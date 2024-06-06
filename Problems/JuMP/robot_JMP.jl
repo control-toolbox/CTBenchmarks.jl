@@ -4,9 +4,12 @@
 # COPS 2.0 - September 2000
 # COPS 3.0 - November 2002
 # COPS 3.1 - March 2004
+using JuMP , Ipopt
 
-function robot_model(nh)
+
+function robot_JMP()
     # total length of arm
+    nh = 200
     L = 5.0
 
     # Upper bounds on the controls
@@ -17,7 +20,7 @@ function robot_model(nh)
     rho0 = 4.5
     phi0 = pi /4
 
-    model = Model()
+    model = JuMP.Model()
 
     @variables(model, begin
         0 <= rho[k=1:nh+1] <= L,                  (start=rho0)
@@ -52,22 +55,20 @@ function robot_model(nh)
     end)
 
     # Boundary condition
-    @constraints(
-        model, begin
-            rho[1] == 4.5
-            the[1] == 0.0
-            phi[1] == pi / 4.0
-            rho[nh+1] == 4.5
-            the[nh+1] == 2.0 * pi / 3
-            phi[nh+1] == pi / 4.0
-            rho_dot[1] == 0.0
-            the_dot[1] == 0.0
-            phi_dot[1] == 0.0
-            rho_dot[nh+1] == 0.0
-            the_dot[nh+1] == 0.0
-            phi_dot[nh+1] == 0.0
-        end
-    )
+    @constraints(model, begin
+        rho[1] == 4.5
+        the[1] == 0.0
+        phi[1] == pi / 4.0
+        rho[nh+1] == 4.5
+        the[nh+1] == 2.0 * pi / 3
+        phi[nh+1] == pi / 4.0
+        rho_dot[1] == 0.0
+        the_dot[1] == 0.0
+        phi_dot[1] == 0.0
+        rho_dot[nh+1] == 0.0
+        the_dot[nh+1] == 0.0
+        phi_dot[nh+1] == 0.0
+    end)
 
     return model
 end
