@@ -1,5 +1,3 @@
-using OptimalControl
-
 function rocket_OC()
     # should return an OptimalControlProblem with a message, a model and a solution
 

@@ -1,4 +1,3 @@
-using JuMP , Ipopt
 
 function rocket_JMP()
     h_0 = 1.0

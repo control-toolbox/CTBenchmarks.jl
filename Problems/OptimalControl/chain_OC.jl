@@ -1,5 +1,3 @@
-using OptimalControl
-
 function chain_OC()
     # should return an OptimalControlProblem with a message, a model and a solution
 
@@ -28,9 +26,11 @@ function chain_OC()
 # control constraints
 
 # dynamics
-    dynamics!(ocp, (x, u) -> [ u , 
-                               x[1] * sqrt(1+u^2),
-                               sqrt(1+u^2)] ) 
+    dynamics!(ocp, (x, u) -> [ 
+        u , 
+        x[1] * sqrt(1+u^2),
+        sqrt(1+u^2)
+    ] ) 
 
 # objective     
     objective!(ocp, :mayer, (x0, xf) -> xf[2], :min)    

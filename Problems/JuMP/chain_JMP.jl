@@ -1,5 +1,3 @@
-using JuMP , Ipopt
-
 function chain_JMP()
 
     nh = 200

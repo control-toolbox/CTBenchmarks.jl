@@ -1,11 +1,8 @@
-using OptimalControl
-
 function robot_OC()
     # should return an OptimalControlProblem with a message, a model and a solution
 
     # ------------------------------------------------------------------------------------------
 # parameters
-    nh = 200
     L = 5.0
     max_u_rho = 1.0
     max_u_the = 1.0
@@ -36,12 +33,14 @@ function robot_OC()
     constraint!(model, :control ,-max_u, max_u)
 
 # dynamics
-    dynamics!(model, (x, u, tf) -> [ x[2],
+    dynamics!(model, (x, u, tf) -> [
+        x[2],
+        u[1] / L,
         x[4],
+        u[2] * 3 /(((L-x[1])^3 + x[1]^3) * sin(x[5])^2),
         x[6],
-        (u[1] - (L-x[1]) * sin(x[5]) * x[6]^2) / ((L-x[1])^3 + x[1]^3) * sin(x[5]),
-        (u[2] - x[3] * x[6]^2 * sin(x[5]) * cos(x[5])) / ((L-x[1])^3 + x[1]^3),
-        (u[3] - x[3] * x[6]^2 * cos(x[5])) / ((L-x[1])^3 + x[1]^3) ] )
+        u[3] * 3 /((L-x[1])^3 + x[1]^3)
+    ] )
 
     
 # objective

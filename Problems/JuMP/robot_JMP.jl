@@ -4,7 +4,6 @@
 # COPS 2.0 - September 2000
 # COPS 3.0 - November 2002
 # COPS 3.1 - March 2004
-using JuMP , Ipopt
 
 
 function robot_JMP()
@@ -40,18 +39,18 @@ function robot_JMP()
     # Physical equations
     @expressions(model, begin
         step,            tf /nh
-        I_the[i=1:nh+1], ((L-rho[i])^3+rho[i]^3)*(sin(phi[i]))^2/3.0
+        I_the[i=1:nh+1], (((L-rho[i])^3+rho[i]^3)*(sin(phi[i]))^2)/3.0
         I_phi[i=1:nh+1], ((L-rho[i])^3+rho[i]^3)/3.0
     end)
 
     # Dynamics
     @constraints(model, begin
-        [j=2:nh+1], rho[j] == rho[j-1] + 0.5 * step * (rho_dot[j] + rho_dot[j-1])
-        [j=2:nh+1], phi[j] == phi[j-1] + 0.5 * step * (phi_dot[j] + phi_dot[j-1])
-        [j=2:nh+1], the[j] == the[j-1] + 0.5 * step * (the_dot[j] + the_dot[j-1])
-        [j=2:nh+1], rho_dot[j] == rho_dot[j-1] + 0.5 * step * (u_rho[j] + u_rho[j-1]) / L
-        [j=2:nh+1], the_dot[j] == the_dot[j-1] + 0.5 * step * (u_the[j] / I_the[j] + u_the[j-1] / I_the[j-1])
-        [j=2:nh+1], phi_dot[j] == phi_dot[j-1] + 0.5 * step * (u_phi[j] / I_phi[j] + u_phi[j-1] / I_phi[j-1])
+        con_rho[j=2:nh+1], rho[j] == rho[j-1] + 0.5 * step * (rho_dot[j] + rho_dot[j-1])
+        con_phi[j=2:nh+1], phi[j] == phi[j-1] + 0.5 * step * (phi_dot[j] + phi_dot[j-1])
+        con_the[j=2:nh+1], the[j] == the[j-1] + 0.5 * step * (the_dot[j] + the_dot[j-1])
+        con_rho_dot[j=2:nh+1], rho_dot[j] == rho_dot[j-1] + 0.5 * step * (u_rho[j] + u_rho[j-1]) / L
+        con_the_dot[j=2:nh+1], the_dot[j] == the_dot[j-1] + 0.5 * step * ((u_the[j] / I_the[j]) + (u_the[j-1] / I_the[j-1]))
+        con_phi_dot[j=2:nh+1], phi_dot[j] == phi_dot[j-1] + 0.5 * step * ((u_phi[j] / I_phi[j]) + (u_phi[j-1] / I_phi[j-1]))
     end)
 
     # Boundary condition
