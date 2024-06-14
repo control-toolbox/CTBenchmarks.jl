@@ -1,5 +1,5 @@
 
-function rocket_JMP()
+function rocket_JMP(;nh::Int64 = 100)
     h_0 = 1.0
     v_0 = 0.0
     m_0 = 1.0
@@ -8,7 +8,6 @@ function rocket_JMP()
     h_c = 500.0
     v_c = 620.0
     m_c = 0.6
-    nh = 100
 
     c = 0.5*sqrt(g_0 * h_0)
     m_f = m_c * m_0
