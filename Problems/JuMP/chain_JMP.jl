@@ -6,14 +6,15 @@ function chain_JMP()
     b = 3.0
     tf = 1.0
     h = tf / nh
+    tmin = b > a ? 1 / 4 : 3 / 4
 
     model = JuMP.Model()
     
     @variables(model, begin
-        u[1:(nh + 1)]
-        x1[1:(nh + 1)]
-        x2[1:(nh + 1)]
-        x3[1:(nh + 1)]
+        u[k=1:(nh + 1)],          (start=4 * abs(b - a) * (k / nh - tmin))
+        x1[k=1:(nh + 1)],         (start=4 * abs(b - a) * k / nh * (1 / 2 * k / nh - tmin) + a)
+        x2[k=1:(nh + 1)],         (start=(4 * abs(b - a) * k / nh * (1 / 2 * k / nh - tmin) + a) * (4 * abs(b - a) * (k / nh - tmin)))
+        x3[k=1:(nh + 1)],         (start=4 * abs(b - a) * (k / nh - tmin))
     end)
 
     @constraints(model, begin
