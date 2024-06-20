@@ -4,6 +4,7 @@ import Interpolations
 ## ref : https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/space_shuttle_reentry_trajectory/
 
 function space_Shuttle_JMP()
+    integration_rule = "rectangular"
     ## Global variables
     w = 203000.0  # weight (lb)
     g₀ = 32.174    # acceleration (ft/sec^2)
@@ -40,7 +41,7 @@ function space_Shuttle_JMP()
     h_t = 0.8          # altitude (ft) / 1e5
     v_t = 0.25         # velocity (ft/sec) / 1e4
     γ_t = deg2rad(-5)  # flight path angle (rad)
-
+    Δt = 4.0       # time step (sec)
     ## Number of mesh points (knots) to be used
     n = 503
 
@@ -54,8 +55,6 @@ function space_Shuttle_JMP()
         ψ[1:n]                # azimuth (rad)
         deg2rad(-90) ≤ α[1:n] ≤ deg2rad(90)  # angle of attack (rad)
         deg2rad(-89) ≤ β[1:n] ≤ deg2rad(1)  # bank angle (rad)
-        ##        3.5 ≤       Δt[1:n] ≤ 4.5          # time step (sec)
-        Δt[1:n] == 4.0         # time step (sec)
     end);
 
     fix(scaled_h[1], h_s; force = true)
@@ -71,8 +70,8 @@ function space_Shuttle_JMP()
     fix(γ[n], γ_t; force = true)
 
     ## Initial guess: linear interpolation between boundary conditions
-    x_s = [h_s, ϕ_s, θ_s, v_s, γ_s, ψ_s, α_s, β_s, t_s]
-    x_t = [h_t, ϕ_s, θ_s, v_t, γ_t, ψ_s, α_s, β_s, t_s]
+    x_s = [h_s, ϕ_s, θ_s, v_s, γ_s, ψ_s, α_s, β_s]
+    x_t = [h_t, ϕ_s, θ_s, v_t, γ_t, ψ_s, α_s, β_s]
     interp_linear = Interpolations.LinearInterpolation([1, n], [x_s, x_t])
     initial_guess = mapreduce(transpose, vcat, interp_linear.(1:n))
     set_start_value.(all_variables(model), vec(initial_guess))
@@ -112,15 +111,28 @@ function space_Shuttle_JMP()
         (v[j] / (r[j] * cos(θ[j]))) * cos(γ[j]) * sin(ψ[j]) * sin(θ[j])
     )
 
-    for j in 2:n
-        i = j - 1  # index of previous knot
+    if integration_rule == "rectangular"
+        ## Rectangular integration
+        @constraints(model,begin 
+            con_dh[i=2:n], h[i] == h[i-1] + Δt * δh[i-1]
+            con_dϕ[i=2:n], ϕ[i] == ϕ[i-1] + Δt * δϕ[i-1]
+            con_dθ[i=2:n], θ[i] == θ[i-1] + Δt * δθ[i-1]
+            con_dv[i=2:n], v[i] == v[i-1] + Δt * δv[i-1]
+            con_dγ[i=2:n], γ[i] == γ[i-1] + Δt * δγ[i-1]
+            con_dψ[i=2:n], ψ[i] == ψ[i-1] + Δt * δψ[i-1]
+        end)
+    elseif integration_rule == "trapezoidal"
         ## Trapezoidal integration
-        @constraint(model, h[j] == h[i] + 0.5 * Δt[i] * (δh[j] + δh[i]))
-        @constraint(model, ϕ[j] == ϕ[i] + 0.5 * Δt[i] * (δϕ[j] + δϕ[i]))
-        @constraint(model, θ[j] == θ[i] + 0.5 * Δt[i] * (δθ[j] + δθ[i]))
-        @constraint(model, v[j] == v[i] + 0.5 * Δt[i] * (δv[j] + δv[i]))
-        @constraint(model, γ[j] == γ[i] + 0.5 * Δt[i] * (δγ[j] + δγ[i]))
-        @constraint(model, ψ[j] == ψ[i] + 0.5 * Δt[i] * (δψ[j] + δψ[i]))
+        @constraints(model,begin 
+            con_dh[i=2:n], h[i] == h[i-1] + 0.5 * Δt * (δh[i] + δh[i-1])
+            con_dϕ[i=2:n], ϕ[i] == ϕ[i-1] + 0.5 * Δt * (δϕ[i] + δϕ[i-1])
+            con_dθ[i=2:n], θ[i] == θ[i-1] + 0.5 * Δt * (δθ[i] + δθ[i-1])
+            con_dv[i=2:n], v[i] == v[i-1] + 0.5 * Δt * (δv[i] + δv[i-1])
+            con_dγ[i=2:n], γ[i] == γ[i-1] + 0.5 * Δt * (δγ[i] + δγ[i-1])
+            con_dψ[i=2:n], ψ[i] == ψ[i-1] + 0.5 * Δt * (δψ[i] + δψ[i-1])
+        end)
+    else
+        @error "Unexpected integration rule '$(integration_rule)'"
     end
 
     @objective(model, Max, θ[n])
