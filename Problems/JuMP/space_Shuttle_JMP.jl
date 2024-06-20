@@ -3,8 +3,7 @@ import Interpolations
 
 ## ref : https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/space_shuttle_reentry_trajectory/
 
-function space_Shuttle_JMP()
-    integration_rule = "rectangular"
+function space_Shuttle_JMP(integration_rule::String = "rectangular")
     ## Global variables
     w = 203000.0  # weight (lb)
     g₀ = 32.174    # acceleration (ft/sec^2)
