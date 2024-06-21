@@ -40,7 +40,6 @@ function space_Shuttle_JMP(integration_rule::String = "rectangular")
     h_t = 0.8          # altitude (ft) / 1e5
     v_t = 0.25         # velocity (ft/sec) / 1e4
     γ_t = deg2rad(-5)  # flight path angle (rad)
-    Δt = 4.0       # time step (sec)
     ## Number of mesh points (knots) to be used
     n = 503
 
@@ -54,23 +53,27 @@ function space_Shuttle_JMP(integration_rule::String = "rectangular")
         ψ[1:n]                # azimuth (rad)
         deg2rad(-90) ≤ α[1:n] ≤ deg2rad(90)  # angle of attack (rad)
         deg2rad(-89) ≤ β[1:n] ≤ deg2rad(1)  # bank angle (rad)
+        3.5 ≤ Δt[1:n] ≤ 4.5                 # time step (sec)
     end);
 
-    fix(scaled_h[1], h_s; force = true)
-    fix(ϕ[1], ϕ_s; force = true)
-    fix(θ[1], θ_s; force = true)
-    fix(scaled_v[1], v_s; force = true)
-    fix(γ[1], γ_s; force = true)
-    fix(ψ[1], ψ_s; force = true)
-
-    ## Fix final conditions
-    fix(scaled_h[n], h_t; force = true)
-    fix(scaled_v[n], v_t; force = true)
-    fix(γ[n], γ_t; force = true)
+    @expression(model, sum(Δt) ==2009.0)
+    ## Fix initial conditions
+    # inial and final conditions
+    @constraints(model,begin
+        con_h0, scaled_h[1] == h_s
+        con_ϕ0, ϕ[1] == ϕ_s
+        con_θ0, θ[1] == θ_s
+        con_v0, scaled_v[1] == v_s
+        con_γ0, γ[1] == γ_s
+        con_ψ0, ψ[1] == ψ_s
+        con_hf, scaled_h[n] == h_t
+        con_vf, scaled_v[n] == v_t
+        con_γf, γ[n] == γ_t
+    end)
 
     ## Initial guess: linear interpolation between boundary conditions
-    x_s = [h_s, ϕ_s, θ_s, v_s, γ_s, ψ_s, α_s, β_s]
-    x_t = [h_t, ϕ_s, θ_s, v_t, γ_t, ψ_s, α_s, β_s]
+    x_s = [h_s, ϕ_s, θ_s, v_s, γ_s, ψ_s, α_s, β_s, t_s]
+    x_t = [h_t, ϕ_s, θ_s, v_t, γ_t, ψ_s, α_s, β_s, t_s]
     interp_linear = Interpolations.LinearInterpolation([1, n], [x_s, x_t])
     initial_guess = mapreduce(transpose, vcat, interp_linear.(1:n))
     set_start_value.(all_variables(model), vec(initial_guess))
@@ -113,22 +116,22 @@ function space_Shuttle_JMP(integration_rule::String = "rectangular")
     if integration_rule == "rectangular"
         ## Rectangular integration
         @constraints(model,begin 
-            con_dh[i=2:n], h[i] == h[i-1] + Δt * δh[i-1]
-            con_dϕ[i=2:n], ϕ[i] == ϕ[i-1] + Δt * δϕ[i-1]
-            con_dθ[i=2:n], θ[i] == θ[i-1] + Δt * δθ[i-1]
-            con_dv[i=2:n], v[i] == v[i-1] + Δt * δv[i-1]
-            con_dγ[i=2:n], γ[i] == γ[i-1] + Δt * δγ[i-1]
-            con_dψ[i=2:n], ψ[i] == ψ[i-1] + Δt * δψ[i-1]
+            con_dh[i=2:n], h[i] == h[i-1] + Δt[i-1] * δh[i-1]
+            con_dϕ[i=2:n], ϕ[i] == ϕ[i-1] + Δt[i-1] * δϕ[i-1]
+            con_dθ[i=2:n], θ[i] == θ[i-1] + Δt[i-1] * δθ[i-1]
+            con_dv[i=2:n], v[i] == v[i-1] + Δt[i-1] * δv[i-1]
+            con_dγ[i=2:n], γ[i] == γ[i-1] + Δt[i-1] * δγ[i-1]
+            con_dψ[i=2:n], ψ[i] == ψ[i-1] + Δt[i-1] * δψ[i-1]
         end)
     elseif integration_rule == "trapezoidal"
         ## Trapezoidal integration
         @constraints(model,begin 
-            con_dh[i=2:n], h[i] == h[i-1] + 0.5 * Δt * (δh[i] + δh[i-1])
-            con_dϕ[i=2:n], ϕ[i] == ϕ[i-1] + 0.5 * Δt * (δϕ[i] + δϕ[i-1])
-            con_dθ[i=2:n], θ[i] == θ[i-1] + 0.5 * Δt * (δθ[i] + δθ[i-1])
-            con_dv[i=2:n], v[i] == v[i-1] + 0.5 * Δt * (δv[i] + δv[i-1])
-            con_dγ[i=2:n], γ[i] == γ[i-1] + 0.5 * Δt * (δγ[i] + δγ[i-1])
-            con_dψ[i=2:n], ψ[i] == ψ[i-1] + 0.5 * Δt * (δψ[i] + δψ[i-1])
+            con_dh[i=2:n], h[i] == h[i-1] + 0.5 * Δt[i-1] * (δh[i-1] + δh[i]) 
+            con_dϕ[i=2:n], ϕ[i] == ϕ[i-1] + 0.5 * Δt[i-1] * (δϕ[i-1] + δϕ[i]) 
+            con_dθ[i=2:n], θ[i] == θ[i-1] + 0.5 * Δt[i-1] * (δθ[i-1] + δθ[i]) 
+            con_dv[i=2:n], v[i] == v[i-1] + 0.5 * Δt[i-1] * (δv[i-1] + δv[i]) 
+            con_dγ[i=2:n], γ[i] == γ[i-1] + 0.5 * Δt[i-1] * (δγ[i-1] + δγ[i]) 
+            con_dψ[i=2:n], ψ[i] == ψ[i-1] + 0.5 * Δt[i-1] * (δψ[i-1] + δψ[i]) 
         end)
     else
         @error "Unexpected integration rule '$(integration_rule)'"
