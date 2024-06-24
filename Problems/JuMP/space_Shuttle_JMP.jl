@@ -56,7 +56,8 @@ function space_Shuttle_JMP(integration_rule::String = "rectangular")
         3.5 ≤ Δt[1:n] ≤ 4.5                 # time step (sec)
     end);
 
-    @expression(model, sum(Δt) ==2009.0)
+    #@constraint(model, sum(Δt) ==2009.0)
+
     ## Fix initial conditions
     # inial and final conditions
     @constraints(model,begin
