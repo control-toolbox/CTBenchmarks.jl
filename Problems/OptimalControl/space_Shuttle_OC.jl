@@ -21,10 +21,10 @@ function space_Shuttle_OC()
     c₃ = -0.10117249e-5
 
     ## Initial conditions
-    h_s = 2.6*1e5          # altitude (ft)
+    h_s = 2.6          # altitude (ft) / 1e5
     ϕ_s = deg2rad(0)   # longitude (rad)
     θ_s = deg2rad(0)   # latitude (rad)
-    v_s = 2.56*1e4         # velocity (ft/sec) 
+    v_s = 2.56         # velocity (ft/sec) / 1e4
     γ_s = deg2rad(-1)  # flight path angle (rad)
     ψ_s = deg2rad(90)  # azimuth (rad)
     α_s = deg2rad(0)   # angle of attack (rad)
@@ -32,11 +32,10 @@ function space_Shuttle_OC()
     t_s = 1.00         # time step (sec)
 
     ## Final conditions, the so-called Terminal Area Energy Management (TAEM)
-    h_t = 0.8*1e5          # altitude (ft)
-    v_t = 0.25*1e4          # velocity (ft/sec)
+    h_t = 0.8          # altitude (ft) / 1e5
+    v_t = 0.25         # velocity (ft/sec) / 1e4
     γ_t = deg2rad(-5)  # flight path angle (rad)
-
-    tf = 2009.0 # final time (sec) 
+    tf = 2009.0 # final time (sec)
     t0 = 0.0 # initial time (sec)
 
     @def ocp begin 
@@ -58,19 +57,19 @@ function space_Shuttle_OC()
         c₁ = -0.19213774e-1
         c₂ = 0.21286289e-3
         c₃ = -0.10117249e-5
-        h_s = 2.6*1e5          # altitude (ft)
+        h_s = 2.6          # altitude (ft) / 1e5
         ϕ_s = deg2rad(0)   # longitude (rad)
         θ_s = deg2rad(0)   # latitude (rad)
-        v_s = 2.56*1e4         # velocity (ft/sec) 
+        v_s = 2.56         # velocity (ft/sec) / 1e4
         γ_s = deg2rad(-1)  # flight path angle (rad)
         ψ_s = deg2rad(90)  # azimuth (rad)
         α_s = deg2rad(0)   # angle of attack (rad)
         β_s = deg2rad(0)   # bank angle (rad)
-        t_s = 1.00         # time step (sec)
-        h_t = 0.8*1e5          # altitude (ft)
-        v_t = 0.25*1e4          # velocity (ft/sec)
+        t_s = 1.00 
+        h_t = 0.8          # altitude (ft) / 1e5
+        v_t = 0.25         # velocity (ft/sec) / 1e4
         γ_t = deg2rad(-5)  # flight path angle (rad)
-        tf = 2009.0 # final time (sec) 
+        tf = 2009.0 # final time (sec)
         t0 = 0.0 # initial time (sec)
 
     ## define the problem
@@ -79,10 +78,10 @@ function space_Shuttle_OC()
         u ∈ R², control
 
     ## state variables
-        h = x₁
+        scaled_h = x₁
         ϕ = x₂
         θ = x₃
-        v = x₄
+        scaled_v = x₄
         γ = x₅
         ψ = x₆
 
@@ -92,23 +91,23 @@ function space_Shuttle_OC()
 
     ## constraints
         # state constraints
-        h(t) ≥ 0,                               (h_con)
+        scaled_h(t) ≥ 0,                        (scaled_h_con)
         deg2rad(-89) ≤ θ(t) ≤ deg2rad(89),      (θ_con)
-        v(t) ≥ 1e-4,                            (v_con)
+        scaled_v(t) ≥ 1e-4,                     (scaled_v_con)
         deg2rad(-89) ≤ γ(t) ≤ deg2rad(89),      (γ_con)
         # control constraints
         deg2rad(-89) ≤ β(t) ≤ deg2rad(1),       (β_con)
         deg2rad(-90) ≤ α(t) ≤ deg2rad(90),      (α_con)
         # initial conditions
-        h(t0) == h_s,                           (h0_con)
+        scaled_h(t0) == h_s,                    (scaled_h0_con)
         ϕ(t0) == ϕ_s,                           (ϕ0_con)
         θ(t0) == θ_s,                           (θ0_con)
-        v(t0) == v_s,                           (v0_con)
+        scaled_v(t0) == v_s,                    (scaled_v0_con)
         γ(t0) == γ_s,                           (γ0_con)
         ψ(t0) == ψ_s,                           (ψ0_con)
         # final conditions
-        h(tf) == h_t,                           (hf_con)
-        v(tf) == v_t,                           (vf_con)
+        scaled_h(tf) == h_t,                    (scaled_hf_con)
+        scaled_v(tf) == v_t,                    (scaled_vf_con)
         γ(tf) == γ_t,                           (γf_con)
 
     ## dynamics  
@@ -120,14 +119,16 @@ function space_Shuttle_OC()
 
     ## dynamics
     function dynamics(x,u)
-        h, ϕ, θ, v, γ, ψ = x
+        scaled_h, ϕ, θ, scaled_v, γ, ψ = x
         α, β = u
+        h = scaled_h * 1e5
+        v = scaled_v * 1e4
         ## Helper functions
-        c_D = b₀ + b₁ * rad2deg(α) + b₂ * rad2deg(α)^2
+        c_D = b₀ + b₁ * rad2deg(α) + b₂ * (rad2deg(α)^2)
         c_L = a₀ + a₁ * rad2deg(α)
         ρ = ρ₀ * exp(-h/hᵣ)
-        D = 0.5 * c_D * S * ρ * v^2
-        L = 0.5 * c_L * S * ρ * v^2
+        D = (1/2) * c_D * S * ρ * (v^2)
+        L = (1/2) * c_L * S * ρ * (v^2)
         r = Rₑ + h
         g = μ / (r^2)
 
@@ -137,7 +138,7 @@ function space_Shuttle_OC()
         θ_dot = v * cos(γ) * cos(ψ) / r
         v_dot = -(D/m) - g*sin(γ)
         γ_dot = (L/(m*v)) * cos(β) + cos(γ) * ((v/r)-(g/v))
-        ψ_dot = (1/(m*v*cos(γ))) * (L*sin(β)) + (v/(r*cos(θ))) * cos(γ) * sin(ψ) * sin(θ)
+        ψ_dot = (1/(m*v*cos(γ))) * L*sin(β) + (v/(r*cos(θ))) * cos(γ) * sin(ψ) * sin(θ)
 
         return [ h_dot, ϕ_dot, θ_dot, v_dot, γ_dot, ψ_dot]
     end
