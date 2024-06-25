@@ -1,2 +1,2 @@
-# COTS : Control Optimization Test Set
+# COTS : Control Optimal Test Set
 
