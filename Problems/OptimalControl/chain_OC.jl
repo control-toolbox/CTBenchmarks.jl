@@ -1,7 +1,12 @@
-function chain_OC()
-    # should return an OptimalControlProblem with a message, a model and a solution
+"""
+    The Hanging Chain Problem:
+        We want to find the shape of a chain hanging between two points a and b, with a length L.
+        The objective is to minimize the potential energy of the chain.
+        The problem is formulated as an OptimalControl model.
+"""
 
-    # ------------------------------------------------------------------------------------------
+
+function chain_OC()
 # parameters
     L = 4
     a = 1
@@ -17,13 +22,9 @@ function chain_OC()
     time!(ocp, 0, tf) 
     
 # initial and final conditions
-    constraint!(ocp, :initial, [a , 0.0 , 0.0])       
-    constraint!(ocp, :final, Index(3) , L)    
-    constraint!(ocp, :final, Index(1) , b)     
-
-# state constraints
-
-# control constraints
+    constraint!(ocp, :initial, [a , 0.0 , 0.0])    
+    constraint!(ocp, :final, Index(1) , b)    
+    constraint!(ocp, :final, Index(3) , L)      
 
 # dynamics
     dynamics!(ocp, (x, u) -> [ 

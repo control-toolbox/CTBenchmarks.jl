@@ -1,6 +1,11 @@
-function chain_JMP()
-
-    nh = 200
+"""
+    The Hanging Chain Problem:
+        We want to find the shape of a chain hanging between two points a and b, with a length L.
+        The objective is to minimize the potential energy of the chain.
+        The problem is formulated as a JuMP model.
+    Ref: https://github.com/MadNLP/COPSBenchmark.jl/blob/main/src/chain.jl
+"""
+function chain_JMP(;nh::Int64 = 200)
     L = 4.0
     a = 1.0
     b = 3.0
