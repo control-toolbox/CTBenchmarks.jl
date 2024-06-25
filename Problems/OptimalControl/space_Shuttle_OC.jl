@@ -1,3 +1,9 @@
+"""
+    Space Shuttle Reentry Trajectory Problem:
+        We want to find the optimal trajectory of a space shuttle reentry.
+        The objective is to minimize the angle of attack at the terminal point.
+        The problem is formulated as an OptimalControl model.
+"""
 function space_Shuttle_OC()
     ## Global variables
     w = 203000.0  # weight (lb)
