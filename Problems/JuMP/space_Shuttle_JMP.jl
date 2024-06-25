@@ -1,8 +1,12 @@
 using JuMP
 import Interpolations
-
-## ref : https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/space_shuttle_reentry_trajectory/
-
+"""
+    Space Shuttle Reentry Trajectory Problem:
+        We want to find the optimal trajectory of a space shuttle reentry.
+        The objective is to minimize the angle of attack at the terminal point.
+        The problem is formulated as a JuMP model.
+    Ref: https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/space_shuttle_reentry_trajectory/
+"""
 function space_Shuttle_JMP(integration_rule::String = "rectangular")
     ## Global variables
     w = 203000.0  # weight (lb)
