@@ -1,3 +1,9 @@
+"""
+    Hang Glider Problem:
+        We want to find the optimal trajectory of a hang glider.
+        The objective is to maximize the final horizontal position of the glider while in the presence of a thermal updraft.
+        The problem is formulated as an OptimalControl model.
+"""
 function glider_OC()
 # parameters
     x_0 = 0.0
@@ -17,65 +23,80 @@ function glider_OC()
     rho = 1.13
     cL_min = 0.0
     cL_max = 1.4
+    t0 = 0.0
 
-    model = OptimalControl.Model(variable=true)
+    @def ocp begin
+    ## parameters
+        x_0 = 0.0
+        y_0 = 1000.0
+        y_f = 900.0
+        vx_0 = 13.23
+        vx_f = 13.23
+        vy_0 = -1.288
+        vy_f = -1.288
+        u_c = 2.5
+        r_0 = 100.0
+        m = 100.0
+        g = 9.81
+        c0 = 0.034
+        c1 = 0.069662
+        S = 14.0
+        rho = 1.13
+        cL_min = 0.0
+        cL_max = 1.4
+        t0 = 0.0
+    ## define the problem
+        tf ∈ R¹, variable
+        t ∈ [ t0, tf ], time
+        x ∈ R⁴, state
+        u ∈ R¹, control
+    ## state variables
+        x1 = x₁
+        y = x₂
+        vx = x₃
+        vy = x₄
+    ## control variables
+        cL = u₁
 
-# dimensions
-    state!(model, 4)                                  
-    control!(model, 1)
-    variable!(model, 1, "tf")
+    ## constraints
+        # state constraints
+        x1(t) ≥ 0.0,                        (x_con)
+        vx(t) ≥ 0.0,                       (vx_con)
+        # control constraints
+        cL_min ≤ cL(t) ≤ cL_max,         (cL_con)
+        # initial conditions
+        x1(t0) == x_0,                    (x0_con)
+        y(t0) == y_0,                    (y0_con)
+        vx(t0) == vx_0,                  (vx0_con)
+        vy(t0) == vy_0,                  (vy0_con)
+        # final conditions
+        y(tf) == y_f,                    (yf_con)
+        vx(tf) == vx_f,                  (vxf_con)
+        vy(tf) == vy_f,                  (vyf_con)
 
-# time interval
-    time!(model, 0.0 , Index(1)) 
-    constraint!(model, :variable, Index(1), 0, Inf)
+    ## dynamics
+        ẋ(t) == dynamics(x(t),u(t))
 
-# initial and final conditions
-    constraint!(model, :initial, [x_0, y_0, vx_0, vy_0])   
-    constraint!(model, :final, 2:4 , [ y_f, vx_f, vy_f])
+    ## objective
+        x1(tf) → max
 
-# state constraints
-    constraint!(model, :state, Index(1), 0.0, Inf)
-    constraint!(model, :state, Index(3), 0.0, Inf)
-
-# control constraints
-    constraint!(model, :control , cL_min, cL_max)
-
-# dynamics
-    function r(x)
-        return ((x[1]/r_0) - 2.5)^2
     end
-    
-    function UpD(x)
-        return u_c*(1 - r(x))*exp(-r(x))
+
+    function dynamics(x,u)
+        x1, y, vx, vy = x
+        cL = u
+        ## Helper functions
+        r = (x1/r_0 - 2.5)^2
+        UpD = u_c*(1 - r)*exp(-r)
+        w = vy - UpD
+        v = sqrt(vx^2 + w^2)
+        D = 0.5*(c0+c1*(cL^2))*rho*S*(v^2)
+        L = 0.5*cL*rho*S*(v^2)
+        vx_dot = (-L*(w/v) - D*(vx/v))/m
+        vy_dot = ((L*(vx/v) - D*(w/v))/m) - g
+        return [vx, vy, vx_dot, vy_dot]
     end
 
-    function w(x)
-        return x[4] - UpD(x)
-    end
-
-    function v(x)
-        return sqrt(x[3]^2 + w(x)^2)
-    end
-
-    function D(x, u)
-        return 0.5*(c0+c1*(u^2))*rho*S*v(x)^2
-    end
-
-    function L(x, u)
-        return 0.5*u*rho*S*v(x)^2
-    end
-
-
-    dynamics!(model, (x, u, tf) -> [
-        x[3],
-        x[4],
-        (1/m) * (-L(x, u)*(w(x)/v(x)) - D(x, u)*(x[3]/v(x))),
-        (1/m) * (L(x, u)*(x[3]/v(x)) - D(x, u)*(w(x)/v(x))) - g
-    ] )
-
-# objective
-    objective!(model, :mayer, (x0, xf, tf) -> xf[1], :max)    
-
-    return model
+    return ocp
 
 end

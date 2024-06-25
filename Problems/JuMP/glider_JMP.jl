@@ -1,13 +1,14 @@
-# Hang Glider Problem
-# Trapezoidal formulation
-# David Bortz - Summer 1998
-# COPS 2.0 - September 2000
-# COPS 3.0 - November 2002
-# COPS 3.1 - March 2004
+"""
+    Hang Glider Problem:
+        We want to find the optimal trajectory of a hang glider.
+        The objective is to maximize the final horizontal position of the glider while in the presence of a thermal updraft.
+        The problem is formulated as a JuMP model.
+    Ref: https://github.com/MadNLP/COPSBenchmark.jl/blob/main/src/glider.jl
 
-function glider_JMP()
+"""
+
+function glider_JMP(;nh::Int64=200)
     # Design parameters
-    nh = 200
     x_0 = 0.0
     y_0 = 1000.0
     y_f = 900.0
