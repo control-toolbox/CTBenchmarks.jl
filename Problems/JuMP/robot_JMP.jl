@@ -1,16 +1,13 @@
-# Robot Arm Problem
-# Trapezoidal formulation
-# David Bortz - Summer 1998
-# COPS 2.0 - September 2000
-# COPS 3.0 - November 2002
-# COPS 3.1 - March 2004
-
-
-function robot_JMP()
+"""
+    Robot arm problem:
+        We want to find the shape of a robot arm moving between two points.
+        The objective is to minimize the time taken to move between the two points.
+        The problem is formulated as a JuMP model.
+    Ref: https://github.com/MadNLP/COPSBenchmark.jl/blob/main/src/robot.jl
+"""
+function robot_JMP(;nh::Int64=200)
     # total length of arm
-    nh = 200
     L = 5.0
-
     # Upper bounds on the controls
     max_u_rho = 1.0
     max_u_the = 1.0

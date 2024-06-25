@@ -1,7 +1,10 @@
+"""
+    Robot arm problem:
+        We want to find the shape of a robot arm moving between two points.
+        The objective is to minimize the time taken to move between the two points.
+        The problem is formulated as an OptimalControl model.
+"""
 function robot_OC()
-    # should return an OptimalControlProblem with a message, a model and a solution
-
-    # ------------------------------------------------------------------------------------------
 # parameters
     L = 5.0
     max_u_rho = 1.0
@@ -27,8 +30,6 @@ function robot_OC()
     constraint!(model, :initial, [rho0, 0.0 ,0.0, 0.0 , phi0, 0.0])       
     constraint!(model, :final,   [rho0, 0.0 , thef, 0.0 , phi0, 0.0])  
 
-# state constraints
-    
 # control constraints
     constraint!(model, :control ,-max_u, max_u)
 
