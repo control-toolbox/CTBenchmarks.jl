@@ -1,4 +1,10 @@
-
+"""
+    Goddard Rocket Problem:
+        We want to find the optimal trajectory of a Goddard rocket.
+        The objective is to maximize the final altitude of the rocket.
+        The problem is formulated as a JuMP model.
+    Ref: https://github.com/MadNLP/COPSBenchmark.jl/blob/main/src/rocket.jl
+"""
 function rocket_JMP(;nh::Int64 = 100)
     h_0 = 1.0
     v_0 = 0.0

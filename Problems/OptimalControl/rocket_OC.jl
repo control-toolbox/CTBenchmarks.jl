@@ -1,7 +1,10 @@
+"""
+    Goddard Rocket Problem:
+        We want to find the optimal trajectory of a Goddard rocket.
+        The objective is to maximize the final altitude of the rocket.
+        The problem is formulated as an OptimalControl model.
+"""
 function rocket_OC()
-    # should return an OptimalControlProblem with a message, a model and a solution
-
-    # ------------------------------------------------------------------------------------------
 # parameters
     h_0 = 1.0
     v_0 = 0.0
