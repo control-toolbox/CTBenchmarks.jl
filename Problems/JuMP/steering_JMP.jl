@@ -1,11 +1,11 @@
-# Rocket Steering Problem
-# Trapezoidal formulation
-# COPS 2.0 - September 2000
-# COPS 3.0 - November 2002
-# COPS 3.1 - March 2004
-
-function steering_JMP()
-    nh = 100
+"""
+    Particle Steering Problem:
+        We want to find the optimal trajectory of a particle.
+        The objective is to minimize the time taken to achieve a given altitude and terminal velocity.
+        The problem is formulated as a JuMP model.
+    Ref: https://github.com/MadNLP/COPSBenchmark.jl/blob/main/src/steering.jl
+"""
+function steering_JMP(;nh::Int64 = 100)
     a = 100.0 
     u_min, u_max = -pi/2.0, pi/2.0
     xs = zeros(4)
