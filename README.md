@@ -81,6 +81,3 @@ In this section, we list the issues that we encountered during the development o
 ## License
 
 ## Acknowledgments
-
-Inspiration, code snippets, etc.
-* [link](link)
