@@ -2,11 +2,11 @@
 
 ## Description
 
-This project is a tool to compare the performance of two optimal control solvers : `JuMP` and `OptimalControl`. The comparison is done on different problems. The goal is to evaluate the performance of OptimalControl in terms of speed and accuracy. It aims also to identify the limitations of OptimalControl and to propose some improvements.
+This project is a tool to compare the performance of two optimal control solvers : `JuMP` and `OptimalControl`. The comparison is done on different problems. The goal is to evaluate the performance of OptimalControl in terms of speed and accuracy. It also aims to identify the limitations of OptimalControl and to propose some improvements.
 
 ## Getting Started
 
-For this project, you need to have the following packages installed :
+For this project, you need to have the following packages installed:
 1. Models
     - [JuMP](https://jump.dev/JuMP.jl/stable/) 
     - [OptimalControl](https://control-toolbox.org/OptimalControl.jl/stable/)
@@ -16,8 +16,8 @@ For this project, you need to have the following packages installed :
     - [NLPModelsIpopt](https://jso.dev/NLPModelsIpopt.jl/stable/)
 2. Solvers
     - [IPOPT](https://github.com/jump-dev/Ipopt.jl)
-    - [KNITRO](https://www.artelys.com/app/docs/knitro/1_introduction.html): To use KNITRO, you need to have a license from [Artelys KNITRO](https://www.artelys.com/products/knitro/). For installation instructions, you can check the [installation guide](https://www.artelys.com/app/docs/knitro/1_introduction/installation.html).
-    - [HSL_jll](https://licences.stfc.ac.uk/product/libhsl): After getting the license, to use the HSL solvers in julia you can check the following [link](https://discourse.julialang.org/t/how-to-get-hsl-up-and-running-with-ipopt/114138/3) for installation instructions.
+    - [KNITRO](https://www.artelys.com/app/docs/knitro/1_introduction.html): To use KNITRO, you need a license from [Artelys KNITRO](https://www.artelys.com/products/knitro/). For installation instructions, you can check the [installation guide](https://www.artelys.com/app/docs/knitro/1_introduction/installation.html).
+    - [HSL_jll](https://licences.stfc.ac.uk/product/libhsl): After obtaining the license, to use the HSL solvers in Julia, you can check the following [link](https://discourse.julialang.org/t/how-to-get-hsl-up-and-running-with-ipopt/114138/3) for installation instructions.
     - [MadNLP](https://madnlp.github.io/MadNLP.jl/stable/)
     - [MadNLPHSL](https://github.com/MadNLP/MadNLP.jl/tree/master/lib/MadNLPHSL)
 3. Tools
@@ -69,11 +69,11 @@ For this matter, we use the following functions that varyate the different param
 In this section, we list the issues that we encountered during the development of the project. some of them are still open and need to be fixed.
 
 - [ ] In [GoddardJuMPs](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardJuMPs.ipynb#L254), the Knitro solvers gives an auto-diff time equal to zero. The issue comes from using `solve_time` in [solver_variant.jl](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/solver_variant.jl#L39). That apllies also on the other solvers. The solution is to use an output file to get the `diff_auto_time`.
-- [x] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L316), we created an output file to be parsed in order to get the time spend in the Ipopt solver. But it could be nice to have a function in the OptimalControl package that returns it directly.
-- [ ] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L923), the `HSL_MA57` solver gives different results with JuMP and OptimalControl. This issue doesn't appear with the other solvers including HSL_MA27. 
+- [x] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L316), we created an output file to be parsed in order to get the time spent in the Ipopt solver. But it could be nice to have a function in the OptimalControl package that returns it directly.
+- [ ] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L923), the `HSL_MA57` solver gives different results with JuMP and OptimalControl. This issue doesn't appear with the other solvers, including HSL_MA27. 
 - [ ] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L923), The number of nonzeros in the Hessians is different between JuMP and OptimalControl. This issue could be due to the way we collect the information.
-- [ ] The `The Hang Glider Problem` is unsolvable with the current version of OptimalControl. we have a dedicated issue for that matter [here](https://github.com/0Yassine0/COTS.jl/issues/9)
-- [ ] The `primitive figures` given by the OptimalControl package are not the same as the ones given by the JuMP package. This issue appers for most of the problems. We can take the results of Robot Arm Problem as an example [here](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/TestProblems/testRobot.ipynb).
+- [ ] The `The Hang Glider Problem` is unsolvable with the current version of OptimalControl. We have a dedicated issue for that matter [here](https://github.com/0Yassine0/COTS.jl/issues/9)
+- [ ] The `primitive figures` given by the OptimalControl package are not the same as the ones given by the JuMP package. This issue appears for most of the problems. We can take the results of Robot Arm Problem as an example [here](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/TestProblems/testRobot.ipynb).
 - [ ] The OptimalControl package doesn't solve the `The Space Shuttle Reentry Problem` with its current version. We have a dedicated issue for that matter [here](https://github.com/0Yassine0/COTS.jl/issues/8).
 - [ ] In [SpaceShuttleSolvers](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/TestProblems/SpaceShuttleSolvers.ipynb#L251), Knitro solver is not working with JuMP for the `The Space Shuttle Reentry Problem`.
 
