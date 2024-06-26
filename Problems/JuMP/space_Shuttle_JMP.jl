@@ -7,7 +7,7 @@ import Interpolations
         The problem is formulated as a JuMP model.
     Ref: https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/space_shuttle_reentry_trajectory/
 """
-function space_Shuttle_JMP(integration_rule::String = "rectangular")
+function space_Shuttle_JMP(integration_rule::String = "rectangular",n::Int=503)
     ## Global variables
     w = 203000.0  # weight (lb)
     g₀ = 32.174    # acceleration (ft/sec^2)
@@ -44,9 +44,8 @@ function space_Shuttle_JMP(integration_rule::String = "rectangular")
     h_t = 0.8          # altitude (ft) / 1e5
     v_t = 0.25         # velocity (ft/sec) / 1e4
     γ_t = deg2rad(-5)  # flight path angle (rad)
-    ## Number of mesh points (knots) to be used
-    n = 503
-
+    tf = 2009.0 # final time (sec)
+    Δt = tf/n*ones(n)
     model = JuMP.Model()
     @variables(model, begin
         0 ≤ scaled_h[1:n]                # altitude (ft) / 1e5
@@ -57,7 +56,7 @@ function space_Shuttle_JMP(integration_rule::String = "rectangular")
         ψ[1:n]                # azimuth (rad)
         deg2rad(-90) ≤ α[1:n] ≤ deg2rad(90)  # angle of attack (rad)
         deg2rad(-89) ≤ β[1:n] ≤ deg2rad(1)  # bank angle (rad)
-        3.5 ≤ Δt[1:n] ≤ 4.5                 # time step (sec)
+        #3.5 ≤ Δt[1:n] ≤ 4.5                 # time step (sec)
     end);
 
     #@constraint(model, sum(Δt) ==2009.0)
@@ -77,8 +76,8 @@ function space_Shuttle_JMP(integration_rule::String = "rectangular")
     end)
 
     ## Initial guess: linear interpolation between boundary conditions
-    x_s = [h_s, ϕ_s, θ_s, v_s, γ_s, ψ_s, α_s, β_s, t_s]
-    x_t = [h_t, ϕ_s, θ_s, v_t, γ_t, ψ_s, α_s, β_s, t_s]
+    x_s = [h_s, ϕ_s, θ_s, v_s, γ_s, ψ_s, α_s, β_s]
+    x_t = [h_t, ϕ_s, θ_s, v_t, γ_t, ψ_s, α_s, β_s]
     interp_linear = Interpolations.LinearInterpolation([1, n], [x_s, x_t])
     initial_guess = mapreduce(transpose, vcat, interp_linear.(1:n))
     set_start_value.(all_variables(model), vec(initial_guess))
