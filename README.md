@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is a tool to compare the performance of two optimal control solvers : `JuMP` and `OptimalControl`. The comparison is done on different problems. The goal is to evaluate the performance of `OptimalControl` in terms of speed and accuracy. It aims also to identify the limitations of `OptimalControl` and to propose some improvements.
+This project is a tool to compare the performance of two optimal control solvers : `JuMP` and `OptimalControl`. The comparison is done on different problems. The goal is to evaluate the performance of OptimalControl in terms of speed and accuracy. It aims also to identify the limitations of OptimalControl and to propose some improvements.
 
 ## Getting Started
 
@@ -59,14 +59,24 @@ This directory contains the benchmark of the Goddard Rocket Problem.
 The main two files are :
 - ***"GoddardJuMPs"*** : This file contains the benchmark of the Goddard Rocket Problem using JuMP. We compare the results of different linear solvers, backends, and nonlinear solvers. The goal is to find the best combination that gives the best results.
 - ***"GoddardModels"*** : This file contains the benchmark of the Goddard Rocket Problem using different linear solvers (MUMPS, HSL_MA57 and HSL_MA27) with both JuMP and OptimalControl. We compare the results on terms of speed and accuracy.
-For this matter, we use the following functions that varyate the different parameters.
-- ***"backend_variant"*** : This function compares the results of different backends (ExaModels, JuMPDefault and SymbolicAD) with JuMP.
-- ***"linear_solver_variant"*** : This function compares the results of different linear solvers (MUMPS, HSL_MA57 and HSL_MA27) with JuMP.
-- ***"solver_variant"*** : This function compares the results of different nonlinear solvers (IPOPT, MadNLP and KNITRO) with JuMP.
+For this matter, we use the following functions that varyate the different parameters:
+    - *"backend_variant"* : This function compares the results of different backends (ExaModels, JuMPDefault and SymbolicAD) with JuMP.
+    - *"linear_solver_variant"* : This function compares the results of different linear solvers (MUMPS, HSL_MA57 and HSL_MA27) with JuMP.
+    - *"solver_variant"* : This function compares the results of different nonlinear solvers (IPOPT, MadNLP and KNITRO) with JuMP.
 
 ## Issues
 
 In this section, we list the issues that we encountered during the development of the project. some of them are still open and need to be fixed.
+
+- [ ] In [GoddardJuMPs](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardJuMPs.ipynb#L254), the Knitro solvers gives an auto-diff time equal to zero. The issue comes from using `solve_time` in [solver_variant.jl](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/solver_variant.jl#L39). That apllies also on the other solvers. The solution is to use an output file to get the `diff_auto_time`.
+- [ ] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L316), we created an output file to be parsed in order to get the time spend in the Ipopt solver. But it could be nice to have a function in the OptimalControl package that returns it directly.
+- [ ] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L923), the `HSL_MA57` solver gives different results with JuMP and OptimalControl. This issue doesn't appear with the other solvers including HSL_MA27. 
+- [ ] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L923), The number of nonzeros in the Hessians is different between JuMP and OptimalControl. This issue could be due to the way we collect the information.
+- [ ] The `The Hang Glider Problem` is unsolvable with the current version of OptimalControl. we have a dedicated issue for that matter [here](https://github.com/0Yassine0/COTS.jl/issues/9)
+- [ ] The `primitive figures` given by the OptimalControl package are not the same as the ones given by the JuMP package. This issue appers for most of the problems. We can take the results of Robot Arm Problem as an example [here](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/TestProblems/testRobot.ipynb).
+- [ ] The OptimalControl package doesn't solve the `The Space Shuttle Reentry Problem` with its current version. We have a dedicated issue for that matter [here](https://github.com/0Yassine0/COTS.jl/issues/8).
+- [ ] In [SpaceShuttleSolvers](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/TestProblems/SpaceShuttleSolvers.ipynb#L251), Knitro solver is not working with JuMP for the `The Space Shuttle Reentry Problem`.
+
 
 ## License
 
