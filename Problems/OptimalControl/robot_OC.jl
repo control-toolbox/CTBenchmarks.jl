@@ -14,39 +14,74 @@ function robot_OC()
     rho0 = 4.5
     phi0 = pi /4
     thef = 2.0 * pi / 3
+    t0 = 0.0
 
-    model = OptimalControl.Model(variable=true)
+    @def ocp begin 
+    # parameters
+        L = 5.0
+        max_u_rho = 1.0
+        max_u_the = 1.0
+        max_u_phi = 1.0
+        max_u = [max_u_rho, max_u_the, max_u_phi]
+        rho0 = 4.5
+        phi0 = pi /4
+        thef = 2.0 * pi / 3
+        t0 = 0.0
 
-# dimensions
-    state!(model, 6)                                  
-    control!(model, 3)
-    variable!(model, 1, "tf")
+    ## define the problem
+        tf ∈ R,variable
+        t ∈ [ t0, tf ], time
+        x ∈ R⁶, state
+        u ∈ R³, control
 
-# time interval
-    time!(model, 0, Index(1)) 
-    constraint!(model, :variable, Index(1), 0.0, Inf)
+    ## state variables
+        rho = x₁
+        rho_dot = x₂
+        the = x₃
+        the_dot = x₄
+        phi = x₅
+        phi_dot = x₆
+    ## control variables
+        u1 = u₁
+        u2 = u₂
+        u3 = u₃
 
-# initial and final conditions
-    constraint!(model, :initial, [rho0, 0.0 ,0.0, 0.0 , phi0, 0.0])       
-    constraint!(model, :final,   [rho0, 0.0 , thef, 0.0 , phi0, 0.0])  
+    ## constraints
+        # state constraints
+        0 ≤ rho(t) ≤ L,                        (rho_con)
+        -pi ≤ the(t) ≤ pi,                     (the_con)
+        0 ≤ phi(t) ≤ pi,                       (phi_con)
+        # control constraints
+        -max_u_rho ≤ u₁(t) ≤ max_u_rho,        (u_rho_con)
+        -max_u_the ≤ u₂(t) ≤ max_u_the,        (u_the_con)
+        -max_u_phi ≤ u₃(t) ≤ max_u_phi,        (u_phi_con)
+        # initial conditions
+        rho(t0) == rho0,                       (rho0_con)
+        phi(t0) == phi0,                       (phi0_con)
+        the(t0) == 0.0,                        (the0_con)
+        the_dot(t0) == 0.0,                    (the_dot0_con)
+        phi_dot(t0) == 0.0,                    (phi_dot0_con)
+        rho_dot(t0) == 0.0,                    (rho_dot0_con)
+        # final conditions
+        rho(tf) == rho0,                       (rhof_con)
+        the(tf) == thef,                       (thef_con)
+        phi(tf) == phi0,                       (phif_con)
+        the_dot(tf) == 0.0,                    (the_dotf_con)
+        phi_dot(tf) == 0.0,                    (phi_dotf_con)
+        rho_dot(tf) == 0.0,                    (rho_dotf_con)
 
-# control constraints
-    constraint!(model, :control ,-max_u, max_u)
+    ## dynamics  
+        ẋ(t) == [rho_dot(t),
+                    u1(t) / L,
+                    the_dot(t),
+                    u2(t) * 3 /(((L-rho(t))^3 + rho(t)^3) * sin(phi(t))^2),
+                    phi_dot(t),
+                    u3(t) * 3 /((L-rho(t))^3 + rho(t)^3)]
 
-# dynamics
-    dynamics!(model, (x, u, tf) -> [
-        x[2],
-        u[1] / L,
-        x[4],
-        u[2] * 3 /(((L-x[1])^3 + x[1]^3) * sin(x[5])^2),
-        x[6],
-        u[3] * 3 /((L-x[1])^3 + x[1]^3)
-    ] )
+    ## objective
+        tf → min
 
-    
-# objective
-    objective!(model, :mayer, (x0, xf, tf) -> tf, :min)    
-
-    return model
+    end
+    return ocp
 
 end
