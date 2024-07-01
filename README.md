@@ -41,6 +41,7 @@ We have the following problems <span  style="font-size:0.8em;">(Let XX be JMP or
 - ***"The Goddard Rocket Problem"*** (`rocket_XX`): This problem consists of maximizing the final altitude of a rocket using the thrust as a control and given the initial mass, the fuel mass, and the drag characteristics of the rocket.      
 - ***"The Particle Steering Problem"*** (`steering_XX`) : This problem consists of a particle that has to reach a target point. The goal is to find the trajectory that minimize the time taken for the particle to travel between the two points.
 - ***"The Space Shuttle Reentry Problem"*** (`space_Shuttle_XX`) : This problem consists of finding the optimal trajectory of a space shuttle reentry. The objective is to minimize the angle of attack at the terminal point.
+- ***"The Cart Pendulum Problem"*** (`cart_pendulum_XX`) : This problem consists of a cart pendulum system. The goal is to find the trajectory that minimize the time taken for the cart pendulum to travel from a downward position to an upward position.
 
 ### 2. TestProblems
 
@@ -50,9 +51,11 @@ This directory contains the execution of the different problems stated above. Th
 - ***"TestRobot"*** : This file contains the execution of the robot problem.
 - ***"TestRocket"*** : This file contains the execution of the rocket problem.
 - ***"TestSteering"*** : This file contains the execution of the steering problem.
+- ***"TestCartPendulum"*** : This file contains the execution of the cart pendulum problem.
 - ***"TestSpaceShuttleOC"*** : This file contains the execution of the space shuttle problem with OptimalControl.
 - ***"TestSpaceShuttleJMP"*** : This file contains the execution of the space shuttle problem with JuMP. It compares the results using the rectangular and the trapezoidal integration methods.
 - ***"TestSpaceShuttleSolvers"*** : This file contains the execution of the space shuttle problem with JuMP. It compares the results using different linear and nonlinear solvers.
+
 
 ### 3. Benchmark
 This directory contains the benchmark of the Goddard Rocket Problem. 
@@ -70,11 +73,10 @@ In this section, we list the issues that we encountered during the development o
 
 - [ ] In [GoddardJuMPs](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardJuMPs.ipynb#L254), the Knitro solvers gives an auto-diff time equal to zero. The issue comes from using `solve_time` in [solver_variant.jl](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/solver_variant.jl#L39). That apllies also on the other solvers. The solution is to use an output file to get the `diff_auto_time`.
 - [x] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L316), we created an output file to be parsed in order to get the time spent in the Ipopt solver. But it could be nice to have a function in the OptimalControl package that returns it directly.
-- [x] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L923), the `HSL_MA57` solver gives different results with JuMP and OptimalControl. This issue doesn't appear with the other solvers, including HSL_MA27 -> Initial guess problem 
-- [ ] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L923), The number of nonzeros in the Hessians is different between JuMP and OptimalControl. This issue could be due to the way we collect the information.
+- [x] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L923), the `HSL_MA57` solver gives different results with JuMP and OptimalControl. This issue doesn't appear with the other solvers, including HSL_MA27 -> Initial guess problem.
 - [x] The `The Hang Glider Problem` is unsolvable with the current version of OptimalControl. We have a dedicated issue for that matter [here](https://github.com/0Yassine0/COTS.jl/issues/9) -> Initial guess problem
-- [ ] The `primitive figures` given by the OptimalControl package are not the same as the ones given by the JuMP package. This issue appears for most of the problems. We can take the results of Robot Arm Problem as an example [here](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/TestProblems/testRobot.ipynb).
-- [ ] The OptimalControl package doesn't solve the `The Space Shuttle Reentry Problem` with its current version. We have a dedicated issue for that matter [here](https://github.com/0Yassine0/COTS.jl/issues/8).
+- [ ] The `co-state figures` given by the OptimalControl package are not the same as the ones given by the JuMP package. This issue appears for most of the problems. We can take the results of Robot Arm Problem as an example [here](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/TestProblems/testRobot.ipynb).
+- [ ] The OptimalControl package doesn't solve the `The Space Shuttle Reentry Problem` with its current version. We have a dedicated issue for that matter [here](https://github.com/0Yassine0/COTS.jl/issues/10).
 - [ ] In [SpaceShuttleSolvers](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/TestProblems/SpaceShuttleSolvers.ipynb#L251), Knitro solver is not working with JuMP for the `The Space Shuttle Reentry Problem`.
 
 
