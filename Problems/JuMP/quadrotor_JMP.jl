@@ -29,7 +29,7 @@ function quadrotor_JMP(;nh::Int64=100)
         v1[0:nh]
         v2[0:nh]
         v3[0:nh]
-        atmin <= at[0:nh] <= atmax,  (start = 10)
+        atmin <= at[0:nh] <= atmax,  (start=10.0)
         - pi/2 <= ϕ[0:nh] <= pi/2
         - pi/2 <= θ[0:nh] <= pi/2
         ψ[0:nh]
@@ -55,17 +55,17 @@ function quadrotor_JMP(;nh::Int64=100)
         v1_i, v1[0] == v0[1]
         v2_i, v2[0] == v0[2]
         v3_i, v3[0] == v0[3]
-        at_i, at[0] == u0[1]
-        ϕ_i, ϕ[0] == u0[2]
-        θ_i, θ[0] == u0[3]
-        ψ_i, ψ[0] == u0[4]
+        #at_i, at[0] == u0[1]
+        #ϕ_i, ϕ[0] == u0[2]
+        #θ_i, θ[0] == u0[3]
+        #ψ_i, ψ[0] == u0[4]
         p1_f, p1[nh] == pf[1]
         p2_f, p2[nh] == pf[2]
         p3_f, p3[nh] == pf[3]
         v1_f, v1[nh] == vf[1]
         v2_f, v2[nh] == vf[2]
         v3_f, v3[nh] == vf[3]
-        ϕ_f, ϕ[nh] == ϕf
+        #ϕ_f, ϕ[nh] == ϕf
     end)
 
     # dynamics
@@ -76,11 +76,11 @@ function quadrotor_JMP(;nh::Int64=100)
         sp[j=0:nh],     sin(θ[j])
         cy[j=0:nh],     cos(ψ[j])
         sy[j=0:nh],     sin(ψ[j])
-        R[j=0:nh],      [cy[j]*cp[j] cy[j]*sp[j]*sr[j]-sy[j]*cr[j] cy[j]*sp[j]*cr[j] + sy[j]*sr[j];
-                        sy[j]*cp[j] sy[j]*sp[j]*sr[j] + cy[j]*cr[j] sy[j]*sp[j]*cr[j] - cy[j]*sr[j];
-                        -sp[j] cp[j]*sr[j] cp[j]*cr[j]]
-        at_[j=0:nh],    R[j] * [0;0;at[j]]
-        g_,             [0;0;g]
+        R[j=0:nh],      [(cy[j]*cp[j]) (sy[j]*cp[j]) (-sp[j]);
+                        (cy[j]*sp[j]*sr[j]-sy[j]*cr[j]) (sy[j]*sp[j]*sr[j] + cy[j]*cr[j]) (cp[j]*sr[j]);
+                        (cy[j]*sp[j]*cr[j] + sy[j]*sr[j]) (sy[j]*sp[j]*cr[j]-cy[j]*sr[j]) (cp[j]*cr[j]) ]
+        at_[j=0:nh],    R[j] * [0 ; 0 ; at[j]]
+        g_,             [0 ; 0 ; g]
         a[j=0:nh],      at_[j] + g_
     end)
     @constraints(model,begin
@@ -93,7 +93,7 @@ function quadrotor_JMP(;nh::Int64=100)
     end)
 
     @objective(model, Min, tf + 
-            sum(1e-8 * (at[j]*at[nh] + ϕ[j]*ϕ[nh] + θ[j]*θ[nh] + ψ[j]*ψ[nh]) for j in 0:nh) +
+            sum(1e-8 * (at[j] + ϕ[j] + θ[j] + ψ[j]) for j in 0:nh) +
             sum(1e2*(ψ[j]- u0[3])^2 for j in 0:nh) 
             )
     return model

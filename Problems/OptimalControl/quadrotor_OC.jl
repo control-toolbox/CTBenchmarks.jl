@@ -11,11 +11,11 @@ atmin = 0
 atmax = 9.18*5
 tiltmax = 1.1 / 2
 dtiltmax = 6.0 / 2
-p0 = [0.0; 0.0; 2.5]
-v0 = [0; 0; 0]
-u0 = [9.81; 0; 0; 0]
-pf = [0.01; 5.0; 2.5]
-vf = [0.0; 0.0; 0.0]
+p0 = [0.0, 0.0, 2.5]
+v0 = [0, 0, 0]
+u0 = [9.81, 0, 0, 0]
+pf = [0.01, 5.0, 2.5]
+vf = [0.0, 0.0, 0.0]
 ϕf = 0.0
 
     @def ocp begin
@@ -53,7 +53,7 @@ vf = [0.0; 0.0; 0.0]
 
     ## constraints
         # state constraints
-
+        tf ≥ 0.0,                                             (tf_con)
         # control constraints
         -pi/2 ≤ ϕ(t) ≤ pi/2,                                   (ϕ_con) 
         -pi/2 ≤ θ(t) ≤ pi/2,                                   (θ_con)
@@ -85,7 +85,7 @@ vf = [0.0; 0.0; 0.0]
         ẋ(t) == dynamics(x(t), u(t))
 
     ## objective  
-        tf + ∫(1e-8 * (t*ϕ(t) + t*θ(t) +t*ψ(t) + t*at(t)) + (1e2*(ψ(t)- u0[3])^2)) → min
+        tf + ∫(1e-8 * (ϕ(t) + θ(t) +ψ(t) + at(t)) + (1e2*(ψ(t)- u0[3])^2)) → min
     end
 
     function dynamics(x,u)
@@ -99,12 +99,12 @@ vf = [0.0; 0.0; 0.0]
         cy = cos(ψ)
         sy = sin(ψ)
 
-        R = [[cy*cp, sy*cp , -sp ],
-            [cy*sp*sr-sy*cr,sy*sp*sr + cy*cr,  cp*sr ],
-           [ cy*sp*cr + sy*sr,cp*sr, cp*cr]
+        R = [(cy*cp) (sy*cp)   (-sp);
+            (cy*sp*sr-sy*cr )(sy*sp*sr + cy*cr)  (cp*sr );
+            (cy*sp*cr + sy*sr)  (cp*sr)  (cp*cr);
             ]
 
-        at_ = [sum(R[1] .* [0;0;at]); sum(R[2] .* [0;0;at]); sum(R[3] .* [0;0;at])]
+        at_ = R*[0;0;at]
         g_ = [0;0;g]
         a = g_ + at_
 
