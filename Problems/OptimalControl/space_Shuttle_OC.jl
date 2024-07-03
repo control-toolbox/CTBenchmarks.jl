@@ -140,8 +140,8 @@ function space_Shuttle_OC()
 
         ## dynamics  
         h_dot = v * sin(γ)
-        ϕ_dot = v * cos(γ) * sin(ψ) / (r*cos(θ))
-        θ_dot = v * cos(γ) * cos(ψ) / r
+        ϕ_dot = (v/r) * cos(γ) * sin(ψ) / cos(θ)
+        θ_dot = (v/r) * cos(γ) * cos(ψ)
         v_dot = -(D/m) - g*sin(γ)
         γ_dot = (L/(m*v)) * cos(β) + cos(γ) * ((v/r)-(g/v))
         ψ_dot = (1/(m*v*cos(γ))) * L*sin(β) + (v/(r*cos(θ))) * cos(γ) * sin(ψ) * sin(θ)
