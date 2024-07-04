@@ -1,13 +1,13 @@
 """
     Quadrotor Problem:
         We want to find the optimal trajectory of a quadrotor to reach a target position.
-        The objective is to minimize the final time of the quadrotor while avoiding obstacles.
+        The objective is to minimize the final time.
         The problem is formulated as an OptimalControl model.
     Ref: https://arxiv.org/pdf/2303.16746
 """
-function quadrotor_JMP(;nh::Int64=100)
+function quadrotorP2P_JMP(;nh::Int64=100)
     # parameters
-    g = -9.81
+    g = 9.81
     atmin = 0
     atmax = 9.18*5
     tiltmax = 1.1 / 2
@@ -80,7 +80,7 @@ function quadrotor_JMP(;nh::Int64=100)
                         (cy[j]*sp[j]*sr[j]-sy[j]*cr[j]) (sy[j]*sp[j]*sr[j] + cy[j]*cr[j]) (cp[j]*sr[j]);
                         (cy[j]*sp[j]*cr[j] + sy[j]*sr[j]) (sy[j]*sp[j]*cr[j]-cy[j]*sr[j]) (cp[j]*cr[j]) ]
         at_[j=0:nh],    R[j] * [0 ; 0 ; at[j]]
-        g_,             [0 ; 0 ; g]
+        g_,             [0 ; 0 ; -g]
         a[j=0:nh],      at_[j] + g_
     end)
     @constraints(model,begin
@@ -100,3 +100,9 @@ function quadrotor_JMP(;nh::Int64=100)
 
 
 end
+
+"""
+R[j=0:nh],      [(cy[j]*cp[j]) (cy[j]*sp[j]*sr[j]-sy[j]*cr[j]) (cy[j]*sp[j]*cr[j] + sy[j]*sr[j]);
+                (sy[j]*cp[j]) (sy[j]*sp[j]*sr[j] + cy[j]*cr[j]) (sy[j]*sp[j]*cr[j]-cy[j]*sr[j]);
+                (-sp[j]) (cp[j]*sr[j]) (cp[j]*cr[j])]
+                """

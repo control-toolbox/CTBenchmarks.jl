@@ -1,12 +1,12 @@
 """
     Quadrotor Problem:
         We want to find the optimal trajectory of a quadrotor to reach a target position.
-        The objective is to minimize the final time of the quadrotor while avoiding obstacles.
+        The objective is to minimize the final time.
         The problem is formulated as an OptimalControl model.
 """
-function quadrotor_OC()
+function quadrotorP2P_OC()
 # parameters
-g = -9.81
+g = 9.81
 atmin = 0
 atmax = 9.18*5
 tiltmax = 1.1 / 2
@@ -20,7 +20,7 @@ vf = [0.0, 0.0, 0.0]
 
     @def ocp begin
     ## parameters
-        g = -9.81
+        g = 9.81
         atmin = 0
         atmax = 9.18*5
         tiltmax = 1.1 / 2
@@ -35,7 +35,7 @@ vf = [0.0, 0.0, 0.0]
     ## define the problem
         tf ∈ R¹, variable
         t ∈ [ 0.0, tf ], time
-        x ∈ R⁶, state
+        x ∈ R⁸, state
         u ∈ R⁴, control
 
     ## state variables
@@ -45,22 +45,24 @@ vf = [0.0, 0.0, 0.0]
         v1 = x₄
         v2 = x₅
         v3 = x₆
+        ϕ = x₇
+        θ = x₈
     ## control variables
         at = u₁
-        ϕ = u₂
-        θ = u₃
+        ϕ_dot = u₂
+        θ_dot = u₃
         ψ = u₄
 
     ## constraints
         # state constraints
-        tf ≥ 0.0,                                             (tf_con)
+        tf ≥ 0.0,                                       (tf_con)
         # control constraints
-        -pi/2 ≤ ϕ(t) ≤ pi/2,                                   (ϕ_con) 
-        -pi/2 ≤ θ(t) ≤ pi/2,                                   (θ_con)
-        cos(θ(t))*cos(ϕ(t)) ≥ cos(tiltmax),                       (tiltmax_con)
-        #-dtiltmax ≤ (ϕ(t+1e-9) - ϕ(t)) / 1e-10   ≤ dtiltmax    , (ϕdot_con)
-        #-dtiltmax ≤ (θ(t+1e-9) - θ(t)) / 1e-9  ≤ dtiltmax,  (θdot_con)
-        atmin ≤ at(t) ≤ atmax,                                 (at_con)
+        -pi/2 ≤ ϕ(t) ≤ pi/2,                            (ϕ_con) 
+        -pi/2 ≤ θ(t) ≤ pi/2,                            (θ_con)
+        cos(θ(t))*cos(ϕ(t)) ≥ cos(tiltmax),             (tiltmax_con)
+        -dtiltmax ≤ ϕ_dot(t)   ≤ dtiltmax,              (ϕdot_con)
+        -dtiltmax ≤ θ_dot(t)  ≤ dtiltmax,               (θdot_con)
+        atmin ≤ at(t) ≤ atmax,                          (at_con)
         # initial constraints
         p1(0) == p0[1],      (p1_i)
         p2(0) == p0[2],      (p2_i)
@@ -89,8 +91,8 @@ vf = [0.0, 0.0, 0.0]
     end
 
     function dynamics(x,u)
-        p1, p2, p3, v1, v2, v3 = x
-        at, ϕ, θ, ψ = u
+        p1, p2, p3, v1, v2, v3, ϕ, θ =x
+        at, ϕ_dot, θ_dot, ψ = u
 
         cr = cos(ϕ)
         sr = sin(ϕ)
@@ -98,25 +100,20 @@ vf = [0.0, 0.0, 0.0]
         sp = sin(θ)
         cy = cos(ψ)
         sy = sin(ψ)
-
-        R = [(cy*cp) (sy*cp)   (-sp);
-            (cy*sp*sr-sy*cr )(sy*sp*sr + cy*cr)  (cp*sr );
-            (cy*sp*cr + sy*sr)  (cp*sr)  (cp*cr);
-            ]
-
+        R = [(cy*cp) (sy*cp) (-sp);
+            (cy*sp*sr-sy*cr) (sy*sp*sr + cy*cr) (cp*sr);
+            (cy*sp*cr + sy*sr) (sy*sp*cr - cy*sr) (cp*cr)]
         at_ = R*[0;0;at]
-        g_ = [0;0;g]
+        g_ = [0;0;-g]
         a = g_ + at_
 
-        return [
-            v1
-            v2
-            v3
-            a[1]
-            a[2]
-            a[3]
-        ]
+        return [v1, v2, v3, a[1], a[2], a[3], ϕ_dot, θ_dot]
 
     end
     return ocp
 end
+"""
+        R=  [(cy*cp)  (cy*sp*sr-sy*cr) (cy*sp*cr + sy*sr);
+            (sy*cp) (sy*sp*sr + cy*cr) (sy*sp*cr - cy*sr);
+            (-sp) (cp*sr) (cp*cr)]
+"""
