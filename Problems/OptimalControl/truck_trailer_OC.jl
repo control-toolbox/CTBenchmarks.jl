@@ -61,7 +61,7 @@ function truck_OC(;data::Array{Float64,2}=default_data)
     ## define the problem
         tf ∈ R, variable
         t ∈ [0.0, tf], time
-        x ∈ R⁵, state
+        x ∈ R⁷, state
         u ∈ R², control
 
     ## state variables
@@ -70,9 +70,11 @@ function truck_OC(;data::Array{Float64,2}=default_data)
         theta0 = x₃
         theta1 = x₄
         theta2 = x₅
+        v0 = x₆
+        delta0 = x₇
     ## control variables
-        v0 = u₁
-        delta0 = u₂
+        d_v0 = u₁
+        d_delta0 = u₂
     ## auxiliary variables
         beta01 = theta0 - theta1
         beta12 = theta1 - theta2
@@ -88,8 +90,8 @@ function truck_OC(;data::Array{Float64,2}=default_data)
         # control constraints
         -0.2 * speedf ≤ v0(t) ≤ 0.2 * speedf,                       (v0_con)
         -pi/6 ≤ delta0(t) ≤ pi/6,                                   (delta0_con)
-        #-1 ≤ (t -> (ForwardDiff.derivative(v0(t), t))) ≤ 1,                   (v0_dot_con)
-        #-pi/10 ≤ (t -> (ForwardDiff.derivative(delta0(t), t))) ≤ pi/10,       (delta0_dot_con)
+        -1 ≤ d_v0(t) ≤ 1,                   (v0_dot_con)
+        -pi/10 ≤ d_delta0(t) ≤ pi/10,       (delta0_dot_con)
         -pi/2 ≤ beta01(t) ≤ pi/2,                     (beta01_con)
         -pi/2 ≤ beta12(t) ≤ pi/2,                     (beta12_con)
         # initial conditions
@@ -113,8 +115,8 @@ function truck_OC(;data::Array{Float64,2}=default_data)
     end
 
     function dynamics(x, u)
-        x2, y2, theta0, theta1, theta2 = x
-        v0, delta0 = u
+        x2, y2, theta0, theta1, theta2, v0, delta0 = x
+       d_v0, d_delta0 = u
 
         beta01 = theta0 - theta1
         beta12 = theta1 - theta2
@@ -129,7 +131,7 @@ function truck_OC(;data::Array{Float64,2}=default_data)
         dx2 = v2*cos(theta2)
         dy2 = v2*sin(theta2)
         
-        return [ dx2, dy2, dtheta0, dtheta1, dtheta2 ]
+        return [ dx2, dy2, dtheta0, dtheta1, dtheta2,d_v0, d_delta0 ]
     end
 
     return ocp
