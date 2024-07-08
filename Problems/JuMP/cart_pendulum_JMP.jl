@@ -6,7 +6,6 @@
     Ref: https://arxiv.org/pdf/2303.16746
 """
 function Cart_Pendulum_JMP(;nh::Int64=100)
-    println("Cart-Pendulum Problem")
 ## parameters
     g = 9.82      # gravitation [m/s^2]
     L = 1.0       # pendulum length [m]
