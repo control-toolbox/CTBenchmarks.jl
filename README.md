@@ -42,6 +42,7 @@ We have the following problems <span  style="font-size:0.8em;">(Let XX be JMP or
 - ***"The Particle Steering Problem"*** (`steering_XX`) : This problem consists of a particle that has to reach a target point. The goal is to find the trajectory that minimize the time taken for the particle to travel between the two points.
 - ***"The Space Shuttle Reentry Problem"*** (`space_Shuttle_XX`) : This problem consists of finding the optimal trajectory of a space shuttle reentry. The objective is to minimize the angle of attack at the terminal point.
 - ***"The Cart Pendulum Problem"*** (`cart_pendulum_XX`) : This problem consists of a cart pendulum system. The goal is to find the trajectory that minimize the time taken for the cart pendulum to travel from a downward position to an upward position.
+- ***"The Moonlander Problem"*** (`moonlander_XX`): This problem consists of finding the optimal trajectory of a spacecraft to land on the moon. The objective is to minimize the time taken to land.
 
 ### 2. TestProblems
 
@@ -52,6 +53,7 @@ This directory contains the execution of the different problems stated above. Th
 - ***"TestRocket"*** : This file contains the execution of the rocket problem.
 - ***"TestSteering"*** : This file contains the execution of the steering problem.
 - ***"TestCartPendulum"*** : This file contains the execution of the cart pendulum problem.
+- ***"TestMoonLander"*** : This file contains the execution of the moon lander problem.
 - ***"TestSpaceShuttleOC"*** : This file contains the execution of the space shuttle problem with OptimalControl.
 - ***"TestSpaceShuttleJMP"*** : This file contains the execution of the space shuttle problem with JuMP. It compares the results using the rectangular and the trapezoidal integration methods.
 - ***"TestSpaceShuttleSolvers"*** : This file contains the execution of the space shuttle problem with JuMP. It compares the results using different linear and nonlinear solvers.
