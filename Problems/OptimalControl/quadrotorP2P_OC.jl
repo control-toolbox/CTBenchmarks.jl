@@ -16,7 +16,6 @@ v0 = [0, 0, 0]
 u0 = [9.81, 0, 0, 0]
 pf = [0.01, 5.0, 2.5]
 vf = [0.0, 0.0, 0.0]
-ϕf = 0.0
 
     @def ocp begin
     ## parameters
@@ -30,7 +29,6 @@ vf = [0.0, 0.0, 0.0]
         u0 = [9.81, 0, 0, 0]
         pf = [0.01, 5.0, 2.5]
         vf = [0.0, 0.0, 0.0]
-        ϕf = 0.0
 
     ## define the problem
         tf ∈ R¹, variable
@@ -70,10 +68,8 @@ vf = [0.0, 0.0, 0.0]
         v1(0) == v0[1],      (v1_i)
         v2(0) == v0[2],      (v2_i)
         v3(0) == v0[3],      (v3_i)
-        #at(0) == u0[1],      (at_i)
-        #ϕ(0) == u0[2],      (ϕ_i)
-        #θ(0) == u0[3],      (θ_i)
-        #ψ(0) == u0[4],      (ψ_i)
+        ϕ(0) == u0[2],      (ϕ_i)
+        θ(0) == u0[3],      (θ_i)
         # final constraints
         p1(tf) == pf[1],     (p1_f)
         p2(tf) == pf[2],     (p2_f)
@@ -81,18 +77,17 @@ vf = [0.0, 0.0, 0.0]
         v1(tf) == vf[1],   (v1_f)
         v2(tf) == vf[2],   (v2_f)
         v3(tf) == vf[3],   (v3_f)
-        #ϕ(tf) == ϕf,       (ϕ_f)
 
     ## dynamics
         ẋ(t) == dynamics(x(t), u(t))
 
     ## objective  
-        tf + ∫(1e-8 * (ϕ(t) + θ(t) +ψ(t) + at(t)) + (1e2*(ψ(t)- u0[3])^2)) → min
+        tf + ∫(1e-8 * (ϕ(t)^2 + θ(t)^2 +ψ(t)^2 + at(t)^2) + (1e2*(ψ(t)- u0[3])^2)) → min
     end
 
     function dynamics(x,u)
-        p1, p2, p3, v1, v2, v3, ϕ, θ =x
-        at, ϕ_dot, θ_dot, ψ = u
+        p1, p2, p3, v1, v2, v3, ϕ, θ = x
+        at , ϕ_dot, θ_dot, ψ = u
 
         cr = cos(ϕ)
         sr = sin(ϕ)
@@ -100,20 +95,15 @@ vf = [0.0, 0.0, 0.0]
         sp = sin(θ)
         cy = cos(ψ)
         sy = sin(ψ)
-        R = [(cy*cp) (sy*cp) (-sp);
-            (cy*sp*sr-sy*cr) (sy*sp*sr + cy*cr) (cp*sr);
-            (cy*sp*cr + sy*sr) (sy*sp*cr - cy*sr) (cp*cr)]
+        R=  [(cy*cp)    (cy*sp*sr - sy*cr) (cy*sp*cr + sy*sr);
+            (sy*cp)     (sy*sp*sr + cy*cr) (sy*sp*cr - cy*sr);
+            (-sp)       (cp*sr)            (cp*cr)]
         at_ = R*[0;0;at]
         g_ = [0;0;-g]
         a = g_ + at_
 
         return [v1, v2, v3, a[1], a[2], a[3], ϕ_dot, θ_dot]
-
     end
+
     return ocp
 end
-"""
-        R=  [(cy*cp)  (cy*sp*sr-sy*cr) (cy*sp*cr + sy*sr);
-            (sy*cp) (sy*sp*sr + cy*cr) (sy*sp*cr - cy*sr);
-            (-sp) (cp*sr) (cp*cr)]
-"""
