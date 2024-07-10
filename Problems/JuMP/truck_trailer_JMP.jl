@@ -8,7 +8,7 @@
 default_data = [0.4 0.1 0.2; #truck
                 1.1 0.2 0.2; #trailer1
                 0.8 0.1 0.2] #trailer2
-function truck_JMP(;data::Array{Float64,2}=default_data,nh::Int64=200)
+function truck_JMP(;data::Array{Float64,2}=default_data,nh::Int64=100)
 # parameters
     if size(data) != (3, 3)
         error("The input matrix must be 3x3.")
@@ -38,7 +38,7 @@ function truck_JMP(;data::Array{Float64,2}=default_data,nh::Int64=200)
 
     @variables(model, begin 
         # Final time
-        0 <= tf
+        0.0 <= tf
         # State variables
         x2[0:nh]              
         y2[0:nh]   
