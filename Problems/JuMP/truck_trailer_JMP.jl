@@ -1,8 +1,9 @@
 """
     The Truck Trailer Problem:
-
-
+        We want to find the optimal trajectory of a truck with two trailers that starts horizontally aligned.
+        The objective is to minimize the time taken to park the truck and the trailers aligned vertically at a given target location.
         The problem is formulated as a JuMP model.
+    Ref: https://arxiv.org/pdf/2303.16746
 """
                 #L   M   W
 default_data = [0.4 0.1 0.2; #truck

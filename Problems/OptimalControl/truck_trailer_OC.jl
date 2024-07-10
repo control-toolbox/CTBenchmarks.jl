@@ -1,8 +1,7 @@
-using ForwardDiff
 """
     The Truck Trailer Problem:
-
-
+        We want to find the optimal trajectory of a truck with two trailers that starts horizontally aligned.
+        The objective is to minimize the time taken to park the truck and the trailers aligned vertically at a given target location.
         The problem is formulated as an OptimalControl model.
 """
                #L   M   W
@@ -85,8 +84,8 @@ function truck_OC(;data::Array{Float64,2}=default_data)
 
     ## constraints
         # state constraints
-        -pi/1 ≤ theta0(t) ≤ pi/1,                  (theta0_con)
-        -pi/1 ≤ theta1(t) ≤ pi/1,                  (theta1_con)
+        -pi/2 ≤ theta0(t) ≤ pi/2,                  (theta0_con)
+        -pi/2 ≤ theta1(t) ≤ pi/2,                  (theta1_con)
         # control constraints
         -0.2 * speedf ≤ v0(t) ≤ 0.2 * speedf,                       (v0_con)
         -pi/6 ≤ delta0(t) ≤ pi/6,                                   (delta0_con)
