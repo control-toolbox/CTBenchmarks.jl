@@ -47,7 +47,7 @@ We have the following problems <span  style="font-size:0.8em;">(Let XX be JMP or
 - ***"The Quadrotor Point to Point Problem:"*** (`quadrotorP2P_XX`): This problem consists of a quadrotor system. The goal is to find the trajectory that minimize the time taken for the quadrotor to travel between two points.
 - ***"The Quadrotor one Obstacle Problem:"*** (`quadrotor1Obs_XX`): This problem consists of a quadrotor system. The goal is to find the trajectory that minimize the time taken for the quadrotor to travel between two points while avoiding an obstacle.
 
-=> The table below summarizes the comparison between the two solvers for each problem:
+=> The table below summarizes the status of the each problem with JuMP and OptimalControl:
 
 | Problem | With JuMP | With OptimalControl | Comparaison Remarks |
 | --- | --- | --- | --- |
