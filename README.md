@@ -43,6 +43,27 @@ We have the following problems <span  style="font-size:0.8em;">(Let XX be JMP or
 - ***"The Space Shuttle Reentry Problem"*** (`space_Shuttle_XX`) : This problem consists of finding the optimal trajectory of a space shuttle reentry. The objective is to minimize the angle of attack at the terminal point.
 - ***"The Cart Pendulum Problem"*** (`cart_pendulum_XX`) : This problem consists of a cart pendulum system. The goal is to find the trajectory that minimize the time taken for the cart pendulum to travel from a downward position to an upward position.
 - ***"The Moonlander Problem"*** (`moonlander_XX`): This problem consists of finding the optimal trajectory of a spacecraft to land on the moon. The objective is to minimize the time taken to land.
+- ***"The Truck Trailer Problem"*** (`truck_trailer_XX`): This problem consists of a truck trailer system. The goal is to find the trajectory that minimize the time taken for the truck and the two trailers to travel between a horizontal position and a vertical target position.
+- ***"The Quadrotor Point to Point Problem:"*** (`quadrotorP2P_XX`): This problem consists of a quadrotor system. The goal is to find the trajectory that minimize the time taken for the quadrotor to travel between two points.
+- ***"The Quadrotor one Obstacle Problem:"*** (`quadrotor1Obs_XX`): This problem consists of a quadrotor system. The goal is to find the trajectory that minimize the time taken for the quadrotor to travel between two points while avoiding an obstacle.
+
+=> The table below summarizes the comparison between the two solvers for each problem:
+
+| Problem | With JuMP | With OptimalControl | Comparaison Remarks |
+| --- | --- | --- | --- |
+| `The Hanging Chain` |   ✅  |   ✅ | 🆗|
+| `The Hang Glider` |  ✅  |  ✅ | solution 🆗 + derivative issues |
+| `The Robot Arm` |  ✅ | ✅| solution 🆗 + costate differences |
+| `The Goddard Rocket` |  ✅ | ✅| 🆗 |
+| `The Particle Steering` |  ✅ | ✅|🆗  |
+| `The Space Shuttle Reentry` |  ✅ |  ❌| ❌ not same solution found |
+| `The Cart Pendulum` | ✅ | ✅| 🆗 |
+| `The Moonlander` | ✅ | ✅| 🆗 |
+| `The Truck Trailer` | ✅ | ❌| ❌ |
+| `The Quadrotor P2P` | ✅ | ✅| ❌ not same solution found|
+| `The Quadrotor 1Obstacle` | ❌ | ❌| ❌ |
+
+
 
 ### 2. TestProblems
 
@@ -54,9 +75,13 @@ This directory contains the execution of the different problems stated above. Th
 - ***"TestSteering"*** : This file contains the execution of the steering problem.
 - ***"TestCartPendulum"*** : This file contains the execution of the cart pendulum problem.
 - ***"TestMoonLander"*** : This file contains the execution of the moon lander problem.
+- ***"TestTruckTrailer"*** : This file contains the execution of the truck trailer problem.
+- ***"TestQuadrotorP2P"*** : This file contains the execution of the quadrotor point to point problem.
+- ***"TestQuadrotor1Obs"*** : This file contains the execution of the quadrotor one obstacle problem.
 - ***"TestSpaceShuttleOC"*** : This file contains the execution of the space shuttle problem with OptimalControl.
 - ***"TestSpaceShuttleJMP"*** : This file contains the execution of the space shuttle problem with JuMP. It compares the results using the rectangular and the trapezoidal integration methods.
 - ***"TestSpaceShuttleSolvers"*** : This file contains the execution of the space shuttle problem with JuMP. It compares the results using different linear and nonlinear solvers.
+
 
 
 ### 3. Benchmark
