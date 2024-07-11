@@ -48,6 +48,7 @@ We have the following problems <span  style="font-size:0.8em;">(Let XX be JMP or
 - ***"The Quadrotor one Obstacle Problem:"*** (`quadrotor1Obs_XX`): This problem consists of a quadrotor system. The goal is to find the trajectory that minimize the time taken for the quadrotor to travel between two points while avoiding an obstacle.
 - ***"The Dielectrophoretic Particle Problem:"*** (`particle_XX`): This problem consists of a dielectrophoretic particle system. The goal is to find the trajectory that minimize the time taken for the particle to travel between two points.
 - ***"The Ducted Fan Problem:"*** (`ducted_fan_XX`): This problem consists of a planar ducted fan system. 
+- ***"Double Oscillator Problem:"*** (`oscillator_XX`): This problem consists of a double oscillator system. 
 
 => The table below summarizes the status of the each problem with JuMP and OptimalControl:
 
@@ -66,6 +67,7 @@ We have the following problems <span  style="font-size:0.8em;">(Let XX be JMP or
 | `The Quadrotor 1Obstacle` | ❌ | ❌| ❌ |
 | `The Dielectrophoretic Particle` | ✅ | ✅| 🆗 |
 | `The Ducted Fan` | ✅ | ✅| 🆗 |
+| `The Double Oscillator` | ✅ | ✅| solution 🆗 + costate differences |
 
 
 
@@ -82,6 +84,7 @@ This directory contains the execution of the different problems stated above. Th
 - ***"TestTruckTrailer"*** : This file contains the execution of the truck trailer problem.
 - ***"TestParticle"*** : This file contains the execution of the particle problem.
 - ***"TestDuctedFan"*** : This file contains the execution of the ducted fan problem.
+- ***"TestOscillator"*** : This file contains the execution of the oscillator problem.
 - ***"TestQuadrotorP2P"*** : This file contains the execution of the quadrotor point to point problem.
 - ***"TestQuadrotor1Obs"*** : This file contains the execution of the quadrotor one obstacle problem.
 - ***"TestSpaceShuttleOC"*** : This file contains the execution of the space shuttle problem with OptimalControl.

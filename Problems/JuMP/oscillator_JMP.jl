@@ -1,20 +1,10 @@
-
 """
-    double_oscillator_model
-
-Implement the optimal control of a double oscillator toy model.
-Instance taken from [CLP2018].
-
-- nx: 4
-- nu: 2
-- time: fixed
-
-# Reference
-
-[CLP2018] Coudurier, C., Lepreux, O., & Petit, N. (2018). Optimal bang-bang control of a mechanical double oscillator using averaging methods. IFAC-PapersOnLine, 51(2), 49-54.
-
+    Double Oscillator Problem:
+        Implement the optimal control of a double oscillator toy model.
+        The problem is formulated as a JuMP model.
+    Ref: [CLP2018] Coudurier, C., Lepreux, O., & Petit, N. (2018). Optimal bang-bang control of a mechanical double oscillator using averaging methods. IFAC-PapersOnLine, 51(2), 49-54.
 """
-function double_oscillator_model(N)
+function double_oscillator_JMP(;N::Int=100)
     m1 = 100.0 # [kg]
     m2 = 2.0   # [kg]
     c = 0.5    # [Ns/m]
@@ -47,10 +37,10 @@ function double_oscillator_model(N)
     end)
     # Collocation
     @constraints(model, begin
-        [t=1:N], x1[t] == x1[t-1] + 0.5 * step * (dx1[t] + dx1[t-1])
-        [t=1:N], x2[t] == x2[t-1] + 0.5 * step * (dx2[t] + dx2[t-1])
-        [t=1:N], x3[t] == x3[t-1] + 0.5 * step * (dx3[t] + dx3[t-1])
-        [t=1:N], x4[t] == x4[t-1] + 0.5 * step * (dx4[t] + dx4[t-1])
+        con_x1[t=1:N], x1[t] == x1[t-1] + 0.5 * step * (dx1[t] + dx1[t-1])
+        con_x2[t=1:N], x2[t] == x2[t-1] + 0.5 * step * (dx2[t] + dx2[t-1])
+        con_x3[t=1:N], x3[t] == x3[t-1] + 0.5 * step * (dx3[t] + dx3[t-1])
+        con_x4[t=1:N], x4[t] == x4[t-1] + 0.5 * step * (dx4[t] + dx4[t-1])
     end)
     # Boundary
     @constraints(model, begin
