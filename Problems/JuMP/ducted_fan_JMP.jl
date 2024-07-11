@@ -1,6 +1,6 @@
 
 """
-    ducted_fan_model
+    ducted_fan_JMP
 
 Implement the optimal control of a planar ducted fan.
 Instance taken from [GP2009].
@@ -15,7 +15,7 @@ Instance taken from [GP2009].
 Graichen, K., & Petit, N. (2009). Incorporating a class of constraints into the dynamics of optimal control problems. Optimal Control Applications and Methods, 30(6), 537-561.
 
 """
-function ducted_fan_model(N)
+function ducted_fan_JMP(;N::Int=100)
     r = 0.2         # [m]
     J = 0.05        # [kg.m2]
     m = 2.2         # [kg]
@@ -48,12 +48,12 @@ function ducted_fan_model(N)
     end)
     # Collocation
     @constraints(model, begin
-        [t=1:N], x1[t] == x1[t-1] + 0.5 * step * (dx1[t] + dx1[t-1])
-        [t=1:N], v1[t] == v1[t-1] + 0.5 * step * (dv1[t] + dv1[t-1])
-        [t=1:N], x2[t] == x2[t-1] + 0.5 * step * (dx2[t] + dx2[t-1])
-        [t=1:N], v2[t] == v2[t-1] + 0.5 * step * (dv2[t] + dv2[t-1])
-        [t=1:N], α[t] == α[t-1] + 0.5 * step * (dα[t] + dα[t-1])
-        [t=1:N], vα[t] == vα[t-1] + 0.5 * step * (dvα[t] + dvα[t-1])
+        con_x1[t=1:N], x1[t] == x1[t-1] + 0.5 * step * (dx1[t] + dx1[t-1])
+        con_v1[t=1:N], v1[t] == v1[t-1] + 0.5 * step * (dv1[t] + dv1[t-1])
+        con_x2[t=1:N], x2[t] == x2[t-1] + 0.5 * step * (dx2[t] + dx2[t-1])
+        con_v2[t=1:N], v2[t] == v2[t-1] + 0.5 * step * (dv2[t] + dv2[t-1])
+        con_α[t=1:N], α[t] == α[t-1] + 0.5 * step * (dα[t] + dα[t-1])
+        con_vα[t=1:N], vα[t] == vα[t-1] + 0.5 * step * (dvα[t] + dvα[t-1])
     end)
     # Boundary constraints
     @constraints(model, begin
