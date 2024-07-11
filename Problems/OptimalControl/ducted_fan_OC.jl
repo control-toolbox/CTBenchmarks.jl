@@ -14,7 +14,7 @@ Instance taken from [GP2009].
 Graichen, K., & Petit, N. (2009). Incorporating a class of constraints into the dynamics of optimal control problems. Optimal Control Applications and Methods, 30(6), 537-561.
 
 """
-function ducted_fan_OC(;N::Int=100)
+function ducted_fan_OC()
 # parameters
     r = 0.2         # [m]
     J = 0.05        # [kg.m2]
@@ -72,7 +72,7 @@ function ducted_fan_OC(;N::Int=100)
         ẋ(t) == dynamics(x(t), u(t))
 
     ## objective
-        tf / N * ∫(2*u1(t)^2 + u2(t)^2) + μ * tf → min
+        tf * ∫(2*u1(t)^2 + u2(t)^2) + μ * tf → min
     end
 
     function dynamics(x,u)  
