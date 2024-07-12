@@ -19,12 +19,12 @@ function chain_OC()
     control!(ocp, 1) 
     
 # time interval
-    time!(ocp, 0, tf) 
+    time!(ocp, t0 = 0, tf = tf) 
     
 # initial and final conditions
-    constraint!(ocp, :initial, [a , 0.0 , 0.0])    
-    constraint!(ocp, :final, Index(1) , b)    
-    constraint!(ocp, :final, Index(3) , L)      
+    constraint!(ocp, :initial, lb=[a , 0.0 , 0.0],ub=[a , 0.0 , 0.0])    
+    constraint!(ocp, :final, rg=1 , lb=b, ub=b)    
+    constraint!(ocp, :final, rg=3 , lb=L, ub=L)      
 
 # dynamics
     dynamics!(ocp, (x, u) -> [ 
