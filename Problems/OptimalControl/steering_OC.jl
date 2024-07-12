@@ -19,15 +19,15 @@ function steering_OC()
     variable!(ocp, 1, "tf")
     
 # time interval
-    time!(ocp, 0, Index(1)) 
-    constraint!(ocp, :variable, Index(1), 0.0, Inf)
+    time!(ocp, t0=0, indf=1) 
+    constraint!(ocp, :variable, rg=1, lb=0.0, ub=Inf)
     
 # initial and final conditions
-    constraint!(ocp, :initial, xs)       
-    constraint!(ocp, :final, xf)        
+    constraint!(ocp, :initial, lb=xs, ub=xs)       
+    constraint!(ocp, :final, lb=xf, ub=xf)       
 
 # control constraints
-    constraint!(ocp, :control, u_min, u_max)
+    constraint!(ocp, :control, lb=u_min, ub=u_max)
     
 # dynamics
     dynamics!(ocp, (x, u, tf) -> [ 
