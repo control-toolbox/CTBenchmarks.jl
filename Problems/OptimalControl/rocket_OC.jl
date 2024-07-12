@@ -28,18 +28,18 @@ function rocket_OC()
     variable!(ocp, 1, "tf")
     
 # time interval
-    time!(ocp, 0, Index(1)) 
-    constraint!(ocp, :variable, Index(1), 0.0, Inf)
+    time!(ocp, t0=0, indf=1) 
+    constraint!(ocp, :variable, lb=0.0, ub=Inf)
     
 # initial and final conditions
-    constraint!(ocp, :initial, [h_0, v_0 ,m_0])       
-    constraint!(ocp, :final, Index(3) ,   m_f)     
+    constraint!(ocp, :initial, lb=[h_0, v_0 ,m_0],ub=[h_0, v_0 ,m_0]) 
+    constraint!(ocp, :final, rg =3 , lb=m_f,ub=m_f)     
 
 # state constraints
     constraint!(ocp, :state , rg=1:3, lb=[h_0, v_0 ,m_f] , ub=[Inf, Inf, m_0]) 
 
 # control constraints
-    constraint!(ocp, :control , 0, T_max)
+    constraint!(ocp, :control , lb=0, ub=T_max)
 
 # dynamics
     dynamics!(ocp, (x, u, tf) -> [ x[2],
