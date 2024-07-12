@@ -44,6 +44,7 @@ We have the following problems <span  style="font-size:0.8em;">(Let XX be JMP or
 - ***"The Cart Pendulum Problem"*** (`cart_pendulum_XX`) : This problem consists of a cart pendulum system. The goal is to find the trajectory that minimize the time taken for the cart pendulum to travel from a downward position to an upward position.
 - ***"The Moonlander Problem"*** (`moonlander_XX`): This problem consists of finding the optimal trajectory of a spacecraft to land on the moon. The objective is to minimize the time taken to land.
 - ***"The Truck Trailer Problem"*** (`truck_trailer_XX`): This problem consists of a truck trailer system. The goal is to find the trajectory that minimize the time taken for the truck and the two trailers to travel between a horizontal position and a vertical target position.
+- ***The Electrical Vehicle Problem"*** (`electrical_vehicle_XX`): This problem consists of an electrical vehicle system.
 - ***"The Quadrotor Point to Point Problem:"*** (`quadrotorP2P_XX`): This problem consists of a quadrotor system. The goal is to find the trajectory that minimize the time taken for the quadrotor to travel between two points.
 - ***"The Quadrotor one Obstacle Problem:"*** (`quadrotor1Obs_XX`): This problem consists of a quadrotor system. The goal is to find the trajectory that minimize the time taken for the quadrotor to travel between two points while avoiding an obstacle.
 - ***"The Dielectrophoretic Particle Problem:"*** (`particle_XX`): This problem consists of a dielectrophoretic particle system. The goal is to find the trajectory that minimize the time taken for the particle to travel between two points.
@@ -68,6 +69,8 @@ We have the following problems <span  style="font-size:0.8em;">(Let XX be JMP or
 | `The Dielectrophoretic Particle` | ✅ | ✅| 🆗 |
 | `The Ducted Fan` | ✅ | ✅| 🆗 |
 | `The Double Oscillator` | ✅ | ✅| solution 🆗 + costate differences |
+| `The Electrical Vehicle` | ✅ | ✅| solution 🆗 + costate differences |
+
 
 
 
@@ -85,6 +88,7 @@ This directory contains the execution of the different problems stated above. Th
 - ***"TestParticle"*** : This file contains the execution of the particle problem.
 - ***"TestDuctedFan"*** : This file contains the execution of the ducted fan problem.
 - ***"TestOscillator"*** : This file contains the execution of the oscillator problem.
+- ***"TestElectricalVehicle"*** : This file contains the execution of the electrical vehicle problem.
 - ***"TestQuadrotorP2P"*** : This file contains the execution of the quadrotor point to point problem.
 - ***"TestQuadrotor1Obs"*** : This file contains the execution of the quadrotor one obstacle problem.
 - ***"TestSpaceShuttleOC"*** : This file contains the execution of the space shuttle problem with OptimalControl.

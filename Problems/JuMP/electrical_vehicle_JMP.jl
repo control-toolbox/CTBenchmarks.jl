@@ -1,6 +1,5 @@
-
 """
-    electrical_vehicle_model
+    electrical_vehicle_JMP
 
 Implement optimal control of an electrical vehicle, following [PS2011].
 
@@ -13,7 +12,7 @@ Implement optimal control of an electrical vehicle, following [PS2011].
 [PS2011] Nicolas Petit and Antonio Sciarretta. "Optimal drive of electric vehicles using an inversion-based trajectory generation approach." IFAC Proceedings Volumes 44, no. 1 (2011): 14519-14526.
 
 """
-function electrical_vehicle_model(N)
+function electrical_vehicle_JMP(;N::Int=100)
     D = 10.0
     T = 1.0
     b1 = 1e3
@@ -43,8 +42,8 @@ function electrical_vehicle_model(N)
     end)
     # Collocation
     @constraints(model, begin
-        [t=0:N-1], x[t+1] == x[t] + 0.5 * step * (dx[t] + dx[t+1])
-        [t=0:N-1], v[t+1] == v[t] + 0.5 * step * (dv[t] + dv[t+1])
+        cond_x[t=1:N], x[t] == x[t-1] + 0.5 * step * (dx[t-1] + dx[t])
+        cond_v[t=1:N], v[t] == v[t-1] + 0.5 * step * (dv[t-1] + dv[t])
     end)
     # Boundary constraints
     @constraints(model, begin
