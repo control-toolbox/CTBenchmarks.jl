@@ -1,6 +1,6 @@
 using Interpolations
 
-function costateInterpolatio(p, t)
+function costateInterpolation(p, t)
     nx = size(p[1])[1]
     n_h = length(t)[1]
     res = [zeros(Float64, nx) for _ in 1:n_h]
