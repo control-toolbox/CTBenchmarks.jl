@@ -107,19 +107,6 @@ For this matter, we use the following functions that varyate the different param
     - *"linear_solver_variant"* : This function compares the results of different linear solvers (MUMPS, HSL_MA57 and HSL_MA27) with JuMP.
     - *"solver_variant"* : This function compares the results of different nonlinear solvers (IPOPT, MadNLP and KNITRO) with JuMP.
 
-## Issues
-
-In this section, we list the issues that we encountered during the development of the project. some of them are still open and need to be fixed.
-
-- [ ] In [GoddardJuMPs](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardJuMPs.ipynb#L254), the Knitro solvers gives an auto-diff time equal to zero. The issue comes from using `solve_time` in [solver_variant.jl](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/solver_variant.jl#L39). That apllies also on the other solvers. The solution is to use an output file to get the `diff_auto_time`.
-- [x] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L316), we created an output file to be parsed in order to get the time spent in the Ipopt solver. But it could be nice to have a function in the OptimalControl package that returns it directly.
-- [x] In [GoddardModeles](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/Benchmark/GoddardModeles.ipynb#L923), the `HSL_MA57` solver gives different results with JuMP and OptimalControl. This issue doesn't appear with the other solvers, including HSL_MA27 -> Initial guess problem.
-- [x] The `The Hang Glider Problem` is unsolvable with the current version of OptimalControl. We have a dedicated issue for that matter [here](https://github.com/0Yassine0/COTS.jl/issues/9) -> Initial guess problem
-- [ ] The `co-state figures` given by the OptimalControl package are not the same as the ones given by the JuMP package. This issue appears for most of the problems. We can take the results of Robot Arm Problem as an example [here](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/TestProblems/testRobot.ipynb).
-- [ ] The OptimalControl package doesn't solve the `The Space Shuttle Reentry Problem` with its current version. We have a dedicated issue for that matter [here](https://github.com/0Yassine0/COTS.jl/issues/10).
-- [ ] In [SpaceShuttleSolvers](https://github.com/0Yassine0/COTS.jl/blob/a1b97478dfa4dcd7f9ed96fe8330ddbe5e274114/TestProblems/SpaceShuttleSolvers.ipynb#L251), Knitro solver is not working with JuMP for the `The Space Shuttle Reentry Problem`.
-
-
 ## License
 
 ## Acknowledgments
