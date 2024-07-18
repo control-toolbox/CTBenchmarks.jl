@@ -7,7 +7,8 @@ import Interpolations
         The problem is formulated as a JuMP model.
     Ref: https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/space_shuttle_reentry_trajectory/
 """
-function space_Shuttle_JMP(integration_rule::String = "rectangular";n::Int64=503)
+function space_Shuttle_JMP(integration_rule::String = "rectangular";nh::Int64=503)
+    n=nh
     ## Global variables
     w = 203000.0  # weight (lb)
     g₀ = 32.174    # acceleration (ft/sec^2)

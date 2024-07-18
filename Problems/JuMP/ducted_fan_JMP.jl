@@ -15,7 +15,8 @@ Instance taken from [GP2009].
 Graichen, K., & Petit, N. (2009). Incorporating a class of constraints into the dynamics of optimal control problems. Optimal Control Applications and Methods, 30(6), 537-561.
 
 """
-function ducted_fan_JMP(;N::Int=100)
+function ducted_fan_JMP(;nh::Int=100)
+    N=nh
     r = 0.2         # [m]
     J = 0.05        # [kg.m2]
     m = 2.2         # [kg]

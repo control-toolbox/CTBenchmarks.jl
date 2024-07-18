@@ -4,7 +4,8 @@
         The problem is formulated as a JuMP model.
     Ref: [CLP2018] Coudurier, C., Lepreux, O., & Petit, N. (2018). Optimal bang-bang control of a mechanical double oscillator using averaging methods. IFAC-PapersOnLine, 51(2), 49-54.
 """
-function double_oscillator_JMP(;N::Int=100)
+function double_oscillator_JMP(;nh::Int=100)
+    N=nh
     m1 = 100.0 # [kg]
     m2 = 2.0   # [kg]
     c = 0.5    # [Ns/m]

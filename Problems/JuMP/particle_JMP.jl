@@ -5,7 +5,8 @@
         The problem is formulated as a JuMP model.
     Ref: [CPR2006] Chang, D. E., Petit, N., & Rouchon, P. (2006). Time-optimal control of a particle in a dielectrophoretic system. IEEE Transactions on Automatic Control, 51(7), 1100-1114.
 """
-function dielectrophoretic_particle_JMP(;N::Int=100)
+function dielectrophoretic_particle_JMP(;nh::Int=100)
+    N=nh
     x0 = 1.0
     xf = 2.0
     α = -0.75
