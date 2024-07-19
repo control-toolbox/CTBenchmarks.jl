@@ -88,3 +88,9 @@ function moonlander_OC(;target::Array{Float64}=target)
     return ocp
 
 end
+
+
+function moonlander_init(;nh)
+    init = (control=[5.0,5.0],)
+    return init
+end

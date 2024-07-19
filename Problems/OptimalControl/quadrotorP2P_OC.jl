@@ -107,3 +107,10 @@ vf = [0.0, 0.0, 0.0]
 
     return ocp
 end
+
+
+
+function quadrotorP2P_init(;nh)
+    init = (control = [10, 0.0, 0.0, 0.0],);
+    return init
+end

@@ -52,3 +52,20 @@ function rocket_OC()
     return ocp
 
 end
+
+
+function rocket_init(;nh)
+    m_0 = 1.0
+    g_0 = 1.0
+    T_c = 3.5
+    m_c = 0.6
+    m_f = m_c * m_0
+    T_max = T_c * m_0 * g_0
+
+    xinit = t -> [1.0,
+                t * (1.0 - t) ,
+                (m_f - m_0)*t + m_0]
+
+    init = (state = xinit,control = T_max/2.0 ,variable= 1);
+    return init
+end

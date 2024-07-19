@@ -85,3 +85,20 @@ function robot_OC()
     return ocp
 
 end
+
+
+function robot_init(;nh)
+    rho0 = 4.5
+    phi0 = pi/4
+
+    xinit = t -> [rho0,
+            2*pi/3*(t^2),
+            phi0,
+            0.0,
+            4*pi/3*t,
+            0.0]
+    uinit = [0.0, 0.0, 0.0]
+    init = (state = xinit, control = uinit , variable= 1.0)
+
+    return init
+end

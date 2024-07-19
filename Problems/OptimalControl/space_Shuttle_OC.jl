@@ -1,3 +1,4 @@
+import Interpolations
 """
     Space Shuttle Reentry Trajectory Problem:
         We want to find the optimal trajectory of a space shuttle reentry.
@@ -75,10 +76,11 @@ function space_Shuttle_OC()
         h_t = 0.8          # altitude (ft) / 1e5
         v_t = 0.25         # velocity (ft/sec) / 1e4
         γ_t = deg2rad(-5)  # flight path angle (rad)
-        tf = 2009.0 # final time (sec)
+        #tf = 2009.0 # final time (sec)
         t0 = 0.0 # initial time (sec)
 
     ## define the problem
+        tf ∈ R, variable
         t ∈ [ t0, tf ], time
         x ∈ R⁶, state
         u ∈ R², control
@@ -96,6 +98,8 @@ function space_Shuttle_OC()
         β = u₂
 
     ## constraints
+        # variable constraints
+        1800 ≤ tf ≤ 2200,                       (tf_con)
         # state constraints
         scaled_h(t) ≥ 0,                        (scaled_h_con)
         deg2rad(-89) ≤ θ(t) ≤ deg2rad(89),      (θ_con)
@@ -150,4 +154,35 @@ function space_Shuttle_OC()
     end
 
     return ocp
+end
+
+
+function space_Shuttle_init(;nh)
+    n = nh
+    ## Initial conditions
+    h_s = 2.6          # altitude (ft) / 1e5
+    ϕ_s = deg2rad(0)   # longitude (rad)
+    θ_s = deg2rad(0)   # latitude (rad)
+    v_s = 2.56         # velocity (ft/sec) / 1e4
+    γ_s = deg2rad(-1)  # flight path angle (rad)
+    ψ_s = deg2rad(90)  # azimuth (rad)
+    α_s = deg2rad(0)   # angle of attack (rad)
+    β_s = deg2rad(0)   # bank angle (rad)
+    t_s = 1.00         # time step (sec)
+    ## Final conditions
+    h_t = 0.8          # altitude (ft) / 1e5
+    v_t = 0.25         # velocity (ft/sec) / 1e4
+    γ_t = deg2rad(-5)  # flight path angle (rad)
+
+    x_s = [h_s, ϕ_s, θ_s, v_s, γ_s, ψ_s, α_s, β_s,t_s*n*4]
+    x_t = [h_t, ϕ_s, θ_s, v_t, γ_t, ψ_s, α_s, β_s,t_s*n*4]
+    interp_linear = Interpolations.LinearInterpolation([1, n], [x_s, x_t])
+    initial_guess = mapreduce(transpose, vcat, interp_linear.(1:n))
+
+    x_init = [initial_guess[i,1:6] for i in 1:n];
+    u_init = [initial_guess[i,7:8] for i in 1:n];
+    t_init =  2009.0
+    time_vec = LinRange(0.0,t_s*n*4,n)
+    init = (time= time_vec, state= x_init, control= u_init,variable= t_init)
+    return init
 end

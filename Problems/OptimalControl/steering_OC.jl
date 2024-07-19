@@ -43,3 +43,21 @@ function steering_OC()
     return ocp
 
 end
+
+
+function steering_init(;nh)
+    function gen_x0(t, i)
+        if i == 1 || i == 4
+            return 0.0
+        elseif i == 2
+            return 5*t
+        elseif i == 3
+            return 45.0*t
+        end
+    end
+    xinit = t -> [ gen_x0(t, i) for i in 1:4]
+
+    init = (state = xinit, control =  0.0 ,variable = 1.0);
+    
+    return init
+end

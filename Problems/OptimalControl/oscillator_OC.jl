@@ -65,3 +65,8 @@ function double_oscillator_OC()
     return ocp
 
 end
+
+
+function double_oscillator_init(;nh)
+    return ()
+end

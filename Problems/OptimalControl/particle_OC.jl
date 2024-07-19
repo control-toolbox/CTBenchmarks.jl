@@ -58,3 +58,9 @@ c = 1.0
 
     return ocp
 end
+
+
+function dielectrophoretic_particle_init(;nh)
+    init = (state = [1.0,1.0],control = 0.0,variable = 1.0);
+    return init
+end

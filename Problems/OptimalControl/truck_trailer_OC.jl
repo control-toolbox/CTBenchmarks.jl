@@ -136,3 +136,9 @@ function truck_OC(;data::Array{Float64,2}=default_data)
     return ocp
 
 end
+
+
+function truck_init(;nh)
+    init = (state=[0, 0, 0.1, 0.0, 0.0, -0.2, 0],)
+    return init
+end

@@ -84,3 +84,8 @@ function cart_pendulum_OC()
 
     return ocp
 end
+
+
+function cart_pendulum_init(;nh)
+    return ()
+end

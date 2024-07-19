@@ -100,3 +100,23 @@ function glider_OC()
     return ocp
 
 end
+
+
+function glider_init(;nh)
+    x_0 = 0.0
+    y_0 = 1000.0
+    y_f = 900.0
+    vx_0 = 13.23
+    vy_0 = -1.288
+    cL_max = 1.4
+    tf = 90.0
+
+    xinit = [[x_0 + vx_0*(k/nh),
+            y_0 + (k/nh)*(y_f - y_0),
+            vx_0 ,
+            vy_0] for k=0:nh]
+    uinit = cL_max/2.0
+    time_vec = LinRange(0.0,tf,nh+1)
+    init = (time=time_vec,state = xinit, control = uinit , variable= 1.0,)
+    return init
+end

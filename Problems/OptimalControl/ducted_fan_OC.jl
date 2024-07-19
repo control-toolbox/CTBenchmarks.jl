@@ -92,3 +92,8 @@ function ducted_fan_OC()
     return ocp
 
 end
+
+
+function ducted_fan_init(;nh)
+    return ()
+end

@@ -69,3 +69,8 @@ function electrical_vehicle_OC()
     return ocp
 
 end
+
+
+function electrical_vehicle_init(;nh)
+    return ()
+end
