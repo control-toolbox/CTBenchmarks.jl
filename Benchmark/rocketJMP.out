@@ -41,11 +41,11 @@ Number of Iterations....: 19
 
                                    (scaled)                 (unscaled)
 Objective...............:  -1.0128320238051771e+00    1.0128320238051771e+00
-Dual infeasibility......:   4.2074934957577225e-09    4.2074934957577225e-09
+Dual infeasibility......:   4.2074875695086502e-09    4.2074875695086502e-09
 Constraint violation....:   6.2158611591200952e-13    6.2158611591200952e-13
-Variable bound violation:   1.0427384844574877e-36    1.0427384844574877e-36
-Complementarity.........:   1.1449953953484704e-11    1.1449953953484704e-11
-Overall NLP error.......:   4.2074934957577225e-09    4.2074934957577225e-09
+Variable bound violation:   7.0688829959608202e-35    7.0688829959608202e-35
+Complementarity.........:   1.1449953953455260e-11    1.1449953953455260e-11
+Overall NLP error.......:   4.2074875695086502e-09    4.2074875695086502e-09
 
 
 Number of objective function evaluations             = 20
@@ -55,6 +55,6 @@ Number of inequality constraint evaluations          = 0
 Number of equality constraint Jacobian evaluations   = 20
 Number of inequality constraint Jacobian evaluations = 0
 Number of Lagrangian Hessian evaluations             = 19
-Total seconds in IPOPT                               = 0.053
+Total seconds in IPOPT                               = 0.021
 
 EXIT: Optimal Solution Found.
