@@ -23,7 +23,7 @@ using DataFrames
 
 
 nb_discr_list = [100; 500]
-excluded_models = [:space_shuttle; :quadrotor1obs; :quadrotorp2p; :truck]
+excluded_models = [:space_shuttle; :quadrotor1obs; :quadrotorp2p; :truck; :moonlander]
 
 # JIT warm-up for the first run
 # Redirect stdout and stderr to /dev/null
@@ -82,7 +82,7 @@ function Benchmark_JuMP(nb_discr_list=nb_discr_list, excluded_models=excluded_mo
     display_Benchmark(Results, title)
 end
 
-function Benchmark_model(model_key; nb_discr_list=nb_discr_list)
+function Benchmark_model(model_key, nb_discr_list=nb_discr_list)
     Results = benchmark_model(model_key, OCProblems.function_init ,nb_discr_list)
     title = "Benchmark $model_key model with JuMP and OptimalControl"
     display_Benchmark(Results, title)

@@ -26,7 +26,7 @@ function benchmark_1model_OC(model, init, nb_discr)
                         :total_time => total_time,
                         :Ipopt_time => Ipopt_time,
                         :flag => flag)
-    return [data]
+    return data
 end
 
 
@@ -56,7 +56,7 @@ function benchmark_1model_JuMP(model, nb_discr)
                         :total_time => total_time,
                         :Ipopt_time => Ipopt_time,
                         :flag => flag)
-    return [data]
+    return data
 end
 
 
@@ -65,6 +65,8 @@ function benchmark_model(model_key, inits , nb_discr_list)
     Results = Dict{Symbol,Any}()
     solve_OC = true
     solve_JMP = true
+    R_OC = []
+    R_JuMP = []
     if ! (model_key in keys(OCProblems.function_OC))
         println("The model $model_key is not available in the OptimalControl benchmark list. ❌")
         solve_OC = false
@@ -78,16 +80,18 @@ function benchmark_model(model_key, inits , nb_discr_list)
             print("Benchmarking the model $model_key with OptimalControl ($nb_discr)... ")
             model = OCProblems.function_OC[model_key]()
             info_OC = benchmark_1model_OC(model, inits[model_key](;nh=nb_discr), nb_discr)
-            Results[:OptimalControl] = info_OC
+            push!(R_OC, info_OC)
             println("✅")
         end
         if solve_JMP
             print("Benchmarking the model $model_key with JuMP ($nb_discr)... ")
             model = JMPProblems.function_JMP[model_key](;nh=nb_discr)
             info_JuMP = benchmark_1model_JuMP(model, nb_discr)
-            Results[:JuMP] = info_JuMP
+            push!(R_JuMP, info_JuMP)
             println("✅")
         end
     end
+    Results[:JuMP] = R_JuMP
+    Results[:OptimalControl] = R_OC
     return Results
 end
