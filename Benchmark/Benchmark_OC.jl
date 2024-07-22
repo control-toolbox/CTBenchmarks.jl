@@ -63,29 +63,4 @@ function benchmark_all_models_OC(models, inits , nb_discr_list, excluded_models)
     return Results
 end
 
-"""
-function Benchmarking_OC(nb_discr_list, excluded_models)
-    Results = benchmark_all_models_OC(OCProblems.function_OC,OCProblems.function_init ,nb_discr_list, excluded_models)
 
-    # print the results
-    println("---------- Results : ")
-    table = DataFrame(:Model => Symbol[], :nb_discr => Int[], :nb_iter => Int[], :total_time => Float64[], :Ipopt_time => Float64[], :obj_value => Float64[], :flag => Any[])
-    for (k,v) in Results
-        for i in v
-            push!(table, [k; i.nb_discr[1]; i.nb_iter[1]; i.total_time[1]; i.Ipopt_time[1]; i.obj_value[1]; i.flag[1]])
-        end
-    end
-    # Define the custom display
-    header = ["Model","Discretization" ,"Iterations" ,"Total Time", "Ipopt Time" ,"Objective Value", "Flag"];
-    hl_flags = Highlighter( (results, i, j) -> (j == 7) && (results[i, j] != "Solve_Succeeded"),
-                            crayon"red"
-                        );
-    pretty_table(
-        table;
-        header        = header,
-        title = "Benchmark results",
-        header_crayon = crayon"yellow bold",
-        highlighters  = (hl_flags),
-        tf            = tf_unicode_rounded
-    )
-end"""

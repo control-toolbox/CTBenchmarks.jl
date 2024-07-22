@@ -106,6 +106,11 @@ For this matter, we use the following functions that varyate the different param
     - *"backend_variant"* : This function compares the results of different backends (ExaModels, JuMPDefault and SymbolicAD) with JuMP.
     - *"linear_solver_variant"* : This function compares the results of different linear solvers (MUMPS, HSL_MA57 and HSL_MA27) with JuMP.
     - *"solver_variant"* : This function compares the results of different nonlinear solvers (IPOPT, MadNLP and KNITRO) with JuMP.
+- ***"Benchmark"*** : This file contains the benchmark module that solves the different models with different solvers and compares the results in terms of speed and accuracy.                                                                      It contains 3 main functions:
+    - *"Benchmark_model(model_key,nb_discr_list)"* : This function compares the results of different solvers (JuMP and OptimalControl) on a specific problem (model_key) with different discretization values (nb_discr_list).
+    - *"Benchmark_JuMP(nb_discr_list,excluded_models)"* : This function compares the results of solving with JuMP on the different problems with different discretization values (nb_discr_list). It excludes the problems in the excluded_models list.
+    - *"Benchmark_OC(nb_discr_list,excluded_models)"* : This function compares the results of solving with OptimalControl on the different problems with different discretization values (nb_discr_list). It excludes the problems in the excluded_models list.
+
 
 ## License
 
