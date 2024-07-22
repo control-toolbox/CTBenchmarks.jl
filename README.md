@@ -110,7 +110,13 @@ For this matter, we use the following functions that varyate the different param
     - *"Benchmark_model(model_key,nb_discr_list)"* : This function compares the results of different solvers (JuMP and OptimalControl) on a specific problem (model_key) with different discretization values (nb_discr_list).
     - *"Benchmark_JuMP(nb_discr_list,excluded_models)"* : This function compares the results of solving with JuMP on the different problems with different discretization values (nb_discr_list). It excludes the problems in the excluded_models list.
     - *"Benchmark_OC(nb_discr_list,excluded_models)"* : This function compares the results of solving with OptimalControl on the different problems with different discretization values (nb_discr_list). It excludes the problems in the excluded_models list.
-
+To run the benchmark, you can use the following command:
+```julia
+    include("./path/to/Benchmark.jl")
+    Benchmark.Benchmark_OC()
+    Benchmark.Benchmark_JuMP()
+    Benchmark.Benchmark_model(:glider)
+```
 
 ## License
 
