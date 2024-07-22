@@ -56,7 +56,7 @@ We have the following problems <span  style="font-size:0.8em;">(Let XX be JMP or
 | Problem | With JuMP | With OptimalControl | Comparaison Remarks |
 | --- | --- | --- | --- |
 | `The Hanging Chain` |   ✅  |   ✅ | 🆗|
-| `The Hang Glider` |  ✅  |  ✅ | solution 🆗 + derivative issues |
+| `The Hang Glider` |  ✅  |  ✅ | 🆗 |
 | `The Robot Arm` |  ✅ | ✅| solution 🆗 + costate differences |
 | `The Goddard Rocket` |  ✅ | ✅| 🆗 |
 | `The Particle Steering` |  ✅ | ✅|🆗  |
