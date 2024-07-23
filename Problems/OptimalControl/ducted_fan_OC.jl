@@ -72,7 +72,7 @@ function ducted_fan_OC()
         ẋ(t) == dynamics(x(t), u(t))
 
     ## objective
-        tf * ∫(2*u1(t)^2 + u2(t)^2) + μ * tf → min
+        (1/tf) * ∫(2*u1(t)^2 + u2(t)^2) + μ * tf → min
     end
 
     function dynamics(x,u)  
