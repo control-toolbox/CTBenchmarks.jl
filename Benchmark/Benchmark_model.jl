@@ -4,16 +4,17 @@
 
 # Function to solve the model with OptimalControl
 function benchmark_1model_OC(model, init, nb_discr)
+    nh = nb_discr - 1 > 1 ? nb_discr - 1 : 2 
     t =  @timed ( 
-        sol = OptimalControl.solve(model, grid_size=nb_discr, init=init, 
+        sol = OptimalControl.solve(model, grid_size=nh, init=init, 
             linear_solver="ma57",hsllib=HSL_jll.libhsl_path,
             max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6, 
-            display=false, sb = "yes",output_file="outputOC.out",
+            display=false, sb = "yes",output_file="./outputs/outputOC.out",
             print_level=0,
             );
         )
     # Get the results
-    outputOC = read("outputOC.out", String)
+    outputOC = read("./outputs/outputOC.out", String)
     tIpopt = parse(Float64,split(split(outputOC, "Total seconds in IPOPT                               =")[2], "\n")[1])
     obj_value = sol.objective
     flag = sol.message
@@ -79,7 +80,7 @@ function benchmark_model(model_key, inits , nb_discr_list)
         if solve_OC
             print("Benchmarking the model $model_key with OptimalControl ($nb_discr)... ")
             model = OCProblems.function_OC[model_key]()
-            info_OC = benchmark_1model_OC(model, inits[model_key](;nh=nb_discr), nb_discr)
+            info_OC = benchmark_1model_OC(model, inits[model_key](;nh=nb_discr-1), nb_discr)
             push!(R_OC, info_OC)
             println("✅")
         end

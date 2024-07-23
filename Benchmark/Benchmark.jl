@@ -43,9 +43,9 @@ finally
 end
 
 
-function display_Benchmark(Results, title)
+function display_Benchmark(Results, title, file_name)
     # Print the results
-    println("---------- Results : ")
+    #println("---------- Results : ")
     table = DataFrame(:Model => Symbol[], :nb_discr => Int[], :nb_iter => Int[], :total_time => Float64[], :Ipopt_time => Float64[], :obj_value => Float64[], :flag => Any[])
     for (k,v) in Results
         for i in v
@@ -54,38 +54,57 @@ function display_Benchmark(Results, title)
     end
     # Define the custom display
     header = ["Model","Discretization" ,"Iterations" ,"Total Time", "Ipopt Time" ,"Objective Value", "Flag"];
-    hl_flags = Highlighter( (results, i, j) -> (j == 7) && (results[i, j] != MOI.LOCALLY_SOLVED) && (results[i, j] != MOI.OPTIMAL) && (results[i, j] != "Solve_Succeeded"),
-                            crayon"red"
+    hl_flags = LatexHighlighter( (results, i, j) -> ((j == 7) && (results[i, j] != MOI.LOCALLY_SOLVED) && (results[i, j] != MOI.OPTIMAL) && (results[i, j] != "Solve_Succeeded")),
+                            ["color{red}"]
                         );
-    pretty_table(
-        table;
-        header        = header,
-        title = title,
-        title_alignment = :c,
-        alignment = :c,
-        header_crayon = crayon"yellow bold",
-        highlighters  = (hl_flags),
-        tf            = tf_unicode_rounded
-    )
+    original_stdout = stdout
+    file = open("./outputs/$(file_name)", "w")
+    try
+        redirect_stdout(file)
+        println("\\documentclass{standalone}")
+        println("\\usepackage{color}")
+        println("\\usepackage{booktabs}")
+        println("\\begin{document}")
+        println("\\begin{tabular}{c}")
+        println("\\hline")
+        println("\\Large\\textbf{$title}\\\\")
+        pretty_table(
+            table;
+            (backend = Val(:latex)),
+            header        = header,
+            title = title,
+            title_alignment = :c,
+            alignment = :c,
+            highlighters  = (hl_flags,)
+        )
+        println("\\end{tabular}")
+        println("\\end{document}")
+    finally
+        redirect_stdout(original_stdout)
+        close(file)
+    end
 end 
 
 
 function Benchmark_OC(nb_discr_list=nb_discr_list, excluded_models=excluded_models)
     Results = benchmark_all_models_OC(OCProblems.function_OC,OCProblems.function_init ,nb_discr_list, excluded_models)
-    title = "Benchmark OptimalControl results"
-    display_Benchmark(Results, title)
+    title = "Benchmark OptimalControl Results"
+    file_name = "OptimalControl_Benchmark_file.tex"
+    display_Benchmark(Results, title, file_name)
 end
 
 function Benchmark_JuMP(nb_discr_list=nb_discr_list, excluded_models=excluded_models)
     Results = benchmark_all_models_JuMP(JMPProblems.function_JMP, nb_discr_list, excluded_models)
-    title = "Benchmark JuMP results"
-    display_Benchmark(Results, title)
+    title = "Benchmark JuMP Results"
+    file_name = "JuMP_Benchmark_file.tex"
+    display_Benchmark(Results, title, file_name)
 end
 
 function Benchmark_model(model_key, nb_discr_list=nb_discr_list)
     Results = benchmark_model(model_key, OCProblems.function_init ,nb_discr_list)
     title = "Benchmark $model_key model with JuMP and OptimalControl"
-    display_Benchmark(Results, title)
+    file_name = "Model_Benchmark_file.tex"
+    display_Benchmark(Results, title, file_name)
 end
 
 
