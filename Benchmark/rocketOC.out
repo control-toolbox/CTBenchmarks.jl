@@ -9,24 +9,24 @@ Total number of inequality constraints...............:        0
         inequality constraints with only upper bounds:        0
 
 
-Number of Iterations....: 17
+Number of Iterations....: 21
 
                                    (scaled)                 (unscaled)
-Objective...............:  -1.0128320223413265e+00   -1.0128320223413265e+00
-Dual infeasibility......:   2.5947916911962609e-09    2.5947916911962609e-09
-Constraint violation....:   4.6016837562667945e-10    4.6016837562667945e-10
-Variable bound violation:   6.6895818075890890e-09    6.6895818075890890e-09
-Complementarity.........:   8.3297467851429675e-11    8.3297467851429675e-11
-Overall NLP error.......:   2.5947916911962609e-09    2.5947916911962609e-09
+Objective...............:  -1.0128320181597092e+00   -1.0128320181597092e+00
+Dual infeasibility......:   5.5139938474765980e-08    5.5139938474765980e-08
+Constraint violation....:   7.8385087309840173e-09    8.9990002949402736e-09
+Variable bound violation:   2.6603036329121387e-33    2.6603036329121387e-33
+Complementarity.........:   7.0993602452200997e-10    7.0993602452200997e-10
+Overall NLP error.......:   7.8385087309840173e-09    5.5139938474765980e-08
 
 
-Number of objective function evaluations             = 18
-Number of objective gradient evaluations             = 18
-Number of equality constraint evaluations            = 18
+Number of objective function evaluations             = 22
+Number of objective gradient evaluations             = 22
+Number of equality constraint evaluations            = 22
 Number of inequality constraint evaluations          = 0
-Number of equality constraint Jacobian evaluations   = 18
+Number of equality constraint Jacobian evaluations   = 22
 Number of inequality constraint Jacobian evaluations = 0
-Number of Lagrangian Hessian evaluations             = 17
-Total seconds in IPOPT                               = 0.052
+Number of Lagrangian Hessian evaluations             = 21
+Total seconds in IPOPT                               = 0.253
 
 EXIT: Optimal Solution Found.
