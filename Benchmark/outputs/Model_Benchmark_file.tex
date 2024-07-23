@@ -1,0 +1,17 @@
+\documentclass{standalone}
+\usepackage{color}
+\usepackage{booktabs}
+\begin{document}
+\begin{tabular}{c}
+\hline
+\Large\textbf{Benchmark glider model with JuMP and OptimalControl}\\
+\begin{tabular}{ccccccc}
+  \hline
+  \textbf{Model} & \textbf{Discretization} & \textbf{Iterations} & \textbf{Total Time} & \textbf{Ipopt Time} & \textbf{Objective Value} & \textbf{Flag} \\\hline
+  JuMP & 100 & 223 & 3.17928 & 3.172 & 1254.61 & LOCALLY\_SOLVED \\
+  JuMP & 500 & 734 & 17.2466 & 17.195 & 1247.98 & LOCALLY\_SOLVED \\
+  OptimalControl & 100 & 126 & 1.44618 & 0.657 & 1254.78 & Solve\_Succeeded \\
+  OptimalControl & 500 & 322 & 663.723 & 659.039 & 1247.98 & Solve\_Succeeded \\\hline
+\end{tabular}
+\end{tabular}
+\end{document}

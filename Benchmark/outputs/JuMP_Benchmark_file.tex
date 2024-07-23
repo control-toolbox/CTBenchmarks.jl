@@ -1,0 +1,33 @@
+\documentclass{standalone}
+\usepackage{color}
+\usepackage{booktabs}
+\begin{document}
+\begin{tabular}{c}
+\hline
+\Large\textbf{Benchmark JuMP Results}\\
+\begin{tabular}{ccccccc}
+  \hline
+  \textbf{Model} & \textbf{Discretization} & \textbf{Iterations} & \textbf{Total Time} & \textbf{Ipopt Time} & \textbf{Objective Value} & \textbf{Flag} \\\hline
+  cart\_pendulum & 100 & 16 & 1.53902 & 1.511 & 1.88011e-11 & \color{red}{LOCALLY\_INFEASIBLE} \\
+  cart\_pendulum & 500 & 34 & 279.847 & 279.706 & 4.42608e-8 & \color{red}{LOCALLY\_INFEASIBLE} \\
+  robot & 100 & 18 & 2.94482 & 2.918 & 9.14269 & LOCALLY\_SOLVED \\
+  robot & 500 & 21 & 0.836607 & 0.735 & 9.14099 & LOCALLY\_SOLVED \\
+  electrical\_vehicle & 100 & 5 & 0.33121 & 0.013 & 1.24629e8 & LOCALLY\_SOLVED \\
+  electrical\_vehicle & 500 & 5 & 0.175182 & 0.0549998 & 6.16023e8 & LOCALLY\_SOLVED \\
+  double\_oscillator & 100 & 4 & 0.0074676 & 0.00600004 & 0.014816 & LOCALLY\_SOLVED \\
+  double\_oscillator & 500 & 4 & 0.0299059 & 0.026 & 0.0728525 & LOCALLY\_SOLVED \\
+  ducted\_fan & 100 & 59 & 2.60905 & 2.335 & 1911.53 & LOCALLY\_SOLVED \\
+  ducted\_fan & 500 & 67 & 45.8637 & 45.846 & 1909.53 & LOCALLY\_SOLVED \\
+  steering & 100 & 11 & 1.24426 & 1.236 & 0.554595 & LOCALLY\_SOLVED \\
+  steering & 500 & 17 & 0.293975 & 0.277 & 0.554572 & LOCALLY\_SOLVED \\
+  glider & 100 & 223 & 7.00009 & 6.967 & 1254.61 & LOCALLY\_SOLVED \\
+  glider & 500 & 734 & 30.3694 & 30.185 & 1247.98 & LOCALLY\_SOLVED \\
+  rocket & 100 & 19 & 0.0794601 & 0.072 & 1.01283 & LOCALLY\_SOLVED \\
+  rocket & 500 & 59 & 0.93553 & 0.905 & 1.01284 & LOCALLY\_SOLVED \\
+  chain & 100 & 7 & 0.026384 & 0.023 & 5.06978 & LOCALLY\_SOLVED \\
+  chain & 500 & 8 & 0.122378 & 0.0979998 & 5.06858 & LOCALLY\_SOLVED \\
+  dielectrophoretic\_particle & 100 & 39 & 0.0762178 & 0.0740001 & -9.97699e-9 & \color{red}{LOCALLY\_INFEASIBLE} \\
+  dielectrophoretic\_particle & 500 & 39 & 6.56932 & 6.565 & -9.99545e-9 & \color{red}{LOCALLY\_INFEASIBLE} \\\hline
+\end{tabular}
+\end{tabular}
+\end{document}
