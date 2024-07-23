@@ -120,6 +120,16 @@ For this matter, we use the following functions that varyate the different param
     Benchmark.Benchmark_model(:glider)
 ```
 
+The results of the benchmark are generated in the `Benchmark/outputs` directory. They are saved in Latex files that contains the following columns:
+
+- *Model* : The name of the problem.
+- *Discretization* : The number of discretization points.
+- *Iterations* : The number of iterations.
+- *Total Time* : The total time taken to solve the problem.
+- *Ipopt Time* : The time taken by Ipopt to solve the problem.
+- *Objective Value* : The value of the objective function.
+- *Flag* : The status of the solution.
+
 ## License
 
 ## Acknowledgments
