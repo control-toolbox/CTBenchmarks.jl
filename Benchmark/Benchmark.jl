@@ -43,7 +43,7 @@ finally
 end
 
 
-function display_Benchmark(Results, title, file_name)
+function display_Benchmark(Results, title, file_name, parameter_value)
     # Print the results
     #println("---------- Results : ")
     table = DataFrame(:Model => Symbol[], :nb_discr => Int[], :nb_iter => Int[], :total_time => Float64[], :Ipopt_time => Float64[], :obj_value => Float64[], :flag => Any[])
@@ -68,6 +68,7 @@ function display_Benchmark(Results, title, file_name)
         println("\\begin{tabular}{c}")
         println("\\hline")
         println("\\Large\\textbf{$title}\\\\")
+        println("\\large\\textbf{$parameter_value}\\\\")
         pretty_table(
             table;
             (backend = Val(:latex)),
@@ -86,25 +87,28 @@ function display_Benchmark(Results, title, file_name)
 end 
 
 
-function Benchmark_OC(nb_discr_list=nb_discr_list, excluded_models=excluded_models)
-    Results = benchmark_all_models_OC(OCProblems.function_OC,OCProblems.function_init ,nb_discr_list, excluded_models)
+function Benchmark_OC(nb_discr_list=nb_discr_list, excluded_models=excluded_models;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6,solver="ma57",display=false)
+    Results = benchmark_all_models_OC(OCProblems.function_OC,OCProblems.function_init ,nb_discr_list, excluded_models;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
     title = "Benchmark OptimalControl Results"
     file_name = "OptimalControl_Benchmark_file.tex"
-    display_Benchmark(Results, title, file_name)
+    parameter_value = "max iter = $max_iter, tol = $tol, constr viol tol = $constr_viol_tol, solver = $solver"
+    display_Benchmark(Results, title, file_name,parameter_value)
 end
 
-function Benchmark_JuMP(nb_discr_list=nb_discr_list, excluded_models=excluded_models)
-    Results = benchmark_all_models_JuMP(JMPProblems.function_JMP, nb_discr_list, excluded_models)
+function Benchmark_JuMP(nb_discr_list=nb_discr_list, excluded_models=excluded_models;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6,solver="ma57",display=false)
+    Results = benchmark_all_models_JuMP(JMPProblems.function_JMP, nb_discr_list, excluded_models;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
     title = "Benchmark JuMP Results"
     file_name = "JuMP_Benchmark_file.tex"
-    display_Benchmark(Results, title, file_name)
+    parameter_value = "max iter = $max_iter, tol = $tol, constr viol tol = $constr_viol_tol, solver = $solver"
+    display_Benchmark(Results, title, file_name,parameter_value)
 end
 
-function Benchmark_model(model_key, nb_discr_list=nb_discr_list)
-    Results = benchmark_model(model_key, OCProblems.function_init ,nb_discr_list)
+function Benchmark_model(model_key, nb_discr_list=nb_discr_list;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6,solver="ma57",display=false)
+    Results = benchmark_model(model_key, OCProblems.function_init ,nb_discr_list;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
     title = "Benchmark $model_key model with JuMP and OptimalControl"
     file_name = "Model_Benchmark_file.tex"
-    display_Benchmark(Results, title, file_name)
+    parameter_value = "max iter = $max_iter, tol = $tol, constr viol tol = $constr_viol_tol, solver = $solver"
+    display_Benchmark(Results, title, file_name,parameter_value)
 end
 
 

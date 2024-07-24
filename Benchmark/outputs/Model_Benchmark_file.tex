@@ -5,13 +5,14 @@
 \begin{tabular}{c}
 \hline
 \Large\textbf{Benchmark glider model with JuMP and OptimalControl}\\
+\large\textbf{max iter = 1000, tol = 1.0e-8, constr viol tol = 1.0e-6, solver = ma57}\\
 \begin{tabular}{ccccccc}
   \hline
   \textbf{Model} & \textbf{Discretization} & \textbf{Iterations} & \textbf{Total Time} & \textbf{Ipopt Time} & \textbf{Objective Value} & \textbf{Flag} \\\hline
-  JuMP & 100 & 223 & 3.17928 & 3.172 & 1254.61 & LOCALLY\_SOLVED \\
-  JuMP & 500 & 734 & 17.2466 & 17.195 & 1247.98 & LOCALLY\_SOLVED \\
-  OptimalControl & 100 & 126 & 1.44618 & 0.657 & 1254.78 & Solve\_Succeeded \\
-  OptimalControl & 500 & 322 & 663.723 & 659.039 & 1247.98 & Solve\_Succeeded \\\hline
+  JuMP & 100 & 223 & 2.9923 & 2.985 & 1254.61 & LOCALLY\_SOLVED \\
+  JuMP & 500 & 734 & 37.7955 & 37.143 & 1247.98 & LOCALLY\_SOLVED \\
+  OptimalControl & 100 & 126 & 0.539951 & 0.453 & 1254.78 & Solve\_Succeeded \\
+  OptimalControl & 500 & 322 & 836.761 & 835.485 & 1247.98 & Solve\_Succeeded \\\hline
 \end{tabular}
 \end{tabular}
 \end{document}
