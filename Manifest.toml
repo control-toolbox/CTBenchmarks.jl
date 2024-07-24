@@ -2,7 +2,7 @@
 
 julia_version = "1.10.4"
 manifest_format = "2.0"
-project_hash = "9f0eb3ef905dfad560a4b328d29d6af3c2857d95"
+project_hash = "998cf45d46aaf9ee8cd435529c38e2d54729fc9f"
 
 [[deps.ADNLPModels]]
 deps = ["ADTypes", "ForwardDiff", "LinearAlgebra", "NLPModels", "Requires", "ReverseDiff", "SparseArrays", "SparseConnectivityTracer", "SparseMatrixColorings"]
@@ -1115,6 +1115,12 @@ deps = ["Ipopt", "NLPModels", "SolverCore"]
 git-tree-sha1 = "b188ef0886fecd76827cacf9044ae1b3214185ee"
 uuid = "f4238b75-b362-5c4c-b852-0801c9a21d71"
 version = "0.10.2"
+
+[[deps.NLPModelsJuMP]]
+deps = ["JuMP", "LinearAlgebra", "MathOptInterface", "NLPModels", "Printf", "SolverCore", "SparseArrays"]
+git-tree-sha1 = "33572e7e33d6fba5c2f4aa8e7550ae175fb2b56a"
+uuid = "792afdf1-32c1-5681-94e0-d7bf7a5df49e"
+version = "0.13.1"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]

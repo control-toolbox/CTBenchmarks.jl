@@ -1,0 +1,16 @@
+\documentclass{standalone}
+\usepackage{color}
+\usepackage{booktabs}
+\begin{document}
+\begin{tabular}{c}
+\Large\textbf{Benchmark Callbacks of rocket model with JuMP and OptimalControl}\\
+\begin{tabular}{ccccccccc}
+  \hline
+  \textbf{Model} & \textbf{Discretization} & \textbf{nnz Hessian} & \textbf{nnz Jacobian} & \textbf{Time Obj(*e-5)} & \textbf{Time Grad(*e-5)} & \textbf{Time Cons(*e-4)} & \textbf{Time Jac(*e-4)} & \textbf{Time Hess(*e-4)} \\\hline
+  JuMP & 500 & 24500 & 9504 & 1526.5 & 7494.0 & 109.21 & 77.06 & 24.4 \\
+  JuMP & 100 & 4900 & 1904 & 3.2 & 1.5 & 2.16 & 1.6 & 4.64 \\
+  OptimalControl & 500 & 5511 & 9504 & 2.3 & 1.5 & 9.74 & 62.56 & 63.54 \\
+  OptimalControl & 100 & 1111 & 1904 & 2.7 & 1.1 & 2.46 & 27.05 & 19.5 \\\hline
+\end{tabular}
+\end{tabular}
+\end{document}
