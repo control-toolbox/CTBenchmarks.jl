@@ -66,7 +66,6 @@ function display_Benchmark(Results, title, file_name, parameter_value)
         println("\\usepackage{booktabs}")
         println("\\begin{document}")
         println("\\begin{tabular}{c}")
-        println("\\hline")
         println("\\Large\\textbf{$title}\\\\")
         println("\\large\\textbf{$parameter_value}\\\\")
         pretty_table(
