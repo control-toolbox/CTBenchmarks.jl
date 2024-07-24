@@ -42,7 +42,10 @@ function solving_model_OC(model,nb_discr,init;max_iter=1000, tol=1e-8, constr_vi
     nb_iter = sol.iterations
     Ipopt_time = tIpopt
     total_time = t.time
-    return nb_iter, total_time, Ipopt_time, obj_value, flag
+    nlp = get_nlp(direct_transcription(model; grid_size=nb_discr))
+    nvar = nlp.meta.nvar
+    ncon = nlp.meta.ncon
+    return nb_iter, total_time, Ipopt_time, obj_value, flag, nvar, ncon
 end
 
 
@@ -53,9 +56,11 @@ function benchmark_model_OC(model_function,model_init, nb_discr_list;max_iter=10
     for nb_discr in nb_discr_list
         model = model_function()
         # Solve the model
-        nb_iter, total_time, Ipopt_time, obj_value, flag = solving_model_OC(model,nb_discr,model_init(;nh=nb_discr);max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+        nb_iter, total_time, Ipopt_time, obj_value, flag, nvar, ncon = solving_model_OC(model,nb_discr,model_init(;nh=nb_discr);max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
         # Save the data
         data = DataFrame(:nb_discr => nb_discr,
+                        :nvar => nvar,
+                        :ncon => ncon,
                         :nb_iter => nb_iter,
                         :obj_value => obj_value,
                         :total_time => total_time,

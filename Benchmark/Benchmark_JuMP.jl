@@ -33,7 +33,9 @@ function solving_model_JuMP(model;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-
     nb_iter = solution_summary(model).barrier_iterations
     Ipopt_time = solution_summary(model).solve_time
     total_time = t.time
-    return nb_iter, total_time, Ipopt_time, obj_value, flag
+    nvar = MOI.get(model, MOI.NumberOfVariables());
+    ncon = length(all_constraints(model; include_variable_in_set_constraints = false))
+    return nb_iter, total_time, Ipopt_time, obj_value, flag, nvar, ncon
 end
 
 # Function to benchmark the model
@@ -43,9 +45,11 @@ function benchmark_model_JuMP(model_function, nb_discr_list;max_iter=1000, tol=1
     for nb_discr in nb_discr_list
         model = model_function(;nh=nb_discr)
         # Solve the model
-        nb_iter, total_time, Ipopt_time, obj_value, flag = solving_model_JuMP(model;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+        nb_iter, total_time, Ipopt_time, obj_value, flag, nvar, ncon = solving_model_JuMP(model;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
         # Save the data
         data = DataFrame(:nb_discr => nb_discr,
+                        :nvar => nvar,
+                        :ncon => ncon,
                         :nb_iter => nb_iter,
                         :obj_value => obj_value,
                         :total_time => total_time,

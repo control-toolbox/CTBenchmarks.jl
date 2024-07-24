@@ -42,7 +42,12 @@ function benchmark_1model_OC(model, init, nb_discr;max_iter=1000, tol=1e-8, cons
     nb_iter = sol.iterations
     Ipopt_time = tIpopt
     total_time = t.time
+    nlp = get_nlp(direct_transcription(model; grid_size=nb_discr))
+    nvar = nlp.meta.nvar
+    ncon = nlp.meta.ncon
     data = DataFrame(:nb_discr => nb_discr,
+                        :nvar => nvar,
+                        :ncon => ncon,
                         :nb_iter => nb_iter,
                         :obj_value => obj_value,
                         :total_time => total_time,
@@ -83,7 +88,11 @@ function benchmark_1model_JuMP(model, nb_discr;max_iter=1000, tol=1e-8, constr_v
     nb_iter = solution_summary(model).barrier_iterations
     Ipopt_time = solution_summary(model).solve_time
     total_time = t.time
+    nvar = MOI.get(model, MOI.NumberOfVariables());
+    ncon = length(all_constraints(model; include_variable_in_set_constraints = false))
     data = DataFrame(:nb_discr => nb_discr,
+                        :nvar => nvar,
+                        :ncon => ncon,
                         :nb_iter => nb_iter,
                         :obj_value => obj_value,
                         :total_time => total_time,
