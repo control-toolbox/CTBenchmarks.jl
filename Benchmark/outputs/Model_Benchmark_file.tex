@@ -8,8 +8,10 @@
 \begin{tabular}{ccccccccc}
   \hline
   \textbf{Model} & \textbf{Discretization} & \textbf{Variables} & \textbf{Constraints} & \textbf{Iterations} & \textbf{Total Time} & \textbf{Ipopt Time} & \textbf{Objective Value} & \textbf{Flag} \\\hline
-  JuMP & 100 & 506 & 407 & 223 & 3.7 & 3.7 & 1254.61 & Solve Succeeded \\
-  OptimalControl & 100 & 506 & 407 & 126 & 6.0 & 2.7 & 1254.78 & Solve Succeeded \\\hline
+  JuMP & 100 & 506 & 407 & 223 & 3.4 & 3.4 & 1254.61 & Solve Succeeded \\
+  JuMP & 400 & 2006 & 1607 & 497 & 96.1 & 95.9 & 1247.97 & Solve Succeeded \\
+  OptimalControl & 100 & 506 & 407 & 126 & 2.9 & 0.8 & 1254.78 & Solve Succeeded \\
+  OptimalControl & 400 & 2006 & 1607 & 1000 & 38.6 & 29.7 & 106.778 & \color{red}{Iterations Exceeded} \\\hline
 \end{tabular}
 \end{tabular}
 \end{document}
