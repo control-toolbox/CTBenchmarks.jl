@@ -115,12 +115,12 @@ function display_Callbacks(Results, title, file_name)
                         :t_obj => Any[], :t_grad => Any[], :t_cons => Any[], :t_jac => Any[], :t_hess => Any[])
     for (k,v) in Results
         for i in v
-            push!(table, [k; i.nb_discr[1]; i.nnzh; i.nnzj; round(i.t_obj[1]*1e5,digits=1); round(i.t_grad[1]*1e5,digits=1); round(i.t_cons[1]*1e4,digits=2); round(i.t_jac[1]*1e4,digits=2); round(i.t_hess[1]*1e4,digits=2)])
+            push!(table, [k; i.nb_discr[1]; i.nnzh; i.nnzj; round(i.t_obj[1]*1e3,digits=2); round(i.t_grad[1]*1e3,digits=2); round(i.t_cons[1]*1e3,digits=2); round(i.t_jac[1]*1e3,digits=2); round(i.t_hess[1]*1e3,digits=2)])
             #push!(table, [k; i.nb_discr[1]; i.nnzh; i.nnzj; i.t_obj[1]; i.t_grad[1]; i.t_cons[1]; i.t_jac[1]; i.t_hess[1]])
         end
     end
     # Define the custom display
-    header = ["Model","Discretization", "nnz Hessian", "nnz Jacobian", "Time Obj(*e-5)", "Time Grad(*e-5)", "Time Cons(*e-4)", "Time Jac(*e-4)", "Time Hess(*e-4)"];
+    header = ["Model","Discretization", "nnz Hessian", "nnz Jacobian", "Time Obj(ms)", "Time Grad(ms)", "Time Cons(ms)", "Time Jac(ms)", "Time Hess(ms)"];
     original_stdout = stdout
     file = open("./outputs/$(file_name)", "w")
     try
