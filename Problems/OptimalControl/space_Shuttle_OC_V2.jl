@@ -183,6 +183,7 @@ function space_Shuttle_init(;nh)
     h_t = 0.8          # altitude (ft) / 1e5
     v_t = 0.25         # velocity (ft/sec) / 1e4
     γ_t = deg2rad(-5)  # flight path angle (rad)
+    tf = 2008.0 # final time (sec)
 
     x_s = [h_s, ϕ_s, θ_s, v_s, γ_s, ψ_s, α_s, β_s,t_s*n*4]
     x_t = [h_t, ϕ_s, θ_s, v_t, γ_t, ψ_s, α_s, β_s,t_s*n*4]
@@ -191,8 +192,8 @@ function space_Shuttle_init(;nh)
 
     x_init = [initial_guess[i,1:6] for i in 1:n];
     u_init = [initial_guess[i,7:8] for i in 1:n];
-    t_init =  2012.0
-    time_vec = LinRange(0.0,t_s*n*4,n)
+    #t_init =  2012.0
+    time_vec = LinRange(0.0,tf,n)
     #init = (time= time_vec, state= x_init, control= u_init,variable= t_init)
     init = (time= time_vec, state= x_init, control= u_init)
     return init
