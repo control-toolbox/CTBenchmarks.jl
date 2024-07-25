@@ -3,7 +3,7 @@
 """
 
 function uniflag(flag)
-    if flag == MOI.LOCALLY_SOLVED || flag == "Solve_Succeeded" || flag == MOI.OPTIMAL
+    if flag == MOI.LOCALLY_SOLVED || flag == "Solve_Succeeded" || flag == MOI.OPTIMAL || flag == 0 
         return "Solve Succeeded"
     elseif flag == MOI.ITERATION_LIMIT || flag == "Maximum_Iterations_Exceeded"
         return "Iterations Exceeded"
