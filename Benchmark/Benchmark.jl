@@ -7,6 +7,7 @@ include(path*"/../Problems/JuMP/JMPProblems.jl");
 include(path*"/../Problems/OptimalControl/OCProblems.jl");
 
 using MKL
+using BenchmarkTools
 using .JMPProblems
 using .OCProblems
 
@@ -23,8 +24,7 @@ using NLPModels, NLPModelsJuMP
 using PrettyTables, Colors
 using DataFrames
 
-
-nb_discr_list = [100; 500]
+nb_discr_list = [100;500]
 excluded_models = [:space_shuttle; :quadrotor1obs; :quadrotorp2p; :truck; :moonlander; :glider]
 
 # JIT warm-up for the first run
@@ -38,13 +38,11 @@ redirect_stderr(open(null_device, "w"))
 try
     # dummy run for OC and JuMP
     benchmark_model(:rocket,OCProblems.function_init, [2])
-    benchmark_model_callbacks(:rocket, OCProblems.function_init ,[2])
 finally
     # Restore original stdout and stderr
     redirect_stdout(original_stdout)
     redirect_stderr(original_stderr)
 end
-
 
 function uniflag(flag)
     if flag == MOI.LOCALLY_SOLVED || flag == "Solve_Succeeded" || flag == MOI.OPTIMAL
@@ -67,7 +65,7 @@ function display_Benchmark(Results, title, file_name, parameter_value)
     for (k,v) in Results
         if length(v) > 0
             for i in v
-                push!(table, [k; i.nb_discr[1]; i.nvar; i.ncon; i.nb_iter[1]; round(i.total_time[1],digits=1); round(i.Ipopt_time[1],digits=1); i.obj_value[1]; uniflag(i.flag[1])])
+                push!(table, [k; i.nb_discr[1]; i.nvar; i.ncon; i.nb_iter[1]; round(i.total_time[1],digits=2); round(i.Ipopt_time[1],digits=2); i.obj_value[1]; uniflag(i.flag[1])])
             end
         else
             push!(ex, [k])
