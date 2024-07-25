@@ -25,7 +25,7 @@ function space_Shuttle_JMP_V2(integration_rule::String = "rectangular";nh::Int64
     b₀ = 0.07854
     b₁ = -0.61592e-2
     b₂ = 0.621408e-3
-    c₀ = 1.0672181
+    c₀ = 1.06723181
     c₁ = -0.19213774e-1
     c₂ = 0.21286289e-3
     c₃ = -0.10117249e-5
@@ -41,6 +41,7 @@ function space_Shuttle_JMP_V2(integration_rule::String = "rectangular";nh::Int64
     α_s = deg2rad(0)   # angle of attack (rad)
     β_s = deg2rad(0)   # bank angle (rad)
     t_s = 1.00         # time step (sec)
+    tf = 2008.0 # final time (sec)
 
     ## Final conditions, the so-called Terminal Area Energy Management (TAEM)
     h_t = 0.8          # altitude (ft) / 1e5
@@ -57,7 +58,6 @@ function space_Shuttle_JMP_V2(integration_rule::String = "rectangular";nh::Int64
         ψ[1:n]                # azimuth (rad)
         deg2rad(-90) ≤ α[1:n] ≤ deg2rad(90)  # angle of attack (rad)
         deg2rad(-89) ≤ β[1:n] ≤ deg2rad(1)  # bank angle (rad)
-        Δt[1:(n-1)] == 4.0                 # time step (sec)
     end);
 
     ## Fix initial conditions
@@ -87,7 +87,6 @@ function space_Shuttle_JMP_V2(integration_rule::String = "rectangular";nh::Int64
     set_start_value.(model[:ψ], vec(initial_guess[:,6]))
     set_start_value.(model[:α], vec(initial_guess[:,7]))
     set_start_value.(model[:β], vec(initial_guess[:,8]))
-    set_start_value.(model[:Δt], vec(initial_guess[1:end-1,9]))
 
     ## Functions to restore `h` and `v` to their true scale
     @expression(model, h[j = 1:n], scaled_h[j] * 1e5)
@@ -123,6 +122,8 @@ function space_Shuttle_JMP_V2(integration_rule::String = "rectangular";nh::Int64
         (1 / (m * v[j] * cos(γ[j]))) * L[j] * sin(β[j]) +
         (v[j] / (r[j] * cos(θ[j]))) * cos(γ[j]) * sin(ψ[j]) * sin(θ[j])
     )
+
+    @expression(model, Δt[i = 1:n-1], tf/n)
 
     if integration_rule == "rectangular"
         ## Rectangular integration
