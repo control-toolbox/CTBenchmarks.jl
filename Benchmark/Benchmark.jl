@@ -38,6 +38,7 @@ redirect_stderr(open(null_device, "w"))
 try
     # dummy run for OC and JuMP
     benchmark_model(:rocket,OCProblems.function_init, [2])
+    benchmark_model_callbacks(:rocket, OCProblems.function_init ,[2])
 finally
     # Restore original stdout and stderr
     redirect_stdout(original_stdout)
