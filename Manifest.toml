@@ -2,7 +2,7 @@
 
 julia_version = "1.10.4"
 manifest_format = "2.0"
-project_hash = "998cf45d46aaf9ee8cd435529c38e2d54729fc9f"
+project_hash = "084b57c519e8c2a5a7a5c7198c157f4dec7ea7a0"
 
 [[deps.ADNLPModels]]
 deps = ["ADTypes", "ForwardDiff", "LinearAlgebra", "NLPModels", "Requires", "ReverseDiff", "SparseArrays", "SparseConnectivityTracer", "SparseMatrixColorings"]
@@ -811,10 +811,10 @@ version = "1.22.2"
     DimensionalData = "0703355e-b756-11e9-17c0-8b28908087d0"
 
 [[deps.KNITRO]]
-deps = ["Libdl", "MathOptInterface", "SparseArrays"]
-git-tree-sha1 = "705dc630703ab6b53d62d7644321efed96f29182"
+deps = ["Libdl", "MathOptInterface"]
+git-tree-sha1 = "babc6146a948541c49562904b1fc7b6e3361b4dd"
 uuid = "67920dd8-b58e-52a8-8622-53c4cffbe346"
-version = "0.14.2"
+version = "0.14.4"
 
 [[deps.LAME_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1121,6 +1121,18 @@ deps = ["JuMP", "LinearAlgebra", "MathOptInterface", "NLPModels", "Printf", "Sol
 git-tree-sha1 = "33572e7e33d6fba5c2f4aa8e7550ae175fb2b56a"
 uuid = "792afdf1-32c1-5681-94e0-d7bf7a5df49e"
 version = "0.13.1"
+
+[[deps.NLPModelsKnitro]]
+deps = ["KNITRO", "NLPModels", "NLPModelsModifiers", "SolverCore"]
+git-tree-sha1 = "fae1bc00c632fa3738bbd811b222e512023d0c9c"
+uuid = "bec4dd0d-7755-52d5-9a02-22f0ffc7efcb"
+version = "0.9.1"
+
+[[deps.NLPModelsModifiers]]
+deps = ["FastClosures", "LinearAlgebra", "LinearOperators", "NLPModels", "Printf", "SparseArrays"]
+git-tree-sha1 = "a80505adbe42104cbbe9674591a5ccd9e9c2dfda"
+uuid = "e01155f1-5c6f-4375-a9d8-616dd036575f"
+version = "0.7.2"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]
