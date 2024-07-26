@@ -103,37 +103,41 @@ end
 
 
 # Function to benchmark the model
-function benchmark_model(model_key, inits , nb_discr_list;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6,solver="ma57",display=false)
+function benchmark_model(model_key_list, inits , nb_discr_list;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6,solver="ma57",display=false)
     Results = Dict{Symbol,Any}()
-    solve_OC = true
-    solve_JMP = true
-    R_OC = []
-    R_JuMP = []
-    if ! (model_key in keys(OCProblems.function_OC))
-        println("The model $model_key is not available in the OptimalControl benchmark list. ❌")
-        solve_OC = false
-    end
-    if ! (model_key in keys(JMPProblems.function_JMP))
-        println("The model $model_key is not available in the JuMP benchmark list. ❌")
-        solve_JMP = false
-    end
-    for nb_discr in nb_discr_list
-        if solve_OC
-            print("Benchmarking the model $model_key with OptimalControl ($nb_discr)... ")
-            model = OCProblems.function_OC[model_key]()
-            info_OC = benchmark_1model_OC(model, inits[model_key](;nh=nb_discr-1), nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
-            push!(R_OC, info_OC)
-            println("✅")
+    for model_key in model_key_list
+        R = Dict{Symbol,Any}()
+        R_OC = []
+        R_JuMP = [] 
+        solve_OC = true
+        solve_JMP = true
+        if ! (model_key in keys(OCProblems.function_OC))
+            println("The model $model_key is not available in the OptimalControl benchmark list. ❌")
+            solve_OC = false
         end
-        if solve_JMP
-            print("Benchmarking the model $model_key with JuMP ($nb_discr)... ")
-            model = JMPProblems.function_JMP[model_key](;nh=nb_discr)
-            info_JuMP = benchmark_1model_JuMP(model, nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
-            push!(R_JuMP, info_JuMP)
-            println("✅")
+        if ! (model_key in keys(JMPProblems.function_JMP))
+            println("The model $model_key is not available in the JuMP benchmark list. ❌")
+            solve_JMP = false
         end
+        for nb_discr in nb_discr_list
+            if solve_OC
+                print("Benchmarking the model $model_key with OptimalControl ($nb_discr)... ")
+                model = OCProblems.function_OC[model_key]()
+                info_OC = benchmark_1model_OC(model, inits[model_key](;nh=nb_discr-1), nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+                push!(R_OC, info_OC)
+                println("✅")
+            end
+            if solve_JMP
+                print("Benchmarking the model $model_key with JuMP ($nb_discr)... ")
+                model = JMPProblems.function_JMP[model_key](;nh=nb_discr)
+                info_JuMP = benchmark_1model_JuMP(model, nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+                push!(R_JuMP, info_JuMP)
+                println("✅")
+            end
+        end
+        R[:JuMP] = R_JuMP
+        R[:OptimalControl] = R_OC
+        Results[model_key] = R
     end
-    Results[:JuMP] = R_JuMP
-    Results[:OptimalControl] = R_OC
     return Results
 end

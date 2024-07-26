@@ -41,7 +41,7 @@ redirect_stderr(open(null_device, "w"))
 
 try
     # dummy run for OC and JuMP
-    benchmark_model(:rocket,OCProblems.function_init, [2])
+    benchmark_model([:rocket],OCProblems.function_init, [2])
 finally
     # Restore original stdout and stderr
     redirect_stdout(original_stdout)
@@ -66,12 +66,12 @@ function Benchmark_JuMP(nb_discr_list=nb_discr_list, excluded_models=excluded_mo
     display_Benchmark(Results, title, file_name,parameter_value)
 end
 
-function Benchmark_model(model_key, nb_discr_list=nb_discr_list;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6,solver="ma57",display=false)
-    Results = benchmark_model(model_key, OCProblems.function_init ,nb_discr_list;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
-    title = "Benchmark $model_key model with JuMP and OptimalControl"
+function Benchmark_model(model_key_list, nb_discr_list=nb_discr_list;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6,solver="ma57",display=false)
+    Results = benchmark_model(model_key_list, OCProblems.function_init ,nb_discr_list;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+    title = "Benchmark models with JuMP and OptimalControl"
     file_name = "Model_Benchmark_file.tex"
     parameter_value = "max iter = $max_iter, tol = $tol, constr viol tol = $constr_viol_tol, solver = $solver"
-    display_Benchmark(Results, title, file_name,parameter_value)
+    display_Benchmark_model(Results, title, file_name,parameter_value)
 end
 
 

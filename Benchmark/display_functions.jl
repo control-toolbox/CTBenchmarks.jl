@@ -64,6 +64,50 @@ function display_Benchmark(Results, title, file_name, parameter_value)
 end 
 
 
+function display_Benchmark_model(Results, title, file_name,parameter_value)
+    table = DataFrame(:solver => Symbol[], :Model => Symbol[], :nb_discr => Any[], :nvar => Any[], :ncon => Any[], :nb_iter => Any[], :total_time => Any[], :Ipopt_time => Any[], :obj_value => Any[], :flag => Any[])
+        for (k,v) in Results
+            for (m,s) in v
+                for i in s
+                    push!(table, [k; m; i.nb_discr[1]; i.nvar; i.ncon; i.nb_iter[1]; round(i.total_time[1],digits=2); round(i.Ipopt_time[1],digits=2); i.obj_value[1]; uniflag(i.flag[1])])
+                end
+            end
+        end
+        # Define the custom display
+        header = ["Solver","Model","Discretization", "Variables","Constraints", "Iterations", "Total Time", "Ipopt Time" ,"Objective Value", "Flag"];
+        hl_flags = LatexHighlighter( (table, i, j) -> ((j == 10) && (table[i, j] != "Solve Succeeded") && (table[i, j] != "NaN")),
+                                ["color{red}"]
+                            );
+        original_stdout = stdout
+        file = open("./outputs/$(file_name)", "w")
+        try
+            redirect_stdout(file)
+            println("\\documentclass{standalone}")
+            println("\\usepackage{color}")
+            println("\\usepackage{booktabs}")
+            println("\\begin{document}")
+            println("\\begin{tabular}{c}")
+            println("\\Large\\textbf{$title}\\\\")
+            println("\\large\\textbf{$parameter_value}\\\\")
+            pretty_table(
+                table;
+                (backend = Val(:latex)),
+                header        = header,
+                title = title,
+                title_alignment = :c,
+                alignment = :c,
+                highlighters  = (hl_flags,)
+            )
+            println("\\end{tabular}")
+            println("\\end{document}")
+        finally
+            redirect_stdout(original_stdout)
+            close(file)
+        end
+    end 
+
+
+
 function display_Callbacks(Results, title, file_name)
     table = DataFrame(:Model => Symbol[], :nb_discr => Any[], :nnzh => Any[], :nnzj => Any[], 
                         :t_obj => Any[], :t_grad => Any[], :t_cons => Any[], :t_jac => Any[], :t_hess => Any[])
@@ -139,3 +183,4 @@ function display_Knitro(Results, title, file_name)
         close(file)
     end
 end 
+
