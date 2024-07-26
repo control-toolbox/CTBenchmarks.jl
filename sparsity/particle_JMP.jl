@@ -13,7 +13,6 @@ function dielectrophoretic_particle_JMP(;nh::Int=100)
     c = 1.0
 
     model = JuMP.Model()
-
     @variable(model, x[0:N], start=1.0)
     @variable(model, y[0:N], start=1.0)
     @variable(model, -1.0 <= u[0:N] <= 1.0)
