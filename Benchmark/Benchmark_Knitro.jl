@@ -44,16 +44,21 @@ end
 # Function to solve the model with JuMP
 function benchmark_Knitro_JuMP(model_key, model, nb_discr;display=false)
     # Set up the solver
+    set_optimizer(model,KNITRO.Optimizer)
     if !display
         set_silent(model)
+        set_optimizer_attribute(model, "outmode", 1)
+    else
+        set_optimizer_attribute(model, "outmode", 2)
     end
-    set_optimizer(model,KNITRO.Optimizer)
     # Solve the model
     t =  @timed (optimize!(model));
     # Get the results
     obj_value = JuMP.objective_value(model)
     flag = solution_summary(model).termination_status
-    nb_iter = solution_summary(model).barrier_iterations
+    output = read("knitro.log", String)
+    nb_iter = parse(Float64,split(split(output, "# of iterations                     =         ")[2], "\n")[1])
+    nb_iter = Int(nb_iter)
     knitro_time = solution_summary(model).solve_time
     total_time = t.time
     nvar = MOI.get(model, MOI.NumberOfVariables());
