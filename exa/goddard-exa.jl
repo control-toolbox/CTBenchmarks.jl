@@ -47,7 +47,7 @@ i_print_level = 0
 m_print_level = MadNLP.WARN
 sol = solve(ocp; grid_size=N, print_level=0)
 
-N = 100
+N = 100 
 print_level = 0
 n = 3
 m = 1
@@ -58,6 +58,20 @@ xs = [ xs[j][i] for (i, j) ∈ Base.product(1:n, 1:N+1) ]
 us = sol.control.(t)
 us = [ us[j][i] for (i, j) ∈ Base.product(1:m, 1:N+1) ] 
 
+# save (N = 5)
+# julia> tfs
+# 0.18761155665063417
+# 
+# julia> xs
+# 3×6 Matrix{Float64}:
+#   1.0          1.00105   1.00398   1.00751    1.01009    1.01124
+#  -1.83989e-40  0.056163  0.1       0.0880311  0.0492518  0.0123601
+#   1.0          0.811509  0.650867  0.6        0.6        0.6
+# 
+# julia> us
+# 1×6 Matrix{Float64}:
+#  0.599377  0.835887  0.387328  -5.87733e-9  -9.03538e-9  -8.62101e-9
+ 
 # NLP
 
 _, nlp_m = direct_transcription(ocp; grid_size=N)
@@ -96,8 +110,8 @@ function docp_exa(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
 end
 
-#exa_m = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CPU()) 
-exa_m = docp_exa(N; tfs=tfs, xs=xs, us=us) 
+exa_m = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CPU()) 
+#exa_m = docp_exa(N; tfs=tfs, xs=xs, us=us) 
 
 # Solve
 
