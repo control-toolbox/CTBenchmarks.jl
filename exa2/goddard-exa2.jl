@@ -1,10 +1,12 @@
-import ExaModels
+using ExaModels
 using NLPModelsIpopt
 using MadNLP
 using MadNLPGPU
+using CUDA
 using KernelAbstractions
 using BenchmarkTools
-using CUDA
+
+# ExaModel
 
 const Cd = 310 # Drag (1/2)
 const β = 500 # Drag (2/2)
@@ -17,17 +19,20 @@ m0 = 1 # Initial mass
 vmax = 0.1 # Maximal authorized speed
 mf = 0.6 # Final mass to target
 
-N = 100
-print_level = 0
-n = 3
-m = 1
-
-# NLP
-
-_, nlp_m = direct_transcription(ocp; grid_size=N)
-
-# ExaModel
-
+# save (N = 5)
+# julia> tfs
+# 0.18761155665063417
+# 
+# julia> xs
+# 3×6 Matrix{Float64}:
+#   1.0          1.00105   1.00398   1.00751    1.01009    1.01124
+#  -1.83989e-40  0.056163  0.1       0.0880311  0.0492518  0.0123601
+#   1.0          0.811509  0.650867  0.6        0.6        0.6
+# 
+# julia> us
+# 1×6 Matrix{Float64}:
+#  0.599377  0.835887  0.387328  -5.87733e-9  -9.03538e-9  -8.62101e-9
+ 
 function docp_exa(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
     c = ExaModels.ExaCore(; backend=backend)
@@ -60,22 +65,20 @@ function docp_exa(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
 end
 
-#exa_m = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CPU()) 
-exa_m = docp_exa(N; tfs=tfs, xs=xs, us=us) 
+exa0 = docp_exa(N; tfs=tfs, xs=xs, us=us) 
+exa1 = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CPU()) 
+exa2 = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CUDABackend()) 
 
 # Solve
 
-print("NLP + Ipopt :")
-nlp_i_output = @btime ipopt(nlp_m; print_level=i_print_level)
-print("NLP + MadNLP:")
-nlp_m_output = @btime madnlp(nlp_m; print_level=m_print_level)
-print("Exa + Ipopt :")
-exa_i_output = @btime ipopt(exa_m; print_level=i_print_level)
-print("Exa + MadNLP:")
-exa_m_output = @btime madnlp(exa_m; print_level=m_print_level)
+print("exa0:")
+output0 = @btime madnlp(exa0; print_level=m_print_level)
+print("exa1:")
+output1 = @btime madnlp(exa1; print_level=m_print_level)
+print("exa2:")
+output2 = @btime madnlp(exa2; print_level=m_print_level)
 
 println()
-println("NLP + Ipopt : ", nlp_i_output)
-println("NLP + MadNLP: ", nlp_m_output)
-println("Exa + Ipopt : ", exa_i_output)
-println("Exa + MadNLP: ", exa_m_output)
+print("exa0: ", output0)
+print("exa1: ", output1)
+print("exa2: ", output2)
