@@ -8,6 +8,8 @@ using BenchmarkTools
 
 # ExaModel
 
+const n = 3 # State dim
+const m = 1 # Control dim
 const Cd = 310 # Drag (1/2)
 const β = 500 # Drag (2/2)
 const Tmax = 3.5 # Max thrust
@@ -19,7 +21,7 @@ m0 = 1 # Initial mass
 vmax = 0.1 # Maximal authorized speed
 mf = 0.6 # Final mass to target
 
-# save (N = 5)
+# OptimalControl sol (N = 5):
 # julia> tfs
 # 0.18761155665063417
 # 
@@ -32,6 +34,12 @@ mf = 0.6 # Final mass to target
 # julia> us
 # 1×6 Matrix{Float64}:
 #  0.599377  0.835887  0.387328  -5.87733e-9  -9.03538e-9  -8.62101e-9
+
+tfs = 0.18761155665063417
+xs = [ 1.0          1.00105   1.00398   1.00751    1.01009    1.01124
+      -1.83989e-40  0.056163  0.1       0.0880311  0.0492518  0.0123601
+       1.0          0.811509  0.650867  0.6        0.6        0.6 ]
+us = [0.599377  0.835887  0.387328  -5.87733e-9  -9.03538e-9  -8.62101e-9]
  
 function docp_exa(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
@@ -65,6 +73,9 @@ function docp_exa(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
 end
 
+N = 5
+print_level = MadNLP.WARN
+
 exa0 = docp_exa(N; tfs=tfs, xs=xs, us=us) 
 exa1 = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CPU()) 
 exa2 = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CUDABackend()) 
@@ -72,11 +83,11 @@ exa2 = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CUDABackend())
 # Solve
 
 print("exa0:")
-output0 = @btime madnlp(exa0; print_level=m_print_level)
+output0 = @btime madnlp(exa0; print_level=print_level)
 print("exa1:")
-output1 = @btime madnlp(exa1; print_level=m_print_level)
+output1 = @btime madnlp(exa1; print_level=print_level)
 print("exa2:")
-output2 = @btime madnlp(exa2; print_level=m_print_level)
+output2 = @btime madnlp(exa2; print_level=print_level)
 
 println()
 print("exa0: ", output0)
