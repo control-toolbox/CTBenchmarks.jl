@@ -6,9 +6,9 @@ project_hash = "af18ef0387102762ee53dfedd9d0fa06b0d04ee8"
 
 [[deps.ADNLPModels]]
 deps = ["ADTypes", "ForwardDiff", "LinearAlgebra", "NLPModels", "Requires", "ReverseDiff", "SparseArrays", "SparseConnectivityTracer", "SparseMatrixColorings"]
-git-tree-sha1 = "1575e111b835e27963f3570c45d48c29a0907036"
+git-tree-sha1 = "e8858cf208cb3243b8cc93c4e8f8c9c6a26c0d34"
 uuid = "54578032-b7ea-4c30-94aa-7cbd1cce6c9a"
-version = "0.8.4"
+version = "0.8.5"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "6778bcc27496dae5723ff37ee30af451db8b35fe"
@@ -159,10 +159,10 @@ version = "5.4.3"
     SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 
 [[deps.CUDA_Driver_jll]]
-deps = ["Artifacts", "JLLWrappers", "LazyArtifacts", "Libdl", "Pkg"]
-git-tree-sha1 = "97df9d4d6be8ac6270cb8fd3b8fc413690820cbd"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "325058b426c2b421e3d2df3d5fa646d72d2e3e7e"
 uuid = "4ee394cb-3365-5eb0-8335-949819d2adfc"
-version = "0.9.1+1"
+version = "0.9.2+0"
 
 [[deps.CUDA_Runtime_Discovery]]
 deps = ["Libdl"]
@@ -332,7 +332,7 @@ version = "1.6.0"
 
 [[deps.ExaModels]]
 deps = ["NLPModels", "Printf", "SolverCore"]
-path = "/home/jcaillau/ExaModels.jl/"
+git-tree-sha1 = "68888f0d012aae809dbbe90f5ea6e1c8c5c5f737"
 uuid = "1037b233-b668-4ce9-9b63-f9f681f55dd2"
 version = "0.7.1"
 
@@ -702,9 +702,9 @@ version = "1.4.6"
 
 [[deps.NLPModels]]
 deps = ["FastClosures", "LinearAlgebra", "LinearOperators", "Printf", "SparseArrays"]
-git-tree-sha1 = "9b2ede4609f98b0b0e8bf11b9ea28e4ff5d7aba3"
+git-tree-sha1 = "bf40a3b387d6238d0c353daed22289991ce95e77"
 uuid = "a4795742-8479-5a88-8948-cc11e1c8c1a6"
-version = "0.21.1"
+version = "0.21.3"
 
 [[deps.NLPModelsIpopt]]
 deps = ["Ipopt", "NLPModels", "SolverCore"]
