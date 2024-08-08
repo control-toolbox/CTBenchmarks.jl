@@ -47,7 +47,7 @@ t = tfs * 0:N0
 xs = linear_interpolation(t, [xs[:, j] for j ∈ 1:N0+1], extrapolation_bc=Line())
 us = linear_interpolation(t, [us[:, j] for j ∈ 1:N0+1], extrapolation_bc=Line())
 
-N = 500
+N = 5000
 t = tfs * 0:N
 xs = xs.(t); xs = stack(xs[:])
 us = us.(t); us = stack(us[:])
@@ -106,6 +106,7 @@ println("exa1: ", output1)
 println("exa2: ", output2)
 
 println()
+println("N = ", N)
 print("exa0:")
 @btime madnlp(exa0; print_level=print_level, tol=tol)
 print("exa1:")
