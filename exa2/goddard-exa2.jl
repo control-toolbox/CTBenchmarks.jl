@@ -5,6 +5,7 @@ using MadNLPGPU
 using CUDA
 using KernelAbstractions
 using BenchmarkTools
+using Interpolations
 
 # ExaModel
 
@@ -39,7 +40,20 @@ tfs = 0.18761155665063417
 xs = [ 1.0          1.00105   1.00398   1.00751    1.01009    1.01124
       -1.83989e-40  0.056163  0.1       0.0880311  0.0492518  0.0123601
        1.0          0.811509  0.650867  0.6        0.6        0.6 ]
-us = [0.599377  0.835887  0.387328  -5.87733e-9  -9.03538e-9  -8.62101e-9]
+us = [0.599377 0.835887 0.387328 -5.87733e-9 -9.03538e-9 -8.62101e-9]
+
+N0 = 5
+t = tfs * 0:N0
+xs = linear_interpolation(t, [xs[:, j] for j ∈ 1:N0+1], extrapolation_bc=Line())
+us = linear_interpolation(t, [us[:, j] for j ∈ 1:N0+1], extrapolation_bc=Line())
+
+N = 500
+t = tfs * 0:N
+xs = xs.(t); xs = stack(xs[:])
+us = us.(t); us = stack(us[:])
+
+print_level = MadNLP.WARN
+tol = 1e-8
  
 function docp_exa(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
@@ -73,23 +87,29 @@ function docp_exa(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
 end
 
-N = 5
-print_level = MadNLP.WARN
-
 exa0 = docp_exa(N; tfs=tfs, xs=xs, us=us) 
 exa1 = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CPU()) 
 exa2 = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CUDABackend()) 
 
 # Solve
 
-print("exa0:")
-output0 = @btime madnlp(exa0; print_level=print_level)
-print("exa1:")
-output1 = @btime madnlp(exa1; print_level=print_level)
-print("exa2:")
-output2 = @btime madnlp(exa2; print_level=print_level)
+println("\n******************** exa0:")
+output0 = madnlp(exa0; tol=tol)
+println("\n******************** exa1:")
+output1 = madnlp(exa1; tol=tol)
+println("\n******************** exa2:")
+output2 = madnlp(exa2; tol=tol)
 
 println()
-print("exa0: ", output0)
-print("exa1: ", output1)
-print("exa2: ", output2)
+println("exa0: ", output0)
+println("exa1: ", output1)
+println("exa2: ", output2)
+
+println()
+print("exa0:")
+@btime madnlp(exa0; print_level=print_level, tol=tol)
+print("exa1:")
+@btime madnlp(exa1; print_level=print_level, tol=tol)
+print("exa2:")
+@btime madnlp(exa2; print_level=print_level, tol=tol)
+nothing
