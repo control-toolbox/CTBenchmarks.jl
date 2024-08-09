@@ -47,7 +47,7 @@ i_print_level = 0
 m_print_level = MadNLP.WARN
 sol = solve(ocp; grid_size=N, print_level=0)
 
-N = 100 
+N = 1000
 print_level = 0
 n = 3
 m = 1
