@@ -42,7 +42,7 @@ function benchmark_1model_OC(model, init, nb_discr;max_iter=1000, tol=1e-8, cons
     nb_iter = sol.iterations
     Ipopt_time = tIpopt
     total_time = t.time
-    nlp = get_nlp(direct_transcription(model; grid_size=nb_discr))
+    nlp = direct_transcription(model; grid_size=nb_discr)[2]
     nvar = nlp.meta.nvar
     ncon = nlp.meta.ncon
     data = DataFrame(:nb_discr => nb_discr,

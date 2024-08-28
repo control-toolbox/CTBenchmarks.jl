@@ -41,10 +41,6 @@ function robot_OC()
         the_dot = x₄
         phi = x₅
         phi_dot = x₆
-    ## control variables
-        u1 = u₁
-        u2 = u₂
-        u3 = u₃
 
     ## constraints
         # state constraints
@@ -72,11 +68,11 @@ function robot_OC()
 
     ## dynamics  
         ẋ(t) == [rho_dot(t),
-                    u1(t) / L,
+                    u₁(t) / L,
                     the_dot(t),
-                    u2(t) * 3 /(((L-rho(t))^3 + rho(t)^3) * sin(phi(t))^2),
+                    u₂(t) * 3 /(((L-rho(t))^3 + rho(t)^3) * sin(phi(t))^2),
                     phi_dot(t),
-                    u3(t) * 3 /((L-rho(t))^3 + rho(t)^3)]
+                    u₃(t) * 3 /((L-rho(t))^3 + rho(t)^3)]
 
     ## objective
         tf → min

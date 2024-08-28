@@ -23,6 +23,7 @@ using Ipopt , KNITRO
 using ADNLPModels, NLPModelsKnitro
 using OptimalControl, NLPModelsIpopt
 import HSL_jll
+import HSL
 using NLPModels, NLPModelsJuMP
 
 using PrettyTables, Colors

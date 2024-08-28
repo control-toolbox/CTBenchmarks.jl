@@ -76,11 +76,11 @@ function space_Shuttle_OC()
         h_t = 0.8          # altitude (ft) / 1e5
         v_t = 0.25         # velocity (ft/sec) / 1e4
         γ_t = deg2rad(-5)  # flight path angle (rad)
-        #tf = 2009.0 # final time (sec)
+        tf = 2012.0 # final time (sec)
         t0 = 0.0 # initial time (sec)
 
     ## define the problem
-        tf ∈ R, variable
+        #tf ∈ R, variable
         t ∈ [ t0, tf ], time
         x ∈ R⁶, state
         u ∈ R², control
@@ -99,7 +99,7 @@ function space_Shuttle_OC()
 
     ## constraints
         # variable constraints
-        1800 ≤ tf ≤ 2200,                       (tf_con)
+        #1800 ≤ tf ≤ 2200,                       (tf_con)
         # state constraints
         scaled_h(t) ≥ 0,                        (scaled_h_con)
         deg2rad(-89) ≤ θ(t) ≤ deg2rad(89),      (θ_con)
@@ -181,8 +181,9 @@ function space_Shuttle_init(;nh)
 
     x_init = [initial_guess[i,1:6] for i in 1:n];
     u_init = [initial_guess[i,7:8] for i in 1:n];
-    t_init =  2009.0
+    t_init =  2012.0
     time_vec = LinRange(0.0,t_s*n*4,n)
-    init = (time= time_vec, state= x_init, control= u_init,variable= t_init)
+    #init = (time= time_vec, state= x_init, control= u_init,variable= t_init)
+    init = (time= time_vec, state= x_init, control= u_init)
     return init
 end

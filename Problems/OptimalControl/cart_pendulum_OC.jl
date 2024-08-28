@@ -35,7 +35,6 @@ function cart_pendulum_OC()
         u ∈ R¹, control
 
     ## state variables
-        x1 = x₁
         dx = x₂
         theta = x₃
         omega = x₄
@@ -44,14 +43,14 @@ function cart_pendulum_OC()
     
     ## constraints
         # state constraints
-        -max_x ≤ x1(t) ≤ max_x,         (x1_con)
+        -max_x ≤ x₁(t) ≤ max_x,         (x1_con)
         -max_v ≤ dx(t) ≤ max_v,        (dx_con)
         # control constraints
         -max_f ≤ Fex(t) ≤ max_f,       (Fex_con)
         # variables constraints
         tf ≥ 0.0,                      (tf_con)
         # initial conditions
-        x1(0.0) == 0.0,                    (x1_ic)
+        x₁(0.0) == 0.0,                    (x1_ic)
         theta(0.0) == 0.0,                  (theta_ic)
         omega(0.0) == 0.0,                  (omega_ic)
         # final conditions

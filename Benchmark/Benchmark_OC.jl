@@ -42,7 +42,7 @@ function solving_model_OC(model,nb_discr,init;max_iter=1000, tol=1e-8, constr_vi
     nb_iter = sol.iterations
     Ipopt_time = tIpopt
     total_time = t.time
-    nlp = get_nlp(direct_transcription(model; grid_size=nb_discr))
+    nlp = direct_transcription(model; grid_size=nb_discr)[2]
     nvar = nlp.meta.nvar
     ncon = nlp.meta.ncon
     return nb_iter, total_time, Ipopt_time, obj_value, flag, nvar, ncon

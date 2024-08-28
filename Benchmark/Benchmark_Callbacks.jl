@@ -39,7 +39,7 @@ end
 
 # Function to solve the model with OptimalControl
 function callbacks_1model_OC(model, init, nb_discr)
-    nlp = get_nlp(direct_transcription(model,grid_size=nb_discr, init=init))
+    nlp = direct_transcription(model,grid_size=nb_discr, init=init)[2]
     data = callbacks_nlp(nlp, nb_discr)
     return data
 end

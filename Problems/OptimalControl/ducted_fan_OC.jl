@@ -37,33 +37,33 @@ function ducted_fan_OC()
         u ∈ R², control
         
     ## state variables
-        x1 = x₁
+        #x1 = x₁
         v1 = x₂
-        x2 = x₃
+        #x2 = x₃
         v2 = x₄
         α = x₅
         vα = x₆
     ## control variables
-        u1 = u₁
-        u2 = u₂
+        #u1 = u₁
+        #u2 = u₂
     ## constraints
         # state constraints
         tf ≥ 0.0,                                       (tf_con)
         -deg2rad(30.0) ≤ α(t) ≤ deg2rad(30.0),          (α_con)
         # control constraints
-        -5.0 ≤ u1(t) ≤ 5.0,                             (u1_con)
-        0.0 ≤ u2(t) ≤ 17.0,                             (u2_con)
+        -5.0 ≤ u₁(t) ≤ 5.0,                             (u1_con)
+        0.0 ≤ u₂(t) ≤ 17.0,                             (u2_con)
         # initial constraints
-        x1(0) == 0.0,                                   (x1_i)
+        x₁(0) == 0.0,                                   (x1_i)
         v1(0) == 0.0,                                   (v1_i)
-        x2(0) == 0.0,                                   (x2_i)
+        x₂(0) == 0.0,                                   (x2_i)
         v2(0) == 0.0,                                   (v2_i)
         α(0) == 0.0,                                    (α_i)
         vα(0) == 0.0,                                   (vα_i)
         # final constraints
-        x1(tf) == 1.0,                                  (x1_f)
+        x₁(tf) == 1.0,                                  (x1_f)
         v1(tf) == 0.0,                                  (v1_f)
-        x2(tf) == 0.0,                                  (x2_f)
+        x₂(tf) == 0.0,                                  (x2_f)
         v2(tf) == 0.0,                                  (v2_f)
         α(tf) == 0.0,                                   (α_f)
         vα(tf) == 0.0,                                  (vα_f)
@@ -72,7 +72,7 @@ function ducted_fan_OC()
         ẋ(t) == dynamics(x(t), u(t))
 
     ## objective
-        (1/tf) * ∫(2*u1(t)^2 + u2(t)^2) + μ * tf → min
+        (1/tf) * ∫(2*u₁(t)^2 + u₂(t)^2) + μ * tf → min
     end
 
     function dynamics(x,u)  

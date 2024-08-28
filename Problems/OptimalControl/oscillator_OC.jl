@@ -27,23 +27,18 @@ function double_oscillator_OC()
             x ∈ R⁴, state
             u ∈ R¹, control
 
-        ## state variables
-            x1 = x₁
-            x2 = x₂
-            x3 = x₃
-            x4 = x₄
         ## constraints
             # control constraints
             -1.0 ≤ u(t) ≤ 1.0,                          (u_con)
             # initial constraints
-            x1(0.0) == 0.0,                                (x1_con)
-            x2(0.0) == 0.0,                                (x2_con)
+            x₁(0.0) == 0.0,                                (x1_con)
+            x₂(0.0) == 0.0,                                (x2_con)
         
         ## dynamics
             ẋ(t) == dynamics(x(t), u(t),F(t))
         
         ## objective
-            0.5 * ∫(x1(t)^2 + x2(t)^2 + u(t)^2) → min
+            0.5 * ∫(x₁(t)^2 + x₂(t)^2 + u(t)^2) → min
 
     end
 

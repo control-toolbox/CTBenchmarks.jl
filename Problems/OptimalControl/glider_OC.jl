@@ -51,7 +51,6 @@ function glider_OC()
         x ∈ R⁴, state
         u ∈ R¹, control
     ## state variables
-        x1 = x₁
         y = x₂
         vx = x₃
         vy = x₄
@@ -60,12 +59,12 @@ function glider_OC()
 
     ## constraints
         # state constraints
-        x1(t) ≥ 0.0,                        (x_con)
+        x₁(t) ≥ 0.0,                        (x_con)
         vx(t) ≥ 0.0,                       (vx_con)
         # control constraints
         cL_min ≤ cL(t) ≤ cL_max,         (cL_con)
         # initial conditions
-        x1(t0) == x_0,                    (x0_con)
+        x₁(t0) == x_0,                    (x0_con)
         y(t0) == y_0,                    (y0_con)
         vx(t0) == vx_0,                  (vx0_con)
         vy(t0) == vy_0,                  (vy0_con)
@@ -78,7 +77,7 @@ function glider_OC()
         ẋ(t) == dynamics(x(t),u(t))
 
     ## objective
-        x1(tf) → max
+        x₁(tf) → max
 
     end
 
