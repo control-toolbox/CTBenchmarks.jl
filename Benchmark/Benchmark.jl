@@ -73,6 +73,11 @@ function Benchmark_model(model_key_list, nb_discr_list=nb_discr_list;max_iter=10
     file_name = "Model_Benchmark_file.tex"
     parameter_value = "max iter = $max_iter, tol = $tol, constr viol tol = $constr_viol_tol, solver = $solver"
     display_Benchmark_model(Results, title, file_name,parameter_value)
+    Results = benchmark_model_TTonly(model_key_list, OCProblems.function_init ,nb_discr_list;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+    title = "Benchmark models with JuMP and OptimalControl (Total Time only)"
+    file_name = "Model_Benchmark_TTonly_file.tex"
+    parameter_value = "max iter = $max_iter, tol = $tol, constr viol tol = $constr_viol_tol, solver = $solver"
+    display_Benchmark_model_TTonly(Results, title, file_name,parameter_value)
 end
 
 

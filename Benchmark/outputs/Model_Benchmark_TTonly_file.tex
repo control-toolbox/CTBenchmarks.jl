@@ -1,0 +1,21 @@
+\documentclass{standalone}
+\usepackage{color}
+\usepackage{booktabs}
+\begin{document}
+\begin{tabular}{c}
+\Large\textbf{Benchmark models with JuMP and OptimalControl (Total Time only)}\\
+\large\textbf{max iter = 1000, tol = 1.0e-8, constr viol tol = 1.0e-6, solver = ma57}\\
+\begin{tabular}{cccc}
+  \hline
+  \textbf{Model} & \textbf{Discretization} & \textbf{Total Time JuMP} & \textbf{Total Time OC} \\\hline
+  robot & 100 & 0.04 & 0.14 \\
+  robot & 400 & 0.19 & 15.92 \\
+  rocket & 100 & 0.04 & 0.13 \\
+  rocket & 400 & 0.26 & 1.09 \\
+  glider & 100 & 3.08 & 0.68 \\
+  glider & 400 & 81.6 & 20.8 \\
+  electrical\_vehicle & 100 & 0.01 & 0.2 \\
+  electrical\_vehicle & 400 & 0.04 & 0.89 \\\hline
+\end{tabular}
+\end{tabular}
+\end{document}

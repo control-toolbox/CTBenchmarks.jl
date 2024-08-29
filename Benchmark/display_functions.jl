@@ -106,6 +106,42 @@ function display_Benchmark_model(Results, title, file_name,parameter_value)
         end
     end 
 
+function display_Benchmark_model_TTonly(Results, title, file_name,parameter_value)
+    table = DataFrame(:Model => Symbol[], :nb_discr => Any[] ,:total_time_JuMP => Any[], :total_time_OC => Any[])
+        for (k,s) in Results
+            for i in s
+                push!(table, [k; i.nb_discr ; round(i.TTJMP[1],digits=2); round(i.TTOC[1],digits=2)])
+            end
+        end
+        # Define the custom display
+        header = ["Model","Discretization", "Total Time JuMP", "Total Time OC"];
+        original_stdout = stdout
+        file = open("./outputs/$(file_name)", "w")
+        try
+            redirect_stdout(file)
+            println("\\documentclass{standalone}")
+            println("\\usepackage{color}")
+            println("\\usepackage{booktabs}")
+            println("\\begin{document}")
+            println("\\begin{tabular}{c}")
+            println("\\Large\\textbf{$title}\\\\")
+            println("\\large\\textbf{$parameter_value}\\\\")
+            pretty_table(
+                table;
+                (backend = Val(:latex)),
+                header        = header,
+                title = title,
+                title_alignment = :c,
+                alignment = :c,
+            )
+            println("\\end{tabular}")
+            println("\\end{document}")
+        finally
+            redirect_stdout(original_stdout)
+            close(file)
+        end
+    end 
+
 
 
 function display_Callbacks(Results, title, file_name)
@@ -183,4 +219,3 @@ function display_Knitro(Results, title, file_name)
         close(file)
     end
 end 
-
