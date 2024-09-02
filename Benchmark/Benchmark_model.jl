@@ -170,7 +170,7 @@ function benchmark_model_TTonly(model_key_list, inits , nb_discr_list;max_iter=1
                 info_JuMP = benchmark_1model_JuMP(model, nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
                 println("✅")
             end
-            push!(R, DataFrame(:nb_discr => nb_discr,:TTJMP => info_JuMP.total_time, :TTOC => info_OC.total_time))
+            push!(R, DataFrame(:nb_discr => nb_discr,:TTJMP => info_JuMP.total_time, :TTOC => info_OC.total_time, :IterJuMP => info_JuMP.nb_iter, :IterOC => info_OC.nb_iter))
         end
         Results[model_key] = R
     end

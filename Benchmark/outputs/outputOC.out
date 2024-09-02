@@ -27,6 +27,6 @@ Number of inequality constraint evaluations          = 0
 Number of equality constraint Jacobian evaluations   = 56
 Number of inequality constraint Jacobian evaluations = 0
 Number of Lagrangian Hessian evaluations             = 54
-Total seconds in IPOPT                               = 769.753
+Total seconds in IPOPT                               = 935.420
 
 EXIT: Converged to a point of local infeasibility. Problem may be infeasible.

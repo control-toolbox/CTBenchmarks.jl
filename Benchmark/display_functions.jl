@@ -107,14 +107,14 @@ function display_Benchmark_model(Results, title, file_name,parameter_value)
     end 
 
 function display_Benchmark_model_TTonly(Results, title, file_name,parameter_value)
-    table = DataFrame(:Model => Symbol[], :nb_discr => Any[] ,:total_time_JuMP => Any[], :total_time_OC => Any[])
+    table = DataFrame(:Model => Symbol[], :nb_discr => Any[] ,:total_time_JuMP => Any[], :total_time_OC => Any[], :nb_iter_JuMP => Any[], :nb_iter_OC => Any[])
         for (k,s) in Results
             for i in s
-                push!(table, [k; i.nb_discr ; round(i.TTJMP[1],digits=2); round(i.TTOC[1],digits=2)])
+                push!(table, [k; i.nb_discr ; round(i.TTJMP[1],digits=2); round(i.TTOC[1],digits=2); i.IterJuMP[1]; i.IterOC[1]])
             end
         end
         # Define the custom display
-        header = ["Model","Discretization", "Total Time JuMP", "Total Time OC"];
+        header = ["Model","Discretization", "Total Time JuMP", "Total Time OC", "Iterations JuMP", "Iterations OC"];
         original_stdout = stdout
         file = open("./outputs/$(file_name)", "w")
         try
