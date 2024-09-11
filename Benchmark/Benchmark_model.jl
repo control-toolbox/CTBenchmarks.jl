@@ -7,29 +7,35 @@ function benchmark_1model_OC(model, init, nb_discr;max_iter=1000, tol=1e-8, cons
     nh = nb_discr - 1 > 1 ? nb_discr - 1 : 2 
     if solver == "ma57"
         t =  @timed ( 
-            sol = OptimalControl.solve(model, grid_size=nh, init=init, 
-                linear_solver="ma57",hsllib=HSL_jll.libhsl_path,
-                max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol, 
-                display=display, sb = "yes",output_file="./outputs/outputOC.out",
-                print_level=0,
-                );
+            alloc = @allocated(
+                sol = OptimalControl.solve(model, grid_size=nh, init=init, 
+                    linear_solver="ma57",hsllib=HSL_jll.libhsl_path,
+                    max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol, 
+                    display=display, sb = "yes",output_file="./outputs/outputOC.out",
+                    print_level=0,
+                    )
+                )
             )
     elseif solver == "ma27"
         t =  @timed ( 
-            sol = OptimalControl.solve(model, grid_size=nh, init=init, 
-                linear_solver="ma27",hsllib=HSL_jll.libhsl_path,
-                max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol, 
-                display=display, sb = "yes",output_file="./outputs/outputOC.out",
-                print_level=0,
-                );
+            alloc = @allocated(
+                sol = OptimalControl.solve(model, grid_size=nh, init=init, 
+                    linear_solver="ma27",hsllib=HSL_jll.libhsl_path,
+                    max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol, 
+                    display=display, sb = "yes",output_file="./outputs/outputOC.out",
+                    print_level=0,
+                    )
+                )
             )
     elseif solver == "mumps"
         t =  @timed ( 
-            sol = OptimalControl.solve(model, grid_size=nh, init=init, 
-                max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol, 
-                display=display, sb = "yes",output_file="./outputs/outputOC.out",
-                print_level=0,
-                );
+            alloc = @allocated(
+                sol = OptimalControl.solve(model, grid_size=nh, init=init, 
+                    max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol, 
+                    display=display, sb = "yes",output_file="./outputs/outputOC.out",
+                    print_level=0,
+                    )
+                )
             )
     else
         error("The solver $solver is not supported")
@@ -53,7 +59,7 @@ function benchmark_1model_OC(model, init, nb_discr;max_iter=1000, tol=1e-8, cons
                         :total_time => total_time,
                         :Ipopt_time => Ipopt_time,
                         :flag => flag)
-    return data
+    return data,alloc
 end
 
 
@@ -81,7 +87,11 @@ function benchmark_1model_JuMP(model, nb_discr;max_iter=1000, tol=1e-8, constr_v
         error("The solver $solver is not supported")
     end
     # Solve the model
-    t =  @timed (optimize!(model));
+    t =  @timed(
+            alloc = @allocated(
+                optimize!(model)
+            )
+        )
     # Get the results
     obj_value = JuMP.objective_value(model)
     flag = solution_summary(model).termination_status
@@ -98,7 +108,7 @@ function benchmark_1model_JuMP(model, nb_discr;max_iter=1000, tol=1e-8, constr_v
                         :total_time => total_time,
                         :Ipopt_time => Ipopt_time,
                         :flag => flag)
-    return data
+    return data,alloc
 end
 
 
@@ -123,14 +133,14 @@ function benchmark_model(model_key_list, inits , nb_discr_list;max_iter=1000, to
             if solve_OC
                 print("Benchmarking the model $model_key with OptimalControl ($nb_discr)... ")
                 model = OCProblems.function_OC[model_key]()
-                info_OC = benchmark_1model_OC(model, inits[model_key](;nh=nb_discr-1), nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+                info_OC,a = benchmark_1model_OC(model, inits[model_key](;nh=nb_discr-1), nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
                 push!(R_OC, info_OC)
                 println("✅")
             end
             if solve_JMP
                 print("Benchmarking the model $model_key with JuMP ($nb_discr)... ")
                 model = JMPProblems.function_JMP[model_key](;nh=nb_discr)
-                info_JuMP = benchmark_1model_JuMP(model, nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+                info_JuMP,a = benchmark_1model_JuMP(model, nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
                 push!(R_JuMP, info_JuMP)
                 println("✅")
             end
@@ -161,16 +171,16 @@ function benchmark_model_TTonly(model_key_list, inits , nb_discr_list;max_iter=1
             if solve_OC
                 print("Benchmarking the model $model_key with OptimalControl ($nb_discr)... ")
                 model = OCProblems.function_OC[model_key]()
-                info_OC = benchmark_1model_OC(model, inits[model_key](;nh=nb_discr-1), nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+                info_OC , allocOC = benchmark_1model_OC(model, inits[model_key](;nh=nb_discr-1), nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
                 println("✅")
             end
             if solve_JMP
                 print("Benchmarking the model $model_key with JuMP ($nb_discr)... ")
                 model = JMPProblems.function_JMP[model_key](;nh=nb_discr)
-                info_JuMP = benchmark_1model_JuMP(model, nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+                info_JuMP, allocJuMP = benchmark_1model_JuMP(model, nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
                 println("✅")
             end
-            push!(R, DataFrame(:nb_discr => nb_discr,:TTJMP => info_JuMP.total_time, :TTOC => info_OC.total_time, :IterJuMP => info_JuMP.nb_iter, :IterOC => info_OC.nb_iter))
+            push!(R, DataFrame(:nb_discr => nb_discr,:TTJMP => info_JuMP.total_time, :TTOC => info_OC.total_time, :IterJuMP => info_JuMP.nb_iter, :IterOC => info_OC.nb_iter, :AllocJuMP => allocJuMP, :AllocOC => allocOC))
         end
         Results[model_key] = R
     end
