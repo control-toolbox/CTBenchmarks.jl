@@ -34,3 +34,4 @@ Manifest.toml
 benchmark/rocketJMP.out
 benchmark/rocketOC.out
 Benchmark/knitro.log
+/.vscode
