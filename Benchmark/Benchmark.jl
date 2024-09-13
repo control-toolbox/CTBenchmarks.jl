@@ -38,7 +38,7 @@ include(path*"./Benchmark_Knitro.jl")
 include(path*"./display_functions.jl")
 
 nb_discr_list = [100; 500]
-excluded_models = [:space_shuttle; :quadrotor1obs; :quadrotorp2p; :truck; :moonlander; :glider]
+excluded_models = [:space_shuttle; :quadrotor; :truck_trailer; :moonlander; :jackson; :vanderpol; :glider; :bioreactor]
 
 # JIT warm-up for the first run
 # Redirect stdout and stderr to /dev/null

@@ -3,11 +3,11 @@
 """
 
 function uniflag(flag)
-    if flag == MOI.LOCALLY_SOLVED || flag == "Solve_Succeeded" || flag == MOI.OPTIMAL || flag == 0 
+    if flag == MOI.LOCALLY_SOLVED || flag == :first_order || flag == MOI.OPTIMAL || flag == 0 
         return "Solve Succeeded"
-    elseif flag == MOI.ITERATION_LIMIT || flag == "Maximum_Iterations_Exceeded"
+    elseif flag == MOI.ITERATION_LIMIT || flag == :max_iter
         return "Iterations Exceeded"
-    elseif flag == MOI.LOCALLY_INFEASIBLE || flag == "Infeasible_Problem_Detected"
+    elseif flag == MOI.LOCALLY_INFEASIBLE || flag == :infeasible
         return "Infeasible Problem"
     elseif flag == MOI.INVALID_MODEL || flag == "Invalid Model"
         return "Invalid Model"
