@@ -1,4 +1,4 @@
-# COTS : Control Optimal Test Set
+# Control-toolbox benchmark
 
 ## Description
 
