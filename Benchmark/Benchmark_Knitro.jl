@@ -3,19 +3,17 @@
 """
 
 # Function to solve the model with OptimalControl
-function benchmark_Knitro_OC(model_key, model, init, nb_discr;display=false)
-    nh = nb_discr - 1 > 1 ? nb_discr - 1 : 2 
+function benchmark_Knitro_OC(model_key, model, nb_discr;display=false)
     if !KNITRO.has_knitro()
         error("KNITRO is not available")
     else
-        nlp = get_nlp(direct_transcription(model,grid_size=nb_discr, init=init))
         if display
             t = @timed ( 
-                stats = knitro(nlp)
+                stats = knitro(model)
             )
         else
             t = @timed ( 
-                stats = knitro(nlp, outlev=0)
+                stats = knitro(model, outlev=0)
             )
         end
     end
@@ -25,9 +23,8 @@ function benchmark_Knitro_OC(model_key, model, init, nb_discr;display=false)
     flag = stats.solver_specific[:internal_msg]
     nb_iter = stats.iter
     total_time = t.time
-    nlp = get_nlp(direct_transcription(model; grid_size=nb_discr))
-    nvar = nlp.meta.nvar
-    ncon = nlp.meta.ncon
+    nvar = model.meta.nvar
+    ncon = model.meta.ncon
     data = DataFrame(   :model => model_key,
                         :nb_discr => nb_discr,
                         :nvar => nvar,
@@ -77,36 +74,23 @@ end
 
 
 # Function to benchmark the model
-function benchmark_knitro(model_key_list, inits , nb_discr_list;display=false)
+function benchmark_knitro(model_key_list, nb_discr_list;display=false)
     Results = Dict{Symbol,Any}()
-    solve_OC = true
-    solve_JMP = true
     R_OC = []
     R_JuMP = []
     for model_key in model_key_list
-        if ! (model_key in keys(OCProblems.function_OC))
-            println("The model $model_key is not available in the OptimalControl benchmark list. ❌")
-            solve_OC = false
-        end
-        if ! (model_key in keys(JMPProblems.function_JMP))
-            println("The model $model_key is not available in the JuMP benchmark list. ❌")
-            solve_JMP = false
-        end
         for nb_discr in nb_discr_list
-            if solve_OC
-                print("Benchmarking the model $model_key with OptimalControl ($nb_discr)... ")
-                model = OCProblems.function_OC[model_key]()
-                info_OC = benchmark_Knitro_OC(model_key,model, inits[model_key](;nh=nb_discr-1), nb_discr;display=display)
-                push!(R_OC, info_OC)
-                println("✅")
-            end
-            if solve_JMP
-                print("Benchmarking the model $model_key with JuMP ($nb_discr)... ")
-                model = JMPProblems.function_JMP[model_key](;nh=nb_discr)
-                info_JuMP = benchmark_Knitro_JuMP(model_key,model, nb_discr;display=display)
-                push!(R_JuMP, info_JuMP)
-                println("✅")
-            end
+            print("Benchmarking the model $model_key with OptimalControl ($nb_discr)... ")
+            _, model = functions_list[model_key](OptimalControlBackend(); nh=nb_discr)
+            info_OC = benchmark_Knitro_OC(model_key,model, nb_discr;display=display)
+            push!(R_OC, info_OC)
+            println("✅")
+            
+            print("Benchmarking the model $model_key with JuMP ($nb_discr)... ")
+            model = functions_list[model_key](JuMPBackend(); nh=nb_discr)
+            info_JuMP = benchmark_Knitro_JuMP(model_key,model, nb_discr;display=display)
+            push!(R_JuMP, info_JuMP)
+            println("✅")
         end
     end
     Results[:JuMP] = R_JuMP

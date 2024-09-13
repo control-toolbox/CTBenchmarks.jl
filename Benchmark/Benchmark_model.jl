@@ -3,37 +3,41 @@
 """
 
 # Function to solve the model with OptimalControl
-function benchmark_1model_OC(model, init, nb_discr;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6,solver="ma57",display=false)
+function benchmark_1model_OC(model, nb_discr;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6,solver="ma57",display=false)
     nh = nb_discr - 1 > 1 ? nb_discr - 1 : 2 
+    printlevel = 0
+    if display
+        printlevel = 5
+    end
     if solver == "ma57"
         t =  @timed ( 
             alloc = @allocated(
-                sol = OptimalControl.solve(model, grid_size=nh, init=init, 
+                sol = NLPModelsIpopt.ipopt(model, mu_strategy="adaptive";
                     linear_solver="ma57",hsllib=HSL_jll.libhsl_path,
                     max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol, 
-                    display=display, sb = "yes",output_file="./outputs/outputOC.out",
-                    print_level=0,
+                    sb = "yes",output_file="./outputs/outputOC.out",
+                    print_level=printlevel,
                     )
                 )
             )
     elseif solver == "ma27"
         t =  @timed ( 
             alloc = @allocated(
-                sol = OptimalControl.solve(model, grid_size=nh, init=init, 
+                sol = NLPModelsIpopt.ipopt(model, mu_strategy="adaptive";
                     linear_solver="ma27",hsllib=HSL_jll.libhsl_path,
                     max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol, 
-                    display=display, sb = "yes",output_file="./outputs/outputOC.out",
-                    print_level=0,
+                    sb = "yes",output_file="./outputs/outputOC.out",
+                    print_level=printlevel,
                     )
                 )
             )
     elseif solver == "mumps"
         t =  @timed ( 
             alloc = @allocated(
-                sol = OptimalControl.solve(model, grid_size=nh, init=init, 
+                sol = NLPModelsIpopt.ipopt(model, mu_strategy="adaptive";
                     max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol, 
-                    display=display, sb = "yes",output_file="./outputs/outputOC.out",
-                    print_level=0,
+                    sb = "yes",output_file="./outputs/outputOC.out",
+                    print_level=printlevel,
                     )
                 )
             )
@@ -44,13 +48,12 @@ function benchmark_1model_OC(model, init, nb_discr;max_iter=1000, tol=1e-8, cons
     outputOC = read("./outputs/outputOC.out", String)
     tIpopt = parse(Float64,split(split(outputOC, "Total seconds in IPOPT                               =")[2], "\n")[1])
     obj_value = sol.objective
-    flag = sol.message
-    nb_iter = sol.iterations
+    flag = sol.status
+    nb_iter = sol.iter
     Ipopt_time = tIpopt
     total_time = t.time
-    nlp = direct_transcription(model; grid_size=nb_discr)[2]
-    nvar = nlp.meta.nvar
-    ncon = nlp.meta.ncon
+    nvar = model.meta.nvar
+    ncon = model.meta.ncon
     data = DataFrame(:nb_discr => nb_discr,
                         :nvar => nvar,
                         :ncon => ncon,
@@ -113,37 +116,24 @@ end
 
 
 # Function to benchmark the model
-function benchmark_model(model_key_list, inits , nb_discr_list;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6,solver="ma57",display=false)
+function benchmark_model(model_key_list,nb_discr_list;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6,solver="ma57",display=false)
     Results = Dict{Symbol,Any}()
     for model_key in model_key_list
         R = Dict{Symbol,Any}()
         R_OC = []
-        R_JuMP = [] 
-        solve_OC = true
-        solve_JMP = true
-        if ! (model_key in keys(OCProblems.function_OC))
-            println("The model $model_key is not available in the OptimalControl benchmark list. ❌")
-            solve_OC = false
-        end
-        if ! (model_key in keys(JMPProblems.function_JMP))
-            println("The model $model_key is not available in the JuMP benchmark list. ❌")
-            solve_JMP = false
-        end
+        R_JuMP = []
         for nb_discr in nb_discr_list
-            if solve_OC
-                print("Benchmarking the model $model_key with OptimalControl ($nb_discr)... ")
-                model = OCProblems.function_OC[model_key]()
-                info_OC,a = benchmark_1model_OC(model, inits[model_key](;nh=nb_discr-1), nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
-                push!(R_OC, info_OC)
-                println("✅")
-            end
-            if solve_JMP
-                print("Benchmarking the model $model_key with JuMP ($nb_discr)... ")
-                model = JMPProblems.function_JMP[model_key](;nh=nb_discr)
-                info_JuMP,a = benchmark_1model_JuMP(model, nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
-                push!(R_JuMP, info_JuMP)
-                println("✅")
-            end
+            print("Benchmarking the model $model_key with OptimalControl ($nb_discr)... ")
+            _, model = functions_list[model_key](OptimalControlBackend();nh=nb_discr-1)
+            info_OC,a = benchmark_1model_OC(model, nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+            push!(R_OC, info_OC)
+            println("✅")
+
+            print("Benchmarking the model $model_key with JuMP ($nb_discr)... ")
+            model = functions_list[model_key](JuMPBackend();nh=nb_discr)
+            info_JuMP,a = benchmark_1model_JuMP(model, nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+            push!(R_JuMP, info_JuMP)
+            println("✅")
         end
         R[:JuMP] = R_JuMP
         R[:OptimalControl] = R_OC
@@ -153,33 +143,19 @@ function benchmark_model(model_key_list, inits , nb_discr_list;max_iter=1000, to
 end
 
 # Function to benchmark the model
-function benchmark_model_TTonly(model_key_list, inits , nb_discr_list;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6,solver="ma57",display=false)
+function benchmark_model_TTonly(model_key_list, nb_discr_list;max_iter=1000, tol=1e-8, constr_viol_tol = 1e-6,solver="ma57",display=false)
     Results = Dict{Symbol,Any}()
     for model_key in model_key_list
         R = []
-        solve_OC = true
-        solve_JMP = true
-        if ! (model_key in keys(OCProblems.function_OC))
-            println("The model $model_key is not available in the OptimalControl benchmark list. ❌")
-            solve_OC = false
-        end
-        if ! (model_key in keys(JMPProblems.function_JMP))
-            println("The model $model_key is not available in the JuMP benchmark list. ❌")
-            solve_JMP = false
-        end
         for nb_discr in nb_discr_list
-            if solve_OC
-                print("Benchmarking the model $model_key with OptimalControl ($nb_discr)... ")
-                model = OCProblems.function_OC[model_key]()
-                info_OC , allocOC = benchmark_1model_OC(model, inits[model_key](;nh=nb_discr-1), nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
-                println("✅")
-            end
-            if solve_JMP
-                print("Benchmarking the model $model_key with JuMP ($nb_discr)... ")
-                model = JMPProblems.function_JMP[model_key](;nh=nb_discr)
-                info_JuMP, allocJuMP = benchmark_1model_JuMP(model, nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
-                println("✅")
-            end
+            print("Benchmarking the model $model_key with OptimalControl ($nb_discr)... ")
+            _, model = functions_list[model_key](OptimalControlBackend();nh=nb_discr)
+            info_OC , allocOC = benchmark_1model_OC(model, nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+            println("✅")
+            print("Benchmarking the model $model_key with JuMP ($nb_discr)... ")
+            model = functions_list[model_key](JuMPBackend();nh=nb_discr)
+            info_JuMP, allocJuMP = benchmark_1model_JuMP(model, nb_discr;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
+            println("✅")
             push!(R, DataFrame(:nb_discr => nb_discr,:TTJMP => info_JuMP.total_time, :TTOC => info_OC.total_time, :IterJuMP => info_JuMP.nb_iter, :IterOC => info_OC.nb_iter, :AllocJuMP => allocJuMP, :AllocOC => allocOC))
         end
         Results[model_key] = R

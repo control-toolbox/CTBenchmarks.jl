@@ -43,7 +43,7 @@ function benchmark_model_JuMP(model_function, nb_discr_list;max_iter=1000, tol=1
     DataModel = []
     # Loop over the list of number of discretization
     for nb_discr in nb_discr_list
-        model = model_function(;nh=nb_discr)
+        model = model_function(JuMPBackend();nh=nb_discr)
         # Solve the model
         nb_iter, total_time, Ipopt_time, obj_value, flag, nvar, ncon = solving_model_JuMP(model;max_iter=max_iter, tol=tol, constr_viol_tol = constr_viol_tol,solver=solver,display=display)
         # Save the data

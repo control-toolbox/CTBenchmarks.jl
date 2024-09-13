@@ -36,15 +36,6 @@ function callbacks_nlp(nlp, nb_discr)
 end
 
 
-
-# Function to solve the model with OptimalControl
-function callbacks_1model_OC(model, init, nb_discr)
-    nlp = direct_transcription(model,grid_size=nb_discr, init=init)[2]
-    data = callbacks_nlp(nlp, nb_discr)
-    return data
-end
-
-
 # Function to solve the model with JuMP
 function callbacks_1model_JuMP(model, nb_discr)
     # Set up the solver
@@ -54,35 +45,22 @@ function callbacks_1model_JuMP(model, nb_discr)
     return data
 end
 
-function benchmark_model_callbacks(model_key, inits ,nb_discr_list)
+function benchmark_model_callbacks(model_key,nb_discr_list)
     Results = Dict{Symbol,Any}()
-    solve_OC = true
-    solve_JMP = true
     R_OC = []
     R_JuMP = []
-    if ! (model_key in keys(OCProblems.function_OC))
-        println("The model $model_key is not available in the OptimalControl benchmark list. ❌")
-        solve_OC = false
-    end
-    if ! (model_key in keys(JMPProblems.function_JMP))
-        println("The model $model_key is not available in the JuMP benchmark list. ❌")
-        solve_JMP = false
-    end
     for nb_discr in nb_discr_list
-        if solve_OC
-            print("Benchmarking $model_key model's callbacks with OptimalControl ($nb_discr)... ")
-            model = OCProblems.function_OC[model_key]()
-            info_OC = callbacks_1model_OC(model, inits[model_key](;nh=nb_discr-1), nb_discr)
-            push!(R_OC, info_OC)
-            println("✅")
-        end
-        if solve_JMP
-            print("Benchmarking $model_key model's callbacks with JuMP ($nb_discr)... ")
-            model = JMPProblems.function_JMP[model_key](;nh=nb_discr)
-            info_JuMP = callbacks_1model_JuMP(model, nb_discr)
-            push!(R_JuMP, info_JuMP)
-            println("✅")
-        end
+        print("Benchmarking $model_key model's callbacks with OptimalControl ($nb_discr)... ")
+        _, model = functions_list[model_key](OptimalControlBackend(); nh=nb_discr)
+        info_OC = callbacks_nlp(model, nb_discr)
+        push!(R_OC, info_OC)
+        println("✅")
+
+        print("Benchmarking $model_key model's callbacks with JuMP ($nb_discr)... ")
+        model = functions_list[model_key](JuMPBackend(); nh=nb_discr)
+        info_JuMP = callbacks_1model_JuMP(model, nb_discr)
+        push!(R_JuMP, info_JuMP)
+        println("✅")
     end
     Results[:JuMP] = R_JuMP
     Results[:OptimalControl] = R_OC

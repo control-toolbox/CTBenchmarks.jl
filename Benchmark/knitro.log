@@ -56,8 +56,8 @@ Final optimality error  (abs / rel) =   5.01e-07 / 5.01e-07
 # of function evaluations           =         25
 # of gradient evaluations           =         19
 # of Hessian evaluations            =         17
-Total program time (secs)           =       0.008 (     0.000 CPU time)
-Time spent in evaluations (secs)    =       0.002
+Total program time (secs)           =       0.179 (     0.063 CPU time)
+Time spent in evaluations (secs)    =       0.155
 
 ===============================================================================
 

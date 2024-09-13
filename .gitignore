@@ -30,3 +30,7 @@ Benchmark/outputs/Model_Benchmark_TTonly_file.fdb_latexmk
 Benchmark/outputs/Model_Benchmark_TTonly_file.log
 Benchmark/outputs/Model_Benchmark_TTonly_file.synctex.gz
 Benchmark/outputs/Model_Benchmark_TTonly_file.fls
+Manifest.toml
+benchmark/rocketJMP.out
+benchmark/rocketOC.out
+Benchmark/knitro.log
