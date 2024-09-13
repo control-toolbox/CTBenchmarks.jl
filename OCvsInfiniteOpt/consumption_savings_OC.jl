@@ -1,4 +1,5 @@
 function consumption_savings_OC(;nh=1000)
+    B0 = 100.0 # endowment
     ocp = @def begin 
         # Constants
         ρ = 0.025  # discount rate
@@ -24,7 +25,7 @@ function consumption_savings_OC(;nh=1000)
     end
 
     # Initial guess
-    init = ()
+    init = (state =B0, control = B0)
 
     # NLPModel + DOCP
     res = direct_transcription(ocp; init=init, grid_size=nh)

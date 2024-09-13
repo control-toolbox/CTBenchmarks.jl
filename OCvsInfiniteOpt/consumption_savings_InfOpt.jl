@@ -11,8 +11,8 @@ function consumption_savings_InfOpt(;nh=1000)
     m = InfiniteModel(opt)
     @infinite_parameter(m, t in [0, T], num_supports = nh)
 
-    @variable(m, B, Infinite(t)) ## state variables
-    @variable(m, c, Infinite(t)) ## control variables
+    @variable(m, B, Infinite(t), start = B0)
+    @variable(m, c, Infinite(t), start = B0)
     @objective(m, Max, integral(u(c), t, weight_func = discount))
     @constraint(m, B(0) == B0)
     @constraint(m, B(T) == 0)
