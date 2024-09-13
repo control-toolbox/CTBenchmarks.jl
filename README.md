@@ -1,4 +1,4 @@
-# Control-toolbox benchmark
+# Control-toolbox benchmarks
 
 ## Description
 
