@@ -1,3 +1,5 @@
+# Solve Goddard problem using ExaModels.jl
+
 using ExaModels
 using NLPModelsIpopt
 using MadNLP
@@ -7,7 +9,7 @@ using KernelAbstractions
 using BenchmarkTools
 using Interpolations
 
-# ExaModel
+# Parameters
 
 const n = 3 # State dim
 const m = 1 # Control dim
@@ -22,7 +24,7 @@ m0 = 1 # Initial mass
 vmax = 0.1 # Maximal authorized speed
 mf = 0.6 # Final mass to target
 
-# OptimalControl sol (N = 5):
+# Intialisation from OptimalControl sol (N = 5):
 # julia> tfs
 # 0.18761155665063417
 # 
@@ -55,6 +57,8 @@ us = us.(t); us = stack(us[:])
 print_level = MadNLP.WARN
 tol = 1e-5
  
+# Model
+
 function docp_exa(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
     c = ExaModels.ExaCore(; backend=backend)
@@ -77,7 +81,7 @@ function docp_exa(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
     dm(r, v, m, u) = -b * Tmax * u
     rk2(x1, x2, rhs1, rhs2, dt) = x2 - x1 - dt / 2 * (rhs1 + rhs2)
 
-    ExaModels.constraint(c, rk2(x[1, j], x[1, j+1], dr(x[1, j], x[2, j], x[3, j], u[1, j]), dr(x[1, j+1], x[2, j+1], x[3, j+1], u[1, j+1]), dt) for j ∈ 1:N) # To be optimised using additional vars
+    ExaModels.constraint(c, rk2(x[1, j], x[1, j+1], dr(x[1, j], x[2, j], x[3, j], u[1, j]), dr(x[1, j+1], x[2, j+1], x[3, j+1], u[1, j+1]), dt) for j ∈ 1:N)
     ExaModels.constraint(c, rk2(x[2, j], x[2, j+1], dv(x[1, j], x[2, j], x[3, j], u[1, j]), dv(x[1, j+1], x[2, j+1], x[3, j+1], u[1, j+1]), dt) for j ∈ 1:N)
     ExaModels.constraint(c, rk2(x[3, j], x[3, j+1], dm(x[1, j], x[2, j], x[3, j], u[1, j]), dm(x[1, j+1], x[2, j+1], x[3, j+1], u[1, j+1]), dt) for j ∈ 1:N)
 
@@ -86,6 +90,8 @@ function docp_exa(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
     return ExaModels.ExaModel(c)
 
 end
+
+# Model (alternative version)
 
 function docp_exa_aux(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
