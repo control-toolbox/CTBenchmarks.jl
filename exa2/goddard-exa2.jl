@@ -93,7 +93,7 @@ end
 
 # Model (alternative version)
 
-function docp_exa_aux(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
+function docp_exa_s(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
     c = ExaModels.ExaCore(; backend=backend)
 
@@ -130,9 +130,10 @@ function docp_exa_aux(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
 end
 
-exa0 = docp_exa(N; tfs=tfs, xs=xs, us=us) 
-exa1 = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CPU()) 
-exa2 = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CUDABackend()) 
+_docp = docp_exa #_s
+exa0 = _docp(N; tfs=tfs, xs=xs, us=us) 
+exa1 = _docp(N; tfs=tfs, xs=xs, us=us, backend=CPU()) 
+exa2 = _docp(N; tfs=tfs, xs=xs, us=us, backend=CUDABackend()) 
 
 # Solve
 
