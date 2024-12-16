@@ -49,13 +49,13 @@ t = tfs * 0:N0
 xs = linear_interpolation(t, [xs[:, j] for j ∈ 1:N0+1], extrapolation_bc=Line())
 us = linear_interpolation(t, [us[:, j] for j ∈ 1:N0+1], extrapolation_bc=Line())
 
-N = 5000
+N = 10000
 t = tfs * 0:N
 xs = xs.(t); xs = stack(xs[:])
 us = us.(t); us = stack(us[:])
 
 print_level = MadNLP.WARN
-tol = 1e-5
+tol = 1e-7 # 1e-5
  
 # Model
 
@@ -130,7 +130,7 @@ function docp_exa_s(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
 end
 
-_docp = docp_exa #_s
+_docp = docp_exa_s
 exa0 = _docp(N; tfs=tfs, xs=xs, us=us) 
 exa1 = _docp(N; tfs=tfs, xs=xs, us=us, backend=CPU()) 
 exa2 = _docp(N; tfs=tfs, xs=xs, us=us, backend=CUDABackend()) 
