@@ -49,7 +49,7 @@ t = tfs * 0:N0
 xs = linear_interpolation(t, [xs[:, j] for j ∈ 1:N0+1], extrapolation_bc=Line())
 us = linear_interpolation(t, [us[:, j] for j ∈ 1:N0+1], extrapolation_bc=Line())
 
-N = 10000
+N = 40000
 t = tfs * 0:N
 xs = xs.(t); xs = stack(xs[:])
 us = us.(t); us = stack(us[:])
@@ -139,22 +139,22 @@ exa2 = _docp(N; tfs=tfs, xs=xs, us=us, backend=CUDABackend())
 
 println("\n******************** exa0:")
 output0 = madnlp(exa0; tol=tol)
-println("\n******************** exa1:")
-output1 = madnlp(exa1; tol=tol)
+#println("\n******************** exa1:")
+#output1 = madnlp(exa1; tol=tol)
 println("\n******************** exa2:")
 output2 = madnlp(exa2; tol=tol)
 
 println()
 println("exa0: ", output0)
-println("exa1: ", output1)
+#println("exa1: ", output1)
 println("exa2: ", output2)
 
 println()
 println("N = ", N)
 print("exa0:")
 @btime madnlp(exa0; print_level=print_level, tol=tol)
-print("exa1:")
-@btime madnlp(exa1; print_level=print_level, tol=tol)
+#print("exa1:")
+#@btime madnlp(exa1; print_level=print_level, tol=tol)
 print("exa2:")
 @btime madnlp(exa2; print_level=print_level, tol=tol)
 nothing
