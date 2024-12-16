@@ -55,7 +55,7 @@ xs = xs.(t); xs = stack(xs[:])
 us = us.(t); us = stack(us[:])
 
 print_level = MadNLP.WARN
-tol = 1e-5
+tol = 1e-7 # 1e-5
  
 # Model
 
@@ -93,7 +93,7 @@ end
 
 # Model (alternative version)
 
-function docp_exa_aux(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
+function docp_exa_s(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
     c = ExaModels.ExaCore(; backend=backend)
 
@@ -130,30 +130,31 @@ function docp_exa_aux(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
 end
 
-exa0 = docp_exa(N; tfs=tfs, xs=xs, us=us) 
-exa1 = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CPU()) 
-exa2 = docp_exa(N; tfs=tfs, xs=xs, us=us, backend=CUDABackend()) 
+_docp = docp_exa_s
+exa0 = _docp(N; tfs=tfs, xs=xs, us=us) 
+exa1 = _docp(N; tfs=tfs, xs=xs, us=us, backend=CPU()) 
+exa2 = _docp(N; tfs=tfs, xs=xs, us=us, backend=CUDABackend()) 
 
 # Solve
 
 println("\n******************** exa0:")
 output0 = madnlp(exa0; tol=tol)
-println("\n******************** exa1:")
-output1 = madnlp(exa1; tol=tol)
+#println("\n******************** exa1:")
+#output1 = madnlp(exa1; tol=tol)
 println("\n******************** exa2:")
 output2 = madnlp(exa2; tol=tol)
 
 println()
 println("exa0: ", output0)
-println("exa1: ", output1)
+#println("exa1: ", output1)
 println("exa2: ", output2)
 
 println()
 println("N = ", N)
 print("exa0:")
 @btime madnlp(exa0; print_level=print_level, tol=tol)
-print("exa1:")
-@btime madnlp(exa1; print_level=print_level, tol=tol)
+#print("exa1:")
+#@btime madnlp(exa1; print_level=print_level, tol=tol)
 print("exa2:")
 @btime madnlp(exa2; print_level=print_level, tol=tol)
 nothing
