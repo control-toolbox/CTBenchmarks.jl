@@ -13,16 +13,16 @@ using Interpolations
 
 const n = 3 # State dim
 const m = 1 # Control dim
-const Cd = 310 # Drag (1/2)
-const β = 500 # Drag (2/2)
+const Cd = 310. # Drag (1/2)
+const β = 500. # Drag (2/2)
 const Tmax = 3.5 # Max thrust
-const b = 2 # Fuel consumption
+const b = 2. # Fuel consumption
 
-r0 = 1 # Initial altitude
-v0 = 0 # Initial speed
-m0 = 1 # Initial mass
-vmax = 0.1 # Maximal authorized speed
-mf = 0.6 # Final mass to target
+const r0 = 1. # Initial altitude
+const v0 = 0. # Initial speed
+const m0 = 1. # Initial mass
+const vmax = 0.1 # Maximal authorized speed
+const mf = 0.6 # Final mass to target
 
 # Intialisation from OptimalControl sol (N = 5):
 # julia> tfs
