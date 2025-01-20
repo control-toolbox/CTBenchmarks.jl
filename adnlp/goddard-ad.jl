@@ -64,7 +64,6 @@ dv(r, v, m, u) = -Cd * v^2 * exp(-β * (r - 1)) / m - 1 / r^2 + u * Tmax / m
 dm(r, v, m, u) = -b * Tmax * u
 rk2(x1, x2, rhs1, rhs2, dt) = x2 - x1 - dt / 2 * (rhs1 + rhs2)
 
-#function build(c, z, N :: Int; set_bounds=false)
 function build(c, z, N; set_bounds=false)
     k = 1
     lcon = Float64[]
@@ -128,15 +127,14 @@ z_dim = 1 + n * (N + 1) + m * (N + 1)
 z = ones(z_dim)
 
 f(z) = f(z, N)
-lcon, ucon = build([], z, N; set_bounds=true); c_dim = length(lcon)
-con!(c, z) = (build(c, z, N :: Int); nothing) # usefull to add nothing?
-@assert(length(lcon) == length(lcon) == 1 + n + 1 + 3(N + 1) + n * N)
+lcon, ucon = build([], z, N; set_bounds=true)
+con!(c, z) = (build(c, z, N :: Int); nothing)
+@assert(length(lcon) == length(ucon) == 1 + n + 1 + 3(N + 1) + n * N)
+c_dim = length(lcon)
 
-c = -1.1ones(c_dim)
+#c = -1.1ones(c_dim)
 #@code_warntype con!(c, z)
 #@report_opt con!(c, z)
-
-error("debug")
 
 # check
 
