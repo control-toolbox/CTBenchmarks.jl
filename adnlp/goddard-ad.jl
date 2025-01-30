@@ -4,7 +4,6 @@ using OptimalControl
 using ADNLPModels
 using NLPModelsIpopt
 using LinearAlgebra
-using MLStyle
 using JET
 
 # Parameters
@@ -41,20 +40,16 @@ macro x(j) esc( :( _get(z, $j, n; offset=1) ) ) end
 macro u(i, j) esc( :( _get(z, $i, $j, m; offset=1 + (N + 1) * n) ) ) end
 macro u(j) esc( :( _get(z, $j, m; offset=1 + (N + 1) * n) ) ) end
 
-macro con(e)
-    code = @match e begin
-    :( $l ≤ $v ≤ $u ) => begin
-        quote # assumes c, lcon, ucon, dim are used
-            dim = length($l) # not local to avoid reallocating
-            if set_bounds
-                append!(lcon, $l)
-                append!(ucon, $u)
-            else
-                c[k:k + dim - 1] .= $v
-                k = k + dim
-            end
-        end end
-    _ => :( error("wrong syntax: $e") )
+macro con(l, v, u)
+    code = quote # assumes c, lcon, ucon, dim are used
+        dim = length($l) # not local to avoid reallocating
+        if set_bounds
+            append!(lcon, $l)
+            append!(ucon, $u)
+        else
+            c[k:k + dim - 1] .= $v
+            k = k + dim
+        end
     end
     return esc(code)
 end
@@ -79,70 +74,61 @@ dv(r, v, m, u) = -Cd * v^2 * exp(-β * (r - 1)) / m - 1 / r^2 + u * Tmax / m
 dm(r, v, m, u) = -b * Tmax * u
 rk2(x1, x2, rhs1, rhs2, dt) = x2 - x1 - dt / 2 * (rhs1 + rhs2)
 
-function build(z, N) # passing z could be avoided
+function build(c, z, N; set_bounds=false)
 
-    function __build(c, z, N; set_bounds=false)
-    
-        @init
-    
-        dt = (@tf) / N
-    
-        # 0 ≤ tf
-        @con 0 ≤ (@tf) ≤ Inf
-    
-        # x[:, 1] - [r0, v0, m0] == 0
-        @con [0, 0, 0] ≤ @x(1) - [r0, v0, m0] ≤ [0, 0, 0] 
-    
-        # x[3, N + 1] == mf
-        @con 0 ≤ @x(3, N + 1) - mf ≤ 0
-    
-        # 0 ≤ u[1, :] ≤ 1 
-        for j ∈ 1:N + 1
-            @con 0 ≤ @u(1, j) ≤ 1
-        end
-    
-        # r0 ≤ x[1, :]
-        for j ∈ 1:N + 1
-            @con r0 ≤ @x(1, j) ≤ Inf
-        end
-    
-        # 0 ≤ x[2, :] ≤ vmax
-        for j ∈ 1:N + 1
-            @con 0 ≤ @x(2, j) ≤ vmax
-        end
-    
-        # rk2 on r
-        dj = dr(@x(1, 1), @x(2, 1), @x(3, 1), @u(1, 1)) 
-        for j ∈ 1:N
-            dj1 = dr(@x(1, j + 1), @x(2, j + 1), @x(3, j + 1), @u(1, j + 1)) 
-            @con 0 ≤ rk2(@x(1, j), @x(1, j + 1), dj, dj1, dt) ≤ 0
-            dj = dj1
-        end
-    
-        # rk2 on v
-        dj = dv(@x(1, 1), @x(2, 1), @x(3, 1), @u(1, 1)) 
-        for j ∈ 1:N
-            dj1 = dv(@x(1, j + 1), @x(2, j + 1), @x(3, j + 1), @u(1, j + 1)) 
-            @con 0 ≤ rk2(@x(2, j), @x(2, j + 1), dj, dj1, dt) ≤ 0
-            dj = dj1
-        end
-    
-        # rk2 on m
-        dj = dm(@x(1, 1), @x(2, 1), @x(3, 1), @u(1, 1)) 
-        for j ∈ 1:N
-            dj1 = dm(@x(1, j + 1), @x(2, j + 1), @x(3, j + 1), @u(1, j + 1)) 
-            @con 0 ≤ rk2(@x(3, j), @x(3, j + 1), dj, dj1, dt) ≤ 0
-            dj = dj1
-        end
-    
-        return lcon, ucon
-    
+    @init
+
+    dt = (@tf) / N
+
+    # 0 ≤ tf
+    @con 0 (@tf) Inf
+
+    # x[:, 1] - [r0, v0, m0] == 0
+    @con [0, 0, 0] @x(1) - [r0, v0, m0] [0, 0, 0] 
+
+    # x[3, N + 1] == mf
+    @con 0 @x(3, N + 1) - mf 0
+
+    # 0 ≤ u[1, :] ≤ 1 
+    for j ∈ 1:N + 1
+        @con 0 @u(1, j) 1
     end
 
-    lcon, ucon = __build([], z, N; set_bounds=true)
-    con!(c, z) = (__build(c, z, N :: Int); nothing)
+    # r0 ≤ x[1, :]
+    for j ∈ 1:N + 1
+        @con r0 @x(1, j) Inf
+    end
 
-    return lcon, ucon, con!
+    # 0 ≤ x[2, :] ≤ vmax
+    for j ∈ 1:N + 1
+        @con 0 @x(2, j) vmax
+    end
+
+    # rk2 on r
+    dj = dr(@x(1, 1), @x(2, 1), @x(3, 1), @u(1, 1)) 
+    for j ∈ 1:N
+        dj1 = dr(@x(1, j + 1), @x(2, j + 1), @x(3, j + 1), @u(1, j + 1)) 
+        @con 0 rk2(@x(1, j), @x(1, j + 1), dj, dj1, dt) 0
+        dj = dj1
+    end
+
+    # rk2 on v
+    dj = dv(@x(1, 1), @x(2, 1), @x(3, 1), @u(1, 1)) 
+    for j ∈ 1:N
+        dj1 = dv(@x(1, j + 1), @x(2, j + 1), @x(3, j + 1), @u(1, j + 1)) 
+        @con 0 rk2(@x(2, j), @x(2, j + 1), dj, dj1, dt) 0
+        dj = dj1
+    end
+
+    # rk2 on m
+    dj = dm(@x(1, 1), @x(2, 1), @x(3, 1), @u(1, 1)) 
+    for j ∈ 1:N
+        dj1 = dm(@x(1, j + 1), @x(2, j + 1), @x(3, j + 1), @u(1, j + 1)) 
+        @con 0 rk2(@x(3, j), @x(3, j + 1), dj, dj1, dt) 0
+        dj = dj1
+    end
+
+    return lcon, ucon
 
 end
 
@@ -151,12 +137,12 @@ z_dim = 1 + n * (N + 1) + m * (N + 1)
 z = ones(z_dim)
 
 f(z) = f(z, N)
-lcon, ucon, con! = build(z, N)
+lcon, ucon = build([], z, N; set_bounds=true)
+con!(c, z) = (build(c, z, N :: Int); nothing)
 @assert(length(lcon) == length(ucon) == 1 + n + 1 + 3(N + 1) + n * N)
 c_dim = length(lcon)
-c = -1.1ones(c_dim)
 
-error("debug")
+#c = -1.1ones(c_dim)
 #@code_warntype con!(c, z)
 #@report_opt con!(c, z)
 
@@ -202,7 +188,7 @@ println("lcon    : ", lcon ≤ c)
 println("ucon    : ", c ≤ ucon)
 println("dynamics: ", norm(@view c[end - 3N + 1:end]))
 
-lvar = -Inf * ones(z_dim)
-uvar =  Inf * ones(z_dim)
+#lvar = -Inf * ones(z_dim)
+#uvar =  Inf * ones(z_dim)
 #nlp = ADNLPModel!(f, z, lvar, uvar, con!, lcon, ucon)
-#sol2 = ipopt(nlpet_b
+#sol2 = ipopt(nlp)
