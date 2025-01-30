@@ -141,8 +141,8 @@ lcon, ucon = build([], z, N; set_bounds=true)
 con!(c, z) = (build(c, z, N :: Int); nothing)
 @assert(length(lcon) == length(ucon) == 1 + n + 1 + 3(N + 1) + n * N)
 c_dim = length(lcon)
+c = -1.1ones(c_dim)
 
-#c = -1.1ones(c_dim)
 #@code_warntype con!(c, z)
 #@report_opt con!(c, z)
 
