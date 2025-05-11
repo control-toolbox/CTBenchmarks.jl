@@ -43,13 +43,13 @@ xs = [ 1.0          1.00105   1.00398   1.00751    1.01009    1.01124
       -1.83989e-40  0.056163  0.1       0.0880311  0.0492518  0.0123601
        1.0          0.811509  0.650867  0.6        0.6        0.6 ]
 us = [0.599377 0.835887 0.387328 -5.87733e-9 -9.03538e-9 -8.62101e-9]
+N0 = length(us) - 1
 
-N0 = 5
 t = tfs * 0:N0
 xs = linear_interpolation(t, [xs[:, j] for j ∈ 1:N0+1], extrapolation_bc=Line())
 us = linear_interpolation(t, [us[:, j] for j ∈ 1:N0+1], extrapolation_bc=Line())
 
-N = 50000
+N = 200 
 t = tfs * 0:N
 xs = xs.(t); xs = stack(xs[:])
 us = us.(t); us = stack(us[:])
@@ -64,17 +64,29 @@ function docp_exa(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
     c = ExaModels.ExaCore(; backend=backend)
 
     tf = ExaModels.variable(c, 1; start=tfs)
-    x = ExaModels.variable(c, n, 1:N+1; start=xs)
-    u = ExaModels.variable(c, m, 1:N+1; start=us)
+
+    l_x = -Inf * ones(n)
+    l_x[1] = r0
+    l_x[2] = 0
+    u_x = Inf * ones(n)
+    u_x[2] = vmax
+    lvar_x = [l_x[i] for (i, j) ∈ Base.product(1:n, 1:N+1)]
+    uvar_x = [u_x[i] for (i, j) ∈ Base.product(1:n, 1:N+1)]
+    x = ExaModels.variable(c, n, 1:N+1; lvar=lvar_x, uvar=uvar_x, start=xs)
+
+    l_u = -Inf * ones(m)
+    l_u[1] = 0
+    u_u = Inf * ones(m)
+    u_u[1] = 1
+    lvar_u = [l_u[i] for (i, j) ∈ Base.product(1:m, 1:N+1)]
+    uvar_u = [u_u[i] for (i, j) ∈ Base.product(1:m, 1:N+1)]
+    u = ExaModels.variable(c, m, 1:N+1; lvar=lvar_u, uvar=uvar_u, start=us)
 
     dt = tf[1] / N
     ExaModels.constraint(c, tf[1]; lcon=0, ucon=Inf)
     __it1 = [(i, [r0, v0, m0][i]) for i ∈ 1:n] 
     ExaModels.constraint(c, x[i, 1] - __v for (i, __v) ∈ __it1)
     ExaModels.constraint(c, x[3, N+1] - mf)
-    ExaModels.constraint(c, u[1, j] for j ∈ 1:N+1; lcon=0, ucon=1)
-    ExaModels.constraint(c, x[1, j] for j ∈ 1:N+1; lcon=r0, ucon=Inf)
-    ExaModels.constraint(c, x[2, j] for j ∈ 1:N+1; lcon=0, ucon=vmax)
     
     dr(r, v, m, u) = v
     dv(r, v, m, u) = -Cd * v^2 * exp(-β * (r - 1)) / m - 1 / r^2 + u * Tmax / m
@@ -130,7 +142,8 @@ function docp_exa_s(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
 
 end
 
-_docp = docp_exa_s
+_docp = docp_exa
+#_docp = docp_exa_s
 exa0 = _docp(N; tfs=tfs, xs=xs, us=us) 
 exa1 = _docp(N; tfs=tfs, xs=xs, us=us, backend=CPU()) 
 exa2 = _docp(N; tfs=tfs, xs=xs, us=us, backend=CUDABackend()) 
