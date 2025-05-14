@@ -66,14 +66,14 @@ for N ∈ [100, 500, 1000, 5000, 7500, 10000, 20000, 50000]
     printstyled("\nsolver = ", solver, ", N = ", N, "\n"; bold = true)
     print("CPU:")
     try sol = @btime $solver($m_cpu; tol = $tol, print_level = $print_level)
-        println("      converged: ", sol.status == MadNLP.Status(1), "iter: ", sol.iter)
+        println("      converged: ", sol.status == MadNLP.Status(1), ", iter: ", sol.iter)
     catch ex
         println("\n      error: ", ex)
     end
     CUDA.functional() || throw("CUDA not available")
     print("GPU:")
     try sol = @btime $solver($m_gpu; tol = $tol, print_level = $print_level)
-        println("      converged: ", sol.status == MadNLP.Status(1), "iter: ", sol.iter)
+        println("      converged: ", sol.status == MadNLP.Status(1), ", iter: ", sol.iter)
     catch ex
         println("\n      error: ", ex)
     end
