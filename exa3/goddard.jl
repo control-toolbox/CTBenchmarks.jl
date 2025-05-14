@@ -54,8 +54,8 @@ _us = linear_interpolation(_t, [us0[:, j] for j ∈ 1:N0+1], extrapolation_bc=Li
 tol = 1e-7
 print_level = MadNLP.WARN
 ncl_options = MadNCL.NCLOptions(verbose = false)
-#mads = :madnlp
-mads = :madncl
+mads = :madnlp
+#mads = :madncl
 
 function solver(m, s)
     sol = begin
@@ -86,7 +86,8 @@ for N ∈ (100, 500, 1000, 2000, 5000, 7500, 10000, 20000, 50000)
     end
     CUDA.functional() || throw("CUDA not available")
     print("GPU:")
-    try sol = @btime $solver($m_gpu, mads)
+    try solver(m_gpu, mads);
+        sol = CUDA.@time solver(m_gpu, mads)
         println("      converged: ", sol.status == MadNLP.Status(1), ", iter: ", sol.iter)
     catch ex
         println("\n      error: ", ex)
