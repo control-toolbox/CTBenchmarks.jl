@@ -2,7 +2,7 @@
 
 using OptimalControl
 using MadNLP
-import MadNCL: madncl
+import MadNCL: MadNCL, madncl
 using MadNLPGPU
 using CUDA
 using BenchmarkTools
@@ -53,26 +53,40 @@ _us = linear_interpolation(_t, [us0[:, j] for j ∈ 1:N0+1], extrapolation_bc=Li
 
 tol = 1e-7
 print_level = MadNLP.WARN
-solver = madnlp
-#solver = madncl
+ncl_options = MadNCL.NCLOptions(verbose = false)
+#mads = :madnlp
+mads = :madncl
 
-for N ∈ [100, 500, 1000, 2000, 5000, 7500, 10000, 20000, 50000]
+function solver(m, s)
+    sol = begin
+        if s == :madnlp
+            madnlp(m; print_level = print_level, tol = tol)
+        elseif s == :madncl
+            madncl(m; print_level = print_level, ncl_options = ncl_options, tol = tol)
+        else
+            throw("unknown solver")
+        end
+    end
+    return sol
+end
+
+for N ∈ (100, 500, 1000, 2000, 5000, 7500, 10000, 20000, 50000)
 
     t = tfs * 0:N
     xs = _xs.(t); xs = stack(xs[:])
     us = _us.(t); us = stack(us[:])
     m_cpu = o(; grid_size = N, init = (tfs, xs, us))
     m_gpu = o(; grid_size = N, init = (tfs, xs, us), backend = CUDABackend())
-    printstyled("\nsolver = ", solver, ", N = ", N, "\n"; bold = true)
+    printstyled("\nsolver = ", mads, ", N = ", N, "\n"; bold = true)
     print("CPU:")
-    try sol = @btime $solver($m_cpu; tol = $tol, print_level = $print_level)
+    try sol = @btime $solver($m_cpu, mads)
         println("      converged: ", sol.status == MadNLP.Status(1), ", iter: ", sol.iter)
     catch ex
         println("\n      error: ", ex)
     end
     CUDA.functional() || throw("CUDA not available")
     print("GPU:")
-    try sol = @btime $solver($m_gpu; tol = $tol, print_level = $print_level)
+    try sol = @btime $solver($m_gpu, mads)
         println("      converged: ", sol.status == MadNLP.Status(1), ", iter: ", sol.iter)
     catch ex
         println("\n      error: ", ex)
