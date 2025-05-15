@@ -1,4 +1,6 @@
 [deps]
 AMDGPU = "21141c5a-9bdb-4563-92ae-f87d6854732e"
+CTParser = "32681960-a1b1-40db-9bff-a1ca817385d1"
 CUDA = "052768ef-5323-5732-b1bb-66c8b64840ba"
 KernelAbstractions = "63c18a36-062a-441e-b654-da1e3ab1ce7c"
+MLStyle = "d8e11817-5142-5d16-987a-aa16d5891078"
