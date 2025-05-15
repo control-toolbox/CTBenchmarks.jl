@@ -21,7 +21,7 @@ end
   dx[1,j] = u[1,j] * cosx12
   dx[2,j] = x[2,j] + x[3,j] * u[2,j]
   dx[3,j] = u[1,j] + cosx12
-  nothing
+  nothing # no return allowed
 end
 
 n = 3
