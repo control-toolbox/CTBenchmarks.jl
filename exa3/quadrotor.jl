@@ -1,10 +1,20 @@
 # quadrotor.jl
 
+using OptimalControl
+using MadNLP
+import MadNCL: MadNCL, madncl
+using MadNLPGPU
+using CUDA
+using BenchmarkTools
+
+parsing_backend!(:exa)
+
 n = 10 
 m = 4
 const T = 60
 const x0 = zeros(n)
 const g = 9.8
+const r = 0.1
 
 ocp = @def begin 
 
@@ -31,14 +41,15 @@ ocp = @def begin
     dt5 = 2(t / T)
     df5 = 2
 
-    ∂(x10)(t) == (x₁(t) - dt1)^2 + (x₃(t) - dt3)^2 + (x₅(t) - dt5)^2 + x₇(t)^2 + x₈(t)^2 + x₉(t)^2 + u₁(t)^2 + u₂(t)^2 + u₃(t)^2 + u₄(t)^2
-    (x₁(T) - df1)^2 + (x₃(T) - df3)^2 + (x₅(T) - df5)^2 + x₇(T)^2 + x₈(T)^2 + x₉(T)^2 + x10(T) → min
+    ∂(x[10])(t) == (x₁(t) - dt1)^2 + (x₃(t) - dt3)^2 + (x₅(t) - dt5)^2 + x₇(t)^2 + x₈(t)^2 + x₉(t)^2 +
+                   r * ( u₁(t)^2 + u₂(t)^2 + u₃(t)^2 + u₄(t)^2 )
+    0.5( (x₁(T) - df1)^2 + (x₃(T) - df3)^2 + (x₅(T) - df5)^2 + x₇(T)^2 + x₈(T)^2 + x₉(T)^2 + x[10](T) ) → min
 
 end
 
 N = 100
-m = ocp(; grid_size = N)
-sol = madnlp(m)
+mexa = ocp(; grid_size = N, scheme = :euler)
+sol = madnlp(mexa)
 
 if false # debug
 init = (state = zeros(n), control = zeros(m))
