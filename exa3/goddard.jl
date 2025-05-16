@@ -70,7 +70,7 @@ function solver(m, s)
     return sol
 end
 
-for N ∈ (100, 500, 1000, 2000, 5000, 7500, 10000, 20000, 50000)
+for N ∈ (100, ) #500, 1000, 2000, 5000, 7500, 10000, 20000, 50000) debug
 
     t = tfs * 0:N
     xs = _xs.(t); xs = stack(xs[:])

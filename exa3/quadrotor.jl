@@ -6,13 +6,13 @@ import MadNCL: MadNCL, madncl
 using MadNLPGPU
 using CUDA
 using BenchmarkTools
+using NLPModelsIpopt # debug (ipopt) 
 
 parsing_backend!(:exa)
 
-n = 10 
-m = 4
+const n = 10 
+const m = 4
 const T = 60
-const x0 = zeros(n)
 const g = 9.8
 const r = 0.1
 
@@ -22,7 +22,7 @@ ocp = @def begin
     x ∈ R^n, state
     u ∈ R^m, control
 
-    x(0) == x0
+    x(0) == zeros(n)
 
     ∂(x₁)(t) == x₂(t)
     ∂(x₂)(t) == u₁(t) * cos(x₇(t)) * sin(x₈(t)) * cos(x₉(t)) + u₁(t) * sin(x₇(t)) * sin(x₉(t))
@@ -38,20 +38,22 @@ ocp = @def begin
     df1 = 0 
     dt3 = 2sin(4π * t / T)
     df3 = 0 
-    dt5 = 2(t / T)
+    dt5 = 2t / T
     df5 = 2
 
     ∂(x[10])(t) == (x₁(t) - dt1)^2 + (x₃(t) - dt3)^2 + (x₅(t) - dt5)^2 + x₇(t)^2 + x₈(t)^2 + x₉(t)^2 +
                    r * ( u₁(t)^2 + u₂(t)^2 + u₃(t)^2 + u₄(t)^2 )
-    0.5( (x₁(T) - df1)^2 + (x₃(T) - df3)^2 + (x₅(T) - df5)^2 + x₇(T)^2 + x₈(T)^2 + x₉(T)^2 + x[10](T) ) → min
+    0.5( (x₁(T) - df1)^2 + (x₃(T) - df3)^2 + (x₅(T) - df5)^2 + x₇(T)^2 + x₈(T)^2 + x₉(T)^2 )+ 0.5x[10](T) → min
 
 end
 
-N = 100
-mexa = ocp(; grid_size = N, scheme = :euler)
-sol = madnlp(mexa)
+N = 3000
+mexa = ocp(; grid_size = N, init = (0, 0, 0))
+sol = ipopt(mexa) # debug: OK with N = 3000 and init = (0, 0, 0)
 
-if false # debug
+macro ignore(e) return :() end
+
+@ignore begin # debug
 init = (state = zeros(n), control = zeros(m))
 
 tol = 1e-7
@@ -79,7 +81,7 @@ for N ∈ (100,) # 500, 1000, 2000, 5000, 7500, 10000, 20000, 50000)
     xs = _xs.(t); xs = stack(xs[:])
     us = _us.(t); us = stack(us[:])
     m_cpu = o(; grid_size = N, init = init)
-    m_gpu = o(; grid_size = N, init = init), backend = CUDABackend())
+    m_gpu = o(; grid_size = N, init = init, backend = CUDABackend())
     printstyled("\nsolver = ", mads, ", N = ", N, "\n"; bold = true)
     print("CPU:")
     try sol = @btime $solver($m_cpu, mads)

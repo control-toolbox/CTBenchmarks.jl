@@ -32,7 +32,7 @@ o = @def begin
     0 ≤ u(s) ≤ 1
     r(s) ≥ r0
     0 ≤ v(s) ≤ vmax
-    0.16 ≤ tf(s) ≤ 0.19 # debug: not converging...
+    0.18 ≤ tf(s) ≤ 0.21 # debug: not converging...
 
     ∂(r)(s) == tf(s) * ( v(s) )
     ∂(v)(s) == tf(s) * ( -Cd * v(s)^2 * exp(-β * (r(s) - 1)) / m(s) - 1 / r(s)^2 + u(s) * Tmax / m(s) )
