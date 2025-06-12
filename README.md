@@ -25,6 +25,28 @@ For this project, you need to have the following packages installed:
     - [Interpolations](http://juliamath.github.io/Interpolations.jl/latest/)
     - [MathOptSymbolicAD](https://juliapackages.com/p/mathoptsymbolicad)
 
+## Important Note on Linear Solvers
+
+Some tests use the MA57 linear solver, which is often more efficient than the default MUMPS solver. However, MA57 requires a (free) license from HSL.
+
+By default, all lines enabling MA57 are commented out in the test scripts. If you wish to use MA57:
+
+1. **Obtain a license** for HSL from [STFC](https://licences.stfc.ac.uk/product/libhsl).
+2. **Follow the installation instructions** to set up HSL with Julia. See [this guide](https://discourse.julialang.org/t/how-to-get-hsl-up-and-running-with-ipopt/114138/3) for details.
+3. **Uncomment the relevant lines** in the code to enable MA57. 
+    ```julia
+    # Optionally, set the path to the HSL library if needed:
+    # set_attribute(DuctedFanJMP, "hsllib", HSL_jll.libhsl_path)
+    ```
+    and
+    ```julia
+    #linear_solver="ma57",
+    #hsllib=HSL_jll.libhsl_path,
+    ```
+
+If you do not have a license, the tests will run with the default MUMPS solver.
+
+
 ## Unit tests
 
 The directory `test` contains the execution of the different problems from `OptimalControlProblems`. The goal is to compare the performance of `JuMP` and `OptimalControl` in terms of accuracy:
@@ -48,20 +70,26 @@ The directory `test` contains the execution of the different problems from `Opti
 
 | Problem | With JuMP | With OptimalControl | Comparaison Remarks |
 | --- | --- | --- | --- |
-| `The Hanging Chain` |   ✅  |   ✅ | 🆗|
+| `The Hanging Chain` |   ✅  |  ✅ | 🆗|
 | `The Hang Glider` |  ✅  |  ✅ | 🆗 |
 | `The Robot Arm` |  ✅ | ✅| solution 🆗 + costate differences |
-| `The Goddard Rocket` |  ✅ | ✅| 🆗 |
-| `The Particle Steering` |  ✅ | ✅|🆗  |
-| `The Space Shuttle Reentry` |  ✅ |  ❌| ❌ not same solution found |
-| `The Cart Pendulum` | ✅ | ✅| 🆗 |
-| `The Moonlander` | ✅ | ✅| 🆗 |
-| `The Truck Trailer` | ✅ | ❌| ❌ |
-| `The Quadrotor` | ✅ | ✅| ❌ not same solution found|
-| `The Dielectrophoretic Particle` | ✅ | ✅| 🆗 |
-| `The Ducted Fan` | ✅ | ✅| 🆗 |
+| `The Goddard Rocket` |  ✅ | ✅| 🆗 + coast differances |
+| `The Particle Steering` |  ✅ | ✅ | 🆗 |
+| `The Space Shuttle Reentry` |  ✅ | 🟠 | 🟠 Different solution found |
+| `The Cart Pendulum` | ❌ | ❌ | ❌ Error occurs during import of the Cart Pendulum problem. | 
+| `The Moonlander` | ✅ | 🟠| 🟠 |
+| `The Truck Trailer` | 🟠EXIT: Converged to a point of local infeasibility. Problem may be infeasible. | ✅| ❌ |
+| `The Quadrotor` | ❌ | ✅| ❌ |
+| `The Dielectrophoretic Particle` | ✅ | ✅ | 🆗 |
+| `The Ducted Fan` | ✅ | ✅| ❌ slightly different solution |
 | `The Double Oscillator` | ✅ | ✅| solution 🆗 + costate differences |
 | `The Electrical Vehicle` | ✅ | ✅| solution 🆗 + costate differences |
+
+Legend:
+- ✅ : The problem is solved with the tool.
+- ❌ : The problem does not compile.
+- 🟠 : Problem of the solution
+- 🆗 : The solution is correct.
 
 ## Benchmark
 

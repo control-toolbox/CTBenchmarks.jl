@@ -1,0 +1,8 @@
+voir compat dans le manager de pack
+
+
+]
+activate .
+instantiate
+st
+st --outdated -m
