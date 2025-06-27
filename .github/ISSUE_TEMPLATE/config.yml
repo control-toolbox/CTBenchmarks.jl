@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: CTBenchmarks.jl package support
+    url: https://github.com/control-toolbox/CTBenchmarks.jl/discussions
+    about: Please ask and answer questions about CTBenchmarks.jl here.
+  - name: Control-toolbox organisation support
+    url: https://github.com/orgs/control-toolbox/discussions
+    about: For more general questions about control-toolbox ecosystem it's here.
