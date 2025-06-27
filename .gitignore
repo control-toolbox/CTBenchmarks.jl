@@ -1,37 +1,354 @@
+## Core latex/pdflatex auxiliary files:
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
 
-/lbt_HSL_jll.jl-2023.11.7
-Benchmark/outputs/JuMP_Benchmark_file.aux
-Benchmark/outputs/JuMP_Benchmark_file.fdb_latexmk
-Benchmark/outputs/JuMP_Benchmark_file.fls
-Benchmark/outputs/JuMP_Benchmark_file.log
-Benchmark/outputs/JuMP_Benchmark_file.synctex.gz
-Benchmark/outputs/model_Benchmark_file.aux
-Benchmark/outputs/model_Benchmark_file.fdb_latexmk
-Benchmark/outputs/model_Benchmark_file.fls
-Benchmark/outputs/model_Benchmark_file.log
-Benchmark/outputs/model_Benchmark_file.synctex.gz
-Benchmark/outputs/OptimalControl_Benchmark_file.aux
-Benchmark/outputs/OptimalControl_Benchmark_file.fdb_latexmk
-Benchmark/outputs/OptimalControl_Benchmark_file.fls
-Benchmark/outputs/OptimalControl_Benchmark_file.log
-Benchmark/outputs/OptimalControl_Benchmark_file.synctex.gz
-Benchmark/outputs/Benchmark_Callbacks_file.aux
-Benchmark/outputs/Benchmark_Callbacks_file.fdb_latexmk
-Benchmark/outputs/Benchmark_Callbacks_file.fls
-Benchmark/outputs/Benchmark_Callbacks_file.log
-Benchmark/outputs/Benchmark_Callbacks_file.synctex.gz
-Benchmark/outputs/Knitro_Benchmark_file.aux
-Benchmark/outputs/Knitro_Benchmark_file.fdb_latexmk
-Benchmark/outputs/Knitro_Benchmark_file.log
-Benchmark/outputs/Knitro_Benchmark_file.fls
-Benchmark/outputs/Knitro_Benchmark_file.synctex.gz
-Benchmark/outputs/Model_Benchmark_TTonly_file.aux
-Benchmark/outputs/Model_Benchmark_TTonly_file.fdb_latexmk
-Benchmark/outputs/Model_Benchmark_TTonly_file.log
-Benchmark/outputs/Model_Benchmark_TTonly_file.synctex.gz
-Benchmark/outputs/Model_Benchmark_TTonly_file.fls
+## Intermediate documents:
+*.dvi
+*.xdv
+*-converted-to.*
+# these rules might exclude image files for figures etc.
+# *.ps
+# *.eps
+# *.pdf
+
+## Generated if empty string is given at "Please type another file name for output:"
+.pdf
+
+## Bibliography auxiliary files (bibtex/biblatex/biber):
+*.bbl
+*.bbl-SAVE-ERROR
+*.bcf
+*.bcf-SAVE-ERROR
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+## Build tool auxiliary files:
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+*.rubbercache
+rubber.cache
+
+## Build tool directories for auxiliary files
+# latexrun
+latex.out/
+
+## Auxiliary and intermediate files from other packages:
+# algorithms
+*.alg
+*.loa
+
+# achemso
+acs-*.bib
+
+# amsthm
+*.thm
+
+# attachfile2
+*.atfi
+
+# beamer
+*.nav
+*.pre
+*.snm
+*.vrb
+
+# changes
+*.soc
+*.loc
+
+# comment
+*.cut
+
+# cprotect
+*.cpt
+
+# elsarticle (documentclass of Elsevier journals)
+*.spl
+
+# endnotes
+*.ent
+
+# fixme
+*.lox
+
+# feynmf/feynmp
+*.mf
+*.mp
+*.t[1-9]
+*.t[1-9][0-9]
+*.tfm
+
+#(r)(e)ledmac/(r)(e)ledpar
+*.end
+*.?end
+*.[1-9]
+*.[1-9][0-9]
+*.[1-9][0-9][0-9]
+*.[1-9]R
+*.[1-9][0-9]R
+*.[1-9][0-9][0-9]R
+*.eledsec[1-9]
+*.eledsec[1-9]R
+*.eledsec[1-9][0-9]
+*.eledsec[1-9][0-9]R
+*.eledsec[1-9][0-9][0-9]
+*.eledsec[1-9][0-9][0-9]R
+
+# glossaries
+*.acn
+*.acr
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.lzo
+*.lzs
+*.slg
+*.slo
+*.sls
+
+# uncomment this for glossaries-extra (will ignore makeindex's style files!)
+# *.ist
+
+# gnuplot
+*.gnuplot
+*.table
+
+# gnuplottex
+*-gnuplottex-*
+
+# gregoriotex
+*.gaux
+*.glog
+*.gtex
+
+# htlatex
+*.4ct
+*.4tc
+*.idv
+*.lg
+*.trc
+*.xref
+
+# hypdoc
+*.hd
+
+# hyperref
+*.brf
+
+# knitr
+*-concordance.tex
+# TODO Uncomment the next line if you use knitr and want to ignore its generated tikz files
+# *.tikz
+*-tikzDictionary
+
+# listings
+*.lol
+
+# luatexja-ruby
+*.ltjruby
+
+# makeidx
+*.idx
+*.ilg
+*.ind
+
+# minitoc
+*.maf
+*.mlf
+*.mlt
+*.mtc[0-9]*
+*.slf[0-9]*
+*.slt[0-9]*
+*.stc[0-9]*
+
+# minted
+_minted*
+*.data.minted
+*.pyg
+
+# morewrites
+*.mw
+
+# newpax
+*.newpax
+
+# nomencl
+*.nlg
+*.nlo
+*.nls
+
+# pax
+*.pax
+
+# pdfpcnotes
+*.pdfpc
+
+# sagetex
+*.sagetex.sage
+*.sagetex.py
+*.sagetex.scmd
+
+# scrwfile
+*.wrt
+
+# spelling
+*.spell.bad
+*.spell.txt
+
+# svg
+svg-inkscape/
+
+# sympy
+*.sout
+*.sympy
+sympy-plots-for-*.tex/
+
+# pdfcomment
+*.upa
+*.upb
+
+# pythontex
+*.pytxcode
+pythontex-files-*/
+
+# tcolorbox
+*.listing
+
+# thmtools
+*.loe
+
+# TikZ & PGF
+*.dpth
+*.md5
+*.auxlock
+
+# titletoc
+*.ptc
+
+# todonotes
+*.tdo
+
+# vhistory
+*.hst
+*.ver
+
+# easy-todo
+*.lod
+
+# xcolor
+*.xcp
+
+# xmpincl
+*.xmpi
+
+# xindy
+*.xdy
+
+# xypic precompiled matrices and outlines
+*.xyc
+*.xyd
+
+# endfloat
+*.ttt
+*.fff
+
+# Latexian
+TSWLatexianTemp*
+
+## Editors:
+# WinEdt
+*.bak
+*.sav
+
+# latexindent.pl
+*.bak[0-9]*
+
+# Texpad
+.texpadtmp
+
+# LyX
+*.lyx~
+
+# Kile
+*.backup
+
+# gummi
+.*.swp
+
+# KBibTeX
+*~[0-9]*
+
+# TeXnicCenter
+*.tps
+
+# auto folder when using emacs and auctex
+./auto/*
+*.el
+
+# expex forward references with \gathertags
+*-tags.tex
+
+# standalone packages
+*.sta
+
+# Makeindex log files
+*.lpz
+
+# xwatermark package
+*.xwm
+
+# REVTeX puts footnotes in the bibliography by default, unless the nofootinbib
+# option is specified. Footnotes are the stored in a file with suffix Notes.bib.
+# Uncomment the next line to have this generated file ignored.
+#*Notes.bib
+
+# Mac
+.DS_Store
+.vscode
+
+# Files generated by invoking Julia with --code-coverage
+*.jl.cov
+*.jl.*.cov
+
+# Files generated by invoking Julia with --track-allocation
+*.jl.mem
+
+# System-specific files and directories generated by the BinaryProvider and BinDeps packages
+# They contain absolute paths specific to the host computer, and so should not be committed
+deps/deps.jl
+deps/build.log
+deps/downloads/
+deps/usr/
+deps/src/
+
+# Build artifacts for creating documentation generated by the Documenter package
+docs/build/
+docs/site/
+
+# --------------------
+# Julia Environment Files
+# --------------------
+# Keep Project.toml; ignore Manifest.toml in packages
+!Project.toml
+# Ignore all Manifest.toml files...
 Manifest.toml
-benchmark/rocketJMP.out
-benchmark/rocketOC.out
-Benchmark/knitro.log
-/.vscode
+**/Manifest.toml
+# ...except the one inside docs/src/assets
+!docs/src/assets/Manifest.toml
