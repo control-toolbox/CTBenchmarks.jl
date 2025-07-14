@@ -8,5 +8,5 @@ function prettytime(t)
     else
         value, units = t / 1e9, "s"
     end
-    return string(value , " " , units)
+    return string(value, " ", units)
 end

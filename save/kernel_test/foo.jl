@@ -14,9 +14,9 @@ function dynamics_k!(dx, x, u)
     N = size(dx, 2)
     backend = KA.get_backend(dx)
     kernel = __dynamics!(backend)
-    kernel(dx, x, u, ndrange = N)
+    kernel(dx, x, u; ndrange=N)
     KA.synchronize(backend)
-    return
+    return nothing
 end
 
 @kernel function __dynamics!(dx, @Const(x), @Const(u))
@@ -37,9 +37,9 @@ function f_k!(y, x)
     N = size(x, 2)
     backend = KA.get_backend(x)
     kernel = __f!(backend)
-    kernel(y, x, ndrange = N)
+    kernel(y, x; ndrange=N)
     KA.synchronize(backend)
-    return
+    return nothing
 end
 
 @kernel function __f!(y, @Const(x))
@@ -60,14 +60,14 @@ function df_k!(dy, y, x)
     N = size(x, 2)
     backend = KA.get_backend(x)
     kernel = __df!(backend)
-    kernel(dy, y, x, ndrange = N)
+    kernel(dy, y, x; ndrange=N)
     KA.synchronize(backend)
-    return
+    return nothing
 end
 
 @kernel function __df!(dy, y, @Const(x))
     j = @index(Global, Linear)
-    df!(view(dy, :, :, j), view(y, :, j), view(x, :, j))
+    df!(view(dy,:,:,j), view(y, :, j), view(x, :, j))
     nothing # no return allowed
 end
 
@@ -76,28 +76,26 @@ function df!(dy, y, x)
     return nothing
 end
 
-macro kernelise(f, log = false)
-
+macro kernelise(f, log=false)
     f.head == :function || throw("unknown syntax")
     code = @match f.args[1] begin
-            :($fun($dx, $x, $u)) => begin
-                    j = Symbol(:j_, gensym())  
-                    body = f.args[2]
-                    body = subs2(body, dx, dx, j)
-                    body = subs2(body,  x,  x, j)
-                    body = subs2(body,  u,  u, j)
-                    quote
-                        @kernel function $fun($dx, @Const($x), @Const($u))
-                            $j = @index(Global, Linear)
-                            $body
-                        end
-                    end
+        :($fun($dx, $x, $u)) => begin
+            j = Symbol(:j_, gensym())
+            body = f.args[2]
+            body = subs2(body, dx, dx, j)
+            body = subs2(body, x, x, j)
+            body = subs2(body, u, u, j)
+            quote
+                @kernel function $fun($dx, @Const($x), @Const($u))
+                    $j = @index(Global, Linear)
+                    $body
+                end
             end
-            _ => throw("unknow syntax")
+        end
+        _ => throw("unknow syntax")
     end
     log && println("code: ", code)
     return code
-
 end
 
 @kernelise function foo!(dx, x, u)

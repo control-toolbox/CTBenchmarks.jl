@@ -1,6 +1,6 @@
-function consumption_savings_OC(;nh=1000)
+function consumption_savings_OC(; nh=1000)
     B0 = 100.0 # endowment
-    ocp = @def begin 
+    ocp = @def begin
         # Constants
         ρ = 0.025  # discount rate
         k = 100.0  # utility bliss point
@@ -20,12 +20,11 @@ function consumption_savings_OC(;nh=1000)
         ẋ(t) == [r*x(t) - u(t)]
 
         # Objective
-        ∫(exp(-ρ*t)* (-(u(t) - k)^2)) → max
-
+        ∫(exp(-ρ*t) * (-(u(t) - k)^2)) → max
     end
 
     # Initial guess
-    init = (state =B0, control = B0)
+    init = (state=B0, control=B0)
 
     # NLPModel + DOCP
     res = direct_transcription(ocp; init=init, grid_size=nh)
