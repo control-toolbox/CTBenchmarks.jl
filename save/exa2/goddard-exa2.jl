@@ -166,9 +166,15 @@ function docp_exa_s(N=100; backend=nothing, tfs=0.1, xs=0.1, us=0.1)
         c, s[3, j] - dm(x[1, j], x[2, j], x[3, j], u[1, j]) for j in 1:(N + 1)
     )
 
-    ExaModels.constraint(c, rk2(x[1, j], x[1, j + 1], s[1, j], s[1, j + 1], dt) for j in 1:N)
-    ExaModels.constraint(c, rk2(x[2, j], x[2, j + 1], s[2, j], s[2, j + 1], dt) for j in 1:N)
-    ExaModels.constraint(c, rk2(x[3, j], x[3, j + 1], s[3, j], s[3, j + 1], dt) for j in 1:N)
+    ExaModels.constraint(
+        c, rk2(x[1, j], x[1, j + 1], s[1, j], s[1, j + 1], dt) for j in 1:N
+    )
+    ExaModels.constraint(
+        c, rk2(x[2, j], x[2, j + 1], s[2, j], s[2, j + 1], dt) for j in 1:N
+    )
+    ExaModels.constraint(
+        c, rk2(x[3, j], x[3, j + 1], s[3, j], s[3, j + 1], dt) for j in 1:N
+    )
 
     ExaModels.objective(c, -x[1, N + 1])
 
