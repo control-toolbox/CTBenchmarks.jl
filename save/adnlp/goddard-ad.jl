@@ -12,14 +12,14 @@ using BenchmarkTools
 
 const n = 3 # State dim
 const m = 1 # Control dim
-const Cd = 310. # Drag (1/2)
-const β = 500. # Drag (2/2)
+const Cd = 310.0 # Drag (1/2)
+const β = 500.0 # Drag (2/2)
 const Tmax = 3.5 # Max thrust
-const b = 2. # Fuel consumption
+const b = 2.0 # Fuel consumption
 
-const r0 = 1. # Initial altitude
-const v0 = 0. # Initial speed
-const m0 = 1. # Initial const mass
+const r0 = 1.0 # Initial altitude
+const v0 = 0.0 # Initial speed
+const m0 = 1.0 # Initial const mass
 const vmax = 0.1 # Maximal authorized speed
 const mf = 0.6 # Final mass to target
 
@@ -33,38 +33,52 @@ end
 
 @inline function _get(z, j, d; offset=0)
     k = offset + 1 + (j - 1) * d
-    return @view z[k:k + d - 1]
+    return @view z[k:(k + d - 1)]
 end
 
-macro tf() esc( :( z[1] ) ) end # Assumes z, n, m, N are used
-macro x(i, j) esc( :( _get(z, $i, $j, n; offset=1) ) ) end
-macro x(j) esc( :( _get(z, $j, n; offset=1) ) ) end
-macro u(i, j) esc( :( _get(z, $i, $j, m; offset=1 + (N + 1) * n) ) ) end
-macro u(j) esc( :( _get(z, $j, m; offset=1 + (N + 1) * n) ) ) end
+macro tf()
+    esc(:(z[1]))
+end # Assumes z, n, m, N are used
+macro x(i, j)
+    esc(:(_get(z, $i, $j, n; offset=1)))
+end
+macro x(j)
+    esc(:(_get(z, $j, n; offset=1)))
+end
+macro u(i, j)
+    esc(:(_get(z, $i, $j, m; offset=1 + (N + 1) * n)))
+end
+macro u(j)
+    esc(:(_get(z, $j, m; offset=1 + (N + 1) * n)))
+end
 
 macro con(e)
     code = @match e begin # Assumes c, lcon, ucon, dim are used
-        :( $l ≤ $v ≤ $u ) => ( quote # Inequalities
-            dim = length($l) # not local to avoid reallocating
-            if set_bounds
-                append!(lcon, $l)
-                append!(ucon, $u)
-            else
-                c[k:k + dim - 1] .= $v
-                k = k + dim
+        :($l ≤ $v ≤ $u) => (
+            quote # Inequalities
+                dim = length($l) # not local to avoid reallocating
+                if set_bounds
+                    append!(lcon, $l)
+                    append!(ucon, $u)
+                else
+                    c[k:(k + dim - 1)] .= $v
+                    k = k + dim
+                end
             end
-        end )
-        :( $v == $w ) => ( quote # Equalities
-            dim = length($w) # not local to avoid reallocating
-            if set_bounds
-                append!(lcon, $w)
-                append!(ucon, $w)
-            else
-                c[k:k + dim - 1] .= $v
-                k = k + dim
+        )
+        :($v == $w) => (
+            quote # Equalities
+                dim = length($w) # not local to avoid reallocating
+                if set_bounds
+                    append!(lcon, $w)
+                    append!(ucon, $w)
+                else
+                    c[k:(k + dim - 1)] .= $v
+                    k = k + dim
+                end
             end
-        end )
-        _ => :( error("Wrong syntax: $e") ) # not implemented
+        )
+        _ => :(error("Wrong syntax: $e")) # not implemented
     end
     return esc(code)
 end
@@ -90,7 +104,6 @@ dm(r, v, m, u) = -b * Tmax * u
 rk2(x1, x2, rhs1, rhs2, dt) = x2 - x1 - dt / 2 * (rhs1 + rhs2)
 
 function con!(c, z, N; set_bounds=false)
-
     @init
 
     dt = (@tf) / N
@@ -99,52 +112,51 @@ function con!(c, z, N; set_bounds=false)
     @con 0 ≤ (@tf) ≤ Inf
 
     # x[:, 1] - [r0, v0, m0] == 0
-    @con @x(1) - [r0, v0, m0] == [0, 0, 0] 
+    @con @x(1) - [r0, v0, m0] == [0, 0, 0]
 
     # x[3, N + 1] == mf
     @con @x(3, N + 1) - mf == 0
 
     # 0 ≤ u[1, :] ≤ 1 
-    for j ∈ 1:N + 1
+    for j in 1:(N + 1)
         @con 0 ≤ @u(1, j) ≤ 1
     end
 
     # r0 ≤ x[1, :]
-    for j ∈ 1:N + 1
+    for j in 1:(N + 1)
         @con r0 ≤ @x(1, j) ≤ Inf
     end
 
     # 0 ≤ x[2, :] ≤ vmax
-    for j ∈ 1:N + 1
+    for j in 1:(N + 1)
         @con 0 ≤ @x(2, j) ≤ vmax
     end
 
     # rk2 on r
-    dj = dr(@x(1, 1), @x(2, 1), @x(3, 1), @u(1, 1)) 
-    for j ∈ 1:N
-        dj1 = dr(@x(1, j + 1), @x(2, j + 1), @x(3, j + 1), @u(1, j + 1)) 
+    dj = dr(@x(1, 1), @x(2, 1), @x(3, 1), @u(1, 1))
+    for j in 1:N
+        dj1 = dr(@x(1, j + 1), @x(2, j + 1), @x(3, j + 1), @u(1, j + 1))
         @con rk2(@x(1, j), @x(1, j + 1), dj, dj1, dt) == 0
         dj = dj1
     end
 
     # rk2 on v
-    dj = dv(@x(1, 1), @x(2, 1), @x(3, 1), @u(1, 1)) 
-    for j ∈ 1:N
-        dj1 = dv(@x(1, j + 1), @x(2, j + 1), @x(3, j + 1), @u(1, j + 1)) 
+    dj = dv(@x(1, 1), @x(2, 1), @x(3, 1), @u(1, 1))
+    for j in 1:N
+        dj1 = dv(@x(1, j + 1), @x(2, j + 1), @x(3, j + 1), @u(1, j + 1))
         @con rk2(@x(2, j), @x(2, j + 1), dj, dj1, dt) == 0
         dj = dj1
     end
 
     # rk2 on m
-    dj = dm(@x(1, 1), @x(2, 1), @x(3, 1), @u(1, 1)) 
-    for j ∈ 1:N
-        dj1 = dm(@x(1, j + 1), @x(2, j + 1), @x(3, j + 1), @u(1, j + 1)) 
-        @con rk2(@x(3, j), @x(3, j + 1), dj, dj1, dt) == 0 
+    dj = dm(@x(1, 1), @x(2, 1), @x(3, 1), @u(1, 1))
+    for j in 1:N
+        dj1 = dm(@x(1, j + 1), @x(2, j + 1), @x(3, j + 1), @u(1, j + 1))
+        @con rk2(@x(3, j), @x(3, j + 1), dj, dj1, dt) == 0
         dj = dj1
     end
 
     return lcon, ucon
-
 end
 
 ## Solve
@@ -155,7 +167,7 @@ z = ones(z_dim)
 
 f(z) = f(z, N)
 lcon, ucon = con!([], z, N; set_bounds=true)
-con!(c, z) = con!(c, z, N :: Int)
+con!(c, z) = con!(c, z, N::Int)
 @assert(length(lcon) == length(ucon) == 1 + n + 1 + 3(N + 1) + n * N)
 c_dim = length(lcon)
 c = -1.1ones(c_dim)
@@ -166,7 +178,6 @@ c = -1.1ones(c_dim)
 # Check
 
 ocp = @def begin
-
     tf ∈ R, variable
     t ∈ [0, tf], time
     x = (r, v, m) ∈ R³, state
@@ -185,7 +196,6 @@ ocp = @def begin
     ẋ(t) == [dr, dv, dm]
 
     r(tf) → max
-
 end
 
 display = false
@@ -199,7 +209,7 @@ x = state(sol)
 u = control(sol)
 t = range(0, @(tf); length=N + 1)
 
-for j ∈ 1:N + 1
+for j in 1:(N + 1)
     @x(j) .= x(t[j])
     @u(j) .= u(t[j])
 end
@@ -209,10 +219,10 @@ println()
 println("  Constraint check")
 println("  lcon    : ", lcon ≤ c)
 println("  ucon    : ", c ≤ ucon)
-println("  dynamics: ", norm(@view c[end - 3N + 1:end]))
+println("  dynamics: ", norm(@view c[(end - 3N + 1):end]))
 
 lvar = -Inf * ones(z_dim)
-uvar =  Inf * ones(z_dim)
+uvar = Inf * ones(z_dim)
 nlp = ADNLPModel!(f, z, lvar, uvar, con!, lcon, ucon)
 println()
 println("  Raw ADNLP")
