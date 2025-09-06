@@ -11,6 +11,4 @@ The CTBenchmarks.jl package is part of the [control-toolbox ecosystem](https://g
 
 <!-- INCLUDE_ABOUT -->
 
-<!-- INCLUDE_INSTALL -->
-
 <!-- INCLUDE_CONTRIBUTING -->
