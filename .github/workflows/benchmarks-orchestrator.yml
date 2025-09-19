@@ -5,23 +5,44 @@ on:
     types: [labeled, synchronize, reopened]
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
 
 jobs:
   guard:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     outputs:
-      should_run: >-
-        ${{
-          (
-            contains(github.event.pull_request.labels.*.name, 'run benchmark minimal')
-            || contains(github.event.pull_request.labels.*.name, 'run benchmarks all')
-          )
-          && github.event.pull_request.base.ref == 'main'
-        }}
+      should_run: ${{ steps.check.outputs.should_run }}
     steps:
-      - run: echo "Guard evaluated to ${{ needs.guard.outputs.should_run || 'N/A' }}"
+      - name: Check if benchmark should run
+        id: check
+        run: |
+          LABELS="${{ join(github.event.pull_request.labels.*.name, ' ') }}"
+          BASE="${{ github.event.pull_request.base.ref }}"
+
+          echo "Base branch: $BASE"
+          echo "Labels: $LABELS"
+
+          if [[ "$BASE" != "main" ]]; then
+            echo "❌ Not targeting main → skip"
+            echo "should_run=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          if echo "$LABELS" | grep -q "don't run benchmark"; then
+            echo "❌ Explicit 'don't run benchmark' label found → skip"
+            echo "should_run=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          if echo "$LABELS" | grep -q "run benchmark minimal" || echo "$LABELS" | grep -q "run benchmarks all"; then
+            echo "✅ Conditions met: benchmark label present"
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ No matching benchmark label → skip"
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          fi
 
   benchmarks:
     needs: guard
@@ -33,8 +54,71 @@ jobs:
 
   docs:
     needs: benchmarks
-    if: needs.guard.outputs.should_run == 'true'
+    if: success() && needs.guard.outputs.should_run == 'true'
     uses: control-toolbox/CTActions/.github/workflows/documentation.yml@main
     permissions:
       contents: write
       pull-requests: write
+
+  notify-failure:
+    needs: [guard, benchmarks, docs]
+    if: failure() && needs.guard.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Comment on PR with failure notification
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const failedJobs = [];
+            if (needs.benchmarks.result === 'failure') failedJobs.push('Benchmarks');
+            if (needs.docs.result === 'failure') failedJobs.push('Documentation');
+
+            const comment = `
+            ## ❌ Workflow Failed
+
+            The following jobs failed:
+            ${failedJobs.map(job => `- ${job}`).join('\n')}
+
+            See the [workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId}) for details.
+
+            To retry:
+            1. Remove and re-add the \`run benchmark\` label, or
+            2. Push new commits to this PR
+            `;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: comment
+            });
+
+  notify-success:
+    needs: [guard, benchmarks, docs]
+    if: success() && needs.guard.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Comment on PR with success notification
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+
+            const comment = `
+            ## ✅ Benchmark and Documentation Complete
+
+            - ✅ Benchmarks executed
+            - ✅ Documentation updated
+
+            See the [workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId}) for details.
+            `;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: comment
+            });
