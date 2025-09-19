@@ -15,11 +15,11 @@ cp(
 
 repo_url = "github.com/control-toolbox/CTBenchmarks.jl"
 
-makedocs(;
+makedocs(; 
     remotes=nothing,
     warnonly=:cross_references,
     sitename="CTBenchmarks",
-    format=Documenter.HTML(;
+    format=Documenter.HTML(; 
         repolink="https://" * repo_url,
         prettyurls=false,
         size_threshold_ignore=["index.md"],
@@ -28,7 +28,10 @@ makedocs(;
             asset("https://control-toolbox.org/assets/js/documentation.js"),
         ],
     ),
-    pages=["Introduction" => "index.md"],
+    pages=[
+        "Introduction" => "index.md",
+        "Minimal benchmark" => "benchmark-minimal.md",
+    ],
 )
 
 deploydocs(; repo=repo_url * ".git", devbranch="main")

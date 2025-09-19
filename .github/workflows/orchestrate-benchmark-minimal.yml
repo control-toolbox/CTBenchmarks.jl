@@ -1,0 +1,39 @@
+name: Orchestrate Minimal Benchmark and Docs
+
+on:
+  pull_request:
+    types: [labeled, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+    steps:
+      - id: check
+        run: |
+          LABELS='${{ toJson(github.event.pull_request.labels) }}'
+          BASE='${{ github.base_ref }}'
+          if echo "$LABELS" | grep -q '"name":"run benchmark minimal"' && [ "$BASE" = "main" ]; then
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          fi
+  benchmarks:
+    needs: guard
+    if: needs.guard.outputs.should_run == 'true'
+    uses: ./.github/workflows/benchmark-minimal.yml
+    permissions:
+      contents: write
+      pull-requests: write
+  docs:
+    needs: benchmarks
+    if: needs.guard.outputs.should_run == 'true'
+    uses: control-toolbox/CTActions/.github/workflows/documentation.yml@main
+    permissions:
+      contents: write
+      pull-requests: write
