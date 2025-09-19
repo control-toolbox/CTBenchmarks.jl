@@ -1,6 +1,9 @@
 name: Orchestrate Minimal Benchmark and Docs
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     types: [labeled, synchronize, reopened]
 
