@@ -109,8 +109,7 @@ jobs:
         with:
           script: |
             const prNumber = context.payload.pull_request.number;
-
-            const comment = `
+            let comment = `
             ## ✅ Benchmark and Documentation Complete
 
             - ✅ Benchmarks executed
@@ -118,6 +117,19 @@ jobs:
 
             See the [workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId}) for details.
             `;
+
+            // Construct the preview URL
+            const previewUrl = `https://control-toolbox.org/CTBenchmarks.jl/previews/PR${prNumber}`;
+
+            // Check if the preview URL exists
+            const execSync = require('child_process').execSync;
+            try {
+              execSync(`curl -f -s ${previewUrl}`, { stdio: 'ignore' });
+              // If curl succeeds, append the preview link
+              comment += `\n\n🔗 [Preview Documentation](${previewUrl})`;
+            } catch {
+              // URL does not exist, do nothing
+            }
 
             await github.rest.issues.createComment({
               owner: context.repo.owner,
