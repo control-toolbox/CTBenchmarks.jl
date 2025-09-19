@@ -6,7 +6,8 @@ on:
       - main
     tags: '*'
   pull_request:
-  
+
 jobs:
   call:
+    if: ${{ !( join(github.event.pull_request.labels.*.name, ' ') =~ '.*run benchmark.*' ) }}
     uses: control-toolbox/CTActions/.github/workflows/documentation.yml@main
