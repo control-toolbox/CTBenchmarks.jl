@@ -34,4 +34,4 @@ makedocs(;
     ],
 )
 
-deploydocs(; repo=repo_url * ".git", devbranch="main")
+deploydocs(; repo=repo_url * ".git", devbranch="main", push_preview=true)
