@@ -5,7 +5,6 @@ version = "0.1.0"
 
 [deps]
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
-InteractiveUtils = "62139c9c-4634-516f-b8ba-55a180d31980"
 Sockets = "6462fe0b-24de-5631-96d3-3d82896a219d"
 
 [compat]
