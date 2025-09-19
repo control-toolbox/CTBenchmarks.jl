@@ -10,8 +10,8 @@ JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 Sockets = "6462fe0b-24de-5631-8697-dd941f90decc"
 
 [compat]
-Dates = "1.11.0"
-InteractiveUtils = "1.11.0"
-JSON = "0.21.4"
-Sockets = "1.11.0"
+Dates = "1"
+InteractiveUtils = "1"
+JSON = "0.21"
+Sockets = "1"
 julia = "1.10"
