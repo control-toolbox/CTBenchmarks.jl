@@ -54,17 +54,20 @@ jobs:
           '
           echo "benchmark_success=true" >> $GITHUB_OUTPUT
 
-      # ---------------------------
-      # Commit benchmark results
-      # ---------------------------
+    # ---------------------------
+    # Commit benchmark results
+    # ---------------------------
       - name: Commit benchmark results to branch
         if: steps.benchmark.outputs.benchmark_success == 'true'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Ensure we are on the PR branch
-          git checkout -B auto-benchmark-minimal
+          # Fetch the remote branch if it exists
+          git fetch origin auto-benchmark-minimal:refs/remotes/origin/auto-benchmark-minimal || true
+
+          # Checkout or create the branch
+          git checkout -B auto-benchmark-minimal origin/auto-benchmark-minimal || git checkout -B auto-benchmark-minimal
 
           # Add the benchmark JSON
           git add benchmarks/minimal.json
@@ -72,7 +75,8 @@ jobs:
           # Commit only if there are changes
           if ! git diff --cached --quiet; then
             git commit -m "📊 Update minimal benchmark results [skip ci]"
-            git push --set-upstream origin auto-benchmark-minimal
+            # Force push to overwrite remote branch if needed
+            git push --force --set-upstream origin auto-benchmark-minimal
             echo "✅ Benchmark results committed and pushed"
           else
             echo "ℹ️ No changes in benchmark results, nothing to commit"
