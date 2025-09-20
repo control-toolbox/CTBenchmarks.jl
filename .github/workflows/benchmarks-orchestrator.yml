@@ -49,7 +49,7 @@ jobs:
   docs:
     needs: benchmarks
     if: success() && needs.guard.outputs.should_run == 'true'
-    uses: ./.github/workflows/documentation.yml
+    uses: control-toolbox/CTActions/.github/workflows/documentation.yml@main
     permissions:
       contents: write
       pull-requests: write
