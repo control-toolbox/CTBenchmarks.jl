@@ -19,21 +19,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
         with:
-          fetch-depth: 0  # Needed for full history / PRs
+          fetch-depth: 0
 
       # ---------------------------
       # Setup Julia Environment
       # ---------------------------
-      - name: Setup Julia
-        uses: julia-actions/setup-julia@v1
+      - uses: julia-actions/setup-julia@v1
         with:
           version: '1.11'
 
-      - name: Cache Julia packages
-        uses: julia-actions/cache@v2
+      - uses: julia-actions/cache@v2
 
-      - name: Build Julia package
-        uses: julia-actions/julia-buildpkg@v1
+      - uses: julia-actions/julia-buildpkg@v1
         with:
           ignore-no-cache: true
 
@@ -44,69 +41,41 @@ jobs:
         id: benchmark
         timeout-minutes: 30
         run: |
-          echo "Starting benchmark execution..."
           julia --color=yes -e '
-            using Pkg
-            try
-              Pkg.activate(".")
-              Pkg.instantiate()
-              using CTBenchmarks
-
-              out = CTBenchmarks.benchmark_minimal()
-              if isnothing(out) || isempty(string(out))
-                error("Benchmark returned empty or null result")
-              end
-
-              println("✅ Benchmark completed successfully")
-              println("📄 Benchmark written to: ", out)
-
-              # Save output path for later steps
-              open("benchmark_output.txt", "w") do f
-                write(f, string(out))
-              end
-            catch e
-              println("❌ ERROR: Benchmark failed:")
-              showerror(stdout, e)
-              exit(1)
+            using Pkg, CTBenchmarks
+            Pkg.activate(".")
+            Pkg.instantiate()
+            out = CTBenchmarks.benchmark_minimal()
+            println(out)
+            open("benchmark_output.txt", "w") do f
+              write(f, string(out))
             end
           '
           echo "benchmark_success=true" >> $GITHUB_OUTPUT
 
       # ---------------------------
-      # Validate Benchmark Output
+      # Commit benchmark results
       # ---------------------------
-      - name: Validate benchmark output
+      - name: Commit benchmark results to branch
         if: steps.benchmark.outputs.benchmark_success == 'true'
         run: |
-          if [ ! -f "benchmark_output.txt" ]; then
-            echo "❌ Benchmark output file not found"
-            exit 1
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Ensure we are on the PR branch
+          git checkout -B auto-benchmark-minimal
+
+          # Add the benchmark JSON
+          git add benchmarks/minimal.json
+
+          # Commit only if there are changes
+          if ! git diff --cached --quiet; then
+            git commit -m "📊 Update minimal benchmark results [skip ci]"
+            git push --set-upstream origin auto-benchmark-minimal
+            echo "✅ Benchmark results committed and pushed"
+          else
+            echo "ℹ️ No changes in benchmark results, nothing to commit"
           fi
-
-          OUTPUT_PATH=$(cat benchmark_output.txt)
-          if [ ! -f "$OUTPUT_PATH" ]; then
-            echo "❌ Benchmark result file does not exist: $OUTPUT_PATH"
-            exit 1
-          fi
-
-          if [ ! -s "$OUTPUT_PATH" ]; then
-            echo "❌ Benchmark result file is empty: $OUTPUT_PATH"
-            exit 1
-          fi
-
-          echo "✅ Benchmark output validation passed"
-          echo "📊 Result file: $OUTPUT_PATH ($(wc -l < "$OUTPUT_PATH") lines)"
-
-      # ---------------------------
-      # Upload Benchmark Artifact
-      # ---------------------------
-      - name: Upload benchmark artifact
-        if: steps.benchmark.outputs.benchmark_success == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: benchmark-minimal
-          path: benchmarks/minimal.json
-          if-no-files-found: error
 
       # ---------------------------
       # Check for Existing PR
@@ -119,10 +88,8 @@ jobs:
           if [ -n "$EXISTING_PR" ]; then
             echo "existing_pr_number=$EXISTING_PR" >> $GITHUB_OUTPUT
             echo "has_existing_pr=true" >> $GITHUB_OUTPUT
-            echo "🔄 Found existing PR #$EXISTING_PR"
           else
             echo "has_existing_pr=false" >> $GITHUB_OUTPUT
-            echo "📝 No existing PR found, will create new one"
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -140,50 +107,8 @@ jobs:
           title: "[AUTO] Minimal benchmark results"
           body: |
             ## 📊 Automated Benchmark Results
-
             This PR contains updated minimal benchmark results.
-
-            ### Details
-            - **Triggered by**: ${{ github.event_name }}
-            - **Source branch/PR**: ${{ github.head_ref || github.ref_name }}
-            - **Commit**: ${{ github.sha }}
-            - **Run ID**: [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-
-            ### Files Changed
-            The benchmark results have been updated with the latest performance metrics.
-
-            ---
-            *This PR was automatically generated by the benchmark workflow.*
           branch: auto-benchmark-minimal
-          base: ${{ github.event.pull_request.base.ref }}  # FIX: explicitly specify target branch
+          base: ${{ github.event.pull_request.base.ref }}
           delete-branch: true
           labels: benchmarks, automated pr, no changelog
-
-      # ---------------------------
-      # Report Results
-      # ---------------------------
-      - name: Report results
-        if: always()
-        run: |
-          echo "## 📊 Benchmark Workflow Summary"
-
-          if [ "${{ steps.benchmark.outputs.benchmark_success }}" == "true" ]; then
-            echo "✅ Benchmark execution: SUCCESS"
-
-            if [ "${{ steps.cpr.outputs.pull-request-number }}" != "" ]; then
-              echo "✅ Pull Request: CREATED/UPDATED"
-              echo "   - Number: ${{ steps.cpr.outputs.pull-request-number }}"
-              echo "   - URL: ${{ steps.cpr.outputs.pull-request-url }}"
-
-              if [ "${{ steps.check-pr.outputs.has_existing_pr }}" == "true" ]; then
-                echo "   - Type: Updated existing PR #${{ steps.check-pr.outputs.existing_pr_number }}"
-              else
-                echo "   - Type: New PR created"
-              fi
-            else
-              echo "ℹ️  Pull Request: NO CHANGES DETECTED"
-            fi
-          else
-            echo "❌ Benchmark execution: FAILED"
-            exit 1
-          fi

@@ -7,8 +7,8 @@ on:
     types: [labeled, synchronize, reopened]
 
 permissions:
-  actions: write   # 👈 allow cache cleanup
-  contents: read   # 👈 keep read-only repo access
+  actions: write
+  contents: write
   pull-requests: write
 
 jobs:
@@ -28,16 +28,13 @@ jobs:
           echo "Labels: $LABELS"
 
           if [[ "$BASE" != "main" ]]; then
-            echo "❌ Not targeting main → skip"
             echo "should_run=false" >> $GITHUB_OUTPUT
             exit 0
           fi
 
           if echo "$LABELS" | grep -q "run benchmark minimal" || echo "$LABELS" | grep -q "run benchmarks all"; then
-            echo "✅ Conditions met: benchmark label present"
             echo "should_run=true" >> $GITHUB_OUTPUT
           else
-            echo "❌ No matching benchmark label → skip"
             echo "should_run=false" >> $GITHUB_OUTPUT
           fi
 
@@ -49,38 +46,18 @@ jobs:
       contents: write
       pull-requests: write
 
-  docs-artifacts:
+  docs:
     needs: benchmarks
     if: success() && needs.guard.outputs.should_run == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download benchmark artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: benchmark-minimal
-          path: benchmarks
-        continue-on-error: true
-
-      - name: Upload again for docs job
-        if: success() # only re-upload if something was downloaded
-        uses: actions/upload-artifact@v4
-        with:
-          name: benchmark-minimal
-          path: benchmarks
-
-  docs:
-    needs: docs-artifacts
-    if: success() && needs.guard.outputs.should_run == 'true'
-    uses: control-toolbox/CTActions/.github/workflows/documentation.yml@main
+    uses: ./.github/workflows/documentation.yml
     permissions:
       contents: write
       pull-requests: write
-    
+
   notify-failure:
     needs: [guard, benchmarks, docs]
     if: failure() && needs.guard.outputs.should_run == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
     steps:
       - name: Comment on PR with failure notification
         uses: actions/github-script@v7
@@ -93,15 +70,8 @@ jobs:
 
             const comment = `
             ## ❌ Workflow Failed
-
             The following jobs failed:
             ${failedJobs.map(job => `- ${job}`).join('\n')}
-
-            See the [workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId}) for details.
-
-            To retry:
-            1. Remove and re-add the \`run benchmark\` label, or
-            2. Push new commits to this PR
             `;
 
             await github.rest.issues.createComment({
@@ -115,7 +85,6 @@ jobs:
     needs: [guard, benchmarks, docs]
     if: success() && needs.guard.outputs.should_run == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
     steps:
       - name: Comment on PR with success notification
         uses: actions/github-script@v7
@@ -124,26 +93,9 @@ jobs:
             const prNumber = context.payload.pull_request.number;
             let comment = `
             ## ✅ Benchmark and Documentation Complete
-
             - ✅ Benchmarks executed
             - ✅ Documentation updated
-
-            See the [workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId}) for details.
             `;
-
-            // Construct the preview URL
-            const previewUrl = `https://control-toolbox.org/CTBenchmarks.jl/previews/PR${prNumber}`;
-
-            // Check if the preview URL exists
-            const execSync = require('child_process').execSync;
-            try {
-              execSync(`curl -f -s ${previewUrl}`, { stdio: 'ignore' });
-              // If curl succeeds, append the preview link
-              comment += `\n\n🔗 [Preview Documentation](${previewUrl})`;
-            } catch {
-              // URL does not exist, do nothing
-            }
-
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
