@@ -91,3 +91,19 @@ jobs:
               echo "💡 Push events only run benchmarks when pushed to 'main'"
             fi
           fi
+
+  benchmarks:
+    needs: guard
+    if: needs.guard.outputs.should_run == 'true'
+    uses: ./.github/workflows/benchmark-minimal.yml
+    permissions:
+      contents: write
+      pull-requests: write
+
+  docs:
+    needs: [guard, benchmarks]
+    if: success() && needs.guard.outputs.should_run == 'true'
+    uses: control-toolbox/CTActions/.github/workflows/documentation.yml@main
+    permissions:
+      contents: write
+      pull-requests: write
