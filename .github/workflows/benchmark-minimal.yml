@@ -42,9 +42,10 @@ jobs:
         timeout-minutes: 30
         run: |
           julia --color=yes -e '
-            using Pkg, CTBenchmarks
+            using Pkg
             Pkg.activate(".")
             Pkg.instantiate()
+            using CTBenchmarks
             out = CTBenchmarks.benchmark_minimal()
             println(out)
             open("benchmark_output.txt", "w") do f
