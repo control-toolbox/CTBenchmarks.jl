@@ -67,7 +67,7 @@ end
 # ------------------------------
 
 """
-    benchmark_minimal(; outpath::AbstractString = joinpath(normpath(@__DIR__, ".."), "docs", "src, "assets", "benchmark-minimal", "data.json")) -> String
+    benchmark_minimal(; outpath::AbstractString = joinpath(normpath(@__DIR__, ".."), "docs", "src", "assets", "benchmark-minimal", "data.json")) -> String
 
 Run a minimal placeholder benchmark and save results to a JSON file.
 
