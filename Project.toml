@@ -3,5 +3,15 @@ uuid = "db1dffaa-5ed3-4583-9a66-b5881c82ef11"
 authors = ["Olivier Cots <olivier.cots@toulouse-inp.fr>"]
 version = "0.1.0"
 
+[deps]
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+Sockets = "6462fe0b-24de-5631-8697-dd941f90decc"
+
 [compat]
+Dates = "1"
+InteractiveUtils = "1"
+JSON = "0.21"
+Sockets = "1"
 julia = "1.10"

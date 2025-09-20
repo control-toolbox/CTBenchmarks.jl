@@ -1,5 +1,12 @@
 module CTBenchmarks
 
-greet() = print("Hello World!")
+using Dates
+using JSON
+using InteractiveUtils
+using Sockets
 
-end
+include("benchmark-minimal.jl")
+
+export benchmark_minimal
+
+end # module
