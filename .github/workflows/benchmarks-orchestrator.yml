@@ -224,7 +224,7 @@ jobs:
             ${previewSection}
             ### 📋 Results
             - 🎯 Benchmark results have been committed to your feature branch
-            - 📄 The \`docs/assets/benchmark-minimal/data.json\` file is now part of your PR changes
+            - 📄 The \`docs/src/assets/benchmark-minimal/data.json\` file is now part of your PR changes
             - 📚 Documentation has been regenerated with the latest benchmark data
 
             ### 🔗 Links
@@ -291,4 +291,3 @@ jobs:
           
           echo "🎯 Overall Status: $overall_status"
           echo "📋 ==================================="
-          
