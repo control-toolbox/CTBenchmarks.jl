@@ -57,8 +57,8 @@ Uses pretty printing for readability.
 function save_json(payload::Dict, outpath::AbstractString)
     mkpath(dirname(outpath))
     open(outpath, "w") do io
-        # JSON.jl only supports this
-        JSON.print(io, payload)
+        JSON.print(io, payload)    # pretty printed, multi-line
+        write(io, '\n')            # add trailing newline
     end
 end
 
