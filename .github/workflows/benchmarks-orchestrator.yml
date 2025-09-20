@@ -101,7 +101,7 @@ jobs:
       pull-requests: write
 
   docs:
-    needs: benchmarks
+    needs: [guard, benchmarks]
     if: success() && needs.guard.outputs.should_run == 'true'
     uses: control-toolbox/CTActions/.github/workflows/documentation.yml@main
     permissions:
