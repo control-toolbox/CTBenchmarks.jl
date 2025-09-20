@@ -105,23 +105,28 @@ jobs:
       - name: Checkout with latest changes
         uses: actions/checkout@v5
         with:
+          ref: ${{ github.head_ref || github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Wait for benchmark commit to be available
+      - name: Pull latest changes including benchmark results
         run: |
-          echo "⏳ Waiting for benchmark results to be committed..."
-          for i in {1..30}; do
-            if [ -f "docs/src/assets/benchmark-minimal/data.json" ]; then
-              echo "✅ Found benchmark file!"
-              break
-            fi
-            echo "📂 Attempt $i: Benchmark file not found yet..."
-            sleep 10
-          done
+          echo "🔄 Pulling latest changes from branch..."
+          git pull origin ${{ github.head_ref || github.ref_name }}
+          echo "✅ Latest changes pulled"
 
-          if [ ! -f "docs/src/assets/benchmark-minimal/data.json" ]; then
-            echo "❌ Benchmark file still not found after 5 minutes"
+      - name: Verify benchmark file exists
+        run: |
+          echo "🔍 Checking for benchmark results..."
+          if [ -f "docs/src/assets/benchmark-minimal/data.json" ]; then
+            echo "✅ Benchmark file found!"
+            echo "📏 File size: $(stat -c%s docs/src/assets/benchmark-minimal/data.json 2>/dev/null || stat -f%z docs/src/assets/benchmark-minimal/data.json) bytes"
+            echo "🔎 File preview:"
+            head -5 docs/src/assets/benchmark-minimal/data.json
+          else
+            echo "❌ Benchmark file not found at docs/src/assets/benchmark-minimal/data.json"
+            echo "📂 Contents of docs/src/assets/:"
+            find docs/src/assets/ -type f 2>/dev/null || echo "Directory not found"
             exit 1
           fi
 
