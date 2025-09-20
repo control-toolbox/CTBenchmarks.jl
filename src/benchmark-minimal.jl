@@ -67,7 +67,7 @@ end
 # ------------------------------
 
 """
-    benchmark_minimal(; outpath::AbstractString = joinpath(normpath(@__DIR__, ".."), "benchmarks", "minimal.json")) -> String
+    benchmark_minimal(; outpath::AbstractString = joinpath(normpath(@__DIR__, ".."), "docs", "assets", "benchmark-minimal", "data.json")) -> String
 
 Run a minimal placeholder benchmark and save results to a JSON file.
 
@@ -78,12 +78,12 @@ This function performs the following steps:
 4. Saves the payload to `outpath` as pretty-printed JSON.
 
 # Arguments
-- `outpath`: path to save the JSON file (default: `benchmarks/minimal.json` relative to package root)
+- `outpath`: path to save the JSON file (default: `docs/assets/benchmark-minimal/data.json` relative to package root)
 
 # Returns
 - The `outpath` of the saved JSON file.
 """
-function benchmark_minimal(; outpath::AbstractString = joinpath(normpath(@__DIR__, ".."), "benchmarks", "minimal.json"))    
+function benchmark_minimal(; outpath::AbstractString = joinpath(normpath(@__DIR__, ".."), "docs", "assets", "benchmark-minimal", "data.json"))    
     results = generate_dummy_results()
     meta = generate_metadata()
     payload = build_payload(results, meta)

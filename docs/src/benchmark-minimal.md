@@ -1,6 +1,6 @@
 # Minimal benchmark
 
-This page attempts to read the minimal benchmark results from `benchmarks/minimal.json` at the root of the repository.
+This page attempts to read the minimal benchmark results from `docs/assets/benchmark-minimal/data.json` at the root of the repository.
 If the file is not present (e.g., benchmarks were not run yet), a message will be displayed.
 
 ```@setup bench
@@ -18,7 +18,7 @@ function _read_benchmark_json(path::AbstractString)
     end
 end
 
-const _BENCH_PATH = joinpath(@__DIR__, "..", "..", "benchmarks", "minimal.json")
+const _BENCH_PATH = joinpath(@__DIR__, "assets", "benchmark-minimal", "data.json")
 bench_data = _read_benchmark_json(_BENCH_PATH)
 ```
 

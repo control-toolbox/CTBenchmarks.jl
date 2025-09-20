@@ -192,7 +192,7 @@ jobs:
             ${previewSection}
             ### 📋 Results
             - 🎯 Benchmark results have been committed to your feature branch
-            - 📄 The \`benchmarks/minimal.json\` file is now part of your PR changes
+            - 📄 The \`docs/assets/benchmark-minimal/data.json\` file is now part of your PR changes
             - 📚 Documentation has been regenerated with the latest benchmark data
             
             ### 🔗 Links
