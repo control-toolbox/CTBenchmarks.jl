@@ -96,17 +96,48 @@ jobs:
     needs: guard
     if: needs.guard.outputs.should_run == 'true'
     uses: ./.github/workflows/benchmark-minimal.yml
-    permissions:
-      contents: write
-      pull-requests: write
 
   docs:
     needs: [guard, benchmarks]
     if: success() && needs.guard.outputs.should_run == 'true'
-    uses: control-toolbox/CTActions/.github/workflows/documentation.yml@main
-    permissions:
-      contents: write
-      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with latest changes
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Wait for benchmark commit to be available
+        run: |
+          echo "⏳ Waiting for benchmark results to be committed..."
+          for i in {1..30}; do
+            if [ -f "docs/src/assets/benchmark-minimal/data.json" ]; then
+              echo "✅ Found benchmark file!"
+              break
+            fi
+            echo "📂 Attempt $i: Benchmark file not found yet..."
+            sleep 10
+          done
+
+          if [ ! -f "docs/src/assets/benchmark-minimal/data.json" ]; then
+            echo "❌ Benchmark file still not found after 5 minutes"
+            exit 1
+          fi
+
+      - uses: julia-actions/setup-julia@latest
+      - uses: julia-actions/julia-buildpkg@latest
+
+      - name: Install dependencies
+        run: julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
+
+      - name: Build and deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCUMENTER_KEY: ${{ secrets.DOCUMENTER_KEY }}
+          GKSwstype: 100
+        run: |
+          julia --project=docs/ -e 'ENV["GKSwstype"]="nul"; include("docs/make.jl")'
 
   notify-failure:
     needs: [guard, benchmarks, docs]
