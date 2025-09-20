@@ -94,14 +94,12 @@ jobs:
 
   benchmarks:
     needs: guard
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run benchmarks
-        uses: actions/github-script@v7
-        with:
-          script: |
-            echo "Running benchmarks..."
-            
+    if: needs.guard.outputs.should_run == 'true'
+    uses: ./.github/workflows/benchmark-minimal.yml
+    permissions:
+      contents: write
+      pull-requests: write
+
   docs:
     needs: [guard, benchmarks]
     if: success() && needs.guard.outputs.should_run == 'true'
