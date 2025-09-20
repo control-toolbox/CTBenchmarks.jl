@@ -21,21 +21,47 @@ jobs:
       - name: Check if benchmark should run
         id: check
         run: |
+          echo "🛡️  Guard job: Checking execution conditions..."
+          
           LABELS="${{ join(github.event.pull_request.labels.*.name, ' ') }}"
           BASE="${{ github.event.pull_request.base.ref }}"
 
-          echo "Base branch: $BASE"
-          echo "Labels: $LABELS"
+          echo "🎯 Base branch: $BASE"
+          echo "🏷️  PR labels: $LABELS"
+          echo "📋 Event type: ${{ github.event_name }}"
 
           if [[ "$BASE" != "main" ]]; then
+            echo "❌ Base branch is not 'main' - skipping benchmark"
             echo "should_run=false" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          if echo "$LABELS" | grep -q "run benchmark minimal" || echo "$LABELS" | grep -q "run benchmarks all"; then
+          echo "✅ Base branch check passed (main)"
+
+          if echo "$LABELS" | grep -q "run benchmark minimal"; then
+            echo "✅ Found 'run benchmark minimal' label"
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          elif echo "$LABELS" | grep -q "run benchmarks all"; then
+            echo "✅ Found 'run benchmarks all' label"
             echo "should_run=true" >> $GITHUB_OUTPUT
           else
+            echo "❌ Required benchmark labels not found"
+            echo "ℹ️  Expected labels: 'run benchmark minimal' or 'run benchmarks all'"
             echo "should_run=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 📊 Guard decision summary
+        run: |
+          echo "🛡️  Guard Job Summary:"
+          echo "🎯 Should run benchmarks: ${{ steps.check.outputs.should_run }}"
+          if [ "${{ steps.check.outputs.should_run }}" == "true" ]; then
+            echo "✅ All conditions met - proceeding with benchmark and docs"
+            echo "🚀 Next: Benchmark execution will start"
+          else
+            echo "⏭️  Conditions not met - skipping benchmark workflow"
+            echo "💡 To run benchmarks, ensure:"
+            echo "   • PR targets 'main' branch"
+            echo "   • PR has 'run benchmark minimal' or 'run benchmarks all' label"
           fi
 
   benchmarks:
@@ -63,23 +89,54 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            console.log('🚨 Workflow failure detected - posting notification...');
+            
             const prNumber = context.payload.pull_request.number;
             const failedJobs = [];
-            if (needs.benchmarks.result === 'failure') failedJobs.push('Benchmarks');
-            if (needs.docs.result === 'failure') failedJobs.push('Documentation');
+            
+            console.log('📊 Analyzing job results...');
+            if (needs.benchmarks.result === 'failure') {
+              console.log('❌ Benchmarks job failed');
+              failedJobs.push('Benchmarks');
+            }
+            if (needs.docs.result === 'failure') {
+              console.log('❌ Documentation job failed');
+              failedJobs.push('Documentation');
+            }
+            
+            console.log(`📝 Failed jobs: ${failedJobs.join(', ')}`);
 
             const comment = `
             ## ❌ Workflow Failed
-            The following jobs failed:
-            ${failedJobs.map(job => `- ${job}`).join('\n')}
+            
+            The benchmark and documentation workflow encountered failures:
+            
+            ### Failed Jobs
+            ${failedJobs.map(job => `- ❌ ${job}`).join('\n')}
+            
+            ### 🔍 Troubleshooting
+            - Check the [workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId}) for detailed logs
+            - Verify that all required dependencies are available
+            - Ensure the benchmark code is functioning correctly
+            
+            ### 🔄 Next Steps
+            - Fix any issues identified in the logs
+            - Push new commits to retry, or
+            - Remove and re-add the benchmark label to restart
+            
+            ---
+            *🤖 This notification was automatically generated*
             `;
 
+            console.log('💬 Posting failure comment to PR...');
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
               body: comment
             });
+            
+            console.log('✅ Failure notification posted successfully');
 
   notify-success:
     needs: [guard, benchmarks, docs]
@@ -90,15 +147,115 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            console.log('🎉 Workflow success detected - posting notification...');
+            
             const prNumber = context.payload.pull_request.number;
+            const previewUrl = `https://control-toolbox.org/CTBenchmarks.jl/previews/PR${prNumber}/index.html`;
+            
+            console.log(`📝 Preparing success comment for PR #${prNumber}...`);
+            console.log(`🔍 Checking documentation preview at: ${previewUrl}`);
+            
+            // Check if the preview documentation exists
+            let previewSection = '';
+            try {
+              const response = await fetch(previewUrl, { method: 'HEAD' });
+              if (response.ok) {
+                console.log('✅ Documentation preview is available');
+                previewSection = `
+            ### 📖 Documentation Preview
+            - 🌐 **[📚 View Documentation Preview](${previewUrl})** ← Click to see your changes!
+                `;
+              } else {
+                console.log(`⚠️ Documentation preview not yet available (HTTP ${response.status})`);
+                previewSection = `
+            ### 📖 Documentation Preview
+            - ⏳ Documentation preview will be available shortly at: [Preview Link](${previewUrl})
+                `;
+              }
+            } catch (error) {
+              console.log(`⚠️ Could not check preview availability: ${error.message}`);
+              previewSection = `
+            ### 📖 Documentation Preview
+            - ⏳ Documentation preview will be available shortly at: [Preview Link](${previewUrl})
+            `;
+            }
+            
             let comment = `
             ## ✅ Benchmark and Documentation Complete
-            - ✅ Benchmarks executed
-            - ✅ Documentation updated
+            
+            The automated workflow has completed successfully! 🎉
+            
+            ### ✅ Completed Tasks
+            - 📊 **Benchmarks**: Minimal benchmark executed and results saved to your branch
+            - 📚 **Documentation**: Documentation updated successfully
+            - 🔄 **Integration**: All changes integrated properly
+            ${previewSection}
+            ### 📋 Results
+            - 🎯 Benchmark results have been committed to your feature branch
+            - 📄 The \`benchmarks/minimal.json\` file is now part of your PR changes
+            - 📚 Documentation has been regenerated with the latest benchmark data
+            
+            ### 🔗 Links
+            - 📊 [View workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId})
+            - 🌿 [View your feature branch](${context.payload.repository.html_url}/tree/${context.payload.pull_request.head.ref})
+            
+            ---
+            *🤖 This notification was automatically generated*
             `;
+            
+            console.log('💬 Posting success comment to PR...');
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
               body: comment
             });
+            
+            console.log('✅ Success notification posted successfully');
+
+  workflow-summary:
+    needs: [guard, benchmarks, docs]
+    if: always() && needs.guard.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📊 Final workflow summary
+        run: |
+          echo "📋 ==================================="
+          echo "📊 WORKFLOW EXECUTION SUMMARY"
+          echo "📋 ==================================="
+          echo ""
+          echo "🛡️  Guard Job: ✅ PASSED"
+          echo "   └─ Conditions met for execution"
+          echo ""
+          
+          if [ "${{ needs.benchmarks.result }}" == "success" ]; then
+            echo "📊 Benchmarks: ✅ SUCCESS"
+            echo "   └─ Minimal benchmark completed"
+          elif [ "${{ needs.benchmarks.result }}" == "failure" ]; then
+            echo "📊 Benchmarks: ❌ FAILED"
+            echo "   └─ Check logs for details"
+          else
+            echo "📊 Benchmarks: ⏭️  SKIPPED"
+          fi
+          
+          if [ "${{ needs.docs.result }}" == "success" ]; then
+            echo "📚 Documentation: ✅ SUCCESS"
+            echo "   └─ Docs updated successfully"
+          elif [ "${{ needs.docs.result }}" == "failure" ]; then
+            echo "📚 Documentation: ❌ FAILED"
+            echo "   └─ Check logs for details"
+          else
+            echo "📚 Documentation: ⏭️  SKIPPED"
+          fi
+          
+          echo ""
+          echo "🔗 Workflow URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo ""
+          
+          overall_status="✅ SUCCESS"
+          if [ "${{ needs.benchmarks.result }}" == "failure" ] || [ "${{ needs.docs.result }}" == "failure" ]; then
+            overall_status="❌ FAILED"
+          fi
+          
+          echo "🎯 Overall Status: $overall_status"
+          echo "📋 ==================================="

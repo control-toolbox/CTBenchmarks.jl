@@ -21,6 +21,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: 📋 Repository checkout status
+        run: |
+          echo "✅ Repository checked out successfully"
+          echo "📁 Current directory: $(pwd)"
+          echo "📊 Total files: $(find . -type f | wc -l)"
+
       # ---------------------------
       # Setup Julia Environment
       # ---------------------------
@@ -28,11 +34,24 @@ jobs:
         with:
           version: '1.11'
 
+      - name: 🔧 Julia setup status
+        run: |
+          echo "✅ Julia $(julia --version | cut -d' ' -f3) installed successfully"
+          echo "📍 Julia location: $(which julia)"
+
       - uses: julia-actions/cache@v2
+
+      - name: 💾 Julia cache status
+        run: echo "✅ Julia package cache configured"
 
       - uses: julia-actions/julia-buildpkg@v1
         with:
           ignore-no-cache: true
+
+      - name: 🔨 Package build status
+        run: |
+          echo "✅ Julia package built successfully"
+          echo "📦 CTBenchmarks package ready for use"
 
       # ---------------------------
       # Run Minimal Benchmark
@@ -41,79 +60,111 @@ jobs:
         id: benchmark
         timeout-minutes: 30
         run: |
+          echo "🚀 Starting minimal benchmark execution..."
+          echo "⏱️  Benchmark timeout: 30 minutes"
+          
           julia --color=yes -e '
             using Pkg
+            println("📦 Activating project environment...")
             Pkg.activate(".")
+            println("📥 Installing dependencies...")
             Pkg.instantiate()
+            println("🔄 Loading CTBenchmarks package...")
             using CTBenchmarks
+            println("⏱️  Running minimal benchmark...")
             out = CTBenchmarks.benchmark_minimal()
-            println(out)
+            println("✅ Benchmark completed successfully!")
+            println("📄 Output file: ", out)
             open("benchmark_output.txt", "w") do f
               write(f, string(out))
             end
+            println("💾 Output path saved to benchmark_output.txt")
           '
+          
+          echo "✅ Benchmark execution completed"
           echo "benchmark_success=true" >> $GITHUB_OUTPUT
 
-    # ---------------------------
-    # Commit benchmark results
-    # ---------------------------
-      - name: Commit benchmark results to branch
+      - name: 📊 Benchmark results validation
         if: steps.benchmark.outputs.benchmark_success == 'true'
         run: |
+          echo "🔍 Validating benchmark results..."
+          
+          if [ -f "benchmark_output.txt" ]; then
+            OUTPUT_PATH=$(cat benchmark_output.txt)
+            echo "✅ Benchmark output file found: $OUTPUT_PATH"
+            
+            if [ -f "$OUTPUT_PATH" ]; then
+              FILE_SIZE=$(stat -f%z "$OUTPUT_PATH" 2>/dev/null || stat -c%s "$OUTPUT_PATH" 2>/dev/null || echo "unknown")
+              LINE_COUNT=$(wc -l < "$OUTPUT_PATH")
+              echo "✅ Benchmark JSON file created successfully"
+              echo "📏 File size: $FILE_SIZE bytes"
+              echo "📝 File lines: $LINE_COUNT"
+              echo "📍 File location: $OUTPUT_PATH"
+              
+              # Show first few lines of the JSON for verification
+              echo "🔎 JSON content preview:"
+              head -10 "$OUTPUT_PATH"
+              if [ $LINE_COUNT -gt 10 ]; then
+                echo "   ... (truncated, $LINE_COUNT total lines)"
+              fi
+            else
+              echo "❌ ERROR: Benchmark JSON file not found at $OUTPUT_PATH"
+              exit 1
+            fi
+          else
+            echo "❌ ERROR: benchmark_output.txt not found"
+            exit 1
+          fi
+
+    # ---------------------------
+    # Commit benchmark results to current branch
+    # ---------------------------
+      - name: Commit benchmark results to current branch
+        if: steps.benchmark.outputs.benchmark_success == 'true'
+        run: |
+          echo "🔧 Configuring git user..."
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          echo "✅ Git user configured"
 
-          # Fetch the remote branch if it exists
-          git fetch origin auto-benchmark-minimal:refs/remotes/origin/auto-benchmark-minimal || true
-
-          # Checkout or create the branch
-          git checkout -B auto-benchmark-minimal origin/auto-benchmark-minimal || git checkout -B auto-benchmark-minimal
-
+          echo "🌿 Working on current branch: $(git branch --show-current)"
+          echo "📊 Adding benchmark results to current branch..."
+          
           # Add the benchmark JSON
           git add benchmarks/minimal.json
 
+          # Check if file was added
+          if git diff --cached --name-only | grep -q "benchmarks/minimal.json"; then
+            echo "✅ benchmarks/minimal.json staged for commit"
+            
+            # Show what's being committed
+            echo "📋 Files to be committed:"
+            git diff --cached --name-status
+          else
+            echo "⚠️  benchmarks/minimal.json not staged (possibly no changes)"
+          fi
+
           # Commit only if there are changes
           if ! git diff --cached --quiet; then
-            git commit -m "📊 Update minimal benchmark results [skip ci]"
-            # Force push to overwrite remote branch if needed
-            git push --force --set-upstream origin auto-benchmark-minimal
-            echo "✅ Benchmark results committed and pushed"
+            echo "📝 Committing benchmark results to current branch..."
+            git commit -m "📊 Add minimal benchmark results
+
+            echo "✅ Benchmark results committed successfully"
+            
+            echo "🚀 Pushing changes to current branch..."
+            git push
+            echo "✅ Benchmark results pushed to ${{ github.head_ref || github.ref_name }}"
           else
-            echo "ℹ️ No changes in benchmark results, nothing to commit"
+            echo "ℹ️  No changes detected in benchmark results"
+            echo "📊 Current results are identical to previous run"
           fi
 
-      # ---------------------------
-      # Check for Existing PR
-      # ---------------------------
-      - name: Check for existing PR
-        id: check-pr
+      - name: 📋 Benchmark workflow summary
         if: steps.benchmark.outputs.benchmark_success == 'true'
         run: |
-          EXISTING_PR=$(gh pr list --head auto-benchmark-minimal --json number --jq '.[0].number // empty')
-          if [ -n "$EXISTING_PR" ]; then
-            echo "existing_pr_number=$EXISTING_PR" >> $GITHUB_OUTPUT
-            echo "has_existing_pr=true" >> $GITHUB_OUTPUT
-          else
-            echo "has_existing_pr=false" >> $GITHUB_OUTPUT
-          fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # ---------------------------
-      # Create or Update Pull Request
-      # ---------------------------
-      - name: Create or Update Pull Request
-        id: cpr
-        if: steps.benchmark.outputs.benchmark_success == 'true'
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: ":stopwatch: Add/update minimal benchmark results"
-          title: "[AUTO] Minimal benchmark results"
-          body: |
-            ## 📊 Automated Benchmark Results
-            This PR contains updated minimal benchmark results.
-          branch: auto-benchmark-minimal
-          base: ${{ github.event.pull_request.base.ref }}
-          delete-branch: true
-          labels: benchmarks, automated pr, no changelog
+          echo "📊 Benchmark workflow summary:"
+          echo "✅ Benchmark execution: SUCCESS"
+          echo "📁 Results saved to: benchmarks/minimal.json"
+          echo "🌿 Results committed to: ${{ github.head_ref || github.ref_name }} branch"
+          echo "📚 Ready for documentation generation"
+          echo "🎉 Minimal benchmark workflow completed successfully!"
