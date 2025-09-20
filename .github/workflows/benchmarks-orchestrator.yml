@@ -23,30 +23,44 @@ jobs:
         run: |
           echo "🛡️  Guard job: Checking execution conditions..."
           
-          LABELS="${{ join(github.event.pull_request.labels.*.name, ' ') }}"
-          BASE="${{ github.event.pull_request.base.ref }}"
-
-          echo "🎯 Base branch: $BASE"
-          echo "🏷️  PR labels: $LABELS"
-          echo "📋 Event type: ${{ github.event_name }}"
-
-          if [[ "$BASE" != "main" ]]; then
-            echo "❌ Base branch is not 'main' - skipping benchmark"
-            echo "should_run=false" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-
-          echo "✅ Base branch check passed (main)"
-
-          if echo "$LABELS" | grep -q "run benchmark minimal"; then
-            echo "✅ Found 'run benchmark minimal' label"
+          EVENT_NAME="${{ github.event_name }}"
+          echo "📋 Event type: $EVENT_NAME"
+          
+          if [[ "$EVENT_NAME" == "push" ]]; then
+            # For push events, we already filter by branch in the trigger
+            # So if we're here, it's a push to main - always run
+            echo "🚀 Push event to main branch detected"
+            echo "✅ Push to main - proceeding with benchmark"
             echo "should_run=true" >> $GITHUB_OUTPUT
-          elif echo "$LABELS" | grep -q "run benchmarks all"; then
-            echo "✅ Found 'run benchmarks all' label"
-            echo "should_run=true" >> $GITHUB_OUTPUT
+          elif [[ "$EVENT_NAME" == "pull_request" ]]; then
+            # For PR events, check base branch and labels
+            LABELS="${{ join(github.event.pull_request.labels.*.name, ' ') }}"
+            BASE="${{ github.event.pull_request.base.ref }}"
+
+            echo "🎯 Base branch: $BASE"
+            echo "🏷️  PR labels: $LABELS"
+
+            if [[ "$BASE" != "main" ]]; then
+              echo "❌ Base branch is not 'main' - skipping benchmark"
+              echo "should_run=false" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+
+            echo "✅ Base branch check passed (main)"
+
+            if echo "$LABELS" | grep -q "run benchmark minimal"; then
+              echo "✅ Found 'run benchmark minimal' label"
+              echo "should_run=true" >> $GITHUB_OUTPUT
+            elif echo "$LABELS" | grep -q "run benchmarks all"; then
+              echo "✅ Found 'run benchmarks all' label"
+              echo "should_run=true" >> $GITHUB_OUTPUT
+            else
+              echo "❌ Required benchmark labels not found"
+              echo "ℹ️  Expected labels: 'run benchmark minimal' or 'run benchmarks all'"
+              echo "should_run=false" >> $GITHUB_OUTPUT
+            fi
           else
-            echo "❌ Required benchmark labels not found"
-            echo "ℹ️  Expected labels: 'run benchmark minimal' or 'run benchmarks all'"
+            echo "❌ Unexpected event type: $EVENT_NAME"
             echo "should_run=false" >> $GITHUB_OUTPUT
           fi
 
@@ -54,14 +68,28 @@ jobs:
         run: |
           echo "🛡️  Guard Job Summary:"
           echo "🎯 Should run benchmarks: ${{ steps.check.outputs.should_run }}"
+          
+          EVENT_NAME="${{ github.event_name }}"
+          
           if [ "${{ steps.check.outputs.should_run }}" == "true" ]; then
             echo "✅ All conditions met - proceeding with benchmark and docs"
             echo "🚀 Next: Benchmark execution will start"
+            
+            if [[ "$EVENT_NAME" == "push" ]]; then
+              echo "📝 Trigger: Push to main branch"
+            else
+              echo "📝 Trigger: PR with benchmark label"
+            fi
           else
             echo "⏭️  Conditions not met - skipping benchmark workflow"
-            echo "💡 To run benchmarks, ensure:"
-            echo "   • PR targets 'main' branch"
-            echo "   • PR has 'run benchmark minimal' or 'run benchmarks all' label"
+            
+            if [[ "$EVENT_NAME" == "pull_request" ]]; then
+              echo "💡 To run benchmarks on PRs, ensure:"
+              echo "   • PR targets 'main' branch"
+              echo "   • PR has 'run benchmark minimal' or 'run benchmarks all' label"
+            else
+              echo "💡 Push events only run benchmarks when pushed to 'main'"
+            fi
           fi
 
   benchmarks:
