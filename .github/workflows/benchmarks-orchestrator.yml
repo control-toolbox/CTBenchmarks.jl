@@ -2,13 +2,13 @@ name: Orchestrate Minimal Benchmark and Docs
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
     types: [labeled, synchronize, reopened]
 
 permissions:
-  contents: read
+  actions: write   # 👈 allow cache cleanup
+  contents: read   # 👈 keep read-only repo access
   pull-requests: write
 
 jobs:
