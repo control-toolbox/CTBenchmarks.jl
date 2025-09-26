@@ -12,10 +12,7 @@ Each result is a NamedTuple with:
 - `time::Float64`: arbitrary execution time
 """
 function generate_dummy_results()
-    [
-        (; problem = :toy_problem_1, time = 0.123),
-        (; problem = :toy_problem_2, time = 0.456),
-    ]
+    [(; problem=:toy_problem_1, time=0.123), (; problem=:toy_problem_2, time=0.456)]
 end
 
 """
@@ -44,7 +41,8 @@ Combine benchmark results and metadata into a JSON-friendly dictionary.
 function build_payload(results::Vector{<:NamedTuple}, meta::Dict)
     Dict(
         "metadata" => meta,
-        "results" => [Dict("problem" => String(r.problem), "time" => r.time) for r in results],
+        "results" =>
+            [Dict("problem" => String(r.problem), "time" => r.time) for r in results],
     )
 end
 
@@ -83,7 +81,11 @@ This function performs the following steps:
 # Returns
 - The `outpath` of the saved JSON file.
 """
-function benchmark_minimal(; outpath::AbstractString = joinpath(normpath(@__DIR__, ".."), "docs", "src", "assets", "benchmark-minimal", "data.json"))    
+function benchmark_minimal(;
+    outpath::AbstractString=joinpath(
+        normpath(@__DIR__, ".."), "docs", "src", "assets", "benchmark-minimal", "data.json"
+    ),
+)
     results = generate_dummy_results()
     meta = generate_metadata()
     payload = build_payload(results, meta)
