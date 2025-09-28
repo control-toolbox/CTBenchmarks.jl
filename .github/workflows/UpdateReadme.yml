@@ -32,8 +32,8 @@ jobs:
     with:
       template_file: README.template.md
       output_file: README.md
-      package_name: CTBenchmarks        # package for INSTALL.md
-      repo_name: CTBenchmarks.jl        # repository for CONTRIBUTING.md links
-      citation_badge: "[![DOI](https://zenodo.org/badge/541187171.svg)](https://zenodo.org/doi/10.5281/zenodo.16753152)" # example, can be empty
+      package_name: CTBenchmarks                            # package for INSTALL.md
+      repo_name: control-toolbox/CTBenchmarks.jl            # repository for CONTRIBUTING.md links
+      doc_url: https://control-toolbox.org/CTBenchmarks.jl
       assignee: "ocots"
     secrets: inherit
