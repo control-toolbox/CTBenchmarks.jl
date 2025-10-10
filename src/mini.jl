@@ -3,39 +3,90 @@
 using OptimalControlProblems
 using OptimalControl
 import JuMP
-using Ipopt
-using NLPModelsIpopt 
+import Ipopt
+import NLPModelsIpopt 
 using MadNLPMumps
 using BenchmarkTools
 
-solver = :ipopt
-print_level = 0 # solver dependent
-disc_method = :trapeze # only available method for JuMP
-problem = :space_shuttle # should loop on problems
+# Options 
 
-println("problem: $problem, solver: $solver, disc_method: $disc_method")
+disc_method = :trapeze # fixed method for JuMP
+tol = 1e-8
 
-for N ∈ [100, 200, 500]
+#solver = :ipopt
+solver = :madnlp
 
-    println("\nN      :   $N")
+if solver == :ipopt
+    mu_strategy = "adaptive"
+    print_level = 0 # 5
+elseif solver == :madnlp
+    print_level = MadNLP.ERROR # MadNLP.INFO
+else
+    error("undefined solver: $solver")  
+end
 
-    # JuMP
-    print("JuMP   : ")
-    nlp = eval(problem)(JuMPBackend(); grid_size=N)
-    JuMP.set_optimizer(nlp, Ipopt.Optimizer) # update for MadNLP
-    JuMP.set_optimizer_attribute(nlp, "print_level", print_level)
-    @btime JuMP.optimize!($nlp)
+# Main loop
+
+for problem ∈ [:beam,
+               :chain,
+               :double_oscillator,
+               :ducted_fan,
+               :electric_vehicle,
+               :glider,
+               :insurance,
+               :glider,
+               :jackson,
+               :robbins,
+               :robot,
+               :rocket,
+               :space_shuttle,
+               :steering,
+               :vanderpol,
+               ]
+
+    println("\nproblem: $problem, solver: $solver, disc_method: $disc_method")
     
-    # adnlp
-    print("adnlp  : ")
-    docp = eval(Symbol(problem, :_s))(OptimalControlBackend(), :adnlp, solver; grid_size=N, disc_method=disc_method)
-    nlp = nlp_model(docp)
-    @btime eval(solver)($nlp; print_level=$print_level)
+    #for N ∈ [100, 200, 500]
+    for N ∈ [200]
     
-    # exa
-    print("exa    : ")
-    docp = eval(Symbol(problem, :_s))(OptimalControlBackend(), :exa, solver; grid_size=N, disc_method=disc_method)
-    nlp = nlp_model(docp)
-    @btime eval(solver)($nlp; print_level=$print_level)
+        println("\nN      :   $N")
     
+        # JuMP
+        print("JuMP   : ")
+        nlp = eval(problem)(JuMPBackend(); grid_size=N)
+        if solver == :ipopt
+            JuMP.set_optimizer(nlp, Ipopt.Optimizer)
+            JuMP.set_optimizer_attribute(nlp, "tol", tol)
+            JuMP.set_optimizer_attribute(nlp, "mu_strategy", mu_strategy)
+            JuMP.set_optimizer_attribute(nlp, "print_level", print_level)
+        elseif solver == :madnlp
+            JuMP.set_optimizer(nlp, MadNLP.Optimizer)
+            JuMP.set_optimizer_attribute(nlp, "tol", tol)
+            JuMP.set_optimizer_attribute(nlp, "print_level", print_level)
+        else
+            error("undefined solver: $solver")
+        end
+        @btime JuMP.optimize!($nlp)
+        
+        # adnlp
+        print("adnlp  : ")
+        docp = eval(Symbol(problem, :_s))(OptimalControlBackend(), :adnlp, solver; grid_size=N, disc_method=disc_method)
+        nlp = nlp_model(docp)
+        if solver == :ipopt
+            opt = (tol=tol, mu_strategy=mu_strategy, print_level=print_level)
+        elseif solver == :madnlp
+            opt = (tol=tol, print_level=print_level)
+        else
+            error("undefined solver: $solver")
+        end
+        @btime eval(solver)($nlp; $opt...)
+
+        # exa
+        print("exa    : ")
+        docp = eval(Symbol(problem, :_s))(OptimalControlBackend(), :exa, solver; grid_size=N, disc_method=disc_method)
+        nlp = nlp_model(docp)
+        @btime eval(solver)($nlp; $opt...)
+        
+    end
+
 end
