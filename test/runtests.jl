@@ -2,12 +2,13 @@ using Test
 using Aqua
 using CTBenchmarks
 using DataFrames
+using MadNLPMumps
 
 #
 @testset verbose = true showtiming = true "CTBenchmarks tests" begin
     for name in (
         # :aqua, 
-        :minimal,
+        :utils,
         )
         @testset "$(name)" begin
             test_name = Symbol(:test_, name)

@@ -1,9 +1,4 @@
-using Test
-using DataFrames
-using MadNLPMumps
-
-# test_minimal
-function test_minimal()
+function test_utils()
     
     # ===== Test 1: solve_and_extract_data with different models =====
     println("\n=== Testing solve_and_extract_data ===")
@@ -11,7 +6,7 @@ function test_minimal()
     # Test JuMP model
     println("Testing JuMP model...")
     stats_jump = CTBenchmarks.solve_and_extract_data(
-        :beam, :ipopt, :JuMP, 50, :trapeze, 1e-8, "adaptive", 0
+        :beam, :ipopt, :JuMP, 50, :trapeze, 1e-8, "adaptive", 0, 1000, 500.0
     )
     @test stats_jump isa NamedTuple
     @test haskey(stats_jump, :time)
@@ -32,7 +27,7 @@ function test_minimal()
     # Test adnlp model
     println("Testing adnlp model...")
     stats_adnlp = CTBenchmarks.solve_and_extract_data(
-        :beam, :ipopt, :adnlp, 50, :trapeze, 1e-8, "adaptive", 0
+        :beam, :ipopt, :adnlp, 50, :trapeze, 1e-8, "adaptive", 0, 1000, 500.0
     )
     @test stats_adnlp isa NamedTuple
     @test haskey(stats_adnlp, :status)
@@ -44,7 +39,7 @@ function test_minimal()
     # Test exa model
     println("Testing exa model...")
     stats_exa = CTBenchmarks.solve_and_extract_data(
-        :beam, :ipopt, :exa, 50, :trapeze, 1e-8, "adaptive", 0
+        :beam, :ipopt, :exa, 50, :trapeze, 1e-8, "adaptive", 0, 1000, 500.0
     )
     @test stats_exa isa NamedTuple
     @test haskey(stats_exa, :status)
@@ -56,7 +51,7 @@ function test_minimal()
     # Test with MadNLP (missing mu_strategy)
     println("Testing with MadNLP...")
     stats_madnlp = CTBenchmarks.solve_and_extract_data(
-        :beam, :madnlp, :JuMP, 50, :trapeze, 1e-8, missing, MadNLP.ERROR
+        :beam, :madnlp, :JuMP, 50, :trapeze, 1e-8, missing, MadNLP.ERROR, 1000, 500.0
     )
     @test stats_madnlp isa NamedTuple
     @test haskey(stats_madnlp, :status)
@@ -65,17 +60,24 @@ function test_minimal()
     @test stats_madnlp.allocs > 0
     @test !ismissing(stats_madnlp.objective)
     
-    # ===== Test 2: benchmark_minimal_data with multiple configurations =====
-    println("\n=== Testing benchmark_minimal_data ===")
+    # ===== Test 2: benchmark_data with multiple configurations =====
+    println("\n=== Testing benchmark_data ===")
     
     # Test with 2 problems, 2 solvers, 3 models, 2 grid sizes
     # Expected rows: 2 * 2 * 3 * 2 = 24
     println("Testing with multiple configurations...")
-    df = benchmark_minimal_data(
+    df = benchmark_data(
         problems = [:beam, :chain],
         solvers = [:ipopt, :madnlp],
         models = [:JuMP, :adnlp, :exa],
-        grid_sizes = [50, 100]
+        grid_sizes = [50, 100],
+        disc_methods = [:trapeze],
+        tol = 1e-8,
+        ipopt_mu_strategy = "adaptive",
+        ipopt_print_level = 0,
+        madnlp_print_level = MadNLP.ERROR,
+        max_iter = 1000,
+        max_wall_time = 500.0
     )
     
     # Check DataFrame type
@@ -119,16 +121,23 @@ function test_minimal()
     @test all(.!ismissing.(df.objective))
     @test all(.!ismissing.(df.iterations))
     
-    # ===== Test 3: benchmark_minimal_data with subset of models =====
+    # ===== Test 3: benchmark_data with subset of models =====
     println("\n=== Testing with subset of models ===")
     
     # Test with only 1 problem, 1 solver, 2 models, 1 grid size
     # Expected rows: 1 * 1 * 2 * 1 = 2
-    df_subset = benchmark_minimal_data(
+    df_subset = benchmark_data(
         problems = [:beam],
         solvers = [:ipopt],
         models = [:JuMP, :adnlp],
-        grid_sizes = [50]
+        grid_sizes = [50],
+        disc_methods = [:trapeze],
+        tol = 1e-8,
+        ipopt_mu_strategy = "adaptive",
+        ipopt_print_level = 0,
+        madnlp_print_level = MadNLP.ERROR,
+        max_iter = 1000,
+        max_wall_time = 500.0
     )
     
     @test nrow(df_subset) == 2

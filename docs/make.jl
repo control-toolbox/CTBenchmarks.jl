@@ -28,7 +28,7 @@ makedocs(;
             asset("https://control-toolbox.org/assets/js/documentation.js"),
         ],
     ),
-    pages=["Introduction" => "index.md", "Minimal benchmark" => "benchmark-minimal.md"],
+    pages=["Introduction" => "index.md", "Core benchmark" => "benchmark-core.md"],
 )
 
 deploydocs(; repo=repo_url * ".git", devbranch="main", push_preview=true)

@@ -19,8 +19,8 @@ import Ipopt                    # Interior Point OPTimizer
 import NLPModelsIpopt           # NLPModels interface to Ipopt
 using MadNLPMumps               # MadNLP with MUMPS linear solver
 
-include("benchmark-minimal.jl")
+include("utils.jl")
 
-export benchmark_minimal, benchmark_minimal_data
+export benchmark, benchmark_data
 
 end # module

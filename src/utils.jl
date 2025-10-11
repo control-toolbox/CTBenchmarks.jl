@@ -4,7 +4,7 @@
 
 """
     solve_and_extract_data(problem, solver, model, grid_size, disc_method, 
-                          tol, mu_strategy, print_level) -> NamedTuple
+                          tol, mu_strategy, print_level, max_iter, max_wall_time) -> NamedTuple
 
 Solve an optimal control problem and extract performance and solver statistics.
 
@@ -20,6 +20,8 @@ different model types (JuMP, adnlp, exa).
 - `tol::Float64`: solver tolerance
 - `mu_strategy::Union{String, Missing}`: mu strategy for Ipopt (missing for MadNLP)
 - `print_level::Union{Int, MadNLP.LogLevels, Missing}`: print level for solver (Int for Ipopt, MadNLP.LogLevels for MadNLP)
+- `max_iter::Int`: maximum number of iterations
+- `max_wall_time::Float64`: maximum wall time in seconds
 
 # Returns
 A NamedTuple with fields:
@@ -40,7 +42,9 @@ function solve_and_extract_data(
     disc_method::Symbol,
     tol::Float64,
     mu_strategy::Union{String, Missing},
-    print_level::Union{Int, MadNLP.LogLevels, Missing}
+    print_level::Union{Int, MadNLP.LogLevels, Missing},
+    max_iter::Int,
+    max_wall_time::Float64
 )
     if model == :JuMP
         # ===== JuMP Model =====
@@ -51,6 +55,8 @@ function solve_and_extract_data(
                 JuMP.set_optimizer(nlp, Ipopt.Optimizer)
                 JuMP.set_optimizer_attribute(nlp, "sb", "yes")
                 JuMP.set_optimizer_attribute(nlp, "tol", tol)
+                JuMP.set_optimizer_attribute(nlp, "max_iter", max_iter)
+                JuMP.set_optimizer_attribute(nlp, "max_wall_time", max_wall_time)
                 if !ismissing(mu_strategy)
                     JuMP.set_optimizer_attribute(nlp, "mu_strategy", mu_strategy)
                 end
@@ -60,6 +66,8 @@ function solve_and_extract_data(
             elseif solver == :madnlp
                 JuMP.set_optimizer(nlp, MadNLP.Optimizer)
                 JuMP.set_optimizer_attribute(nlp, "tol", tol)
+                JuMP.set_optimizer_attribute(nlp, "max_iter", max_iter)
+                JuMP.set_optimizer_attribute(nlp, "max_wall_time", max_wall_time)
                 if !ismissing(print_level)
                     JuMP.set_optimizer_attribute(nlp, "print_level", print_level)
                 end
@@ -113,19 +121,19 @@ function solve_and_extract_data(
             # Build solver options and solve
             if solver == :ipopt
                 if !ismissing(mu_strategy) && !ismissing(print_level)
-                    opt = (tol=tol, mu_strategy=mu_strategy, print_level=print_level, sb="yes")
+                    opt = (tol=tol, mu_strategy=mu_strategy, print_level=print_level, sb="yes", max_iter=max_iter, max_wall_time=max_wall_time)
                 elseif !ismissing(print_level)
-                    opt = (tol=tol, print_level=print_level, sb="yes")
+                    opt = (tol=tol, print_level=print_level, sb="yes", max_iter=max_iter, max_wall_time=max_wall_time)
                 else
-                    opt = (tol=tol, sb="yes")
+                    opt = (tol=tol, sb="yes", max_iter=max_iter, max_wall_time=max_wall_time)
                 end
                 bt = @btimed NLPModelsIpopt.ipopt($nlp_model_oc; $opt...)
                 nlp_sol = bt.value
             elseif solver == :madnlp
                 if !ismissing(print_level)
-                    opt = (tol=tol, print_level=print_level)
+                    opt = (tol=tol, print_level=print_level, max_iter=max_iter, max_wall_time=max_wall_time)
                 else
-                    opt = (tol=tol,)
+                    opt = (tol=tol, max_iter=max_iter, max_wall_time=max_wall_time)
                 end
                 bt = @btimed madnlp($nlp_model_oc; $opt...)
                 nlp_sol = bt.value
@@ -180,18 +188,18 @@ function solve_and_extract_data(
 end
 
 """
-    benchmark_minimal_data(;
-        problems = [:beam, :chain, :double_oscillator, :ducted_fan, :electric_vehicle, 
-                    :glider, :insurance, :jackson, :robbins, :robot, :rocket, 
-                    :space_shuttle, :steering, :vanderpol],
-        solvers = [:ipopt, :madnlp],
-        models = [:JuMP, :adnlp, :exa],
-        grid_sizes = [200],
-        disc_methods = [:trapeze],
-        tol = 1e-8,
-        ipopt_mu_strategy = "adaptive",
-        ipopt_print_level = 0,
-        madnlp_print_level = MadNLP.ERROR
+    benchmark_data(;
+        problems,
+        solvers,
+        models,
+        grid_sizes,
+        disc_methods,
+        tol,
+        ipopt_mu_strategy,
+        ipopt_print_level,
+        madnlp_print_level,
+        max_iter,
+        max_wall_time
     ) -> DataFrame
 
 Run benchmarks on optimal control problems and return results as a DataFrame.
@@ -201,6 +209,19 @@ For each combination of problem, solver, model, and grid size, this function:
 2. Captures timing and memory statistics using `@btimed`
 3. Extracts solver statistics (objective value, iterations)
 4. Stores all data in a DataFrame row
+
+# Arguments
+- `problems`: Vector of problem names (Symbols)
+- `solvers`: Vector of solver names (:ipopt or :madnlp)
+- `models`: Vector of model types (:JuMP, :adnlp, or :exa)
+- `grid_sizes`: Vector of grid sizes (Int)
+- `disc_methods`: Vector of discretization methods (Symbols)
+- `tol`: Solver tolerance (Float64)
+- `ipopt_mu_strategy`: Mu strategy for Ipopt (String)
+- `ipopt_print_level`: Print level for Ipopt (Int)
+- `madnlp_print_level`: Print level for MadNLP (MadNLP.LogLevels)
+- `max_iter`: Maximum number of iterations (Int)
+- `max_wall_time`: Maximum wall time in seconds (Float64)
 
 # Returns
 A DataFrame with columns:
@@ -212,6 +233,8 @@ A DataFrame with columns:
 - `tol`: Float64 - solver tolerance
 - `mu_strategy`: Union{String, Missing} - mu strategy for Ipopt (missing for MadNLP)
 - `print_level`: Any - print level for solver (Int for Ipopt, MadNLP.LogLevels for MadNLP)
+- `max_iter`: Int - maximum number of iterations
+- `max_wall_time`: Float64 - maximum wall time in seconds
 - `time`: Float64 - execution time in seconds (NaN if failed)
 - `allocs`: Int - number of allocations (0 if failed)
 - `memory`: Int - memory allocated in bytes (0 if failed)
@@ -221,29 +244,18 @@ A DataFrame with columns:
 - `status`: Any - termination status (type depends on solver/model)
 - `success`: Bool - whether the solve succeeded
 """
-function benchmark_minimal_data(;
-    problems = [:beam,
-                :chain,
-                :double_oscillator,
-                :ducted_fan,
-                :electric_vehicle,
-                :glider,
-                :insurance,
-                :jackson,
-                :robbins,
-                :robot,
-                :rocket,
-                :space_shuttle,
-                :steering,
-                :vanderpol],
-    solvers = [:ipopt, :madnlp],
-    models = [:JuMP, :adnlp, :exa],
-    grid_sizes = [200],
-    disc_methods = [:trapeze],
-    tol = 1e-8,
-    ipopt_mu_strategy = "adaptive",
-    ipopt_print_level = 0,
-    madnlp_print_level = MadNLP.ERROR
+function benchmark_data(;
+    problems,
+    solvers,
+    models,
+    grid_sizes,
+    disc_methods,
+    tol,
+    ipopt_mu_strategy,
+    ipopt_print_level,
+    madnlp_print_level,
+    max_iter,
+    max_wall_time
 )
     # Initialize DataFrame
     data = DataFrame(
@@ -255,6 +267,8 @@ function benchmark_minimal_data(;
         tol = Float64[],
         mu_strategy = Union{String, Missing}[],
         print_level = Any[],  # Can be Int or MadNLP.LogLevel
+        max_iter = Int[],
+        max_wall_time = Float64[],
         time = Float64[],
         allocs = Int[],
         memory = Int[],
@@ -290,7 +304,7 @@ function benchmark_minimal_data(;
                     # Solve and extract data using helper function
                     stats = solve_and_extract_data(
                         problem, solver, model, N, disc_method,
-                        tol, mu_strategy, print_level
+                        tol, mu_strategy, print_level, max_iter, max_wall_time
                     )
                     
                     println("$(stats.time)s, $(stats.allocs) allocs, $(stats.memory) bytes")
@@ -305,6 +319,8 @@ function benchmark_minimal_data(;
                         tol = tol,
                         mu_strategy = mu_strategy,
                         print_level = print_level,
+                        max_iter = max_iter,
+                        max_wall_time = max_wall_time,
                         time = stats.time,
                         allocs = stats.allocs,
                         memory = stats.memory,
@@ -377,25 +393,25 @@ end
 # ------------------------------
 
 """
-    benchmark_minimal(;
-        outpath::AbstractString = joinpath(normpath(@__DIR__, ".."), "docs", "src", "assets", "benchmark-minimal", "data.json"),
-        problems = [:beam, :chain, :double_oscillator, :ducted_fan, :electric_vehicle, 
-                    :glider, :insurance, :jackson, :robbins, :robot, :rocket, 
-                    :space_shuttle, :steering, :vanderpol],
-        solvers = [:ipopt, :madnlp],
-        models = [:JuMP, :adnlp, :exa],
-        grid_sizes = [200],
-        disc_methods = [:trapeze],
-        tol = 1e-8,
-        ipopt_mu_strategy = "adaptive",
-        ipopt_print_level = 0,
-        madnlp_print_level = MadNLP.ERROR
+    benchmark(;
+        outpath,
+        problems,
+        solvers,
+        models,
+        grid_sizes,
+        disc_methods,
+        tol,
+        ipopt_mu_strategy,
+        ipopt_print_level,
+        madnlp_print_level,
+        max_iter,
+        max_wall_time
     ) -> String
 
-Run minimal benchmarks on optimal control problems and save results to a JSON file.
+Run benchmarks on optimal control problems and save results to a JSON file.
 
 This function performs the following steps:
-1. Runs benchmarks using `benchmark_minimal_data()` to generate a DataFrame of results
+1. Runs benchmarks using `benchmark_data()` to generate a DataFrame of results
 2. Collects environment metadata (Julia version, OS, machine, timestamp)
 3. Builds a JSON-friendly payload combining results and metadata
 4. Saves the payload to `outpath` as pretty-printed JSON
@@ -408,41 +424,38 @@ df = DataFrame(data["results"])
 ```
 
 # Arguments
-- `outpath`: path to save the JSON file (default: `docs/src/assets/benchmark-minimal/data.json` relative to package root)
-- All other arguments are passed to `benchmark_minimal_data()` - see its documentation for details
+- `outpath`: Path to save the JSON file
+- `problems`: Vector of problem names (Symbols)
+- `solvers`: Vector of solver names (:ipopt or :madnlp)
+- `models`: Vector of model types (:JuMP, :adnlp, or :exa)
+- `grid_sizes`: Vector of grid sizes (Int)
+- `disc_methods`: Vector of discretization methods (Symbols)
+- `tol`: Solver tolerance (Float64)
+- `ipopt_mu_strategy`: Mu strategy for Ipopt (String)
+- `ipopt_print_level`: Print level for Ipopt (Int)
+- `madnlp_print_level`: Print level for MadNLP (MadNLP.LogLevels)
+- `max_iter`: Maximum number of iterations (Int)
+- `max_wall_time`: Maximum wall time in seconds (Float64)
 
 # Returns
 - The `outpath` of the saved JSON file.
 """
-function benchmark_minimal(;
-    outpath::AbstractString=joinpath(
-        normpath(@__DIR__, ".."), "docs", "src", "assets", "benchmark-minimal", "data.json"
-    ),
-    problems = [:beam,
-                :chain,
-                :double_oscillator,
-                :ducted_fan,
-                :electric_vehicle,
-                :glider,
-                :insurance,
-                :jackson,
-                :robbins,
-                :robot,
-                :rocket,
-                :space_shuttle,
-                :steering,
-                :vanderpol],
-    solvers = [:ipopt, :madnlp],
-    models = [:JuMP, :adnlp, :exa],
-    grid_sizes = [200],
-    disc_methods = [:trapeze],
-    tol = 1e-8,
-    ipopt_mu_strategy = "adaptive",
-    ipopt_print_level = 0,
-    madnlp_print_level = MadNLP.ERROR
+function benchmark(;
+    outpath,
+    problems,
+    solvers,
+    models,
+    grid_sizes,
+    disc_methods,
+    tol,
+    ipopt_mu_strategy,
+    ipopt_print_level,
+    madnlp_print_level,
+    max_iter,
+    max_wall_time
 )
     # Run benchmarks and get DataFrame
-    results = benchmark_minimal_data(;
+    results = benchmark_data(;
         problems=problems,
         solvers=solvers,
         models=models,
@@ -451,7 +464,9 @@ function benchmark_minimal(;
         tol=tol,
         ipopt_mu_strategy=ipopt_mu_strategy,
         ipopt_print_level=ipopt_print_level,
-        madnlp_print_level=madnlp_print_level
+        madnlp_print_level=madnlp_print_level,
+        max_iter=max_iter,
+        max_wall_time=max_wall_time
     )
     
     # Generate metadata
