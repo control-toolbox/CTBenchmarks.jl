@@ -11,8 +11,8 @@ using CTBenchmarks
 using MadNLP
 println("⏱️  Running core benchmark...")
 
-function main()
-    outpath=joinpath(project_dir, "docs", "src", "assets", "benchmark-core")
+function main(; runner="local")
+    outpath=joinpath(project_dir, "docs", "src", "assets", "benchmark-core" * (runner == "local" ? "" : "-" * runner))
     CTBenchmarks.benchmark(;
         outpath=outpath,
         problems = [

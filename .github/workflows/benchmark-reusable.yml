@@ -23,6 +23,7 @@ jobs:
     timeout-minutes: 45
     env:
       SCRIPT_PATH: ${{ inputs.script_path }}
+      OS: ${{ inputs.os }}
 
     steps:
       # ---------------------------
@@ -33,17 +34,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: \ud83d\udccb Repository checkout status
+      - name: 📋 Repository checkout status
         run: |
-          echo "\u2705 Repository checked out successfully"
-          echo "\ud83d\udcc1 Current directory: $(pwd)"
-          echo "\ud83d\udcca Total files: $(find . -type f | wc -l)"
+          echo "✅ Repository checked out successfully"
+          echo "📁 Current directory: $(pwd)"
+          echo "📊 Total files: $(find . -type f | wc -l)"
 
-      - name: \ud83d\udcc4 Prepare benchmark output filename
+      - name: 📄 Prepare benchmark output filename
         run: |
           OUTPUT_FILE="benchmark_output_path_$(date +%s)_$RANDOM.txt"
           echo "BENCHMARK_OUTPUT_FILE=$OUTPUT_FILE" >> $GITHUB_ENV
-          echo "\ud83d\udcc4 Benchmark output file will be stored in: $OUTPUT_FILE"
+          echo "📄 Benchmark output file will be stored in: $OUTPUT_FILE"
 
       # ---------------------------
       # Setup Julia Environment
@@ -52,24 +53,24 @@ jobs:
         with:
           version: '1.11'
 
-      - name: \ud83d\udd0b Julia setup status
+      - name: 🔋 Julia setup status
         run: |
-          echo "\u2705 Julia $(julia --version | cut -d' ' -f3) installed successfully"
-          echo "\ud83d\udccd Julia location: $(which julia)"
+          echo "✅ Julia $(julia --version | cut -d' ' -f3) installed successfully"
+          echo "📍 Julia location: $(which julia)"
 
       - uses: julia-actions/cache@v2
 
-      - name: \ud83d\udcbe Julia cache status
-        run: echo "\u2705 Julia package cache configured"
+      - name: 💾 Julia cache status
+        run: echo "✅ Julia package cache configured"
 
       - uses: julia-actions/julia-buildpkg@v1
         with:
           ignore-no-cache: true
 
-      - name: \ud83d\udd28 Package build status
+      - name: 🔨 Package build status
         run: |
-          echo "\u2705 Julia package built successfully"
-          echo "\ud83d\udce6 CTBenchmarks package ready for use"
+          echo "✅ Julia package built successfully"
+          echo "📦 CTBenchmarks package ready for use"
 
       # ---------------------------
       # Run Benchmark Script
@@ -79,44 +80,45 @@ jobs:
         timeout-minutes: 30
         env:
           SCRIPT_PATH: ${{ env.SCRIPT_PATH }}
+          OS: ${{ env.OS }}
         run: |
-          echo "\ud83d\ude80 Starting benchmark execution..."
-          echo "\u23f1\ufe0f  Benchmark timeout: 30 minutes"
+          echo "🚀 Starting benchmark execution..."
+          echo "⏱️  Benchmark timeout: 30 minutes"
           
           julia --color=yes -e '
             include(ENV["SCRIPT_PATH"])
-            out = main()
-            println("\ud83d\udcc4 Output file: ", out)
+            out = main(; runner=ENV["OS"])
+            println("📄 Output file: ", out)
             open(ENV["BENCHMARK_OUTPUT_FILE"], "w") do f
               write(f, string(out))
             end
-            println("\ud83d\udcbe Output path saved to ", ENV["BENCHMARK_OUTPUT_FILE"])
+            println("💾 Output path saved to ", ENV["BENCHMARK_OUTPUT_FILE"])
           '
           
-          echo "\u2705 Benchmark execution completed"
+          echo "✅ Benchmark execution completed"
           echo "benchmark_success=true" >> $GITHUB_OUTPUT
 
-      - name: \ud83d\udcca Benchmark results validation
+      - name: 📊 Benchmark results validation
         if: steps.benchmark.outputs.benchmark_success == 'true'
         run: |
-          echo "\ud83d\udd0d Validating benchmark results..."
+          echo "🔍 Validating benchmark results..."
           
           if [ -f "$BENCHMARK_OUTPUT_FILE" ]; then
             OUTPUT_DIR=$(cat "$BENCHMARK_OUTPUT_FILE")
-            echo "\u2705 Benchmark output directory found: $OUTPUT_DIR"
+            echo "✅ Benchmark output directory found: $OUTPUT_DIR"
             
             DATA_JSON_PATH="$OUTPUT_DIR/data.json"
-            echo "\ud83d\udcc4 Resolved JSON path: $DATA_JSON_PATH"
+            echo "📄 Resolved JSON path: $DATA_JSON_PATH"
             
             if [ -f "$DATA_JSON_PATH" ]; then
               FILE_SIZE=$(stat -f%z "$DATA_JSON_PATH" 2>/dev/null || stat -c%s "$DATA_JSON_PATH" 2>/dev/null || echo "unknown")
               LINE_COUNT=$(wc -l < "$DATA_JSON_PATH")
-              echo "\u2705 Benchmark JSON file created successfully"
-              echo "\ud83d\udcdf File size: $FILE_SIZE bytes"
-              echo "\ud83d\udcdf File lines: $LINE_COUNT"
-              echo "\ud83d\udccd File location: $DATA_JSON_PATH"
+              echo "✅ Benchmark JSON file created successfully"
+              echo "📏 File size: $FILE_SIZE bytes"
+              echo "📏 File lines: $LINE_COUNT"
+              echo "📍 File location: $DATA_JSON_PATH"
 
-              echo "\ud83d\udd0e JSON content preview:"
+              echo "🔎 JSON content preview:"
               head -10 "$DATA_JSON_PATH"
               if [ $LINE_COUNT -gt 10 ]; then
                 echo "   ... (truncated, $LINE_COUNT total lines)"
@@ -125,52 +127,52 @@ jobs:
               for filename in Project.toml Manifest.toml; do
                 FILE_PATH="$OUTPUT_DIR/$filename"
                 if [ -f "$FILE_PATH" ]; then
-                  echo "\u2705 Found $filename alongside benchmark output"
+                  echo "✅ Found $filename alongside benchmark output"
                 else
-                  echo "\u274c ERROR: $filename not found in $OUTPUT_DIR"
+                  echo "❌ ERROR: $filename not found in $OUTPUT_DIR"
                   exit 1
                 fi
               done
             else
-              echo "\u274c ERROR: Benchmark JSON file not found at $DATA_JSON_PATH"
+              echo "❌ ERROR: Benchmark JSON file not found at $DATA_JSON_PATH"
               exit 1
             fi
           else
-            echo "\u274c ERROR: $BENCHMARK_OUTPUT_FILE not found"
+            echo "❌ ERROR: $BENCHMARK_OUTPUT_FILE not found"
             exit 1
           fi
 
       - name: Commit benchmark results to current branch
         if: steps.benchmark.outputs.benchmark_success == 'true'
         run: |
-          echo "\ud83d\udd27 Configuring git user..."
+          echo "🔧 Configuring git user..."
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          echo "\u2705 Git user configured"
+          echo "✅ Git user configured"
 
-          echo "\ud83c\udf33 Checking current git state..."
+          echo "🌳 Checking current git state..."
           echo "Current HEAD: $(git rev-parse --short HEAD)"
           echo "Current branch: $(git branch --show-current || echo 'DETACHED HEAD')"
           
           if [ -n "${{ github.head_ref }}" ]; then
             BRANCH_NAME="${{ github.head_ref }}"
-            echo "\ud83d\udd04 This is a PR, switching to branch: $BRANCH_NAME"
+            echo "🔄 This is a PR, switching to branch: $BRANCH_NAME"
             git checkout -B "$BRANCH_NAME"
-            echo "\u2705 Now on branch: $(git branch --show-current)"
+            echo "✅ Now on branch: $(git branch --show-current)"
           else
             BRANCH_NAME="${{ github.ref_name }}"
-            echo "\ud83d\udd04 This is a push, switching to branch: $BRANCH_NAME"
+            echo "🔄 This is a push, switching to branch: $BRANCH_NAME"
             git checkout -B "$BRANCH_NAME"
-            echo "\u2705 Now on branch: $(git branch --show-current)"
+            echo "✅ Now on branch: $(git branch --show-current)"
           fi
 
-          echo "\ud83d\udcca Adding benchmark results to current branch..."
+          echo "📊 Adding benchmark results to current branch..."
           
           if [ -f "$BENCHMARK_OUTPUT_FILE" ]; then
             OUTPUT_DIR=$(cat "$BENCHMARK_OUTPUT_FILE")
-            echo "\ud83d\udcc1 Using benchmark output directory: $OUTPUT_DIR"
+            echo "📁 Using benchmark output directory: $OUTPUT_DIR"
           else
-            echo "\u274c ERROR: $BENCHMARK_OUTPUT_FILE not found"
+            echo "❌ ERROR: $BENCHMARK_OUTPUT_FILE not found"
             exit 1
           fi
 
@@ -185,45 +187,45 @@ jobs:
           STAGED_ALL=true
           for artifact in "${ARTIFACTS[@]}"; do
             if git diff --cached --name-only | grep -q "$artifact"; then
-              echo "\u2705 $artifact staged for commit"
+              echo "✅ $artifact staged for commit"
             else
-              echo "\u26a0\ufe0f  $artifact not staged (possibly no changes)"
+              echo "⚠️  $artifact not staged (possibly no changes)"
               STAGED_ALL=false
             fi
           done
 
           if [ "$STAGED_ALL" = true ]; then
-            echo "\ud83d\udccb Files to be committed:"
+            echo "📋 Files to be committed:"
             git diff --cached --name-status
           fi
 
           if ! git diff --cached --quiet; then
-            echo "\ud83d\udcdd Committing benchmark results to current branch..."
-            git commit -m "\ud83d\udcca Add benchmark results" -m "Generated by reusable benchmark workflow" -m "Results saved to ${OUTPUT_DIR}/data.json" -m "Includes environment TOMLs"
-            echo "\u2705 Benchmark results committed successfully"
+            echo "📝 Committing benchmark results to current branch..."
+            git commit -m "📊 Add benchmark results" -m "Generated by reusable benchmark workflow" -m "Results saved to ${OUTPUT_DIR}/data.json" -m "Includes environment TOMLs"
+            echo "✅ Benchmark results committed successfully"
             
-            echo "\ud83d\ude80 Pushing changes to branch: $BRANCH_NAME"
+            echo "🚀 Pushing changes to branch: $BRANCH_NAME"
             git push origin "$BRANCH_NAME"
-            echo "\u2705 Benchmark results pushed to $BRANCH_NAME"
+            echo "✅ Benchmark results pushed to $BRANCH_NAME"
           else
-            echo "\u2139\ufe0f  No changes detected in benchmark results"
-            echo "\ud83d\udcca Current results are identical to previous run"
+            echo "ℹ️  No changes detected in benchmark results"
+            echo "📊 Current results are identical to previous run"
           fi
 
-      - name: \ud83d\udcc3 Benchmark workflow summary
+      - name: 📃 Benchmark workflow summary
         if: steps.benchmark.outputs.benchmark_success == 'true'
         run: |
           if [ -f "$BENCHMARK_OUTPUT_FILE" ]; then
             OUTPUT_DIR=$(cat "$BENCHMARK_OUTPUT_FILE")
-            echo "\ud83d\udcc1 Using benchmark output directory: $OUTPUT_DIR"
+            echo "📁 Using benchmark output directory: $OUTPUT_DIR"
           else
-            echo "\u274c ERROR: $BENCHMARK_OUTPUT_FILE not found"
+            echo "❌ ERROR: $BENCHMARK_OUTPUT_FILE not found"
             exit 1
           fi
 
-          echo "\ud83d\udcca Benchmark workflow summary:"
-          echo "\u2705 Benchmark execution: SUCCESS"
-          echo "\ud83d\udcc1 Results saved to: $OUTPUT_DIR/data.json"
-          echo "\ud83c\udf33 Results committed to: ${{ github.head_ref || github.ref_name }} branch"
-          echo "\ud83d\udcd8 Ready for documentation generation"
-          echo "\ud83c\udf89 Reusable benchmark workflow completed successfully!"
+          echo "📊 Benchmark workflow summary:"
+          echo "✅ Benchmark execution: SUCCESS"
+          echo "📁 Results saved to: $OUTPUT_DIR/data.json"
+          echo "🌳 Results committed to: ${{ github.head_ref || github.ref_name }} branch"
+          echo "📘 Ready for documentation generation"
+          echo "🎉 Reusable benchmark workflow completed successfully!"
