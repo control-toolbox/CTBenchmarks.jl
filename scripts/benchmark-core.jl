@@ -1,6 +1,6 @@
 using Pkg
 println("📦 Activating project environment...")
-project_dir = normpath(@__DIR__, "..")
+const project_dir = normpath(@__DIR__, "..")
 ENV["PROJECT"] = project_dir
 Pkg.activate(project_dir)
 println("📥 Installing dependencies...")
@@ -13,7 +13,7 @@ println("⏱️  Running core benchmark...")
 function main()
     out = CTBenchmarks.benchmark(;
         outpath=joinpath(
-            normpath(@__DIR__, ".."), "docs", "src", "assets", "benchmark-core", "data.json"
+            project_dir, "docs", "src", "assets", "benchmark-core", "data.json"
         ),
         problems = [:beam,
                     :chain,
