@@ -142,7 +142,7 @@ version = "0.16.4"
     JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 
 [[deps.CTBenchmarks]]
-deps = ["BenchmarkTools", "CUDA", "DataFrames", "Dates", "InteractiveUtils", "Ipopt", "JSON", "JuMP", "MadNLPGPU", "MadNLPMumps", "NLPModelsIpopt", "OptimalControl", "OptimalControlProblems", "Sockets"]
+deps = ["BenchmarkTools", "CUDA", "DataFrames", "Dates", "InteractiveUtils", "Ipopt", "JSON", "JuMP", "MadNLPGPU", "MadNLPMumps", "NLPModelsIpopt", "OptimalControl", "OptimalControlProblems", "Sockets", "Tables"]
 path = "/home/runner/work/CTBenchmarks.jl/CTBenchmarks.jl"
 uuid = "db1dffaa-5ed3-4583-9a66-b5881c82ef11"
 version = "0.1.0"
