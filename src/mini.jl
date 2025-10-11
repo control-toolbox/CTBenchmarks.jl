@@ -1,4 +1,4 @@
-# todo: check solver return status, number of iterations...
+# todo: check solver return status, number of iterations, objective value
 
 using OptimalControlProblems
 using OptimalControl
@@ -6,7 +6,11 @@ import JuMP
 import Ipopt
 import NLPModelsIpopt 
 using MadNLPMumps
+using CUDA
+using MadNLPGPU
 using BenchmarkTools
+
+cuda_on = CUDA.functional()
 
 # Options 
 
@@ -28,26 +32,26 @@ end
 # Main loop
 
 for problem ∈ [:beam,
-               :chain,
-               :double_oscillator,
-               :ducted_fan,
-               :electric_vehicle,
-               :glider,
-               :insurance,
-               :glider,
-               :jackson,
-               :robbins,
-               :robot,
-               :rocket,
-               :space_shuttle,
-               :steering,
-               :vanderpol,
+               #:chain,
+               #:double_oscillator,
+               #:ducted_fan,
+               #:electric_vehicle,
+               #:glider,
+               #:insurance,
+               #:glider,
+               #:jackson,
+               #:robbins,
+               #:robot,
+               #:rocket,
+               #:space_shuttle,
+               #:steering,
+               #:vanderpol,
                ]
 
     println("\nproblem: $problem, solver: $solver, disc_method: $disc_method")
     
     #for N ∈ [100, 200, 500]
-    for N ∈ [200]
+    for N ∈ [100]
     
         println("\nN      :   $N")
     
@@ -86,6 +90,15 @@ for problem ∈ [:beam,
         docp = eval(Symbol(problem, :_s))(OptimalControlBackend(), :exa, solver; grid_size=N, disc_method=disc_method)
         nlp = nlp_model(docp)
         @btime eval(solver)($nlp; $opt...)
+
+        # exa  GPU
+        if cuda_on
+            print("exa GPU: ")
+            docp = eval(Symbol(problem, :_s))(OptimalControlBackend(), :exa, solver; grid_size=N, disc_method=disc_method)
+            nlp = nlp_model(docp)
+            eval(solver)(nlp; opt..., exa_backend=CUDABackend());
+            CUDA.@time eval(solver)(nlp; opt..., exa_backend=CUDABackend())
+        end
         
     end
 
