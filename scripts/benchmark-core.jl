@@ -1,3 +1,4 @@
+using Revise
 using Pkg
 println("📦 Activating project environment...")
 const project_dir = normpath(@__DIR__, "..")
@@ -11,24 +12,25 @@ using MadNLP
 println("⏱️  Running core benchmark...")
 
 function main()
-    out = CTBenchmarks.benchmark(;
-        outpath=joinpath(
-            project_dir, "docs", "src", "assets", "benchmark-core", "data.json"
-        ),
-        problems = [:beam,
-                    :chain,
-                    :double_oscillator,
-                    :ducted_fan,
-                    :electric_vehicle,
-                    :glider,
-                    :insurance,
-                    :jackson,
-                    :robbins,
-                    :robot,
-                    :rocket,
-                    :space_shuttle,
-                    :steering,
-                    :vanderpol],
+    outpath=joinpath(project_dir, "docs", "src", "assets", "benchmark-core")
+    CTBenchmarks.benchmark(;
+        outpath=outpath,
+        problems = [
+            :beam,
+            # :chain,
+            # :double_oscillator,
+            # :ducted_fan,
+            # :electric_vehicle,
+            # :glider,
+            # :insurance,
+            # :jackson,
+            # :robbins,
+            # :robot,
+            # :rocket,
+            # :space_shuttle,
+            # :steering,
+            # :vanderpol,
+        ],
         solvers = [:ipopt, :madnlp],
         models = [:JuMP, :adnlp, :exa],
         grid_sizes = [200],
@@ -41,5 +43,5 @@ function main()
         max_wall_time = 500.0
     )
     println("✅ Benchmark completed successfully!")
-    return out
+    return outpath
 end

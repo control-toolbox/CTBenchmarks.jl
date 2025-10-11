@@ -2,16 +2,13 @@ using Documenter
 
 # For reproducibility
 mkpath(joinpath(@__DIR__, "src", "assets"))
-cp(
-    joinpath(@__DIR__, "Manifest.toml"),
-    joinpath(@__DIR__, "src", "assets", "Manifest.toml");
-    force=true,
-)
-cp(
-    joinpath(@__DIR__, "Project.toml"),
-    joinpath(@__DIR__, "src", "assets", "Project.toml");
-    force=true,
-)
+for filename in ("Manifest.toml", "Project.toml")
+    cp(
+        joinpath(@__DIR__, filename),
+        joinpath(@__DIR__, "src", "assets", filename);
+        force=true,
+    )
+end
 
 repo_url = "github.com/control-toolbox/CTBenchmarks.jl"
 

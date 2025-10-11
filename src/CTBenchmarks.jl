@@ -5,6 +5,7 @@ using Dates                     # Date and time functionality
 using JSON                      # JSON serialization/deserialization
 using InteractiveUtils          # Interactive utilities (e.g., versioninfo)
 using Sockets                   # Network socket support
+using Printf                    # String formatting
 
 # Benchmarking and optimization
 using OptimalControlProblems    # Standard optimal control problems
@@ -20,6 +21,7 @@ import NLPModelsIpopt           # NLPModels interface to Ipopt
 using MadNLPMumps               # MadNLP with MUMPS linear solver
 
 include("utils.jl")
+include("print.jl")
 
 export benchmark, benchmark_data
 

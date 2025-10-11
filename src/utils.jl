@@ -280,34 +280,47 @@ function benchmark_data(;
     )
 
     # Main loop over all combinations
-    for solver in solvers
-        # Set solver-specific options
-        if solver == :ipopt
-            mu_strategy = ipopt_mu_strategy
-            print_level = ipopt_print_level
-        elseif solver == :madnlp
-            mu_strategy = missing
-            print_level = madnlp_print_level
-        else
-            error("undefined solver: $solver")
-        end
-
-        for problem in problems, disc_method in disc_methods
-            println("\nproblem: $problem, solver: $solver, disc_method: $disc_method")
+    # Loop order: problems -> solvers -> disc_methods -> grid_sizes -> models
+    for (prob_idx, problem) in enumerate(problems)
+        # Print problem header
+        println("┌─ problem: $problem")
+        println("│")
+        
+        # Create all combinations of solver and disc_method for this problem
+        solver_disc_combos = [(s, d) for s in solvers for d in disc_methods]
+        
+        for (combo_idx, (solver, disc_method)) in enumerate(solver_disc_combos)
+            # Set solver-specific options
+            if solver == :ipopt
+                mu_strategy = ipopt_mu_strategy
+                print_level = ipopt_print_level
+            elseif solver == :madnlp
+                mu_strategy = missing
+                print_level = madnlp_print_level
+            else
+                error("undefined solver: $solver")
+            end
             
-            for N in grid_sizes
-                println("N: $N")
+            # Determine if this is the last solver+disc combo
+            is_last_combo = (combo_idx == length(solver_disc_combos))
+            
+            # Print solver/disc_method header
+            println("├──┬ solver: $solver, disc_method: $disc_method")
+            println("│  │")
+            
+            for (grid_idx, N) in enumerate(grid_sizes)
+                # Print grid size
+                println("│  │  N     :   $N")
                 
                 for model in models
-                    print("  $(rpad(string(model), 6)) : ")
-                    
                     # Solve and extract data using helper function
                     stats = solve_and_extract_data(
                         problem, solver, model, N, disc_method,
                         tol, mu_strategy, print_level, max_iter, max_wall_time
                     )
                     
-                    println("$(stats.time)s, $(stats.allocs) allocs, $(stats.memory) bytes")
+                    # Format and print the benchmark line
+                    println("│  │", format_benchmark_line(model, stats.time, stats.allocs, stats.memory))
                     
                     # Store results in DataFrame
                     push!(data, (
@@ -331,8 +344,25 @@ function benchmark_data(;
                         success = stats.success
                     ))
                 end
+                
+                # Add spacing between grid sizes (except after the last one)
+                if grid_idx < length(grid_sizes)
+                    println("│  │ ")
+                end
+            end
+            
+            # Close solver block
+            println("│  └─")
+            
+            # Add spacing between solver blocks (except after the last one)
+            if !is_last_combo
+                println("│")
             end
         end
+        
+        # Close problem block
+        println("└─")
+        println()
     end
     
     return data
@@ -386,6 +416,17 @@ function save_json(payload::Dict, outpath::AbstractString)
         JSON.print(io, payload)    # pretty printed, multi-line
         write(io, '\n')            # add trailing newline
     end
+end
+
+function copy_project_files(outpath::AbstractString)
+    root_dir = normpath(joinpath(@__DIR__, ".."))
+    mkpath(outpath)
+    for filename in ("Project.toml", "Manifest.toml")
+        src = normpath(joinpath(root_dir, filename))
+        dest = joinpath(outpath, filename)
+        cp(src, dest; force=true)
+    end
+    return nothing
 end
 
 # ------------------------------
@@ -455,6 +496,7 @@ function benchmark(;
     max_wall_time
 )
     # Run benchmarks and get DataFrame
+    println("Running benchmarks...")
     results = benchmark_data(;
         problems=problems,
         solvers=solvers,
@@ -470,13 +512,18 @@ function benchmark(;
     )
     
     # Generate metadata
+    println("Generating metadata...")
     meta = generate_metadata()
     
     # Build payload
+    println("Building payload...")
     payload = build_payload(results, meta)
     
     # Save to JSON
-    save_json(payload, outpath)
+    println("Saving results to $outpath...")
+    copy_project_files(outpath)
+    JSON_path = joinpath(outpath, "data.json")
+    save_json(payload, JSON_path)
     
-    return outpath
+    return nothing
 end
