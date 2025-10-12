@@ -10,12 +10,17 @@ using CUDA
 using MadNLPGPU
 using BenchmarkTools
 
-cuda_on = CUDA.functional()
-
 # Options 
 
+jump_on = false
+adnlp_on = false
+exa_on = true
+exa_gpu_on = true
+
+cuda_active = CUDA.functional()
+
 disc_method = :trapeze # fixed method for JuMP
-tol = 1e-8
+tol = 1e-6
 
 #solver = :ipopt
 solver = :madnlp
@@ -29,33 +34,42 @@ else
     error("undefined solver: $solver")  
 end
 
+if solver == :ipopt
+    opt = (tol=tol, mu_strategy=mu_strategy, print_level=print_level)
+elseif solver == :madnlp
+    opt = (tol=tol, print_level=print_level)
+else
+    error("undefined solver: $solver")
+end
+
 # Main loop
 
 for problem ∈ [:beam,
-               #:chain,
-               #:double_oscillator,
-               #:ducted_fan,
-               #:electric_vehicle,
-               #:glider,
-               #:insurance,
-               #:glider,
-               #:jackson,
-               #:robbins,
-               #:robot,
-               #:rocket,
-               #:space_shuttle,
-               #:steering,
-               #:vanderpol,
+               :chain,
+               :double_oscillator,
+               ##:ducted_fan, # issue with JuMP + MadNLP
+               :electric_vehicle,
+               :glider,
+               :insurance,
+               :glider,
+               :jackson,
+               :robbins,
+               :robot,
+               :rocket,
+               :space_shuttle,
+               :steering,
+               :vanderpol,
                ]
 
-    println("\nproblem: $problem, solver: $solver, disc_method: $disc_method")
+    println("\n**** problem: $problem (solver: $solver, disc_method: $disc_method)")
     
-    #for N ∈ [100, 200, 500]
-    for N ∈ [100]
+    for N ∈ [10000, 50000]
+    #for N ∈ [100]
     
         println("\nN      :   $N")
     
         # JuMP
+        if jump_on
         print("JuMP   : ")
         nlp = eval(problem)(JuMPBackend(); grid_size=N)
         if solver == :ipopt
@@ -71,33 +85,33 @@ for problem ∈ [:beam,
             error("undefined solver: $solver")
         end
         @btime JuMP.optimize!($nlp)
+        end
         
         # adnlp
+        if adnlp_on
         print("adnlp  : ")
         docp = eval(Symbol(problem, :_s))(OptimalControlBackend(), :adnlp, solver; grid_size=N, disc_method=disc_method)
         nlp = nlp_model(docp)
-        if solver == :ipopt
-            opt = (tol=tol, mu_strategy=mu_strategy, print_level=print_level)
-        elseif solver == :madnlp
-            opt = (tol=tol, print_level=print_level)
-        else
-            error("undefined solver: $solver")
-        end
         @btime eval(solver)($nlp; $opt...)
+        end
 
         # exa
+        if exa_on   
         print("exa    : ")
         docp = eval(Symbol(problem, :_s))(OptimalControlBackend(), :exa, solver; grid_size=N, disc_method=disc_method)
         nlp = nlp_model(docp)
         @btime eval(solver)($nlp; $opt...)
+        end
 
         # exa  GPU
-        if cuda_on
+        if exa_gpu_on
+        if cuda_active
             print("exa GPU: ")
             docp = eval(Symbol(problem, :_s))(OptimalControlBackend(), :exa, solver; grid_size=N, disc_method=disc_method)
             nlp = nlp_model(docp)
             eval(solver)(nlp; opt..., exa_backend=CUDABackend());
             CUDA.@time eval(solver)(nlp; opt..., exa_backend=CUDABackend())
+        end
         end
         
     end
