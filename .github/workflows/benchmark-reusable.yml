@@ -13,8 +13,19 @@ on:
         type: string
       os:
         description: "GitHub runner operating system"
-        required: false
-        default: ubuntu-latest
+        required: true
+        type: string
+      runner:
+        description: "Runner identifier forwarded to benchmark script"
+        required: true
+        type: string
+      grid_sizes:
+        description: "JSON array of grid sizes (e.g., [200, 400])"
+        required: true
+        type: string
+      grid_size_max_cpu:
+        description: "Maximum grid size for CPU models"
+        required: true
         type: string
 
 permissions:
@@ -28,6 +39,9 @@ jobs:
     env:
       SCRIPT_PATH: ${{ inputs.script_path }}
       OS: ${{ inputs.os }}
+      GRID_SIZES: ${{ inputs.grid_sizes }}
+      GRID_SIZE_MAX_CPU: ${{ inputs.grid_size_max_cpu }}
+      RUNNER: ${{ inputs.runner }}
 
     steps:
       # ---------------------------
@@ -90,8 +104,11 @@ jobs:
           echo "⏱️  Benchmark timeout: 30 minutes"
           
           julia --color=yes -e '
+            using JSON
             include(ENV["SCRIPT_PATH"])
-            out = main(; runner=ENV["OS"])
+            grid_sizes = Int.(JSON.parse(ENV["GRID_SIZES"]))
+            grid_size_max_cpu = parse(Int, strip(ENV["GRID_SIZE_MAX_CPU"]))
+            out = main(; runner=ENV["RUNNER"], grid_sizes=grid_sizes, grid_size_max_cpu=grid_size_max_cpu)
             println("📄 Output file: ", out)
             open(ENV["BENCHMARK_OUTPUT_FILE"], "w") do f
               write(f, string(out))

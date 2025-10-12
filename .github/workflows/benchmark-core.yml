@@ -14,3 +14,6 @@ jobs:
       script_path: scripts/benchmark-core.jl
       julia_version: '1.11'
       os: ubuntu-latest
+      runner: ubuntu-cpu
+      grid_sizes: '[200]'
+      grid_size_max_cpu: 'typemax(Int)'

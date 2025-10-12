@@ -263,7 +263,7 @@ For each combination of problem, solver, model, and grid size, this function:
 - `madnlp_print_level`: Print level for MadNLP (MadNLP.LogLevels)
 - `max_iter`: Maximum number of iterations (Int)
 - `max_wall_time`: Maximum wall time in seconds (Float64)
-- `grid_size_max_cpu`: Maximum grid size for CPU models (Int, default=typemax(Int))
+- `grid_size_max_cpu`: Maximum grid size for CPU models (Int)
 
 # Returns
 A DataFrame with columns:
@@ -294,7 +294,7 @@ function benchmark_data(;
     madnlp_print_level,
     max_iter,
     max_wall_time,
-    grid_size_max_cpu = typemax(Int)
+    grid_size_max_cpu
 )
     # Initialize DataFrame
     data = DataFrame(
@@ -554,7 +554,7 @@ df = DataFrame(data["results"])
 - `madnlp_print_level`: Print level for MadNLP (MadNLP.LogLevels)
 - `max_iter`: Maximum number of iterations (Int)
 - `max_wall_time`: Maximum wall time in seconds (Float64)
-- `grid_size_max_cpu`: Maximum grid size for CPU models (Int, default=typemax(Int))
+- `grid_size_max_cpu`: Maximum grid size for CPU models (Int)
 
 # Returns
 - The `outpath` of the saved JSON file.
@@ -571,7 +571,7 @@ function benchmark(;
     madnlp_print_level,
     max_iter,
     max_wall_time,
-    grid_size_max_cpu = typemax(Int)
+    grid_size_max_cpu
 )
     # Detect CUDA availability and filter exa_gpu if not available
     cuda_on = CUDA.functional()

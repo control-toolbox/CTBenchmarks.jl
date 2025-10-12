@@ -3,6 +3,7 @@ using Aqua
 using CTBenchmarks
 using DataFrames
 using MadNLPMumps
+using CUDA
 
 #
 @testset verbose = true showtiming = true "CTBenchmarks tests" begin

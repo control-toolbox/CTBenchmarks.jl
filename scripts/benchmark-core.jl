@@ -21,7 +21,7 @@ using CTBenchmarks
 using MadNLP
 println("⏱️  Running core benchmark...")
 
-function main(; runner="local")
+function main(; runner::String="local", grid_sizes::Vector{Int} = [200], grid_size_max_cpu::Int = typemax(Int))
     outpath=joinpath(project_dir, "docs", "src", "assets", "benchmark-core" * (runner == "local" ? "" : "-" * runner))
     CTBenchmarks.benchmark(;
         outpath=outpath,
@@ -45,7 +45,7 @@ function main(; runner="local")
             :ipopt => [:JuMP, :adnlp, :exa],
             :madnlp => [:JuMP, :adnlp, :exa, :exa_gpu]
         ],
-        grid_sizes = [200],
+        grid_sizes = grid_sizes,
         disc_methods = [:trapeze],
         tol = 1e-8,
         ipopt_mu_strategy = "adaptive",
@@ -53,7 +53,7 @@ function main(; runner="local")
         madnlp_print_level = MadNLP.ERROR,
         max_iter = 1000,
         max_wall_time = 500.0,
-        grid_size_max_cpu = 200  # CPU models won't run for grid_size > 200
+        grid_size_max_cpu = grid_size_max_cpu  # CPU models won't run for grid_size > grid_size_max_cpu
     )
     println("✅ Benchmark completed successfully!")
     return outpath
