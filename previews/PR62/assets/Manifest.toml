@@ -2,7 +2,7 @@
 
 julia_version = "1.12.0"
 manifest_format = "2.0"
-project_hash = "db5e32e658f4b76405bc517bab91b6dc5d2573c5"
+project_hash = "759cbbd61bd15322290f0cc69103059ddfa5d792"
 
 [[deps.ADNLPModels]]
 deps = ["ADTypes", "ForwardDiff", "LinearAlgebra", "NLPModels", "Requires", "ReverseDiff", "SparseArrays", "SparseConnectivityTracer", "SparseMatrixColorings"]
@@ -142,7 +142,7 @@ version = "0.16.4"
     JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 
 [[deps.CTBenchmarks]]
-deps = ["BenchmarkTools", "CUDA", "DataFrames", "Dates", "InteractiveUtils", "Ipopt", "JSON", "JuMP", "MadNLP", "MadNLPGPU", "MadNLPMumps", "NLPModelsIpopt", "OptimalControl", "OptimalControlProblems", "Printf", "Sockets", "Tables"]
+deps = ["BenchmarkTools", "CUDA", "DataFrames", "Dates", "InteractiveUtils", "Ipopt", "JSON", "JuMP", "MadNLP", "MadNLPGPU", "MadNLPMumps", "NLPModelsIpopt", "OptimalControl", "OptimalControlProblems", "Pkg", "Printf", "Sockets", "Tables"]
 path = "/home/runner/work/CTBenchmarks.jl/CTBenchmarks.jl"
 uuid = "db1dffaa-5ed3-4583-9a66-b5881c82ef11"
 version = "0.1.0"
