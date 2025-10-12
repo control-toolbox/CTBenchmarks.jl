@@ -7,6 +7,10 @@ on:
         description: "Julia script to run benchmark"
         required: true
         type: string
+      julia_version:
+        description: "Julia version to install"
+        required: true
+        type: string
       os:
         description: "GitHub runner operating system"
         required: false
@@ -51,7 +55,7 @@ jobs:
       # ---------------------------
       - uses: julia-actions/setup-julia@v2
         with:
-          version: '1.11'
+          version: ${{ inputs.julia_version }}
 
       - name: 🔋 Julia setup status
         run: |

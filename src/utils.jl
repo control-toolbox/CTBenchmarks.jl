@@ -376,13 +376,37 @@ Return metadata about the current environment:
 - `julia_version`
 - `os`
 - `machine` hostname
+- `pkg_status` - output of Pkg.status() with ANSI colors
+- `versioninfo` - output of versioninfo() with ANSI colors
+- `pkg_manifest` - output of Pkg.status(mode=PKGMODE_MANIFEST) with ANSI colors
 """
 function generate_metadata()
+    # Capture Pkg.status() with colors
+    pkg_status_output = sprint() do buffer
+        io = IOContext(buffer, :color => true)
+        Pkg.status(; io=io)
+    end
+    
+    # Capture versioninfo() with colors
+    versioninfo_output = sprint() do buffer
+        io = IOContext(buffer, :color => true)
+        versioninfo(io)
+    end
+    
+    # Capture Pkg.status(mode=PKGMODE_MANIFEST) with colors
+    pkg_manifest_output = sprint() do buffer
+        io = IOContext(buffer, :color => true)
+        Pkg.status(; mode = Pkg.PKGMODE_MANIFEST, io=io)
+    end
+    
     Dict(
-        "timestamp" => Dates.format(Dates.now(), dateformat"yyyy-mm-ddTHH:MM:SSZ"),
+        "timestamp" => Dates.format(Dates.now(Dates.UTC), dateformat"yyyy-mm-dd HH:MM:SS") * " UTC",
         "julia_version" => string(VERSION),
-        "os" => Sys.KERNEL,
+        "os" => string(Sys.KERNEL),
         "machine" => gethostname(),
+        "pkg_status" => pkg_status_output,
+        "versioninfo" => versioninfo_output,
+        "pkg_manifest" => pkg_manifest_output,
     )
 end
 

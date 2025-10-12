@@ -1,4 +1,14 @@
-using Revise
+if Base.find_package("Revise") !== nothing
+    try
+        @eval using Revise
+        println("🔁 Revise loaded successfully")
+    catch err
+        println("⚠️  Revise detected but could not be loaded: $(err)")
+    end
+else
+    println("ℹ️  Revise not installed; continuing without it")
+end
+
 using Pkg
 println("📦 Activating project environment...")
 const project_dir = normpath(@__DIR__, "..")

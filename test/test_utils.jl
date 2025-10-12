@@ -24,6 +24,17 @@ function test_utils()
     @test !ismissing(stats_jump.objective)
     @test !ismissing(stats_jump.iterations)
 
+    # ===== Test 2: generate_metadata =====
+    println("\n=== Testing generate_metadata ===")
+    meta = CTBenchmarks.generate_metadata()
+    @test meta isa Dict
+    for key in ("timestamp", "julia_version", "os", "machine", "pkg_status", "versioninfo", "pkg_manifest")
+        @test haskey(meta, key)
+        value = meta[key]
+        @test value isa AbstractString
+        @test !isempty(strip(value))
+    end
+
     # Test adnlp model
     println("Testing adnlp model...")
     stats_adnlp = CTBenchmarks.solve_and_extract_data(

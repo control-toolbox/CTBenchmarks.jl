@@ -12,4 +12,5 @@ jobs:
     uses: ./.github/workflows/benchmark-reusable.yml
     with:
       script_path: scripts/benchmark-core.jl
+      julia_version: '1.11'
       os: ubuntu-latest
