@@ -52,7 +52,8 @@ function main(; runner="local")
         ipopt_print_level = 0,
         madnlp_print_level = MadNLP.ERROR,
         max_iter = 1000,
-        max_wall_time = 500.0
+        max_wall_time = 500.0,
+        grid_size_max_cpu = 200  # CPU models won't run for grid_size > 200
     )
     println("✅ Benchmark completed successfully!")
     return outpath

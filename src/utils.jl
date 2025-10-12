@@ -240,7 +240,8 @@ end
         ipopt_print_level,
         madnlp_print_level,
         max_iter,
-        max_wall_time
+        max_wall_time,
+        grid_size_max_cpu
     ) -> DataFrame
 
 Run benchmarks on optimal control problems and return results as a DataFrame.
@@ -262,6 +263,7 @@ For each combination of problem, solver, model, and grid size, this function:
 - `madnlp_print_level`: Print level for MadNLP (MadNLP.LogLevels)
 - `max_iter`: Maximum number of iterations (Int)
 - `max_wall_time`: Maximum wall time in seconds (Float64)
+- `grid_size_max_cpu`: Maximum grid size for CPU models (Int, default=typemax(Int))
 
 # Returns
 A DataFrame with columns:
@@ -291,7 +293,8 @@ function benchmark_data(;
     ipopt_print_level,
     madnlp_print_level,
     max_iter,
-    max_wall_time
+    max_wall_time,
+    grid_size_max_cpu = typemax(Int)
 )
     # Initialize DataFrame
     data = DataFrame(
@@ -342,10 +345,22 @@ function benchmark_data(;
             println("│  │")
             
             for (grid_idx, N) in enumerate(grid_sizes)
+                # Filter models based on grid_size_max_cpu
+                # CPU models are those that don't end with "_gpu"
+                models_to_run = filter(models) do model
+                    is_gpu_model = endswith(string(model), "_gpu")
+                    is_gpu_model || N <= grid_size_max_cpu
+                end
+                
+                # Skip this grid size if no models to run
+                if isempty(models_to_run)
+                    continue
+                end
+                
                 # Print grid size
                 println("│  │  N       : $N")
                 
-                for model in models
+                for model in models_to_run
                     # Solve and extract data using helper function
                     stats = solve_and_extract_data(
                         problem, solver, model, N, disc_method,
@@ -376,7 +391,15 @@ function benchmark_data(;
                 end
                 
                 # Add spacing between grid sizes (except after the last one)
-                if grid_idx < length(grid_sizes)
+                # Only add spacing if there are more grid sizes with models to run
+                remaining_grids = grid_sizes[(grid_idx+1):end]
+                has_more_grids = any(remaining_grids) do next_N
+                    any(models) do model
+                        is_gpu_model = endswith(string(model), "_gpu")
+                        is_gpu_model || next_N <= grid_size_max_cpu
+                    end
+                end
+                if has_more_grids
                     println("│  │ ")
                 end
             end
@@ -499,7 +522,8 @@ end
         ipopt_print_level,
         madnlp_print_level,
         max_iter,
-        max_wall_time
+        max_wall_time,
+        grid_size_max_cpu
     ) -> String
 
 Run benchmarks on optimal control problems and save results to a JSON file.
@@ -530,6 +554,7 @@ df = DataFrame(data["results"])
 - `madnlp_print_level`: Print level for MadNLP (MadNLP.LogLevels)
 - `max_iter`: Maximum number of iterations (Int)
 - `max_wall_time`: Maximum wall time in seconds (Float64)
+- `grid_size_max_cpu`: Maximum grid size for CPU models (Int, default=typemax(Int))
 
 # Returns
 - The `outpath` of the saved JSON file.
@@ -545,7 +570,8 @@ function benchmark(;
     ipopt_print_level,
     madnlp_print_level,
     max_iter,
-    max_wall_time
+    max_wall_time,
+    grid_size_max_cpu = typemax(Int)
 )
     # Detect CUDA availability and filter exa_gpu if not available
     cuda_on = CUDA.functional()
@@ -571,7 +597,8 @@ function benchmark(;
         ipopt_print_level=ipopt_print_level,
         madnlp_print_level=madnlp_print_level,
         max_iter=max_iter,
-        max_wall_time=max_wall_time
+        max_wall_time=max_wall_time,
+        grid_size_max_cpu=grid_size_max_cpu
     )
     
     # Generate metadata
