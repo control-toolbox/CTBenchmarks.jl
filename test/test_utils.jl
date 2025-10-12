@@ -1,3 +1,5 @@
+using CUDA
+
 function test_utils()
     
     # ===== Test 1: solve_and_extract_data with different models =====
@@ -76,6 +78,34 @@ function test_utils()
     @test_throws AssertionError CTBenchmarks.solve_and_extract_data(
         :beam, :ipopt, :exa_gpu, 50, :trapeze, 1e-8, "adaptive", 0, 1000, 500.0
     )
+
+    if CUDA.functional()
+        println("Testing exa_gpu model with CUDA...")
+        stats_exa_gpu = CTBenchmarks.solve_and_extract_data(
+            :beam, :madnlp, :exa_gpu, 20, :trapeze, 1e-8, missing, MadNLP.ERROR, 200, 120.0
+        )
+
+        @test stats_exa_gpu isa NamedTuple
+        @test haskey(stats_exa_gpu, :benchmark)
+        @test haskey(stats_exa_gpu, :status)
+        @test haskey(stats_exa_gpu, :success)
+
+        bench_gpu = stats_exa_gpu.benchmark
+
+        getval(obj, key::Symbol) = isa(obj, Dict) ? get(obj, key, get(obj, string(key), nothing)) : getproperty(obj, key)
+        hasval(obj, key::Symbol) = isa(obj, Dict) ? (haskey(obj, key) || haskey(obj, string(key))) : Base.hasproperty(obj, key)
+
+        @test hasval(bench_gpu, :time)
+        @test hasval(bench_gpu, :cpu_bytes)
+        @test hasval(bench_gpu, :gpu_bytes)
+
+        @test !isnan(getval(bench_gpu, :time))
+        @test getval(bench_gpu, :cpu_bytes) >= 0
+        @test getval(bench_gpu, :gpu_bytes) >= 0
+        @test stats_exa_gpu.success isa Bool
+    else
+        println("Skipping exa_gpu model test because CUDA is not functional.")
+    end
     
     # ===== Test 2: benchmark_data with multiple configurations =====
     println("\n=== Testing benchmark_data ===")
