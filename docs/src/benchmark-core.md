@@ -229,7 +229,9 @@ function _print_results(bench_data)
                         
                         # Display each model with library formatting
                         for row in eachrow(grid_df)
-                            println("│  │", CTBenchmarks.format_benchmark_line(Symbol(row.model), row.time, row.allocs, row.memory))
+                            # Create a NamedTuple with benchmark data for formatting
+                            stats = (benchmark = row.benchmark,)
+                            println("│  │", CTBenchmarks.format_benchmark_line(Symbol(row.model), stats))
                         end
                         
                         # Add spacing between grid sizes
