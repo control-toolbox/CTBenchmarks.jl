@@ -9,18 +9,18 @@ function test_utils()
         :beam, :ipopt, :JuMP, 50, :trapeze, 1e-8, "adaptive", 0, 1000, 500.0
     )
     @test stats_jump isa NamedTuple
-    @test haskey(stats_jump, :time)
-    @test haskey(stats_jump, :allocs)
-    @test haskey(stats_jump, :memory)
-    @test haskey(stats_jump, :gctime)
+    @test haskey(stats_jump, :benchmark)
     @test haskey(stats_jump, :objective)
     @test haskey(stats_jump, :iterations)
     @test haskey(stats_jump, :status)
     @test haskey(stats_jump, :success)
     # Check that solve actually worked (not just error handling)
-    @test !isnan(stats_jump.time)
-    @test stats_jump.allocs > 0
-    @test stats_jump.memory > 0
+    @test haskey(stats_jump.benchmark, :time)
+    @test haskey(stats_jump.benchmark, :alloc)
+    @test haskey(stats_jump.benchmark, :bytes)
+    @test !isnan(stats_jump.benchmark.time)
+    @test stats_jump.benchmark.alloc > 0
+    @test stats_jump.benchmark.bytes > 0
     @test !ismissing(stats_jump.objective)
     @test !ismissing(stats_jump.iterations)
 
@@ -43,8 +43,8 @@ function test_utils()
     @test stats_adnlp isa NamedTuple
     @test haskey(stats_adnlp, :status)
     @test haskey(stats_adnlp, :success)
-    @test !isnan(stats_adnlp.time)
-    @test stats_adnlp.allocs > 0
+    @test !isnan(stats_adnlp.benchmark.time)
+    @test stats_adnlp.benchmark.alloc > 0
     @test !ismissing(stats_adnlp.objective)
     
     # Test exa model
@@ -55,8 +55,8 @@ function test_utils()
     @test stats_exa isa NamedTuple
     @test haskey(stats_exa, :status)
     @test haskey(stats_exa, :success)
-    @test !isnan(stats_exa.time)
-    @test stats_exa.allocs > 0
+    @test !isnan(stats_exa.benchmark.time)
+    @test stats_exa.benchmark.alloc > 0
     @test !ismissing(stats_exa.objective)
     
     # Test with MadNLP (missing mu_strategy)
@@ -67,20 +67,28 @@ function test_utils()
     @test stats_madnlp isa NamedTuple
     @test haskey(stats_madnlp, :status)
     @test haskey(stats_madnlp, :success)
-    @test !isnan(stats_madnlp.time)
-    @test stats_madnlp.allocs > 0
+    @test !isnan(stats_madnlp.benchmark.time)
+    @test stats_madnlp.benchmark.alloc > 0
     @test !ismissing(stats_madnlp.objective)
+    
+    # Test assertion: exa_gpu requires madnlp
+    println("Testing exa_gpu assertion...")
+    @test_throws AssertionError CTBenchmarks.solve_and_extract_data(
+        :beam, :ipopt, :exa_gpu, 50, :trapeze, 1e-8, "adaptive", 0, 1000, 500.0
+    )
     
     # ===== Test 2: benchmark_data with multiple configurations =====
     println("\n=== Testing benchmark_data ===")
     
-    # Test with 2 problems, 2 solvers, 3 models, 2 grid sizes
-    # Expected rows: 2 * 2 * 3 * 2 = 24
+    # Test with 2 problems, 2 solvers with their models, 2 grid sizes
+    # Expected rows: 2 problems × (3 ipopt models + 3 madnlp models) × 2 grid_sizes = 24
     println("Testing with multiple configurations...")
     df = benchmark_data(
         problems = [:beam, :chain],
-        solvers = [:ipopt, :madnlp],
-        models = [:JuMP, :adnlp, :exa],
+        solver_models = [
+            :ipopt => [:JuMP, :adnlp, :exa],
+            :madnlp => [:JuMP, :adnlp, :exa]
+        ],
         grid_sizes = [50, 100],
         disc_methods = [:trapeze],
         tol = 1e-8,
@@ -99,8 +107,8 @@ function test_utils()
     
     # Check that all expected columns exist
     expected_columns = [:problem, :solver, :model, :disc_method, :grid_size, 
-                       :tol, :mu_strategy, :print_level, :time, :allocs, 
-                       :memory, :gctime, :objective, :iterations, :status, :success]
+                       :tol, :mu_strategy, :print_level, :benchmark, 
+                       :objective, :iterations, :status, :success]
     @test all(col in names(df) for col in string.(expected_columns))
     
     # Check that all problems are present
@@ -126,9 +134,9 @@ function test_utils()
     @test all(isa.(df.success, Bool))
     
     # Check that solves actually worked (not all errors)
-    @test all(.!isnan.(df.time))
-    @test all(df.allocs .> 0)
-    @test all(df.memory .> 0)
+    @test all(row -> !isnan(row.benchmark.time), eachrow(df))
+    @test all(row -> row.benchmark.alloc > 0, eachrow(df))
+    @test all(row -> row.benchmark.bytes > 0, eachrow(df))
     @test all(.!ismissing.(df.objective))
     @test all(.!ismissing.(df.iterations))
     
@@ -139,8 +147,9 @@ function test_utils()
     # Expected rows: 1 * 1 * 2 * 1 = 2
     df_subset = benchmark_data(
         problems = [:beam],
-        solvers = [:ipopt],
-        models = [:JuMP, :adnlp],
+        solver_models = [
+            :ipopt => [:JuMP, :adnlp]
+        ],
         grid_sizes = [50],
         disc_methods = [:trapeze],
         tol = 1e-8,

@@ -20,6 +20,7 @@ import JuMP                     # Julia Mathematical Programming
 import Ipopt                    # Interior Point OPTimizer
 import NLPModelsIpopt           # NLPModels interface to Ipopt
 using MadNLPMumps               # MadNLP with MUMPS linear solver
+using CUDA                      # CUDA GPU support
 
 include("utils.jl")
 include("print.jl")

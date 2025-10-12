@@ -44,15 +44,31 @@ function prettymemory(b)
 end
 
 """
-    format_benchmark_line(model::Symbol, time_ns::Real, allocs::Integer, memory_bytes::Integer) -> String
+    format_benchmark_line(model::Symbol, stats::NamedTuple) -> String
 
-Build a formatted line summarizing benchmark statistics for `model`, combining
-the elapsed time `time_ns`, allocation count `allocs`, and allocated memory
-`memory_bytes` using `prettytime` and `prettymemory`.
+Build a formatted line summarizing benchmark statistics for `model`.
+Handles both CPU benchmarks (from @btimed) and GPU benchmarks (from CUDA.@timed).
+
+For CPU: displays time, allocations count, and memory
+For GPU: displays time, CPU allocations/memory, and GPU allocations/memory
 """
-function format_benchmark_line(model::Symbol, time_ns::Float64, allocs::Int, memory_bytes::Int)
-    model_str = rpad(string(model), 6)
-    time_str = prettytime(time_ns)
-    memory_str = prettymemory(memory_bytes)
-    return "  $model_str:   $time_str ($allocs allocations: $memory_str)"
+function format_benchmark_line(model::Symbol, stats::NamedTuple)
+    model_str = rpad(string(model), 8)
+    bench = stats.benchmark
+    
+    # Check if this is a CUDA.@timed result (has cpu_bytes and gpu_bytes)
+    if haskey(bench, :cpu_bytes) && haskey(bench, :gpu_bytes)
+        # GPU benchmark format
+        time_str = @sprintf("%.6f", bench.time)
+        cpu_allocs = Base.gc_alloc_count(bench.cpu_gcstats)
+        cpu_mem_str = prettymemory(bench.cpu_bytes)
+        gpu_allocs = bench.gpu_memstats.alloc_count
+        gpu_mem_str = prettymemory(bench.gpu_bytes)
+        return "  $model_str: $time_str seconds ($cpu_allocs CPU allocations: $cpu_mem_str) ($gpu_allocs GPU allocation$(gpu_allocs == 1 ? "" : "s"): $gpu_mem_str)"
+    else
+        # CPU benchmark format (BenchmarkTools @btimed)
+        time_str = prettytime(bench.time)
+        memory_str = prettymemory(bench.bytes)
+        return "  $model_str: $time_str ($(bench.alloc) allocations: $memory_str)"
+    end
 end

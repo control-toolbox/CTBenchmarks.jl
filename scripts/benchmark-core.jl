@@ -41,8 +41,10 @@ function main(; runner="local")
             # :steering,
             # :vanderpol,
         ],
-        solvers = [:ipopt, :madnlp],
-        models = [:JuMP, :adnlp, :exa],
+        solver_models = [
+            :ipopt => [:JuMP, :adnlp, :exa],
+            :madnlp => [:JuMP, :adnlp, :exa, :exa_gpu]
+        ],
         grid_sizes = [200],
         disc_methods = [:trapeze],
         tol = 1e-8,
