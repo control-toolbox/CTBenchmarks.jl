@@ -21,7 +21,7 @@
 end</code></pre></details><pre class="documenter-example-output"><code class="nohighlight hljs ansi">╔═══════════════════════════════════════════════════════════╗
 ║                   BENCHMARK METADATA                      ║
 ╠═══════════════════════════════════════════════════════════╣
-  📅 Timestamp     : 2025-10-12 12:03:14 UTC
+  📅 Timestamp     : 2025-10-12 20:18:04 UTC
   🔧 Julia version : 1.11.7
   💻 OS            : Darwin
   🖥️ Machine       : ap240209-01.local
@@ -314,14 +314,16 @@ _complete_manifest()</code></pre><pre class="documenter-example-output"><code cl
                     grid_sizes = unique(combo_df.grid_size)
 
                     for (grid_idx, N) in enumerate(grid_sizes)
-                        println(&quot;│  │  N     :   $N&quot;)
+                        println(&quot;│  │  N       : $N&quot;)
 
                         # Filter for this grid size
                         grid_df = filter(row -&gt; row.grid_size == N, combo_df)
 
                         # Display each model with library formatting
                         for row in eachrow(grid_df)
-                            println(&quot;│  │&quot;, CTBenchmarks.format_benchmark_line(Symbol(row.model), row.time, row.allocs, row.memory))
+                            # Create a NamedTuple with benchmark data for formatting
+                            stats = (benchmark = row.benchmark,)
+                            println(&quot;│  │&quot;, CTBenchmarks.format_benchmark_line(Symbol(row.model), stats))
                         end
 
                         # Add spacing between grid sizes
@@ -348,17 +350,17 @@ end</code></pre></details></br><pre class="documenter-example-output"><code clas
 │
 ├──┬ solver: ipopt, disc_method: trapeze
 │  │
-│  │  N     :   200
-│  │  JuMP  :   0.006 ns (793 allocations: 16.39 KiB)
-│  │  adnlp :   0.013 ns (216199 allocations: 9.01 MiB)
-│  │  exa   :   0.007 ns (1047 allocations: 89.18 KiB)
+│  │  N       : 200
+│  │  JuMP    : 0.006 ns (793 allocations: 16.39 KiB)
+│  │  adnlp   : 0.012 ns (37309 allocations: 2.41 MiB)
+│  │  exa     : 0.007 ns (1047 allocations: 89.18 KiB)
 │  └─
 │
 ├──┬ solver: madnlp, disc_method: trapeze
 │  │
-│  │  N     :   200
-│  │  JuMP  :   0.008 ns (8403 allocations: 11.22 MiB)
-│  │  adnlp :   0.017 ns (286193 allocations: 22.53 MiB)
-│  │  exa   :   0.008 ns (8021 allocations: 10.92 MiB)
+│  │  N       : 200
+│  │  JuMP    : 0.008 ns (8337 allocations: 11.22 MiB)
+│  │  adnlp   : 0.015 ns (54977 allocations: 13.99 MiB)
+│  │  exa     : 0.008 ns (7955 allocations: 10.92 MiB)
 │  └─
-└─</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="index.html">« Introduction</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.14.1 on <span class="colophon-date" title="Sunday 12 October 2025 18:57">Sunday 12 October 2025</span>. Using Julia version 1.12.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+└─</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="index.html">« Introduction</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.14.1 on <span class="colophon-date" title="Sunday 12 October 2025 20:37">Sunday 12 October 2025</span>. Using Julia version 1.12.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
