@@ -222,7 +222,7 @@ function _print_results(bench_data)
                     grid_sizes = unique(combo_df.grid_size)
                     
                     for (grid_idx, N) in enumerate(grid_sizes)
-                        println("│  │  N     :   $N")
+                        println("│  │  N       : $N")
                         
                         # Filter for this grid size
                         grid_df = filter(row -> row.grid_size == N, combo_df)

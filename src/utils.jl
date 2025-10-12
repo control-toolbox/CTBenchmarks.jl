@@ -343,7 +343,7 @@ function benchmark_data(;
             
             for (grid_idx, N) in enumerate(grid_sizes)
                 # Print grid size
-                println("│  │  N       :   $N")
+                println("│  │  N       : $N")
                 
                 for model in models
                     # Solve and extract data using helper function

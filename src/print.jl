@@ -56,19 +56,56 @@ function format_benchmark_line(model::Symbol, stats::NamedTuple)
     model_str = rpad(string(model), 8)
     bench = stats.benchmark
     
+    # Helper function to get value from either Dict or NamedTuple
+    function getval(obj, key::Symbol)
+        if isa(obj, Dict)
+            return get(obj, string(key), get(obj, key, nothing))
+        else
+            return getproperty(obj, key)
+        end
+    end
+    
     # Check if this is a CUDA.@timed result (has cpu_bytes and gpu_bytes)
-    if haskey(bench, :cpu_bytes) && haskey(bench, :gpu_bytes)
+    has_cpu_bytes = (isa(bench, Dict) && (haskey(bench, "cpu_bytes") || haskey(bench, :cpu_bytes))) || 
+                    (!isa(bench, Dict) && haskey(bench, :cpu_bytes))
+    has_gpu_bytes = (isa(bench, Dict) && (haskey(bench, "gpu_bytes") || haskey(bench, :gpu_bytes))) || 
+                    (!isa(bench, Dict) && haskey(bench, :gpu_bytes))
+    
+    if has_cpu_bytes && has_gpu_bytes
         # GPU benchmark format
-        time_str = @sprintf("%.6f", bench.time)
-        cpu_allocs = Base.gc_alloc_count(bench.cpu_gcstats)
-        cpu_mem_str = prettymemory(bench.cpu_bytes)
-        gpu_allocs = bench.gpu_memstats.alloc_count
-        gpu_mem_str = prettymemory(bench.gpu_bytes)
+        time_val = getval(bench, :time)
+        time_str = @sprintf("%.6f", time_val)
+        
+        cpu_gcstats = getval(bench, :cpu_gcstats)
+        if isa(cpu_gcstats, Dict)
+            cpu_allocs = get(cpu_gcstats, "allocd", get(cpu_gcstats, :allocd, 0))
+        else
+            cpu_allocs = Base.gc_alloc_count(cpu_gcstats)
+        end
+        
+        cpu_bytes = getval(bench, :cpu_bytes)
+        cpu_mem_str = prettymemory(cpu_bytes)
+        
+        gpu_memstats = getval(bench, :gpu_memstats)
+        if isa(gpu_memstats, Dict)
+            gpu_allocs = get(gpu_memstats, "alloc_count", get(gpu_memstats, :alloc_count, 0))
+        else
+            gpu_allocs = gpu_memstats.alloc_count
+        end
+        
+        gpu_bytes = getval(bench, :gpu_bytes)
+        gpu_mem_str = prettymemory(gpu_bytes)
+        
         return "  $model_str: $time_str seconds ($cpu_allocs CPU allocations: $cpu_mem_str) ($gpu_allocs GPU allocation$(gpu_allocs == 1 ? "" : "s"): $gpu_mem_str)"
     else
         # CPU benchmark format (BenchmarkTools @btimed)
-        time_str = prettytime(bench.time)
-        memory_str = prettymemory(bench.bytes)
-        return "  $model_str: $time_str ($(bench.alloc) allocations: $memory_str)"
+        time_val = getval(bench, :time)
+        time_str = prettytime(time_val)
+        
+        bytes_val = getval(bench, :bytes)
+        memory_str = prettymemory(bytes_val)
+        
+        alloc_val = getval(bench, :alloc)
+        return "  $model_str: $time_str ($alloc_val allocations: $memory_str)"
     end
 end
