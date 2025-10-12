@@ -126,7 +126,8 @@ function test_utils()
         ipopt_print_level = 0,
         madnlp_print_level = MadNLP.ERROR,
         max_iter = 1000,
-        max_wall_time = 500.0
+        max_wall_time = 500.0,
+        grid_size_max_cpu = typemax(Int)
     )
     
     # Check DataFrame type
@@ -187,7 +188,8 @@ function test_utils()
         ipopt_print_level = 0,
         madnlp_print_level = MadNLP.ERROR,
         max_iter = 1000,
-        max_wall_time = 500.0
+        max_wall_time = 500.0,
+        grid_size_max_cpu = typemax(Int)
     )
     
     @test nrow(df_subset) == 2

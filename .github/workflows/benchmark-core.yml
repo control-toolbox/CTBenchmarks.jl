@@ -8,7 +8,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  run-benchmark-core:
+  benchmark-core-cpu:
     uses: ./.github/workflows/benchmark-reusable.yml
     with:
       script_path: scripts/benchmark-core.jl
@@ -16,4 +16,14 @@ jobs:
       os: ubuntu-latest
       runner: ubuntu-cpu
       grid_sizes: '[200]'
+      grid_size_max_cpu: 'typemax(Int)'
+
+  benchmark-core-moonshot:
+    uses: ./.github/workflows/benchmark-reusable.yml
+    with:
+      script_path: scripts/benchmark-core.jl
+      julia_version: '1.11'
+      os: '[self-hosted, Linux, gpu, cuda]'
+      runner: moonshot
+      grid_sizes: '[200, 500, 1000, 5000, 10000, 50000]'
       grid_size_max_cpu: 'typemax(Int)'

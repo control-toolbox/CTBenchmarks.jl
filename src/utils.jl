@@ -43,8 +43,10 @@ function solve_and_extract_data(
     max_iter::Int,
     max_wall_time::Float64
 )
-    # Assertion: exa_gpu requires madnlp
-    @assert (model != :exa_gpu || solver == :madnlp) "exa_gpu model requires madnlp solver"
+    # Assertions: GPU models require MadNLP and CUDA
+    is_gpu_model = endswith(string(model), "_gpu")
+    @assert (!is_gpu_model || solver == :madnlp) "gpu model requires madnlp solver"
+    @assert (!is_gpu_model || is_cuda_on()) "gpu model requires CUDA"
     if model == :JuMP
         # ===== JuMP Model =====
         try
@@ -230,6 +232,29 @@ function solve_and_extract_data(
 end
 
 """
+    is_cuda_on() -> Bool
+
+Return true if CUDA is functional on this machine.
+"""
+is_cuda_on() = CUDA.functional()
+
+"""
+    filter_models_for_backend(models::Vector{Symbol}, grid_size::Int, grid_size_max_cpu::Int) -> Vector{Symbol}
+
+Filter solver models depending on backend availability and grid size limits.
+
+- GPU models (ending with `_gpu`) are kept only if CUDA is available.
+- CPU models are kept only if their grid size does not exceed `grid_size_max_cpu`.
+"""
+function filter_models_for_backend(models::Vector{Symbol}, grid_size::Int, grid_size_max_cpu::Int)
+    cuda_on = is_cuda_on()
+    return [
+        model for model in models
+        if (endswith(string(model), "_gpu") ? cuda_on : grid_size <= grid_size_max_cpu)
+    ]
+end
+
+"""
     benchmark_data(;
         problems,
         solver_models,
@@ -345,12 +370,8 @@ function benchmark_data(;
             println("│  │")
             
             for (grid_idx, N) in enumerate(grid_sizes)
-                # Filter models based on grid_size_max_cpu
-                # CPU models are those that don't end with "_gpu"
-                models_to_run = filter(models) do model
-                    is_gpu_model = endswith(string(model), "_gpu")
-                    is_gpu_model || N <= grid_size_max_cpu
-                end
+                # Filter models based on CUDA availability and grid_size_max_cpu
+                models_to_run = filter_models_for_backend(models, N, grid_size_max_cpu)
                 
                 # Skip this grid size if no models to run
                 if isempty(models_to_run)
@@ -394,10 +415,7 @@ function benchmark_data(;
                 # Only add spacing if there are more grid sizes with models to run
                 remaining_grids = grid_sizes[(grid_idx+1):end]
                 has_more_grids = any(remaining_grids) do next_N
-                    any(models) do model
-                        is_gpu_model = endswith(string(model), "_gpu")
-                        is_gpu_model || next_N <= grid_size_max_cpu
-                    end
+                    !isempty(filter_models_for_backend(models, next_N, grid_size_max_cpu))
                 end
                 if has_more_grids
                     println("│  │ ")
@@ -573,16 +591,11 @@ function benchmark(;
     max_wall_time,
     grid_size_max_cpu
 )
-    # Detect CUDA availability and filter exa_gpu if not available
-    cuda_on = CUDA.functional()
-    if !cuda_on
-        println("⚠️  CUDA not functional, filtering out :exa_gpu models")
-        solver_models = [
-            solver => filter(m -> m != :exa_gpu, models)
-            for (solver, models) in solver_models
-        ]
-    else
+    # Detect CUDA availability (logging only; filtering handled in benchmark_data)
+    if is_cuda_on()
         println("✓ CUDA functional, GPU benchmarks enabled")
+    else
+        println("⚠️  CUDA not functional, GPU models will be skipped")
     end
     
     # Run benchmarks and get DataFrame
