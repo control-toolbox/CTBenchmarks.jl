@@ -104,6 +104,8 @@ jobs:
           echo "⏱️  Benchmark timeout: 30 minutes"
           
           julia --color=yes -e '
+            using Pkg
+            Pkg.add("JSON")
             using JSON
             include(ENV["SCRIPT_PATH"])
             grid_sizes = Int.(JSON.parse(ENV["GRID_SIZES"]))
