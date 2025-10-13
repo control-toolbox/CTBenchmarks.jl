@@ -47,6 +47,7 @@ function solve_and_extract_data(
     is_gpu_model = endswith(string(model), "_gpu")
     @assert (!is_gpu_model || solver == :madnlp) "gpu model requires madnlp solver"
     @assert (!is_gpu_model || is_cuda_on()) "gpu model requires CUDA"
+    @assert (model != :JuMP || disc_method == :trapeze) "JuMP model requires :trapeze discretization"
     if model == :JuMP
         # ===== JuMP Model =====
         try
@@ -240,17 +241,19 @@ Return true if CUDA is functional on this machine.
 is_cuda_on() = CUDA.functional()
 
 """
-    filter_models_for_backend(models::Vector{Symbol}) -> Vector{Symbol}
+    filter_models_for_backend(models::Vector{Symbol}, disc_method::Symbol) -> Vector{Symbol}
 
-Filter solver models depending on backend availability.
+Filter solver models depending on backend availability and discretization support.
 
 - GPU models (ending with `_gpu`) are kept only if CUDA is available.
+- JuMP models are kept only when `disc_method == :trapeze`.
 """
-function filter_models_for_backend(models::Vector{Symbol})
+function filter_models_for_backend(models::Vector{Symbol}, disc_method::Symbol)
     cuda_on = is_cuda_on()
+    supports_jump = disc_method == :trapeze
     return [
         model for model in models
-        if (endswith(string(model), "_gpu") ? cuda_on : true)
+        if endswith(string(model), "_gpu") ? cuda_on : (model != :JuMP || supports_jump)
     ]
 end
 
@@ -368,8 +371,8 @@ function benchmark_data(;
             println("│  │")
             
             for (grid_idx, N) in enumerate(grid_sizes)
-                # Filter models based on CUDA availability
-                models_to_run = filter_models_for_backend(models)
+                # Filter models based on CUDA availability and discretization support
+                models_to_run = filter_models_for_backend(models, disc_method)
                 
                 # Skip this grid size if no models to run
                 if isempty(models_to_run)
@@ -413,7 +416,7 @@ function benchmark_data(;
                 # Only add spacing if there are more grid sizes with models to run
                 remaining_grids = grid_sizes[(grid_idx+1):end]
                 has_more_grids = any(remaining_grids) do next_N
-                    !isempty(filter_models_for_backend(models))
+                    !isempty(filter_models_for_backend(models, disc_method))
                 end
                 if has_more_grids
                     println("│  │ ")
