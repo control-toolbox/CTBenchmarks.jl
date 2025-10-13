@@ -13,7 +13,9 @@ jobs:
     with:
       script_path: scripts/benchmark-core.jl
       julia_version: '1.11'
-      os: ubuntu-latest
+      julia_arch: x64
+      runs_on: '"ubuntu-latest"'
+      julia_os: ubuntu-latest
       runner: ubuntu-cpu
       grid_sizes: '[200]'
       grid_size_max_cpu: '1000000'
@@ -23,7 +25,9 @@ jobs:
     with:
       script_path: scripts/benchmark-core.jl
       julia_version: '1.11'
-      os: '[self-hosted, Linux, gpu, cuda]'
+      julia_arch: x64
+      runs_on: '["self-hosted", "Linux", "gpu", "cuda"]'
+      julia_os: ubuntu-24.04
       runner: moonshot
       grid_sizes: '[200, 500, 1000]'
       grid_size_max_cpu: '1000000'

@@ -11,8 +11,16 @@ on:
         description: "Julia version to install"
         required: true
         type: string
-      os:
-        description: "GitHub runner operating system"
+      julia_arch:
+        description: "Julia architecture (e.g., x64, aarch64)"
+        required: true
+        type: string
+      runs_on:
+        description: "GitHub runner labels (e.g., ubuntu-latest or JSON array for self-hosted)"
+        required: true
+        type: string
+      julia_os:
+        description: "Operating system identifier for Julia/benchmark metadata"
         required: true
         type: string
       runner:
@@ -34,11 +42,11 @@ permissions:
 
 jobs:
   run-benchmark:
-    runs-on: ${{ inputs.os }}
+    runs-on: ${{ fromJSON(inputs.runs_on) }}
     timeout-minutes: 45
     env:
       SCRIPT_PATH: ${{ inputs.script_path }}
-      OS: ${{ inputs.os }}
+      OS: ${{ inputs.julia_os }}
       GRID_SIZES: ${{ inputs.grid_sizes }}
       GRID_SIZE_MAX_CPU: ${{ inputs.grid_size_max_cpu }}
       RUNNER: ${{ inputs.runner }}
@@ -70,16 +78,38 @@ jobs:
       - uses: julia-actions/setup-julia@v2
         with:
           version: ${{ inputs.julia_version }}
+          arch: ${{ inputs.julia_arch }}
 
       - name: 🔋 Julia setup status
         run: |
           echo "✅ Julia $(julia --version | cut -d' ' -f3) installed successfully"
           echo "📍 Julia location: $(which julia)"
 
-      - uses: julia-actions/cache@v2
+      # Cache strategy: julia-actions/cache for standard runners, actions/cache for self-hosted
+      - name: Cache Julia packages (standard runners)
+        if: inputs.runner != 'moonshot'
+        uses: julia-actions/cache@v2
+
+      - name: Cache Julia artifacts (self-hosted runners)
+        if: inputs.runner == 'moonshot'
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-artifacts
+        with:
+          path: ~/.julia/artifacts
+          key: ${{ runner.os }}-benchmark-${{ env.cache-name }}-${{ hashFiles('**/Project.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-benchmark-${{ env.cache-name }}-
+            ${{ runner.os }}-benchmark-
+            ${{ runner.os }}-
 
       - name: 💾 Julia cache status
-        run: echo "✅ Julia package cache configured"
+        run: |
+          if [ "${{ inputs.runner }}" = "moonshot" ]; then
+            echo "✅ Julia artifacts cache configured (self-hosted strategy)"
+          else
+            echo "✅ Julia package cache configured (standard strategy)"
+          fi
 
       - uses: julia-actions/julia-buildpkg@v1
         with:
