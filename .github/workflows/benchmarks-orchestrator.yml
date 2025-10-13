@@ -135,6 +135,8 @@ jobs:
   docs:
     needs: [guard, benchmark-ubuntu, benchmark-moonshot]
     if: |
+      always() &&
+      (needs.guard.result == 'success') &&
       (needs.benchmark-ubuntu.result != 'cancelled') &&
       (needs.benchmark-moonshot.result != 'cancelled') &&
       (needs.benchmark-ubuntu.result != 'failure') &&
