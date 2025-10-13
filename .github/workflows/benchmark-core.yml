@@ -1,0 +1,33 @@
+name: Benchmark Core
+
+on:
+  workflow_call:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  benchmark-core-cpu:
+    uses: ./.github/workflows/benchmark-reusable.yml
+    with:
+      script_path: scripts/benchmark-core.jl
+      julia_version: '1.11'
+      julia_arch: x64
+      runs_on: '"ubuntu-latest"'
+      julia_os: ubuntu-latest
+      runner: ubuntu-cpu
+      grid_sizes: '[200]'
+      grid_size_max_cpu: '1000000'
+
+  benchmark-core-moonshot:
+    uses: ./.github/workflows/benchmark-reusable.yml
+    with:
+      script_path: scripts/benchmark-core.jl
+      julia_version: '1.11'
+      julia_arch: x64
+      runs_on: '["self-hosted", "Linux", "gpu", "cuda"]'
+      julia_os: ubuntu-24.04
+      runner: moonshot
+      grid_sizes: '[200, 500, 1000]'
+      grid_size_max_cpu: '1000000'

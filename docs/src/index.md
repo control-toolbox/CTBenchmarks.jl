@@ -2,7 +2,7 @@
 
 Documentation for [CTBenchmarks](https://github.com/control-toolbox/CTBenchmarks.jl).
 
-## Environment snapshots (doc build environment)
+## Documentation build environment
 
 ```@raw html
 <details><summary>The documentation of this package was built using these direct dependencies,</summary>
