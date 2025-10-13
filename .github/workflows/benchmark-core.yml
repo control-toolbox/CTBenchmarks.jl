@@ -25,5 +25,5 @@ jobs:
       julia_version: '1.11'
       os: '[self-hosted, Linux, gpu, cuda]'
       runner: moonshot
-      grid_sizes: '[200, 500, 1000, 5000, 10000, 50000]'
+      grid_sizes: '[200, 500, 1000]'
       grid_size_max_cpu: '1000000'
