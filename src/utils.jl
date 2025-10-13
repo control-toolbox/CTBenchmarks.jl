@@ -123,6 +123,7 @@ function solve_and_extract_data(
             end
             
             # Use CUDA.@timed for GPU benchmarking
+            madnlp(nlp_model_oc; opt...) # run for warmup
             bt = CUDA.@timed madnlp(nlp_model_oc; opt...)
             nlp_sol = bt.value
             
