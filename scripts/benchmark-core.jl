@@ -27,8 +27,7 @@ function main(;
             :ipopt => [:JuMP, :adnlp, :exa],
             :madnlp => [:JuMP, :adnlp, :exa, :exa_gpu]
         ],
-    grid_sizes::Vector{Int} = [200], 
-    grid_size_max_cpu::Int = typemax(Int)
+    grid_sizes::Vector{Int} = [200]
     )
     outpath=joinpath(project_dir, "docs", "src", "assets", "benchmark-core" * (runner == "local" ? "" : "-" * runner))
     CTBenchmarks.benchmark(;
@@ -57,8 +56,7 @@ function main(;
         ipopt_print_level = 0,
         madnlp_print_level = MadNLP.ERROR,
         max_iter = 1000,
-        max_wall_time = 500.0,
-        grid_size_max_cpu = grid_size_max_cpu  # CPU models won't run for grid_size > grid_size_max_cpu
+        max_wall_time = 500.0
     )
     println("✅ Benchmark completed successfully!")
     return outpath

@@ -19,7 +19,6 @@ jobs:
       runner: ubuntu-cpu
       solver_models: '{"ipopt": ["JuMP", "adnlp", "exa"], "madnlp": ["JuMP", "adnlp", "exa"]}'
       grid_sizes: '[200, 500, 1000]'
-      grid_size_max_cpu: '1000000'
 
   benchmark-core-moonshot:
     uses: ./.github/workflows/benchmark-reusable.yml
@@ -31,5 +30,4 @@ jobs:
       julia_os: ubuntu-24.04
       runner: moonshot
       solver_models: '{"madnlp": ["exa", "exa_gpu"]}'
-      grid_sizes: '[5000, 10000]'
-      grid_size_max_cpu: '1000000'
+      grid_sizes: '[5000, 10000, 50000]'

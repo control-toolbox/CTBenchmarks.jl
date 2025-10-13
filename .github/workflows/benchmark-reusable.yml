@@ -31,10 +31,6 @@ on:
         description: "JSON array of grid sizes (e.g., [200, 400])"
         required: true
         type: string
-      grid_size_max_cpu:
-        description: "Maximum grid size for CPU models"
-        required: true
-        type: string
       solver_models:
         description: "JSON object mapping solvers to model types (e.g., {\"ipopt\": [\"JuMP\", \"adnlp\"]})"
         required: true
@@ -52,7 +48,6 @@ jobs:
       SCRIPT_PATH: ${{ inputs.script_path }}
       OS: ${{ inputs.julia_os }}
       GRID_SIZES: ${{ inputs.grid_sizes }}
-      GRID_SIZE_MAX_CPU: ${{ inputs.grid_size_max_cpu }}
       SOLVER_MODELS: ${{ inputs.solver_models }}
       RUNNER: ${{ inputs.runner }}
 
@@ -142,13 +137,12 @@ jobs:
             using JSON
             include(ENV["SCRIPT_PATH"])
             grid_sizes = Int.(JSON.parse(ENV["GRID_SIZES"]))
-            grid_size_max_cpu = parse(Int, strip(ENV["GRID_SIZE_MAX_CPU"]))
             
             # Parse solver_models from JSON to Vector{Pair{Symbol, Vector{Symbol}}}
             solver_models_dict = JSON.parse(ENV["SOLVER_MODELS"])
             solver_models = [Symbol(k) => Symbol.(v) for (k, v) in solver_models_dict]
             
-            out = main(; runner=ENV["RUNNER"], solver_models=solver_models, grid_sizes=grid_sizes, grid_size_max_cpu=grid_size_max_cpu)
+            out = main(; runner=ENV["RUNNER"], solver_models=solver_models, grid_sizes=grid_sizes)
             println("📄 Output file: ", out)
             open(ENV["BENCHMARK_OUTPUT_FILE"], "w") do f
               write(f, string(out))

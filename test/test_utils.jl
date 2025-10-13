@@ -126,8 +126,7 @@ function test_utils()
         ipopt_print_level = 0,
         madnlp_print_level = MadNLP.ERROR,
         max_iter = 1000,
-        max_wall_time = 500.0,
-        grid_size_max_cpu = typemax(Int)
+        max_wall_time = 500.0
     )
     
     # Check DataFrame type
@@ -188,8 +187,7 @@ function test_utils()
         ipopt_print_level = 0,
         madnlp_print_level = MadNLP.ERROR,
         max_iter = 1000,
-        max_wall_time = 500.0,
-        grid_size_max_cpu = typemax(Int)
+        max_wall_time = 500.0
     )
     
     @test nrow(df_subset) == 2
@@ -197,44 +195,6 @@ function test_utils()
     @test all(df_subset.problem .== :beam)
     @test all(df_subset.solver .== :ipopt)
     @test all(df_subset.grid_size .== 50)
-    
-    # ===== Test 4: grid_size_max_cpu filtering =====
-    println("\n=== Testing grid_size_max_cpu filtering ===")
-    
-    # Test with grid_size_max_cpu = 75
-    # Grid sizes: [50, 100]
-    # Expected: CPU models run only for N=50, GPU models run for both N=50 and N=100
-    df_filtered = benchmark_data(
-        problems = [:beam],
-        solver_models = [
-            :madnlp => [:exa, :exa_gpu]
-        ],
-        grid_sizes = [50, 100],
-        disc_methods = [:trapeze],
-        tol = 1e-8,
-        ipopt_mu_strategy = "adaptive",
-        ipopt_print_level = 0,
-        madnlp_print_level = MadNLP.ERROR,
-        max_iter = 200,
-        max_wall_time = 120.0,
-        grid_size_max_cpu = 75
-    )
-    
-    # Check that CPU model (:exa) only appears for N=50
-    exa_rows = df_filtered[df_filtered.model .== :exa, :]
-    @test all(exa_rows.grid_size .<= 75)
-    @test nrow(exa_rows) == 1  # Only N=50
-    @test exa_rows[1, :grid_size] == 50
-    
-    # Check that GPU model (:exa_gpu) appears for both grid sizes if CUDA is functional
-    # or is filtered out if CUDA is not functional
-    exa_gpu_rows = df_filtered[df_filtered.model .== :exa_gpu, :]
-    if CUDA.functional()
-        @test nrow(exa_gpu_rows) == 2  # Both N=50 and N=100
-        @test Set(exa_gpu_rows.grid_size) == Set([50, 100])
-    else
-        @test nrow(exa_gpu_rows) == 0  # Filtered out by benchmark() function
-    end
     
     println("\n=== All tests passed! ===")
 

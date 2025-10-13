@@ -240,18 +240,17 @@ Return true if CUDA is functional on this machine.
 is_cuda_on() = CUDA.functional()
 
 """
-    filter_models_for_backend(models::Vector{Symbol}, grid_size::Int, grid_size_max_cpu::Int) -> Vector{Symbol}
+    filter_models_for_backend(models::Vector{Symbol}) -> Vector{Symbol}
 
-Filter solver models depending on backend availability and grid size limits.
+Filter solver models depending on backend availability.
 
 - GPU models (ending with `_gpu`) are kept only if CUDA is available.
-- CPU models are kept only if their grid size does not exceed `grid_size_max_cpu`.
 """
-function filter_models_for_backend(models::Vector{Symbol}, grid_size::Int, grid_size_max_cpu::Int)
+function filter_models_for_backend(models::Vector{Symbol})
     cuda_on = is_cuda_on()
     return [
         model for model in models
-        if (endswith(string(model), "_gpu") ? cuda_on : grid_size <= grid_size_max_cpu)
+        if (endswith(string(model), "_gpu") ? cuda_on : true)
     ]
 end
 
@@ -289,7 +288,6 @@ For each combination of problem, solver, model, and grid size, this function:
 - `madnlp_print_level`: Print level for MadNLP (MadNLP.LogLevels)
 - `max_iter`: Maximum number of iterations (Int)
 - `max_wall_time`: Maximum wall time in seconds (Float64)
-- `grid_size_max_cpu`: Maximum grid size for CPU models (Int)
 
 # Returns
 A DataFrame with columns:
@@ -319,8 +317,7 @@ function benchmark_data(;
     ipopt_print_level,
     madnlp_print_level,
     max_iter,
-    max_wall_time,
-    grid_size_max_cpu
+    max_wall_time
 )
     # Initialize DataFrame
     data = DataFrame(
@@ -371,8 +368,8 @@ function benchmark_data(;
             println("│  │")
             
             for (grid_idx, N) in enumerate(grid_sizes)
-                # Filter models based on CUDA availability and grid_size_max_cpu
-                models_to_run = filter_models_for_backend(models, N, grid_size_max_cpu)
+                # Filter models based on CUDA availability
+                models_to_run = filter_models_for_backend(models)
                 
                 # Skip this grid size if no models to run
                 if isempty(models_to_run)
@@ -416,7 +413,7 @@ function benchmark_data(;
                 # Only add spacing if there are more grid sizes with models to run
                 remaining_grids = grid_sizes[(grid_idx+1):end]
                 has_more_grids = any(remaining_grids) do next_N
-                    !isempty(filter_models_for_backend(models, next_N, grid_size_max_cpu))
+                    !isempty(filter_models_for_backend(models))
                 end
                 if has_more_grids
                     println("│  │ ")
@@ -589,8 +586,7 @@ function benchmark(;
     ipopt_print_level,
     madnlp_print_level,
     max_iter,
-    max_wall_time,
-    grid_size_max_cpu
+    max_wall_time
 )
     # Detect CUDA availability (logging only; filtering handled in benchmark_data)
     if is_cuda_on()
@@ -611,8 +607,7 @@ function benchmark(;
         ipopt_print_level=ipopt_print_level,
         madnlp_print_level=madnlp_print_level,
         max_iter=max_iter,
-        max_wall_time=max_wall_time,
-        grid_size_max_cpu=grid_size_max_cpu
+        max_wall_time=max_wall_time
     )
     
     # Generate metadata
