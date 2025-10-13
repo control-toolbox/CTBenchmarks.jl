@@ -3,6 +3,7 @@ name: Orchestrate Core Benchmark and Docs
 on:
   push:
     branches: [main]
+    tags: '*'
   pull_request:
     types: [labeled, synchronize, opened, reopened]
 
@@ -16,9 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     outputs:
-      should_run: ${{ steps.check.outputs.should_run }}
+      run_ubuntu: ${{ steps.check.outputs.run_ubuntu }}
+      run_moonshot: ${{ steps.check.outputs.run_moonshot }}
+      benchmarks_summary: ${{ steps.check.outputs.benchmarks_summary }}
     steps:
-      - name: Check if benchmark should run
+      - name: Check which benchmarks should run
         id: check
         run: |
           echo "🛡️  Guard job: Checking execution conditions..."
@@ -26,12 +29,18 @@ jobs:
           EVENT_NAME="${{ github.event_name }}"
           echo "📋 Event type: $EVENT_NAME"
           
+          # Initialize outputs
+          RUN_UBUNTU="false"
+          RUN_MOONSHOT="false"
+          BENCHMARKS_LIST=""
+          
           if [[ "$EVENT_NAME" == "push" ]]; then
-            # For push events, we already filter by branch in the trigger
-            # So if we're here, it's a push to main - always run
+            # For push events to main, run all benchmarks
             echo "🚀 Push event to main branch detected"
-            echo "✅ Push to main - proceeding with benchmark"
-            echo "should_run=true" >> $GITHUB_OUTPUT
+            echo "✅ Running all benchmarks"
+            RUN_UBUNTU="true"
+            RUN_MOONSHOT="true"
+            BENCHMARKS_LIST="ubuntu-latest, moonshot"
           elif [[ "$EVENT_NAME" == "pull_request" ]]; then
             # For PR events, check base branch and labels
             LABELS="${{ join(github.event.pull_request.labels.*.name, ' ') }}"
@@ -41,65 +50,91 @@ jobs:
             echo "🏷️  PR labels: $LABELS"
 
             if [[ "$BASE" != "main" ]]; then
-              echo "❌ Base branch is not 'main' - skipping benchmark"
-              echo "should_run=false" >> $GITHUB_OUTPUT
+              echo "❌ Base branch is not 'main' - skipping benchmarks"
+              echo "run_ubuntu=false" >> $GITHUB_OUTPUT
+              echo "run_moonshot=false" >> $GITHUB_OUTPUT
+              echo "benchmarks_summary=none" >> $GITHUB_OUTPUT
               exit 0
             fi
 
             echo "✅ Base branch check passed (main)"
 
-            if echo "$LABELS" | grep -q "run benchmark core"; then
-              echo "✅ Found 'run benchmark core' label"
-              echo "should_run=true" >> $GITHUB_OUTPUT
-            elif echo "$LABELS" | grep -q "run benchmarks all"; then
-              echo "✅ Found 'run benchmarks all' label"
-              echo "should_run=true" >> $GITHUB_OUTPUT
+            # Check for specific benchmark labels
+            if echo "$LABELS" | grep -q "run bench core all"; then
+              echo "✅ Found 'run bench core all' label"
+              RUN_UBUNTU="true"
+              RUN_MOONSHOT="true"
+              BENCHMARKS_LIST="ubuntu-latest, moonshot"
             else
-              echo "❌ Required benchmark labels not found"
-              echo "ℹ️  Expected labels: 'run benchmark core' or 'run benchmarks all'"
-              echo "should_run=false" >> $GITHUB_OUTPUT
+              if echo "$LABELS" | grep -q "run bench core ubuntu"; then
+                echo "✅ Found 'run bench core ubuntu' label"
+                RUN_UBUNTU="true"
+                BENCHMARKS_LIST="ubuntu-latest"
+              fi
+              if echo "$LABELS" | grep -q "run bench core moonshot"; then
+                echo "✅ Found 'run bench core moonshot' label"
+                RUN_MOONSHOT="true"
+                if [ -n "$BENCHMARKS_LIST" ]; then
+                  BENCHMARKS_LIST="$BENCHMARKS_LIST, moonshot"
+                else
+                  BENCHMARKS_LIST="moonshot"
+                fi
+              fi
+            fi
+            
+            if [ "$RUN_UBUNTU" == "false" ] && [ "$RUN_MOONSHOT" == "false" ]; then
+              echo "❌ No benchmark labels found"
+              echo "ℹ️  Expected labels: 'run bench core ubuntu', 'run bench core moonshot', or 'run bench core all'"
+              BENCHMARKS_LIST="none"
             fi
           else
             echo "❌ Unexpected event type: $EVENT_NAME"
-            echo "should_run=false" >> $GITHUB_OUTPUT
           fi
+          
+          # Set outputs
+          echo "run_ubuntu=$RUN_UBUNTU" >> $GITHUB_OUTPUT
+          echo "run_moonshot=$RUN_MOONSHOT" >> $GITHUB_OUTPUT
+          echo "benchmarks_summary=$BENCHMARKS_LIST" >> $GITHUB_OUTPUT
 
       - name: 📊 Guard decision summary
         run: |
-          echo "🛡️  Guard Job Summary:"
-          echo "🎯 Should run benchmarks: ${{ steps.check.outputs.should_run }}"
+          echo "🛡️ Guard Job Summary:"
+          echo "📊 Benchmarks to run:"
           
-          EVENT_NAME="${{ github.event_name }}"
+          RUN_UBUNTU="${{ steps.check.outputs.run_ubuntu }}"
+          RUN_MOONSHOT="${{ steps.check.outputs.run_moonshot }}"
+          SUMMARY="${{ steps.check.outputs.benchmarks_summary }}"
           
-          if [ "${{ steps.check.outputs.should_run }}" == "true" ]; then
-            echo "✅ All conditions met - proceeding with benchmark and docs"
-            echo "🚀 Next: Benchmark execution will start"
-            
-            if [[ "$EVENT_NAME" == "push" ]]; then
-              echo "📝 Trigger: Push to main branch"
-            else
-              echo "📝 Trigger: PR with benchmark label"
-            fi
+          if [ "$RUN_UBUNTU" == "true" ]; then
+            echo "  ✅ benchmark-core-ubuntu-latest"
+          fi
+          if [ "$RUN_MOONSHOT" == "true" ]; then
+            echo "  ✅ benchmark-core-moonshot"
+          fi
+          if [ "$RUN_UBUNTU" != "true" ] && [ "$RUN_MOONSHOT" != "true" ]; then
+            echo "  ⏭️  None (conditions not met)"
+            echo ""
+            echo "💡 To run benchmarks on PRs, ensure:"
+            echo "   • PR targets 'main' branch"
+            echo "   • PR has one of: 'run bench core ubuntu', 'run bench core moonshot', or 'run bench core all'"
           else
-            echo "⏭️  Conditions not met - skipping benchmark workflow"
-            
-            if [[ "$EVENT_NAME" == "pull_request" ]]; then
-              echo "💡 To run benchmarks on PRs, ensure:"
-              echo "   • PR targets 'main' branch"
-              echo "   • PR has 'run benchmark core' or 'run benchmarks all' label"
-            else
-              echo "💡 Push events only run benchmarks when pushed to 'main'"
-            fi
+            echo ""
+            echo "✅ Proceeding with: $SUMMARY"
           fi
 
-  benchmarks:
+  benchmark-ubuntu:
     needs: guard
-    if: needs.guard.outputs.should_run == 'true'
+    if: needs.guard.outputs.run_ubuntu == 'true'
     uses: ./.github/workflows/benchmark-core-ubuntu-latest.yml
 
+  benchmark-moonshot:
+    needs: guard
+    if: needs.guard.outputs.run_moonshot == 'true'
+    uses: ./.github/workflows/benchmark-core-moonshot.yml
+
   docs:
-    needs: [guard, benchmarks]
-    if: success() && needs.guard.outputs.should_run == 'true'
+    needs: [guard, benchmark-ubuntu, benchmark-moonshot]
+    if: success()
     runs-on: ubuntu-latest
     steps:
       - name: Checkout with latest changes
@@ -114,21 +149,6 @@ jobs:
           echo "🔄 Pulling latest changes from branch..."
           git pull origin ${{ github.head_ref || github.ref_name }}
           echo "✅ Latest changes pulled"
-
-      - name: Verify benchmark file exists
-        run: |
-          echo "🔍 Checking for benchmark results..."
-          if [ -f "docs/src/assets/benchmark-core/data.json" ]; then
-            echo "✅ Benchmark file found!"
-            echo "📏 File size: $(stat -c%s docs/src/assets/benchmark-core/data.json 2>/dev/null || stat -f%z docs/src/assets/benchmark-core/data.json) bytes"
-            echo "🔎 File preview:"
-            head -5 docs/src/assets/benchmark-core/data.json
-          else
-            echo "❌ Benchmark file not found at docs/src/assets/benchmark-core/data.json"
-            echo "📂 Contents of docs/src/assets/:"
-            find docs/src/assets/ -type f 2>/dev/null || echo "Directory not found"
-            exit 1
-          fi
 
       - uses: julia-actions/setup-julia@latest
       - uses: julia-actions/julia-buildpkg@latest
@@ -145,8 +165,8 @@ jobs:
           julia --project=docs/ -e 'ENV["GKSwstype"]="nul"; include("docs/make.jl")'
 
   notify-failure:
-    needs: [guard, benchmarks, docs]
-    if: failure() && needs.guard.outputs.should_run == 'true'
+    needs: [guard, benchmark-ubuntu, benchmark-moonshot, docs]
+    if: failure()
     runs-on: ubuntu-latest
     steps:
       - name: Comment on PR with failure notification
@@ -159,9 +179,13 @@ jobs:
             const failedJobs = [];
             
             console.log('📊 Analyzing job results...');
-            if (needs.benchmarks.result === 'failure') {
-              console.log('❌ Benchmarks job failed');
-              failedJobs.push('Benchmarks');
+            if (needs['benchmark-ubuntu'] && needs['benchmark-ubuntu'].result === 'failure') {
+              console.log('❌ Benchmark Ubuntu job failed');
+              failedJobs.push('Benchmark Ubuntu-Latest');
+            }
+            if (needs['benchmark-moonshot'] && needs['benchmark-moonshot'].result === 'failure') {
+              console.log('❌ Benchmark Moonshot job failed');
+              failedJobs.push('Benchmark Moonshot');
             }
             if (needs.docs.result === 'failure') {
               console.log('❌ Documentation job failed');
@@ -203,8 +227,8 @@ jobs:
             console.log('✅ Failure notification posted successfully');
 
   notify-success:
-    needs: [guard, benchmarks, docs]
-    if: success() && needs.guard.outputs.should_run == 'true'
+    needs: [guard, benchmark-ubuntu, benchmark-moonshot, docs]
+    if: success()
     runs-on: ubuntu-latest
     steps:
       - name: Comment on PR with success notification
@@ -254,13 +278,12 @@ jobs:
             The automated workflow has completed successfully! 🎉
 
             ### ✅ Completed Tasks
-            - 📊 **Benchmarks**: Core benchmark executed and results saved to your branch
+            - 📊 **Benchmarks**: ${needs.guard.outputs.benchmarks_summary} executed and results saved to your branch
             - 📚 **Documentation**: Documentation updated successfully
             - 🔄 **Integration**: All changes integrated properly
             ${previewSection}
             ### 📋 Results
             - 🎯 Benchmark results have been committed to your feature branch
-            - 📄 The \`docs/src/assets/benchmark-core/data.json\` file is now part of your PR changes
             - 📚 Documentation has been regenerated with the latest benchmark data
 
             ### 🔗 Links
@@ -282,8 +305,8 @@ jobs:
             console.log('✅ Success notification posted successfully');
 
   workflow-summary:
-    needs: [guard, benchmarks, docs]
-    if: always() && needs.guard.outputs.should_run == 'true'
+    needs: [guard, benchmark-ubuntu, benchmark-moonshot, docs]
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - name: 📊 Final workflow summary
@@ -293,17 +316,23 @@ jobs:
           echo "📋 ==================================="
           echo ""
           echo "🛡️  Guard Job: ✅ PASSED"
-          echo "   └─ Conditions met for execution"
+          echo "   └─ Benchmarks planned: ${{ needs.guard.outputs.benchmarks_summary }}"
           echo ""
           
-          if [ "${{ needs.benchmarks.result }}" == "success" ]; then
-            echo "📊 Benchmarks: ✅ SUCCESS"
-            echo "   └─ Core benchmark completed"
-          elif [ "${{ needs.benchmarks.result }}" == "failure" ]; then
-            echo "📊 Benchmarks: ❌ FAILED"
-            echo "   └─ Check logs for details"
-          else
-            echo "📊 Benchmarks: ⏭️  SKIPPED"
+          if [ "${{ needs.benchmark-ubuntu.result }}" == "success" ]; then
+            echo "📊 Benchmark Ubuntu-Latest: ✅ SUCCESS"
+          elif [ "${{ needs.benchmark-ubuntu.result }}" == "failure" ]; then
+            echo "📊 Benchmark Ubuntu-Latest: ❌ FAILED"
+          elif [ "${{ needs.benchmark-ubuntu.result }}" == "skipped" ]; then
+            echo "📊 Benchmark Ubuntu-Latest: ⏭️  SKIPPED"
+          fi
+          
+          if [ "${{ needs.benchmark-moonshot.result }}" == "success" ]; then
+            echo "📊 Benchmark Moonshot: ✅ SUCCESS"
+          elif [ "${{ needs.benchmark-moonshot.result }}" == "failure" ]; then
+            echo "📊 Benchmark Moonshot: ❌ FAILED"
+          elif [ "${{ needs.benchmark-moonshot.result }}" == "skipped" ]; then
+            echo "📊 Benchmark Moonshot: ⏭️  SKIPPED"
           fi
           
           if [ "${{ needs.docs.result }}" == "success" ]; then
@@ -321,7 +350,7 @@ jobs:
           echo ""
           
           overall_status="✅ SUCCESS"
-          if [ "${{ needs.benchmarks.result }}" == "failure" ] || [ "${{ needs.docs.result }}" == "failure" ]; then
+          if [ "${{ needs.benchmark-ubuntu.result }}" == "failure" ] || [ "${{ needs.benchmark-moonshot.result }}" == "failure" ] || [ "${{ needs.docs.result }}" == "failure" ]; then
             overall_status="❌ FAILED"
           fi
           
