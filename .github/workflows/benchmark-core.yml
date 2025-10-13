@@ -16,7 +16,7 @@ jobs:
       os: ubuntu-latest
       runner: ubuntu-cpu
       grid_sizes: '[200]'
-      grid_size_max_cpu: 'typemax(Int)'
+      grid_size_max_cpu: '1000000'
 
   benchmark-core-moonshot:
     uses: ./.github/workflows/benchmark-reusable.yml
@@ -26,4 +26,4 @@ jobs:
       os: '[self-hosted, Linux, gpu, cuda]'
       runner: moonshot
       grid_sizes: '[200, 500, 1000, 5000, 10000, 50000]'
-      grid_size_max_cpu: 'typemax(Int)'
+      grid_size_max_cpu: '1000000'
