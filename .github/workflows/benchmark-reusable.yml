@@ -30,7 +30,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  run-benchmark:
+  run:
     runs-on: ${{ fromJSON(inputs.runs_on) }}
     timeout-minutes: 180
     env:

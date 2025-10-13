@@ -8,7 +8,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  benchmark-core-moonshot:
+  bench:
     uses: ./.github/workflows/benchmark-reusable.yml
     with:
       script_path: scripts/benchmark-core-moonshot.jl
