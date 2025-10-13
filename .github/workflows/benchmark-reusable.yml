@@ -179,12 +179,6 @@ jobs:
               echo "📏 File lines: $LINE_COUNT"
               echo "📍 File location: $DATA_JSON_PATH"
 
-              echo "🔎 JSON content preview:"
-              head -10 "$DATA_JSON_PATH"
-              if [ $LINE_COUNT -gt 10 ]; then
-                echo "   ... (truncated, $LINE_COUNT total lines)"
-              fi
-
               for filename in Project.toml Manifest.toml; do
                 FILE_PATH="$OUTPUT_DIR/$filename"
                 if [ -f "$FILE_PATH" ]; then

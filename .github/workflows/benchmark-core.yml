@@ -31,5 +31,5 @@ jobs:
       julia_os: ubuntu-24.04
       runner: moonshot
       solver_models: '{"madnlp": ["exa", "exa_gpu"]}'
-      grid_sizes: '[5000, 10000, 50000]'
+      grid_sizes: '[5000, 10000]'
       grid_size_max_cpu: '1000000'

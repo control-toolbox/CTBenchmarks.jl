@@ -52,7 +52,7 @@ function main(;
         solver_models = solver_models,
         grid_sizes = grid_sizes,
         disc_methods = [:trapeze],
-        tol = 1e-8,
+        tol = 1e-6,
         ipopt_mu_strategy = "adaptive",
         ipopt_print_level = 0,
         madnlp_print_level = MadNLP.ERROR,
