@@ -95,7 +95,7 @@ jobs:
   benchmarks:
     needs: guard
     if: needs.guard.outputs.should_run == 'true'
-    uses: ./.github/workflows/benchmark-core.yml
+    uses: ./.github/workflows/benchmark-core-ubuntu-latest.yml
 
   docs:
     needs: [guard, benchmarks]

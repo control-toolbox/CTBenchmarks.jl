@@ -8,18 +8,19 @@
 """
     prettytime(t::Real) -> String
 
-Format a duration `t` expressed in nanoseconds into a human-readable string with
+Format a duration `t` expressed in **seconds** into a human-readable string with
 three decimal places and adaptive units (ns, μs, ms, s).
 """
 function prettytime(t)
-    if t < 1e3
-        value, units = t, "ns"
-    elseif t < 1e6
-        value, units = t / 1e3, "μs"
-    elseif t < 1e9
-        value, units = t / 1e6, "ms"
+    t_abs = abs(t)
+    if t_abs < 1e-6
+        value, units = t * 1e9, "ns"
+    elseif t_abs < 1e-3
+        value, units = t * 1e6, "μs"
+    elseif t_abs < 1
+        value, units = t * 1e3, "ms"
     else
-        value, units = t / 1e9, "s"
+        value, units = t, "s"
     end
     return string(@sprintf("%.3f", value), " ", units)
 end
@@ -74,7 +75,7 @@ function format_benchmark_line(model::Symbol, stats::NamedTuple)
     if has_cpu_bytes && has_gpu_bytes
         # GPU benchmark format
         time_val = getval(bench, :time)
-        time_str = @sprintf("%.6f", time_val)
+        time_str = prettytime(time_val)
         
         cpu_gcstats = getval(bench, :cpu_gcstats)
         if isa(cpu_gcstats, Dict)
@@ -96,7 +97,7 @@ function format_benchmark_line(model::Symbol, stats::NamedTuple)
         gpu_bytes = getval(bench, :gpu_bytes)
         gpu_mem_str = prettymemory(gpu_bytes)
         
-        return "  $model_str: $time_str seconds ($cpu_allocs CPU allocations: $cpu_mem_str) ($gpu_allocs GPU allocation$(gpu_allocs == 1 ? "" : "s"): $gpu_mem_str)"
+        return "  $model_str: $time_str ($cpu_allocs CPU allocations: $cpu_mem_str) ($gpu_allocs GPU allocation$(gpu_allocs == 1 ? "" : "s"): $gpu_mem_str)"
     else
         # CPU benchmark format (BenchmarkTools @btimed)
         time_val = getval(bench, :time)

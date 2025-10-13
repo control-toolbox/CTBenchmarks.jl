@@ -10,26 +10,22 @@ else
 end
 
 using Pkg
-println("📦 Activating project environment...")
 const project_dir = normpath(@__DIR__, "..")
 ENV["PROJECT"] = project_dir
+
+println("📦 Activating project environment...")
 Pkg.activate(project_dir)
+
 println("📥 Installing dependencies...")
 Pkg.instantiate()
+
 println("🔄 Loading CTBenchmarks package...")
 using CTBenchmarks
 using MadNLP
-println("⏱️  Running core benchmark...")
 
-function main(; 
-    runner::String="local",
-    solver_models::Vector{Pair{Symbol, Vector{Symbol}}} = [
-            :ipopt => [:JuMP, :adnlp, :exa],
-            :madnlp => [:JuMP, :adnlp, :exa, :exa_gpu]
-        ],
-    grid_sizes::Vector{Int} = [200]
-    )
-    outpath=joinpath(project_dir, "docs", "src", "assets", "benchmark-core" * (runner == "local" ? "" : "-" * runner))
+println("⏱️  Ready to run core benchmark...")
+function main()
+    outpath=joinpath(project_dir, "docs", "src", "assets", "benchmark-core-ubuntu-latest")
     CTBenchmarks.benchmark(;
         outpath=outpath,
         problems = [
@@ -48,8 +44,11 @@ function main(;
             # :steering,
             # :vanderpol,
         ],
-        solver_models = solver_models,
-        grid_sizes = grid_sizes,
+        solver_models = [
+            :ipopt => [:JuMP, :adnlp, :exa],
+            :madnlp => [:JuMP, :adnlp, :exa, :exa_gpu]
+        ],
+        grid_sizes = [200, 500, 1000],
         disc_methods = [:trapeze],
         tol = 1e-6,
         ipopt_mu_strategy = "adaptive",

@@ -19,21 +19,10 @@ on:
         description: "GitHub runner labels (e.g., ubuntu-latest or JSON array for self-hosted)"
         required: true
         type: string
-      julia_os:
-        description: "Operating system identifier for Julia/benchmark metadata"
-        required: true
-        type: string
       runner:
         description: "Runner identifier forwarded to benchmark script"
-        required: true
-        type: string
-      grid_sizes:
-        description: "JSON array of grid sizes (e.g., [200, 400])"
-        required: true
-        type: string
-      solver_models:
-        description: "JSON object mapping solvers to model types (e.g., {\"ipopt\": [\"JuMP\", \"adnlp\"]})"
-        required: true
+        required: false
+        default: 'standard'
         type: string
 
 permissions:
@@ -46,10 +35,6 @@ jobs:
     timeout-minutes: 180
     env:
       SCRIPT_PATH: ${{ inputs.script_path }}
-      OS: ${{ inputs.julia_os }}
-      GRID_SIZES: ${{ inputs.grid_sizes }}
-      SOLVER_MODELS: ${{ inputs.solver_models }}
-      RUNNER: ${{ inputs.runner }}
 
     steps:
       # ---------------------------
@@ -127,7 +112,6 @@ jobs:
         id: benchmark
         env:
           SCRIPT_PATH: ${{ env.SCRIPT_PATH }}
-          OS: ${{ env.OS }}
         run: |
           echo "🚀 Starting benchmark execution..."
           
@@ -136,13 +120,7 @@ jobs:
             Pkg.add("JSON")
             using JSON
             include(ENV["SCRIPT_PATH"])
-            grid_sizes = Int.(JSON.parse(ENV["GRID_SIZES"]))
-            
-            # Parse solver_models from JSON to Vector{Pair{Symbol, Vector{Symbol}}}
-            solver_models_dict = JSON.parse(ENV["SOLVER_MODELS"])
-            solver_models = [Symbol(k) => Symbol.(v) for (k, v) in solver_models_dict]
-            
-            out = main(; runner=ENV["RUNNER"], solver_models=solver_models, grid_sizes=grid_sizes)
+            out = main()
             println("📄 Output file: ", out)
             open(ENV["BENCHMARK_OUTPUT_FILE"], "w") do f
               write(f, string(out))
