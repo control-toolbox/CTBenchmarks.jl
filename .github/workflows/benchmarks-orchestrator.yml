@@ -1,4 +1,4 @@
-name: Orchestrate Minimal Benchmark and Docs
+name: Orchestrate Core Benchmark and Docs
 
 on:
   push:
@@ -48,15 +48,15 @@ jobs:
 
             echo "✅ Base branch check passed (main)"
 
-            if echo "$LABELS" | grep -q "run benchmark minimal"; then
-              echo "✅ Found 'run benchmark minimal' label"
+            if echo "$LABELS" | grep -q "run benchmark core"; then
+              echo "✅ Found 'run benchmark core' label"
               echo "should_run=true" >> $GITHUB_OUTPUT
             elif echo "$LABELS" | grep -q "run benchmarks all"; then
               echo "✅ Found 'run benchmarks all' label"
               echo "should_run=true" >> $GITHUB_OUTPUT
             else
               echo "❌ Required benchmark labels not found"
-              echo "ℹ️  Expected labels: 'run benchmark minimal' or 'run benchmarks all'"
+              echo "ℹ️  Expected labels: 'run benchmark core' or 'run benchmarks all'"
               echo "should_run=false" >> $GITHUB_OUTPUT
             fi
           else
@@ -86,7 +86,7 @@ jobs:
             if [[ "$EVENT_NAME" == "pull_request" ]]; then
               echo "💡 To run benchmarks on PRs, ensure:"
               echo "   • PR targets 'main' branch"
-              echo "   • PR has 'run benchmark minimal' or 'run benchmarks all' label"
+              echo "   • PR has 'run benchmark core' or 'run benchmarks all' label"
             else
               echo "💡 Push events only run benchmarks when pushed to 'main'"
             fi
@@ -95,7 +95,7 @@ jobs:
   benchmarks:
     needs: guard
     if: needs.guard.outputs.should_run == 'true'
-    uses: ./.github/workflows/benchmark-minimal.yml
+    uses: ./.github/workflows/benchmark-core.yml
 
   docs:
     needs: [guard, benchmarks]
@@ -118,13 +118,13 @@ jobs:
       - name: Verify benchmark file exists
         run: |
           echo "🔍 Checking for benchmark results..."
-          if [ -f "docs/src/assets/benchmark-minimal/data.json" ]; then
+          if [ -f "docs/src/assets/benchmark-core/data.json" ]; then
             echo "✅ Benchmark file found!"
-            echo "📏 File size: $(stat -c%s docs/src/assets/benchmark-minimal/data.json 2>/dev/null || stat -f%z docs/src/assets/benchmark-minimal/data.json) bytes"
+            echo "📏 File size: $(stat -c%s docs/src/assets/benchmark-core/data.json 2>/dev/null || stat -f%z docs/src/assets/benchmark-core/data.json) bytes"
             echo "🔎 File preview:"
-            head -5 docs/src/assets/benchmark-minimal/data.json
+            head -5 docs/src/assets/benchmark-core/data.json
           else
-            echo "❌ Benchmark file not found at docs/src/assets/benchmark-minimal/data.json"
+            echo "❌ Benchmark file not found at docs/src/assets/benchmark-core/data.json"
             echo "📂 Contents of docs/src/assets/:"
             find docs/src/assets/ -type f 2>/dev/null || echo "Directory not found"
             exit 1
@@ -254,13 +254,13 @@ jobs:
             The automated workflow has completed successfully! 🎉
 
             ### ✅ Completed Tasks
-            - 📊 **Benchmarks**: Minimal benchmark executed and results saved to your branch
+            - 📊 **Benchmarks**: Core benchmark executed and results saved to your branch
             - 📚 **Documentation**: Documentation updated successfully
             - 🔄 **Integration**: All changes integrated properly
             ${previewSection}
             ### 📋 Results
             - 🎯 Benchmark results have been committed to your feature branch
-            - 📄 The \`docs/src/assets/benchmark-minimal/data.json\` file is now part of your PR changes
+            - 📄 The \`docs/src/assets/benchmark-core/data.json\` file is now part of your PR changes
             - 📚 Documentation has been regenerated with the latest benchmark data
 
             ### 🔗 Links
@@ -298,7 +298,7 @@ jobs:
           
           if [ "${{ needs.benchmarks.result }}" == "success" ]; then
             echo "📊 Benchmarks: ✅ SUCCESS"
-            echo "   └─ Minimal benchmark completed"
+            echo "   └─ Core benchmark completed"
           elif [ "${{ needs.benchmarks.result }}" == "failure" ]; then
             echo "📊 Benchmarks: ❌ FAILED"
             echo "   └─ Check logs for details"
