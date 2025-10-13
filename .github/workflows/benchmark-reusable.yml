@@ -43,7 +43,7 @@ permissions:
 jobs:
   run-benchmark:
     runs-on: ${{ fromJSON(inputs.runs_on) }}
-    timeout-minutes: 45
+    timeout-minutes: 180
     env:
       SCRIPT_PATH: ${{ inputs.script_path }}
       OS: ${{ inputs.julia_os }}
