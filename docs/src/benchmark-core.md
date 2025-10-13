@@ -1,6 +1,6 @@
 # Core benchmark
 
-This page displays the core benchmark results from `docs/src/assets/benchmark-core/data.json`.
+This page displays the core benchmark results from `docs/src/assets/benchmark-core-ubuntu-cpu/data.json`.
 
 ```@setup bench
 using CTBenchmarks
@@ -20,67 +20,32 @@ function _read_benchmark_json(path::AbstractString)
     end
 end
 
-# Convert ANSI color codes to HTML spans with inline styles
-function _ansi_to_html(text::AbstractString)
-    # Define ANSI color mappings
-    ansi_colors = Dict(
-        "\e[32m" => "<span style='color: #066f00'>",  # green (Status)
-        "\e[36m" => "<span style='color: #007989'>",  # cyan (Info)
-        "\e[33m" => "<span style='color: #856b00'>",  # yellow (⌅)
-        "\e[0m"  => "</span>",                        # reset
-        "\e[1m"  => "<span style='font-weight: bold'>", # bold
-    )
-    
-    result = text
-    for (ansi, html) in ansi_colors
-        result = replace(result, ansi => html)
-    end
-    
-    # Close any remaining open spans
-    open_spans = count("<span", result) - count("</span>", result)
-    result *= "</span>" ^ open_spans
-    
-    return result
-end
-
 # Benchmark directory name (reusable for paths and links)
-const BENCH_DIR = "benchmark-core"
+const BENCH_DIR = "benchmark-core-ubuntu-cpu"
 const _BENCH_PATH = joinpath(@__DIR__, "assets", BENCH_DIR, "data.json")
 bench_data = _read_benchmark_json(_BENCH_PATH)
 ```
 
 ## Benchmark environment
 
-```@raw html
-<details style="margin-bottom: 1em;"><summary>📋 Basic metadata</summary>
-```
-
 ```@example bench
-function _basic_metadata()
-    if bench_data !== nothing
-        meta = get(bench_data, "metadata", Dict())
-        println("╔═══════════════════════════════════════════════════════════╗")
-        println("║                   BENCHMARK METADATA                      ║")
-        println("╠═══════════════════════════════════════════════════════════╣")
-        for (label, key) in (
-            ("📅 Timestamp", "timestamp"),
-            ("🔧 Julia version", "julia_version"),
-            ("💻 OS", "os"),
-            ("🖥️ Machine", "machine"),
-        )
-            value = string(get(meta, key, "n/a"))
-            println("  ", rpad(label, key=="machine" ? 16 : 17), ": ", rpad(value, 39))
-        end
-        println("╚═══════════════════════════════════════════════════════════╝")
-    else
-        println("⚠️  No benchmark data available")
-    end
-end
+function _basic_metadata() # hide
+    if bench_data !== nothing # hide
+        meta = get(bench_data, "metadata", Dict()) # hide
+        for (label, key) in ( # hide
+            ("📅 Timestamp", "timestamp"), # hide
+            ("🔧 Julia version", "julia_version"), # hide
+            ("💻 OS", "os"), # hide
+            ("🖥️ Machine", "machine"), # hide
+        ) # hide
+            value = string(get(meta, key, "n/a")) # hide
+            println(rpad(label, key=="machine" ? 16 : 17), ": ", value) # hide
+        end # hide
+    else # hide
+        println("⚠️  No benchmark data available") # hide
+    end # hide
+end # hide
 nothing # hide
-```
-
-```@raw html
-</details>
 ```
 
 ```@example bench
@@ -114,20 +79,20 @@ More infos below.
 ```
 
 ```@raw html
-<details style="margin-bottom: 0.5em;"><summary>📦 Package status</summary>
+<details style="margin-bottom: 0.5em;"><summary>ℹ️ Version info</summary>
 ```
 
 ```@example bench
-function _package_status()
-    if bench_data !== nothing
-        meta = get(bench_data, "metadata", Dict())
-        pkg_status = get(meta, "pkg_status", "No package status available")
-        println(_ansi_to_html(pkg_status))
-    else
-        println("⚠️  No benchmark data available")
-    end
-end
-_package_status()
+function _bench_data() # hide
+    if bench_data !== nothing # hide
+        meta = get(bench_data, "metadata", Dict()) # hide
+        versioninfo_text = get(meta, "versioninfo", "No version info available") # hide
+        println(versioninfo_text) # hide
+    else # hide
+        println("⚠️  No benchmark data available") # hide
+    end # hide
+end # hide
+_bench_data() # hide
 ```
 
 ```@raw html
@@ -135,20 +100,20 @@ _package_status()
 ```
 
 ```@raw html
-<details style="margin-bottom: 0.5em;"><summary>ℹ️ Version info</summary>
+<details style="margin-bottom: 0.5em;"><summary>📦 Package status</summary>
 ```
 
 ```@example bench
-function _bench_data()
-    if bench_data !== nothing
-        meta = get(bench_data, "metadata", Dict())
-        versioninfo_text = get(meta, "versioninfo", "No version info available")
-        println(_ansi_to_html(versioninfo_text))
-    else
-        println("⚠️  No benchmark data available")
-    end
-end
-_bench_data()
+function _package_status() # hide
+    if bench_data !== nothing # hide
+        meta = get(bench_data, "metadata", Dict()) # hide
+        pkg_status = get(meta, "pkg_status", "No package status available") # hide
+        println(pkg_status) # hide
+    else # hide
+        println("⚠️  No benchmark data available") # hide
+    end # hide
+end # hide
+_package_status() # hide
 ```
 
 ```@raw html
@@ -160,16 +125,16 @@ _bench_data()
 ```
 
 ```@example bench
-function _complete_manifest()
-    if bench_data !== nothing
-        meta = get(bench_data, "metadata", Dict())
-        pkg_manifest = get(meta, "pkg_manifest", "No manifest available")
-        println(_ansi_to_html(pkg_manifest))
-    else
-        println("⚠️  No benchmark data available")
-    end
-end
-_complete_manifest()
+function _complete_manifest() # hide
+    if bench_data !== nothing # hide
+        meta = get(bench_data, "metadata", Dict()) # hide
+        pkg_manifest = get(meta, "pkg_manifest", "No manifest available") # hide
+        println(pkg_manifest) # hide
+    else # hide
+        println("⚠️  No benchmark data available") # hide
+    end # hide
+end # hide
+_complete_manifest() # hide
 ```
 
 ```@raw html
