@@ -1,3 +1,5 @@
+using Revise
+
 using Pkg
 const project_dir = normpath(@__DIR__, "..")
 ENV["PROJECT"] = project_dir
@@ -17,7 +19,7 @@ function main()
     CTBenchmarks.benchmark(;
         outpath=outpath,
         problems = [
-            :beam,
+            # :beam,
             :chain,
             # :double_oscillator,
             # :ducted_fan,
@@ -33,8 +35,8 @@ function main()
             # :vanderpol,
         ],
         solver_models = [
-            :ipopt => [:JuMP, :adnlp, :exa],
-            :madnlp => [:JuMP, :adnlp, :exa]
+            :ipopt => [:JuMP], #, :adnlp, :exa],
+            #:madnlp => [:JuMP, :adnlp, :exa]
         ],
         grid_sizes = [200],
         disc_methods = [:trapeze],

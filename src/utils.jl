@@ -3,6 +3,29 @@
 # ------------------------------
 
 """
+    strip_benchmark_value(bench)
+
+Remove the `value` field from benchmark outputs (NamedTuple or Dict) to
+ensure JSON-serializable data while preserving all other statistics.
+"""
+strip_benchmark_value(bench) = bench
+
+function strip_benchmark_value(bench::NamedTuple)
+    pairs_without_value = ((k => getproperty(bench, k)) for k in keys(bench) if k != :value)
+    return (; pairs_without_value...)
+end
+
+function strip_benchmark_value(bench::Dict)
+    filtered = Dict{Any, Any}()
+    for (k, v) in bench
+        if k != :value && k != "value"
+            filtered[k] = v
+        end
+    end
+    return filtered
+end
+
+"""
     solve_and_extract_data(problem, solver, model, grid_size, disc_method, 
                           tol, mu_strategy, print_level, max_iter, max_wall_time) -> NamedTuple
 
@@ -96,7 +119,7 @@ function solve_and_extract_data(
             success = (status == JuMP.MOI.LOCALLY_SOLVED || status == JuMP.MOI.OPTIMAL)
 
             return (
-                benchmark = bt,
+                benchmark = strip_benchmark_value(bt),
                 objective = obj,
                 iterations = iters,
                 status = status,
@@ -109,7 +132,7 @@ function solve_and_extract_data(
             # Create a dummy benchmark object for error case
             dummy_bench = (time = NaN, alloc = 0, bytes = 0, gctime = NaN)
             return (
-                benchmark = dummy_bench,
+                benchmark = missing, #dummy_bench,
                 objective = missing,
                 iterations = missing,
                 status = "ERROR: $e",
@@ -153,7 +176,7 @@ function solve_and_extract_data(
             success = (status == MadNLP.SOLVE_SUCCEEDED)
             
             return (
-                benchmark = bt,
+                benchmark = strip_benchmark_value(bt),
                 objective = obj,
                 iterations = iters,
                 status = status,
@@ -168,7 +191,7 @@ function solve_and_extract_data(
                           cpu_gcstats = Base.GC_Diff(Base.gc_num(), Base.gc_num()),
                           gpu_memstats = (alloc_count = 0, alloc_bytes = 0, total_time = NaN))
             return (
-                benchmark = dummy_bench,
+                benchmark = missing, #dummy_bench,
                 objective = missing,
                 iterations = missing,
                 status = "ERROR: $e",
@@ -235,7 +258,7 @@ function solve_and_extract_data(
             end
             
             return (
-                benchmark = bt,
+                benchmark = strip_benchmark_value(bt),
                 objective = obj,
                 iterations = iters,
                 status = status,
@@ -248,7 +271,7 @@ function solve_and_extract_data(
             # Create a dummy benchmark object for error case
             dummy_bench = (time = NaN, alloc = 0, bytes = 0, gctime = NaN)
             return (
-                benchmark = dummy_bench,
+                benchmark = missing, #dummy_bench,
                 objective = missing,
                 iterations = missing,
                 status = "ERROR: $e",
@@ -562,9 +585,9 @@ Sanitizes NaN and Inf values to null for JSON compatibility.
 function save_json(payload::Dict, outpath::AbstractString)
     mkpath(dirname(outpath))
     # Sanitize the payload to replace NaN/Inf with null
-    sanitized_payload = sanitize_for_json(payload)
+    # sanitized_payload = sanitize_for_json(payload)
     open(outpath, "w") do io
-        JSON.print(io, sanitized_payload, 4)    # pretty printed with 4-space indent
+        JSON.print(io, payload, 4)    # pretty printed with 4-space indent
         write(io, '\n')            # add trailing newline
     end
 end
