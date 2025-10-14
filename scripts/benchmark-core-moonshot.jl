@@ -17,31 +17,31 @@ function main()
     CTBenchmarks.benchmark(;
         outpath=outpath,
         problems = [
-            # :beam,
+            :beam,
             :chain,
-            # :double_oscillator,
-            # :ducted_fan,
-            # :electric_vehicle,
-            # :glider,
-            # :insurance,
-            # :jackson,
-            # :robbins,
-            # :robot,
-            # :rocket,
-            # :space_shuttle,
-            # :steering,
-            # :vanderpol,
+            :double_oscillator,
+            :ducted_fan,
+            :electric_vehicle,
+            :glider,
+            :insurance,
+            :jackson,
+            :robbins,
+            :robot,
+            :rocket,
+            :space_shuttle,
+            :steering,
+            :vanderpol,
         ],
         solver_models = [
             :madnlp => [:exa, :exa_gpu]
         ],
-        grid_sizes = [1000],
+        grid_sizes = [1000, 5000, 10000],
         disc_methods = [:trapeze],
         tol = 1e-6,
         ipopt_mu_strategy = "adaptive",
         print_trace = false,
         max_iter = 1000,
-        max_wall_time = 500.0
+        max_wall_time = 1000.0
     )
     println("✅ Benchmark completed successfully!")
     return outpath
