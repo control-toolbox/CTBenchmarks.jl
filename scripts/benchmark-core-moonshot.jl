@@ -39,7 +39,7 @@ function main()
         disc_methods = [:trapeze],
         tol = 1e-6,
         ipopt_mu_strategy = "adaptive",
-        print_trace = true,
+        print_trace = false,
         max_iter = 1000,
         max_wall_time = 500.0
     )

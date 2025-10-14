@@ -4,7 +4,7 @@ module CTBenchmarks
 using Dates                     # Date and time functionality
 using JSON                      # JSON serialization/deserialization
 using InteractiveUtils          # Interactive utilities (e.g., versioninfo)
-import Pkg                     # Package manager utilities
+import Pkg                      # Package manager utilities
 using Sockets                   # Network socket support
 using Printf                    # String formatting
 

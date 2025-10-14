@@ -130,7 +130,6 @@ function solve_and_extract_data(
                 :max_iter => max_iter, 
                 :max_wall_time => max_wall_time, 
                 :exa_backend => CUDABackend(),
-                :linear_solver => CUDSSSolver,
             )
             
             # Use CUDA.@timed for GPU benchmarking
@@ -544,7 +543,7 @@ Uses pretty printing for readability.
 function save_json(payload::Dict, outpath::AbstractString)
     mkpath(dirname(outpath))
     open(outpath, "w") do io
-        JSON.print(io, payload)    # pretty printed, multi-line
+        JSON.write(io, payload; allow_inf=true, allownan=true)    # pretty printed, multi-line
         write(io, '\n')            # add trailing newline
     end
 end

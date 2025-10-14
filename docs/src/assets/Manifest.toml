@@ -142,7 +142,7 @@ version = "0.16.4"
     JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 
 [[deps.CTBenchmarks]]
-deps = ["BenchmarkTools", "CUDA", "DataFrames", "Dates", "InteractiveUtils", "Ipopt", "JSON", "JuMP", "MadNLP", "MadNLPGPU", "MadNLPMumps", "NLPModelsIpopt", "OptimalControl", "OptimalControlProblems", "Pkg", "Printf", "Sockets", "Tables"]
+deps = ["BenchmarkTools", "CUDA", "DataFrames", "Dates", "InteractiveUtils", "Ipopt", "JSON", "JuMP", "MadNLPGPU", "MadNLPMumps", "NLPModelsIpopt", "OptimalControl", "OptimalControlProblems", "Pkg", "Printf", "Sockets", "Tables"]
 path = "/Users/ocots/Research/logiciels/dev/control-toolbox/CTBenchmarks.jl"
 uuid = "db1dffaa-5ed3-4583-9a66-b5881c82ef11"
 version = "0.1.0"
@@ -614,9 +614,9 @@ uuid = "9cc047cb-c261-5740-88fc-0cf96f7bdcc7"
 version = "300.1400.1900+0"
 
 [[deps.IrrationalConstants]]
-git-tree-sha1 = "e2222959fbc6c19554dc15174c81bf7bf3aa691c"
+git-tree-sha1 = "b2d91fe939cae05960e760110b328288867b5758"
 uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
-version = "0.2.4"
+version = "0.2.6"
 
 [[deps.IteratorInterfaceExtensions]]
 git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"

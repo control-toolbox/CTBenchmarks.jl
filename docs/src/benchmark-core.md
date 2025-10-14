@@ -1,9 +1,5 @@
 # Core benchmark
 
-## Ubuntu Latest
-
-This page displays the core benchmark results from `docs/src/assets/benchmark-core-ubuntu-latest/data.json`.
-
 ```@setup bench
 using CTBenchmarks
 using JSON
@@ -22,16 +18,14 @@ function _read_benchmark_json(path::AbstractString)
     end
 end
 
-# Benchmark directory name (reusable for paths and links)
-const BENCH_DIR = "benchmark-core-ubuntu-latest"
-const _BENCH_PATH = joinpath(@__DIR__, "assets", BENCH_DIR, "data.json")
-bench_data = _read_benchmark_json(_BENCH_PATH)
-```
+# Load both benchmark datasets
+const BENCH_DIR_UBUNTU = "benchmark-core-ubuntu-latest"
+const BENCH_DIR_MOONSHOT = "benchmark-core-moonshot"
+const bench_data_ubuntu = _read_benchmark_json(joinpath(@__DIR__, "assets", BENCH_DIR_UBUNTU, "data.json"))
+const bench_data_moonshot = _read_benchmark_json(joinpath(@__DIR__, "assets", BENCH_DIR_MOONSHOT, "data.json"))
 
-### Benchmark environment
-
-```@example bench
-function _basic_metadata() # hide
+# Factorized helper functions that take bench_data as argument
+function _basic_metadata(bench_data) # hide
     if bench_data !== nothing # hide
         meta = get(bench_data, "metadata", Dict()) # hide
         for (label, key) in ( # hide
@@ -47,45 +41,8 @@ function _basic_metadata() # hide
         println("⚠️  No benchmark data available") # hide
     end # hide
 end # hide
-nothing # hide
-```
 
-```@example bench
-_basic_metadata() # hide
-```
-
-```@eval
-using TOML
-using Markdown
-
-# Benchmark directory name
-BENCH_DIR = "benchmark-core-ubuntu-latest"
-
-# Read package metadata
-version = TOML.parse(read("../../Project.toml", String))["version"]
-name = TOML.parse(read("../../Project.toml", String))["name"]
-
-# Build download links using joinpath for correct path construction
-base_url = "https://github.com/control-toolbox/" * name * ".jl/tree/gh-pages/v" * version
-link_manifest = joinpath(base_url, "assets", BENCH_DIR, "Manifest.toml")
-link_project = joinpath(base_url, "assets", BENCH_DIR, "Project.toml")
-
-Markdown.parse("""
-You can download the exact environment used for this benchmark:
-- 📦 [Project.toml]($link_project) - Package dependencies
-- 📋 [Manifest.toml]($link_manifest) - Complete dependency tree with versions
-
-These files allow you to reproduce the benchmark environment exactly.
-More infos below.
-""")
-```
-
-```@raw html
-<details style="margin-bottom: 0.5em;"><summary>ℹ️ Version info</summary>
-```
-
-```@example bench
-function _bench_data() # hide
+function _bench_data(bench_data) # hide
     if bench_data !== nothing # hide
         meta = get(bench_data, "metadata", Dict()) # hide
         versioninfo_text = get(meta, "versioninfo", "No version info available") # hide
@@ -94,19 +51,8 @@ function _bench_data() # hide
         println("⚠️  No benchmark data available") # hide
     end # hide
 end # hide
-_bench_data() # hide
-```
 
-```@raw html
-</details>
-```
-
-```@raw html
-<details style="margin-bottom: 0.5em;"><summary>📦 Package status</summary>
-```
-
-```@example bench
-function _package_status() # hide
+function _package_status(bench_data) # hide
     if bench_data !== nothing # hide
         meta = get(bench_data, "metadata", Dict()) # hide
         pkg_status = get(meta, "pkg_status", "No package status available") # hide
@@ -115,19 +61,8 @@ function _package_status() # hide
         println("⚠️  No benchmark data available") # hide
     end # hide
 end # hide
-_package_status() # hide
-```
 
-```@raw html
-</details>
-```
-
-```@raw html
-<details style="margin-bottom: 0.5em;"><summary>📚 Complete manifest</summary>
-```
-
-```@example bench
-function _complete_manifest() # hide
+function _complete_manifest(bench_data) # hide
     if bench_data !== nothing # hide
         meta = get(bench_data, "metadata", Dict()) # hide
         pkg_manifest = get(meta, "pkg_manifest", "No manifest available") # hide
@@ -136,20 +71,7 @@ function _complete_manifest() # hide
         println("⚠️  No benchmark data available") # hide
     end # hide
 end # hide
-_complete_manifest() # hide
-```
 
-```@raw html
-</details>
-```
-
-### Results
-
-```@raw html
-<details><summary>Click to unfold the results rendering code.</summary>
-```
-
-```@example bench
 function _print_results(bench_data)
     if bench_data === nothing
         println("⚠️  No results to display because the benchmark file is missing.")
@@ -197,7 +119,12 @@ function _print_results(bench_data)
                         # Display each model with library formatting
                         for row in eachrow(grid_df)
                             # Create a NamedTuple with benchmark data for formatting
-                            stats = (benchmark = row.benchmark,)
+                            stats = (
+                                benchmark = row.benchmark,
+                                objective = row.objective,
+                                iterations = row.iterations,
+                                success = row.success
+                            )
                             println("│  │", CTBenchmarks.format_benchmark_line(Symbol(row.model), stats))
                         end
                         
@@ -223,11 +150,160 @@ end
 nothing # hide
 ```
 
+## Ubuntu Latest
+
+This page displays the core benchmark results from `docs/src/assets/benchmark-core-ubuntu-latest/data.json`.
+
+### 🖥️ Environment
+
+```@example bench
+_basic_metadata(bench_data_ubuntu) # hide
+```
+
+```@eval
+using TOML
+using Markdown
+
+# Benchmark directory name
+BENCH_DIR = "benchmark-core-ubuntu-latest"
+
+# Read package metadata
+version = TOML.parse(read("../../Project.toml", String))["version"]
+name = TOML.parse(read("../../Project.toml", String))["name"]
+
+# Build download links using joinpath for correct path construction
+base_url = "https://github.com/control-toolbox/" * name * ".jl/tree/gh-pages/v" * version
+link_manifest = joinpath(base_url, "assets", BENCH_DIR, "Manifest.toml")
+link_project = joinpath(base_url, "assets", BENCH_DIR, "Project.toml")
+
+Markdown.parse("""
+You can download the exact environment used for this benchmark:
+- 📦 [Project.toml]($link_project) - Package dependencies
+- 📋 [Manifest.toml]($link_manifest) - Complete dependency tree with versions
+
+These files allow you to reproduce the benchmark environment exactly.
+More infos below.
+""")
+```
+
 ```@raw html
-</details></br>
+<details style="margin-bottom: 0.5em;"><summary>ℹ️ Version info</summary>
 ```
 
 ```@example bench
-_print_results(bench_data) # hide
+_bench_data(bench_data_ubuntu) # hide
+```
+
+```@raw html
+</details>
+```
+
+```@raw html
+<details style="margin-bottom: 0.5em;"><summary>📦 Package status</summary>
+```
+
+```@example bench
+_package_status(bench_data_ubuntu) # hide
+```
+
+```@raw html
+</details>
+```
+
+```@raw html
+<details style="margin-bottom: 0.5em;"><summary>📚 Complete manifest</summary>
+```
+
+```@example bench
+_complete_manifest(bench_data_ubuntu) # hide
+```
+
+```@raw html
+</details>
+```
+
+### 📊 Results
+
+```@example bench
+_print_results(bench_data_ubuntu) # hide
+nothing # hide
+```
+
+## Moonshot
+
+This page displays the core benchmark results from `docs/src/assets/benchmark-core-moonshot/data.json`.
+
+### 🚀 Environment
+
+```@example bench
+_basic_metadata(bench_data_moonshot) # hide
+```
+
+```@eval
+using TOML
+using Markdown
+
+# Benchmark directory name
+BENCH_DIR = "benchmark-core-moonshot"
+
+# Read package metadata
+version = TOML.parse(read("../../Project.toml", String))["version"]
+name = TOML.parse(read("../../Project.toml", String))["name"]
+
+# Build download links using joinpath for correct path construction
+base_url = "https://github.com/control-toolbox/" * name * ".jl/tree/gh-pages/v" * version
+link_manifest = joinpath(base_url, "assets", BENCH_DIR, "Manifest.toml")
+link_project = joinpath(base_url, "assets", BENCH_DIR, "Project.toml")
+
+Markdown.parse("""
+You can download the exact environment used for this benchmark:
+- 📦 [Project.toml]($link_project) - Package dependencies
+- 📋 [Manifest.toml]($link_manifest) - Complete dependency tree with versions
+
+These files allow you to reproduce the benchmark environment exactly.
+More infos below.
+""")
+```
+
+```@raw html
+<details style="margin-bottom: 0.5em;"><summary>ℹ️ Version info</summary>
+```
+
+```@example bench
+_bench_data(bench_data_moonshot) # hide
+```
+
+```@raw html
+</details>
+```
+
+```@raw html
+<details style="margin-bottom: 0.5em;"><summary>📦 Package status</summary>
+```
+
+```@example bench
+_package_status(bench_data_moonshot) # hide
+```
+
+```@raw html
+</details>
+```
+
+```@raw html
+<details style="margin-bottom: 0.5em;"><summary>📚 Complete manifest</summary>
+```
+
+```@example bench
+_complete_manifest(bench_data_moonshot) # hide
+```
+
+```@raw html
+</details>
+```
+
+### ⚡ Results
+
+```@example bench
+_print_results(bench_data_moonshot) # hide
 nothing # hide
 ```
