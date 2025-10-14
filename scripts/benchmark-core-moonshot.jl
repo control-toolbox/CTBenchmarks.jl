@@ -47,7 +47,7 @@ function main()
         solver_models = [
             :madnlp => [:exa, :exa_gpu]
         ],
-        grid_sizes = [5000, 10000, 50000],
+        grid_sizes = [1000],
         disc_methods = [:trapeze],
         tol = 1e-6,
         ipopt_mu_strategy = "adaptive",

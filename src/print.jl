@@ -85,7 +85,7 @@ function format_benchmark_line(model::Symbol, stats::NamedTuple)
         end
         
         cpu_bytes = getval(bench, :cpu_bytes)
-        cpu_mem_str = prettymemory(cpu_bytes)
+        cpu_mem_str = Base.format_bytes(cpu_bytes)
         
         gpu_memstats = getval(bench, :gpu_memstats)
         if isa(gpu_memstats, Dict)
@@ -95,7 +95,7 @@ function format_benchmark_line(model::Symbol, stats::NamedTuple)
         end
         
         gpu_bytes = getval(bench, :gpu_bytes)
-        gpu_mem_str = prettymemory(gpu_bytes)
+        gpu_mem_str = Base.format_bytes(gpu_bytes)
         
         return "  $model_str: $time_str ($cpu_allocs CPU allocations: $cpu_mem_str) ($gpu_allocs GPU allocation$(gpu_allocs == 1 ? "" : "s"): $gpu_mem_str)"
     else
