@@ -239,12 +239,15 @@ jobs:
     steps:
       - name: Comment on PR with success notification
         uses: actions/github-script@v8
+        env:
+          BENCHMARKS_SUMMARY: ${{ needs.guard.outputs.benchmarks_summary }}
         with:
           script: |
             console.log('🎉 Workflow success detected - posting notification...');
 
             const prNumber = context.payload.pull_request.number;
             const previewUrl = `https://control-toolbox.org/CTBenchmarks.jl/previews/PR${prNumber}/index.html`;
+            const benchmarksSummary = process.env.BENCHMARKS_SUMMARY;
 
             console.log(`🔍 Checking documentation preview at: ${previewUrl}`);
 
@@ -284,7 +287,7 @@ jobs:
             The automated workflow has completed successfully! 🎉
 
             ### ✅ Completed Tasks
-            - 📊 **Benchmarks**: ${needs.guard.outputs.benchmarks_summary} executed and results saved to your branch
+            - 📊 **Benchmarks**: ${benchmarksSummary} executed and results saved to your branch
             - 📚 **Documentation**: Documentation updated successfully
             - 🔄 **Integration**: All changes integrated properly
             ${previewSection}
