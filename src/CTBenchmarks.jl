@@ -23,6 +23,8 @@ using MadNLPMumps               # MadNLP with MUMPS linear solver
 using MadNLPGPU                 # MadNLP with GPU support
 using CUDA                      # CUDA GPU support
 
+const ITERATION = Ref{Int}(0)
+
 include("utils.jl")
 include("print.jl")
 include("run.jl")

@@ -76,10 +76,10 @@ function solve_and_extract_data(
             
             # solve the problem always with print_level = set_print_level(solver, false)
             JuMP.set_optimizer_attribute(nlp, "print_level", print_level)
-            global iter = 0
+            ITERATION[] = 0
             bt = @btimed begin
-                global iter += 1
-                if iter == 2
+                ITERATION[] += 1
+                if ITERATION[] == 2
                     JuMP.set_optimizer_attribute($nlp, "print_level", set_print_level($solver, false))
                 end
                 JuMP.optimize!($nlp)
@@ -133,10 +133,10 @@ function solve_and_extract_data(
             
             # Use CUDA.@timed for GPU benchmarking
             madnlp(nlp_model_oc; opt...) # run for warmup
-            global iter = 0
+            ITERATION[] = 0
             bt = CUDA.@timed begin
-                global iter += 1
-                if iter == 2
+                ITERATION[] += 1
+                if ITERATION[] == 2
                     opt[:print_level] = set_print_level(solver, false)
                 end
                 madnlp(nlp_model_oc; opt...)
@@ -193,10 +193,10 @@ function solve_and_extract_data(
                 opt[:mu_strategy] = mu_strategy
                 opt[:sb] = "yes"
                 opt[:linear_solver] = "mumps"
-                global iter = 0
+                ITERATION[] = 0
                 bt = @btimed begin
-                    global iter += 1
-                    if iter == 2
+                    ITERATION[] += 1
+                    if ITERATION[] == 2
                         $opt[:print_level] = set_print_level($solver, false)
                     end
                     NLPModelsIpopt.ipopt($nlp_model_oc; $opt...)
@@ -204,10 +204,10 @@ function solve_and_extract_data(
                 bt_nlp_sol = bt.value
             elseif solver == :madnlp
                 opt[:linear_solver] = MumpsSolver
-                global iter = 0
+                ITERATION[] = 0
                 bt = @btimed begin
-                    global iter += 1
-                    if iter == 2
+                    ITERATION[] += 1
+                    if ITERATION[] == 2
                         $opt[:print_level] = set_print_level($solver, false)
                     end
                     madnlp($nlp_model_oc; $opt...)
@@ -414,7 +414,7 @@ function benchmark_data(;
                 end
                 
                 # Print grid size
-                println("│  │  N       : $N")
+                println("│  │  N : $N")
                 
                 for model in models_to_run
                     # Solve and extract data using helper function
@@ -534,15 +534,37 @@ function build_payload(results::DataFrame, meta::Dict)
 end
 
 """
+    sanitize_for_json(obj)
+
+Recursively replace NaN and Inf values with null for JSON compatibility.
+"""
+function sanitize_for_json(obj)
+    if isa(obj, Dict)
+        return Dict(k => sanitize_for_json(v) for (k, v) in obj)
+    elseif isa(obj, Array)
+        return [sanitize_for_json(x) for x in obj]
+    elseif isa(obj, Float64) && (isnan(obj) || isinf(obj))
+        return nothing  # Will be serialized as null in JSON
+    elseif isa(obj, NamedTuple)
+        return NamedTuple{keys(obj)}(sanitize_for_json(v) for v in values(obj))
+    else
+        return obj
+    end
+end
+
+"""
     save_json(payload::Dict, outpath::AbstractString)
 
 Save a JSON payload to a file. Creates the parent directory if needed.
 Uses pretty printing for readability.
+Sanitizes NaN and Inf values to null for JSON compatibility.
 """
 function save_json(payload::Dict, outpath::AbstractString)
     mkpath(dirname(outpath))
+    # Sanitize the payload to replace NaN/Inf with null
+    sanitized_payload = sanitize_for_json(payload)
     open(outpath, "w") do io
-        JSON.print(io, payload)    # pretty printed, multi-line
+        JSON.print(io, sanitized_payload, 4)    # pretty printed with 4-space indent
         write(io, '\n')            # add trailing newline
     end
 end

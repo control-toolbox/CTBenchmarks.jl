@@ -13,6 +13,6 @@ Pkg.instantiate()
 println("🔄 Loading CTBenchmarks package...")
 using CTBenchmarks
 
-println("⏱️  Ready to run core benchmark...")
+println("⏱️ Ready to run core benchmark...")
 CTBenchmarks.run(:minimal; print_trace=false)
 #CTBenchmarks.run(:complete; print_trace=false)

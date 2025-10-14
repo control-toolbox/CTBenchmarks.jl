@@ -75,21 +75,28 @@ function format_benchmark_line(model::Symbol, stats::NamedTuple)
     time_val = getval(bench, :time)
     time_str = rpad(prettytime(time_val), 10)  # Fixed width for time
     
+    # Build memory string with CPU/GPU labels
     if has_cpu_bytes && has_gpu_bytes
-        # GPU benchmark format
+        # GPU benchmark format - show both CPU and GPU memory
         cpu_bytes = getval(bench, :cpu_bytes)
-        cpu_mem_str = lpad(Base.format_bytes(cpu_bytes), 10)  # Right-aligned for memory
+        cpu_mem_str = lpad(Base.format_bytes(cpu_bytes), 10)
+        
+        gpu_bytes = getval(bench, :gpu_bytes)
+        gpu_mem_str = lpad(Base.format_bytes(gpu_bytes), 10)
+        
+        memory_display = "CPU: $cpu_mem_str | GPU: $gpu_mem_str"
     else
         # CPU benchmark format (BenchmarkTools @btimed)
         bytes_val = getval(bench, :bytes)
-        memory_str = lpad(prettymemory(bytes_val), 10)  # Right-aligned for memory
-        cpu_mem_str = memory_str
+        memory_str = lpad(prettymemory(bytes_val), 10)
+        
+        memory_display = "CPU: $memory_str" * " " ^ 18  # Padding to align with GPU format
     end
     
     # Format solver statistics with fixed widths
     obj_str = ismissing(stats.objective) ? rpad("N/A", 13) : rpad(@sprintf("%.6e", stats.objective), 13)
-    iter_str = ismissing(stats.iterations) ? rpad("N/A", 4) : rpad(string(stats.iterations), 4)
+    iter_str = ismissing(stats.iterations) ? rpad("N/A", 6) : rpad(string(stats.iterations), 6)
     status_icon = stats.success ? "✓" : "✗"
     
-    return "  $model_str: $time_str | memory: $cpu_mem_str | obj: $obj_str | iters: $iter_str | $status_icon"
+    return "  $status_icon | $model_str: $time_str | obj: $obj_str | iters: $iter_str | $memory_display"
 end
