@@ -120,7 +120,7 @@ function solve_and_extract_data(
         # ===== GPU Model (exa with CUDA backend) =====
         try
             pb = Symbol(problem, :_s)  # exa models need the suffix _s
-            docp = eval(pb)(OptimalControlBackend(), :exa, solver; grid_size=grid_size, disc_method=disc_method)
+            docp = eval(pb)(OptimalControlBackend(), :exa, solver; exa_backend=CUDABackend(), grid_size=grid_size, disc_method=disc_method)
             nlp_model_oc = nlp_model(docp)
             
             # Build solver options (only madnlp for GPU)
@@ -128,8 +128,7 @@ function solve_and_extract_data(
                 :tol => tol, 
                 :print_level => print_level, 
                 :max_iter => max_iter, 
-                :max_wall_time => max_wall_time, 
-                :exa_backend => CUDABackend(),
+                :max_wall_time => max_wall_time,
             )
             
             # Use CUDA.@timed for GPU benchmarking
@@ -543,7 +542,7 @@ Uses pretty printing for readability.
 function save_json(payload::Dict, outpath::AbstractString)
     mkpath(dirname(outpath))
     open(outpath, "w") do io
-        JSON.write(io, payload; allow_inf=true, allownan=true)    # pretty printed, multi-line
+        JSON.print(io, payload)    # pretty printed, multi-line
         write(io, '\n')            # add trailing newline
     end
 end
