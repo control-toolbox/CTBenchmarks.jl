@@ -25,6 +25,7 @@ using CUDA                      # CUDA GPU support
 
 include("utils.jl")
 include("print.jl")
+include("run.jl")
 
 export benchmark, benchmark_data
 

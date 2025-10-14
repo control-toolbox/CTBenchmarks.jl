@@ -1,6 +1,8 @@
 # Core benchmark
 
-This page displays the core benchmark results from `docs/src/assets/benchmark-core-ubuntu-cpu/data.json`.
+## Ubuntu Latest
+
+This page displays the core benchmark results from `docs/src/assets/benchmark-core-ubuntu-latest/data.json`.
 
 ```@setup bench
 using CTBenchmarks
@@ -21,12 +23,12 @@ function _read_benchmark_json(path::AbstractString)
 end
 
 # Benchmark directory name (reusable for paths and links)
-const BENCH_DIR = "benchmark-core-ubuntu-cpu"
+const BENCH_DIR = "benchmark-core-ubuntu-latest"
 const _BENCH_PATH = joinpath(@__DIR__, "assets", BENCH_DIR, "data.json")
 bench_data = _read_benchmark_json(_BENCH_PATH)
 ```
 
-## Benchmark environment
+### Benchmark environment
 
 ```@example bench
 function _basic_metadata() # hide
@@ -57,7 +59,7 @@ using TOML
 using Markdown
 
 # Benchmark directory name
-BENCH_DIR = "benchmark-core"
+BENCH_DIR = "benchmark-core-ubuntu-latest"
 
 # Read package metadata
 version = TOML.parse(read("../../Project.toml", String))["version"]
@@ -141,7 +143,7 @@ _complete_manifest() # hide
 </details>
 ```
 
-## Results
+### Results
 
 ```@raw html
 <details><summary>Click to unfold the results rendering code.</summary>

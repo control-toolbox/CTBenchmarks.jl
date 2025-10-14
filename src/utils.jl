@@ -39,15 +39,21 @@ function solve_and_extract_data(
     disc_method::Symbol,
     tol::Float64,
     mu_strategy::Union{String, Missing},
-    print_level::Union{Int, MadNLP.LogLevels, Missing},
+    print_trace::Bool,
     max_iter::Int,
     max_wall_time::Float64
 )
+    # print_level
+    print_level = set_print_level(solver, print_trace)
+
     # Assertions: GPU models require MadNLP and CUDA
     is_gpu_model = endswith(string(model), "_gpu")
     @assert (!is_gpu_model || solver == :madnlp) "gpu model requires madnlp solver"
     @assert (!is_gpu_model || is_cuda_on()) "gpu model requires CUDA"
     @assert (model != :JuMP || disc_method == :trapeze) "JuMP model requires :trapeze discretization"
+    @assert (solver != :ipopt || !ismissing(mu_strategy))
+
+    # solve the problem
     if model == :JuMP
         # ===== JuMP Model =====
         try
@@ -56,37 +62,39 @@ function solve_and_extract_data(
             if solver == :ipopt
                 JuMP.set_optimizer(nlp, Ipopt.Optimizer)
                 JuMP.set_optimizer_attribute(nlp, "sb", "yes")
-                JuMP.set_optimizer_attribute(nlp, "tol", tol)
-                JuMP.set_optimizer_attribute(nlp, "max_iter", max_iter)
-                JuMP.set_optimizer_attribute(nlp, "max_wall_time", max_wall_time)
-                if !ismissing(mu_strategy)
-                    JuMP.set_optimizer_attribute(nlp, "mu_strategy", mu_strategy)
-                end
-                if !ismissing(print_level)
-                    JuMP.set_optimizer_attribute(nlp, "print_level", print_level)
-                end
+                JuMP.set_optimizer_attribute(nlp, "mu_strategy", mu_strategy)
+                JuMP.set_optimizer_attribute(nlp, "linear_solver", "mumps")
             elseif solver == :madnlp
                 JuMP.set_optimizer(nlp, MadNLP.Optimizer)
-                JuMP.set_optimizer_attribute(nlp, "tol", tol)
-                JuMP.set_optimizer_attribute(nlp, "max_iter", max_iter)
-                JuMP.set_optimizer_attribute(nlp, "max_wall_time", max_wall_time)
-                if !ismissing(print_level)
-                    JuMP.set_optimizer_attribute(nlp, "print_level", print_level)
-                end
+                JuMP.set_optimizer_attribute(nlp, "linear_solver", MumpsSolver)
             else
                 error("undefined solver: $solver")
             end
+            JuMP.set_optimizer_attribute(nlp, "tol", tol)
+            JuMP.set_optimizer_attribute(nlp, "max_iter", max_iter)
+            JuMP.set_optimizer_attribute(nlp, "max_wall_time", max_wall_time)
             
-            bt = @btimed JuMP.optimize!($nlp)
+            # solve the problem always with print_level = set_print_level(solver, false)
+            JuMP.set_optimizer_attribute(nlp, "print_level", print_level)
+            global iter = 0
+            bt = @btimed begin
+                global iter += 1
+                if iter == 2
+                    JuMP.set_optimizer_attribute($nlp, "print_level", set_print_level($solver, false))
+                end
+                JuMP.optimize!($nlp)
+                $nlp
+            end
             
             # Extract statistics from JuMP model
-            status = JuMP.termination_status(nlp)
-            obj = objective(nlp)
-            iters = iterations(nlp)
+            bt_nlp = bt.value
+            status = JuMP.termination_status(bt_nlp)
+            obj = objective(bt_nlp)
+            iters = iterations(bt_nlp)
             
             # Check if solve succeeded (MOI.LOCALLY_SOLVED or MOI.OPTIMAL)
             success = (status == JuMP.MOI.LOCALLY_SOLVED || status == JuMP.MOI.OPTIMAL)
-            
+
             return (
                 benchmark = bt,
                 objective = obj,
@@ -96,7 +104,6 @@ function solve_and_extract_data(
             )
         catch e
             println("ERROR in JuMP solve: ", e)
-            println("Stack trace: ")
             Base.show_backtrace(stdout, catch_backtrace())
             println()
             # Create a dummy benchmark object for error case
@@ -117,22 +124,32 @@ function solve_and_extract_data(
             nlp_model_oc = nlp_model(docp)
             
             # Build solver options (only madnlp for GPU)
-            if !ismissing(print_level)
-                opt = (tol=tol, print_level=print_level, max_iter=max_iter, max_wall_time=max_wall_time, exa_backend=CUDABackend())
-            else
-                opt = (tol=tol, max_iter=max_iter, max_wall_time=max_wall_time, exa_backend=CUDABackend())
-            end
+            opt = Dict{Symbol, Any}(
+                :tol => tol, 
+                :print_level => print_level, 
+                :max_iter => max_iter, 
+                :max_wall_time => max_wall_time, 
+                :exa_backend => CUDABackend(),
+                :linear_solver => CUDSSSolver,
+            )
             
             # Use CUDA.@timed for GPU benchmarking
             madnlp(nlp_model_oc; opt...) # run for warmup
-            bt = CUDA.@timed madnlp(nlp_model_oc; opt...)
-            nlp_sol = bt.value
+            global iter = 0
+            bt = CUDA.@timed begin
+                global iter += 1
+                if iter == 2
+                    opt[:print_level] = set_print_level(solver, false)
+                end
+                madnlp(nlp_model_oc; opt...)
+            end
+            bt_nlp_sol = bt.value
             
             # Build OCP solution to extract statistics
-            ocp_sol = build_ocp_solution(docp, nlp_sol)
+            ocp_sol = build_ocp_solution(docp, bt_nlp_sol)
             obj = objective(ocp_sol)
             iters = iterations(ocp_sol)
-            status = nlp_sol.status
+            status = bt_nlp_sol.status
             
             # Check if solve succeeded
             success = (status == MadNLP.SOLVE_SUCCEEDED)
@@ -146,7 +163,6 @@ function solve_and_extract_data(
             )
         catch e
             println("ERROR in GPU solve: ", e)
-            println("Stack trace: ")
             Base.show_backtrace(stdout, catch_backtrace())
             println()
             # Create a dummy benchmark object for error case
@@ -169,33 +185,45 @@ function solve_and_extract_data(
             nlp_model_oc = nlp_model(docp)
             
             # Build solver options and solve
+            opt = Dict{Symbol, Any}(
+                :tol => tol, 
+                :print_level => print_level, 
+                :max_iter => max_iter, 
+                :max_wall_time => max_wall_time
+            )
             if solver == :ipopt
-                if !ismissing(mu_strategy) && !ismissing(print_level)
-                    opt = (tol=tol, mu_strategy=mu_strategy, print_level=print_level, sb="yes", max_iter=max_iter, max_wall_time=max_wall_time)
-                elseif !ismissing(print_level)
-                    opt = (tol=tol, print_level=print_level, sb="yes", max_iter=max_iter, max_wall_time=max_wall_time)
-                else
-                    opt = (tol=tol, sb="yes", max_iter=max_iter, max_wall_time=max_wall_time)
+                opt[:mu_strategy] = mu_strategy
+                opt[:sb] = "yes"
+                opt[:linear_solver] = "mumps"
+                global iter = 0
+                bt = @btimed begin
+                    global iter += 1
+                    if iter == 2
+                        $opt[:print_level] = set_print_level($solver, false)
+                    end
+                    NLPModelsIpopt.ipopt($nlp_model_oc; $opt...)
                 end
-                bt = @btimed NLPModelsIpopt.ipopt($nlp_model_oc; $opt...)
-                nlp_sol = bt.value
+                bt_nlp_sol = bt.value
             elseif solver == :madnlp
-                if !ismissing(print_level)
-                    opt = (tol=tol, print_level=print_level, max_iter=max_iter, max_wall_time=max_wall_time)
-                else
-                    opt = (tol=tol, max_iter=max_iter, max_wall_time=max_wall_time)
+                opt[:linear_solver] = MumpsSolver
+                global iter = 0
+                bt = @btimed begin
+                    global iter += 1
+                    if iter == 2
+                        $opt[:print_level] = set_print_level($solver, false)
+                    end
+                    madnlp($nlp_model_oc; $opt...)
                 end
-                bt = @btimed madnlp($nlp_model_oc; $opt...)
-                nlp_sol = bt.value
+                bt_nlp_sol = bt.value
             else
                 error("undefined solver: $solver")
             end
             
             # Build OCP solution to extract statistics
-            ocp_sol = build_ocp_solution(docp, nlp_sol)
+            ocp_sol = build_ocp_solution(docp, bt_nlp_sol)
             obj = objective(ocp_sol)
             iters = iterations(ocp_sol)
-            status = nlp_sol.status
+            status = bt_nlp_sol.status
             
             # Check if solve succeeded
             # For Ipopt: :first_order or :acceptable
@@ -217,7 +245,6 @@ function solve_and_extract_data(
             )
         catch e
             println("ERROR in OptimalControl solve: ", e)
-            println("Stack trace: ")
             Base.show_backtrace(stdout, catch_backtrace())
             println()
             # Create a dummy benchmark object for error case
@@ -258,6 +285,21 @@ function filter_models_for_backend(models::Vector{Symbol}, disc_method::Symbol)
 end
 
 """
+    set_print_level(solver::Symbol, print_trace::Bool) -> Int
+
+Set print level based on solver and print_trace flag.
+"""
+function set_print_level(solver::Symbol, print_trace::Bool)
+    if solver == :ipopt
+        return print_trace ? 5 : 0
+    elseif solver == :madnlp
+        return print_trace ? MadNLP.INFO : MadNLP.ERROR
+    else
+        error("undefined solver: $solver")
+    end
+end
+
+"""
     benchmark_data(;
         problems,
         solver_models,
@@ -265,8 +307,7 @@ end
         disc_methods,
         tol,
         ipopt_mu_strategy,
-        ipopt_print_level,
-        madnlp_print_level,
+        print_trace
         max_iter,
         max_wall_time,
         grid_size_max_cpu
@@ -287,8 +328,7 @@ For each combination of problem, solver, model, and grid size, this function:
 - `disc_methods`: Vector of discretization methods (Symbols)
 - `tol`: Solver tolerance (Float64)
 - `ipopt_mu_strategy`: Mu strategy for Ipopt (String)
-- `ipopt_print_level`: Print level for Ipopt (Int)
-- `madnlp_print_level`: Print level for MadNLP (MadNLP.LogLevels)
+- `print_trace`: Boolean - whether to print solver output (for debugging)
 - `max_iter`: Maximum number of iterations (Int)
 - `max_wall_time`: Maximum wall time in seconds (Float64)
 
@@ -317,8 +357,7 @@ function benchmark_data(;
     disc_methods,
     tol,
     ipopt_mu_strategy,
-    ipopt_print_level,
-    madnlp_print_level,
+    print_trace,
     max_iter,
     max_wall_time
 )
@@ -331,13 +370,12 @@ function benchmark_data(;
         grid_size = Int[],
         tol = Float64[],
         mu_strategy = Union{String, Missing}[],
-        print_level = Any[],  # Can be Int or MadNLP.LogLevel
         max_iter = Int[],
         max_wall_time = Float64[],
-        benchmark = Any[],  # Full benchmark object from @btimed or CUDA.@timed
+        benchmark = Any[],
         objective = Union{Float64, Missing}[],
         iterations = Union{Int, Missing}[],
-        status = Any[],  # Type depends on solver/model
+        status = Any[],
         success = Bool[]
     )
 
@@ -355,10 +393,8 @@ function benchmark_data(;
             # Set solver-specific options
             if solver == :ipopt
                 mu_strategy = ipopt_mu_strategy
-                print_level = ipopt_print_level
             elseif solver == :madnlp
                 mu_strategy = missing
-                print_level = madnlp_print_level
             else
                 error("undefined solver: $solver")
             end
@@ -386,7 +422,7 @@ function benchmark_data(;
                     # Solve and extract data using helper function
                     stats = solve_and_extract_data(
                         problem, solver, model, N, disc_method,
-                        tol, mu_strategy, print_level, max_iter, max_wall_time
+                        tol, mu_strategy, print_trace, max_iter, max_wall_time
                     )
                     
                     # Format and print the benchmark line
@@ -401,7 +437,6 @@ function benchmark_data(;
                         grid_size = N,
                         tol = tol,
                         mu_strategy = mu_strategy,
-                        print_level = print_level,
                         max_iter = max_iter,
                         max_wall_time = max_wall_time,
                         benchmark = stats.benchmark,
@@ -538,8 +573,7 @@ end
         disc_methods,
         tol,
         ipopt_mu_strategy,
-        ipopt_print_level,
-        madnlp_print_level,
+        print_trace,
         max_iter,
         max_wall_time,
         grid_size_max_cpu
@@ -569,8 +603,7 @@ df = DataFrame(data["results"])
 - `disc_methods`: Vector of discretization methods (Symbols)
 - `tol`: Solver tolerance (Float64)
 - `ipopt_mu_strategy`: Mu strategy for Ipopt (String)
-- `ipopt_print_level`: Print level for Ipopt (Int)
-- `madnlp_print_level`: Print level for MadNLP (MadNLP.LogLevels)
+- `print_trace`: Boolean - whether to print solver output (for debugging)
 - `max_iter`: Maximum number of iterations (Int)
 - `max_wall_time`: Maximum wall time in seconds (Float64)
 - `grid_size_max_cpu`: Maximum grid size for CPU models (Int)
@@ -579,7 +612,7 @@ df = DataFrame(data["results"])
 - The `outpath` of the saved JSON file.
 """
 function benchmark(;
-    outpath::AbstractString,
+    outpath::Union{AbstractString, Nothing},
     problems::Vector{Symbol},
     solver_models::Vector{Pair{Symbol, Vector{Symbol}}},
     grid_sizes::Vector{Int},
@@ -590,11 +623,7 @@ function benchmark(;
     max_iter::Int,
     max_wall_time::Float64
 )
-
-    # Set print levels based on print_trace flag
-    ipopt_print_level = print_trace ? 5 : 0
-    madnlp_print_level = print_trace ? MadNLP.TRACE : MadNLP.ERROR
-
+    
     # Detect CUDA availability (logging only; filtering handled in benchmark_data)
     if is_cuda_on()
         println("✓ CUDA functional, GPU benchmarks enabled")
@@ -611,25 +640,28 @@ function benchmark(;
         disc_methods=disc_methods,
         tol=tol,
         ipopt_mu_strategy=ipopt_mu_strategy,
-        ipopt_print_level=ipopt_print_level,
-        madnlp_print_level=madnlp_print_level,
+        print_trace=print_trace,
         max_iter=max_iter,
         max_wall_time=max_wall_time
     )
+
+    if !isnothing(outpath)
     
-    # Generate metadata
-    println("Generating metadata...")
-    meta = generate_metadata()
-    
-    # Build payload
-    println("Building payload...")
-    payload = build_payload(results, meta)
-    
-    # Save to JSON
-    println("Saving results to $outpath...")
-    copy_project_files(outpath)
-    JSON_path = joinpath(outpath, "data.json")
-    save_json(payload, JSON_path)
+        # Generate metadata
+        println("Generating metadata...")
+        meta = generate_metadata()
+        
+        # Build payload
+        println("Building payload...")
+        payload = build_payload(results, meta)
+        
+        # Save to JSON
+        println("Saving results to $outpath...")
+        copy_project_files(outpath)
+        JSON_path = joinpath(outpath, "data.json")
+        save_json(payload, JSON_path)
+
+    end
     
     return nothing
 end

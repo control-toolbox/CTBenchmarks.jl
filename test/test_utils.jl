@@ -6,8 +6,9 @@ function test_utils()
     # Test JuMP model
     println("Testing JuMP model...")
     stats_jump = CTBenchmarks.solve_and_extract_data(
-        :beam, :ipopt, :JuMP, 50, :trapeze, 1e-8, "adaptive", 0, 1000, 500.0
+        :beam, :ipopt, :JuMP, 50, :trapeze, 1e-8, "adaptive", false, 1000, 500.0
     )
+
     @test stats_jump isa NamedTuple
     @test haskey(stats_jump, :benchmark)
     @test haskey(stats_jump, :objective)
@@ -38,7 +39,7 @@ function test_utils()
     # Test adnlp model
     println("Testing adnlp model...")
     stats_adnlp = CTBenchmarks.solve_and_extract_data(
-        :beam, :ipopt, :adnlp, 50, :trapeze, 1e-8, "adaptive", 0, 1000, 500.0
+        :beam, :ipopt, :adnlp, 50, :trapeze, 1e-8, "adaptive", false, 1000, 500.0
     )
     @test stats_adnlp isa NamedTuple
     @test haskey(stats_adnlp, :status)
@@ -50,7 +51,7 @@ function test_utils()
     # Test exa model
     println("Testing exa model...")
     stats_exa = CTBenchmarks.solve_and_extract_data(
-        :beam, :ipopt, :exa, 50, :trapeze, 1e-8, "adaptive", 0, 1000, 500.0
+        :beam, :ipopt, :exa, 50, :trapeze, 1e-8, "adaptive", false, 1000, 500.0
     )
     @test stats_exa isa NamedTuple
     @test haskey(stats_exa, :status)
@@ -62,7 +63,7 @@ function test_utils()
     # Test with MadNLP (missing mu_strategy)
     println("Testing with MadNLP...")
     stats_madnlp = CTBenchmarks.solve_and_extract_data(
-        :beam, :madnlp, :JuMP, 50, :trapeze, 1e-8, missing, MadNLP.ERROR, 1000, 500.0
+        :beam, :madnlp, :JuMP, 50, :trapeze, 1e-8, missing, false, 1000, 500.0
     )
     @test stats_madnlp isa NamedTuple
     @test haskey(stats_madnlp, :status)
@@ -74,13 +75,13 @@ function test_utils()
     # Test assertion: exa_gpu requires madnlp
     println("Testing exa_gpu assertion...")
     @test_throws AssertionError CTBenchmarks.solve_and_extract_data(
-        :beam, :ipopt, :exa_gpu, 50, :trapeze, 1e-8, "adaptive", 0, 1000, 500.0
+        :beam, :ipopt, :exa_gpu, 50, :trapeze, 1e-8, "adaptive", false, 1000, 500.0
     )
 
     if CUDA.functional()
         println("Testing exa_gpu model with CUDA...")
         stats_exa_gpu = CTBenchmarks.solve_and_extract_data(
-            :beam, :madnlp, :exa_gpu, 20, :trapeze, 1e-8, missing, MadNLP.ERROR, 200, 120.0
+            :beam, :madnlp, :exa_gpu, 20, :trapeze, 1e-8, missing, false, 200, 120.0
         )
 
         @test stats_exa_gpu isa NamedTuple
@@ -121,8 +122,7 @@ function test_utils()
         disc_methods = [:trapeze],
         tol = 1e-8,
         ipopt_mu_strategy = "adaptive",
-        ipopt_print_level = 0,
-        madnlp_print_level = MadNLP.ERROR,
+        print_trace = false,
         max_iter = 1000,
         max_wall_time = 500.0
     )
@@ -135,7 +135,7 @@ function test_utils()
     
     # Check that all expected columns exist
     expected_columns = [:problem, :solver, :model, :disc_method, :grid_size, 
-                       :tol, :mu_strategy, :print_level, :benchmark, 
+                       :tol, :mu_strategy, :benchmark, 
                        :objective, :iterations, :status, :success]
     @test all(col in names(df) for col in string.(expected_columns))
     
@@ -182,8 +182,7 @@ function test_utils()
         disc_methods = [:trapeze],
         tol = 1e-8,
         ipopt_mu_strategy = "adaptive",
-        ipopt_print_level = 0,
-        madnlp_print_level = MadNLP.ERROR,
+        print_trace = false,
         max_iter = 1000,
         max_wall_time = 500.0
     )

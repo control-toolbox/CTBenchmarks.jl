@@ -50,8 +50,7 @@ end
 Build a formatted line summarizing benchmark statistics for `model`.
 Handles both CPU benchmarks (from @btimed) and GPU benchmarks (from CUDA.@timed).
 
-For CPU: displays time, allocations count, and memory
-For GPU: displays time, CPU allocations/memory, and GPU allocations/memory
+Displays: time, allocations/memory, objective, iterations, and success status
 """
 function format_benchmark_line(model::Symbol, stats::NamedTuple)
     model_str = rpad(string(model), 8)
@@ -72,41 +71,25 @@ function format_benchmark_line(model::Symbol, stats::NamedTuple)
     has_gpu_bytes = (isa(bench, Dict) && (haskey(bench, "gpu_bytes") || haskey(bench, :gpu_bytes))) || 
                     (!isa(bench, Dict) && haskey(bench, :gpu_bytes))
     
+    # Extract timing and memory info
+    time_val = getval(bench, :time)
+    time_str = rpad(prettytime(time_val), 10)  # Fixed width for time
+    
     if has_cpu_bytes && has_gpu_bytes
         # GPU benchmark format
-        time_val = getval(bench, :time)
-        time_str = prettytime(time_val)
-        
-        cpu_gcstats = getval(bench, :cpu_gcstats)
-        if isa(cpu_gcstats, Dict)
-            cpu_allocs = get(cpu_gcstats, "allocd", get(cpu_gcstats, :allocd, 0))
-        else
-            cpu_allocs = Base.gc_alloc_count(cpu_gcstats)
-        end
-        
         cpu_bytes = getval(bench, :cpu_bytes)
-        cpu_mem_str = Base.format_bytes(cpu_bytes)
-        
-        gpu_memstats = getval(bench, :gpu_memstats)
-        if isa(gpu_memstats, Dict)
-            gpu_allocs = get(gpu_memstats, "alloc_count", get(gpu_memstats, :alloc_count, 0))
-        else
-            gpu_allocs = gpu_memstats.alloc_count
-        end
-        
-        gpu_bytes = getval(bench, :gpu_bytes)
-        gpu_mem_str = Base.format_bytes(gpu_bytes)
-        
-        return "  $model_str: $time_str ($cpu_allocs CPU allocations: $cpu_mem_str) ($gpu_allocs GPU allocation$(gpu_allocs == 1 ? "" : "s"): $gpu_mem_str)"
+        cpu_mem_str = lpad(Base.format_bytes(cpu_bytes), 10)  # Right-aligned for memory
     else
         # CPU benchmark format (BenchmarkTools @btimed)
-        time_val = getval(bench, :time)
-        time_str = prettytime(time_val)
-        
         bytes_val = getval(bench, :bytes)
-        memory_str = prettymemory(bytes_val)
-        
-        alloc_val = getval(bench, :alloc)
-        return "  $model_str: $time_str ($alloc_val allocations: $memory_str)"
+        memory_str = lpad(prettymemory(bytes_val), 10)  # Right-aligned for memory
+        cpu_mem_str = memory_str
     end
+    
+    # Format solver statistics with fixed widths
+    obj_str = ismissing(stats.objective) ? rpad("N/A", 13) : rpad(@sprintf("%.6e", stats.objective), 13)
+    iter_str = ismissing(stats.iterations) ? rpad("N/A", 4) : rpad(string(stats.iterations), 4)
+    status_icon = stats.success ? "✓" : "✗"
+    
+    return "  $model_str: $time_str | memory: $cpu_mem_str | obj: $obj_str | iters: $iter_str | $status_icon"
 end

@@ -1,14 +1,3 @@
-if Base.find_package("Revise") !== nothing
-    try
-        @eval using Revise
-        println("🔁 Revise loaded successfully")
-    catch err
-        println("⚠️  Revise detected but could not be loaded: $(err)")
-    end
-else
-    println("ℹ️  Revise not installed; continuing without it")
-end
-
 using Pkg
 const project_dir = normpath(@__DIR__, "..")
 ENV["PROJECT"] = project_dir
@@ -30,18 +19,18 @@ function main()
         problems = [
             :beam,
             :chain,
-            :double_oscillator,
-            :ducted_fan,
-            :electric_vehicle,
-            :glider,
-            :insurance,
-            :jackson,
-            :robbins,
-            :robot,
-            :rocket,
-            :space_shuttle,
-            :steering,
-            :vanderpol,
+            # :double_oscillator,
+            # :ducted_fan,
+            # :electric_vehicle,
+            # :glider,
+            # :insurance,
+            # :jackson,
+            # :robbins,
+            # :robot,
+            # :rocket,
+            # :space_shuttle,
+            # :steering,
+            # :vanderpol,
         ],
         solver_models = [
             :ipopt => [:JuMP, :adnlp, :exa],
