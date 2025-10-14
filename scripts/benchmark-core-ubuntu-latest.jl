@@ -1,5 +1,3 @@
-using Revise
-
 using Pkg
 const project_dir = normpath(@__DIR__, "..")
 ENV["PROJECT"] = project_dir
