@@ -15,7 +15,7 @@ using BenchmarkTools
 jump_on = false
 adnlp_on = false
 exa_on = true
-exa_gpu_on = true
+exa_gpu_on = false
 
 cuda_active = CUDA.functional()
 
@@ -24,12 +24,13 @@ tol = 1e-6
 
 #solver = :ipopt
 solver = :madnlp
+print_on = true
 
 if solver == :ipopt
     mu_strategy = "adaptive"
-    print_level = 0 # 5
+    print_level = print_on ? 5 : 0
 elseif solver == :madnlp
-    print_level = MadNLP.ERROR # MadNLP.INFO
+    print_level = print_on ? MadNLP.INFO : MadNLP.ERROR
 else
     error("undefined solver: $solver")  
 end
@@ -45,26 +46,26 @@ end
 # Main loop
 
 for problem ∈ [:beam,
-               :chain,
-               :double_oscillator,
+               #:chain,
+               #:double_oscillator,
                ##:ducted_fan, # issue with JuMP + MadNLP
-               :electric_vehicle,
-               :glider,
-               :insurance,
-               :glider,
-               :jackson,
-               :robbins,
-               :robot,
-               :rocket,
-               :space_shuttle,
-               :steering,
-               :vanderpol,
+               #:electric_vehicle,
+               #:glider,
+               #:insurance,
+               #:glider,
+               #:jackson,
+               #:robbins,
+               #:robot,
+               #:rocket,
+               #:space_shuttle,
+               #:steering,
+               #:vanderpol,
                ]
 
     println("\n**** problem: $problem (solver: $solver, disc_method: $disc_method)")
     
-    for N ∈ [10000, 50000]
-    #for N ∈ [100]
+    #for N ∈ [10000, 50000]
+    for N ∈ [100]
     
         println("\nN      :   $N")
     
