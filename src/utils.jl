@@ -579,18 +579,22 @@ df = DataFrame(data["results"])
 - The `outpath` of the saved JSON file.
 """
 function benchmark(;
-    outpath,
-    problems,
-    solver_models,
-    grid_sizes,
-    disc_methods,
-    tol,
-    ipopt_mu_strategy,
-    ipopt_print_level,
-    madnlp_print_level,
-    max_iter,
-    max_wall_time
+    outpath::AbstractString,
+    problems::Vector{Symbol},
+    solver_models::Vector{Pair{Symbol, Vector{Symbol}}},
+    grid_sizes::Vector{Int},
+    disc_methods::Vector{Symbol},
+    tol::Float64,
+    ipopt_mu_strategy::String,
+    print_trace::Bool,
+    max_iter::Int,
+    max_wall_time::Float64
 )
+
+    # Set print levels based on print_trace flag
+    ipopt_print_level = print_trace ? 5 : 0
+    madnlp_print_level = print_trace ? MadNLP.TRACE : MadNLP.ERROR
+
     # Detect CUDA availability (logging only; filtering handled in benchmark_data)
     if is_cuda_on()
         println("✓ CUDA functional, GPU benchmarks enabled")

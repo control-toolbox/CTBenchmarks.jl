@@ -1,5 +1,3 @@
-using CUDA
-
 function test_utils()
     
     # ===== Test 1: solve_and_extract_data with different models =====

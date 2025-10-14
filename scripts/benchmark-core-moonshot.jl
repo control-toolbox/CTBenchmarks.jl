@@ -21,7 +21,6 @@ Pkg.instantiate()
 
 println("🔄 Loading CTBenchmarks package...")
 using CTBenchmarks
-using MadNLP
 
 println("⏱️  Ready to run core benchmark...")
 function main()
@@ -51,8 +50,7 @@ function main()
         disc_methods = [:trapeze],
         tol = 1e-6,
         ipopt_mu_strategy = "adaptive",
-        ipopt_print_level = 0,
-        madnlp_print_level = MadNLP.ERROR,
+        print_trace = false,
         max_iter = 1000,
         max_wall_time = 500.0
     )
