@@ -16,6 +16,7 @@ jobs:
     outputs:
       run_ubuntu: ${{ steps.check.outputs.run_ubuntu }}
       run_moonshot: ${{ steps.check.outputs.run_moonshot }}
+      run_mothra: ${{ steps.check.outputs.run_mothra }}
       benchmarks_summary: ${{ steps.check.outputs.benchmarks_summary }}
     steps:
       - name: Check which benchmarks should run
@@ -29,6 +30,7 @@ jobs:
           # Initialize outputs
           RUN_UBUNTU="false"
           RUN_MOONSHOT="false"
+          RUN_MOTHRA="false"
           BENCHMARKS_LIST=""
           
           if [[ "$EVENT_NAME" == "push" ]]; then
@@ -58,7 +60,8 @@ jobs:
               echo "✅ Found 'run bench core all' label"
               RUN_UBUNTU="true"
               RUN_MOONSHOT="true"
-              BENCHMARKS_LIST="ubuntu-latest, moonshot"
+              RUN_MOTHRA="true"
+              BENCHMARKS_LIST="ubuntu-latest, moonshot, mothra"
             else
               if echo "$LABELS" | grep -q "run bench core ubuntu"; then
                 echo "✅ Found 'run bench core ubuntu' label"
@@ -74,11 +77,20 @@ jobs:
                   BENCHMARKS_LIST="moonshot"
                 fi
               fi
+              if echo "$LABELS" | grep -q "run bench core mothra"; then
+                echo "✅ Found 'run bench core mothra' label"
+                RUN_MOTHRA="true"
+                if [ -n "$BENCHMARKS_LIST" ]; then
+                  BENCHMARKS_LIST="$BENCHMARKS_LIST, mothra"
+                else
+                  BENCHMARKS_LIST="mothra"
+                fi
+              fi
             fi
             
-            if [ "$RUN_UBUNTU" == "false" ] && [ "$RUN_MOONSHOT" == "false" ]; then
+            if [ "$RUN_UBUNTU" == "false" ] && [ "$RUN_MOONSHOT" == "false" ] && [ "$RUN_MOTHRA" == "false" ]; then
               echo "❌ No benchmark labels found"
-              echo "ℹ️  Expected labels: 'run bench core ubuntu', 'run bench core moonshot', or 'run bench core all'"
+              echo "ℹ️  Expected labels: 'run bench core ubuntu', 'run bench core moonshot', 'run bench core mothra', or 'run bench core all'"
               BENCHMARKS_LIST="none"
             fi
           else
@@ -88,6 +100,7 @@ jobs:
           # Set outputs
           echo "run_ubuntu=$RUN_UBUNTU" >> $GITHUB_OUTPUT
           echo "run_moonshot=$RUN_MOONSHOT" >> $GITHUB_OUTPUT
+          echo "run_mothra=$RUN_MOTHRA" >> $GITHUB_OUTPUT
           echo "benchmarks_summary=$BENCHMARKS_LIST" >> $GITHUB_OUTPUT
 
       - name: 📊 Guard decision summary
@@ -97,6 +110,7 @@ jobs:
           
           RUN_UBUNTU="${{ steps.check.outputs.run_ubuntu }}"
           RUN_MOONSHOT="${{ steps.check.outputs.run_moonshot }}"
+          RUN_MOTHRA="${{ steps.check.outputs.run_mothra }}"
           SUMMARY="${{ steps.check.outputs.benchmarks_summary }}"
           
           if [ "$RUN_UBUNTU" == "true" ]; then
@@ -105,12 +119,15 @@ jobs:
           if [ "$RUN_MOONSHOT" == "true" ]; then
             echo "  ✅ benchmark-core-moonshot"
           fi
-          if [ "$RUN_UBUNTU" != "true" ] && [ "$RUN_MOONSHOT" != "true" ]; then
+          if [ "$RUN_MOTHRA" == "true" ]; then
+            echo "  ✅ benchmark-core-mothra"
+          fi
+          if [ "$RUN_UBUNTU" != "true" ] && [ "$RUN_MOONSHOT" != "true" ] && [ "$RUN_MOTHRA" != "true" ]; then
             echo "  ⏭️  None (conditions not met)"
             echo ""
             echo "💡 To run benchmarks on PRs, ensure:"
             echo "   • PR targets 'main' branch"
-            echo "   • PR has one of: 'run bench core ubuntu', 'run bench core moonshot', or 'run bench core all'"
+            echo "   • PR has one of: 'run bench core ubuntu', 'run bench core moonshot', 'run bench core mothra', or 'run bench core all'"
           else
             echo ""
             echo "✅ Proceeding with: $SUMMARY"
@@ -126,15 +143,22 @@ jobs:
     if: needs.guard.outputs.run_moonshot == 'true'
     uses: ./.github/workflows/benchmark-core-moonshot.yml
 
+  benchmark-mothra:
+    needs: guard
+    if: needs.guard.outputs.run_mothra == 'true'
+    uses: ./.github/workflows/benchmark-core-mothra.yml
+
   docs:
-    needs: [guard, benchmark-ubuntu, benchmark-moonshot]
+    needs: [guard, benchmark-ubuntu, benchmark-moonshot, benchmark-mothra]
     if: |
       always() &&
       (needs.guard.result == 'success') &&
       (needs.benchmark-ubuntu.result != 'cancelled') &&
       (needs.benchmark-moonshot.result != 'cancelled') &&
+      (needs.benchmark-mothra.result != 'cancelled') &&
       (needs.benchmark-ubuntu.result != 'failure') &&
-      (needs.benchmark-moonshot.result != 'failure')
+      (needs.benchmark-moonshot.result != 'failure') &&
+      (needs.benchmark-mothra.result != 'failure')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout with latest changes
@@ -165,7 +189,7 @@ jobs:
           julia --project=docs/ -e 'ENV["GKSwstype"]="nul"; include("docs/make.jl")'
 
   notify-failure:
-    needs: [guard, benchmark-ubuntu, benchmark-moonshot, docs]
+    needs: [guard, benchmark-ubuntu, benchmark-moonshot, benchmark-mothra, docs]
     if: failure()
     runs-on: ubuntu-latest
     steps:
@@ -186,6 +210,10 @@ jobs:
             if (needs['benchmark-moonshot'] && needs['benchmark-moonshot'].result === 'failure') {
               console.log('❌ Benchmark Moonshot job failed');
               failedJobs.push('Benchmark Moonshot');
+            }
+            if (needs['benchmark-mothra'] && needs['benchmark-mothra'].result === 'failure') {
+              console.log('❌ Benchmark Mothra job failed');
+              failedJobs.push('Benchmark Mothra');
             }
             if (needs.docs.result === 'failure') {
               console.log('❌ Documentation job failed');
@@ -227,15 +255,17 @@ jobs:
             console.log('✅ Failure notification posted successfully');
 
   notify-success:
-    needs: [guard, benchmark-ubuntu, benchmark-moonshot, docs]
+    needs: [guard, benchmark-ubuntu, benchmark-moonshot, benchmark-mothra, docs]
     if: |
       always() &&
       (needs.guard.result == 'success') &&
       (needs.docs.result == 'success') &&
       (needs.benchmark-ubuntu.result != 'cancelled') &&
       (needs.benchmark-moonshot.result != 'cancelled') &&
+      (needs.benchmark-mothra.result != 'cancelled') &&
       (needs.benchmark-ubuntu.result != 'failure') &&
-      (needs.benchmark-moonshot.result != 'failure')
+      (needs.benchmark-moonshot.result != 'failure') &&
+      (needs.benchmark-mothra.result != 'failure')
     runs-on: ubuntu-latest
     steps:
       - name: Comment on PR with success notification
@@ -315,7 +345,7 @@ jobs:
             console.log('✅ Success notification posted successfully');
 
   workflow-summary:
-    needs: [guard, benchmark-ubuntu, benchmark-moonshot, docs]
+    needs: [guard, benchmark-ubuntu, benchmark-moonshot, benchmark-mothra, docs]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -345,6 +375,14 @@ jobs:
             echo "📊 Benchmark Moonshot: ⏭️  SKIPPED"
           fi
           
+          if [ "${{ needs.benchmark-mothra.result }}" == "success" ]; then
+            echo "📊 Benchmark Mothra: ✅ SUCCESS"
+          elif [ "${{ needs.benchmark-mothra.result }}" == "failure" ]; then
+            echo "📊 Benchmark Mothra: ❌ FAILED"
+          elif [ "${{ needs.benchmark-mothra.result }}" == "skipped" ]; then
+            echo "📊 Benchmark Mothra: ⏭️  SKIPPED"
+          fi
+          
           if [ "${{ needs.docs.result }}" == "success" ]; then
             echo "📚 Documentation: ✅ SUCCESS"
             echo "   └─ Docs updated successfully"
@@ -360,7 +398,7 @@ jobs:
           echo ""
           
           overall_status="✅ SUCCESS"
-          if [ "${{ needs.benchmark-ubuntu.result }}" == "failure" ] || [ "${{ needs.benchmark-moonshot.result }}" == "failure" ] || [ "${{ needs.docs.result }}" == "failure" ]; then
+          if [ "${{ needs.benchmark-ubuntu.result }}" == "failure" ] || [ "${{ needs.benchmark-moonshot.result }}" == "failure" ] || [ "${{ needs.benchmark-mothra.result }}" == "failure" ] || [ "${{ needs.docs.result }}" == "failure" ]; then
             overall_status="❌ FAILED"
           fi
           

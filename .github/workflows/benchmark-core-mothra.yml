@@ -1,0 +1,18 @@
+name: Benchmark Core (Mothra)
+
+on:
+  workflow_call:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bench:
+    uses: ./.github/workflows/benchmark-reusable.yml
+    with:
+      script_path: scripts/benchmark-core-mothra.jl
+      julia_version: '1.11'
+      julia_arch: x64
+      runs_on: '["self-hosted", "Linux", "gpu", "cuda", "cuda13"]'
+      runner: 'self-hosted'
