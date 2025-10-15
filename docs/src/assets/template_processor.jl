@@ -3,7 +3,7 @@ Template processor for benchmark documentation.
 
 This module provides functions to process template files that include environment
 information blocks. It replaces `<!-- INCLUDE_ENVIRONMENT: ... -->` blocks with
-the content from `environment.template`, substituting the specified variables.
+the content from `environment.md.template`, substituting the specified variables.
 """
 
 """
@@ -12,7 +12,7 @@ the content from `environment.template`, substituting the specified variables.
 Read the environment template file from the assets directory.
 
 # Arguments
-- `assets_dir`: Path to the assets directory containing `environment.template`
+- `assets_dir`: Path to the assets directory containing `environment.md.template`
 
 # Returns
 - String containing the template content
@@ -21,7 +21,7 @@ Read the environment template file from the assets directory.
 - `SystemError` if the template file doesn't exist
 """
 function read_environment_template(assets_dir::String)
-    template_path = joinpath(assets_dir, "environment.template")
+    template_path = joinpath(assets_dir, "environment.md.template")
     if !isfile(template_path)
         error("Environment template not found at: $template_path")
     end
@@ -204,15 +204,15 @@ end
 Process multiple template files, replacing INCLUDE_ENVIRONMENT blocks with the environment template.
 
 # Arguments
-- `template_files`: List of template file names (without extension) to process
+- `template_files`: List of template file names (e.g., ["benchmark-core.md"]) to process
 - `src_dir`: Source directory containing the template files
-- `assets_dir`: Assets directory containing `environment.template`
+- `assets_dir`: Assets directory containing `environment.md.template`
 
 # Details
 For each file in `template_files`:
-1. Reads `<src_dir>/<filename>.template`
+1. Reads `<src_dir>/<filename>.template` (e.g., `benchmark-core.md.template`)
 2. Replaces all `<!-- INCLUDE_ENVIRONMENT: ... -->` blocks
-3. Writes the result to `<src_dir>/<filename>.md`
+3. Writes the result to `<src_dir>/<filename>` (e.g., `benchmark-core.md`)
 
 # Example
 ```julia
@@ -264,7 +264,7 @@ function process_templates(template_files::Vector{String}, src_dir::String, asse
         @info "─"^70
         
         input_path = joinpath(src_dir, filename * ".template")
-        output_path = joinpath(src_dir, filename * ".md")
+        output_path = joinpath(src_dir, filename)
         
         try
             process_single_template(input_path, output_path, env_template)
@@ -280,4 +280,71 @@ function process_templates(template_files::Vector{String}, src_dir::String, asse
     @info "✅ Successfully processed $(length(template_files)) template file(s)"
     @info "═"^70
     @info "" # Empty line for readability
+end
+
+"""
+    with_processed_templates(f::Function, template_files::Vector{String}, src_dir::String, assets_dir::String)
+
+Process template files, execute the provided function, and clean up generated files.
+
+This function ensures that generated .md files are always removed after use, even if an error occurs
+during the execution of `f`. This is useful for documentation generation where temporary files
+should not persist.
+
+# Arguments
+- `f`: Function to execute after templates are processed (typically `makedocs`)
+- `template_files`: List of template file names (e.g., ["benchmark-core.md"]) to process
+- `src_dir`: Source directory containing the template files
+- `assets_dir`: Assets directory containing `environment.md.template`
+
+# Returns
+- The return value of `f()`
+
+# Example
+```julia
+with_processed_templates(
+    ["benchmark-core.md"],
+    joinpath(@__DIR__, "src"),
+    joinpath(@__DIR__, "src", "assets")
+) do
+    makedocs(;
+        sitename="MyDocs",
+        pages=["Introduction" => "index.md", "Benchmark" => "benchmark-core.md"]
+    )
+end
+```
+
+# Details
+The function follows this workflow:
+1. Process all template files (`.template` → `.md`)
+2. Execute the user function `f`
+3. Clean up all generated `.md` files in a `finally` block (guaranteed cleanup)
+
+This pattern is inspired by `with_problems_browser` from OptimalControlProblems.jl.
+"""
+function with_processed_templates(f::Function, template_files::Vector{String}, src_dir::String, assets_dir::String)
+    # Process templates to generate .md files
+    process_templates(template_files, src_dir, assets_dir)
+    
+    try
+        # Execute the user function (typically makedocs)
+        return f()
+    finally
+        # Clean up generated .md files (guaranteed to run even on error)
+        @info "" # Empty line for readability
+        @info "🧹 Cleaning up generated template files..."
+        
+        for filename in template_files
+            output_file = joinpath(src_dir, filename)
+            if isfile(output_file)
+                rm(output_file)
+                @info "  ✓ Removed: $(basename(output_file))"
+            else
+                @warn "  ⚠ File not found (already removed?): $(basename(output_file))"
+            end
+        end
+        
+        @info "✅ Cleanup completed"
+        @info "" # Empty line for readability
+    end
 end
