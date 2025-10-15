@@ -35,12 +35,9 @@ jobs:
           BENCHMARKS_LIST=""
           
           if [[ "$EVENT_NAME" == "push" ]]; then
-            # For push events to main, run all benchmarks
+            # For push events to main, run no benchmarks
             echo "🚀 Push event to main branch detected"
-            echo "✅ Running all benchmarks"
-            RUN_UBUNTU="true"
-            RUN_MOONSHOT="true"
-            BENCHMARKS_LIST="ubuntu-latest, moonshot"
+            echo "✅ Running no benchmarks"
           elif [[ "$EVENT_NAME" == "pull_request" ]]; then
             # For PR events, check base branch and labels
             LABELS="${{ join(github.event.pull_request.labels.*.name, ' ') }}"
