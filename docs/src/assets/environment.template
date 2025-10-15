@@ -1,0 +1,49 @@
+<!-- 
+INPUTS:
+    BENCH_DATA: The benchmark data
+    BENCH_DIR: The benchmark directory
+    ENV_NAME: The environment name
+-->
+```@example ENV_NAME
+_basic_metadata(BENCH_DATA) # hide
+```
+
+```@example ENV_NAME
+_downloads_toml(BENCH_DIR) # hide
+```
+
+```@raw html
+<details style="margin-bottom: 0.5em; margin-top: 0.5em;"><summary>ℹ️ Version info</summary>
+```
+
+```@example ENV_NAME
+_bench_data(BENCH_DATA) # hide
+```
+
+```@raw html
+</details>
+```
+
+```@raw html
+<details style="margin-bottom: 0.5em;"><summary>📦 Package status</summary>
+```
+
+```@example ENV_NAME
+_package_status(BENCH_DATA) # hide
+```
+
+```@raw html
+</details>
+```
+
+```@raw html
+<details style="margin-bottom: 0.5em;"><summary>📚 Complete manifest</summary>
+```
+
+```@example ENV_NAME
+_complete_manifest(BENCH_DATA) # hide
+```
+
+```@raw html
+</details>
+```

@@ -20,7 +20,7 @@ function prettytime(t)
     elseif t_abs < 1
         value, units = t * 1e3, "ms"
     else
-        value, units = t, "s"
+        value, units = t, "s "
     end
     return string(@sprintf("%.3f", value), " ", units)
 end
@@ -80,7 +80,7 @@ function format_benchmark_line(model::Symbol, stats::NamedTuple)
     
     # Extract timing and memory info
     time_val = getval(bench, :time)
-    time_str = rpad(prettytime(time_val), 10)  # Fixed width for time
+    time_str = lpad(prettytime(time_val), 10)  # Fixed width for time, right-aligned
     
     # Build memory string with CPU/GPU labels
     if has_cpu_bytes && has_gpu_bytes

@@ -11,6 +11,14 @@ for filename in ("Manifest.toml", "Project.toml")
     )
 end
 
+# Process template files before building documentation
+include(joinpath(@__DIR__, "src", "assets", "template_processor.jl"))
+process_templates(
+    ["benchmark-core"],  # List of template files to process
+    joinpath(@__DIR__, "src"),
+    joinpath(@__DIR__, "src", "assets")
+)
+
 repo_url = "github.com/control-toolbox/CTBenchmarks.jl"
 
 # Configure and build the documentation set
