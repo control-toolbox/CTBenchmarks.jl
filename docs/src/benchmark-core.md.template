@@ -26,6 +26,9 @@ This benchmark suite evaluates 14 optimal control problems on a standard CPU pla
 
 This configuration focuses on CPU-based solvers and provides a comprehensive comparison across different modelling frameworks.
 
+!!! note
+    The linear solver is MUMPS for all experiments.
+
 ### 🖥️ Environment
 
 <!-- INCLUDE_ENVIRONMENT:
@@ -55,6 +58,9 @@ This benchmark suite evaluates 14 optimal control problems on GPU-accelerated ha
 - **Limits:** 1000 iterations max, 1000s wall time
 
 This configuration demonstrates GPU acceleration capabilities with ExaModels on large-scale problems, comparing CPU vs GPU performance for the same modelling framework.
+
+!!! note
+    The linear solver is MUMPS for all experiments.
 
 ### 🚀 Environment
 

@@ -94,7 +94,10 @@ function _print_results(bench_data)
             problems = unique(df.problem)
             
             for problem in problems
-                println("\n┌─ problem: $problem")
+                # H2 level: Problem name in deep blue
+                print("\n┌─ ")
+                printstyled("Problem: $problem", color=:blue, bold=true)
+                println()
                 println("│")
                 
                 # Get all rows for this problem
@@ -106,7 +109,12 @@ function _print_results(bench_data)
                 for (idx, (solver, disc_method)) in enumerate(solver_disc_combos)
                     is_last = (idx == length(solver_disc_combos))
                     
-                    println("├──┬ solver: $solver, disc_method: $disc_method")
+                    # H3 level: Solver in cyan, disc_method in yellow
+                    print("├──┬ ")
+                    printstyled("Solver: $solver", color=:cyan, bold=true)
+                    print(", ")
+                    printstyled("Discretization: $disc_method", color=:yellow, bold=true)
+                    println()
                     println("│  │")
                     
                     # Filter for this solver/disc_method combination
@@ -116,7 +124,10 @@ function _print_results(bench_data)
                     grid_sizes = unique(combo_df.grid_size)
                     
                     for (grid_idx, N) in enumerate(grid_sizes)
-                        println("│  │  N : $N")
+                        # H4 level: Grid size in yellow
+                        print("│  │  ")
+                        printstyled("N = $N", color=:yellow, bold=true)
+                        println()
                         
                         # Filter for this grid size
                         grid_df = filter(row -> row.grid_size == N, combo_df)
@@ -131,7 +142,8 @@ function _print_results(bench_data)
                                 status = row.status,
                                 success = row.success
                             )
-                            println("│  │", CTBenchmarks.format_benchmark_line(Symbol(row.model), stats))
+                            print("│  │")
+                            CTBenchmarks.print_benchmark_line(Symbol(row.model), stats)
                         end
                         
                         # Add spacing between grid sizes
