@@ -1,0 +1,298 @@
+name: Benchmark Reusable
+
+on:
+  workflow_call:
+    inputs:
+      script_path:
+        description: "Julia script to run benchmark"
+        required: true
+        type: string
+      julia_version:
+        description: "Julia version to install"
+        required: true
+        type: string
+      julia_arch:
+        description: "Julia architecture (e.g., x64, aarch64)"
+        required: true
+        type: string
+      runs_on:
+        description: "GitHub runner labels (e.g., ubuntu-latest or JSON array for self-hosted)"
+        required: true
+        type: string
+      runner:
+        description: "Runner identifier forwarded to benchmark script"
+        required: false
+        default: 'standard'
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  run:
+    runs-on: ${{ fromJSON(inputs.runs_on) }}
+    timeout-minutes: 180
+    env:
+      SCRIPT_PATH: ${{ inputs.script_path }}
+
+    steps:
+      # ---------------------------
+      # Checkout Repository
+      # ---------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: 📋 Repository checkout status
+        run: |
+          echo "✅ Repository checked out successfully"
+          echo "📁 Current directory: $(pwd)"
+          echo "📊 Total files: $(find . -type f | wc -l)"
+
+      - name: 📄 Prepare benchmark output filename
+        run: |
+          OUTPUT_FILE="benchmark_output_path_$(date +%s)_$RANDOM.txt"
+          echo "BENCHMARK_OUTPUT_FILE=$OUTPUT_FILE" >> $GITHUB_ENV
+          echo "📄 Benchmark output file will be stored in: $OUTPUT_FILE"
+
+      # ---------------------------
+      # Setup Julia Environment
+      # ---------------------------
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: ${{ inputs.julia_version }}
+          arch: ${{ inputs.julia_arch }}
+
+      - name: 🔋 Julia setup status
+        run: |
+          echo "✅ Julia $(julia --version | cut -d' ' -f3) installed successfully"
+          echo "📍 Julia location: $(which julia)"
+
+      # Cache strategy: julia-actions/cache for standard runners, actions/cache for self-hosted
+      - name: Cache Julia packages (standard runners)
+        if: inputs.runner != 'moonshot'
+        uses: julia-actions/cache@v2
+
+      - name: Cache Julia artifacts (self-hosted runners)
+        if: inputs.runner == 'moonshot'
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-artifacts
+        with:
+          path: ~/.julia/artifacts
+          key: ${{ runner.os }}-benchmark-${{ env.cache-name }}-${{ hashFiles('**/Project.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-benchmark-${{ env.cache-name }}-
+            ${{ runner.os }}-benchmark-
+            ${{ runner.os }}-
+
+      - name: 💾 Julia cache status
+        run: |
+          if [ "${{ inputs.runner }}" = "moonshot" ]; then
+            echo "✅ Julia artifacts cache configured (self-hosted strategy)"
+          else
+            echo "✅ Julia package cache configured (standard strategy)"
+          fi
+
+      - uses: julia-actions/julia-buildpkg@v1
+        with:
+          ignore-no-cache: true
+
+      - name: 🔨 Package build status
+        run: |
+          echo "✅ Julia package built successfully"
+          echo "📦 CTBenchmarks package ready for use"
+
+      # ---------------------------
+      # Run Benchmark Script
+      # ---------------------------
+      - name: Run benchmark script
+        id: benchmark
+        env:
+          SCRIPT_PATH: ${{ env.SCRIPT_PATH }}
+        run: |
+          echo "🚀 Starting benchmark execution..."
+          
+          julia --color=yes -e '
+            using Pkg
+            Pkg.add("JSON")
+            using JSON
+            include(ENV["SCRIPT_PATH"])
+            out = main()
+            println("📄 Output file: ", out)
+            open(ENV["BENCHMARK_OUTPUT_FILE"], "w") do f
+              write(f, string(out))
+            end
+            println("💾 Output path saved to ", ENV["BENCHMARK_OUTPUT_FILE"])
+          '
+          
+          echo "✅ Benchmark execution completed"
+          echo "benchmark_success=true" >> $GITHUB_OUTPUT
+
+      - name: 📋 Copy benchmark script to output directory
+        if: steps.benchmark.outputs.benchmark_success == 'true'
+        run: |
+          echo "📋 Copying benchmark script to output directory..."
+          
+          if [ -f "$BENCHMARK_OUTPUT_FILE" ]; then
+            OUTPUT_DIR=$(cat "$BENCHMARK_OUTPUT_FILE")
+            echo "📁 Output directory: $OUTPUT_DIR"
+            
+            # Extract the directory name (e.g., benchmark-core-moonshot)
+            DIR_NAME=$(basename "$OUTPUT_DIR")
+            SCRIPT_DEST="$OUTPUT_DIR/$DIR_NAME.jl"
+            
+            echo "📄 Source script: $SCRIPT_PATH"
+            echo "📄 Destination: $SCRIPT_DEST"
+            
+            cp "$SCRIPT_PATH" "$SCRIPT_DEST"
+            echo "✅ Benchmark script copied successfully to $SCRIPT_DEST"
+          else
+            echo "❌ ERROR: $BENCHMARK_OUTPUT_FILE not found"
+            exit 1
+          fi
+
+      - name: 📊 Benchmark results validation
+        if: steps.benchmark.outputs.benchmark_success == 'true'
+        run: |
+          echo "🔍 Validating benchmark results..."
+          
+          if [ -f "$BENCHMARK_OUTPUT_FILE" ]; then
+            OUTPUT_DIR=$(cat "$BENCHMARK_OUTPUT_FILE")
+            echo "✅ Benchmark output directory found: $OUTPUT_DIR"
+            
+            DATA_JSON_PATH="$OUTPUT_DIR/data.json"
+            echo "📄 Resolved JSON path: $DATA_JSON_PATH"
+            
+            if [ -f "$DATA_JSON_PATH" ]; then
+              FILE_SIZE=$(stat -f%z "$DATA_JSON_PATH" 2>/dev/null || stat -c%s "$DATA_JSON_PATH" 2>/dev/null || echo "unknown")
+              LINE_COUNT=$(wc -l < "$DATA_JSON_PATH")
+              echo "✅ Benchmark JSON file created successfully"
+              echo "📏 File size: $FILE_SIZE bytes"
+              echo "📏 File lines: $LINE_COUNT"
+              echo "📍 File location: $DATA_JSON_PATH"
+
+              for filename in Project.toml Manifest.toml; do
+                FILE_PATH="$OUTPUT_DIR/$filename"
+                if [ -f "$FILE_PATH" ]; then
+                  echo "✅ Found $filename alongside benchmark output"
+                else
+                  echo "❌ ERROR: $filename not found in $OUTPUT_DIR"
+                  exit 1
+                fi
+              done
+              
+              # Validate benchmark script
+              DIR_NAME=$(basename "$OUTPUT_DIR")
+              SCRIPT_FILE="$OUTPUT_DIR/$DIR_NAME.jl"
+              if [ -f "$SCRIPT_FILE" ]; then
+                echo "✅ Found benchmark script: $DIR_NAME.jl"
+              else
+                echo "❌ ERROR: Benchmark script not found at $SCRIPT_FILE"
+                exit 1
+              fi
+            else
+              echo "❌ ERROR: Benchmark JSON file not found at $DATA_JSON_PATH"
+              exit 1
+            fi
+          else
+            echo "❌ ERROR: $BENCHMARK_OUTPUT_FILE not found"
+            exit 1
+          fi
+
+      - name: Commit benchmark results to current branch
+        if: steps.benchmark.outputs.benchmark_success == 'true'
+        run: |
+          echo "🔧 Configuring git user..."
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          echo "✅ Git user configured"
+
+          echo "🌳 Checking current git state..."
+          echo "Current HEAD: $(git rev-parse --short HEAD)"
+          echo "Current branch: $(git branch --show-current || echo 'DETACHED HEAD')"
+          
+          if [ -n "${{ github.head_ref }}" ]; then
+            BRANCH_NAME="${{ github.head_ref }}"
+            echo "🔄 This is a PR, switching to branch: $BRANCH_NAME"
+            git checkout -B "$BRANCH_NAME"
+            echo "✅ Now on branch: $(git branch --show-current)"
+          else
+            BRANCH_NAME="${{ github.ref_name }}"
+            echo "🔄 This is a push, switching to branch: $BRANCH_NAME"
+            git checkout -B "$BRANCH_NAME"
+            echo "✅ Now on branch: $(git branch --show-current)"
+          fi
+
+          echo "📊 Adding benchmark results to current branch..."
+          
+          if [ -f "$BENCHMARK_OUTPUT_FILE" ]; then
+            OUTPUT_DIR=$(cat "$BENCHMARK_OUTPUT_FILE")
+            echo "📁 Using benchmark output directory: $OUTPUT_DIR"
+          else
+            echo "❌ ERROR: $BENCHMARK_OUTPUT_FILE not found"
+            exit 1
+          fi
+
+          # Get directory name for script filename
+          DIR_NAME=$(basename "$OUTPUT_DIR")
+          
+          ARTIFACTS=(
+            "$OUTPUT_DIR/data.json"
+            "$OUTPUT_DIR/Project.toml"
+            "$OUTPUT_DIR/Manifest.toml"
+            "$OUTPUT_DIR/$DIR_NAME.jl"
+          )
+
+          git add "${ARTIFACTS[@]}"
+
+          STAGED_ALL=true
+          for artifact in "${ARTIFACTS[@]}"; do
+            if git diff --cached --name-only | grep -q "$artifact"; then
+              echo "✅ $artifact staged for commit"
+            else
+              echo "⚠️  $artifact not staged (possibly no changes)"
+              STAGED_ALL=false
+            fi
+          done
+
+          if [ "$STAGED_ALL" = true ]; then
+            echo "📋 Files to be committed:"
+            git diff --cached --name-status
+          fi
+
+          if ! git diff --cached --quiet; then
+            echo "📝 Committing benchmark results to current branch..."
+            git commit -m "📊 Add benchmark results" -m "Generated by reusable benchmark workflow" -m "Results saved to ${OUTPUT_DIR}/data.json" -m "Includes environment TOMLs and benchmark script"
+            echo "✅ Benchmark results committed successfully"
+            
+            echo "🔄 Fetching remote branch state before overwrite..."
+            git fetch origin "$BRANCH_NAME" || echo "⚠️  Remote branch does not exist yet, will create it"
+
+            echo "🚀 Force-pushing benchmark results to branch: $BRANCH_NAME"
+            git push --force-with-lease origin "$BRANCH_NAME"
+            echo "✅ Benchmark results force-pushed to $BRANCH_NAME"
+          else
+            echo "ℹ️  No changes detected in benchmark results"
+            echo "📊 Current results are identical to previous run"
+          fi
+
+      - name: 📃 Benchmark workflow summary
+        if: steps.benchmark.outputs.benchmark_success == 'true'
+        run: |
+          if [ -f "$BENCHMARK_OUTPUT_FILE" ]; then
+            OUTPUT_DIR=$(cat "$BENCHMARK_OUTPUT_FILE")
+            echo "📁 Using benchmark output directory: $OUTPUT_DIR"
+          else
+            echo "❌ ERROR: $BENCHMARK_OUTPUT_FILE not found"
+            exit 1
+          fi
+
+          echo "📊 Benchmark workflow summary:"
+          echo "✅ Benchmark execution: SUCCESS"
+          echo "📁 Results saved to: $OUTPUT_DIR/data.json"
+          echo "🌳 Results committed to: ${{ github.head_ref || github.ref_name }} branch"
+          echo "📘 Ready for documentation generation"
+          echo "🎉 Reusable benchmark workflow completed successfully!"

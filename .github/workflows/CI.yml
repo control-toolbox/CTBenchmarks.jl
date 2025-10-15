@@ -7,7 +7,46 @@ on:
     tags: '*'
   pull_request:
 jobs:
-  call:
+  guard:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+    steps:
+      - name: Check if CI should run
+        id: check
+        shell: bash
+        run: |
+          echo "🛡️  Guard job: checking CI conditions..."
+
+          EVENT_NAME="${{ github.event_name }}"
+          echo "📋 Event type: $EVENT_NAME"
+
+          if [[ "$EVENT_NAME" == "push" ]]; then
+            echo "🚀 Push event detected - CI will run"
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          elif [[ "$EVENT_NAME" == "pull_request" ]]; then
+            LABELS="${{ join(github.event.pull_request.labels.*.name, ' ') }}"
+            echo "🏷️  PR labels: $LABELS"
+
+            if echo "$LABELS" | grep -Fq "run CI"; then
+              echo "✅ Found 'run CI' label"
+              echo "should_run=true" >> $GITHUB_OUTPUT
+            else
+              echo "❌ 'run CI' label not found - skipping CI jobs"
+              echo "should_run=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "❌ Unsupported event type for this workflow"
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Guard decision summary
+        run: |
+          echo "🛡️  Guard summary: should_run=${{ steps.check.outputs.should_run }}"
+
+  cpu-tests:
+    needs: guard
+    if: needs.guard.outputs.should_run == 'true'
     strategy:
       matrix:
         version:
@@ -22,3 +61,32 @@ jobs:
       version: ${{ matrix.version }}
       os: ${{ matrix.os }}
       arch: ${{ matrix.arch }}
+
+  moonshot:
+    needs: guard
+    if: needs.guard.outputs.should_run == 'true'
+    runs-on: [self-hosted, Linux, gpu, cuda]
+    strategy:
+      matrix:
+        os: [ubuntu-24.04]
+        julia-version: ['1.11']
+        julia-arch: [x64]
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: ${{ matrix.julia-version }}
+          arch: ${{ matrix.julia-arch }}
+      - uses: actions/cache@v4
+        env:
+          cache-name: cache-artifacts
+        with:
+          path: ~/.julia/artifacts
+          key: ${{ runner.os }}-test-${{ env.cache-name }}-${{ hashFiles('**/Project.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-test-${{ env.cache-name }}-
+            ${{ runner.os }}-test-
+            ${{ runner.os }}-
+      - uses: julia-actions/julia-buildpkg@v1
+      - uses: julia-actions/julia-runtest@v1
