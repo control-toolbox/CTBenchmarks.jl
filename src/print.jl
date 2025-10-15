@@ -56,6 +56,13 @@ function format_benchmark_line(model::Symbol, stats::NamedTuple)
     model_str = rpad(string(model), 8)
     bench = stats.benchmark
     
+    # Handle error cases where benchmark is missing or nothing
+    if ismissing(bench) || isnothing(bench)
+        status_icon = stats.success ? "✓" : "✗"
+        error_msg = haskey(stats, :status) ? stats.status : "ERROR"
+        return "  $status_icon | $model_str: $error_msg"
+    end
+    
     # Helper function to get value from either Dict or NamedTuple
     function getval(obj, key::Symbol)
         if isa(obj, Dict)
