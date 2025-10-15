@@ -234,7 +234,14 @@ jobs:
 
   notify-success:
     needs: [guard, benchmark-ubuntu, benchmark-moonshot, docs]
-    if: success()
+    if: |
+      always() &&
+      (needs.guard.result == 'success') &&
+      (needs.docs.result == 'success') &&
+      (needs.benchmark-ubuntu.result != 'cancelled') &&
+      (needs.benchmark-moonshot.result != 'cancelled') &&
+      (needs.benchmark-ubuntu.result != 'failure') &&
+      (needs.benchmark-moonshot.result != 'failure')
     runs-on: ubuntu-latest
     steps:
       - name: Comment on PR with success notification
