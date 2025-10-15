@@ -10,43 +10,63 @@ jobs:
   guard:
     runs-on: ubuntu-latest
     outputs:
-      should_run: ${{ steps.check.outputs.should_run }}
+      should_run_cpu: ${{ steps.check.outputs.should_run_cpu }}
+      should_run_gpu: ${{ steps.check.outputs.should_run_gpu }}
     steps:
       - name: Check if CI should run
         id: check
         shell: bash
         run: |
           echo "🛡️  Guard job: checking CI conditions..."
-
+          
           EVENT_NAME="${{ github.event_name }}"
           echo "📋 Event type: $EVENT_NAME"
-
+          
           if [[ "$EVENT_NAME" == "push" ]]; then
-            echo "🚀 Push event detected - CI will run"
-            echo "should_run=true" >> $GITHUB_OUTPUT
+            echo "🚀 Push event detected - running CPU CI only"
+            echo "should_run_cpu=true" >> $GITHUB_OUTPUT
+            echo "should_run_gpu=false" >> $GITHUB_OUTPUT
           elif [[ "$EVENT_NAME" == "pull_request" ]]; then
             LABELS="${{ join(github.event.pull_request.labels.*.name, ' ') }}"
             echo "🏷️  PR labels: $LABELS"
-
-            if echo "$LABELS" | grep -Fq "run CI"; then
-              echo "✅ Found 'run CI' label"
-              echo "should_run=true" >> $GITHUB_OUTPUT
+            
+            # Initialize outputs
+            RUN_CPU="false"
+            RUN_GPU="false"
+            
+            # Check for specific labels
+            if echo "$LABELS" | grep -Fq "run CI cpu / gpu"; then
+              echo "✅ Found 'run CI cpu / gpu' label"
+              RUN_CPU="true"
+              RUN_GPU="true"
             else
-              echo "❌ 'run CI' label not found - skipping CI jobs"
-              echo "should_run=false" >> $GITHUB_OUTPUT
+              if echo "$LABELS" | grep -Fq "run CI cpu"; then
+                echo "✅ Found 'run CI cpu' label"
+                RUN_CPU="true"
+              fi
+              if echo "$LABELS" | grep -Fq "run CI gpu"; then
+                echo "✅ Found 'run CI gpu' label"
+                RUN_GPU="true"
+              fi
             fi
+            
+            echo "should_run_cpu=$RUN_CPU" >> $GITHUB_OUTPUT
+            echo "should_run_gpu=$RUN_GPU" >> $GITHUB_OUTPUT
           else
-            echo "❌ Unsupported event type for this workflow"
-            echo "should_run=false" >> $GITHUB_OUTPUT
+            echo "❌ Unsupported event type"
+            echo "should_run_cpu=false" >> $GITHUB_OUTPUT
+            echo "should_run_gpu=false" >> $GITHUB_OUTPUT
           fi
-
+          
       - name: Guard decision summary
         run: |
-          echo "🛡️  Guard summary: should_run=${{ steps.check.outputs.should_run }}"
+          echo "🛡️  Guard summary:"
+          echo "CPU CI: ${{ steps.check.outputs.should_run_cpu }}"
+          echo "GPU CI: ${{ steps.check.outputs.should_run_gpu }}"
 
   cpu-tests:
     needs: guard
-    if: needs.guard.outputs.should_run == 'true'
+    if: needs.guard.outputs.should_run_cpu == 'true'
     strategy:
       matrix:
         version:
@@ -64,7 +84,7 @@ jobs:
 
   moonshot:
     needs: guard
-    if: needs.guard.outputs.should_run == 'true'
+    if: needs.guard.outputs.should_run_gpu == 'true'
     runs-on: [self-hosted, Linux, gpu, cuda]
     strategy:
       matrix:
