@@ -16,7 +16,7 @@ function strip_benchmark_value(bench::NamedTuple)
 end
 
 function strip_benchmark_value(bench::Dict)
-    filtered = Dict{Any, Any}()
+    filtered = Dict{Any,Any}()
     for (k, v) in bench
         if k != :value && k != "value"
             filtered[k] = v
@@ -61,10 +61,10 @@ function solve_and_extract_data(
     grid_size::Int,
     disc_method::Symbol,
     tol::Float64,
-    mu_strategy::Union{String, Missing},
+    mu_strategy::Union{String,Missing},
     print_trace::Bool,
     max_iter::Int,
-    max_wall_time::Float64
+    max_wall_time::Float64,
 )
     # print_level
     print_level = set_print_level(solver, print_trace)
@@ -81,7 +81,7 @@ function solve_and_extract_data(
         # ===== JuMP Model =====
         try
             nlp = eval(problem)(JuMPBackend(); grid_size=grid_size)
-            
+
             if solver == :ipopt
                 JuMP.set_optimizer(nlp, Ipopt.Optimizer)
                 JuMP.set_optimizer_attribute(nlp, "sb", "yes")
@@ -96,64 +96,73 @@ function solve_and_extract_data(
             JuMP.set_optimizer_attribute(nlp, "tol", tol)
             JuMP.set_optimizer_attribute(nlp, "max_iter", max_iter)
             JuMP.set_optimizer_attribute(nlp, "max_wall_time", max_wall_time)
-            
+
             # solve the problem always with print_level = set_print_level(solver, false)
             JuMP.set_optimizer_attribute(nlp, "print_level", print_level)
             ITERATION[] = 0
             bt = @btimed begin
                 ITERATION[] += 1
                 if ITERATION[] == 2
-                    JuMP.set_optimizer_attribute($nlp, "print_level", set_print_level($solver, false))
+                    JuMP.set_optimizer_attribute(
+                        $nlp, "print_level", set_print_level($solver, false)
+                    )
                 end
                 JuMP.optimize!($nlp)
                 $nlp
             end
-            
+
             # Extract statistics from JuMP model
             bt_nlp = bt.value
             status = JuMP.termination_status(bt_nlp)
             obj = objective(bt_nlp)
             iters = iterations(bt_nlp)
-            
+
             # Check if solve succeeded (MOI.LOCALLY_SOLVED or MOI.OPTIMAL)
             success = (status == JuMP.MOI.LOCALLY_SOLVED || status == JuMP.MOI.OPTIMAL)
 
             return (
-                benchmark = strip_benchmark_value(bt),
-                objective = obj,
-                iterations = iters,
-                status = status,
-                success = success
+                benchmark=strip_benchmark_value(bt),
+                objective=obj,
+                iterations=iters,
+                status=status,
+                success=success,
             )
         catch e
             println("ERROR in JuMP solve: ", e)
             Base.show_backtrace(stdout, catch_backtrace())
             println()
             # Create a dummy benchmark object for error case
-            dummy_bench = (time = NaN, alloc = 0, bytes = 0, gctime = NaN)
+            dummy_bench = (time=NaN, alloc=0, bytes=0, gctime=NaN)
             return (
-                benchmark = missing, #dummy_bench,
-                objective = missing,
-                iterations = missing,
-                status = "ERROR: $e",
-                success = false
+                benchmark=missing, #dummy_bench,
+                objective=missing,
+                iterations=missing,
+                status="ERROR: $e",
+                success=false,
             )
         end
     elseif model == :exa_gpu
         # ===== GPU Model (exa with CUDA backend) =====
         try
             pb = Symbol(problem, :_s)  # exa models need the suffix _s
-            docp = eval(pb)(OptimalControlBackend(), :exa, solver; exa_backend=CUDABackend(), grid_size=grid_size, disc_method=disc_method)
+            docp = eval(pb)(
+                OptimalControlBackend(),
+                :exa,
+                solver;
+                exa_backend=CUDABackend(),
+                grid_size=grid_size,
+                disc_method=disc_method,
+            )
             nlp_model_oc = nlp_model(docp)
-            
+
             # Build solver options (only madnlp for GPU)
-            opt = Dict{Symbol, Any}(
-                :tol => tol, 
-                :print_level => print_level, 
-                :max_iter => max_iter, 
+            opt = Dict{Symbol,Any}(
+                :tol => tol,
+                :print_level => print_level,
+                :max_iter => max_iter,
                 :max_wall_time => max_wall_time,
             )
-            
+
             # Use CUDA.@timed for GPU benchmarking
             madnlp(nlp_model_oc; opt...) # run for warmup
             ITERATION[] = 0
@@ -165,52 +174,64 @@ function solve_and_extract_data(
                 madnlp(nlp_model_oc; opt...)
             end
             bt_nlp_sol = bt.value
-            
+
             # Build OCP solution to extract statistics
             ocp_sol = build_ocp_solution(docp, bt_nlp_sol)
             obj = objective(ocp_sol)
             iters = iterations(ocp_sol)
             status = bt_nlp_sol.status
-            
+
             # Check if solve succeeded
             success = (status == MadNLP.SOLVE_SUCCEEDED)
-            
+
             return (
-                benchmark = strip_benchmark_value(bt),
-                objective = obj,
-                iterations = iters,
-                status = status,
-                success = success
+                benchmark=strip_benchmark_value(bt),
+                objective=obj,
+                iterations=iters,
+                status=status,
+                success=success,
             )
         catch e
             println("ERROR in GPU solve: ", e)
             Base.show_backtrace(stdout, catch_backtrace())
             println()
             # Create a dummy benchmark object for error case
-            dummy_bench = (time = NaN, cpu_bytes = 0, gpu_bytes = 0, cpu_gctime = NaN, gpu_memtime = NaN, 
-                          cpu_gcstats = Base.GC_Diff(Base.gc_num(), Base.gc_num()),
-                          gpu_memstats = (alloc_count = 0, alloc_bytes = 0, total_time = NaN))
+            dummy_bench = (
+                time=NaN,
+                cpu_bytes=0,
+                gpu_bytes=0,
+                cpu_gctime=NaN,
+                gpu_memtime=NaN,
+                cpu_gcstats=Base.GC_Diff(Base.gc_num(), Base.gc_num()),
+                gpu_memstats=(alloc_count=0, alloc_bytes=0, total_time=NaN),
+            )
             return (
-                benchmark = missing, #dummy_bench,
-                objective = missing,
-                iterations = missing,
-                status = "ERROR: $e",
-                success = false
+                benchmark=missing, #dummy_bench,
+                objective=missing,
+                iterations=missing,
+                status="ERROR: $e",
+                success=false,
             )
         end
     else
         # ===== OptimalControl Models (adnlp or exa) =====
         try
             pb = (model == :exa) ? Symbol(problem, :_s) : problem # for exa, we need the suffix _s
-            docp = eval(pb)(OptimalControlBackend(), model, solver; grid_size=grid_size, disc_method=disc_method)
+            docp = eval(pb)(
+                OptimalControlBackend(),
+                model,
+                solver;
+                grid_size=grid_size,
+                disc_method=disc_method,
+            )
             nlp_model_oc = nlp_model(docp)
-            
+
             # Build solver options and solve
-            opt = Dict{Symbol, Any}(
-                :tol => tol, 
-                :print_level => print_level, 
-                :max_iter => max_iter, 
-                :max_wall_time => max_wall_time
+            opt = Dict{Symbol,Any}(
+                :tol => tol,
+                :print_level => print_level,
+                :max_iter => max_iter,
+                :max_wall_time => max_wall_time,
             )
             if solver == :ipopt
                 opt[:mu_strategy] = mu_strategy
@@ -239,13 +260,13 @@ function solve_and_extract_data(
             else
                 error("undefined solver: $solver")
             end
-            
+
             # Build OCP solution to extract statistics
             ocp_sol = build_ocp_solution(docp, bt_nlp_sol)
             obj = objective(ocp_sol)
             iters = iterations(ocp_sol)
             status = bt_nlp_sol.status
-            
+
             # Check if solve succeeded
             # For Ipopt: :first_order or :acceptable
             # For MadNLP: MadNLP.SOLVE_SUCCEEDED
@@ -256,26 +277,26 @@ function solve_and_extract_data(
             else
                 success = false
             end
-            
+
             return (
-                benchmark = strip_benchmark_value(bt),
-                objective = obj,
-                iterations = iters,
-                status = status,
-                success = success
+                benchmark=strip_benchmark_value(bt),
+                objective=obj,
+                iterations=iters,
+                status=status,
+                success=success,
             )
         catch e
             println("ERROR in OptimalControl solve: ", e)
             Base.show_backtrace(stdout, catch_backtrace())
             println()
             # Create a dummy benchmark object for error case
-            dummy_bench = (time = NaN, alloc = 0, bytes = 0, gctime = NaN)
+            dummy_bench = (time=NaN, alloc=0, bytes=0, gctime=NaN)
             return (
-                benchmark = missing, #dummy_bench,
-                objective = missing,
-                iterations = missing,
-                status = "ERROR: $e",
-                success = false
+                benchmark=missing, #dummy_bench,
+                objective=missing,
+                iterations=missing,
+                status="ERROR: $e",
+                success=false,
             )
         end
     end
@@ -300,8 +321,8 @@ function filter_models_for_backend(models::Vector{Symbol}, disc_method::Symbol)
     cuda_on = is_cuda_on()
     supports_jump = disc_method == :trapeze
     return [
-        model for model in models
-        if endswith(string(model), "_gpu") ? cuda_on : (model != :JuMP || supports_jump)
+        model for model in models if
+        endswith(string(model), "_gpu") ? cuda_on : (model != :JuMP || supports_jump)
     ]
 end
 
@@ -380,24 +401,24 @@ function benchmark_data(;
     ipopt_mu_strategy,
     print_trace,
     max_iter,
-    max_wall_time
+    max_wall_time,
 )
     # Initialize DataFrame
-    data = DataFrame(
-        problem = Symbol[],
-        solver = Symbol[],
-        model = Symbol[],
-        disc_method = Symbol[],
-        grid_size = Int[],
-        tol = Float64[],
-        mu_strategy = Union{String, Missing}[],
-        max_iter = Int[],
-        max_wall_time = Float64[],
-        benchmark = Any[],
-        objective = Union{Float64, Missing}[],
-        iterations = Union{Int, Missing}[],
-        status = Any[],
-        success = Bool[]
+    data = DataFrame(;
+        problem=Symbol[],
+        solver=Symbol[],
+        model=Symbol[],
+        disc_method=Symbol[],
+        grid_size=Int[],
+        tol=Float64[],
+        mu_strategy=Union{String,Missing}[],
+        max_iter=Int[],
+        max_wall_time=Float64[],
+        benchmark=Any[],
+        objective=Union{Float64,Missing}[],
+        iterations=Union{Int,Missing}[],
+        status=Any[],
+        success=Bool[],
     )
 
     # Main loop over all combinations
@@ -408,10 +429,12 @@ function benchmark_data(;
         printstyled("Problem: $problem", color=:blue, bold=true)
         println()
         println("│")
-        
+
         # Create all combinations of (solver, models) and disc_method for this problem
-        solver_disc_combos = [(solver, models, d) for (solver, models) in solver_models for d in disc_methods]
-        
+        solver_disc_combos = [
+            (solver, models, d) for (solver, models) in solver_models for d in disc_methods
+        ]
+
         for (combo_idx, (solver, models, disc_method)) in enumerate(solver_disc_combos)
             # Set solver-specific options
             if solver == :ipopt
@@ -421,7 +444,7 @@ function benchmark_data(;
             else
                 error("undefined solver: $solver")
             end
-            
+
             # Determine if this is the last solver+disc combo
             is_last_combo = (combo_idx == length(solver_disc_combos))
             
@@ -432,11 +455,11 @@ function benchmark_data(;
             printstyled("Discretization: $disc_method", color=:yellow, bold=true)
             println()
             println("│  │")
-            
+
             for (grid_idx, N) in enumerate(grid_sizes)
                 # Filter models based on CUDA availability and discretization support
                 models_to_run = filter_models_for_backend(models, disc_method)
-                
+
                 # Skip this grid size if no models to run
                 if isempty(models_to_run)
                     continue
@@ -450,8 +473,16 @@ function benchmark_data(;
                 for model in models_to_run
                     # Solve and extract data using helper function
                     stats = solve_and_extract_data(
-                        problem, solver, model, N, disc_method,
-                        tol, mu_strategy, print_trace, max_iter, max_wall_time
+                        problem,
+                        solver,
+                        model,
+                        N,
+                        disc_method,
+                        tol,
+                        mu_strategy,
+                        print_trace,
+                        max_iter,
+                        max_wall_time,
                     )
                     
                     # Print the benchmark line with colors
@@ -459,27 +490,30 @@ function benchmark_data(;
                     print_benchmark_line(model, stats)
                     
                     # Store results in DataFrame
-                    push!(data, (
-                        problem = problem,
-                        solver = solver,
-                        model = model,
-                        disc_method = disc_method,
-                        grid_size = N,
-                        tol = tol,
-                        mu_strategy = mu_strategy,
-                        max_iter = max_iter,
-                        max_wall_time = max_wall_time,
-                        benchmark = stats.benchmark,
-                        objective = stats.objective,
-                        iterations = stats.iterations,
-                        status = stats.status,
-                        success = stats.success
-                    ))
+                    push!(
+                        data,
+                        (
+                            problem=problem,
+                            solver=solver,
+                            model=model,
+                            disc_method=disc_method,
+                            grid_size=N,
+                            tol=tol,
+                            mu_strategy=mu_strategy,
+                            max_iter=max_iter,
+                            max_wall_time=max_wall_time,
+                            benchmark=stats.benchmark,
+                            objective=stats.objective,
+                            iterations=stats.iterations,
+                            status=stats.status,
+                            success=stats.success,
+                        ),
+                    )
                 end
-                
+
                 # Add spacing between grid sizes (except after the last one)
                 # Only add spacing if there are more grid sizes with models to run
-                remaining_grids = grid_sizes[(grid_idx+1):end]
+                remaining_grids = grid_sizes[(grid_idx + 1):end]
                 has_more_grids = any(remaining_grids) do next_N
                     !isempty(filter_models_for_backend(models, disc_method))
                 end
@@ -487,21 +521,21 @@ function benchmark_data(;
                     println("│  │ ")
                 end
             end
-            
+
             # Close solver block
             println("│  └─")
-            
+
             # Add spacing between solver blocks (except after the last one)
             if !is_last_combo
                 println("│")
             end
         end
-        
+
         # Close problem block
         println("└─")
         println()
     end
-    
+
     return data
 end
 
@@ -523,21 +557,22 @@ function generate_metadata()
         io = IOContext(buffer, :color => true)
         Pkg.status(; io=io)
     end
-    
+
     # Capture versioninfo() with colors
     versioninfo_output = sprint() do buffer
         io = IOContext(buffer, :color => true)
         versioninfo(io)
     end
-    
+
     # Capture Pkg.status(mode=PKGMODE_MANIFEST) with colors
     pkg_manifest_output = sprint() do buffer
         io = IOContext(buffer, :color => true)
-        Pkg.status(; mode = Pkg.PKGMODE_MANIFEST, io=io)
+        Pkg.status(; mode=Pkg.PKGMODE_MANIFEST, io=io)
     end
-    
+
     Dict(
-        "timestamp" => Dates.format(Dates.now(Dates.UTC), dateformat"yyyy-mm-dd HH:MM:SS") * " UTC",
+        "timestamp" =>
+            Dates.format(Dates.now(Dates.UTC), dateformat"yyyy-mm-dd HH:MM:SS") * " UTC",
         "julia_version" => string(VERSION),
         "os" => string(Sys.KERNEL),
         "machine" => gethostname(),
@@ -558,11 +593,8 @@ function build_payload(results::DataFrame, meta::Dict)
     # Convert DataFrame to vector of dictionaries using Tables.jl interface
     # This preserves all column names and types automatically
     results_vec = [Dict(pairs(row)) for row in Tables.rows(results)]
-    
-    Dict(
-        "metadata" => meta,
-        "results" => results_vec
-    )
+
+    Dict("metadata" => meta, "results" => results_vec)
 end
 
 """
@@ -664,25 +696,25 @@ df = DataFrame(data["results"])
 - The `outpath` of the saved JSON file.
 """
 function benchmark(;
-    outpath::Union{AbstractString, Nothing},
+    outpath::Union{AbstractString,Nothing},
     problems::Vector{Symbol},
-    solver_models::Vector{Pair{Symbol, Vector{Symbol}}},
+    solver_models::Vector{Pair{Symbol,Vector{Symbol}}},
     grid_sizes::Vector{Int},
     disc_methods::Vector{Symbol},
     tol::Float64,
     ipopt_mu_strategy::String,
     print_trace::Bool,
     max_iter::Int,
-    max_wall_time::Float64
+    max_wall_time::Float64,
 )
-    
+
     # Detect CUDA availability (logging only; filtering handled in benchmark_data)
     if is_cuda_on()
         println("✓ CUDA functional, GPU benchmarks enabled")
     else
         println("⚠️  CUDA not functional, GPU models will be skipped")
     end
-    
+
     # Run benchmarks and get DataFrame
     println("Running benchmarks...")
     results = benchmark_data(;
@@ -694,26 +726,25 @@ function benchmark(;
         ipopt_mu_strategy=ipopt_mu_strategy,
         print_trace=print_trace,
         max_iter=max_iter,
-        max_wall_time=max_wall_time
+        max_wall_time=max_wall_time,
     )
 
     if !isnothing(outpath)
-    
+
         # Generate metadata
         println("Generating metadata...")
         meta = generate_metadata()
-        
+
         # Build payload
         println("Building payload...")
         payload = build_payload(results, meta)
-        
+
         # Save to JSON
         println("Saving results to $outpath...")
         copy_project_files(outpath)
         JSON_path = joinpath(outpath, "data.json")
         save_json(payload, JSON_path)
-
     end
-    
+
     return nothing
 end

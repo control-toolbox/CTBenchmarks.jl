@@ -89,23 +89,25 @@ function _print_results(bench_data)
 
             # Convert to DataFrame for easier manipulation
             df = DataFrame(rows)
-            
+
             # Group by problem for structured display
             problems = unique(df.problem)
-            
+
             for problem in problems
                 # H2 level: Problem name in deep blue
                 print("\n┌─ ")
                 printstyled("Problem: $problem", color=:blue, bold=true)
                 println()
                 println("│")
-                
+
                 # Get all rows for this problem
                 prob_df = filter(row -> row.problem == problem, df)
-                
+
                 # Group by solver and disc_method
-                solver_disc_combos = unique([(row.solver, row.disc_method) for row in eachrow(prob_df)])
-                
+                solver_disc_combos = unique([
+                    (row.solver, row.disc_method) for row in eachrow(prob_df)
+                ])
+
                 for (idx, (solver, disc_method)) in enumerate(solver_disc_combos)
                     is_last = (idx == length(solver_disc_combos))
                     
@@ -116,13 +118,16 @@ function _print_results(bench_data)
                     printstyled("Discretization: $disc_method", color=:yellow, bold=true)
                     println()
                     println("│  │")
-                    
+
                     # Filter for this solver/disc_method combination
-                    combo_df = filter(row -> row.solver == solver && row.disc_method == disc_method, prob_df)
-                    
+                    combo_df = filter(
+                        row -> row.solver == solver && row.disc_method == disc_method,
+                        prob_df,
+                    )
+
                     # Group by grid size
                     grid_sizes = unique(combo_df.grid_size)
-                    
+
                     for (grid_idx, N) in enumerate(grid_sizes)
                         # H4 level: Grid size in yellow
                         print("│  │  ")
@@ -131,35 +136,35 @@ function _print_results(bench_data)
                         
                         # Filter for this grid size
                         grid_df = filter(row -> row.grid_size == N, combo_df)
-                        
+
                         # Display each model with library formatting
                         for row in eachrow(grid_df)
                             # Create a NamedTuple with benchmark data for formatting
                             stats = (
-                                benchmark = row.benchmark,
-                                objective = row.objective,
-                                iterations = row.iterations,
-                                status = row.status,
-                                success = row.success
+                                benchmark=row.benchmark,
+                                objective=row.objective,
+                                iterations=row.iterations,
+                                status=row.status,
+                                success=row.success,
                             )
                             print("│  │")
                             CTBenchmarks.print_benchmark_line(Symbol(row.model), stats)
                         end
-                        
+
                         # Add spacing between grid sizes
                         if grid_idx < length(grid_sizes)
                             println("│  │ ")
                         end
                     end
-                    
+
                     println("│  └─")
-                    
+
                     # Add spacing between solver blocks
                     if !is_last
                         println("│")
                     end
                 end
-                
+
                 println("└─")
             end
         end

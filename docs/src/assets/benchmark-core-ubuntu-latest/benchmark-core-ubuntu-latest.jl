@@ -16,7 +16,7 @@ function main()
     outpath=joinpath(project_dir, "docs", "src", "assets", "benchmark-core-ubuntu-latest")
     CTBenchmarks.benchmark(;
         outpath=outpath,
-        problems = [
+        problems=[
             :beam,
             :chain,
             :double_oscillator,
@@ -32,17 +32,14 @@ function main()
             :steering,
             :vanderpol,
         ],
-        solver_models = [
-            :ipopt => [:JuMP, :adnlp, :exa],
-            :madnlp => [:JuMP, :adnlp, :exa]
-        ],
-        grid_sizes = [200, 500, 1000],
-        disc_methods = [:trapeze],
-        tol = 1e-6,
-        ipopt_mu_strategy = "adaptive",
-        print_trace = false,
-        max_iter = 1000,
-        max_wall_time = 500.0
+        solver_models=[:ipopt => [:JuMP, :adnlp, :exa], :madnlp => [:JuMP, :adnlp, :exa]],
+        grid_sizes=[200, 500, 1000],
+        disc_methods=[:trapeze],
+        tol=1e-6,
+        ipopt_mu_strategy="adaptive",
+        print_trace=false,
+        max_iter=1000,
+        max_wall_time=500.0,
     )
     println("✅ Benchmark completed successfully!")
     return outpath
