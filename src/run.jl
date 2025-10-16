@@ -9,11 +9,15 @@ Run the benchmarks for a specific version.
 # Returns
 - `nothing`
 """
-function run(version::Symbol=:complete; outpath::Union{AbstractString, Nothing}=nothing, print_trace::Bool=false)
+function run(
+    version::Symbol=:complete;
+    outpath::Union{AbstractString,Nothing}=nothing,
+    print_trace::Bool=false,
+)
     if version == :complete
         CTBenchmarks.benchmark(;
             outpath=outpath,
-            problems = [
+            problems=[
                 :beam,
                 :chain,
                 :double_oscillator,
@@ -29,35 +33,31 @@ function run(version::Symbol=:complete; outpath::Union{AbstractString, Nothing}=
                 :steering,
                 :vanderpol,
             ],
-            solver_models = [
-                :ipopt => [:JuMP, :adnlp, :exa],
-                :madnlp => [:JuMP, :adnlp, :exa, :exa_gpu]
+            solver_models=[
+                :ipopt => [:JuMP, :adnlp, :exa], :madnlp => [:JuMP, :adnlp, :exa, :exa_gpu]
             ],
-            grid_sizes = [100, 200, 500],
-            disc_methods = [:trapeze, :midpoint],
-            tol = 1e-6,
-            ipopt_mu_strategy = "adaptive",
-            print_trace = print_trace,
-            max_iter = 1000,
-            max_wall_time = 500.0
+            grid_sizes=[100, 200, 500],
+            disc_methods=[:trapeze, :midpoint],
+            tol=1e-6,
+            ipopt_mu_strategy="adaptive",
+            print_trace=print_trace,
+            max_iter=1000,
+            max_wall_time=500.0,
         )
     elseif version == :minimal
         CTBenchmarks.benchmark(;
             outpath=outpath,
-            problems = [
-                :beam,
+            problems=[:beam],
+            solver_models=[
+                :ipopt => [:JuMP, :adnlp, :exa], :madnlp => [:JuMP, :adnlp, :exa, :exa_gpu]
             ],
-            solver_models = [
-                :ipopt => [:JuMP, :adnlp, :exa],
-                :madnlp => [:JuMP, :adnlp, :exa, :exa_gpu]
-            ],
-            grid_sizes = [100],
-            disc_methods = [:trapeze],
-            tol = 1e-6,
-            ipopt_mu_strategy = "adaptive",
-            print_trace = print_trace,
-            max_iter = 1000,
-            max_wall_time = 500.0
+            grid_sizes=[100],
+            disc_methods=[:trapeze],
+            tol=1e-6,
+            ipopt_mu_strategy="adaptive",
+            print_trace=print_trace,
+            max_iter=1000,
+            max_wall_time=500.0,
         )
     else
         error("undefined version: $version. Please choose :complete or :minimal.")
