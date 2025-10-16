@@ -459,9 +459,9 @@ version = "0.8.5"
 
 [[deps.ForwardDiff]]
 deps = ["CommonSubexpressions", "DiffResults", "DiffRules", "LinearAlgebra", "LogExpFunctions", "NaNMath", "Preferences", "Printf", "Random", "SpecialFunctions"]
-git-tree-sha1 = "dc41303865a16274ecb8450c220021ce1e0cf05f"
+git-tree-sha1 = "ba6ce081425d0afb2bedd00d9884464f764a9225"
 uuid = "f6369f11-7733-5829-9624-2563aa707210"
-version = "1.2.1"
+version = "1.2.2"
 weakdeps = ["StaticArrays"]
 
     [deps.ForwardDiff.extensions]
