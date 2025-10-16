@@ -55,14 +55,14 @@ Displays: time, allocations/memory, objective, iterations, and success status
 function format_benchmark_line(model::Symbol, stats::NamedTuple)
     model_str = rpad(string(model), 8)
     bench = stats.benchmark
-    
+
     # Handle error cases where benchmark is missing or nothing
     if ismissing(bench) || isnothing(bench)
         status_icon = stats.success ? "✓" : "✗"
         error_msg = haskey(stats, :status) ? stats.status : "ERROR"
         return "  $status_icon | $model_str: $error_msg"
     end
-    
+
     # Helper function to get value from either Dict or NamedTuple
     function getval(obj, key::Symbol)
         if isa(obj, Dict)
@@ -71,39 +71,46 @@ function format_benchmark_line(model::Symbol, stats::NamedTuple)
             return getproperty(obj, key)
         end
     end
-    
+
     # Check if this is a CUDA.@timed result (has cpu_bytes and gpu_bytes)
-    has_cpu_bytes = (isa(bench, Dict) && (haskey(bench, "cpu_bytes") || haskey(bench, :cpu_bytes))) || 
-                    (!isa(bench, Dict) && haskey(bench, :cpu_bytes))
-    has_gpu_bytes = (isa(bench, Dict) && (haskey(bench, "gpu_bytes") || haskey(bench, :gpu_bytes))) || 
-                    (!isa(bench, Dict) && haskey(bench, :gpu_bytes))
-    
+    has_cpu_bytes =
+        (isa(bench, Dict) && (haskey(bench, "cpu_bytes") || haskey(bench, :cpu_bytes))) ||
+        (!isa(bench, Dict) && haskey(bench, :cpu_bytes))
+    has_gpu_bytes =
+        (isa(bench, Dict) && (haskey(bench, "gpu_bytes") || haskey(bench, :gpu_bytes))) ||
+        (!isa(bench, Dict) && haskey(bench, :gpu_bytes))
+
     # Extract timing and memory info
     time_val = getval(bench, :time)
     time_str = lpad(prettytime(time_val), 10)  # Fixed width for time, right-aligned
-    
+
     # Build memory string with CPU/GPU labels
     if has_cpu_bytes && has_gpu_bytes
         # GPU benchmark format - show both CPU and GPU memory
         cpu_bytes = getval(bench, :cpu_bytes)
         cpu_mem_str = lpad(Base.format_bytes(cpu_bytes), 10)
-        
+
         gpu_bytes = getval(bench, :gpu_bytes)
         gpu_mem_str = lpad(Base.format_bytes(gpu_bytes), 10)
-        
+
         memory_display = "CPU: $cpu_mem_str | GPU: $gpu_mem_str"
     else
         # CPU benchmark format (BenchmarkTools @btimed)
         bytes_val = getval(bench, :bytes)
         memory_str = lpad(prettymemory(bytes_val), 10)
-        
+
         memory_display = "CPU: $memory_str" * " " ^ 18  # Padding to align with GPU format
     end
-    
+
     # Format solver statistics with fixed widths
-    obj_str = ismissing(stats.objective) ? rpad("N/A", 13) : rpad(@sprintf("%.6e", stats.objective), 13)
-    iter_str = ismissing(stats.iterations) ? rpad("N/A", 6) : rpad(string(stats.iterations), 6)
+    obj_str = if ismissing(stats.objective)
+        rpad("N/A", 13)
+    else
+        rpad(@sprintf("%.6e", stats.objective), 13)
+    end
+    iter_str =
+        ismissing(stats.iterations) ? rpad("N/A", 6) : rpad(string(stats.iterations), 6)
     status_icon = stats.success ? "✓" : "✗"
-    
+
     return "  $status_icon | $model_str: $time_str | obj: $obj_str | iters: $iter_str | $memory_display"
 end

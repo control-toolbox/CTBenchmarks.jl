@@ -16,7 +16,7 @@ function main()
     outpath=joinpath(project_dir, "docs", "src", "assets", "benchmark-core-moonshot")
     CTBenchmarks.benchmark(;
         outpath=outpath,
-        problems = [
+        problems=[
             :beam,
             :chain,
             :double_oscillator,
@@ -32,16 +32,14 @@ function main()
             :steering,
             :vanderpol,
         ],
-        solver_models = [
-            :madnlp => [:exa, :exa_gpu]
-        ],
-        grid_sizes = [1000, 5000, 10000],
-        disc_methods = [:trapeze],
-        tol = 1e-6,
-        ipopt_mu_strategy = "adaptive",
-        print_trace = false,
-        max_iter = 1000,
-        max_wall_time = 1000.0
+        solver_models=[:madnlp => [:exa, :exa_gpu]],
+        grid_sizes=[1000, 5000, 10000],
+        disc_methods=[:trapeze],
+        tol=1e-6,
+        ipopt_mu_strategy="adaptive",
+        print_trace=false,
+        max_iter=1000,
+        max_wall_time=1000.0,
     )
     println("✅ Benchmark completed successfully!")
     return outpath

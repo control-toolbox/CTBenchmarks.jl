@@ -21,7 +21,7 @@ repo_url = "github.com/control-toolbox/CTBenchmarks.jl"
 with_processed_templates(
     ["benchmark-core.md"],  # List of template files to process
     joinpath(@__DIR__, "src"),
-    joinpath(@__DIR__, "src", "assets")
+    joinpath(@__DIR__, "src", "assets"),
 ) do
     # Configure and build the documentation set
     makedocs(;
