@@ -99,16 +99,18 @@ function test_utils()
 
         bench_gpu = stats_exa_gpu.benchmark
 
-        getval(obj, key::Symbol) = if isa(obj, Dict)
-            get(obj, key, get(obj, string(key), nothing))
-        else
-            getproperty(obj, key)
-        end
-        hasval(obj, key::Symbol) = if isa(obj, Dict)
-            (haskey(obj, key) || haskey(obj, string(key)))
-        else
-            Base.hasproperty(obj, key)
-        end
+        getval(obj, key::Symbol) =
+            if isa(obj, Dict)
+                get(obj, key, get(obj, string(key), nothing))
+            else
+                getproperty(obj, key)
+            end
+        hasval(obj, key::Symbol) =
+            if isa(obj, Dict)
+                (haskey(obj, key) || haskey(obj, string(key)))
+            else
+                Base.hasproperty(obj, key)
+            end
 
         @test hasval(bench_gpu, :time)
         @test hasval(bench_gpu, :cpu_bytes)
