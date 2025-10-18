@@ -132,74 +132,18 @@ main()
 - The output directory follows the pattern `docs/src/assets/benchmark-<name>`
 - **Available problems:** The list of problems you can choose is available in the [OptimalControlProblems.jl documentation](https://control-toolbox.org/OptimalControlProblems.jl/stable/problems_browser.html)
 
-### 2. Create the GitHub Actions Workflow
+### 2. Automatic Workflow Execution
 
-Create `.github/workflows/benchmark-<name>.yml`:
+**Good news!** You don't need to create a workflow file manually. The orchestrator automatically runs your benchmark based on the JSON configuration using a matrix strategy.
 
-```yaml
-name: Benchmark <Name>
+When you add a label to a PR (e.g., `run bench your-benchmark-id`), the orchestrator:
 
-on:
-  workflow_call:
+1. Reads `.github/benchmarks-config.json`
+2. Finds your benchmark configuration
+3. Calls the reusable workflow with the correct parameters
+4. Constructs the script path as `benchmarks/{id}.jl`
 
-permissions:
-  contents: write
-  pull-requests: write
-
-jobs:
-  bench:
-    uses: ./.github/workflows/benchmark-reusable.yml
-    with:
-      script_path: benchmarks/<name>.jl
-      julia_version: '1.11'
-      julia_arch: x64
-      runs_on: '<runner-specification>'
-      runner: '<runner-type>'  # Only for self-hosted runners
-```
-
-**Runner configuration:**
-
-For **standard GitHub runners** (e.g., ubuntu-latest):
-
-```yaml
-runs_on: '"ubuntu-latest"'
-# Do NOT include the 'runner' parameter
-```
-
-For **self-hosted runners** (e.g., GPU machines):
-
-```yaml
-runs_on: '["self-hosted", "Linux", "gpu", "cuda", "cuda12"]'
-runner: 'self-hosted'
-```
-
-**All inputs are required except `runner`:**
-
-- `script_path`: Path to your benchmark script
-- `julia_version`: Julia version to use (e.g., '1.11')
-- `julia_arch`: Architecture (typically 'x64')
-- `runs_on`: Runner specification (string or JSON array)
-- `runner`: **Optional** - Only set to `'self-hosted'` for self-hosted runners
-
-### Understanding Cache Management
-
-The `runner` parameter controls the caching strategy:
-
-**Standard runners** (omit `runner` parameter):
-
-- Uses `julia-actions/cache@v2`
-- Caches Julia artifacts, packages, AND registries
-- Cache stored on GitHub servers and restored on each run
-- Optimal for ephemeral runners that start fresh each time
-
-**Self-hosted runners** (`runner: 'self-hosted'`):
-
-- Uses `actions/cache@v4` for artifacts only (`~/.julia/artifacts`)
-- Packages and registries persist naturally on the machine between runs
-- Avoids unnecessary upload/download to GitHub servers
-- More efficient since dependencies are already local
-
-**Why this matters:** Self-hosted runners maintain their filesystem between runs. Using `julia-actions/cache` would wastefully upload/download gigabytes of data to/from GitHub when the files are already on the machine. We only cache artifacts to avoid re-downloading external dependencies.
+**Everything is automatic!** ✨
 
 ### 3. Create the GitHub Label
 
@@ -279,7 +223,7 @@ jobs:
     needs: load-config
     uses: ./.github/workflows/benchmark-reusable.yml
     with:
-      script_path: benchmarks/{id}.jl
+      script_path: benchmarks/${{ fromJSON(needs.load-config.outputs.config).id }}.jl
       julia_version: ${{ fromJSON(needs.load-config.outputs.config).julia_version }}
       julia_arch: ${{ fromJSON(needs.load-config.outputs.config).julia_arch }}
       runs_on: ${{ fromJSON(needs.load-config.outputs.config).runs_on }}
@@ -288,10 +232,11 @@ jobs:
 
 **Key features:**
 
-- Reads configuration from JSON (single source of truth)
-- Can be triggered manually via `workflow_dispatch`
-- Can be called by the orchestrator via `workflow_call`
-- No hardcoded values - everything comes from JSON
+- **Reads configuration from JSON** - Single source of truth
+- **Uses ID to construct script path** - `benchmarks/${{ fromJSON(...).id }}.jl` ensures consistency
+- **Can be triggered manually** via `workflow_dispatch` for testing
+- **Can be called by orchestrator** via `workflow_call`
+- **No hardcoded values** - Everything comes from JSON configuration
 
 ### 5. Create Documentation Page (Optional)
 
