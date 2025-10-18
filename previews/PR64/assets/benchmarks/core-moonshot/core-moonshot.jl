@@ -13,7 +13,7 @@ using CTBenchmarks
 
 println("⏱️  Ready to run core benchmark...")
 function main()
-    outpath=joinpath(project_dir, "docs", "src", "assets", "benchmark-core-moonshot")
+    outpath=joinpath(project_dir, "docs", "src", "assets", "benchmarks", "core-moonshot")
     CTBenchmarks.benchmark(;
         outpath=outpath,
         problems=[
