@@ -4,7 +4,7 @@
       "id": "core-ubuntu-latest",
       "julia_version": "1.11",
       "julia_arch": "x64",
-      "runs_on": "ubuntu-latest",
+      "runs_on": "\"ubuntu-latest\"",
       "runner": "github"
     },
     {
