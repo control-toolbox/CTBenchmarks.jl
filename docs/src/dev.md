@@ -46,7 +46,7 @@ Edit `.github/benchmarks-config.json` and add your benchmark configuration:
 
 - **`id`** (required): Unique identifier for the benchmark (kebab-case)
   - Convention: `{family}-{runner}` (e.g., `core-ubuntu-latest`, `core-moonshot`)
-  - Used to construct script path: `scripts/benchmark-{id}.jl`
+  - Used as script filename: `benchmarks/{id}.jl`
   - Used in label: `run bench {id}`
   
 - **`julia_version`** (required): Julia version to use (e.g., `"1.11"`)
@@ -85,9 +85,11 @@ Edit `.github/benchmarks-config.json` and add your benchmark configuration:
 
 ### 2. Create the Benchmark Script
 
-Create a new Julia script following the naming convention `scripts/benchmark-{id}.jl`:
+Create a new Julia script in the `benchmarks/` directory with the filename `{id}.jl`:
 
-**Important**: The script filename must match the `id` in the JSON configuration.
+**Important**: The script filename must **exactly match** the `id` in the JSON configuration.
+
+**Example**: For `"id": "core-ubuntu-latest"`, create `benchmarks/core-ubuntu-latest.jl`
 
 ```julia
 using Pkg
@@ -148,7 +150,7 @@ jobs:
   bench:
     uses: ./.github/workflows/benchmark-reusable.yml
     with:
-      script_path: scripts/benchmark-<name>.jl
+      script_path: benchmarks/<name>.jl
       julia_version: '1.11'
       julia_arch: x64
       runs_on: '<runner-specification>'
@@ -277,7 +279,7 @@ jobs:
     needs: load-config
     uses: ./.github/workflows/benchmark-reusable.yml
     with:
-      script_path: scripts/benchmark-{id}.jl
+      script_path: benchmarks/{id}.jl
       julia_version: ${{ fromJSON(needs.load-config.outputs.config).julia_version }}
       julia_arch: ${{ fromJSON(needs.load-config.outputs.config).julia_arch }}
       runs_on: ${{ fromJSON(needs.load-config.outputs.config).runs_on }}
@@ -379,7 +381,7 @@ pages = [
 
 A complete GPU benchmark using CUDA 12:
 
-- **Script**: `scripts/benchmark-core-moonshot.jl`
+- **Script**: `benchmarks/core-moonshot.jl`
 - **Workflow**: `.github/workflows/benchmark-core-moonshot.yml`
 - **Label**: `run bench core moonshot`
 - **Runner**: `["self-hosted", "Linux", "gpu", "cuda", "cuda12"]`
@@ -401,7 +403,7 @@ A GPU benchmark identical to Moonshot but using CUDA 13 to compare performance:
     }
     ```
 
-- **Script**: `scripts/benchmark-core-mothra.jl`
+- **Script**: `benchmarks/core-mothra.jl`
   - Only difference: `outpath` points to `benchmark-core-mothra`
 - **Label**: `run bench core-mothra`
 - **Workflow** (optional): `.github/workflows/benchmark-core-mothra.yml` reads from JSON

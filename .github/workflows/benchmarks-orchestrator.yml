@@ -158,7 +158,7 @@ jobs:
       fail-fast: false
     uses: ./.github/workflows/benchmark-reusable.yml
     with:
-      script_path: scripts/benchmark-${{ matrix.benchmark.id }}.jl
+      script_path: benchmarks/${{ matrix.benchmark.id }}.jl
       julia_version: ${{ matrix.benchmark.julia_version }}
       julia_arch: ${{ matrix.benchmark.julia_arch }}
       runs_on: ${{ matrix.benchmark.runs_on }}

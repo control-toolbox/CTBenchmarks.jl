@@ -25,7 +25,7 @@ jobs:
     needs: load-config
     uses: ./.github/workflows/benchmark-reusable.yml
     with:
-      script_path: scripts/benchmark-core-ubuntu-latest.jl
+      script_path: benchmarks/core-ubuntu-latest.jl
       julia_version: ${{ fromJSON(needs.load-config.outputs.config).julia_version }}
       julia_arch: ${{ fromJSON(needs.load-config.outputs.config).julia_arch }}
       runs_on: ${{ fromJSON(needs.load-config.outputs.config).runs_on }}

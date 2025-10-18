@@ -101,7 +101,7 @@ Individual workflows like `benchmark-core-ubuntu-latest.yml` now:
    }
    ```
 
-2. **Create the script** (`scripts/benchmark-your-benchmark-id.jl`)
+2. **Create the script** (`benchmarks/your-benchmark-id.jl`)
 
 3. **(Optional) Create individual workflow** (`.github/workflows/benchmark-your-benchmark-id.yml`)
 
@@ -118,10 +118,10 @@ That's it! The orchestrator will automatically:
 
 The `script_path` is now automatically constructed from the benchmark ID:
 ```yaml
-script_path: scripts/benchmark-${{ matrix.benchmark.id }}.jl
+script_path: benchmarks/${{ matrix.benchmark.id }}.jl
 ```
 
-Convention: `scripts/benchmark-{id}.jl`
+Convention: `benchmarks/{id}.jl` (filename exactly matches the ID)
 
 ### Runner Types
 
