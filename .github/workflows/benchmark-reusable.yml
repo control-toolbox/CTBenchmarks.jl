@@ -20,9 +20,8 @@ on:
         required: true
         type: string
       runner:
-        description: "Runner identifier forwarded to benchmark script"
-        required: false
-        default: 'standard'
+        description: "Runner type: 'github' for standard runners or 'self-hosted' for self-hosted runners"
+        required: true
         type: string
 
 permissions:

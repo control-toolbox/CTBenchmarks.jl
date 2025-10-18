@@ -4,24 +4,90 @@ This guide explains how to add a new benchmark to the CTBenchmarks.jl pipeline.
 
 ## Overview
 
-Adding a new benchmark involves creating several interconnected components:
+Adding a new benchmark involves creating several components:
 
-1. **Benchmark script** ⭐ *Simple* - Julia script that runs the benchmark
-2. **GitHub Actions workflow** ⭐ *Simple* - Workflow that executes the script on a specific runner
+1. **JSON configuration entry** ⭐ *Simple* - Add benchmark config to JSON file (**1 entry to add**)
+2. **Benchmark script** ⭐ *Simple* - Julia script that runs the benchmark
 3. **GitHub label** ⭐ *Simple* - Label to trigger the benchmark on pull requests (manual step on GitHub)
-4. **Orchestrator integration** ⚠️ *Complex* - Update the orchestrator to manage the new workflow (**14 locations to modify**)
-5. **Documentation page** ⭐ *Simple* (optional) - Display benchmark results in the documentation
+4. **Individual workflow** ⭐ *Optional* - Workflow for manual testing (reads from JSON)
+5. **Documentation page** ⭐ *Optional* - Display benchmark results in the documentation
 
 !!! tip "Estimated Time"
-    - Steps 1-3: ~10 minutes
-    - Step 4 (Orchestrator): ~30-45 minutes (careful verification required)
-    - Step 5: ~10 minutes
+    - Step 1 (JSON): ~2 minutes
+    - Step 2 (Script): ~5-10 minutes
+    - Step 3 (Label): ~1 minute
+    - Step 4 (Optional workflow): ~5 minutes
+    - Step 5 (Optional docs): ~10 minutes
+
+!!! success "Key Improvement"
+    The orchestrator now uses a **JSON configuration file** and **matrix strategy**. Adding a benchmark requires modifying only **one JSON entry** instead of multiple workflow files!
 
 ## Step-by-Step Guide
 
-### 1. Create the Benchmark Script
+### 1. Add Configuration to JSON
 
-Create a new Julia script in `scripts/benchmark-<name>.jl`:
+Edit `.github/benchmarks-config.json` and add your benchmark configuration:
+
+```json
+{
+  "benchmarks": [
+    {
+      "id": "your-benchmark-id",
+      "julia_version": "1.11",
+      "julia_arch": "x64",
+      "runs_on": "ubuntu-latest",
+      "runner": "github"
+    }
+  ]
+}
+```
+
+**Configuration fields:**
+
+- **`id`** (required): Unique identifier for the benchmark (kebab-case)
+  - Convention: `{family}-{runner}` (e.g., `core-ubuntu-latest`, `core-moonshot`)
+  - Used to construct script path: `scripts/benchmark-{id}.jl`
+  - Used in label: `run bench {id}`
+  
+- **`julia_version`** (required): Julia version to use (e.g., `"1.11"`)
+
+- **`julia_arch`** (required): Architecture (typically `"x64"`)
+
+- **`runs_on`** (required): GitHub runner specification
+  - For standard runners: `"ubuntu-latest"`
+  - For self-hosted: `"[\"self-hosted\", \"Linux\", \"gpu\", \"cuda\", \"cuda12\"]"`
+  
+- **`runner`** (required): Runner type for caching strategy
+  - `"github"` for standard GitHub runners (uses `julia-actions/cache`)
+  - `"self-hosted"` for self-hosted runners (uses `actions/cache` for artifacts only)
+
+**Examples:**
+
+```json
+// Standard GitHub runner
+{
+  "id": "core-ubuntu-latest",
+  "julia_version": "1.11",
+  "julia_arch": "x64",
+  "runs_on": "ubuntu-latest",
+  "runner": "github"
+}
+
+// Self-hosted GPU runner
+{
+  "id": "core-moonshot",
+  "julia_version": "1.11",
+  "julia_arch": "x64",
+  "runs_on": "[\"self-hosted\", \"Linux\", \"gpu\", \"cuda\", \"cuda12\"]",
+  "runner": "self-hosted"
+}
+```
+
+### 2. Create the Benchmark Script
+
+Create a new Julia script following the naming convention `scripts/benchmark-{id}.jl`:
+
+**Important**: The script filename must match the `id` in the JSON configuration.
 
 ```julia
 using Pkg
@@ -139,245 +205,91 @@ On GitHub, create a new label for your benchmark:
 
 1. Go to your repository → **Issues** → **Labels**
 2. Click **New label**
-3. Name: `run bench <name>` (e.g., `run bench core moonshot`)
+3. Name: `run bench {id}` where `{id}` matches your JSON configuration
+   - Example: `run bench core-ubuntu-latest`
+   - Example: `run bench core-moonshot`
+   - **Important**: Use the exact benchmark ID from JSON
 4. Choose a color and description
 5. Click **Create label**
 
-### 4. Update the Orchestrator
+**Label types:**
 
-!!! warning "Complex Integration"
-    This is the **most complex and error-prone step**. The orchestrator requires modifications in **14 different locations** throughout the file. Missing even one location will cause workflow failures. Take your time and verify each step.
+1. **Individual labels** - Trigger a specific benchmark:
+   - Format: `run bench {id}`
+   - Example: `run bench core-moonshot`
+   - Example: `run bench minimal-ubuntu-latest`
 
-Edit `.github/workflows/benchmarks-orchestrator.yml` to integrate your new benchmark. Follow these steps carefully:
+2. **Group labels** - Trigger all benchmarks with a common prefix:
+   - Format: `run bench {prefix}-all`
+   - Example: `run bench core-all` → runs all `core-*` benchmarks
+   - Example: `run bench minimal-all` → runs all `minimal-*` benchmarks
+   - Example: `run bench gpu-all` → runs all `gpu-*` benchmarks
 
-#### Step 4.1: Add output in the guard job
+**Naming convention for benchmark families:**
 
-In the `guard` job outputs section (~line 16-20):
+To use group labels effectively, follow this naming convention:
+
+- `{family}-{runner}` format (e.g., `core-ubuntu-latest`, `core-moonshot`)
+- All benchmarks in the same family share the same prefix
+- Group label `run bench {family}-all` will run all benchmarks in that family
+
+**Examples:**
+
+- `core-ubuntu-latest`, `core-moonshot`, `core-mothra` → `run bench core-all`
+- `minimal-ubuntu-latest`, `minimal-macos` → `run bench minimal-all`
+- `gpu-cuda12`, `gpu-cuda13` → `run bench gpu-all`
+
+### 4. (Optional) Create Individual Workflow
+
+!!! info "Optional Step"
+    Individual workflows are **optional**. The orchestrator will automatically run your benchmark based on the JSON configuration. Individual workflows are useful for:
+    - Manual testing via `workflow_dispatch`
+    - Running a specific benchmark without the orchestrator
+    - Debugging
+
+Create `.github/workflows/benchmark-{id}.yml`:
 
 ```yaml
+name: Benchmark {Name}
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
-  guard:
+  load-config:
+    runs-on: ubuntu-latest
     outputs:
-      run_ubuntu: ${{ steps.check.outputs.run_ubuntu }}
-      run_moonshot: ${{ steps.check.outputs.run_moonshot }}
-      run_<name>: ${{ steps.check.outputs.run_<name> }}  # Add this line
-      benchmarks_summary: ${{ steps.check.outputs.benchmarks_summary }}
+      config: ${{ steps.get-config.outputs.config }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Get benchmark config
+        id: get-config
+        run: |
+          CONFIG=$(jq -c '.benchmarks[] | select(.id == "{id}")' .github/benchmarks-config.json)
+          echo "config=$CONFIG" >> $GITHUB_OUTPUT
+  
+  bench:
+    needs: load-config
+    uses: ./.github/workflows/benchmark-reusable.yml
+    with:
+      script_path: scripts/benchmark-{id}.jl
+      julia_version: ${{ fromJSON(needs.load-config.outputs.config).julia_version }}
+      julia_arch: ${{ fromJSON(needs.load-config.outputs.config).julia_arch }}
+      runs_on: ${{ fromJSON(needs.load-config.outputs.config).runs_on }}
+      runner: ${{ fromJSON(needs.load-config.outputs.config).runner }}
 ```
 
-#### Step 4.2: Initialize the variable
+**Key features:**
 
-In the guard job's check step, initialize the variable (~line 30-33):
-
-```bash
-# Initialize outputs
-RUN_UBUNTU="false"
-RUN_MOONSHOT="false"
-RUN_<NAME>="false"  # Add this line
-BENCHMARKS_LIST=""
-```
-
-#### Step 4.3: Update "run all" label detection
-
-When the "run bench core all" label is detected (~line 57-64), add your benchmark:
-
-```bash
-if echo "$LABELS" | grep -q "run bench core all"; then
-  echo "✅ Found 'run bench core all' label"
-  RUN_UBUNTU="true"
-  RUN_MOONSHOT="true"
-  RUN_<NAME>="true"  # Add this line
-  BENCHMARKS_LIST="ubuntu-latest, moonshot, <name>"  # Add <name> here
-```
-
-#### Step 4.4: Add specific label detection
-
-After the moonshot label detection block (~line 68-77), add detection for your benchmark:
-
-```bash
-if echo "$LABELS" | grep -q "run bench core <name>"; then
-  echo "✅ Found 'run bench core <name>' label"
-  RUN_<NAME>="true"
-  if [ -n "$BENCHMARKS_LIST" ]; then
-    BENCHMARKS_LIST="$BENCHMARKS_LIST, <name>"
-  else
-    BENCHMARKS_LIST="<name>"
-  fi
-fi
-```
-
-#### Step 4.5: Update "no labels" condition
-
-Update the condition that checks if no benchmarks were selected (~line 79-83):
-
-```bash
-if [ "$RUN_UBUNTU" == "false" ] && [ "$RUN_MOONSHOT" == "false" ] && [ "$RUN_<NAME>" == "false" ]; then
-  echo "❌ No benchmark labels found"
-  echo "ℹ️  Expected labels: 'run bench core ubuntu', 'run bench core moonshot', 'run bench core <name>', or 'run bench core all'"
-  BENCHMARKS_LIST="none"
-fi
-```
-
-#### Step 4.6: Set the output
-
-Add the output for your benchmark (~line 88-91):
-
-```bash
-# Set outputs
-echo "run_ubuntu=$RUN_UBUNTU" >> $GITHUB_OUTPUT
-echo "run_moonshot=$RUN_MOONSHOT" >> $GITHUB_OUTPUT
-echo "run_<name>=$RUN_<NAME>" >> $GITHUB_OUTPUT  # Add this line
-echo "benchmarks_summary=$BENCHMARKS_LIST" >> $GITHUB_OUTPUT
-```
-
-#### Step 4.7: Update guard summary logs
-
-In the guard decision summary step (~line 98-117), add logging for your benchmark:
-
-```bash
-RUN_UBUNTU="${{ steps.check.outputs.run_ubuntu }}"
-RUN_MOONSHOT="${{ steps.check.outputs.run_moonshot }}"
-RUN_<NAME>="${{ steps.check.outputs.run_<name> }}"  # Add this line
-SUMMARY="${{ steps.check.outputs.benchmarks_summary }}"
-
-if [ "$RUN_UBUNTU" == "true" ]; then
-  echo "  ✅ benchmark-core-ubuntu-latest"
-fi
-if [ "$RUN_MOONSHOT" == "true" ]; then
-  echo "  ✅ benchmark-core-moonshot"
-fi
-if [ "$RUN_<NAME>" == "true" ]; then  # Add this block
-  echo "  ✅ benchmark-core-<name>"
-fi
-if [ "$RUN_UBUNTU" != "true" ] && [ "$RUN_MOONSHOT" != "true" ] && [ "$RUN_<NAME>" != "true" ]; then
-  echo "  ⏭️  None (conditions not met)"
-  echo ""
-  echo "💡 To run benchmarks on PRs, ensure:"
-  echo "   • PR targets 'main' branch"
-  echo "   • PR has one of: 'run bench core ubuntu', 'run bench core moonshot', 'run bench core <name>', or 'run bench core all'"
-```
-
-#### Step 4.8: Add the benchmark job
-
-After the existing benchmark jobs (~line 124-127), add your new job:
-
-```yaml
-benchmark-<name>:
-  needs: guard
-  if: needs.guard.outputs.run_<name> == 'true'
-  uses: ./.github/workflows/benchmark-<name>.yml
-```
-
-#### Step 4.9: Update docs job dependencies and conditions
-
-Update the `docs` job (~line 129-138):
-
-```yaml
-docs:
-  needs: [guard, benchmark-ubuntu, benchmark-moonshot, benchmark-<name>]  # Add benchmark-<name>
-  if: |
-    always() &&
-    (needs.guard.result == 'success') &&
-    (needs.benchmark-ubuntu.result != 'cancelled') &&
-    (needs.benchmark-moonshot.result != 'cancelled') &&
-    (needs.benchmark-<name>.result != 'cancelled') &&  # Add this line
-    (needs.benchmark-ubuntu.result != 'failure') &&
-    (needs.benchmark-moonshot.result != 'failure') &&
-    (needs.benchmark-<name>.result != 'failure')  # Add this line
-```
-
-#### Step 4.10: Update notify-failure job
-
-Update the `notify-failure` job dependencies (~line 167-168):
-
-```yaml
-notify-failure:
-  needs: [guard, benchmark-ubuntu, benchmark-moonshot, benchmark-<name>, docs]  # Add benchmark-<name>
-```
-
-And add failure detection in the script (~line 182-193):
-
-```javascript
-if (needs['benchmark-<name>'] && needs['benchmark-<name>'].result === 'failure') {
-  console.log('❌ Benchmark <Name> job failed');
-  failedJobs.push('Benchmark <Name>');
-}
-```
-
-#### Step 4.11: Update notify-success job
-
-Update the `notify-success` job dependencies and conditions (~line 229-238):
-
-```yaml
-notify-success:
-  needs: [guard, benchmark-ubuntu, benchmark-moonshot, benchmark-<name>, docs]  # Add benchmark-<name>
-  if: |
-    always() &&
-    (needs.guard.result == 'success') &&
-    (needs.docs.result == 'success') &&
-    (needs.benchmark-ubuntu.result != 'cancelled') &&
-    (needs.benchmark-moonshot.result != 'cancelled') &&
-    (needs.benchmark-<name>.result != 'cancelled') &&  # Add this line
-    (needs.benchmark-ubuntu.result != 'failure') &&
-    (needs.benchmark-moonshot.result != 'failure') &&
-    (needs.benchmark-<name>.result != 'failure')  # Add this line
-```
-
-#### Step 4.12: Update workflow-summary job
-
-Update the `workflow-summary` job dependencies (~line 317-318):
-
-```yaml
-workflow-summary:
-  needs: [guard, benchmark-ubuntu, benchmark-moonshot, benchmark-<name>, docs]  # Add benchmark-<name>
-```
-
-And add summary logging (~line 340-346):
-
-```bash
-if [ "${{ needs.benchmark-<name>.result }}" == "success" ]; then
-  echo "📊 Benchmark <Name>: ✅ SUCCESS"
-elif [ "${{ needs.benchmark-<name>.result }}" == "failure" ]; then
-  echo "📊 Benchmark <Name>: ❌ FAILED"
-elif [ "${{ needs.benchmark-<name>.result }}" == "skipped" ]; then
-  echo "📊 Benchmark <Name>: ⏭️  SKIPPED"
-fi
-```
-
-#### Step 4.13: Update overall status check
-
-Update the overall status condition (~line 362-365):
-
-```bash
-overall_status="✅ SUCCESS"
-if [ "${{ needs.benchmark-ubuntu.result }}" == "failure" ] || 
-   [ "${{ needs.benchmark-moonshot.result }}" == "failure" ] || 
-   [ "${{ needs.benchmark-<name>.result }}" == "failure" ] ||  # Add this line
-   [ "${{ needs.docs.result }}" == "failure" ]; then
-  overall_status="❌ FAILED"
-fi
-```
-
-#### Verification Checklist
-
-Before committing your changes, verify that you have updated **all 14 locations**:
-
-- [ ] **Step 4.1**: Guard job outputs (add `run_<name>`)
-- [ ] **Step 4.2**: Variable initialization (add `RUN_<NAME>="false"`)
-- [ ] **Step 4.3**: "Run all" label detection (add `RUN_<NAME>="true"` and update `BENCHMARKS_LIST`)
-- [ ] **Step 4.4**: Specific label detection (add new `if` block for your label)
-- [ ] **Step 4.5**: No labels condition (add `RUN_<NAME>` check and update message)
-- [ ] **Step 4.6**: Set outputs (add `echo "run_<name>=$RUN_<NAME>"`)
-- [ ] **Step 4.7**: Guard summary logs (add `RUN_<NAME>` variable and logging block)
-- [ ] **Step 4.8**: New benchmark job (add complete job definition)
-- [ ] **Step 4.9**: Docs job (add to `needs` list and two condition lines)
-- [ ] **Step 4.10**: Notify-failure job (add to `needs` list and failure detection)
-- [ ] **Step 4.11**: Notify-success job (add to `needs` list and two condition lines)
-- [ ] **Step 4.12**: Workflow-summary job (add to `needs` list and logging block)
-- [ ] **Step 4.13**: Overall status check (add to failure condition)
-
-**Tip:** Use `grep -n "<name>" .github/workflows/benchmarks-orchestrator.yml` to verify all occurrences of your benchmark name are present.
-
-**Important:** All these modifications must be done consistently. Missing even one location can cause the workflow to fail or behave unexpectedly.
+- Reads configuration from JSON (single source of truth)
+- Can be triggered manually via `workflow_dispatch`
+- Can be called by the orchestrator via `workflow_call`
+- No hardcoded values - everything comes from JSON
 
 ### 5. Create Documentation Page (Optional)
 
@@ -477,12 +389,89 @@ A complete GPU benchmark using CUDA 12:
 
 A GPU benchmark identical to Moonshot but using CUDA 13 to compare performance:
 
+- **JSON entry**: Added to `.github/benchmarks-config.json`
+
+    ```json
+    {
+    "id": "core-mothra",
+    "julia_version": "1.11",
+    "julia_arch": "x64",
+    "runs_on": "[\"self-hosted\", \"Linux\", \"gpu\", \"cuda\", \"cuda13\"]",
+    "runner": "self-hosted"
+    }
+    ```
+
 - **Script**: `scripts/benchmark-core-mothra.jl`
   - Only difference: `outpath` points to `benchmark-core-mothra`
-- **Workflow**: `.github/workflows/benchmark-core-mothra.yml`
-  - Only difference: `runs_on: '["self-hosted", "Linux", "gpu", "cuda", "cuda13"]'`
-- **Label**: `run bench core mothra`
-- **Runner**: `["self-hosted", "Linux", "gpu", "cuda", "cuda13"]`
-- **Orchestrator**: Updated in 14 locations to integrate mothra
+- **Label**: `run bench core-mothra`
+- **Workflow** (optional): `.github/workflows/benchmark-core-mothra.yml` reads from JSON
 
 This example demonstrates how to create a variant of an existing benchmark to test different hardware configurations.
+
+## How the Orchestrator Works
+
+### Matrix Strategy
+
+The orchestrator uses a **matrix strategy** to dynamically call benchmarks:
+
+1. **Guard job** reads `.github/benchmarks-config.json`
+2. Based on PR labels, it builds a JSON array of selected benchmarks
+3. **Benchmark job** uses matrix to iterate over selected benchmarks
+4. Each matrix iteration calls `benchmark-reusable.yml` with the appropriate parameters
+
+**Benefits:**
+
+- No need to declare individual jobs for each benchmark
+- Adding a benchmark requires only JSON modification
+- All benchmarks run in parallel (matrix strategy)
+- Consistent behavior across all benchmarks
+
+### Label System
+
+The orchestrator supports two types of labels with **automatic prefix detection**:
+
+#### Individual Labels
+
+- **Format**: `run bench {id}`
+- **Behavior**: Runs the specific benchmark with that exact ID
+- **Examples**:
+  - `run bench core-ubuntu-latest` → runs only `core-ubuntu-latest`
+  - `run bench minimal-macos` → runs only `minimal-macos`
+
+#### Group Labels (Generic)
+
+- **Format**: `run bench {prefix}-all`
+- **Behavior**: Automatically runs **all** benchmarks whose ID starts with `{prefix}-`
+- **How it works**:
+  1. The orchestrator extracts the prefix from the label (e.g., `core` from `run bench core-all`)
+  2. It scans all benchmark IDs in the JSON
+  3. It selects all benchmarks matching the pattern `{prefix}-*`
+  
+- **Examples**:
+  - `run bench core-all` → runs `core-ubuntu-latest`, `core-moonshot`, `core-mothra`
+  - `run bench minimal-all` → runs `minimal-ubuntu-latest`, `minimal-macos`
+  - `run bench gpu-all` → runs `gpu-cuda12`, `gpu-cuda13`
+
+#### Multiple Labels
+
+You can combine multiple labels on a PR:
+
+- `run bench core-all` + `run bench minimal-ubuntu-latest` → runs all `core-*` benchmarks + `minimal-ubuntu-latest`
+- `run bench core-moonshot` + `run bench gpu-all` → runs `core-moonshot` + all `gpu-*` benchmarks
+
+#### Automatic Discovery
+
+The system is **completely generic** - no hardcoded family names:
+
+- Add benchmarks with any prefix (e.g., `perf-*`, `stress-*`, `validation-*`)
+- Create corresponding group labels (e.g., `run bench perf-all`)
+- The orchestrator automatically detects and processes them
+
+### Configuration File
+
+The `.github/benchmarks-config.json` file is the **single source of truth**:
+
+- Orchestrator reads it to discover available benchmarks
+- Individual workflows read it to get their configuration
+- Easy to maintain and validate
+- Can be extended with additional metadata
