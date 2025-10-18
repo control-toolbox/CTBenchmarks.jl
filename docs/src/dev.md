@@ -102,7 +102,7 @@ Pkg.instantiate()
 using CTBenchmarks
 
 function main()
-    outpath = joinpath(project_dir, "docs", "src", "assets", "benchmark-<name>")
+    outpath = joinpath(project_dir, "docs", "src", "assets", "benchmarks", "<id>")
     CTBenchmarks.benchmark(;
         outpath = outpath,
         problems = [:problem1, :problem2, ...],
@@ -129,7 +129,7 @@ main()
   - Return the output path where files are saved
 - The `benchmark` function generates JSON and TOML files in the specified `outpath`
 - Print statements (like `println("📦 Activating...")`) are optional but helpful for debugging
-- The output directory follows the pattern `docs/src/assets/benchmark-<name>`
+- The output directory follows the pattern `docs/src/assets/benchmarks/{id}`
 - **Available problems:** The list of problems you can choose is available in the [OptimalControlProblems.jl documentation](https://control-toolbox.org/OptimalControlProblems.jl/stable/problems_browser.html)
 
 ### 2. Automatic Workflow Execution
@@ -349,7 +349,7 @@ A GPU benchmark identical to Moonshot but using CUDA 13 to compare performance:
     ```
 
 - **Script**: `benchmarks/core-mothra.jl`
-  - Only difference: `outpath` points to `benchmark-core-mothra`
+  - Only difference: `outpath` points to `docs/src/assets/benchmarks/core-mothra`
 - **Label**: `run bench core-mothra`
 - **Workflow** (optional): `.github/workflows/benchmark-core-mothra.yml` reads from JSON
 

@@ -5,6 +5,13 @@ using Markdown
 using Dates
 using Printf
 
+# Get benchmark data from benchmark ID
+function _get_bench_data(bench_id::AbstractString)
+    path = joinpath(@__DIR__, "benchmarks", bench_id, "data.json")
+    return _read_benchmark_json(path)
+end
+
+# Read benchmark JSON file
 function _read_benchmark_json(path::AbstractString)
     if !isfile(path)
         return nothing
@@ -15,10 +22,10 @@ function _read_benchmark_json(path::AbstractString)
 end
 
 # Download links for the benchmark environment
-function _downloads_toml(DIR)
-    link_manifest = joinpath("assets", DIR, "Manifest.toml")
-    link_project = joinpath("assets", DIR, "Project.toml")
-    link_script = joinpath("assets", DIR, "$DIR.jl")
+function _downloads_toml(BENCH_ID)
+    link_manifest = joinpath(@__DIR__, "benchmarks", BENCH_ID, "Manifest.toml")
+    link_project = joinpath(@__DIR__, "benchmarks", BENCH_ID, "Project.toml")
+    link_script = joinpath(@__DIR__, "benchmarks", BENCH_ID, "$BENCH_ID.jl")
     return Markdown.parse("""
     You can download the exact environment used for this benchmark:
     - 📦 [Project.toml]($link_project) - Package dependencies
@@ -29,8 +36,9 @@ function _downloads_toml(DIR)
     """)
 end
 
-# Factorized helper functions that take bench_data as argument
-function _basic_metadata(bench_data) # hide
+# Factorized helper functions that take bench_id as argument
+function _basic_metadata(bench_id) # hide
+    bench_data = _get_bench_data(bench_id) # hide
     if bench_data !== nothing # hide
         meta = get(bench_data, "metadata", Dict()) # hide
         for (label, key) in ( # hide
@@ -47,7 +55,8 @@ function _basic_metadata(bench_data) # hide
     end # hide
 end # hide
 
-function _bench_data(bench_data) # hide
+function _bench_data(bench_id) # hide
+    bench_data = _get_bench_data(bench_id) # hide
     if bench_data !== nothing # hide
         meta = get(bench_data, "metadata", Dict()) # hide
         versioninfo_text = get(meta, "versioninfo", "No version info available") # hide
@@ -57,7 +66,8 @@ function _bench_data(bench_data) # hide
     end # hide
 end # hide
 
-function _package_status(bench_data) # hide
+function _package_status(bench_id) # hide
+    bench_data = _get_bench_data(bench_id) # hide
     if bench_data !== nothing # hide
         meta = get(bench_data, "metadata", Dict()) # hide
         pkg_status = get(meta, "pkg_status", "No package status available") # hide
@@ -67,7 +77,8 @@ function _package_status(bench_data) # hide
     end # hide
 end # hide
 
-function _complete_manifest(bench_data) # hide
+function _complete_manifest(bench_id) # hide
+    bench_data = _get_bench_data(bench_id) # hide
     if bench_data !== nothing # hide
         meta = get(bench_data, "metadata", Dict()) # hide
         pkg_manifest = get(meta, "pkg_manifest", "No manifest available") # hide
@@ -77,7 +88,8 @@ function _complete_manifest(bench_data) # hide
     end # hide
 end # hide
 
-function _print_results(bench_data)
+function _print_results(bench_id)
+    bench_data = _get_bench_data(bench_id)
     if bench_data === nothing
         println("⚠️  No results to display because the benchmark file is missing.")
     else

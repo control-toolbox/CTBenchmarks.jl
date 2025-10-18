@@ -13,7 +13,7 @@ using CTBenchmarks
 
 println("⏱️  Ready to run core benchmark...")
 function main()
-    outpath=joinpath(project_dir, "docs", "src", "assets", "benchmark-core-mothra")
+    outpath=joinpath(project_dir, "docs", "src", "assets", "benchmarks", "core-mothra")
     CTBenchmarks.benchmark(;
         outpath=outpath,
         problems = [

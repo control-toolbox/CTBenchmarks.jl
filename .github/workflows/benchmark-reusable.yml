@@ -139,9 +139,9 @@ jobs:
             OUTPUT_DIR=$(cat "$BENCHMARK_OUTPUT_FILE")
             echo "📁 Output directory: $OUTPUT_DIR"
             
-            # Extract the directory name (e.g., benchmark-core-moonshot)
-            DIR_NAME=$(basename "$OUTPUT_DIR")
-            SCRIPT_DEST="$OUTPUT_DIR/$DIR_NAME.jl"
+            # Extract the benchmark ID (e.g., core-moonshot from .../benchmarks/core-moonshot)
+            BENCH_ID=$(basename "$OUTPUT_DIR")
+            SCRIPT_DEST="$OUTPUT_DIR/$BENCH_ID.jl"
             
             echo "📄 Source script: $SCRIPT_PATH"
             echo "📄 Destination: $SCRIPT_DEST"

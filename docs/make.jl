@@ -31,7 +31,7 @@ with_processed_templates(
         format=Documenter.HTML(;
             repolink="https://" * repo_url,
             prettyurls=false,
-            size_threshold_ignore=["index.md"],
+            size_threshold_ignore=["index.md", "benchmark-core.md"],
             assets=[
                 asset("https://control-toolbox.org/assets/css/documentation.css"),
                 asset("https://control-toolbox.org/assets/js/documentation.js"),
