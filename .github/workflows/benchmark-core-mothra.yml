@@ -1,4 +1,4 @@
-name: Benchmark Core (Ubuntu Latest)
+name: Benchmark Core (Mothra)
 
 on:
   workflow_call:
@@ -18,7 +18,7 @@ jobs:
       - name: Get benchmark config
         id: get-config
         run: |
-          CONFIG=$(jq -c '.benchmarks[] | select(.id == "core-ubuntu-latest")' .github/benchmarks-config.json)
+          CONFIG=$(jq -c '.benchmarks[] | select(.id == "core-mothra")' .github/benchmarks-config.json)
           echo "config=$CONFIG" >> $GITHUB_OUTPUT
   
   bench:

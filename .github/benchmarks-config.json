@@ -1,0 +1,25 @@
+{
+  "benchmarks": [
+    {
+      "id": "core-ubuntu-latest",
+      "julia_version": "1.11",
+      "julia_arch": "x64",
+      "runs_on": "\"ubuntu-latest\"",
+      "runner": "github"
+    },
+    {
+      "id": "core-moonshot",
+      "julia_version": "1.11",
+      "julia_arch": "x64",
+      "runs_on": "[\"self-hosted\", \"Linux\", \"gpu\", \"cuda\", \"cuda12\"]",
+      "runner": "self-hosted"
+    },
+    {
+      "id": "core-mothra",
+      "julia_version": "1.11",
+      "julia_arch": "x64",
+      "runs_on": "[\"self-hosted\", \"Linux\", \"gpu\", \"cuda\", \"cuda13\"]",
+      "runner": "self-hosted"
+    }
+  ]
+}

@@ -42,6 +42,7 @@ with_processed_templates(
             "Introduction" => "index.md",
             "Core benchmark" => "benchmark-core.md",
             "API" => "api.md",
+            "Development Guidelines" => "dev.md",
         ],
     )
 end
