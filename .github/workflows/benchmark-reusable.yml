@@ -31,7 +31,7 @@ permissions:
 jobs:
   run:
     runs-on: ${{ fromJSON(inputs.runs_on) }}
-    timeout-minutes: 300
+    timeout-minutes: 600
     env:
       SCRIPT_PATH: ${{ inputs.script_path }}
 
