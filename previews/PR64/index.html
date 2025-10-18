@@ -39,8 +39,8 @@ Pkg.develop(url=&quot;https://github.com/control-toolbox/CTBenchmarks.jl&quot;)
 <li><p>📋 <a href="assets/./Manifest.toml">Manifest.toml</a> - Complete dependency tree with versions</p>
 </li>
 </ul>
-</div><details style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Version info</summary><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Julia Version 1.12.0
-Commit b907bd0600f (2025-10-07 15:42 UTC)
+</div><details style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Version info</summary><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Julia Version 1.12.1
+Commit ba1e628ee49 (2025-10-17 13:02 UTC)
 Build Info:
   Official https://julialang.org release
 Platform Info:
@@ -52,8 +52,8 @@ Platform Info:
 Threads: 1 default, 1 interactive, 1 GC (on 4 virtual cores)
 Environment:
   JULIA_PKG_SERVER_REGISTRY_PREFERENCE = eager</code></pre></details><details style="margin-bottom: 0.5em;"><summary>📦 Package status</summary><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Status `~/work/CTBenchmarks.jl/CTBenchmarks.jl/docs/Project.toml`
-  [db1dffaa] CTBenchmarks v0.2.1 `~/work/CTBenchmarks.jl/CTBenchmarks.jl`
-  [a93c6f00] DataFrames v1.8.0
+  [db1dffaa] CTBenchmarks v0.2.2 `~/work/CTBenchmarks.jl/CTBenchmarks.jl`
+  [a93c6f00] DataFrames v1.8.1
   [e30172f5] Documenter v1.14.1
 ⌅ [682c06a0] JSON v0.21.4
   [de0858da] Printf v1.11.0
@@ -67,16 +67,16 @@ Info Packages marked with ⌅ have new versions available but compatibility cons
   [79e6a3ab] Adapt v4.4.0
   [a9b6321e] Atomix v1.1.2
   [13072b0f] AxisAlgorithms v1.1.0
-⌅ [ab4f0b2a] BFloat16s v0.5.1
-  [6e4b80f9] BenchmarkTools v1.6.0
+  [ab4f0b2a] BFloat16s v0.6.0
+  [6e4b80f9] BenchmarkTools v1.6.2
   [fa961155] CEnum v0.5.0
   [54762871] CTBase v0.16.4
-  [db1dffaa] CTBenchmarks v0.2.1 `~/work/CTBenchmarks.jl/CTBenchmarks.jl`
+  [db1dffaa] CTBenchmarks v0.2.2 `~/work/CTBenchmarks.jl/CTBenchmarks.jl`
   [790bbbee] CTDirect v0.17.3
   [1c39547c] CTFlows v0.8.9
   [34c4fa32] CTModels v0.6.8
   [32681960] CTParser v0.7.0
-  [052768ef] CUDA v5.9.0
+  [052768ef] CUDA v5.9.1
   [1af6417a] CUDA_Runtime_Discovery v1.0.0
   [45b445bb] CUDSS v0.6.0
   [d360d2e6] ChainRulesCore v1.26.0
@@ -89,7 +89,7 @@ Info Packages marked with ⌅ have new versions available but compatibility cons
   [34da2185] Compat v4.18.1
   [a8cc5b0e] Crayons v4.1.1
   [9a962f9c] DataAPI v1.16.0
-  [a93c6f00] DataFrames v1.8.0
+  [a93c6f00] DataFrames v1.8.1
   [864edb3b] DataStructures v0.19.1
   [e2d170a0] DataValueInterfaces v1.0.0
   [163ba53b] DiffResults v1.1.0
@@ -106,7 +106,7 @@ Info Packages marked with ⌅ have new versions available but compatibility cons
   [0c68f7d7] GPUArrays v11.2.6
   [46192b85] GPUArraysCore v0.2.0
   [61eb1bfa] GPUCompiler v1.7.2
-⌅ [096a3bc2] GPUToolbox v0.3.0
+  [096a3bc2] GPUToolbox v1.0.0
   [d7ba0133] Git v1.5.0
   [34c5aeac] HSL v0.5.1
   [076d061b] HashArrayMappedTries v0.2.0
@@ -186,9 +186,9 @@ Info Packages marked with ⌅ have new versions available but compatibility cons
   [efce3f68] WoodburyMatrices v1.0.0
   [ae81ac8f] ASL_jll v0.1.3+0
   [6e34b625] Bzip2_jll v1.0.9+0
-  [d1e2174e] CUDA_Compiler_jll v0.2.1+0
-  [4ee394cb] CUDA_Driver_jll v13.0.1+1
-  [76a88914] CUDA_Runtime_jll v0.19.1+0
+  [d1e2174e] CUDA_Compiler_jll v0.2.2+0
+  [4ee394cb] CUDA_Driver_jll v13.0.2+0
+  [76a88914] CUDA_Runtime_jll v0.19.2+0
   [4889d778] CUDSS_jll v0.7.0+0
   [2e619515] Expat_jll v2.7.1+0
   [020c3dae] Git_LFS_jll v3.7.0+0
@@ -212,7 +212,7 @@ Info Packages marked with ⌅ have new versions available but compatibility cons
 ⌅ [02c8fc9c] XML2_jll v2.13.9+0
   [a65dc6b1] Xorg_libpciaccess_jll v0.18.1+0
   [1e29f10c] demumble_jll v1.3.0+0
-  [1317d2d5] oneTBB_jll v2022.0.0+0
+  [1317d2d5] oneTBB_jll v2022.0.0+1
   [0dad84c5] ArgTools v1.1.2
   [56f22d72] Artifacts v1.11.0
   [2a0f44e3] Base64 v1.11.0
@@ -260,7 +260,7 @@ Info Packages marked with ⌅ have new versions available but compatibility cons
   [efcefdf7] PCRE2_jll v10.44.0+1
   [bea87d4a] SuiteSparse_jll v7.8.3+2
   [83775a58] Zlib_jll v1.3.1+2
-  [8e850b90] libblastrampoline_jll v5.13.1+1
+  [8e850b90] libblastrampoline_jll v5.15.0+0
   [8e850ede] nghttp2_jll v1.64.0+1
   [3f19e933] p7zip_jll v17.5.0+2
-Info Packages marked with ⌃ and ⌅ have new versions available. Those with ⌃ may be upgradable, but those with ⌅ are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details></article><nav class="docs-footer"><a class="docs-footer-nextpage" href="benchmark-core.html">Core benchmark »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.14.1 on <span class="colophon-date" title="Wednesday 15 October 2025 21:48">Wednesday 15 October 2025</span>. Using Julia version 1.12.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+Info Packages marked with ⌃ and ⌅ have new versions available. Those with ⌃ may be upgradable, but those with ⌅ are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details></article><nav class="docs-footer"><a class="docs-footer-nextpage" href="benchmark-core.html">Core benchmark »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.14.1 on <span class="colophon-date" title="Saturday 18 October 2025 11:47">Saturday 18 October 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
