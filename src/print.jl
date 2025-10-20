@@ -45,22 +45,24 @@ function prettymemory(b)
 end
 
 """
-    format_benchmark_line(model::Symbol, stats::NamedTuple) -> String
+    print_benchmark_line(model::Symbol, stats::NamedTuple)
 
-Build a formatted line summarizing benchmark statistics for `model`.
+Print a formatted line summarizing benchmark statistics for `model` with colors.
 Handles both CPU benchmarks (from @btimed) and GPU benchmarks (from CUDA.@timed).
 
 Displays: time, allocations/memory, objective, iterations, and success status
 """
-function format_benchmark_line(model::Symbol, stats::NamedTuple)
-    model_str = rpad(string(model), 8)
+function print_benchmark_line(model::Symbol, stats::NamedTuple)
     bench = stats.benchmark
 
     # Handle error cases where benchmark is missing or nothing
     if ismissing(bench) || isnothing(bench)
-        status_icon = stats.success ? "✓" : "✗"
         error_msg = haskey(stats, :status) ? stats.status : "ERROR"
-        return "  $status_icon | $model_str: $error_msg"
+        # Print with colored model name
+        printstyled("  ✗ | ", color=:red, bold=true)
+        printstyled(rpad(string(model), 8), color=:magenta, bold=true)
+        println(": $error_msg")
+        return
     end
 
     # Helper function to get value from either Dict or NamedTuple
@@ -82,11 +84,10 @@ function format_benchmark_line(model::Symbol, stats::NamedTuple)
 
     # Extract timing and memory info
     time_val = getval(bench, :time)
-    time_str = lpad(prettytime(time_val), 10)  # Fixed width for time, right-aligned
-
+    time_str = lpad(prettytime(time_val), 10)
+    
     # Build memory string with CPU/GPU labels
     if has_cpu_bytes && has_gpu_bytes
-        # GPU benchmark format - show both CPU and GPU memory
         cpu_bytes = getval(bench, :cpu_bytes)
         cpu_mem_str = lpad(Base.format_bytes(cpu_bytes), 10)
 
@@ -95,22 +96,25 @@ function format_benchmark_line(model::Symbol, stats::NamedTuple)
 
         memory_display = "CPU: $cpu_mem_str | GPU: $gpu_mem_str"
     else
-        # CPU benchmark format (BenchmarkTools @btimed)
         bytes_val = getval(bench, :bytes)
         memory_str = lpad(prettymemory(bytes_val), 10)
-
-        memory_display = "CPU: $memory_str" * " " ^ 18  # Padding to align with GPU format
+        
+        memory_display = "CPU: $memory_str" * " " ^ 18
     end
 
     # Format solver statistics with fixed widths
-    obj_str = if ismissing(stats.objective)
-        rpad("N/A", 13)
+    obj_str = ismissing(stats.objective) ? rpad("N/A", 13) : rpad(@sprintf("%.6e", stats.objective), 13)
+    iter_str = ismissing(stats.iterations) ? rpad("N/A", 6) : rpad(string(stats.iterations), 6)
+    
+    # Print with colored elements
+    if stats.success
+        printstyled("  ✓", color=:green, bold=true)
     else
-        rpad(@sprintf("%.6e", stats.objective), 13)
+        printstyled("  ✗", color=:red, bold=true)
     end
-    iter_str =
-        ismissing(stats.iterations) ? rpad("N/A", 6) : rpad(string(stats.iterations), 6)
-    status_icon = stats.success ? "✓" : "✗"
-
-    return "  $status_icon | $model_str: $time_str | obj: $obj_str | iters: $iter_str | $memory_display"
+    
+    print(" | ")
+    printstyled(rpad(string(model), 8), color=:magenta, bold=true)
+    println(" | time: $time_str | iters: $iter_str | obj: $obj_str | $memory_display")
 end
+
