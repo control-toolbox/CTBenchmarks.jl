@@ -1,15 +1,14 @@
 <!-- 
 INPUTS:
-    BENCH_DATA: The benchmark data
-    BENCH_DIR: The benchmark directory
+    BENCH_ID: The benchmark ID
     ENV_NAME: The environment name
 -->
 ```@example ENV_NAME
-_basic_metadata(BENCH_DATA) # hide
+_basic_metadata(BENCH_ID) # hide
 ```
 
 ```@example ENV_NAME
-_downloads_toml(BENCH_DIR) # hide
+_downloads_toml(BENCH_ID) # hide
 ```
 
 ```@raw html
@@ -17,7 +16,7 @@ _downloads_toml(BENCH_DIR) # hide
 ```
 
 ```@example ENV_NAME
-_bench_data(BENCH_DATA) # hide
+_bench_data(BENCH_ID) # hide
 ```
 
 ```@raw html
@@ -29,7 +28,7 @@ _bench_data(BENCH_DATA) # hide
 ```
 
 ```@example ENV_NAME
-_package_status(BENCH_DATA) # hide
+_package_status(BENCH_ID) # hide
 ```
 
 ```@raw html
@@ -41,7 +40,7 @@ _package_status(BENCH_DATA) # hide
 ```
 
 ```@example ENV_NAME
-_complete_manifest(BENCH_DATA) # hide
+_complete_manifest(BENCH_ID) # hide
 ```
 
 ```@raw html
