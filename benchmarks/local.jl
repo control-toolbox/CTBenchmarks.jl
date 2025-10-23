@@ -1,4 +1,4 @@
-using Revise
+# using Revise
 
 using Pkg
 const project_dir = normpath(@__DIR__, "..")
