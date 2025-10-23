@@ -27,7 +27,7 @@ jobs:
           echo "🛡️  Guard job: Checking execution conditions..."
           
           # Load benchmarks configuration from JSON
-          CONFIG_FILE=".github/benchmarks-config.json"
+          CONFIG_FILE="benchmarks/benchmarks-config.json"
           if [ ! -f "$CONFIG_FILE" ]; then
             echo "❌ Configuration file not found: $CONFIG_FILE"
             exit 1

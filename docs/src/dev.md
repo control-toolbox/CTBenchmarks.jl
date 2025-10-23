@@ -26,7 +26,7 @@ Adding a new benchmark involves creating several components:
 
 ### 1. Add Configuration to JSON
 
-Edit `.github/benchmarks-config.json` and add your benchmark configuration:
+Edit `benchmarks/benchmarks-config.json` and add your benchmark configuration:
 
 ```json
 {
@@ -138,7 +138,7 @@ main()
 
 When you add a label to a PR (e.g., `run bench your-benchmark-id`), the orchestrator:
 
-1. Reads `.github/benchmarks-config.json`
+1. Reads `benchmarks/benchmarks-config.json`
 2. Finds your benchmark configuration
 3. Calls the reusable workflow with the correct parameters
 4. Constructs the script path as `benchmarks/{id}.jl`
@@ -216,7 +216,7 @@ jobs:
       - name: Get benchmark config
         id: get-config
         run: |
-          CONFIG=$(jq -c '.benchmarks[] | select(.id == "{id}")' .github/benchmarks-config.json)
+          CONFIG=$(jq -c '.benchmarks[] | select(.id == "{id}")' benchmarks/benchmarks-config.json)
           echo "config=$CONFIG" >> $GITHUB_OUTPUT
   
   bench:
@@ -336,7 +336,7 @@ A complete GPU benchmark using CUDA 12:
 
 A GPU benchmark identical to Moonshot but using CUDA 13 to compare performance:
 
-- **JSON entry**: Added to `.github/benchmarks-config.json`
+- **JSON entry**: Added to `benchmarks/benchmarks-config.json`
 
     ```json
     {
@@ -361,7 +361,7 @@ This example demonstrates how to create a variant of an existing benchmark to te
 
 The orchestrator uses a **matrix strategy** to dynamically call benchmarks:
 
-1. **Guard job** reads `.github/benchmarks-config.json`
+1. **Guard job** reads `benchmarks/benchmarks-config.json`
 2. Based on PR labels, it builds a JSON array of selected benchmarks
 3. **Benchmark job** uses matrix to iterate over selected benchmarks
 4. Each matrix iteration calls `benchmark-reusable.yml` with the appropriate parameters
@@ -416,7 +416,7 @@ The system is **completely generic** - no hardcoded family names:
 
 ### Configuration File
 
-The `.github/benchmarks-config.json` file is the **single source of truth**:
+The `benchmarks/benchmarks-config.json` file is the **single source of truth**:
 
 - Orchestrator reads it to discover available benchmarks
 - Individual workflows read it to get their configuration

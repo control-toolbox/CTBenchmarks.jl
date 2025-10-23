@@ -18,7 +18,7 @@ jobs:
       - name: Get benchmark config
         id: get-config
         run: |
-          CONFIG=$(jq -c '.benchmarks[] | select(.id == "core-ubuntu-latest")' .github/benchmarks-config.json)
+          CONFIG=$(jq -c '.benchmarks[] | select(.id == "core-ubuntu-latest")' benchmarks/benchmarks-config.json)
           echo "config=$CONFIG" >> $GITHUB_OUTPUT
   
   bench:
