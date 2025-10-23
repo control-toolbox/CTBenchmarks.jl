@@ -20,9 +20,8 @@ on:
         required: true
         type: string
       runner:
-        description: "Runner identifier forwarded to benchmark script"
-        required: false
-        default: 'standard'
+        description: "Runner type: 'github' for standard runners or 'self-hosted' for self-hosted runners"
+        required: true
         type: string
 
 permissions:
@@ -32,7 +31,7 @@ permissions:
 jobs:
   run:
     runs-on: ${{ fromJSON(inputs.runs_on) }}
-    timeout-minutes: 180
+    timeout-minutes: 600
     env:
       SCRIPT_PATH: ${{ inputs.script_path }}
 
@@ -72,11 +71,11 @@ jobs:
 
       # Cache strategy: julia-actions/cache for standard runners, actions/cache for self-hosted
       - name: Cache Julia packages (standard runners)
-        if: inputs.runner != 'moonshot'
+        if: inputs.runner != 'self-hosted'
         uses: julia-actions/cache@v2
 
       - name: Cache Julia artifacts (self-hosted runners)
-        if: inputs.runner == 'moonshot'
+        if: inputs.runner == 'self-hosted'
         uses: actions/cache@v4
         env:
           cache-name: cache-artifacts
@@ -90,7 +89,7 @@ jobs:
 
       - name: 💾 Julia cache status
         run: |
-          if [ "${{ inputs.runner }}" = "moonshot" ]; then
+          if [ "${{ inputs.runner }}" = "self-hosted" ]; then
             echo "✅ Julia artifacts cache configured (self-hosted strategy)"
           else
             echo "✅ Julia package cache configured (standard strategy)"
@@ -140,9 +139,9 @@ jobs:
             OUTPUT_DIR=$(cat "$BENCHMARK_OUTPUT_FILE")
             echo "📁 Output directory: $OUTPUT_DIR"
             
-            # Extract the directory name (e.g., benchmark-core-moonshot)
-            DIR_NAME=$(basename "$OUTPUT_DIR")
-            SCRIPT_DEST="$OUTPUT_DIR/$DIR_NAME.jl"
+            # Extract the benchmark ID (e.g., core-moonshot from .../benchmarks/core-moonshot)
+            BENCH_ID=$(basename "$OUTPUT_DIR")
+            SCRIPT_DEST="$OUTPUT_DIR/$BENCH_ID.jl"
             
             echo "📄 Source script: $SCRIPT_PATH"
             echo "📄 Destination: $SCRIPT_DEST"

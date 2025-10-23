@@ -181,9 +181,9 @@ Benchmarks results:
 ├──┬ solver: ipopt, disc_method: trapeze
 │  │
 │  │  N : 100
-│  │  ✓ | JuMP    :    1.234 s | obj: 1.234567e+00 | iters: 42    | CPU:    2.5 MiB
-│  │  ✓ | adnlp   :    0.987 s | obj: 1.234567e+00 | iters: 42    | CPU:    2.1 MiB
-│  │  ✓ | exa     :    0.765 s | obj: 1.234567e+00 | iters: 42    | CPU:    1.8 MiB
+│  │  ✓ | JuMP    | time:    1.234 s | iters: 42    | obj: 1.234567e+00 | CPU:    2.5 MiB
+│  │  ✓ | adnlp   | time:    0.987 s | iters: 42    | obj: 1.234567e+00 | CPU:    2.1 MiB
+│  │  ✓ | exa     | time:    0.765 s | iters: 42    | obj: 1.234567e+00 | CPU:    1.8 MiB
 │  └─
 └─
 ```
@@ -191,9 +191,10 @@ Benchmarks results:
 **Legend:**
 
 - ✓ / ✗ - Success or failure indicator
-- **Time** - Total solve time (right-aligned for easy comparison)
-- **obj** - Objective function value
+- **Model** - Modelling framework (JuMP, ADNLPModels, ExaModels)
+- **time** - Total solve time
 - **iters** - Number of solver iterations
+- **obj** - Objective function value
 - **Memory** - CPU memory usage (GPU memory shown separately for GPU models)
 
 ## Documentation build environment

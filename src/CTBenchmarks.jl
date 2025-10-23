@@ -29,6 +29,6 @@ include("utils.jl")
 include("print.jl")
 include("run.jl")
 
-export benchmark, benchmark_data
+export benchmark, benchmark_data, print_benchmark_line
 
 end # module

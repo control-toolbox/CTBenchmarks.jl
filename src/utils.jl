@@ -424,8 +424,10 @@ function benchmark_data(;
     # Main loop over all combinations
     # Loop order: problems -> solver_models -> disc_methods -> grid_sizes -> models
     for (prob_idx, problem) in enumerate(problems)
-        # Print problem header
-        println("┌─ problem: $problem")
+        # Print problem header with color
+        print("┌─ ")
+        printstyled("Problem: $problem", color=:blue, bold=true)
+        println()
         println("│")
 
         # Create all combinations of (solver, models) and disc_method for this problem
@@ -445,9 +447,13 @@ function benchmark_data(;
 
             # Determine if this is the last solver+disc combo
             is_last_combo = (combo_idx == length(solver_disc_combos))
-
-            # Print solver/disc_method header
-            println("├──┬ solver: $solver, disc_method: $disc_method")
+            
+            # Print solver/disc_method header with colors
+            print("├──┬ ")
+            printstyled("Solver: $solver", color=:cyan, bold=true)
+            print(", ")
+            printstyled("Discretization: $disc_method", color=:yellow, bold=true)
+            println()
             println("│  │")
 
             for (grid_idx, N) in enumerate(grid_sizes)
@@ -458,10 +464,12 @@ function benchmark_data(;
                 if isempty(models_to_run)
                     continue
                 end
-
-                # Print grid size
-                println("│  │  N : $N")
-
+                
+                # Print grid size with color
+                print("│  │  ")
+                printstyled("N = $N", color=:yellow, bold=true)
+                println()
+                
                 for model in models_to_run
                     # Solve and extract data using helper function
                     stats = solve_and_extract_data(
@@ -476,10 +484,11 @@ function benchmark_data(;
                         max_iter,
                         max_wall_time,
                     )
-
-                    # Format and print the benchmark line
-                    println("│  │", format_benchmark_line(model, stats))
-
+                    
+                    # Print the benchmark line with colors
+                    print("│  │")
+                    print_benchmark_line(model, stats)
+                    
                     # Store results in DataFrame
                     push!(
                         data,
