@@ -59,10 +59,10 @@ function print_benchmark_line(model::Symbol, stats::NamedTuple)
     if ismissing(bench) || isnothing(bench)
         error_msg = haskey(stats, :status) ? stats.status : "ERROR"
         # Print with colored model name
-        printstyled("  ✗ | ", color=:red, bold=true)
-        printstyled(rpad(string(model), 8), color=:magenta, bold=true)
+        printstyled("  ✗ | "; color=:red, bold=true)
+        printstyled(rpad(string(model), 8); color=:magenta, bold=true)
         println(": $error_msg")
-        return
+        return nothing
     end
 
     # Helper function to get value from either Dict or NamedTuple
@@ -85,7 +85,7 @@ function print_benchmark_line(model::Symbol, stats::NamedTuple)
     # Extract timing and memory info
     time_val = getval(bench, :time)
     time_str = lpad(prettytime(time_val), 10)
-    
+
     # Build memory string with CPU/GPU labels
     if has_cpu_bytes && has_gpu_bytes
         cpu_bytes = getval(bench, :cpu_bytes)
@@ -98,23 +98,27 @@ function print_benchmark_line(model::Symbol, stats::NamedTuple)
     else
         bytes_val = getval(bench, :bytes)
         memory_str = lpad(prettymemory(bytes_val), 10)
-        
+
         memory_display = "CPU: $memory_str" * " " ^ 18
     end
 
     # Format solver statistics with fixed widths
-    obj_str = ismissing(stats.objective) ? rpad("N/A", 13) : rpad(@sprintf("%.6e", stats.objective), 13)
-    iter_str = ismissing(stats.iterations) ? rpad("N/A", 6) : rpad(string(stats.iterations), 6)
-    
+    obj_str = if ismissing(stats.objective)
+        rpad("N/A", 13)
+    else
+        rpad(@sprintf("%.6e", stats.objective), 13)
+    end
+    iter_str =
+        ismissing(stats.iterations) ? rpad("N/A", 6) : rpad(string(stats.iterations), 6)
+
     # Print with colored elements
     if stats.success
-        printstyled("  ✓", color=:green, bold=true)
+        printstyled("  ✓"; color=:green, bold=true)
     else
-        printstyled("  ✗", color=:red, bold=true)
+        printstyled("  ✗"; color=:red, bold=true)
     end
-    
+
     print(" | ")
-    printstyled(rpad(string(model), 8), color=:magenta, bold=true)
+    printstyled(rpad(string(model), 8); color=:magenta, bold=true)
     println(" | time: $time_str | iters: $iter_str | obj: $obj_str | $memory_display")
 end
-
