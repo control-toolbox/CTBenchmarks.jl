@@ -108,7 +108,7 @@ function _print_results(bench_id)
             for problem in problems
                 # H2 level: Problem name in deep blue
                 print("\n┌─ ")
-                printstyled("Problem: $problem", color=:blue, bold=true)
+                printstyled("Problem: $problem"; color=:blue, bold=true)
                 println()
                 println("│")
 
@@ -122,12 +122,12 @@ function _print_results(bench_id)
 
                 for (idx, (solver, disc_method)) in enumerate(solver_disc_combos)
                     is_last = (idx == length(solver_disc_combos))
-                    
+
                     # H3 level: Solver in cyan, disc_method in yellow
                     print("├──┬ ")
-                    printstyled("Solver: $solver", color=:cyan, bold=true)
+                    printstyled("Solver: $solver"; color=:cyan, bold=true)
                     print(", ")
-                    printstyled("Discretization: $disc_method", color=:yellow, bold=true)
+                    printstyled("Discretization: $disc_method"; color=:yellow, bold=true)
                     println()
                     println("│  │")
 
@@ -143,9 +143,9 @@ function _print_results(bench_id)
                     for (grid_idx, N) in enumerate(grid_sizes)
                         # H4 level: Grid size in yellow
                         print("│  │  ")
-                        printstyled("N = $N", color=:yellow, bold=true)
+                        printstyled("N = $N"; color=:yellow, bold=true)
                         println()
-                        
+
                         # Filter for this grid size
                         grid_df = filter(row -> row.grid_size == N, combo_df)
 
