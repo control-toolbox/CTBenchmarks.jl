@@ -2,7 +2,7 @@
 
 julia_version = "1.11.7"
 manifest_format = "2.0"
-project_hash = "0e0ae1b7a13661f9df42711082a5273d5c0351e7"
+project_hash = "504321ce5e41e219898888ab0c5197c8a0da3a8b"
 
 [[deps.ADNLPModels]]
 deps = ["ADTypes", "ForwardDiff", "LinearAlgebra", "NLPModels", "Requires", "ReverseDiff", "SparseArrays", "SparseConnectivityTracer", "SparseMatrixColorings"]
@@ -132,10 +132,10 @@ version = "0.16.4"
     JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 
 [[deps.CTDirect]]
-deps = ["CTBase", "CTModels", "DocStringExtensions", "HSL", "MKL", "SparseArrays"]
-git-tree-sha1 = "a3e796c81478034446feb316816ccfe1f250f211"
+deps = ["CTBase", "CTModels", "DocStringExtensions", "HSL", "MKL", "NLPModels", "SolverCore", "SparseArrays"]
+git-tree-sha1 = "66244d746db32e51fc27229079e355f675e017ea"
 uuid = "790bbbee-bee9-49ee-8912-a9de031322d5"
-version = "0.17.3"
+version = "0.17.4"
 
     [deps.CTDirect.extensions]
     CTDirectExtADNLP = ["ADNLPModels"]
@@ -364,9 +364,9 @@ version = "1.6.0"
 
 [[deps.ExaModels]]
 deps = ["NLPModels", "Printf", "SolverCore"]
-git-tree-sha1 = "228b2c8a02228fb28179c620d8337a8b7a781a15"
+git-tree-sha1 = "2a372f5f8049cc429ddd98cd89247bc51ab954d7"
 uuid = "1037b233-b668-4ce9-9b63-f9f681f55dd2"
-version = "0.9.1"
+version = "0.9.2"
 
     [deps.ExaModels.extensions]
     ExaModelsAMDGPU = "AMDGPU"
@@ -875,10 +875,16 @@ uuid = "a4795742-8479-5a88-8948-cc11e1c8c1a6"
 version = "0.21.5"
 
 [[deps.NLPModelsIpopt]]
-deps = ["Ipopt", "NLPModels", "SolverCore"]
-git-tree-sha1 = "06782efc249b21d7b7c538fec4593d72420a36e3"
+deps = ["Ipopt", "NLPModels", "NLPModelsModifiers", "SolverCore"]
+git-tree-sha1 = "4bda4cf02a6ff0a9508179503517cb905519bbf9"
 uuid = "f4238b75-b362-5c4c-b852-0801c9a21d71"
-version = "0.10.4"
+version = "0.11.0"
+
+[[deps.NLPModelsModifiers]]
+deps = ["FastClosures", "LinearAlgebra", "LinearOperators", "NLPModels", "Printf", "SparseArrays"]
+git-tree-sha1 = "a80505adbe42104cbbe9674591a5ccd9e9c2dfda"
+uuid = "e01155f1-5c6f-4375-a9d8-616dd036575f"
+version = "0.7.2"
 
 [[deps.NVTX]]
 deps = ["Colors", "JuliaNVTXCallbacks_jll", "Libdl", "NVTX_jll"]
