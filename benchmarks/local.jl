@@ -1,4 +1,8 @@
-# using Revise
+try
+    using Revise
+catch
+    @warn "Revise not available, continuing without it"
+end
 
 using Pkg
 const project_dir = normpath(@__DIR__, "..")
@@ -16,6 +20,6 @@ Pkg.update()
 println("🔄 Loading CTBenchmarks package...")
 using CTBenchmarks
 
-println("⏱️ Ready to run core benchmark...")
+println("⏱️  Ready to run core benchmark...")
 CTBenchmarks.run(:minimal; print_trace=false)
 #CTBenchmarks.run(:complete; print_trace=false)
