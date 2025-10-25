@@ -1,7 +1,7 @@
 name = "CTBenchmarks"
 uuid = "db1dffaa-5ed3-4583-9a66-b5881c82ef11"
 authors = ["Olivier Cots <olivier.cots@toulouse-inp.fr>"]
-version = "0.1.0"
+version = "0.2.2"
 
 [deps]
 BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
