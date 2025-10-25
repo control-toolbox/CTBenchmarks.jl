@@ -29,6 +29,7 @@ with_processed_templates(
         warnonly=:cross_references,
         sitename="CTBenchmarks",
         format=Documenter.HTML(;
+            ansicolor = true,
             repolink="https://" * repo_url,
             prettyurls=false,
             size_threshold_ignore=["index.md", "benchmark-core.md"],
