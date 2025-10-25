@@ -176,7 +176,7 @@ function solve_and_extract_data(
             bt_nlp_sol = bt.value
 
             # Build OCP solution to extract statistics
-            ocp_sol = build_ocp_solution(docp, bt_nlp_sol)
+            ocp_sol = OptimalControl.build_OCP_solution(docp, bt_nlp_sol)
             obj = objective(ocp_sol)
             iters = iterations(ocp_sol)
             status = bt_nlp_sol.status
@@ -262,7 +262,7 @@ function solve_and_extract_data(
             end
 
             # Build OCP solution to extract statistics
-            ocp_sol = build_ocp_solution(docp, bt_nlp_sol)
+            ocp_sol = OptimalControl.build_OCP_solution(docp, bt_nlp_sol)
             obj = objective(ocp_sol)
             iters = iterations(ocp_sol)
             status = bt_nlp_sol.status

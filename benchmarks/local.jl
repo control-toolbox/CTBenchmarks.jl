@@ -10,6 +10,9 @@ Pkg.activate(project_dir)
 println("📥 Installing dependencies...")
 Pkg.instantiate()
 
+println("🔄 Updating dependencies...")
+Pkg.update()
+
 println("🔄 Loading CTBenchmarks package...")
 using CTBenchmarks
 
