@@ -633,17 +633,6 @@ function save_json(payload::Dict, outpath::AbstractString)
     end
 end
 
-function copy_project_files(outpath::AbstractString)
-    root_dir = normpath(joinpath(@__DIR__, ".."))
-    mkpath(outpath)
-    for filename in ("Project.toml", "Manifest.toml")
-        src = normpath(joinpath(root_dir, filename))
-        dest = joinpath(outpath, filename)
-        cp(src, dest; force=true)
-    end
-    return nothing
-end
-
 # ------------------------------
 # Public API
 # ------------------------------
@@ -661,7 +650,7 @@ end
         max_iter,
         max_wall_time,
         grid_size_max_cpu
-    ) -> String
+    ) -> Nothing
 
 Run benchmarks on optimal control problems and save results to a JSON file.
 
@@ -670,7 +659,7 @@ This function performs the following steps:
 2. Runs benchmarks using `benchmark_data()` to generate a DataFrame of results
 3. Collects environment metadata (Julia version, OS, machine, timestamp)
 4. Builds a JSON-friendly payload combining results and metadata
-5. Saves the payload to `outpath` as pretty-printed JSON
+5. Saves the payload to `outpath/data.json` as pretty-printed JSON
 
 The JSON file can be easily loaded and converted back to a DataFrame using:
 ```julia
@@ -679,8 +668,17 @@ data = JSON.parsefile("path/to/data.json")
 df = DataFrame(data["results"])
 ```
 
+!!! note "File Management in CI"
+    When run in the GitHub Actions workflow, `Project.toml` and `Manifest.toml` are 
+    automatically copied to the output directory by the workflow itself. This ensures 
+    reproducibility of benchmark results.
+
+!!! note "Return Value"
+    This function returns `nothing`. The output path is managed by the calling `main()` 
+    function in benchmark scripts, which returns the `outpath` for the workflow to use.
+
 # Arguments
-- `outpath`: Path to save the JSON file
+- `outpath`: Path to directory where results will be saved (or `nothing` to skip saving)
 - `problems`: Vector of problem names (Symbols)
 - `solver_models`: Vector of Pairs mapping solver => models (e.g., [:ipopt => [:JuMP, :adnlp], :madnlp => [:exa, :exa_gpu]])
 - `grid_sizes`: Vector of grid sizes (Int)
@@ -693,7 +691,7 @@ df = DataFrame(data["results"])
 - `grid_size_max_cpu`: Maximum grid size for CPU models (Int)
 
 # Returns
-- The `outpath` of the saved JSON file.
+- `nothing`
 """
 function benchmark(;
     outpath::Union{AbstractString,Nothing},
@@ -741,7 +739,6 @@ function benchmark(;
 
         # Save to JSON
         println("Saving results to $outpath...")
-        copy_project_files(outpath)
         JSON_path = joinpath(outpath, "data.json")
         save_json(payload, JSON_path)
     end
