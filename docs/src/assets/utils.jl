@@ -4,6 +4,7 @@ using DataFrames
 using Markdown
 using Dates
 using Printf
+using Plots
 
 # Get benchmark data from benchmark ID
 function _get_bench_data(bench_id::AbstractString)
@@ -183,5 +184,49 @@ function _print_results(bench_id)
     end
 end
 
-
-sssssssssss
+function _plot_results(file)
+    raw = JSON.read(open(file, "r"), Dict)
+    results = raw["results"]
+    df = DataFrame(
+        problem = [r["problem"] for r in results],
+        solver  = [r["solver"] for r in results],
+        model   = [r["model"] for r in results],
+        metric  = [r["benchmark"][string(time)] for r in results],
+        success = [r["success"] for r in results],
+    )
+    filter!(r -> r.success == true, df)
+    df.ratio = similar(df.metric)
+    for prob in unique(df.problem)
+        subset = df[df.problem .== prob, :]
+        tmin = minimum(subset.metric)
+        df.ratio[df.problem .== prob] .= subset.metric ./ tmin
+    end
+    taus = range(1, stop=10, length=200)
+    solvers = unique(df.solver)
+    profiles = Dict{String, Vector{Float64}}()
+    for s in solvers
+        ratios = df.ratio[df.solver .== s]
+        probs = df.problem[df.solver .== s]
+        unique_probs = unique(probs)
+        ρ = Float64[]
+        for τ in taus
+            count = sum(ratios .<= τ)
+            push!(ρ, count / length(unique_probs))
+        end
+        profiles[s] = ρ
+    end
+    plt = plot(
+        xlabel="Facteur de performance (τ)",
+        ylabel="Proportion de problèmes résolus (ρ)",
+        legend=:bottomright,
+        title="Performance Profile — $(metric)",
+        xlim=(1, maximum(taus)),
+        ylim=(0, 1.05),
+        lw=2,
+    )
+    for (solver, ρ) in profiles
+        plot!(plt, taus, ρ, label=solver)
+    end
+    display(plt)
+    return plt
+end
