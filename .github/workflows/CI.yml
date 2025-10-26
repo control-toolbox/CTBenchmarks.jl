@@ -1,11 +1,10 @@
 # [.github/workflows/CI.yml]
 name: CI
+
 on:
-  push:
-    branches:
-      - main
-    tags: '*'
   pull_request:
+    types: [labeled, synchronize, opened, reopened]
+
 jobs:
   guard:
     runs-on: ubuntu-latest
