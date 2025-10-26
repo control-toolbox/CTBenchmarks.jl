@@ -8,12 +8,17 @@ Pkg.activate(project_dir)
 println("📥 Installing dependencies...")
 Pkg.instantiate()
 
+println("🔄 Updating dependencies...")
+Pkg.update()
+
 println("🔄 Loading CTBenchmarks package...")
 using CTBenchmarks
 
 println("⏱️  Ready to run core benchmark...")
 function main()
-    outpath=joinpath(project_dir, "docs", "src", "assets", "benchmarks", "core-ubuntu-latest")
+    outpath=joinpath(
+        project_dir, "docs", "src", "assets", "benchmarks", "core-ubuntu-latest"
+    )
     CTBenchmarks.benchmark(;
         outpath=outpath,
         problems=[

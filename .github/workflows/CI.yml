@@ -66,20 +66,10 @@ jobs:
   cpu-tests:
     needs: guard
     if: needs.guard.outputs.should_run_cpu == 'true'
-    strategy:
-      matrix:
-        version:
-          - '1.10'
-          - '1.11'
-        os:
-          - ubuntu-latest
-        arch:
-          - x64
     uses: control-toolbox/CTActions/.github/workflows/ci.yml@main
     with:
-      version: ${{ matrix.version }}
-      os: ${{ matrix.os }}
-      arch: ${{ matrix.arch }}
+      runners: '["ubuntu-latest"]'
+      versions: '["1.12"]'
 
   moonshot:
     needs: guard
@@ -88,7 +78,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-24.04]
-        julia-version: ['1.11']
+        julia-version: ['1.10', '1.11', '1.12']
         julia-arch: [x64]
 
     steps:
