@@ -1,22 +1,9 @@
-using Pkg
-const project_dir = normpath(@__DIR__, "..")
-ENV["PROJECT"] = project_dir
+# Benchmark script for core-mothra
+# Setup (Pkg.activate, instantiate, update, using CTBenchmarks) is handled by the workflow
 
-println("📦 Activating project environment...")
-Pkg.activate(project_dir)
-
-println("📥 Installing dependencies...")
-Pkg.instantiate()
-
-println("🔄 Updating dependencies...")
-Pkg.update()
-
-println("🔄 Loading CTBenchmarks package...")
-using CTBenchmarks
-
-println("⏱️  Ready to run core benchmark...")
 function main()
-    outpath=joinpath(project_dir, "docs", "src", "assets", "benchmarks", "core-mothra")
+    project_dir = normpath(@__DIR__, "..")
+    outpath = joinpath(project_dir, "docs", "src", "assets", "benchmarks", "core-mothra")
     CTBenchmarks.benchmark(;
         outpath=outpath,
         problems=[

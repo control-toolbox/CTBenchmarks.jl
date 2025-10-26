@@ -1,3 +1,7 @@
+# Local testing script for CTBenchmarks
+# This script includes the setup code that is handled by the GitHub workflow in CI
+# Use this as a template for running benchmarks locally
+
 try
     using Revise
 catch
@@ -22,3 +26,7 @@ using CTBenchmarks
 
 println("⏱️  Ready to run core benchmark...")
 CTBenchmarks.run(:minimal; print_trace=false) # or :complete
+
+# To run a specific benchmark script locally, you can also do:
+# include("core-moonshot.jl")
+# main()
