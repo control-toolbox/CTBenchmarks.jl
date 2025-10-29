@@ -116,8 +116,23 @@ jobs:
           
           julia --color=yes -e '
             using Pkg
+            
+            println("📦 Activating project environment...")
+            Pkg.activate(".")
+            
+            println("📥 Installing dependencies...")
+            Pkg.instantiate()
+            
+            println("🔄 Updating dependencies...")
+            Pkg.update()
+            
+            println("📦 Ensuring JSON package is available...")
             Pkg.add("JSON")
             using JSON
+            
+            println("🔄 Loading CTBenchmarks package...")
+            using CTBenchmarks
+            
             include(ENV["SCRIPT_PATH"])
             out = main()
             println("📄 Output file: ", out)
@@ -148,6 +163,25 @@ jobs:
             
             cp "$SCRIPT_PATH" "$SCRIPT_DEST"
             echo "✅ Benchmark script copied successfully to $SCRIPT_DEST"
+          else
+            echo "❌ ERROR: $BENCHMARK_OUTPUT_FILE not found"
+            exit 1
+          fi
+
+      - name: 📋 Copy TOML files to output directory
+        if: steps.benchmark.outputs.benchmark_success == 'true'
+        run: |
+          echo "📋 Copying TOML files to output directory..."
+          
+          if [ -f "$BENCHMARK_OUTPUT_FILE" ]; then
+            OUTPUT_DIR=$(cat "$BENCHMARK_OUTPUT_FILE")
+            echo "📁 Output directory: $OUTPUT_DIR"
+            
+            # Copy Project.toml and Manifest.toml from repo root
+            cp Project.toml "$OUTPUT_DIR/Project.toml"
+            cp Manifest.toml "$OUTPUT_DIR/Manifest.toml"
+            
+            echo "✅ TOML files copied successfully to $OUTPUT_DIR"
           else
             echo "❌ ERROR: $BENCHMARK_OUTPUT_FILE not found"
             exit 1

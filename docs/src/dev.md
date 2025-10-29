@@ -92,16 +92,11 @@ Create a new Julia script in the `benchmarks/` directory with the filename `{id}
 **Example**: For `"id": "core-ubuntu-latest"`, create `benchmarks/core-ubuntu-latest.jl`
 
 ```julia
-using Pkg
-const project_dir = normpath(@__DIR__, "..")
-ENV["PROJECT"] = project_dir
-
-Pkg.activate(project_dir)
-Pkg.instantiate()
-
-using CTBenchmarks
+# Benchmark script for <id>
+# Setup (Pkg.activate, instantiate, update, using CTBenchmarks) is handled by the workflow
 
 function main()
+    project_dir = normpath(@__DIR__, "..")
     outpath = joinpath(project_dir, "docs", "src", "assets", "benchmarks", "<id>")
     CTBenchmarks.benchmark(;
         outpath = outpath,
@@ -123,14 +118,16 @@ main()
 
 **Key points:**
 
+- **Setup code is handled by the workflow** - No need to include `using Pkg`, `Pkg.activate()`, `Pkg.instantiate()`, `Pkg.update()`, or `using CTBenchmarks` in your script. The GitHub Actions workflow handles all environment setup automatically.
 - **All parameters are required** - the `benchmark` function has no optional arguments
 - **The `main()` function is crucial** - it must:
   - Take no arguments
   - Return the output path where files are saved
-- The `benchmark` function generates JSON and TOML files in the specified `outpath`
-- Print statements (like `println("📦 Activating...")`) are optional but helpful for debugging
+- The `benchmark` function generates a JSON file (`data.json`) in the specified `outpath`
+- **TOML files are copied by the workflow** - `Project.toml` and `Manifest.toml` are automatically copied to the output directory by the GitHub Actions workflow to ensure reproducibility
 - The output directory follows the pattern `docs/src/assets/benchmarks/{id}`
 - **Available problems:** The list of problems you can choose is available in the [OptimalControlProblems.jl documentation](https://control-toolbox.org/OptimalControlProblems.jl/stable/problems_browser.html)
+- **For local testing:** See `benchmarks/local.jl` for an example that includes the setup code needed to run benchmarks locally
 
 ### 2. Automatic Workflow Execution
 
