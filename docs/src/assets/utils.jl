@@ -5,6 +5,7 @@ using Markdown
 using Dates
 using Printf
 using Plots
+using Statistics
 
 # Get benchmark data from benchmark ID
 function _get_bench_data(bench_id::AbstractString)
@@ -184,49 +185,74 @@ function _print_results(bench_id)
     end
 end
 
-function _plot_results(file)
-    raw = JSON.read(open(file, "r"), Dict)
-    results = raw["results"]
-    df = DataFrame(
-        problem = [r["problem"] for r in results],
-        solver  = [r["solver"] for r in results],
-        model   = [r["model"] for r in results],
-        metric  = [r["benchmark"][string(time)] for r in results],
-        success = [r["success"] for r in results],
-    )
-    filter!(r -> r.success == true, df)
-    df.ratio = similar(df.metric)
-    for prob in unique(df.problem)
-        subset = df[df.problem .== prob, :]
-        tmin = minimum(subset.metric)
-        df.ratio[df.problem .== prob] .= subset.metric ./ tmin
-    end
-    taus = range(1, stop=10, length=200)
-    solvers = unique(df.solver)
-    profiles = Dict{String, Vector{Float64}}()
-    for s in solvers
-        ratios = df.ratio[df.solver .== s]
-        probs = df.problem[df.solver .== s]
-        unique_probs = unique(probs)
-        ρ = Float64[]
-        for τ in taus
-            count = sum(ratios .<= τ)
-            push!(ρ, count / length(unique_probs))
+function _plot_results(chemin_fichier_json::String)
+    
+    # --- Étape 1 : Chargement et préparation des données ---
+    # MODIFICATION : On utilise JSON.parsefile au lieu de JSON3.read
+    brut_data = JSON.parsefile(chemin_fichier_json)
+    df = DataFrame(brut_data["results"])
+
+    df_successful = filter(row -> row.success == true && row.benchmark !== nothing, df)
+    df_successful.time = [row.benchmark["time"] for row in eachrow(df_successful)]
+
+    select!(df_successful, [:problem, :model, :solver, :grid_size, :time])
+    sort!(df_successful, [:problem, :model, :solver, :grid_size])
+
+    # --- Étape 2 : Boucle de génération des graphiques ---
+    for problem in unique(df_successful.problem)
+        df_problem = filter(row -> row.problem == problem, df_successful)
+        
+        problem_plot = plot(
+            title = "Profil de Performance pour: $problem",
+            xlabel = "Facteur de performance τ (échelle log)",
+            ylabel = "Proportion des problèmes résolus",
+            legend = :bottomright,
+            xaxis = :log10,
+            grid = true,
+            framestyle = :box,
+            minorticks = true
+        )
+
+        df_grouped_by_model = groupby(df_problem, :model)
+        
+        for (key, sub_df) in pairs(df_grouped_by_model)
+            model_name = key.model
+            
+            # Calcul des ratios
+            wide_df = unstack(DataFrame(sub_df), :grid_size, :solver, :time)
+            
+            required_solvers = ["ipopt", "madnlp"]
+            if !all(s -> s in names(wide_df), required_solvers)
+                continue
+            end
+
+            min_times = min.(wide_df.ipopt, wide_df.madnlp)
+            ratios_ipopt = wide_df.ipopt ./ min_times
+            ratios_madnlp = wide_df.madnlp ./ min_times
+
+            # Ajout des courbes
+            for (solver, ratios) in [("ipopt", ratios_ipopt), ("madnlp", ratios_madnlp)]
+                sorted_ratios = sort(ratios)
+                n = length(sorted_ratios)
+                proportions = (1:n) / n
+                
+                plot_x = [1; sorted_ratios]
+                plot_y = [0; proportions]
+                
+                plot!(problem_plot, plot_x, plot_y,
+                    label = "$(solver) ($(model_name))",
+                    seriestype = :steppost,
+                    lw = 2.5,
+                    markershape = :circle,
+                    markersize = 3,
+                    markerstrokewidth = 0
+                )
+            end
         end
-        profiles[s] = ρ
+        
+        # --- Étape 3 : Affichage du graphique ---
+        display(problem_plot)
     end
-    plt = plot(
-        xlabel="Facteur de performance (τ)",
-        ylabel="Proportion de problèmes résolus (ρ)",
-        legend=:bottomright,
-        title="Performance Profile — $(metric)",
-        xlim=(1, maximum(taus)),
-        ylim=(0, 1.05),
-        lw=2,
-    )
-    for (solver, ρ) in profiles
-        plot!(plt, taus, ρ, label=solver)
-    end
-    display(plt)
-    return plt
+    
+    return nothing
 end
