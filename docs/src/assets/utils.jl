@@ -186,9 +186,6 @@ function _print_results(bench_id)
 end
 
 function _plot_results(chemin_fichier_json::String)
-    
-    # --- Étape 1 : Chargement et préparation des données ---
-    # MODIFICATION : On utilise JSON.parsefile au lieu de JSON3.read
     brut_data = JSON.parsefile(chemin_fichier_json)
     df = DataFrame(brut_data["results"])
 
@@ -198,7 +195,6 @@ function _plot_results(chemin_fichier_json::String)
     select!(df_successful, [:problem, :model, :solver, :grid_size, :time])
     sort!(df_successful, [:problem, :model, :solver, :grid_size])
 
-    # --- Étape 2 : Boucle de génération des graphiques ---
     for problem in unique(df_successful.problem)
         df_problem = filter(row -> row.problem == problem, df_successful)
         
@@ -218,7 +214,6 @@ function _plot_results(chemin_fichier_json::String)
         for (key, sub_df) in pairs(df_grouped_by_model)
             model_name = key.model
             
-            # Calcul des ratios
             wide_df = unstack(DataFrame(sub_df), :grid_size, :solver, :time)
             
             required_solvers = ["ipopt", "madnlp"]
@@ -230,7 +225,6 @@ function _plot_results(chemin_fichier_json::String)
             ratios_ipopt = wide_df.ipopt ./ min_times
             ratios_madnlp = wide_df.madnlp ./ min_times
 
-            # Ajout des courbes
             for (solver, ratios) in [("ipopt", ratios_ipopt), ("madnlp", ratios_madnlp)]
                 sorted_ratios = sort(ratios)
                 n = length(sorted_ratios)
@@ -249,9 +243,8 @@ function _plot_results(chemin_fichier_json::String)
                 )
             end
         end
-        
-        # --- Étape 3 : Affichage du graphique ---
-        display(problem_plot)
+        filepath = joinpath("./benchmarks/core-ubuntu-latest", "$(problem)_profile.png")
+        savefig(problem_plot, filepath)
     end
     
     return nothing
