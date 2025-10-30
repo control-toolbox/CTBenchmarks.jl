@@ -271,8 +271,8 @@ function _plot_results(bench_id)
         end
     end
 
-    N = 10
-    problem_plots = problem_plots[1:N]
+    # N = 10
+    # problem_plots = problem_plots[1:N]
     n_plots = length(problem_plots)
     return plot(problem_plots...; 
         layout = (n_plots, 1),
