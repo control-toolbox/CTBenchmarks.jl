@@ -5,6 +5,7 @@ using Markdown
 using Dates
 using Printf
 using Plots
+using Plots.PlotMeasures
 using Statistics
 
 # Get benchmark data from benchmark ID
@@ -185,23 +186,40 @@ function _print_results(bench_id)
     end
 end
 
-function _plot_results(chemin_fichier_json::String)
-    brut_data = JSON.parsefile(chemin_fichier_json)
-    df = DataFrame(brut_data["results"])
+function _plot_results(bench_id)
+    bench_data = _get_bench_data(bench_id)
+    if bench_data === nothing
+        println("⚠️  No results to display because the benchmark file is missing.")
+        return Plots.Plot[]
+    end
 
+    rows = get(bench_data, "results", Any[])
+    if isempty(rows)
+        println("⚠️  No results recorded in the benchmark file.")
+        return Plots.Plot[]
+    end
+
+    df = DataFrame(rows)
     df_successful = filter(row -> row.success == true && row.benchmark !== nothing, df)
+    if isempty(df_successful)
+        println("⚠️  No successful benchmark entries to plot.")
+        return Plots.Plot[]
+    end
+
     df_successful.time = [row.benchmark["time"] for row in eachrow(df_successful)]
 
     select!(df_successful, [:problem, :model, :solver, :grid_size, :time])
     sort!(df_successful, [:problem, :model, :solver, :grid_size])
 
+    problem_plots = Plots.Plot[]
+
     for problem in unique(df_successful.problem)
         df_problem = filter(row -> row.problem == problem, df_successful)
-        
+
         problem_plot = plot(
-            title = "Profil de Performance pour: $problem",
-            xlabel = "Facteur de performance τ (échelle log)",
-            ylabel = "Proportion des problèmes résolus",
+            title = "Performance Profile: $problem",
+            xlabel = "Performance factor τ (log)",
+            ylabel = "Solved fraction",
             legend = :bottomright,
             xaxis = :log10,
             grid = true,
@@ -210,12 +228,13 @@ function _plot_results(chemin_fichier_json::String)
         )
 
         df_grouped_by_model = groupby(df_problem, :model)
-        
+        has_series = false
+
         for (key, sub_df) in pairs(df_grouped_by_model)
             model_name = key.model
-            
+
             wide_df = unstack(DataFrame(sub_df), :grid_size, :solver, :time)
-            
+
             required_solvers = ["ipopt", "madnlp"]
             if !all(s -> s in names(wide_df), required_solvers)
                 continue
@@ -229,10 +248,10 @@ function _plot_results(chemin_fichier_json::String)
                 sorted_ratios = sort(ratios)
                 n = length(sorted_ratios)
                 proportions = (1:n) / n
-                
+
                 plot_x = [1; sorted_ratios]
                 plot_y = [0; proportions]
-                
+
                 plot!(problem_plot, plot_x, plot_y,
                     label = "$(solver) ($(model_name))",
                     seriestype = :steppost,
@@ -241,11 +260,27 @@ function _plot_results(chemin_fichier_json::String)
                     markersize = 3,
                     markerstrokewidth = 0
                 )
+                has_series = true
             end
         end
-        filepath = joinpath("./benchmarks/core-ubuntu-latest", "$(problem)_profile.png")
-        savefig(problem_plot, filepath)
+
+        if has_series
+            push!(problem_plots, problem_plot)
+        else
+            println("⚠️  No comparable solver results to plot for problem $(problem).")
+        end
     end
-    
-    return nothing
+
+    # N = 10
+    # problem_plots = problem_plots[1:N]
+    n_plots = length(problem_plots)
+    return plot(problem_plots...; 
+        layout = (n_plots, 1),
+        size = (800, 400*n_plots),
+        left_margin = 30mm,
+        bottom_margin = 15mm,
+        top_margin = 2mm,
+        right_margin = 2mm,
+        margin = 2mm,
+    )
 end
