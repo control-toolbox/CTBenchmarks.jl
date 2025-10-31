@@ -7,5 +7,5 @@ Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 [compat]
 DataFrames = "1"
 Documenter = "1"
-JSON = "0.21"
+JSON = "1"
 Printf = "1"
