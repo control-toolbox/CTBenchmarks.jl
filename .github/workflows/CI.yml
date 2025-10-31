@@ -1,24 +1,101 @@
 # [.github/workflows/CI.yml]
 name: CI
+
 on:
-  push:
-    branches:
-      - main
-    tags: '*'
   pull_request:
+    types: [labeled, synchronize, opened, reopened]
+
 jobs:
-  call:
-    strategy:
-      matrix:
-        version:
-          - '1.10'
-          - '1.11'
-        os:
-          - ubuntu-latest
-        arch:
-          - x64
+  guard:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run_cpu: ${{ steps.check.outputs.should_run_cpu }}
+      should_run_gpu: ${{ steps.check.outputs.should_run_gpu }}
+    steps:
+      - name: Check if CI should run
+        id: check
+        shell: bash
+        run: |
+          echo "🛡️  Guard job: checking CI conditions..."
+          
+          EVENT_NAME="${{ github.event_name }}"
+          echo "📋 Event type: $EVENT_NAME"
+          
+          if [[ "$EVENT_NAME" == "push" ]]; then
+            echo "🚀 Push event detected - running CPU CI only"
+            echo "should_run_cpu=true" >> $GITHUB_OUTPUT
+            echo "should_run_gpu=false" >> $GITHUB_OUTPUT
+          elif [[ "$EVENT_NAME" == "pull_request" ]]; then
+            LABELS="${{ join(github.event.pull_request.labels.*.name, ' ') }}"
+            echo "🏷️  PR labels: $LABELS"
+            
+            # Initialize outputs
+            RUN_CPU="false"
+            RUN_GPU="false"
+            
+            # Check for specific labels
+            if echo "$LABELS" | grep -Fq "run CI cpu / gpu"; then
+              echo "✅ Found 'run CI cpu / gpu' label"
+              RUN_CPU="true"
+              RUN_GPU="true"
+            else
+              if echo "$LABELS" | grep -Fq "run CI cpu"; then
+                echo "✅ Found 'run CI cpu' label"
+                RUN_CPU="true"
+              fi
+              if echo "$LABELS" | grep -Fq "run CI gpu"; then
+                echo "✅ Found 'run CI gpu' label"
+                RUN_GPU="true"
+              fi
+            fi
+            
+            echo "should_run_cpu=$RUN_CPU" >> $GITHUB_OUTPUT
+            echo "should_run_gpu=$RUN_GPU" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Unsupported event type"
+            echo "should_run_cpu=false" >> $GITHUB_OUTPUT
+            echo "should_run_gpu=false" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Guard decision summary
+        run: |
+          echo "🛡️  Guard summary:"
+          echo "CPU CI: ${{ steps.check.outputs.should_run_cpu }}"
+          echo "GPU CI: ${{ steps.check.outputs.should_run_gpu }}"
+
+  cpu-tests:
+    needs: guard
+    if: needs.guard.outputs.should_run_cpu == 'true'
     uses: control-toolbox/CTActions/.github/workflows/ci.yml@main
     with:
-      version: ${{ matrix.version }}
-      os: ${{ matrix.os }}
-      arch: ${{ matrix.arch }}
+      runners: '["ubuntu-latest"]'
+      versions: '["1.12"]'
+
+  moonshot:
+    needs: guard
+    if: needs.guard.outputs.should_run_gpu == 'true'
+    runs-on: [self-hosted, Linux, gpu, cuda]
+    strategy:
+      matrix:
+        os: [ubuntu-24.04]
+        julia-version: ['1.10', '1.11', '1.12']
+        julia-arch: [x64]
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: ${{ matrix.julia-version }}
+          arch: ${{ matrix.julia-arch }}
+      - uses: actions/cache@v4
+        env:
+          cache-name: cache-artifacts
+        with:
+          path: ~/.julia/artifacts
+          key: ${{ runner.os }}-test-${{ env.cache-name }}-${{ hashFiles('**/Project.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-test-${{ env.cache-name }}-
+            ${{ runner.os }}-test-
+            ${{ runner.os }}-
+      - uses: julia-actions/julia-buildpkg@v1
+      - uses: julia-actions/julia-runtest@v1
