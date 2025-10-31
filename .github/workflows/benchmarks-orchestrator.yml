@@ -1,8 +1,6 @@
-name: Orchestrate Minimal Benchmark and Docs
+name: Orchestrate Benchmarks
 
 on:
-  push:
-    branches: [main]
   pull_request:
     types: [labeled, synchronize, opened, reopened]
 
@@ -16,22 +14,38 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     outputs:
-      should_run: ${{ steps.check.outputs.should_run }}
+      benchmarks: ${{ steps.check.outputs.benchmarks }}
+      run_any: ${{ steps.check.outputs.run_any }}
+      benchmarks_summary: ${{ steps.check.outputs.benchmarks_summary }}
     steps:
-      - name: Check if benchmark should run
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      
+      - name: Check which benchmarks should run
         id: check
         run: |
           echo "🛡️  Guard job: Checking execution conditions..."
           
+          # Load benchmarks configuration from JSON
+          CONFIG_FILE="benchmarks/benchmarks-config.json"
+          if [ ! -f "$CONFIG_FILE" ]; then
+            echo "❌ Configuration file not found: $CONFIG_FILE"
+            exit 1
+          fi
+          
+          # Extract benchmark IDs from JSON
+          BENCHMARK_IDS=$(jq -r '.benchmarks[].id' "$CONFIG_FILE")
+          
           EVENT_NAME="${{ github.event_name }}"
           echo "📋 Event type: $EVENT_NAME"
           
+          SELECTED='[]'
+          BENCHMARKS_LIST=""
+          
           if [[ "$EVENT_NAME" == "push" ]]; then
-            # For push events, we already filter by branch in the trigger
-            # So if we're here, it's a push to main - always run
+            # For push events to main, run no benchmarks
             echo "🚀 Push event to main branch detected"
-            echo "✅ Push to main - proceeding with benchmark"
-            echo "should_run=true" >> $GITHUB_OUTPUT
+            echo "✅ Running no benchmarks"
           elif [[ "$EVENT_NAME" == "pull_request" ]]; then
             # For PR events, check base branch and labels
             LABELS="${{ join(github.event.pull_request.labels.*.name, ' ') }}"
@@ -41,65 +55,122 @@ jobs:
             echo "🏷️  PR labels: $LABELS"
 
             if [[ "$BASE" != "main" ]]; then
-              echo "❌ Base branch is not 'main' - skipping benchmark"
-              echo "should_run=false" >> $GITHUB_OUTPUT
+              echo "❌ Base branch is not 'main' - skipping benchmarks"
+              echo "benchmarks=[]" >> $GITHUB_OUTPUT
+              echo "run_any=false" >> $GITHUB_OUTPUT
+              echo "benchmarks_summary=none" >> $GITHUB_OUTPUT
               exit 0
             fi
 
             echo "✅ Base branch check passed (main)"
 
-            if echo "$LABELS" | grep -q "run benchmark minimal"; then
-              echo "✅ Found 'run benchmark minimal' label"
-              echo "should_run=true" >> $GITHUB_OUTPUT
-            elif echo "$LABELS" | grep -q "run benchmarks all"; then
-              echo "✅ Found 'run benchmarks all' label"
-              echo "should_run=true" >> $GITHUB_OUTPUT
+            # Build JSON array of selected benchmarks
+            FIRST=true
+            
+            # Check for group labels (pattern: "run bench {prefix}-all")
+            # Extract all potential group prefixes from labels
+            GROUP_PREFIXES=$(echo "$LABELS" | grep -oE "run bench [a-z0-9]+-all" | sed 's/run bench //g' | sed 's/-all//g')
+            
+            if [ -n "$GROUP_PREFIXES" ]; then
+              # Process each group label found
+              for prefix in $GROUP_PREFIXES; do
+                echo "✅ Found 'run bench ${prefix}-all' label"
+                
+                # Add all benchmarks starting with this prefix
+                for bench_id in $BENCHMARK_IDS; do
+                  if [[ "$bench_id" == ${prefix}-* ]]; then
+                    # Get full benchmark config from JSON
+                    BENCH_CONFIG=$(jq -c ".benchmarks[] | select(.id == \"$bench_id\")" "$CONFIG_FILE")
+                    
+                    if [ "$FIRST" = true ]; then
+                      SELECTED="[$BENCH_CONFIG"
+                      BENCHMARKS_LIST="$bench_id"
+                      FIRST=false
+                    else
+                      SELECTED="$SELECTED,$BENCH_CONFIG"
+                      BENCHMARKS_LIST="$BENCHMARKS_LIST, $bench_id"
+                    fi
+                  fi
+                done
+              done
+            fi
+            
+            # Check for individual benchmark labels
+            for bench_id in $BENCHMARK_IDS; do
+              if echo "$LABELS" | grep -q "run bench $bench_id"; then
+                echo "✅ Found 'run bench $bench_id' label"
+                
+                # Get full benchmark config from JSON
+                BENCH_CONFIG=$(jq -c ".benchmarks[] | select(.id == \"$bench_id\")" "$CONFIG_FILE")
+                
+                if [ "$FIRST" = true ]; then
+                  SELECTED="[$BENCH_CONFIG"
+                  BENCHMARKS_LIST="$bench_id"
+                  FIRST=false
+                else
+                  SELECTED="$SELECTED,$BENCH_CONFIG"
+                  BENCHMARKS_LIST="$BENCHMARKS_LIST, $bench_id"
+                fi
+              fi
+            done
+            
+            # Close JSON array
+            if [ "$FIRST" = true ]; then
+              SELECTED='[]'
+              BENCHMARKS_LIST="none"
+              echo "❌ No benchmark labels found"
+              
+              # Extract unique prefixes from benchmark IDs for group label suggestions
+              PREFIXES=$(echo "$BENCHMARK_IDS" | grep -oE '^[a-z0-9]+' | sort -u)
+              GROUP_LABELS=$(echo "$PREFIXES" | sed 's/^/run bench /g' | sed 's/$/-all/g' | tr '\n' ',' | sed 's/,/, /g' | sed 's/, $//')
+              
+              echo "ℹ️  Expected labels:"
+              echo "   • Individual: $(echo $BENCHMARK_IDS | tr '\n' ' ' | sed 's/ /, run bench /g' | sed 's/^/run bench /')"
+              echo "   • Groups: $GROUP_LABELS"
             else
-              echo "❌ Required benchmark labels not found"
-              echo "ℹ️  Expected labels: 'run benchmark minimal' or 'run benchmarks all'"
-              echo "should_run=false" >> $GITHUB_OUTPUT
+              SELECTED="$SELECTED]"
             fi
           else
             echo "❌ Unexpected event type: $EVENT_NAME"
-            echo "should_run=false" >> $GITHUB_OUTPUT
           fi
-
-      - name: 📊 Guard decision summary
-        run: |
-          echo "🛡️  Guard Job Summary:"
-          echo "🎯 Should run benchmarks: ${{ steps.check.outputs.should_run }}"
           
-          EVENT_NAME="${{ github.event_name }}"
+          # Set outputs
+          echo "benchmarks=$SELECTED" >> $GITHUB_OUTPUT
           
-          if [ "${{ steps.check.outputs.should_run }}" == "true" ]; then
-            echo "✅ All conditions met - proceeding with benchmark and docs"
-            echo "🚀 Next: Benchmark execution will start"
-            
-            if [[ "$EVENT_NAME" == "push" ]]; then
-              echo "📝 Trigger: Push to main branch"
-            else
-              echo "📝 Trigger: PR with benchmark label"
-            fi
+          if [ "$SELECTED" = "[]" ]; then
+            echo "run_any=false" >> $GITHUB_OUTPUT
           else
-            echo "⏭️  Conditions not met - skipping benchmark workflow"
-            
-            if [[ "$EVENT_NAME" == "pull_request" ]]; then
-              echo "💡 To run benchmarks on PRs, ensure:"
-              echo "   • PR targets 'main' branch"
-              echo "   • PR has 'run benchmark minimal' or 'run benchmarks all' label"
-            else
-              echo "💡 Push events only run benchmarks when pushed to 'main'"
-            fi
+            echo "run_any=true" >> $GITHUB_OUTPUT
           fi
+          
+          echo "benchmarks_summary=$BENCHMARKS_LIST" >> $GITHUB_OUTPUT
+          
+          echo ""
+          echo "📊 Summary: Will run benchmarks for: $BENCHMARKS_LIST"
+          echo "📋 Selected benchmarks JSON: $SELECTED"
 
-  benchmarks:
+  benchmark:
     needs: guard
-    if: needs.guard.outputs.should_run == 'true'
-    uses: ./.github/workflows/benchmark-minimal.yml
+    if: needs.guard.outputs.run_any == 'true'
+    strategy:
+      matrix:
+        benchmark: ${{ fromJSON(needs.guard.outputs.benchmarks) }}
+      fail-fast: false
+    uses: ./.github/workflows/benchmark-reusable.yml
+    with:
+      script_path: benchmarks/${{ matrix.benchmark.id }}.jl
+      julia_version: ${{ matrix.benchmark.julia_version }}
+      julia_arch: ${{ matrix.benchmark.julia_arch }}
+      runs_on: ${{ matrix.benchmark.runs_on }}
+      runner: ${{ matrix.benchmark.runner }}
 
   docs:
-    needs: [guard, benchmarks]
-    if: success() && needs.guard.outputs.should_run == 'true'
+    needs: [guard, benchmark]
+    if: |
+      always() &&
+      (needs.guard.result == 'success') &&
+      (needs.benchmark.result != 'cancelled') &&
+      (needs.benchmark.result != 'failure')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout with latest changes
@@ -114,21 +185,6 @@ jobs:
           echo "🔄 Pulling latest changes from branch..."
           git pull origin ${{ github.head_ref || github.ref_name }}
           echo "✅ Latest changes pulled"
-
-      - name: Verify benchmark file exists
-        run: |
-          echo "🔍 Checking for benchmark results..."
-          if [ -f "docs/src/assets/benchmark-minimal/data.json" ]; then
-            echo "✅ Benchmark file found!"
-            echo "📏 File size: $(stat -c%s docs/src/assets/benchmark-minimal/data.json 2>/dev/null || stat -f%z docs/src/assets/benchmark-minimal/data.json) bytes"
-            echo "🔎 File preview:"
-            head -5 docs/src/assets/benchmark-minimal/data.json
-          else
-            echo "❌ Benchmark file not found at docs/src/assets/benchmark-minimal/data.json"
-            echo "📂 Contents of docs/src/assets/:"
-            find docs/src/assets/ -type f 2>/dev/null || echo "Directory not found"
-            exit 1
-          fi
 
       - uses: julia-actions/setup-julia@latest
       - uses: julia-actions/julia-buildpkg@latest
@@ -145,12 +201,15 @@ jobs:
           julia --project=docs/ -e 'ENV["GKSwstype"]="nul"; include("docs/make.jl")'
 
   notify-failure:
-    needs: [guard, benchmarks, docs]
-    if: failure() && needs.guard.outputs.should_run == 'true'
+    needs: [guard, benchmark, docs]
+    if: failure()
     runs-on: ubuntu-latest
     steps:
       - name: Comment on PR with failure notification
         uses: actions/github-script@v8
+        env:
+          BENCHMARK_RESULT: ${{ needs.benchmark.result }}
+          DOCS_RESULT: ${{ needs.docs.result }}
         with:
           script: |
             console.log('🚨 Workflow failure detected - posting notification...');
@@ -159,11 +218,15 @@ jobs:
             const failedJobs = [];
             
             console.log('📊 Analyzing job results...');
-            if (needs.benchmarks.result === 'failure') {
-              console.log('❌ Benchmarks job failed');
+            
+            // Check benchmark job
+            if (process.env.BENCHMARK_RESULT === 'failure') {
+              console.log('❌ Benchmark job failed');
               failedJobs.push('Benchmarks');
             }
-            if (needs.docs.result === 'failure') {
+            
+            // Check docs job
+            if (process.env.DOCS_RESULT === 'failure') {
               console.log('❌ Documentation job failed');
               failedJobs.push('Documentation');
             }
@@ -203,18 +266,26 @@ jobs:
             console.log('✅ Failure notification posted successfully');
 
   notify-success:
-    needs: [guard, benchmarks, docs]
-    if: success() && needs.guard.outputs.should_run == 'true'
+    needs: [guard, benchmark, docs]
+    if: |
+      always() &&
+      (needs.guard.result == 'success') &&
+      (needs.docs.result == 'success') &&
+      (needs.benchmark.result != 'cancelled') &&
+      (needs.benchmark.result != 'failure')
     runs-on: ubuntu-latest
     steps:
       - name: Comment on PR with success notification
         uses: actions/github-script@v8
+        env:
+          BENCHMARKS_SUMMARY: ${{ needs.guard.outputs.benchmarks_summary }}
         with:
           script: |
             console.log('🎉 Workflow success detected - posting notification...');
 
             const prNumber = context.payload.pull_request.number;
             const previewUrl = `https://control-toolbox.org/CTBenchmarks.jl/previews/PR${prNumber}/index.html`;
+            const benchmarksSummary = process.env.BENCHMARKS_SUMMARY;
 
             console.log(`🔍 Checking documentation preview at: ${previewUrl}`);
 
@@ -254,13 +325,12 @@ jobs:
             The automated workflow has completed successfully! 🎉
 
             ### ✅ Completed Tasks
-            - 📊 **Benchmarks**: Minimal benchmark executed and results saved to your branch
+            - 📊 **Benchmarks**: ${benchmarksSummary} executed and results saved to your branch
             - 📚 **Documentation**: Documentation updated successfully
             - 🔄 **Integration**: All changes integrated properly
             ${previewSection}
             ### 📋 Results
             - 🎯 Benchmark results have been committed to your feature branch
-            - 📄 The \`docs/src/assets/benchmark-minimal/data.json\` file is now part of your PR changes
             - 📚 Documentation has been regenerated with the latest benchmark data
 
             ### 🔗 Links
@@ -282,34 +352,37 @@ jobs:
             console.log('✅ Success notification posted successfully');
 
   workflow-summary:
-    needs: [guard, benchmarks, docs]
-    if: always() && needs.guard.outputs.should_run == 'true'
+    needs: [guard, benchmark, docs]
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - name: 📊 Final workflow summary
+        env:
+          BENCHMARK_RESULT: ${{ needs.benchmark.result }}
+          DOCS_RESULT: ${{ needs.docs.result }}
         run: |
           echo "📋 ==================================="
           echo "📊 WORKFLOW EXECUTION SUMMARY"
           echo "📋 ==================================="
           echo ""
           echo "🛡️  Guard Job: ✅ PASSED"
-          echo "   └─ Conditions met for execution"
+          echo "   └─ Benchmarks planned: ${{ needs.guard.outputs.benchmarks_summary }}"
           echo ""
           
-          if [ "${{ needs.benchmarks.result }}" == "success" ]; then
+          # Display benchmark results
+          if [ "$BENCHMARK_RESULT" == "success" ]; then
             echo "📊 Benchmarks: ✅ SUCCESS"
-            echo "   └─ Minimal benchmark completed"
-          elif [ "${{ needs.benchmarks.result }}" == "failure" ]; then
+          elif [ "$BENCHMARK_RESULT" == "failure" ]; then
             echo "📊 Benchmarks: ❌ FAILED"
-            echo "   └─ Check logs for details"
-          else
+          elif [ "$BENCHMARK_RESULT" == "skipped" ]; then
             echo "📊 Benchmarks: ⏭️  SKIPPED"
           fi
           
-          if [ "${{ needs.docs.result }}" == "success" ]; then
+          # Display docs result
+          if [ "$DOCS_RESULT" == "success" ]; then
             echo "📚 Documentation: ✅ SUCCESS"
             echo "   └─ Docs updated successfully"
-          elif [ "${{ needs.docs.result }}" == "failure" ]; then
+          elif [ "$DOCS_RESULT" == "failure" ]; then
             echo "📚 Documentation: ❌ FAILED"
             echo "   └─ Check logs for details"
           else
@@ -320,8 +393,9 @@ jobs:
           echo "🔗 Workflow URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           echo ""
           
+          # Check overall status
           overall_status="✅ SUCCESS"
-          if [ "${{ needs.benchmarks.result }}" == "failure" ] || [ "${{ needs.docs.result }}" == "failure" ]; then
+          if [ "$BENCHMARK_RESULT" == "failure" ] || [ "$DOCS_RESULT" == "failure" ]; then
             overall_status="❌ FAILED"
           fi
           

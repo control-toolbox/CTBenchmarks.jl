@@ -1,0 +1,32 @@
+name: Benchmark Core (Moonshot)
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  load-config:
+    runs-on: ubuntu-latest
+    outputs:
+      config: ${{ steps.get-config.outputs.config }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Get benchmark config
+        id: get-config
+        run: |
+          CONFIG=$(jq -c '.benchmarks[] | select(.id == "core-moonshot")' benchmarks/benchmarks-config.json)
+          echo "config=$CONFIG" >> $GITHUB_OUTPUT
+  
+  bench:
+    needs: load-config
+    uses: ./.github/workflows/benchmark-reusable.yml
+    with:
+      script_path: benchmarks/${{ fromJSON(needs.load-config.outputs.config).id }}.jl
+      julia_version: ${{ fromJSON(needs.load-config.outputs.config).julia_version }}
+      julia_arch: ${{ fromJSON(needs.load-config.outputs.config).julia_arch }}
+      runs_on: ${{ fromJSON(needs.load-config.outputs.config).runs_on }}
+      runner: ${{ fromJSON(needs.load-config.outputs.config).runner }}

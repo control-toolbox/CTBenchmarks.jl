@@ -1,6 +1,6 @@
 name = "CTBenchmarks"
 uuid = "db1dffaa-5ed3-4583-9a66-b5881c82ef11"
-version = "0.2.3"
+version = "0.2.2"
 authors = ["Olivier Cots <olivier.cots@toulouse-inp.fr>"]
 
 [deps]
