@@ -187,100 +187,97 @@ function _print_results(bench_id)
 end
 
 function _plot_results(bench_id)
-    bench_data = _get_bench_data(bench_id)
-    if bench_data === nothing
-        println("⚠️  No results to display because the benchmark file is missing.")
-        return Plots.Plot[]
+
+    function pratios(df_sub)
+        wide = unstack(df_sub, [:problem, :grid_size], :solver, :time)
+        if !("ipopt" in names(wide)) || !("madnlp" in names(wide))
+            return nothing
+        end
+        min_times = min.(wide.ipopt, wide.madnlp)
+        wide.r_ipopt  = wide.ipopt  ./ min_times
+        wide.r_madnlp = wide.madnlp ./ min_times
+        return wide
     end
 
-    rows = get(bench_data, "results", Any[])
+    function plot_performance_profile(wide, model)
+        r_ipopt  = sort(collect(skipmissing(wide.r_ipopt)))
+        r_madnlp = sort(collect(skipmissing(wide.r_madnlp)))
+        n = length(r_ipopt)
+        y = (1:n) ./ n
+        plt = plot(
+            r_ipopt, y,
+            label = "Ipopt", lw = 2,
+            xlabel = "τ (Performance ratio)",
+            ylabel = "Proportion d'instances résolues ≤ τ",
+            title = "Profil de performance — $(model)",
+            legend = :bottomright,
+            xscale = :log10,
+            grid = true
+        )
+        plot!(
+            r_madnlp, y,
+            label = "MadNLP", lw = 2
+        )
+        return plt
+    end
+
+    brut = _get_bench_data(bench_id) 
+    if brut === nothing
+        println("⚠️  Aucun résultat (fichier manquant ou invalide) pour bench_id: $bench_id")
+        return plot() 
+    end
+
+    rows = get(brut, "results", Any[])
     if isempty(rows)
-        println("⚠️  No results recorded in the benchmark file.")
-        return Plots.Plot[]
+        println("⚠️  Aucun résultat ('results') enregistré dans le fichier benchmark.")
+        return plot()
     end
 
     df = DataFrame(rows)
+
     df_successful = filter(row -> row.success == true && row.benchmark !== nothing, df)
     if isempty(df_successful)
-        println("⚠️  No successful benchmark entries to plot.")
-        return Plots.Plot[]
+        println("⚠️  Aucune entrée de benchmark réussie à analyser.")
+        return plot() 
     end
 
     df_successful.time = [row.benchmark["time"] for row in eachrow(df_successful)]
-
     select!(df_successful, [:problem, :model, :solver, :grid_size, :time])
-    sort!(df_successful, [:problem, :model, :solver, :grid_size])
+    sort!(df_successful, [:model, :problem, :grid_size, :solver])
+    models = unique(df_successful.model)
+    model_plots = Plots.Plot[]
 
-    problem_plots = Plots.Plot[]
+    println("\nGénération des profils de performance par modèle :\n")
 
-    for problem in unique(df_successful.problem)
-        df_problem = filter(row -> row.problem == problem, df_successful)
+    for m in models
+        df_sub = filter(row -> row.model == m, df_successful)
 
-        problem_plot = plot(
-            title = "Performance Profile: $problem",
-            xlabel = "Performance factor τ (log)",
-            ylabel = "Solved fraction",
-            legend = :bottomright,
-            xaxis = :log10,
-            grid = true,
-            framestyle = :box,
-            minorticks = true
-        )
-
-        df_grouped_by_model = groupby(df_problem, :model)
-        has_series = false
-
-        for (key, sub_df) in pairs(df_grouped_by_model)
-            model_name = key.model
-
-            wide_df = unstack(DataFrame(sub_df), :grid_size, :solver, :time)
-
-            required_solvers = ["ipopt", "madnlp"]
-            if !all(s -> s in names(wide_df), required_solvers)
-                continue
-            end
-
-            min_times = min.(wide_df.ipopt, wide_df.madnlp)
-            ratios_ipopt = wide_df.ipopt ./ min_times
-            ratios_madnlp = wide_df.madnlp ./ min_times
-
-            for (solver, ratios) in [("ipopt", ratios_ipopt), ("madnlp", ratios_madnlp)]
-                sorted_ratios = sort(ratios)
-                n = length(sorted_ratios)
-                proportions = (1:n) / n
-
-                plot_x = [1; sorted_ratios]
-                plot_y = [0; proportions]
-
-                plot!(problem_plot, plot_x, plot_y,
-                    label = "$(solver) ($(model_name))",
-                    seriestype = :steppost,
-                    lw = 2.5,
-                    markershape = :circle,
-                    markersize = 3,
-                    markerstrokewidth = 0
-                )
-                has_series = true
-            end
+        wide = pratios(df_sub) 
+        
+        if wide === nothing
+            println("Skipped modèle $(m) (un des solveurs manquant)")
+            continue
         end
 
-        if has_series
-            push!(problem_plots, problem_plot)
-        else
-            println("⚠️  No comparable solver results to plot for problem $(problem).")
-        end
+        plt = plot_performance_profile(wide, m)
+
+        push!(model_plots, plt)
+        println("✅ Plot créé pour le modèle $(m)")
     end
 
-    # N = 10
-    # problem_plots = problem_plots[1:N]
-    n_plots = length(problem_plots)
-    return plot(problem_plots...; 
+
+    n_plots = length(model_plots)
+    if n_plots == 0
+        println("⚠️  Aucun graphique de modèle n'a pu être généré.")
+        return plot() 
+    end
+
+    println("\nTerminé : Combinaison de $n_plots graphiques...")
+    
+    return plot(model_plots...; 
         layout = (n_plots, 1),
-        size = (800, 400*n_plots),
-        left_margin = 30mm,
-        bottom_margin = 15mm,
-        top_margin = 2mm,
-        right_margin = 2mm,
-        margin = 2mm,
+        size = (800, 500 * n_plots), 
+        left_margin = 10Plots.mm,
+        bottom_margin = 10Plots.mm
     )
 end
