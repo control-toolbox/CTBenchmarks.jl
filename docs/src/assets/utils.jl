@@ -187,30 +187,15 @@ function _print_results(bench_id)
 end
 
 function _plot_results(bench_id)
-    bench_data = _get_bench_data(bench_id)
-    if bench_data === nothing
-        println("⚠️  No results to display because the benchmark file is missing.")
-        return Plots.Plot[]
-    end
-
-    rows = get(bench_data, "results", Any[])
-    if isempty(rows)
-        println("⚠️  No results recorded in the benchmark file.")
-        return Plots.Plot[]
-    end
 
     function pratios(df_sub)
         wide = unstack(df_sub, [:problem, :grid_size], :solver, :time)
-
         if !("ipopt" in names(wide)) || !("madnlp" in names(wide))
             return nothing
         end
-
         min_times = min.(wide.ipopt, wide.madnlp)
-
         wide.r_ipopt  = wide.ipopt  ./ min_times
         wide.r_madnlp = wide.madnlp ./ min_times
-
         return wide
     end
 
@@ -218,9 +203,7 @@ function _plot_results(bench_id)
         r_ipopt  = sort(collect(skipmissing(wide.r_ipopt)))
         r_madnlp = sort(collect(skipmissing(wide.r_madnlp)))
         n = length(r_ipopt)
-
         y = (1:n) ./ n
-
         plt = plot(
             r_ipopt, y,
             label = "Ipopt", lw = 2,
@@ -231,52 +214,70 @@ function _plot_results(bench_id)
             xscale = :log10,
             grid = true
         )
-
         plot!(
             r_madnlp, y,
             label = "MadNLP", lw = 2
         )
-
         return plt
     end
-    println("Chargement du fichier $input_json_path...")
-    brut = JSON.parsefile(input_json_path)
-    df = DataFrame(brut["results"])
-    nouveaux_temps = []
-    for row in eachrow(df)
-        if row.benchmark === nothing
-            push!(nouveaux_temps, missing)
-        else
-            valeur_time = row.benchmark["time"]
-            push!(nouveaux_temps, valeur_time)
-        end
-    end
-    df.time = nouveaux_temps
 
-    select!(df, [:problem, :model, :solver, :grid_size, :time])
-    sort!(df, [:model, :problem, :grid_size, :solver])
-    models = unique(df.model)
-    mkpath(output_dir_path)
+    brut = _get_bench_data(bench_id) 
+    if brut === nothing
+        println("⚠️  Aucun résultat (fichier manquant ou invalide) pour bench_id: $bench_id")
+        return plot() 
+    end
+
+    rows = get(brut, "results", Any[])
+    if isempty(rows)
+        println("⚠️  Aucun résultat ('results') enregistré dans le fichier benchmark.")
+        return plot()
+    end
+
+    df = DataFrame(rows)
+
+    df_successful = filter(row -> row.success == true && row.benchmark !== nothing, df)
+    if isempty(df_successful)
+        println("⚠️  Aucune entrée de benchmark réussie à analyser.")
+        return plot() 
+    end
+
+    df_successful.time = [row.benchmark["time"] for row in eachrow(df_successful)]
+    select!(df_successful, [:problem, :model, :solver, :grid_size, :time])
+    sort!(df_successful, [:model, :problem, :grid_size, :solver])
+    models = unique(df_successful.model)
+    model_plots = Plots.Plot[]
 
     println("\nGénération des profils de performance par modèle :\n")
 
     for m in models
-        df_sub = filter(row -> row.model == m, df)
+        df_sub = filter(row -> row.model == m, df_successful)
+
         wide = pratios(df_sub) 
         
         if wide === nothing
             println("Skipped modèle $(m) (un des solveurs manquant)")
             continue
         end
+
         plt = plot_performance_profile(wide, m)
 
-        filepath = joinpath(output_dir_path, "$(m)_profile.png")
-        savefig(plt, filepath)
-
-        println("✅ Saved → $(filepath)")
+        push!(model_plots, plt)
+        println("✅ Plot créé pour le modèle $(m)")
     end
 
-    println("\nTerminé : les graphiques sont dans → $(output_dir_path)\n")
+
+    n_plots = length(model_plots)
+    if n_plots == 0
+        println("⚠️  Aucun graphique de modèle n'a pu être généré.")
+        return plot() 
+    end
+
+    println("\nTerminé : Combinaison de $n_plots graphiques...")
     
-    return nothing
+    return plot(model_plots...; 
+        layout = (n_plots, 1),
+        size = (800, 500 * n_plots), 
+        left_margin = 10Plots.mm,
+        bottom_margin = 10Plots.mm
+    )
 end
