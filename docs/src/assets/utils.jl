@@ -211,7 +211,7 @@ function _plot_results(bench_id)
             ylabel = "Proportion d'instances résolues ≤ τ",
             title = "Profil de performance — $(model)",
             legend = :bottomright,
-            xscale = :log10,
+            xscale = :log2,
             grid = true
         )
         plot!(
