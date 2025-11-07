@@ -173,6 +173,9 @@ jobs:
       (needs.benchmark.result != 'failure')
     runs-on: ubuntu-latest
     steps:
+      # ---------------------------
+      # Checkout repository
+      # ---------------------------
       - name: Checkout with latest changes
         uses: actions/checkout@v5
         with:
@@ -186,12 +189,36 @@ jobs:
           git pull origin ${{ github.head_ref || github.ref_name }}
           echo "✅ Latest changes pulled"
 
+      # ---------------------------
+      # Setup Julia
+      # ---------------------------
       - uses: julia-actions/setup-julia@latest
-      - uses: julia-actions/julia-buildpkg@latest
 
-      - name: Install dependencies
+      # ---------------------------
+      # Cache Julia packages and compiled artifacts
+      # ---------------------------
+      - name: Cache Julia packages for docs
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.julia/packages
+            ~/.julia/compiled
+          key: julia-docs-${{ hashFiles('docs/Project.toml') }}
+          restore-keys: julia-docs-
+
+      # ---------------------------
+      # Build Julia package for docs
+      # ---------------------------
+      - uses: julia-actions/julia-buildpkg@latest
+        with:
+          ignore-no-cache: true
+
+      - name: Install dependencies for docs
         run: julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
 
+      # ---------------------------
+      # Build and deploy documentation
+      # ---------------------------
       - name: Build and deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -212,58 +239,74 @@ jobs:
           DOCS_RESULT: ${{ needs.docs.result }}
         with:
           script: |
-            console.log('🚨 Workflow failure detected - posting notification...');
-            
+            console.log('🚨 Workflow failure detected - posting/updating comment...');
+
+            const marker = '<!-- ctbenchmarks-failure-comment -->';
             const prNumber = context.payload.pull_request.number;
             const failedJobs = [];
-            
-            console.log('📊 Analyzing job results...');
-            
+
             // Check benchmark job
             if (process.env.BENCHMARK_RESULT === 'failure') {
-              console.log('❌ Benchmark job failed');
               failedJobs.push('Benchmarks');
             }
-            
+
             // Check docs job
             if (process.env.DOCS_RESULT === 'failure') {
-              console.log('❌ Documentation job failed');
               failedJobs.push('Documentation');
             }
-            
-            console.log(`📝 Failed jobs: ${failedJobs.join(', ')}`);
 
-            const comment = `
+            const runUrl = `${context.payload.repository.html_url}/actions/runs/${context.runId}`;
+
+            const comment = `${marker}
             ## ❌ Workflow Failed
-            
+
             The benchmark and documentation workflow encountered failures:
-            
+
             ### Failed Jobs
             ${failedJobs.map(job => `- ❌ ${job}`).join('\n')}
-            
+
             ### 🔍 Troubleshooting
-            - Check the [workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId}) for detailed logs
+            - Check the [workflow run](${runUrl}) for detailed logs
             - Verify that all required dependencies are available
             - Ensure the benchmark code is functioning correctly
-            
+
             ### 🔄 Next Steps
             - Fix any issues identified in the logs
             - Push new commits to retry, or
             - Remove and re-add the benchmark label to restart
-            
-            ---
-            *🤖 This notification was automatically generated*
-            `;
 
-            console.log('💬 Posting failure comment to PR...');
-            await github.rest.issues.createComment({
+            ---
+            *🤖 This notification was automatically generated*`;
+
+            // Find existing failure comment
+            const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
-              body: comment
+              per_page: 100
             });
-            
-            console.log('✅ Failure notification posted successfully');
+
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+
+            if (existing) {
+              console.log(`✏️ Updating existing comment ${existing.id}`);
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body: comment
+              });
+            } else {
+              console.log('💬 Posting new comment to PR...');
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: comment
+              });
+            }
+
+            console.log('✅ Failure comment posted/updated successfully');
 
   notify-success:
     needs: [guard, benchmark, docs]
@@ -281,45 +324,21 @@ jobs:
           BENCHMARKS_SUMMARY: ${{ needs.guard.outputs.benchmarks_summary }}
         with:
           script: |
-            console.log('🎉 Workflow success detected - posting notification...');
+            console.log('🎉 Workflow success detected - posting/updating comment...');
 
+            const marker = '<!-- ctbenchmarks-success-comment -->';
             const prNumber = context.payload.pull_request.number;
             const previewUrl = `https://control-toolbox.org/CTBenchmarks.jl/previews/PR${prNumber}/index.html`;
             const benchmarksSummary = process.env.BENCHMARKS_SUMMARY;
+            const runUrl = `${context.payload.repository.html_url}/actions/runs/${context.runId}`;
+            const branchName = context.payload.pull_request.head.ref;
 
-            console.log(`🔍 Checking documentation preview at: ${previewUrl}`);
-
-            // Wait up to 30s for the preview page to exist
-            async function checkPreview(url, attempts=6, delayMs=5000) {
-              for (let i = 0; i < attempts; i++) {
-                try {
-                  const response = await fetch(url, { method: 'HEAD' });
-                  if (response.ok) return true;
-                } catch {}
-                console.log(`⏳ Preview not ready yet (attempt ${i+1}/${attempts})`);
-                await new Promise(r => setTimeout(r, delayMs));
-              }
-              return false;
-            }
-
-            const previewReady = await checkPreview(previewUrl);
-
-            let previewSection = '';
-            if (previewReady) {
-              console.log('✅ Documentation preview is available');
-              previewSection = `
+            const previewSection = `
             ### 📖 Documentation Preview
             - 🌐 **[📚 View Documentation Preview](${previewUrl})** ← Click to see your changes!
-                        `;
-                      } else {
-                        console.log('⚠️ Documentation preview still not available');
-                        previewSection = `
-            ### 📖 Documentation Preview
-            - ⏳ Documentation preview will be available shortly at: [Preview Link](${previewUrl})
-                        `;
-                      }
+            `;
 
-                      let comment = `
+            const comment = `${marker}
             ## ✅ Benchmark and Documentation Complete
 
             The automated workflow has completed successfully! 🎉
@@ -329,27 +348,47 @@ jobs:
             - 📚 **Documentation**: Documentation updated successfully
             - 🔄 **Integration**: All changes integrated properly
             ${previewSection}
+
             ### 📋 Results
             - 🎯 Benchmark results have been committed to your feature branch
             - 📚 Documentation has been regenerated with the latest benchmark data
 
             ### 🔗 Links
-            - 📊 [View workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId})
-            - 🌿 [View your feature branch](${context.payload.repository.html_url}/tree/${context.payload.pull_request.head.ref})
+            - 📊 [View workflow run](${runUrl})
+            - 🌿 [View your feature branch](${context.payload.repository.html_url}/tree/${branchName})
 
             ---
-            *🤖 This notification was automatically generated*
-            `;
+            *🤖 This notification was automatically generated*`;
 
-            console.log('💬 Posting success comment to PR...');
-            await github.rest.issues.createComment({
+            // Find existing success comment
+            const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
-              body: comment
+              per_page: 100
             });
 
-            console.log('✅ Success notification posted successfully');
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+
+            if (existing) {
+              console.log(`✏️ Updating existing comment ${existing.id}`);
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body: comment
+              });
+            } else {
+              console.log('💬 Posting new comment to PR...');
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: comment
+              });
+            }
+
+            console.log('✅ Success comment posted/updated successfully');
 
   workflow-summary:
     needs: [guard, benchmark, docs]

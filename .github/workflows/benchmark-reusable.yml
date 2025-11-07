@@ -69,7 +69,9 @@ jobs:
           echo "✅ Julia $(julia --version | cut -d' ' -f3) installed successfully"
           echo "📍 Julia location: $(which julia)"
 
-      # Cache strategy: julia-actions/cache for standard runners, actions/cache for self-hosted
+      # ---------------------------
+      # Julia caching
+      # ---------------------------
       - name: Cache Julia packages (standard runners)
         if: inputs.runner != 'self-hosted'
         uses: julia-actions/cache@v2
@@ -145,6 +147,9 @@ jobs:
           echo "✅ Benchmark execution completed"
           echo "benchmark_success=true" >> $GITHUB_OUTPUT
 
+      # ---------------------------
+      # Copy benchmark scripts and TOML files
+      # ---------------------------
       - name: 📋 Copy benchmark script to output directory
         if: steps.benchmark.outputs.benchmark_success == 'true'
         run: |
@@ -154,7 +159,6 @@ jobs:
             OUTPUT_DIR=$(cat "$BENCHMARK_OUTPUT_FILE")
             echo "📁 Output directory: $OUTPUT_DIR"
             
-            # Extract the benchmark ID (e.g., core-moonshot from .../benchmarks/core-moonshot)
             BENCH_ID=$(basename "$OUTPUT_DIR")
             SCRIPT_DEST="$OUTPUT_DIR/$BENCH_ID.jl"
             
@@ -177,7 +181,6 @@ jobs:
             OUTPUT_DIR=$(cat "$BENCHMARK_OUTPUT_FILE")
             echo "📁 Output directory: $OUTPUT_DIR"
             
-            # Copy Project.toml and Manifest.toml from repo root
             cp Project.toml "$OUTPUT_DIR/Project.toml"
             cp Manifest.toml "$OUTPUT_DIR/Manifest.toml"
             
@@ -187,6 +190,9 @@ jobs:
             exit 1
           fi
 
+      # ---------------------------
+      # Benchmark results validation
+      # ---------------------------
       - name: 📊 Benchmark results validation
         if: steps.benchmark.outputs.benchmark_success == 'true'
         run: |
@@ -217,7 +223,6 @@ jobs:
                 fi
               done
               
-              # Validate benchmark script
               DIR_NAME=$(basename "$OUTPUT_DIR")
               SCRIPT_FILE="$OUTPUT_DIR/$DIR_NAME.jl"
               if [ -f "$SCRIPT_FILE" ]; then
@@ -235,6 +240,9 @@ jobs:
             exit 1
           fi
 
+      # ---------------------------
+      # Commit benchmark results
+      # ---------------------------
       - name: Commit benchmark results to current branch
         if: steps.benchmark.outputs.benchmark_success == 'true'
         run: |
@@ -269,7 +277,6 @@ jobs:
             exit 1
           fi
 
-          # Get directory name for script filename
           DIR_NAME=$(basename "$OUTPUT_DIR")
           
           ARTIFACTS=(
@@ -312,6 +319,9 @@ jobs:
             echo "📊 Current results are identical to previous run"
           fi
 
+      # ---------------------------
+      # Workflow summary
+      # ---------------------------
       - name: 📃 Benchmark workflow summary
         if: steps.benchmark.outputs.benchmark_success == 'true'
         run: |
