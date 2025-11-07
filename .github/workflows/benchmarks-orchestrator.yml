@@ -245,6 +245,13 @@ jobs:
             const prNumber = context.payload.pull_request.number;
             const failedJobs = [];
 
+            const now = new Date();
+            const utcMillis = now.getTime() + now.getTimezoneOffset() * 60000;
+            const tzMillis = utcMillis - 2 * 60 * 60 * 1000; // UTC-2
+            const tzDate = new Date(tzMillis);
+            const pad = (value) => value.toString().padStart(2, '0');
+            const timestamp = `${tzDate.getFullYear()}-${pad(tzDate.getMonth() + 1)}-${pad(tzDate.getDate())} ${pad(tzDate.getHours())}:${pad(tzDate.getMinutes())}:${pad(tzDate.getSeconds())} (UTC-2)`;
+
             // Check benchmark job
             if (process.env.BENCHMARK_RESULT === 'failure') {
               failedJobs.push('Benchmarks');
@@ -276,7 +283,7 @@ jobs:
             - Remove and re-add the benchmark label to restart
 
             ---
-            *🤖 This notification was automatically generated*`;
+            *🤖 This notification was automatically generated* ${timestamp}`;
 
             // Find existing failure comment
             const { data: comments } = await github.rest.issues.listComments({
@@ -332,7 +339,14 @@ jobs:
             const benchmarksSummary = process.env.BENCHMARKS_SUMMARY;
             const runUrl = `${context.payload.repository.html_url}/actions/runs/${context.runId}`;
             const branchName = context.payload.pull_request.head.ref;
-
+            
+            const now = new Date();
+            const utcMillis = now.getTime() + now.getTimezoneOffset() * 60000;
+            const tzMillis = utcMillis - 2 * 60 * 60 * 1000; // UTC-2
+            const tzDate = new Date(tzMillis);
+            const pad = (value) => value.toString().padStart(2, '0');
+            const timestamp = `${tzDate.getFullYear()}-${pad(tzDate.getMonth() + 1)}-${pad(tzDate.getDate())} ${pad(tzDate.getHours())}:${pad(tzDate.getMinutes())}:${pad(tzDate.getSeconds())} (UTC-2)`;
+            
             const previewSection = `
             ### 📖 Documentation Preview
             - 🌐 **[📚 View Documentation Preview](${previewUrl})** ← Click to see your changes!
@@ -358,7 +372,7 @@ jobs:
             - 🌿 [View your feature branch](${context.payload.repository.html_url}/tree/${branchName})
 
             ---
-            *🤖 This notification was automatically generated*`;
+            *🤖 This notification was automatically generated* ${timestamp}`;
 
             // Find existing success comment
             const { data: comments } = await github.rest.issues.listComments({
