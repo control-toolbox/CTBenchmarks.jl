@@ -214,10 +214,10 @@ function _plot_results(bench_id)
             r_ipopt, y,
             label = "Ipopt", lw = 2,
             xlabel = "τ (Performance ratio)",
-            ylabel = "Proportion d'instances résolues ≤ τ",
-            title = "Profil de performance — $(model)",
+            ylabel = "Proportion of solved instances ≤ τ",
+            title = "Performance profile — $(model)",
             legend = :bottomright,
-            xscale = :log10,
+            xscale = :log2,
             grid = true
         )
         plot!(
@@ -229,13 +229,13 @@ function _plot_results(bench_id)
 
     brut = _get_bench_data(bench_id) 
     if brut === nothing
-        println("⚠️  Aucun résultat (fichier manquant ou invalide) pour bench_id: $bench_id")
+        println("⚠️  No result (missing or invalid file) for bench_id: $bench_id")
         return plot() 
     end
 
     rows = get(brut, "results", Any[])
     if isempty(rows)
-        println("⚠️  Aucun résultat ('results') enregistré dans le fichier benchmark.")
+        println("⚠️  No ('results') recorded in the benchmark file.")
         return plot()
     end
 
@@ -243,7 +243,7 @@ function _plot_results(bench_id)
 
     df_successful = filter(row -> row.success == true && row.benchmark !== nothing, df)
     if isempty(df_successful)
-        println("⚠️  Aucune entrée de benchmark réussie à analyser.")
+        println("⚠️  No successful benchmark entry to analyze.")
         return plot() 
     end
 
@@ -253,7 +253,7 @@ function _plot_results(bench_id)
     models = unique(df_successful.model)
     model_plots = Plots.Plot[]
 
-    println("\nGénération des profils de performance par modèle :\n")
+    println("\nGenerating performance profiles by model :\n")
 
     for m in models
         df_sub = filter(row -> row.model == m, df_successful)
@@ -261,24 +261,24 @@ function _plot_results(bench_id)
         wide = pratios(df_sub) 
         
         if wide === nothing
-            println("Skipped modèle $(m) (un des solveurs manquant)")
+            println("Skipped model $(m) (one of the solvers missing)")
             continue
         end
 
         plt = plot_performance_profile(wide, m)
 
         push!(model_plots, plt)
-        println("✅ Plot créé pour le modèle $(m)")
+        println("✅ Plot created for the model $(m)")
     end
 
 
     n_plots = length(model_plots)
     if n_plots == 0
-        println("⚠️  Aucun graphique de modèle n'a pu être généré.")
+        println("⚠️  No model plot could be generated.")
         return plot() 
     end
 
-    println("\nTerminé : Combinaison de $n_plots graphiques...")
+    println("\nDone: Combining $n_plots plots...")
     
     return plot(model_plots...; 
         layout = (n_plots, 1),
