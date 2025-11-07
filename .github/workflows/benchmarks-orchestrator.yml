@@ -173,6 +173,9 @@ jobs:
       (needs.benchmark.result != 'failure')
     runs-on: ubuntu-latest
     steps:
+      # ---------------------------
+      # Checkout repository
+      # ---------------------------
       - name: Checkout with latest changes
         uses: actions/checkout@v5
         with:
@@ -186,12 +189,36 @@ jobs:
           git pull origin ${{ github.head_ref || github.ref_name }}
           echo "✅ Latest changes pulled"
 
+      # ---------------------------
+      # Setup Julia
+      # ---------------------------
       - uses: julia-actions/setup-julia@latest
-      - uses: julia-actions/julia-buildpkg@latest
 
-      - name: Install dependencies
+      # ---------------------------
+      # Cache Julia packages and compiled artifacts
+      # ---------------------------
+      - name: Cache Julia packages for docs
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.julia/packages
+            ~/.julia/compiled
+          key: julia-docs-${{ hashFiles('docs/Project.toml') }}
+          restore-keys: julia-docs-
+
+      # ---------------------------
+      # Build Julia package for docs
+      # ---------------------------
+      - uses: julia-actions/julia-buildpkg@latest
+        with:
+          ignore-no-cache: true
+
+      - name: Install dependencies for docs
         run: julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
 
+      # ---------------------------
+      # Build and deploy documentation
+      # ---------------------------
       - name: Build and deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
