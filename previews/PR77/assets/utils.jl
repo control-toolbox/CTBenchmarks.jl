@@ -199,6 +199,12 @@ function _plot_results(bench_id)
         return wide
     end
 
+    # write in english
+    # use log base 2 instead of log base 1
+    # group the graphs by solver–model pairs
+    # on Moonshot, plot two curves: one for GPU and one for CPU
+    # plot with respect to the number of iterations
+    # set time to infinity if it does not converge
     function plot_performance_profile(wide, model)
         r_ipopt  = sort(collect(skipmissing(wide.r_ipopt)))
         r_madnlp = sort(collect(skipmissing(wide.r_madnlp)))
