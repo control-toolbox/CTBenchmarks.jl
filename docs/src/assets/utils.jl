@@ -4,6 +4,9 @@ using DataFrames
 using Markdown
 using Dates
 using Printf
+using Plots
+using Plots.PlotMeasures
+using Statistics
 
 # Get benchmark data from benchmark ID
 function _get_bench_data(bench_id::AbstractString)
@@ -181,4 +184,106 @@ function _print_results(bench_id)
             end
         end
     end
+end
+
+function _plot_results(bench_id)
+
+    function pratios(df_sub)
+        wide = unstack(df_sub, [:problem, :grid_size], :solver, :time)
+        if !("ipopt" in names(wide)) || !("madnlp" in names(wide))
+            return nothing
+        end
+        min_times = min.(wide.ipopt, wide.madnlp)
+        wide.r_ipopt  = wide.ipopt  ./ min_times
+        wide.r_madnlp = wide.madnlp ./ min_times
+        return wide
+    end
+
+    #en anglais
+    #mettre en log 2 au lieu de log 1
+    #réunir les graphes par pair de solver model
+    #sur moonshot faire 2 courbes une gpu et cpu
+    #Faire sur nombre d'itération
+    #Mettre temps inf si pas converge
+    function plot_performance_profile(wide, model)
+        r_ipopt  = sort(collect(skipmissing(wide.r_ipopt)))
+        r_madnlp = sort(collect(skipmissing(wide.r_madnlp)))
+        n = length(r_ipopt)
+        y = (1:n) ./ n
+        plt = plot(
+            r_ipopt, y,
+            label = "Ipopt", lw = 2,
+            xlabel = "τ (Performance ratio)",
+            ylabel = "Proportion of solved instances ≤ τ",
+            title = "Performance profile — $(model)",
+            legend = :bottomright,
+            xscale = :log2,
+            grid = true
+        )
+        plot!(
+            r_madnlp, y,
+            label = "MadNLP", lw = 2
+        )
+        return plt
+    end
+
+    brut = _get_bench_data(bench_id) 
+    if brut === nothing
+        println("⚠️  No result (missing or invalid file) for bench_id: $bench_id")
+        return plot() 
+    end
+
+    rows = get(brut, "results", Any[])
+    if isempty(rows)
+        println("⚠️  No ('results') recorded in the benchmark file.")
+        return plot()
+    end
+
+    df = DataFrame(rows)
+
+    df_successful = filter(row -> row.success == true && row.benchmark !== nothing, df)
+    if isempty(df_successful)
+        println("⚠️  No successful benchmark entry to analyze.")
+        return plot() 
+    end
+
+    df_successful.time = [row.benchmark["time"] for row in eachrow(df_successful)]
+    select!(df_successful, [:problem, :model, :solver, :grid_size, :time])
+    sort!(df_successful, [:model, :problem, :grid_size, :solver])
+    models = unique(df_successful.model)
+    model_plots = Plots.Plot[]
+
+    println("\nGenerating performance profiles by model :\n")
+
+    for m in models
+        df_sub = filter(row -> row.model == m, df_successful)
+
+        wide = pratios(df_sub) 
+        
+        if wide === nothing
+            println("Skipped model $(m) (one of the solvers missing)")
+            continue
+        end
+
+        plt = plot_performance_profile(wide, m)
+
+        push!(model_plots, plt)
+        println("✅ Plot created for the model $(m)")
+    end
+
+
+    n_plots = length(model_plots)
+    if n_plots == 0
+        println("⚠️  No model plot could be generated.")
+        return plot() 
+    end
+
+    println("\nDone: Combining $n_plots plots...")
+    
+    return plot(model_plots...; 
+        layout = (n_plots, 1),
+        size = (800, 500 * n_plots), 
+        left_margin = 10Plots.mm,
+        bottom_margin = 10Plots.mm
+    )
 end
