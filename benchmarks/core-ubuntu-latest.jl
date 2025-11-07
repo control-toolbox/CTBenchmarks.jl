@@ -12,7 +12,7 @@ function main()
             :beam,
             :chain,
             :double_oscillator,
-            :ducted_fan,
+            # :ducted_fan,
             :electric_vehicle,
             :glider,
             :insurance,
