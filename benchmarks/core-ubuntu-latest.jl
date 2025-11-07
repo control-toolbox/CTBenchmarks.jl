@@ -25,7 +25,7 @@ function main()
             :vanderpol,
         ],
         solver_models=[:ipopt => [:JuMP, :adnlp, :exa], :madnlp => [:JuMP, :adnlp, :exa]],
-        grid_sizes=[200, 500, 1000],
+        grid_sizes=[[200, 500, 1000, 2000, 5000]],
         disc_methods=[:trapeze],
         tol=1e-6,
         ipopt_mu_strategy="adaptive",
