@@ -31,7 +31,7 @@ permissions:
 jobs:
   run:
     runs-on: ${{ fromJSON(inputs.runs_on) }}
-    timeout-minutes: 360
+    timeout-minutes: 600 # max is 360 on GitHub runners
     env:
       SCRIPT_PATH: ${{ inputs.script_path }}
 
