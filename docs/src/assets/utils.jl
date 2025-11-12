@@ -192,7 +192,7 @@ end
     # on Moonshot, plot two curves: one for GPU and one for CPU
     # plot with respect to the number of iterations
     # set time to infinity if it does not converge
-function _plot_results_global(bench_id)
+function _plot_results(bench_id)
 
     brut = _get_bench_data(bench_id)
     if brut === nothing
