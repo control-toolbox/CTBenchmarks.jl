@@ -15,14 +15,14 @@
       "runner": "self-hosted"
     },
     {
-      "id": "core-moonshot",
+      "id": "core-moonshot-gpu",
       "julia_version": "1.11",
       "julia_arch": "x64",
       "runs_on": "[\"self-hosted\", \"Linux\", \"gpu\", \"cuda\", \"cuda12\"]",
       "runner": "self-hosted"
     },
     {
-      "id": "core-mothra",
+      "id": "core-mothra-gpu",
       "julia_version": "1.11",
       "julia_arch": "x64",
       "runs_on": "[\"self-hosted\", \"Linux\", \"gpu\", \"cuda\", \"cuda13\"]",

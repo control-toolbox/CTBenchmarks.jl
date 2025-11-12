@@ -3,7 +3,7 @@
 
 function main()
     project_dir = normpath(@__DIR__, "..")
-    outpath = joinpath(project_dir, "docs", "src", "assets", "benchmarks", "core-moonshot")
+    outpath = joinpath(project_dir, "docs", "src", "assets", "benchmarks", "core-moonshot-gpu")
     CTBenchmarks.benchmark(;
         outpath=outpath,
         problems=[
