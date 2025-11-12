@@ -68,34 +68,16 @@ jobs:
     if: needs.guard.outputs.should_run_cpu == 'true'
     uses: control-toolbox/CTActions/.github/workflows/ci.yml@main
     with:
-      runners: '["ubuntu-latest"]'
       versions: '["1.12"]'
+      runs_on: '["ubuntu-latest"]'
+      runner_type: 'github'
 
   moonshot:
     needs: guard
     if: needs.guard.outputs.should_run_gpu == 'true'
-    runs-on: [self-hosted, Linux, gpu, cuda]
-    strategy:
-      matrix:
-        os: [ubuntu-24.04]
-        julia-version: ['1.10', '1.11', '1.12']
-        julia-arch: [x64]
-
-    steps:
-      - uses: actions/checkout@v5
-      - uses: julia-actions/setup-julia@v2
-        with:
-          version: ${{ matrix.julia-version }}
-          arch: ${{ matrix.julia-arch }}
-      - uses: actions/cache@v4
-        env:
-          cache-name: cache-artifacts
-        with:
-          path: ~/.julia/artifacts
-          key: ${{ runner.os }}-test-${{ env.cache-name }}-${{ hashFiles('**/Project.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-test-${{ env.cache-name }}-
-            ${{ runner.os }}-test-
-            ${{ runner.os }}-
-      - uses: julia-actions/julia-buildpkg@v1
-      - uses: julia-actions/julia-runtest@v1
+    uses: control-toolbox/CTActions/.github/workflows/ci.yml@main
+    with:
+      versions: '["1.12"]'
+      runs_on: '[["self-hosted", "Linux", "gpu", "cuda", "cuda12"]]'
+      archs: '["x64"]'
+      runner_type: 'self-hosted'
