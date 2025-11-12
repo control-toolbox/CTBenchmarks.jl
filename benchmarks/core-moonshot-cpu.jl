@@ -30,8 +30,8 @@ function main()
         tol=1e-6,
         ipopt_mu_strategy="adaptive",
         print_trace=false,
-        max_iter=2000,
-        max_wall_time=1000.0,
+        max_iter=1000,
+        max_wall_time=200.0,
     )
     println("✅ Benchmark completed successfully!")
     return outpath
