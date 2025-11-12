@@ -97,7 +97,8 @@ jobs:
             
             # Check for individual benchmark labels
             for bench_id in $BENCHMARK_IDS; do
-              if echo "$LABELS" | grep -q "run bench $bench_id"; then
+              ESCAPED_BENCH_ID=$(printf '%s' "$bench_id" | sed 's/[][\\.^$*+?(){}|/-]/\\&/g')
+              if echo "$LABELS" | grep -qE "(^| )run bench ${ESCAPED_BENCH_ID}( |$)"; then
                 echo "✅ Found 'run bench $bench_id' label"
                 
                 # Get full benchmark config from JSON
