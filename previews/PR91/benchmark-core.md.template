@@ -1,0 +1,78 @@
+# Core benchmark
+
+```@setup BENCH
+include(joinpath(@__DIR__, "assets", "utils.jl"))
+
+# Define benchmark IDs
+const BENCH_CORE_UBUNTU = "core-ubuntu-latest"
+const BENCH_CORE_MOONSHOT = "core-moonshot"
+```
+
+## Ubuntu Latest
+
+This benchmark suite evaluates 14 optimal control problems on a standard CPU platform using GitHub Actions runners.
+
+**Benchmark Configuration:**
+
+- **Solvers:** Ipopt and MadNLP
+- **Models:** JuMP, ADNLPModels, ExaModels (CPU)
+- **Grid sizes:** 200, 500, 1000 discretisation points
+- **Discretisation:** Trapeze method
+- **Tolerance:** 1e-6
+- **Ipopt strategy:** Adaptive barrier parameter
+- **Limits:** 1000 iterations max, 500s wall time
+
+This configuration focuses on CPU-based solvers and provides a comprehensive comparison across different modelling frameworks.
+
+!!! note
+    The linear solver is MUMPS for all experiments.
+
+### 🖥️ Environment
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = BENCH_CORE_UBUNTU
+ENV_NAME = BENCH
+-->
+
+### 📊 Results
+
+```@example BENCH
+_plot_results(BENCH_CORE_MOONSHOT) # hide
+```
+
+```@example BENCH
+_print_results(BENCH_CORE_MOONSHOT) # hide
+nothing # hide
+```
+
+## Moonshot
+
+This benchmark suite evaluates 14 optimal control problems on GPU-accelerated hardware, focusing on large-scale problems.
+
+**Benchmark Configuration:**
+
+- **Solver:** MadNLP (GPU-optimised)
+- **Models:** ExaModels (CPU), ExaModels (GPU)
+- **Grid sizes:** 1000, 5000, 10000 discretisation points
+- **Discretisation:** Trapeze method
+- **Tolerance:** 1e-6
+- **Limits:** 1000 iterations max, 1000s wall time
+
+This configuration demonstrates GPU acceleration capabilities with ExaModels on large-scale problems, comparing CPU vs GPU performance for the same modelling framework.
+
+!!! note
+    The linear solver is MUMPS for all experiments.
+
+### 🚀 Environment
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = BENCH_CORE_MOONSHOT
+ENV_NAME = BENCH
+-->
+
+### ⚡ Results
+
+```@example BENCH
+_print_results(BENCH_CORE_MOONSHOT) # hide
+nothing # hide
+```
