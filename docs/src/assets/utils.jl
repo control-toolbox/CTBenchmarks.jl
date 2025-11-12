@@ -193,54 +193,61 @@ end
     # plot with respect to the number of iterations
     # set time to infinity if it does not converge
 function _plot_results(bench_id)
-
-    brut = _get_bench_data(bench_id)
-    if brut === nothing
-        println("⚠️ No result for bench_id: $bench_id")
+    raw = _get_bench_data(bench_id)
+    if raw === nothing
+        println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
         return plot()
     end
 
-    rows = get(brut, "results", Any[])
+    rows = get(raw, "results", Any[])
     if isempty(rows)
-        println("⚠️ No results recorded.")
+        println("⚠️ No ('results') recorded in the benchmark file.")
         return plot()
     end
 
     df = DataFrame(rows)
     df_successful = filter(row -> row.success == true && row.benchmark !== nothing, df)
     if isempty(df_successful)
-        println("⚠️ No successful entries.")
+        println("⚠️ No successful benchmark entry to analyze.")
         return plot()
     end
 
     df_successful.time = [row.benchmark["time"] for row in eachrow(df_successful)]
     select!(df_successful, [:problem, :model, :solver, :grid_size, :time])
+    df_successful = dropmissing(df_successful, :time)
+    sort!(df_successful, [:problem, :grid_size, :model, :solver])
 
-    wide = unstack(df_successful, [:problem, :model, :grid_size], :solver, :time)
+    df_min = combine(groupby(df_successful, [:problem, :grid_size]), :time => minimum => :min_time)
+    df_successful = leftjoin(df_successful, df_min, on = [:problem, :grid_size])
+    df_successful.ratio = df_successful.time ./ df_successful.min_time
 
-    solver_names = setdiff(names(wide), [:problem, :model, :grid_size])
-    min_times = [minimum(skipmissing(collect(row[solver_names]))) for row in eachrow(wide)]
+    df_successful.combo = string.("(", df_successful.model, ", ", df_successful.solver, ")")
 
-    for s in solver_names
-        wide[!, Symbol("r_" * String(s))] = wide[!, s] ./ min_times
+    function performance_profile(df)
+        combos = unique(df.combo)
+        plt = plot(
+            xlabel = "τ (Performance ratio)",
+            ylabel = "Proportion of solved instances ≤ τ",
+            title = "Performance profile — Global models × solvers",
+            legend = :bottomright,
+            xscale = :log2,
+            grid = true,
+            lw = 2,
+            size = (900, 600)
+        )
+
+        for c in combos
+            sub = filter(row -> row.combo == c, df)
+            ratios = sort(collect(skipmissing(sub.ratio)))
+            n = length(ratios)
+            y = (1:n) ./ n
+            plot!(ratios, y, label = c)
+        end
+
+        return plt
     end
 
-    plt = plot(
-        xlabel = "τ (Performance ratio)",
-        ylabel = "Proportion of solved instances ≤ τ",
-        title = "Global Performance Profile (all models)",
-        legend = :bottomright,
-        xscale = :log2,
-        grid = true
-    )
-
-    for s in solver_names
-        ratios = sort(collect(skipmissing(wide[!, Symbol("r_" * String(s))])))
-        n = length(ratios)
-        y = (1:n) ./ n
-        plot!(plt, ratios, y, label = String(s), lw = 2)
-    end
-
-    println("✅ Global performance profile generated with $(length(solver_names)) solvers.")
+    plt = performance_profile(df_successful)
+    println("✅ Global performance profile generated.")
     return plt
 end
