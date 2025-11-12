@@ -75,7 +75,7 @@ jobs:
   moonshot:
     needs: guard
     if: needs.guard.outputs.should_run_gpu == 'true'
-    uses: control-toolbox/CTActions/.github/workflows/ci_.yml@main
+    uses: control-toolbox/CTActions/.github/workflows/ci.yml@main
     with:
       versions: '["1.12"]'
       runs_on: '[["self-hosted", "Linux", "gpu", "cuda", "cuda12"]]'
