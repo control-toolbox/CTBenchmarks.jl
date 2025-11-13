@@ -412,6 +412,7 @@ A DataFrame with columns:
 - `iterations`: Union{Int, Missing} - number of solver iterations (missing if failed)
 - `status`: Any - termination status (type depends on solver/model)
 - `success`: Bool - whether the solve succeeded
+- `criterion`: Union{String, Missing} - optimization sense ("min" or "max", missing if failed)
 """
 function benchmark_data(;
     problems,
@@ -440,6 +441,7 @@ function benchmark_data(;
         iterations=Union{Int,Missing}[],
         status=Any[],
         success=Bool[],
+        criterion=Union{String,Missing}[],
     )
 
     # Main loop over all combinations
