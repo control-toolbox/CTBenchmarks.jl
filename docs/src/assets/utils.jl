@@ -8,14 +8,42 @@ using Plots
 using Plots.PlotMeasures
 using Statistics
 
-# Get benchmark data from benchmark ID
+"""
+    _get_bench_data(bench_id::AbstractString)
+
+Retrieve benchmark data from a JSON file based on the benchmark ID.
+
+# Arguments
+- `bench_id::AbstractString`: Identifier for the benchmark (e.g., "core-ubuntu-latest")
+
+# Returns
+- `Dict` or `nothing`: Parsed benchmark data dictionary if file exists, `nothing` otherwise
+
+# Details
+Constructs the path to the benchmark JSON file using the benchmark ID and reads it.
+The file is expected to be located at `benchmarks/<bench_id>/<bench_id>.json`.
+"""
 function _get_bench_data(bench_id::AbstractString)
     json_filename = string(bench_id, ".json")
     path = joinpath(@__DIR__, "benchmarks", bench_id, json_filename)
     return _read_benchmark_json(path)
 end
 
-# Read benchmark JSON file
+"""
+    _read_benchmark_json(path::AbstractString)
+
+Read and parse a benchmark JSON file.
+
+# Arguments
+- `path::AbstractString`: Full path to the JSON file
+
+# Returns
+- `Dict` or `nothing`: Parsed JSON content if file exists, `nothing` if file not found
+
+# Details
+Safely reads a JSON file and returns its parsed content. Returns `nothing` if the file
+does not exist, allowing graceful handling of missing benchmark data.
+"""
 function _read_benchmark_json(path::AbstractString)
     if !isfile(path)
         return nothing
@@ -25,7 +53,24 @@ function _read_benchmark_json(path::AbstractString)
     end
 end
 
-# Download links for the benchmark environment
+"""
+    _downloads_toml(BENCH_ID)
+
+Generate Markdown links for downloading benchmark environment files.
+
+# Arguments
+- `BENCH_ID`: Benchmark identifier string
+
+# Returns
+- `Markdown.MD`: Parsed Markdown content with download links for:
+  - Project.toml (package dependencies)
+  - Manifest.toml (complete dependency tree with versions)
+  - Benchmark script (Julia script to run the benchmark)
+
+# Details
+Creates a formatted Markdown block with links to the benchmark environment files,
+allowing users to reproduce the exact environment and results.
+"""
 function _downloads_toml(BENCH_ID)
     link_manifest = joinpath(@__DIR__, "benchmarks", BENCH_ID, "Manifest.toml")
     link_project = joinpath(@__DIR__, "benchmarks", BENCH_ID, "Project.toml")
@@ -40,59 +85,210 @@ function _downloads_toml(BENCH_ID)
     """)
 end
 
-# Factorized helper functions that take bench_id as argument
-function _basic_metadata(bench_id) # hide
-    bench_data = _get_bench_data(bench_id) # hide
-    if bench_data !== nothing # hide
-        meta = get(bench_data, "metadata", Dict()) # hide
-        for (label, key) in ( # hide
-            ("📅 Timestamp", "timestamp"), # hide
-            ("🔧 Julia version", "julia_version"), # hide
-            ("💻 OS", "os"), # hide
-            ("🖥️ Machine", "machine"), # hide
-        ) # hide
-            value = string(get(meta, key, "n/a")) # hide
-            println(rpad(label, key=="machine" ? 16 : 17), ": ", value) # hide
-        end # hide
-    else # hide
-        println("⚠️  No benchmark data available") # hide
-    end # hide
-end # hide
+"""
+    _basic_metadata(bench_id)
 
-function _bench_data(bench_id) # hide
-    bench_data = _get_bench_data(bench_id) # hide
-    if bench_data !== nothing # hide
-        meta = get(bench_data, "metadata", Dict()) # hide
-        versioninfo_text = get(meta, "versioninfo", "No version info available") # hide
-        println(versioninfo_text) # hide
-    else # hide
-        println("⚠️  No benchmark data available") # hide
-    end # hide
-end # hide
+Display basic benchmark metadata (timestamp, Julia version, OS, machine).
 
-function _package_status(bench_id) # hide
-    bench_data = _get_bench_data(bench_id) # hide
-    if bench_data !== nothing # hide
-        meta = get(bench_data, "metadata", Dict()) # hide
-        pkg_status = get(meta, "pkg_status", "No package status available") # hide
-        println(pkg_status) # hide
-    else # hide
-        println("⚠️  No benchmark data available") # hide
-    end # hide
-end # hide
+# Arguments
+- `bench_id`: Benchmark identifier string
 
-function _complete_manifest(bench_id) # hide
-    bench_data = _get_bench_data(bench_id) # hide
-    if bench_data !== nothing # hide
-        meta = get(bench_data, "metadata", Dict()) # hide
-        pkg_manifest = get(meta, "pkg_manifest", "No manifest available") # hide
-        println(pkg_manifest) # hide
-    else # hide
-        println("⚠️  No benchmark data available") # hide
-    end # hide
-end # hide
+# Details
+Prints formatted metadata including:
+- 📅 Timestamp (UTC, ISO8601)
+- 🔧 Julia version
+- 💻 Operating system
+- 🖥️ Machine hostname
 
-function _print_results(bench_id)
+Returns nothing if benchmark data is unavailable.
+"""
+function _basic_metadata(bench_id)
+    bench_data = _get_bench_data(bench_id)
+    if bench_data !== nothing
+        meta = get(bench_data, "metadata", Dict())
+        for (label, key) in (
+            ("📅 Timestamp", "timestamp"),
+            ("🔧 Julia version", "julia_version"),
+            ("💻 OS", "os"),
+            ("🖥️ Machine", "machine"),
+        )
+            value = string(get(meta, key, "n/a"))
+            println(rpad(label, key=="machine" ? 16 : 17), ": ", value)
+        end
+    else
+        println("⚠️  No benchmark data available")
+    end
+end
+
+"""
+    _bench_data(bench_id)
+
+Display detailed Julia version information from benchmark metadata.
+
+# Arguments
+- `bench_id`: Benchmark identifier string
+
+# Details
+Prints the complete `versioninfo()` output that was captured during the benchmark run.
+This includes Julia version, platform, and build information.
+"""
+function _bench_data(bench_id)
+    bench_data = _get_bench_data(bench_id)
+    if bench_data !== nothing
+        meta = get(bench_data, "metadata", Dict())
+        versioninfo_text = get(meta, "versioninfo", "No version info available")
+        println(versioninfo_text)
+    else
+        println("⚠️  No benchmark data available")
+    end
+end
+
+"""
+    _package_status(bench_id)
+
+Display package status from benchmark metadata.
+
+# Arguments
+- `bench_id`: Benchmark identifier string
+
+# Details
+Prints the `Pkg.status()` output that was captured during the benchmark run.
+Shows the list of active project dependencies and their versions.
+"""
+function _package_status(bench_id)
+    bench_data = _get_bench_data(bench_id)
+    if bench_data !== nothing
+        meta = get(bench_data, "metadata", Dict())
+        pkg_status = get(meta, "pkg_status", "No package status available")
+        println(pkg_status)
+    else
+        println("⚠️  No benchmark data available")
+    end
+end
+
+"""
+    _complete_manifest(bench_id)
+
+Display complete package manifest from benchmark metadata.
+
+# Arguments
+- `bench_id`: Benchmark identifier string
+
+# Details
+Prints the complete `Pkg.status(mode=PKGMODE_MANIFEST)` output that was captured
+during the benchmark run. Shows all dependencies including transitive dependencies
+with their exact versions.
+"""
+function _complete_manifest(bench_id)
+    bench_data = _get_bench_data(bench_id)
+    if bench_data !== nothing
+        meta = get(bench_data, "metadata", Dict())
+        pkg_manifest = get(meta, "pkg_manifest", "No manifest available")
+        println(pkg_manifest)
+    else
+        println("⚠️  No benchmark data available")
+    end
+end
+
+"""
+    _print_config(bench_id)
+
+Display benchmark configuration parameters.
+
+# Arguments
+- `bench_id`: Benchmark identifier string
+
+# Details
+Prints the benchmark configuration including:
+- Problems tested
+- Solvers used (ipopt, madnlp)
+- Models (JuMP, adnlp, exa, exa_gpu)
+- Grid sizes
+- Discretization methods
+- Solver tolerances
+- Ipopt mu strategy
+- Iteration and wall time limits
+"""
+function _print_config(bench_id)
+    bench_data = _get_bench_data(bench_id)
+    if bench_data === nothing
+        println("⚠️  No configuration available because the benchmark file is missing.")
+    else
+        meta = get(bench_data, "metadata", Dict())
+        config = get(meta, "configuration", nothing)
+        
+        if config === nothing
+            println("⚠️  No configuration recorded in the benchmark file.")
+        else
+            # Extract configuration parameters
+            problems = get(config, "problems", [])
+            solver_models = get(config, "solver_models", [])
+            grid_sizes = get(config, "grid_sizes", [])
+            disc_methods = get(config, "disc_methods", [])
+            tol = get(config, "tol", "n/a")
+            ipopt_mu_strategy = get(config, "ipopt_mu_strategy", "n/a")
+            max_iter = get(config, "max_iter", "n/a")
+            max_wall_time = get(config, "max_wall_time", "n/a")
+            
+            # Format solver_models for display
+            # solver_models is stored as a vector of Pair objects in JSON
+            # Each Pair is stored as a Dict with "first" and "second" keys
+            solvers = Set{String}()
+            models = Set{String}()
+            
+            for pair in solver_models
+                if isa(pair, Dict)
+                    # JSON format: {"first": "solver", "second": ["model1", "model2"]}
+                    solver = get(pair, "first", "")
+                    push!(solvers, string(solver))
+                    for model in get(pair, "second", [])
+                        push!(models, string(model))
+                    end
+                elseif isa(pair, Pair)
+                    # Direct Pair format (if not serialized)
+                    push!(solvers, string(pair.first))
+                    for model in pair.second
+                        push!(models, string(model))
+                    end
+                end
+            end
+            
+            solvers_str = join(sort(collect(solvers)), ", ")
+            models_str = join(sort(collect(models)), ", ")
+            
+            # Print configuration in a structured format
+            println("- **Problems:** ", join(problems, ", "))
+            println("- **Solvers:** ", solvers_str)
+            println("- **Models:** ", models_str)
+            println("- **Grid sizes:** ", join(grid_sizes, ", "), " discretization points")
+            println("- **Discretization:** ", join(disc_methods, ", "), " method")
+            println("- **Tolerance:** ", tol)
+            println("- **Ipopt strategy:** ", ipopt_mu_strategy, " barrier parameter")
+            println("- **Limits:** ", max_iter, " iterations max, ", max_wall_time, "s wall time")
+        end
+    end
+end
+
+"""
+    _print_benchmark_log(bench_id; problems=nothing)
+
+Display benchmark results as a formatted log table.
+
+# Arguments
+- `bench_id`: Benchmark identifier string
+- `problems::Union{Nothing, Vector}`: Optional filter to display only specific problems
+
+# Details
+Prints benchmark results in a hierarchical tree format with:
+- Problem names (grouped by problem)
+- Solver and discretization method combinations
+- Grid sizes
+- Model types with timing and convergence statistics
+
+Results are displayed line-by-line with colored formatting for easy readability.
+If `problems` is specified, only results for those problems are shown.
+"""
+function _print_benchmark_log(bench_id; problems=nothing)
     bench_data = _get_bench_data(bench_id)
     if bench_data === nothing
         println("⚠️  No results to display because the benchmark file is missing.")
@@ -106,10 +302,15 @@ function _print_results(bench_id)
             # Convert to DataFrame for easier manipulation
             df = DataFrame(rows)
 
-            # Group by problem for structured display
-            problems = unique(df.problem)
+            # Filter by problems if specified
+            if problems !== nothing
+                df = filter(row -> row.problem in problems, df)
+            end
 
-            for problem in problems
+            # Group by problem for structured display
+            problems_list = unique(df.problem)
+
+            for problem in problems_list
                 # H2 level: Problem name in deep blue
                 print("\n┌─ ")
                 printstyled("Problem: $problem"; color=:blue, bold=true)
@@ -188,13 +389,30 @@ function _print_results(bench_id)
     end
 end
 
-# write in english
-    # use log base 2 instead of log base 1
-    # group the graphs by solver–model pairs
-    # on Moonshot, plot two curves: one for GPU and one for CPU
-    # plot with respect to the number of iterations
-    # set time to infinity if it does not converge
-function _plot_results(bench_id)
+"""
+    _plot_performance_profiles(bench_id)
+
+Generate and display performance profile plots for benchmark results.
+
+# Arguments
+- `bench_id`: Benchmark identifier string
+
+# Returns
+- `Plots.Plot`: Performance profile plot, or empty plot if no data available
+
+# Details
+Creates a performance profile plot showing the proportion of solved instances
+for each solver-model combination relative to the best solver for each problem.
+
+The plot uses:
+- Log scale (base 2) on the x-axis for performance ratio (τ)
+- Proportion of solved instances on the y-axis
+- One curve per (model, solver) combination
+
+Only successful benchmarks with valid timing data are included.
+Returns an empty plot if no benchmark data or successful runs are found.
+"""
+function _plot_performance_profiles(bench_id)
     raw = _get_bench_data(bench_id)
     if raw === nothing
         println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")

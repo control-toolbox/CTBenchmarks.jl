@@ -262,11 +262,11 @@ ENV_NAME = BENCH
 ### 📊 Results
 
 ```@example BENCH
-_plot_results(BENCH_ID) # hide
+_plot_performance_profiles(BENCH_ID) # hide
 ```
 
 ```@example BENCH
-_print_results(BENCH_ID) # hide
+_print_benchmark_log(BENCH_ID) # hide
 nothing # hide
 ```
 ````
@@ -275,8 +275,8 @@ nothing # hide
 
 - Use a single `@setup BENCH` block for all benchmarks in the same page
 - Define `BENCH_ID` as a constant with your benchmark identifier
-- Use `_plot_results(BENCH_ID)` to display performance plots (optional)
-- Use `_print_results(BENCH_ID)` to display detailed results table
+- Use `_plot_performance_profiles(BENCH_ID)` to display performance plots (optional)
+- Use `_print_benchmark_log(BENCH_ID)` to display detailed results table
 - The `INCLUDE_ENVIRONMENT` comment is processed by the documentation build system
 
 Then add it to `docs/make.jl`:

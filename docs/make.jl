@@ -22,6 +22,7 @@ with_processed_templates(
     [
         "benchmark-core-cpu.md",
         "benchmark-core-gpu.md",
+        "benchmark-core-beam.md",
     ],  # List of template files to process
     joinpath(@__DIR__, "src"),
     joinpath(@__DIR__, "src", "assets"),
@@ -45,8 +46,11 @@ with_processed_templates(
         pages=[
             "Introduction" => "index.md",
             "Core benchmarks" => [
-                "benchmark-core-cpu.md",
-                "benchmark-core-gpu.md",
+                "CPU" => "benchmark-core-cpu.md",
+                "GPU" => "benchmark-core-gpu.md",
+                "By Problems" => [
+                    "benchmark-core-beam.md",
+                ]
             ],
             "API" => "api.md",
             "Development Guidelines" => "dev.md",

@@ -151,7 +151,7 @@ function solve_and_extract_data(
     elseif model == :exa_gpu
         # ===== GPU Model (exa with CUDA backend) =====
         try
-            pb = Symbol(problem, :_s)  # exa models need the suffix _s
+            pb = Symbol(string(problem) * "_s")  # exa models need the suffix _s
             docp = eval(pb)(
                 OptimalControlBackend(),
                 :exa,
@@ -230,7 +230,7 @@ function solve_and_extract_data(
     else
         # ===== OptimalControl Models (adnlp or exa) =====
         try
-            pb = (model == :exa) ? Symbol(problem, :_s) : problem # for exa, we need the suffix _s
+            pb = (model == :exa) ? Symbol(string(problem) * "_s") : problem # for exa, we need the suffix _s
             docp = eval(pb)(
                 OptimalControlBackend(),
                 model,
@@ -607,18 +607,21 @@ function generate_metadata()
 end
 
 """
-    build_payload(results::DataFrame, meta::Dict) -> Dict
+    build_payload(results::DataFrame, meta::Dict, config::Dict) -> Dict
 
-Combine benchmark results DataFrame and metadata into a JSON-friendly dictionary.
+Combine benchmark results DataFrame, metadata, and configuration into a JSON-friendly dictionary.
 The DataFrame is converted to a vector of dictionaries (one per row) for easy JSON serialization
 and reconstruction.
 """
-function build_payload(results::DataFrame, meta::Dict)
+function build_payload(results::DataFrame, meta::Dict, config::Dict)
     # Convert DataFrame to vector of dictionaries using Tables.jl interface
     # This preserves all column names and types automatically
     results_vec = [Dict(pairs(row)) for row in Tables.rows(results)]
 
-    Dict("metadata" => meta, "results" => results_vec)
+    # Add configuration to metadata
+    meta_with_config = merge(meta, Dict("configuration" => config))
+
+    Dict("metadata" => meta_with_config, "results" => results_vec)
 end
 
 """
@@ -751,9 +754,22 @@ function benchmark(;
     println("Generating metadata...")
     meta = generate_metadata()
 
+    # Build configuration dictionary
+    config = Dict(
+        "problems" => problems,
+        "solver_models" => solver_models,
+        "grid_sizes" => grid_sizes,
+        "disc_methods" => disc_methods,
+        "tol" => tol,
+        "ipopt_mu_strategy" => ipopt_mu_strategy,
+        "print_trace" => print_trace,
+        "max_iter" => max_iter,
+        "max_wall_time" => max_wall_time,
+    )
+
     # Build payload
     println("Building payload...")
-    payload = build_payload(results, meta)
+    payload = build_payload(results, meta, config)
 
     return payload
 end
