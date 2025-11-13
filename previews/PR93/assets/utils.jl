@@ -162,6 +162,7 @@ function _print_results(bench_id)
                                 iterations=row.iterations,
                                 status=row.status,
                                 success=row.success,
+                                criterion=hasproperty(row, :criterion) ? row.criterion : missing,
                             )
                             print("│  │")
                             CTBenchmarks.print_benchmark_line(Symbol(row.model), stats)
