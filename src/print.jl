@@ -110,6 +110,13 @@ function print_benchmark_line(model::Symbol, stats::NamedTuple)
     end
     iter_str =
         ismissing(stats.iterations) ? rpad("N/A", 6) : rpad(string(stats.iterations), 6)
+    
+    # Format criterion (min/max)
+    criterion_str = if haskey(stats, :criterion) && !ismissing(stats.criterion)
+        rpad(stats.criterion, 3)
+    else
+        rpad("N/A", 3)
+    end
 
     # Print with colored elements
     if stats.success
@@ -120,5 +127,5 @@ function print_benchmark_line(model::Symbol, stats::NamedTuple)
 
     print(" | ")
     printstyled(rpad(string(model), 8); color=:magenta, bold=true)
-    println(" | time: $time_str | iters: $iter_str | obj: $obj_str | $memory_display")
+    println(" | time: $time_str | iters: $iter_str | obj: $obj_str ($criterion_str) | $memory_display")
 end
