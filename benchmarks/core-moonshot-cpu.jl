@@ -1,10 +1,10 @@
-# Benchmark script for core-ubuntu-latest
+# Benchmark script for core-moonshot-cpu
 # Setup (Pkg.activate, instantiate, update, using CTBenchmarks) is handled by the workflow
 
 function main()
     project_dir = normpath(@__DIR__, "..")
     outpath=joinpath(
-        project_dir, "docs", "src", "assets", "benchmarks", "core-ubuntu-latest"
+        project_dir, "docs", "src", "assets", "benchmarks", "core-moonshot-cpu"
     )
     CTBenchmarks.benchmark(;
         outpath=outpath,
@@ -25,13 +25,13 @@ function main()
             :vanderpol,
         ],
         solver_models=[:ipopt => [:JuMP, :adnlp, :exa], :madnlp => [:JuMP, :adnlp, :exa]],
-        grid_sizes=[200, 500, 1000, 2000],
+        grid_sizes=[200, 500, 1000, 2000, 5000],
         disc_methods=[:trapeze],
         tol=1e-6,
         ipopt_mu_strategy="adaptive",
         print_trace=false,
         max_iter=1000,
-        max_wall_time=500.0,
+        max_wall_time=200.0,
     )
     println("✅ Benchmark completed successfully!")
     return outpath
