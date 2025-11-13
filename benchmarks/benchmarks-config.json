@@ -20,13 +20,6 @@
       "julia_arch": "x64",
       "runs_on": "[\"moonshot\"]",
       "runner": "self-hosted"
-    },
-    {
-      "id": "core-mothra-gpu",
-      "julia_version": "1.11",
-      "julia_arch": "x64",
-      "runs_on": "[\"mothra\"]",
-      "runner": "self-hosted"
     }
   ]
 }
