@@ -1,7 +1,7 @@
 # Core Beam Benchmark
 
 ```@setup BENCH
-include(joinpath(@__DIR__, "assets", "utils.jl"))
+include(joinpath(@__DIR__, "assets", "jl", "utils.jl"))
 
 # Define benchmark IDs
 const BENCH_CORE_UBUNTU = "core-ubuntu-latest"
@@ -15,6 +15,18 @@ This page presents benchmark results for the **beam** problem across different p
 
 Results for the beam problem on GitHub Actions runners (Ubuntu latest).
 
+**Benchmark Configuration:**
+
+```@example BENCH
+_print_config(BENCH_CORE_UBUNTU) # hide
+nothing # hide
+```
+
+This configuration focuses on CPU-based solvers and provides a comprehensive comparison across different modelling frameworks.
+
+!!! note
+    The linear solver is MUMPS for all experiments.
+
 ### 📊 Ubuntu Results
 
 ```@example BENCH
@@ -26,6 +38,18 @@ nothing # hide
 
 Results for the beam problem on self-hosted CPU hardware.
 
+**Benchmark Configuration:**
+
+```@example BENCH
+_print_config(BENCH_CORE_MOONSHOT_CPU) # hide
+nothing # hide
+```
+
+This configuration tests larger grid sizes on dedicated hardware, comparing performance with the GitHub Actions runner.
+
+!!! note
+    The linear solver is MUMPS for all experiments.
+
 ### ⚡ Moonshot CPU Results
 
 ```@example BENCH
@@ -36,6 +60,18 @@ nothing # hide
 ## Moonshot GPU - Beam Problem
 
 Results for the beam problem on GPU-accelerated hardware.
+
+**Benchmark Configuration:**
+
+```@example BENCH
+_print_config(BENCH_CORE_MOONSHOT_GPU) # hide
+nothing # hide
+```
+
+This configuration demonstrates GPU acceleration capabilities with ExaModels on large-scale problems, comparing CPU vs GPU performance for the same modelling framework.
+
+!!! note
+    The linear solver is MUMPS for all experiments.
 
 ### 🚀 Moonshot GPU Results
 

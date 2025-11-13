@@ -7,12 +7,12 @@ the content from `environment.md.template`, substituting the specified variables
 """
 
 """
-    read_environment_template(assets_dir::String) -> String
+    read_environment_template(templates_dir::String) -> String
 
 Read the environment template file from the assets directory.
 
 # Arguments
-- `assets_dir`: Path to the assets directory containing `environment.md.template`
+- `templates_dir`: Path to the assets directory containing `environment.md.template`
 
 # Returns
 - String containing the template content
@@ -20,8 +20,8 @@ Read the environment template file from the assets directory.
 # Throws
 - `SystemError` if the template file doesn't exist
 """
-function read_environment_template(assets_dir::String)
-    template_path = joinpath(assets_dir, "environment.md.template")
+function read_environment_template(templates_dir::String)
+    template_path = joinpath(templates_dir, "environment.md.template")
     if !isfile(template_path)
         error("Environment template not found at: $template_path")
     end
@@ -204,14 +204,14 @@ function process_single_template(
 end
 
 """
-    process_templates(template_files::Vector{String}, src_dir::String, assets_dir::String)
+    process_templates(template_files::Vector{String}, src_dir::String, templates_dir::String)
 
 Process multiple template files, replacing INCLUDE_ENVIRONMENT blocks with the environment template.
 
 # Arguments
 - `template_files`: List of template file names (e.g., ["benchmark-core.md"]) to process
 - `src_dir`: Source directory containing the template files
-- `assets_dir`: Assets directory containing `environment.md.template`
+- `templates_dir`: Assets directory containing `environment.md.template`
 
 # Details
 For each file in `template_files`:
@@ -229,18 +229,18 @@ process_templates(
 ```
 """
 function process_templates(
-    template_files::Vector{String}, src_dir::String, assets_dir::String
+    template_files::Vector{String}, src_dir::String, templates_dir::String
 )
     @info "" # Empty line for readability
     @info "═"^70
     @info "🚀 Starting template processing"
     @info "═"^70
     @info "📂 Source directory: $src_dir"
-    @info "📂 Assets directory: $assets_dir"
+    @info "📂 Assets directory: $templates_dir"
     @info "📋 Templates to process: $(length(template_files))"
 
     # Read the environment template once
-    env_template = read_environment_template(assets_dir)
+    env_template = read_environment_template(templates_dir)
 
     # Remove the comment block from the environment template
     # (lines 1-6: <!-- INPUTS: ... -->)
@@ -292,7 +292,7 @@ function process_templates(
 end
 
 """
-    with_processed_templates(f::Function, template_files::Vector{String}, src_dir::String, assets_dir::String)
+    with_processed_templates(f::Function, template_files::Vector{String}, src_dir::String, templates_dir::String)
 
 Process template files, execute the provided function, and clean up generated files.
 
@@ -304,7 +304,7 @@ should not persist.
 - `f`: Function to execute after templates are processed (typically `makedocs`)
 - `template_files`: List of template file names (e.g., ["benchmark-core.md"]) to process
 - `src_dir`: Source directory containing the template files
-- `assets_dir`: Assets directory containing `environment.md.template`
+- `templates_dir`: Assets directory containing `environment.md.template`
 
 # Returns
 - The return value of `f()`
@@ -314,7 +314,7 @@ should not persist.
 with_processed_templates(
     ["benchmark-core.md"],
     joinpath(@__DIR__, "src"),
-    joinpath(@__DIR__, "src", "assets")
+    joinpath(@__DIR__, "src", "assets", "templates")
 ) do
     makedocs(;
         sitename="MyDocs",
@@ -332,10 +332,10 @@ The function follows this workflow:
 This pattern is inspired by `with_problems_browser` from OptimalControlProblems.jl.
 """
 function with_processed_templates(
-    f::Function, template_files::Vector{String}, src_dir::String, assets_dir::String
+    f::Function, template_files::Vector{String}, src_dir::String, templates_dir::String
 )
     # Process templates to generate .md files
-    process_templates(template_files, src_dir, assets_dir)
+    process_templates(template_files, src_dir, templates_dir)
 
     try
         # Execute the user function (typically makedocs)
