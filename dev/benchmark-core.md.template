@@ -5,7 +5,7 @@ include(joinpath(@__DIR__, "assets", "utils.jl"))
 
 # Define benchmark IDs
 const BENCH_CORE_UBUNTU = "core-ubuntu-latest"
-const BENCH_CORE_MOONSHOT = "core-moonshot"
+const BENCH_CORE_MOONSHOT = "core-moonshot-gpu"
 ```
 
 ## Ubuntu Latest
@@ -71,6 +71,10 @@ ENV_NAME = BENCH
 -->
 
 ### ⚡ Results
+
+```@example BENCH
+_plot_results(BENCH_CORE_MOONSHOT) # hide
+```
 
 ```@example BENCH
 _print_results(BENCH_CORE_MOONSHOT) # hide
