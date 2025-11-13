@@ -187,104 +187,68 @@ function _print_results(bench_id)
     end
 end
 
-function _plot_results(bench_id)
-
-    function pratios(df_sub)
-        wide = unstack(df_sub, [:problem, :grid_size], :solver, :time)
-        if !("ipopt" in names(wide)) || !("madnlp" in names(wide))
-            return nothing
-        end
-        min_times = min.(wide.ipopt, wide.madnlp)
-        wide.r_ipopt  = wide.ipopt  ./ min_times
-        wide.r_madnlp = wide.madnlp ./ min_times
-        return wide
-    end
-
-    # write in english
+# write in english
     # use log base 2 instead of log base 1
     # group the graphs by solver–model pairs
     # on Moonshot, plot two curves: one for GPU and one for CPU
     # plot with respect to the number of iterations
     # set time to infinity if it does not converge
-    function plot_performance_profile(wide, model)
-        r_ipopt  = sort(collect(skipmissing(wide.r_ipopt)))
-        r_madnlp = sort(collect(skipmissing(wide.r_madnlp)))
-        n = length(r_ipopt)
-        y = (1:n) ./ n
-        plt = plot(
-            r_ipopt, y,
-            label = "Ipopt", lw = 2,
-            xlabel = "τ (Performance ratio)",
-            ylabel = "Proportion of solved instances ≤ τ",
-            title = "Performance profile — $(model)",
-            legend = :bottomright,
-            xscale = :log2,
-            grid = true
-        )
-        plot!(
-            r_madnlp, y,
-            label = "MadNLP", lw = 2
-        )
-        return plt
+function _plot_results(bench_id)
+    raw = _get_bench_data(bench_id)
+    if raw === nothing
+        println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
+        return plot()
     end
 
-    brut = _get_bench_data(bench_id) 
-    if brut === nothing
-        println("⚠️  No result (missing or invalid file) for bench_id: $bench_id")
-        return plot() 
-    end
-
-    rows = get(brut, "results", Any[])
+    rows = get(raw, "results", Any[])
     if isempty(rows)
-        println("⚠️  No ('results') recorded in the benchmark file.")
+        println("⚠️ No ('results') recorded in the benchmark file.")
         return plot()
     end
 
     df = DataFrame(rows)
-
     df_successful = filter(row -> row.success == true && row.benchmark !== nothing, df)
     if isempty(df_successful)
-        println("⚠️  No successful benchmark entry to analyze.")
-        return plot() 
+        println("⚠️ No successful benchmark entry to analyze.")
+        return plot()
     end
 
     df_successful.time = [row.benchmark["time"] for row in eachrow(df_successful)]
     select!(df_successful, [:problem, :model, :solver, :grid_size, :time])
-    sort!(df_successful, [:model, :problem, :grid_size, :solver])
-    models = unique(df_successful.model)
-    model_plots = Plots.Plot[]
+    df_successful = dropmissing(df_successful, :time)
+    sort!(df_successful, [:problem, :grid_size, :model, :solver])
 
-    println("\nGenerating performance profiles by model :\n")
+    df_min = combine(groupby(df_successful, [:problem, :grid_size]), :time => minimum => :min_time)
+    df_successful = leftjoin(df_successful, df_min, on = [:problem, :grid_size])
+    df_successful.ratio = df_successful.time ./ df_successful.min_time
 
-    for m in models
-        df_sub = filter(row -> row.model == m, df_successful)
+    df_successful.combo = string.("(", df_successful.model, ", ", df_successful.solver, ")")
 
-        wide = pratios(df_sub) 
-        
-        if wide === nothing
-            println("Skipped model $(m) (one of the solvers missing)")
-            continue
+    function performance_profile(df)
+        combos = unique(df.combo)
+        plt = plot(
+            xlabel = "τ (Performance ratio)",
+            ylabel = "Proportion of solved instances ≤ τ",
+            title = "Performance profile — Global models × solvers",
+            legend = :bottomright,
+            xscale = :log2,
+            grid = true,
+            lw = 2,
+            size = (900, 600)
+        )
+
+        for c in combos
+            sub = filter(row -> row.combo == c, df)
+            ratios = sort(collect(skipmissing(sub.ratio)))
+            n = length(ratios)
+            y = (1:n) ./ n
+            plot!(ratios, y, label = c)
         end
 
-        plt = plot_performance_profile(wide, m)
-
-        push!(model_plots, plt)
-        println("✅ Plot created for the model $(m)")
+        return plt
     end
 
-
-    n_plots = length(model_plots)
-    if n_plots == 0
-        println("⚠️  No model plot could be generated.")
-        return plot() 
-    end
-
-    println("\nDone: Combining $n_plots plots...")
-    
-    return plot(model_plots...; 
-        layout = (n_plots, 1),
-        size = (800, 500 * n_plots), 
-        left_margin = 10Plots.mm,
-        bottom_margin = 10Plots.mm
-    )
+    plt = performance_profile(df_successful)
+    println("✅ Global performance profile generated.")
+    return plt
 end
