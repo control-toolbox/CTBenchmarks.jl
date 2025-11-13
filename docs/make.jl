@@ -54,7 +54,7 @@ with_processed_templates(
                 "CPU" => "benchmark-core-cpu.md",
                 "GPU" => "benchmark-core-gpu.md",
                 "By Problems" => [
-                    "benchmark-core-beam.md",
+                    "Beam" => "benchmark-core-beam.md",
                 ]
             ],
             "API" => "api.md",
