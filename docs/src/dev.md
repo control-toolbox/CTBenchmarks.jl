@@ -6,90 +6,23 @@ This guide explains how to add a new benchmark to the CTBenchmarks.jl pipeline.
 
 Adding a new benchmark involves creating several components:
 
-1. **JSON configuration entry** ⭐ *Simple* - Add benchmark config to JSON file (**1 entry to add**)
-2. **Benchmark script** ⭐ *Simple* - Julia script that runs the benchmark
-3. **GitHub label** ⭐ *Simple* - Label to trigger the benchmark on pull requests (manual step on GitHub)
-4. **Individual workflow** ⭐ *Optional* - Workflow for manual testing (reads from JSON)
-5. **Documentation page** ⭐ *Optional* - Display benchmark results in the documentation
-
-!!! tip "Estimated Time"
-    - Step 1 (JSON): ~2 minutes
-    - Step 2 (Script): ~5-10 minutes
-    - Step 3 (Label): ~1 minute
-    - Step 4 (Optional workflow): ~5 minutes
-    - Step 5 (Optional docs): ~10 minutes
-
-!!! success "Key Improvement"
-    The orchestrator now uses a **JSON configuration file** and **matrix strategy**. Adding a benchmark requires modifying only **one JSON entry** instead of multiple workflow files!
+| Step | Description | Status |
+|------|-------------|--------|
+| [**Benchmark script**](#benchmark-script) | Julia script that runs the benchmark | Required |
+| [**JSON configuration**](#json-config) | Add benchmark config to JSON file | Required |
+| [**GitHub label**](#github-label) | Label to trigger the benchmark on pull requests | Required |
+| [**Individual workflow**](#individual-workflow) | Workflow for manual testing (reads from JSON) | Optional |
+| [**Documentation page**](#documentation-page) | Display benchmark results in the documentation | Optional |
 
 ## Step-by-Step Guide
 
-### 1. Add Configuration to JSON
+### 1. Create the Benchmark Script {#benchmark-script}
 
-Edit `benchmarks/benchmarks-config.json` and add your benchmark configuration:
+Create a new Julia script in the `benchmarks/` directory. Choose a descriptive filename that will serve as your benchmark identifier.
 
-```json
-{
-  "benchmarks": [
-    {
-      "id": "your-benchmark-id",
-      "julia_version": "1.11",
-      "julia_arch": "x64",
-      "runs_on": "ubuntu-latest",
-      "runner": "github"
-    }
-  ]
-}
-```
+**Naming convention**: Use kebab-case (e.g., `core-ubuntu-latest.jl`, `core-moonshot-gpu.jl`)
 
-**Configuration fields:**
-
-- **`id`** (required): Unique identifier for the benchmark (kebab-case)
-  - Convention: `{family}-{runner}` (e.g., `core-ubuntu-latest`, `core-moonshot`)
-  - Used as script filename: `benchmarks/{id}.jl`
-  - Used in label: `run bench {id}`
-  
-- **`julia_version`** (required): Julia version to use (e.g., `"1.11"`)
-
-- **`julia_arch`** (required): Architecture (typically `"x64"`)
-
-- **`runs_on`** (required): GitHub runner specification
-  - For standard runners: `"ubuntu-latest"`
-  - For self-hosted: `"[\"self-hosted\", \"Linux\", \"gpu\", \"cuda\", \"cuda12\"]"`
-  
-- **`runner`** (required): Runner type for caching strategy
-  - `"github"` for standard GitHub runners (uses `julia-actions/cache`)
-  - `"self-hosted"` for self-hosted runners (uses `actions/cache` for artifacts only)
-
-**Examples:**
-
-```json
-// Standard GitHub runner
-{
-  "id": "core-ubuntu-latest",
-  "julia_version": "1.11",
-  "julia_arch": "x64",
-  "runs_on": "ubuntu-latest",
-  "runner": "github"
-}
-
-// Self-hosted GPU runner
-{
-  "id": "core-moonshot",
-  "julia_version": "1.11",
-  "julia_arch": "x64",
-  "runs_on": "[\"self-hosted\", \"Linux\", \"gpu\", \"cuda\", \"cuda12\"]",
-  "runner": "self-hosted"
-}
-```
-
-### 2. Create the Benchmark Script
-
-Create a new Julia script in the `benchmarks/` directory with the filename `{id}.jl`:
-
-**Important**: The script filename must **exactly match** the `id` in the JSON configuration.
-
-**Example**: For `"id": "core-ubuntu-latest"`, create `benchmarks/core-ubuntu-latest.jl`
+**Example**: `benchmarks/core-ubuntu-latest.jl`
 
 ```julia
 # Benchmark script for <id>
@@ -122,20 +55,81 @@ end
 - **Available problems:** The list of problems you can choose is available in the [OptimalControlProblems.jl documentation](https://control-toolbox.org/OptimalControlProblems.jl/stable/problems_browser.html)
 - **For local testing:** See `benchmarks/local.jl` for an example that includes the setup code needed to run benchmarks locally
 
-### 2. Automatic Workflow Execution
+### 2. Add Configuration to JSON {#json-config}
+
+Edit `benchmarks/benchmarks-config.json` and add your benchmark configuration:
+
+```json
+{
+  "benchmarks": [
+    {
+      "id": "your-benchmark-id",
+      "julia_version": "1.11",
+      "julia_arch": "x64",
+      "runs_on": "ubuntu-latest",
+      "runner": "github"
+    }
+  ]
+}
+```
+
+**Configuration fields:**
+
+- **`id`** (required): Unique identifier for the benchmark (kebab-case)
+  - **Must exactly match your script filename** (without the `.jl` extension)
+  - Convention: `{family}-{runner}` (e.g., `core-ubuntu-latest`, `core-moonshot`)
+  - Example: if your script is `benchmarks/core-ubuntu-latest.jl`, use `"id": "core-ubuntu-latest"`
+  - Used in label: `run bench {id}`
+  
+- **`julia_version`** (required): Julia version to use (e.g., `"1.11"`)
+
+- **`julia_arch`** (required): Architecture (typically `"x64"`)
+
+- **`runs_on`** (required): GitHub runner specification
+  - For standard runners: `"ubuntu-latest"`
+  - For self-hosted runners with custom labels: `"[\"moonshot\"]"` or `"[\"mothra\"]"` (use the runner label configured in your self-hosted runner)`
+  
+- **`runner`** (required): Runner type for caching strategy
+  - `"github"` for standard GitHub runners (uses `julia-actions/cache`)
+  - `"self-hosted"` for self-hosted runners (uses `actions/cache` for artifacts only)
+
+**Examples:**
+
+```json
+// Standard GitHub runner
+{
+  "id": "core-ubuntu-latest",
+  "julia_version": "1.11",
+  "julia_arch": "x64",
+  "runs_on": "ubuntu-latest",
+  "runner": "github"
+}
+
+// Self-hosted runner with custom label
+{
+  "id": "core-moonshot",
+  "julia_version": "1.11",
+  "julia_arch": "x64",
+  "runs_on": "[\"moonshot\"]",
+  "runner": "self-hosted"
+}
+```
+
+### Automatic Workflow Execution
 
 **Good news!** You don't need to create a workflow file manually. The orchestrator automatically runs your benchmark based on the JSON configuration using a matrix strategy.
 
 When you add a label to a PR (e.g., `run bench your-benchmark-id`), the orchestrator:
 
 1. Reads `benchmarks/benchmarks-config.json`
-2. Finds your benchmark configuration
-3. Calls the reusable workflow with the correct parameters
-4. Constructs the script path as `benchmarks/{id}.jl`
+2. Finds your benchmark configuration by matching the label with the `id` field
+3. Calls the reusable workflow with the parameters from the JSON (Julia version, architecture, runner, etc.)
+4. The reusable workflow loads and executes your script at `benchmarks/{id}.jl`
+5. Results are saved to `docs/src/assets/benchmarks/{id}/{id}.json`
 
 **Everything is automatic!** ✨
 
-### 3. Create the GitHub Label
+### 3. Create the GitHub Label {#github-label}
 
 On GitHub, create a new label for your benchmark:
 
@@ -143,7 +137,7 @@ On GitHub, create a new label for your benchmark:
 2. Click **New label**
 3. Name: `run bench {id}` where `{id}` matches your JSON configuration
    - Example: `run bench core-ubuntu-latest`
-   - Example: `run bench core-moonshot`
+   - Example: `run bench core-moonshot-gpu`
    - **Important**: Use the exact benchmark ID from JSON
 4. Choose a color and description
 5. Click **Create label**
@@ -152,7 +146,7 @@ On GitHub, create a new label for your benchmark:
 
 1. **Individual labels** - Trigger a specific benchmark:
    - Format: `run bench {id}`
-   - Example: `run bench core-moonshot`
+   - Example: `run bench core-moonshot-gpu`
    - Example: `run bench minimal-ubuntu-latest`
 
 2. **Group labels** - Trigger all benchmarks with a common prefix:
@@ -171,11 +165,11 @@ To use group labels effectively, follow this naming convention:
 
 **Examples:**
 
-- `core-ubuntu-latest`, `core-moonshot`, `core-mothra` → `run bench core-all`
-- `minimal-ubuntu-latest`, `minimal-macos` → `run bench minimal-all`
+- `core-ubuntu-latest`, `core-moonshot-gpu`, `core-mothra-gpu` → `run bench core-all`
+- `minimal-ubuntu-latest`, `minimal-moonshot-gpu`, `minimal-mothra-gpu` → `run bench minimal-all`
 - `gpu-cuda12`, `gpu-cuda13` → `run bench gpu-all`
 
-### 4. (Optional) Create Individual Workflow
+### 4. (Optional) Create Individual Workflow {#individual-workflow}
 
 !!! info "Optional Step"
     Individual workflows are **optional**. The orchestrator will automatically run your benchmark based on the JSON configuration. Individual workflows are useful for:
@@ -228,18 +222,18 @@ jobs:
 - **Can be called by orchestrator** via `workflow_call`
 - **No hardcoded values** - Everything comes from JSON configuration
 
-### 5. Create Documentation Page (Optional)
+### 5. (Optional) Create Documentation Page {#documentation-page}
 
 If you want to display results in the documentation, create `docs/src/benchmark-<name>.md.template`:
 
 ````markdown
 # <Name> Benchmark
 
-```@setup BENCH_<NAME>
+```@setup BENCH
 include(joinpath(@__DIR__, "assets", "utils.jl"))
 
+# Define benchmark ID
 const BENCH_ID = "<id>"
-const BENCH_DATA = _get_bench_data(BENCH_ID)
 ```
 
 ## Description
@@ -248,27 +242,42 @@ Brief description of your benchmark configuration.
 
 **Benchmark Configuration:**
 
-- **Solvers:** List of solvers
-- **Models:** List of models
-- **Grid sizes:** Discretisation points
+- **Solvers:** List of solvers (e.g., Ipopt, MadNLP)
+- **Models:** List of models (e.g., JuMP, ADNLPModels, ExaModels)
+- **Grid sizes:** Discretisation points (e.g., 200, 500, 1000)
+- **Discretisation:** Method used (e.g., Trapeze)
 - **Tolerance:** 1e-6
 - **Limits:** Max iterations and wall time
+
+!!! note
+    Add any relevant notes about the benchmark setup (e.g., linear solver used)
 
 ### 🖥️ Environment
 
 <!-- INCLUDE_ENVIRONMENT:
-BENCH_DATA = BENCH_DATA
-BENCH_DIR = BENCH_DIR
-ENV_NAME = BENCH_<NAME>
+BENCH_ID = BENCH_ID
+ENV_NAME = BENCH
 -->
 
 ### 📊 Results
 
-```@example BENCH_<NAME>
-_print_results(BENCH_DATA) # hide
+```@example BENCH
+_plot_results(BENCH_ID) # hide
+```
+
+```@example BENCH
+_print_results(BENCH_ID) # hide
 nothing # hide
 ```
 ````
+
+**Key points:**
+
+- Use a single `@setup BENCH` block for all benchmarks in the same page
+- Define `BENCH_ID` as a constant with your benchmark identifier
+- Use `_plot_results(BENCH_ID)` to display performance plots (optional)
+- Use `_print_results(BENCH_ID)` to display detailed results table
+- The `INCLUDE_ENVIRONMENT` comment is processed by the documentation build system
 
 Then add it to `docs/make.jl`:
 
@@ -294,15 +303,15 @@ pages = [
 
 **Cache issues on self-hosted runners:**
 
-- Ensure `runner: 'self-hosted'` is set in your workflow
+- Ensure `"runner": "self-hosted"` is set in your JSON configuration
 - The reusable workflow uses `actions/cache` for artifacts only on self-hosted runners
-- If you see slow cache operations on self-hosted runners, verify the `runner` parameter is set correctly
-- Standard runners should NOT have the `runner` parameter (let it default to use `julia-actions/cache`)
+- Standard GitHub runners should use `"runner": "github"` to enable full package caching
 
 **Workflow not triggering:**
 
-- Verify the label name matches exactly in the orchestrator
-- Check that the orchestrator's guard job includes your benchmark in outputs
+- Verify the label name matches exactly: `run bench {id}` where `{id}` is from your JSON
+- Check that your benchmark ID exists in `benchmarks/benchmarks-config.json`
+- Ensure the benchmark script file exists at `benchmarks/{id}.jl`
 
 **Benchmark script fails:**
 
@@ -312,38 +321,83 @@ pages = [
 
 ## Examples
 
-### Example 1: Core Moonshot Benchmark (CUDA 12)
+### Example 1: Standard GitHub Runner
 
-A complete GPU benchmark using CUDA 12:
+A CPU benchmark running on GitHub Actions:
 
-- **Script**: `benchmarks/core-moonshot.jl`
-- **Workflow**: `.github/workflows/benchmark-core-moonshot.yml`
-- **Label**: `run bench core moonshot`
-- **Runner**: `["self-hosted", "Linux", "gpu", "cuda", "cuda12"]`
+**JSON configuration:**
+
+```json
+{
+  "id": "core-ubuntu-latest",
+  "julia_version": "1.11",
+  "julia_arch": "x64",
+  "runs_on": "\"ubuntu-latest\"",
+  "runner": "github"
+}
+```
+
+**Files:**
+
+- **Script**: `benchmarks/core-ubuntu-latest.jl`
+- **Label**: `run bench core-ubuntu-latest`
 - **Documentation**: `docs/src/benchmark-core.md.template`
 
-### Example 2: Core Mothra Benchmark (CUDA 13)
+### Example 2: Self-Hosted Runner (Moonshot)
 
-A GPU benchmark identical to Moonshot but using CUDA 13 to compare performance:
+A GPU benchmark on a self-hosted runner with custom label:
 
-- **JSON entry**: Added to `benchmarks/benchmarks-config.json`
+**JSON configuration:**
 
-    ```json
-    {
-    "id": "core-mothra",
-    "julia_version": "1.11",
-    "julia_arch": "x64",
-    "runs_on": "[\"self-hosted\", \"Linux\", \"gpu\", \"cuda\", \"cuda13\"]",
-    "runner": "self-hosted"
-    }
-    ```
+```json
+{
+  "id": "core-moonshot-gpu",
+  "julia_version": "1.11",
+  "julia_arch": "x64",
+  "runs_on": "[\"moonshot\"]",
+  "runner": "self-hosted"
+}
+```
 
-- **Script**: `benchmarks/core-mothra.jl`
-  - Only difference: `outpath` points to `docs/src/assets/benchmarks/core-mothra`
-- **Label**: `run bench core-mothra`
-- **Workflow** (optional): `.github/workflows/benchmark-core-mothra.yml` reads from JSON
+**Files:**
 
-This example demonstrates how to create a variant of an existing benchmark to test different hardware configurations.
+- **Script**: `benchmarks/core-moonshot-gpu.jl`
+- **Label**: `run bench core-moonshot-gpu`
+
+**Key points:**
+
+- Uses simplified runner label `["moonshot"]` instead of full system labels
+- The `runner: "self-hosted"` field tells the workflow to use artifact-only caching
+
+### Example 3: Multiple Runners, Same Hardware
+
+You can create CPU and GPU variants for the same hardware:
+
+**CPU variant:**
+
+```json
+{
+  "id": "core-moonshot-cpu",
+  "julia_version": "1.11",
+  "julia_arch": "x64",
+  "runs_on": "[\"moonshot\"]",
+  "runner": "self-hosted"
+}
+```
+
+**GPU variant:**
+
+```json
+{
+  "id": "core-moonshot-gpu",
+  "julia_version": "1.11",
+  "julia_arch": "x64",
+  "runs_on": "[\"moonshot\"]",
+  "runner": "self-hosted"
+}
+```
+
+Both use the same runner label but different benchmark scripts with different solver configurations.
 
 ## How the Orchestrator Works
 
@@ -385,9 +439,8 @@ The orchestrator supports two types of labels with **automatic prefix detection*
   3. It selects all benchmarks matching the pattern `{prefix}-*`
   
 - **Examples**:
-  - `run bench core-all` → runs `core-ubuntu-latest`, `core-moonshot`, `core-mothra`
-  - `run bench minimal-all` → runs `minimal-ubuntu-latest`, `minimal-macos`
-  - `run bench gpu-all` → runs `gpu-cuda12`, `gpu-cuda13`
+  - `run bench core-all` → runs `core-ubuntu-latest`, `core-moonshot-cpu`, `core-moonshot-gpu`, `core-mothra-gpu`
+  - `run bench minimal-all` → runs all benchmarks starting with `minimal-`
 
 #### Multiple Labels
 

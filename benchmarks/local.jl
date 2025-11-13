@@ -28,5 +28,5 @@ println("⏱️  Ready to run core benchmark...")
 CTBenchmarks.run(:minimal; print_trace=false) # or :complete
 
 # To run a specific benchmark script locally, you can also do:
-# include("core-moonshot.jl")
-# main()
+# include("core-moonshot-cpu.jl")
+# run()

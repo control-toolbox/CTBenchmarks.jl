@@ -11,21 +11,17 @@ This package provides:
 
 ## Installation
 
-!!! warning "Development Package"
-    CTBenchmarks.jl is not yet registered in the Julia General Registry. You must clone the repository to use it.
-
-To install CTBenchmarks.jl, clone the repository and activate the project:
+CTBenchmarks.jl is registered in the Julia General Registry. Install it using the package manager:
 
 ```julia
 using Pkg
+Pkg.add("CTBenchmarks")
+```
 
-# Clone the repository
-Pkg.develop(url="https://github.com/control-toolbox/CTBenchmarks.jl")
+Or in the Julia REPL package mode (press `]`):
 
-# Or clone manually and activate
-# git clone https://github.com/control-toolbox/CTBenchmarks.jl.git
-# cd CTBenchmarks.jl
-# julia --project=.
+```julia-repl
+pkg> add CTBenchmarks
 ```
 
 Once installed, load the package:

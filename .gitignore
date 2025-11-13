@@ -358,4 +358,4 @@ Manifest.toml
 !docs/src/assets/**/Manifest.toml
 tmp/
 test/build
-reports/
+reports
