@@ -36,7 +36,12 @@ with_processed_templates(
             ansicolor=true,
             repolink="https://" * repo_url,
             prettyurls=false,
-            size_threshold_ignore=["index.md", "benchmark-core.md"],
+            size_threshold_ignore=[
+                "index.md", 
+                "benchmark-core-cpu.md",
+                "benchmark-core-gpu.md",
+                "benchmark-core-beam.md",
+            ],
             assets=[
                 asset("https://control-toolbox.org/assets/css/documentation.css"),
                 asset("https://control-toolbox.org/assets/js/documentation.js"),
