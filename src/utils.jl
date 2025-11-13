@@ -53,6 +53,7 @@ A NamedTuple with fields:
 - `iterations::Union{Int, Missing}`: number of solver iterations (missing if failed)
 - `status::Any`: termination status (type depends on solver/model)
 - `success::Bool`: whether the solve succeeded
+- `criterion::Union{String, Missing}`: optimization sense ("min" or "max", missing if failed)
 """
 function solve_and_extract_data(
     problem::Symbol,
@@ -117,6 +118,10 @@ function solve_and_extract_data(
             obj = objective(bt_nlp)
             iters = iterations(bt_nlp)
 
+            # Extract criterion (min or max)
+            sense = JuMP.objective_sense(bt_nlp)
+            criterion = (sense == JuMP.MAX_SENSE) ? "max" : "min"
+
             # Check if solve succeeded (MOI.LOCALLY_SOLVED or MOI.OPTIMAL)
             success = (status == JuMP.MOI.LOCALLY_SOLVED || status == JuMP.MOI.OPTIMAL)
 
@@ -126,6 +131,7 @@ function solve_and_extract_data(
                 iterations=iters,
                 status=status,
                 success=success,
+                criterion=criterion,
             )
         catch e
             println("ERROR in JuMP solve: ", e)
@@ -139,6 +145,7 @@ function solve_and_extract_data(
                 iterations=missing,
                 status="ERROR: $e",
                 success=false,
+                criterion=missing,
             )
         end
     elseif model == :exa_gpu
@@ -181,6 +188,11 @@ function solve_and_extract_data(
             iters = iterations(ocp_sol)
             status = bt_nlp_sol.status
 
+            # Extract criterion from OCP model
+            ocp_model_oc = ocp_model(docp)
+            criterion_sym = OptimalControl.criterion(ocp_model_oc)
+            criterion = string(criterion_sym)
+
             # Check if solve succeeded
             success = (status == MadNLP.SOLVE_SUCCEEDED)
 
@@ -190,6 +202,7 @@ function solve_and_extract_data(
                 iterations=iters,
                 status=status,
                 success=success,
+                criterion=criterion,
             )
         catch e
             println("ERROR in GPU solve: ", e)
@@ -211,6 +224,7 @@ function solve_and_extract_data(
                 iterations=missing,
                 status="ERROR: $e",
                 success=false,
+                criterion=missing,
             )
         end
     else
@@ -267,6 +281,11 @@ function solve_and_extract_data(
             iters = iterations(ocp_sol)
             status = bt_nlp_sol.status
 
+            # Extract criterion from OCP model
+            ocp_model_oc = ocp_model(docp)
+            criterion_sym = OptimalControl.criterion(ocp_model_oc)
+            criterion = string(criterion_sym)
+
             # Check if solve succeeded
             # For Ipopt: :first_order or :acceptable
             # For MadNLP: MadNLP.SOLVE_SUCCEEDED
@@ -284,6 +303,7 @@ function solve_and_extract_data(
                 iterations=iters,
                 status=status,
                 success=success,
+                criterion=criterion,
             )
         catch e
             println("ERROR in OptimalControl solve: ", e)
@@ -297,6 +317,7 @@ function solve_and_extract_data(
                 iterations=missing,
                 status="ERROR: $e",
                 success=false,
+                criterion=missing,
             )
         end
     end
@@ -507,6 +528,7 @@ function benchmark_data(;
                             iterations=stats.iterations,
                             status=stats.status,
                             success=stats.success,
+                            criterion=stats.criterion,
                         ),
                     )
                 end
