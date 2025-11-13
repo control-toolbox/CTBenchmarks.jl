@@ -6,7 +6,7 @@ function test_utils()
     # Test JuMP model
     println("Testing JuMP model...")
     stats_jump = CTBenchmarks.solve_and_extract_data(
-        :beam, :ipopt, :JuMP, 50, :trapeze, 1e-8, "adaptive", false, 1000, 500.0
+        :beam, :ipopt, :jump, 50, :trapeze, 1e-8, "adaptive", false, 1000, 500.0
     )
 
     @test stats_jump isa NamedTuple
@@ -71,7 +71,7 @@ function test_utils()
     # Test with MadNLP (missing mu_strategy)
     println("Testing with MadNLP...")
     stats_madnlp = CTBenchmarks.solve_and_extract_data(
-        :beam, :madnlp, :JuMP, 50, :trapeze, 1e-8, missing, false, 1000, 500.0
+        :beam, :madnlp, :jump, 50, :trapeze, 1e-8, missing, false, 1000, 500.0
     )
     @test stats_madnlp isa NamedTuple
     @test haskey(stats_madnlp, :status)
@@ -132,7 +132,7 @@ function test_utils()
     println("Testing with multiple configurations...")
     df = CTBenchmarks.benchmark_data(;
         problems=[:beam, :chain],
-        solver_models=[:ipopt => [:JuMP, :adnlp, :exa], :madnlp => [:JuMP, :adnlp, :exa]],
+        solver_models=[:ipopt => [:jump, :adnlp, :exa], :madnlp => [:jump, :adnlp, :exa]],
         grid_sizes=[50, 100],
         disc_methods=[:trapeze],
         tol=1e-8,
@@ -172,7 +172,7 @@ function test_utils()
     @test Set(df.solver) == Set([:ipopt, :madnlp])
 
     # Check that all models are present
-    @test Set(df.model) == Set([:JuMP, :adnlp, :exa])
+    @test Set(df.model) == Set([:jump, :adnlp, :exa])
 
     # Check that all grid sizes are present
     @test Set(df.grid_size) == Set([50, 100])
@@ -201,7 +201,7 @@ function test_utils()
     # Expected rows: 1 * 1 * 2 * 1 = 2
     df_subset = CTBenchmarks.benchmark_data(;
         problems=[:beam],
-        solver_models=[:ipopt => [:JuMP, :adnlp]],
+        solver_models=[:ipopt => [:jump, :adnlp]],
         grid_sizes=[50],
         disc_methods=[:trapeze],
         tol=1e-8,
@@ -212,7 +212,7 @@ function test_utils()
     )
 
     @test nrow(df_subset) == 2
-    @test Set(df_subset.model) == Set([:JuMP, :adnlp])
+    @test Set(df_subset.model) == Set([:jump, :adnlp])
     @test all(df_subset.problem .== :beam)
     @test all(df_subset.solver .== :ipopt)
     @test all(df_subset.grid_size .== 50)

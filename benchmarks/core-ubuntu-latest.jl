@@ -19,7 +19,7 @@ function run()
             # :steering,
             # :vanderpol,
         ],
-        solver_models=[:ipopt => [:JuMP, :adnlp, :exa], :madnlp => [:JuMP, :adnlp, :exa]],
+        solver_models=[:ipopt => [:jump, :adnlp, :exa], :madnlp => [:jump, :adnlp, :exa]],
         grid_sizes=[200, 500, 1000, 2000],
         disc_methods=[:trapeze],
         tol=1e-8,

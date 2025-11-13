@@ -37,7 +37,7 @@ different model types (JuMP, adnlp, exa, exa_gpu).
 # Arguments
 - `problem::Symbol`: problem name (e.g., :beam, :chain)
 - `solver::Symbol`: solver to use (:ipopt or :madnlp)
-- `model::Symbol`: model type (:JuMP, :adnlp, :exa, or :exa_gpu)
+- `model::Symbol`: model type (:jump, :adnlp, :exa, or :exa_gpu)
 - `grid_size::Int`: number of grid points
 - `disc_method::Symbol`: discretization method
 - `tol::Float64`: solver tolerance
@@ -74,11 +74,11 @@ function solve_and_extract_data(
     is_gpu_model = endswith(string(model), "_gpu")
     @assert (!is_gpu_model || solver == :madnlp) "gpu model requires madnlp solver"
     @assert (!is_gpu_model || is_cuda_on()) "gpu model requires CUDA"
-    @assert (model != :JuMP || disc_method == :trapeze) "JuMP model requires :trapeze discretization"
+    @assert (model != :jump || disc_method == :trapeze) "JuMP model requires :trapeze discretization"
     @assert (solver != :ipopt || !ismissing(mu_strategy))
 
     # solve the problem
-    if model == :JuMP
+    if model == :jump
         # ===== JuMP Model =====
         try
             nlp = eval(problem)(JuMPBackend(); grid_size=grid_size)
@@ -132,6 +132,8 @@ function solve_and_extract_data(
                 status=status,
                 success=success,
                 criterion=criterion,
+                solution=bt_nlp,
+                solution_type=:jump,
             )
         catch e
             println("ERROR in JuMP solve: ", e)
@@ -146,6 +148,8 @@ function solve_and_extract_data(
                 status="ERROR: $e",
                 success=false,
                 criterion=missing,
+                solution=missing,
+                solution_type=missing,
             )
         end
     elseif model == :exa_gpu
@@ -203,6 +207,8 @@ function solve_and_extract_data(
                 status=status,
                 success=success,
                 criterion=criterion,
+                solution=ocp_sol,
+                solution_type=:ocp,
             )
         catch e
             println("ERROR in GPU solve: ", e)
@@ -225,6 +231,8 @@ function solve_and_extract_data(
                 status="ERROR: $e",
                 success=false,
                 criterion=missing,
+                solution=missing,
+                solution_type=missing,
             )
         end
     else
@@ -304,6 +312,8 @@ function solve_and_extract_data(
                 status=status,
                 success=success,
                 criterion=criterion,
+                solution=ocp_sol,
+                solution_type=:ocp,
             )
         catch e
             println("ERROR in OptimalControl solve: ", e)
@@ -318,6 +328,8 @@ function solve_and_extract_data(
                 status="ERROR: $e",
                 success=false,
                 criterion=missing,
+                solution=missing,
+                solution_type=missing,
             )
         end
     end
@@ -343,7 +355,7 @@ function filter_models_for_backend(models::Vector{Symbol}, disc_method::Symbol)
     supports_jump = disc_method == :trapeze
     return [
         model for model in models if
-        endswith(string(model), "_gpu") ? cuda_on : (model != :JuMP || supports_jump)
+        endswith(string(model), "_gpu") ? cuda_on : (model != :jump || supports_jump)
     ]
 end
 
@@ -386,7 +398,7 @@ For each combination of problem, solver, model, and grid size, this function:
 
 # Arguments
 - `problems`: Vector of problem names (Symbols)
-- `solver_models`: Vector of Pairs mapping solver => models (e.g., [:ipopt => [:JuMP, :adnlp], :madnlp => [:exa, :exa_gpu]])
+- `solver_models`: Vector of Pairs mapping solver => models (e.g., [:ipopt => [:jump, :adnlp], :madnlp => [:exa, :exa_gpu]])
 - `grid_sizes`: Vector of grid sizes (Int)
 - `disc_methods`: Vector of discretization methods (Symbols)
 - `tol`: Solver tolerance (Float64)
@@ -399,7 +411,7 @@ For each combination of problem, solver, model, and grid size, this function:
 A DataFrame with columns:
 - `problem`: Symbol - problem name
 - `solver`: Symbol - solver used (:ipopt or :madnlp)
-- `model`: Symbol - model type (:JuMP, :adnlp, :exa, or :exa_gpu)
+- `model`: Symbol - model type (:jump, :adnlp, :exa, or :exa_gpu)
 - `disc_method`: Symbol - discretization method
 - `grid_size`: Int - number of grid points
 - `tol`: Float64 - solver tolerance
@@ -442,6 +454,8 @@ function benchmark_data(;
         status=Any[],
         success=Bool[],
         criterion=Union{String,Missing}[],
+        solution=Any[],
+        solution_type=Union{Symbol,Missing}[],
     )
 
     # Main loop over all combinations
@@ -531,6 +545,8 @@ function benchmark_data(;
                             status=stats.status,
                             success=stats.success,
                             criterion=stats.criterion,
+                            solution=stats.solution,
+                            solution_type=stats.solution_type,
                         ),
                     )
                 end
@@ -612,35 +628,30 @@ end
 Combine benchmark results DataFrame, metadata, and configuration into a JSON-friendly dictionary.
 The DataFrame is converted to a vector of dictionaries (one per row) for easy JSON serialization
 and reconstruction.
+
+Solutions are extracted and kept in memory (not serialized to JSON) for later plot generation.
 """
 function build_payload(results::DataFrame, meta::Dict, config::Dict)
+    # Extract solutions and solution_types BEFORE conversion to JSON
+    solutions = results.solution
+    solution_types = results.solution_type
+    
+    # Create a copy of DataFrame WITHOUT solution columns
+    results_for_json = select(results, Not([:solution, :solution_type]))
+    
     # Convert DataFrame to vector of dictionaries using Tables.jl interface
     # This preserves all column names and types automatically
-    results_vec = [Dict(pairs(row)) for row in Tables.rows(results)]
+    results_vec = [Dict(pairs(row)) for row in Tables.rows(results_for_json)]
 
     # Add configuration to metadata
     meta_with_config = merge(meta, Dict("configuration" => config))
 
-    Dict("metadata" => meta_with_config, "results" => results_vec)
-end
-
-"""
-    sanitize_for_json(obj)
-
-Recursively replace NaN and Inf values with null for JSON compatibility.
-"""
-function sanitize_for_json(obj)
-    if isa(obj, Dict)
-        return Dict(k => sanitize_for_json(v) for (k, v) in obj)
-    elseif isa(obj, Array)
-        return [sanitize_for_json(x) for x in obj]
-    elseif isa(obj, Float64) && (isnan(obj) || isinf(obj))
-        return nothing  # Will be serialized as null in JSON
-    elseif isa(obj, NamedTuple)
-        return NamedTuple{keys(obj)}(sanitize_for_json(v) for v in values(obj))
-    else
-        return obj
-    end
+    Dict(
+        "metadata" => meta_with_config,
+        "results" => results_vec,
+        "solutions" => solutions,  # Kept in memory, not in JSON
+        "solution_types" => solution_types,  # Kept in memory, not in JSON
+    )
 end
 
 """
@@ -649,13 +660,19 @@ end
 Save a JSON payload to a file. Creates the parent directory if needed.
 Uses pretty printing for readability.
 Sanitizes NaN and Inf values to null for JSON compatibility.
+
+Solutions and solution_types are excluded from JSON serialization (kept only in memory).
 """
 function save_json(payload::Dict, outpath::AbstractString)
     mkpath(dirname(outpath))
-    # Sanitize the payload to replace NaN/Inf with null
-    # sanitized_payload = sanitize_for_json(payload)
+    
+    # Filter out solutions and solution_types before JSON serialization
+    json_payload = Dict(
+        k => v for (k, v) in payload if k ∉ ("solutions", "solution_types")
+    )
+    
     open(outpath, "w") do io
-        JSON.print(io, payload, 4)    # pretty printed with 4-space indent
+        JSON.print(io, json_payload, 4)    # pretty printed with 4-space indent
         write(io, '\n')            # add trailing newline
     end
 end
@@ -704,7 +721,7 @@ df = DataFrame(data["results"])
 
 # Arguments
 - `problems`: Vector of problem names (Symbols)
-- `solver_models`: Vector of Pairs mapping solver => models (e.g., [:ipopt => [:JuMP, :adnlp], :madnlp => [:exa, :exa_gpu]])
+- `solver_models`: Vector of Pairs mapping solver => models (e.g., [:ipopt => [:jump, :adnlp], :madnlp => [:exa, :exa_gpu]])
 - `grid_sizes`: Vector of grid sizes (Int)
 - `disc_methods`: Vector of discretization methods (Symbols)
 - `tol`: Solver tolerance (Float64)

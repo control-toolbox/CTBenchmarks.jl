@@ -2,7 +2,7 @@ using Documenter
 using CTBenchmarks
 
 # Ensure documentation assets exist in the rendered site
-mkpath(joinpath(@__DIR__, "src", "assets"))
+mkpath(joinpath(@__DIR__, "src", "assets", "toml"))
 for filename in ("Manifest.toml", "Project.toml")
     # Copy the documentation environment files for reproducibility
     cp(
@@ -13,7 +13,7 @@ for filename in ("Manifest.toml", "Project.toml")
 end
 
 # Process template files before building documentation
-include(joinpath(@__DIR__, "src", "assets", "template_processor.jl"))
+include(joinpath(@__DIR__, "src", "assets", "jl", "template_processor.jl"))
 
 repo_url = "github.com/control-toolbox/CTBenchmarks.jl"
 
@@ -25,7 +25,7 @@ with_processed_templates(
         "benchmark-core-beam.md",
     ],  # List of template files to process
     joinpath(@__DIR__, "src"),
-    joinpath(@__DIR__, "src", "assets"),
+    joinpath(@__DIR__, "src", "assets", "templates"),
 ) do
     # Configure and build the documentation set
     makedocs(;

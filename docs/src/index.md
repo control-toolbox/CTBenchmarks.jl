@@ -47,7 +47,7 @@ CTBenchmarks.run(:minimal)
 This runs the `:beam` problem with:
 
 - Grid size: 100
-- Discretisation: trapeze
+- Discretization: trapeze
 - Solvers: Ipopt and MadNLP
 - Models: JuMP, adnlp, exa, exa_gpu
 
@@ -62,7 +62,7 @@ CTBenchmarks.run(:complete)
 This runs 14 optimal control problems with:
 
 - Grid sizes: 100, 200, 500
-- Discretisations: trapeze, midpoint
+- Discretizations: trapeze, midpoint
 - Solvers: Ipopt and MadNLP
 - Models: JuMP, adnlp, exa, exa_gpu
 
@@ -94,7 +94,7 @@ For more control over your benchmarks, use the `CTBenchmarks.benchmark` function
 results = CTBenchmarks.benchmark(;
     problems = [:beam, :chain, :robot],
     solver_models = [
-        :ipopt => [:JuMP, :adnlp, :exa],
+        :ipopt => [:jump, :adnlp, :exa],
         :madnlp => [:exa, :exa_gpu]
     ],
     grid_sizes = [200, 500, 1000],
@@ -117,7 +117,7 @@ CTBenchmarks includes 14 optimal control problems from [OptimalControlProblems.j
 - `:chain` - Chain of masses
 - `:double_oscillator` - Double oscillator
 - `:ducted_fan` - Ducted fan control
-- `:electric_vehicle` - Electric vehicle optimisation
+- `:electric_vehicle` - Electric vehicle optimization
 - `:glider` - Glider trajectory
 - `:insurance` - Insurance problem
 - `:jackson` - Jackson problem
@@ -137,18 +137,18 @@ CTBenchmarks includes 14 optimal control problems from [OptimalControlProblems.j
 
 **Supported Models:**
 
-- `:JuMP` - JuMP modelling framework
+- `:jump` - JuMP modelling framework
 - `:adnlp` - Automatic differentiation NLP models
 - `:exa` - ExaModels (CPU)
 - `:exa_gpu` - ExaModels (GPU acceleration)
 
 ### Benchmark Parameters
 
-- `grid_sizes`: Number of discretisation points (e.g., `[100, 200, 500]`)
-- `disc_methods`: Discretisation schemes (`:trapeze`, `:midpoint`)
-- `tol`: Solver tolerance (default: `1e-6`)
-- `max_iter`: Maximum solver iterations (default: `1000`)
-- `max_wall_time`: Maximum wall time in seconds (default: `500.0`)
+- `grid_sizes`: Number of discretization points (e.g., `[100, 200, 500]`)
+- `disc_methods`: Discretization schemes (`:trapeze`, `:midpoint`)
+- `tol`: Solver tolerance (e.g., `1e-6`)
+- `max_iter`: Maximum solver iterations (e.g., `1000`)
+- `max_wall_time`: Maximum wall time in seconds (e.g., `500.0`)
 
 ## Benchmark Results in This Documentation
 
@@ -178,9 +178,9 @@ Benchmarks results:
 ├──┬ solver: ipopt, disc_method: trapeze
 │  │
 │  │  N : 100
-│  │  ✓ | JuMP    | time:    1.234 s | iters: 42    | obj: 1.234567e+00 | CPU:    2.5 MiB
-│  │  ✓ | adnlp   | time:    0.987 s | iters: 42    | obj: 1.234567e+00 | CPU:    2.1 MiB
-│  │  ✓ | exa     | time:    0.765 s | iters: 42    | obj: 1.234567e+00 | CPU:    1.8 MiB
+│  │  ✓ | JuMP    | time:    1.234 s | iters: 42    | obj: 1.234567e+00 (min) | CPU:    2.5 MiB
+│  │  ✓ | adnlp   | time:    0.987 s | iters: 42    | obj: 1.234567e+00 (min) | CPU:    2.1 MiB
+│  │  ✓ | exa     | time:    0.765 s | iters: 42    | obj: 1.234567e+00 (min) | CPU:    1.8 MiB
 │  └─
 └─
 ```
@@ -191,7 +191,7 @@ Benchmarks results:
 - **Model** - Modelling framework (JuMP, ADNLPModels, ExaModels)
 - **time** - Total solve time
 - **iters** - Number of solver iterations
-- **obj** - Objective function value
+- **obj** - Objective function value and criterion (min or max problem)
 - **Memory** - CPU memory usage (GPU memory shown separately for GPU models)
 
 ## Documentation build environment
@@ -202,9 +202,9 @@ using InteractiveUtils
 using Markdown
 
 # Download links for the benchmark environment
-function _downloads_toml(DIR)
-    link_manifest = joinpath("assets", DIR, "Manifest.toml")
-    link_project = joinpath("assets", DIR, "Project.toml")
+function _downloads_toml()
+    link_manifest = joinpath("assets", "toml", "Manifest.toml")
+    link_project = joinpath("assets", "toml", "Project.toml")
     return Markdown.parse("""
     You can download the exact environment used to build this documentation:
     - 📦 [Project.toml]($link_project) - Package dependencies
@@ -214,7 +214,7 @@ end
 ```
 
 ```@example main
-_downloads_toml(".") # hide
+_downloads_toml() # hide
 ```
 
 ```@raw html

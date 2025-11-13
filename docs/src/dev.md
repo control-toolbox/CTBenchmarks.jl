@@ -230,7 +230,7 @@ If you want to display results in the documentation, create `docs/src/benchmark-
 # <Name> Benchmark
 
 ```@setup BENCH
-include(joinpath(@__DIR__, "assets", "utils.jl"))
+include(joinpath(@__DIR__, "assets", "jl", "utils.jl"))
 
 # Define benchmark ID
 const BENCH_ID = "<id>"

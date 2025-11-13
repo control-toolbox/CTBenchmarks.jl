@@ -157,8 +157,11 @@ jobs:
 
             bench_id = ENV["BENCHMARK_ID"]
             outpath = ENV["BENCHMARK_OUTPUT_DIR"]
+            
+            println("📊 Generating solution plots...")
+            CTBenchmarks.plot_solutions(results, outpath)
+            
             json_path = joinpath(outpath, string(bench_id, ".json"))
-
             println("💾 Saving results to ", json_path)
             CTBenchmarks.save_json(results, json_path)
             println("📄 JSON file created: ", json_path)

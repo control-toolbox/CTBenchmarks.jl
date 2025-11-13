@@ -31,6 +31,4 @@ include("print.jl")
 include("run.jl")
 include("plot_solutions.jl")
 
-export plot_solutions
-
 end # module

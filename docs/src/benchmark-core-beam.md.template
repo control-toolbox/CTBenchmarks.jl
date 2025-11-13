@@ -1,7 +1,7 @@
 # Core Beam Benchmark
 
 ```@setup BENCH
-include(joinpath(@__DIR__, "assets", "utils.jl"))
+include(joinpath(@__DIR__, "assets", "jl", "utils.jl"))
 
 # Define benchmark IDs
 const BENCH_CORE_UBUNTU = "core-ubuntu-latest"

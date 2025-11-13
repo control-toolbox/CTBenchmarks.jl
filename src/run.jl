@@ -40,7 +40,7 @@ function run(
                 :vanderpol,
             ],
             solver_models=[
-                :ipopt => [:JuMP, :adnlp, :exa], :madnlp => [:JuMP, :adnlp, :exa, :exa_gpu]
+                :ipopt => [:jump, :adnlp, :exa], :madnlp => [:jump, :adnlp, :exa, :exa_gpu]
             ],
             grid_sizes=[100, 200, 500],
             disc_methods=[:trapeze, :midpoint],
@@ -54,7 +54,7 @@ function run(
         benchmark(;
             problems=[:beam],
             solver_models=[
-                :ipopt => [:JuMP, :adnlp, :exa], :madnlp => [:JuMP, :adnlp, :exa, :exa_gpu]
+                :ipopt => [:jump, :adnlp, :exa], :madnlp => [:jump, :adnlp, :exa, :exa_gpu]
             ],
             grid_sizes=[100],
             disc_methods=[:trapeze],
