@@ -19,7 +19,10 @@ repo_url = "github.com/control-toolbox/CTBenchmarks.jl"
 
 # Process templates, build documentation, and clean up generated files
 with_processed_templates(
-    ["benchmark-core.md"],  # List of template files to process
+    [
+        "benchmark-core-cpu.md",
+        "benchmark-core-gpu.md",
+    ],  # List of template files to process
     joinpath(@__DIR__, "src"),
     joinpath(@__DIR__, "src", "assets"),
 ) do
@@ -41,7 +44,10 @@ with_processed_templates(
         # Expose the available documentation pages in the navigation sidebar
         pages=[
             "Introduction" => "index.md",
-            "Core benchmark" => "benchmark-core.md",
+            "Core benchmarks" => [
+                "benchmark-core-cpu.md",
+                "benchmark-core-gpu.md",
+            ],
             "API" => "api.md",
             "Development Guidelines" => "dev.md",
         ],
