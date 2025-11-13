@@ -10,18 +10,14 @@ const BENCH_CORE_MOONSHOT_CPU = "core-moonshot-cpu"
 
 ## Ubuntu Latest
 
-This benchmark suite evaluates 2 optimal control problems (beam and chain) on a standard CPU platform using GitHub Actions runners.
+This benchmark suite evaluates optimal control problems on a standard CPU platform using GitHub Actions runners.
 
 **Benchmark Configuration:**
 
-- **Problems:** beam, chain
-- **Solvers:** Ipopt and MadNLP
-- **Models:** JuMP, ADNLPModels, ExaModels (CPU)
-- **Grid sizes:** 200, 500, 1000, 2000 discretization points
-- **Discretization:** Trapeze method
-- **Tolerance:** 1e-8
-- **Ipopt strategy:** Adaptive barrier parameter
-- **Limits:** 1000 iterations max, 500s wall time
+```@example BENCH
+_print_config(BENCH_CORE_UBUNTU) # hide
+nothing # hide
+```
 
 This configuration focuses on CPU-based solvers and provides a comprehensive comparison across different modelling frameworks.
 
@@ -38,28 +34,24 @@ ENV_NAME = BENCH
 ### 📊 Results
 
 ```@example BENCH
-_plot_results(BENCH_CORE_UBUNTU) # hide
+_plot_performance_profiles(BENCH_CORE_UBUNTU) # hide
 ```
 
 ```@example BENCH
-_print_results(BENCH_CORE_UBUNTU) # hide
+_print_benchmark_log(BENCH_CORE_UBUNTU) # hide
 nothing # hide
 ```
 
 ## Moonshot CPU
 
-This benchmark suite evaluates 2 optimal control problems (beam and chain) on self-hosted CPU hardware.
+This benchmark suite evaluates optimal control problems on self-hosted CPU hardware.
 
 **Benchmark Configuration:**
 
-- **Problems:** beam, chain
-- **Solvers:** Ipopt and MadNLP
-- **Models:** JuMP, ADNLPModels, ExaModels (CPU)
-- **Grid sizes:** 200, 500, 1000, 2000, 5000 discretization points
-- **Discretization:** Trapeze method
-- **Tolerance:** 1e-8
-- **Ipopt strategy:** Adaptive barrier parameter
-- **Limits:** 1000 iterations max, 400s wall time
+```@example BENCH
+_print_config(BENCH_CORE_MOONSHOT_CPU) # hide
+nothing # hide
+```
 
 This configuration tests larger grid sizes on dedicated hardware, comparing performance with the GitHub Actions runner.
 
@@ -76,10 +68,10 @@ ENV_NAME = BENCH
 ### ⚡ Results
 
 ```@example BENCH
-_plot_results(BENCH_CORE_MOONSHOT_CPU) # hide
+_plot_performance_profiles(BENCH_CORE_MOONSHOT_CPU) # hide
 ```
 
 ```@example BENCH
-_print_results(BENCH_CORE_MOONSHOT_CPU) # hide
+_print_benchmark_log(BENCH_CORE_MOONSHOT_CPU) # hide
 nothing # hide
 ```

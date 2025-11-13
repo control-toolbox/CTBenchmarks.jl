@@ -9,17 +9,14 @@ const BENCH_CORE_MOONSHOT_GPU = "core-moonshot-gpu"
 
 ## Moonshot GPU
 
-This benchmark suite evaluates 2 optimal control problems (beam and chain) on GPU-accelerated hardware, focusing on large-scale problems.
+This benchmark suite evaluates optimal control problems on GPU-accelerated hardware, focusing on large-scale problems.
 
 **Benchmark Configuration:**
 
-- **Problems:** beam, chain
-- **Solver:** MadNLP (GPU-optimized)
-- **Models:** ExaModels (CPU), ExaModels (GPU)
-- **Grid sizes:** 1000, 5000, 10000, 20000 discretization points
-- **Discretization:** Trapeze method
-- **Tolerance:** 1e-6
-- **Limits:** 1000 iterations max, 1000s wall time
+```@example BENCH
+_print_config(BENCH_CORE_MOONSHOT_GPU) # hide
+nothing # hide
+```
 
 This configuration demonstrates GPU acceleration capabilities with ExaModels on large-scale problems, comparing CPU vs GPU performance for the same modelling framework.
 
@@ -36,10 +33,10 @@ ENV_NAME = BENCH
 ### ⚡ Results
 
 ```@example BENCH
-_plot_results(BENCH_CORE_MOONSHOT_GPU) # hide
+_plot_performance_profiles(BENCH_CORE_MOONSHOT_GPU) # hide
 ```
 
 ```@example BENCH
-_print_results(BENCH_CORE_MOONSHOT_GPU) # hide
+_print_benchmark_log(BENCH_CORE_MOONSHOT_GPU) # hide
 nothing # hide
 ```

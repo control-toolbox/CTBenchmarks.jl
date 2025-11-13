@@ -1,0 +1,45 @@
+# Core Beam Benchmark
+
+```@setup BENCH
+include(joinpath(@__DIR__, "assets", "utils.jl"))
+
+# Define benchmark IDs
+const BENCH_CORE_UBUNTU = "core-ubuntu-latest"
+const BENCH_CORE_MOONSHOT_CPU = "core-moonshot-cpu"
+const BENCH_CORE_MOONSHOT_GPU = "core-moonshot-gpu"
+```
+
+This page presents benchmark results for the **beam** problem across different platforms and configurations.
+
+## Ubuntu Latest - Beam Problem
+
+Results for the beam problem on GitHub Actions runners (Ubuntu latest).
+
+### 📊 Ubuntu Results
+
+```@example BENCH
+_print_benchmark_log(BENCH_CORE_UBUNTU; problems=["beam"]) # hide
+nothing # hide
+```
+
+## Moonshot CPU - Beam Problem
+
+Results for the beam problem on self-hosted CPU hardware.
+
+### ⚡ Moonshot CPU Results
+
+```@example BENCH
+_print_benchmark_log(BENCH_CORE_MOONSHOT_CPU; problems=["beam"]) # hide
+nothing # hide
+```
+
+## Moonshot GPU - Beam Problem
+
+Results for the beam problem on GPU-accelerated hardware.
+
+### 🚀 Moonshot GPU Results
+
+```@example BENCH
+_print_benchmark_log(BENCH_CORE_MOONSHOT_GPU; problems=["beam"]) # hide
+nothing # hide
+```
