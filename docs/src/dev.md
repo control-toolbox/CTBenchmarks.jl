@@ -95,11 +95,8 @@ Create a new Julia script in the `benchmarks/` directory with the filename `{id}
 # Benchmark script for <id>
 # Setup (Pkg.activate, instantiate, update, using CTBenchmarks) is handled by the workflow
 
-function main()
-    project_dir = normpath(@__DIR__, "..")
-    outpath = joinpath(project_dir, "docs", "src", "assets", "benchmarks", "<id>")
-    CTBenchmarks.benchmark(;
-        outpath = outpath,
+function run()
+    results = CTBenchmarks.benchmark(;
         problems = [:problem1, :problem2, ...],
         solver_models = [:solver => [:model1, :model2]],
         grid_sizes = [100, 500, 1000],
@@ -110,22 +107,18 @@ function main()
         max_iter = 1000,
         max_wall_time = 500.0
     )
-    return outpath
+    println("✅ Benchmark completed successfully!")
+    return results
 end
-
-main()
 ```
 
 **Key points:**
 
 - **Setup code is handled by the workflow** - No need to include `using Pkg`, `Pkg.activate()`, `Pkg.instantiate()`, `Pkg.update()`, or `using CTBenchmarks` in your script. The GitHub Actions workflow handles all environment setup automatically.
 - **All parameters are required** - the `benchmark` function has no optional arguments
-- **The `main()` function is crucial** - it must:
-  - Take no arguments
-  - Return the output path where files are saved
-- The `benchmark` function generates a JSON file (`data.json`) in the specified `outpath`
+- **Define a `run()` function** - it must take no arguments, return the `Dict` payload from `CTBenchmarks.benchmark`, and should not perform any file I/O
+- The workflow calls `run()`, saves the returned payload as `{id}.json`, and stores it under `docs/src/assets/benchmarks/{id}/`
 - **TOML files are copied by the workflow** - `Project.toml` and `Manifest.toml` are automatically copied to the output directory by the GitHub Actions workflow to ensure reproducibility
-- The output directory follows the pattern `docs/src/assets/benchmarks/{id}`
 - **Available problems:** The list of problems you can choose is available in the [OptimalControlProblems.jl documentation](https://control-toolbox.org/OptimalControlProblems.jl/stable/problems_browser.html)
 - **For local testing:** See `benchmarks/local.jl` for an example that includes the setup code needed to run benchmarks locally
 
@@ -245,8 +238,8 @@ If you want to display results in the documentation, create `docs/src/benchmark-
 ```@setup BENCH_<NAME>
 include(joinpath(@__DIR__, "assets", "utils.jl"))
 
-const BENCH_DIR = "benchmark-<name>"
-const BENCH_DATA = _read_benchmark_json(joinpath(@__DIR__, "assets", BENCH_DIR, "data.json"))
+const BENCH_ID = "<id>"
+const BENCH_DATA = _get_bench_data(BENCH_ID)
 ```
 
 ## Description

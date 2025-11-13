@@ -639,7 +639,6 @@ end
 
 """
     benchmark(;
-        outpath,
         problems,
         solver_models,
         grid_sizes,
@@ -659,7 +658,7 @@ This function performs the following steps:
 2. Runs benchmarks using `benchmark_data()` to generate a DataFrame of results
 3. Collects environment metadata (Julia version, OS, machine, timestamp)
 4. Builds a JSON-friendly payload combining results and metadata
-5. Saves the payload to `outpath/data.json` as pretty-printed JSON
+5. Returns the payload as a Dict
 
 The JSON file can be easily loaded and converted back to a DataFrame using:
 ```julia
@@ -674,11 +673,9 @@ df = DataFrame(data["results"])
     reproducibility of benchmark results.
 
 !!! note "Return Value"
-    This function returns `nothing`. The output path is managed by the calling `main()` 
-    function in benchmark scripts, which returns the `outpath` for the workflow to use.
+    This function returns `Dict`.
 
 # Arguments
-- `outpath`: Path to directory where results will be saved (or `nothing` to skip saving)
 - `problems`: Vector of problem names (Symbols)
 - `solver_models`: Vector of Pairs mapping solver => models (e.g., [:ipopt => [:JuMP, :adnlp], :madnlp => [:exa, :exa_gpu]])
 - `grid_sizes`: Vector of grid sizes (Int)
@@ -691,10 +688,9 @@ df = DataFrame(data["results"])
 - `grid_size_max_cpu`: Maximum grid size for CPU models (Int)
 
 # Returns
-- `nothing`
+- `Dict`
 """
 function benchmark(;
-    outpath::Union{AbstractString,Nothing},
     problems::Vector{Symbol},
     solver_models::Vector{Pair{Symbol,Vector{Symbol}}},
     grid_sizes::Vector{Int},
@@ -727,21 +723,13 @@ function benchmark(;
         max_wall_time=max_wall_time,
     )
 
-    if !isnothing(outpath)
+    # Generate metadata
+    println("Generating metadata...")
+    meta = generate_metadata()
 
-        # Generate metadata
-        println("Generating metadata...")
-        meta = generate_metadata()
+    # Build payload
+    println("Building payload...")
+    payload = build_payload(results, meta)
 
-        # Build payload
-        println("Building payload...")
-        payload = build_payload(results, meta)
-
-        # Save to JSON
-        println("Saving results to $outpath...")
-        JSON_path = joinpath(outpath, "data.json")
-        save_json(payload, JSON_path)
-    end
-
-    return nothing
+    return payload
 end

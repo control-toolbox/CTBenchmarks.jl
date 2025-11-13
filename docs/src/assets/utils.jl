@@ -10,7 +10,8 @@ using Statistics
 
 # Get benchmark data from benchmark ID
 function _get_bench_data(bench_id::AbstractString)
-    path = joinpath(@__DIR__, "benchmarks", bench_id, "data.json")
+    json_filename = string(bench_id, ".json")
+    path = joinpath(@__DIR__, "benchmarks", bench_id, json_filename)
     return _read_benchmark_json(path)
 end
 

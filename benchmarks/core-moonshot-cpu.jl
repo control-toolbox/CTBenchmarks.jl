@@ -1,13 +1,8 @@
 # Benchmark script for core-moonshot-cpu
 # Setup (Pkg.activate, instantiate, update, using CTBenchmarks) is handled by the workflow
 
-function main()
-    project_dir = normpath(@__DIR__, "..")
-    outpath=joinpath(
-        project_dir, "docs", "src", "assets", "benchmarks", "core-moonshot-cpu"
-    )
-    CTBenchmarks.benchmark(;
-        outpath=outpath,
+function run()
+    results = CTBenchmarks.benchmark(;
         problems=[
             :beam,
             :chain,
@@ -34,5 +29,5 @@ function main()
         max_wall_time=200.0,
     )
     println("✅ Benchmark completed successfully!")
-    return outpath
+    return results
 end

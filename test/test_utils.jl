@@ -130,7 +130,7 @@ function test_utils()
     # Test with 2 problems, 2 solvers with their models, 2 grid sizes
     # Expected rows: 2 problems × (3 ipopt models + 3 madnlp models) × 2 grid_sizes = 24
     println("Testing with multiple configurations...")
-    df = benchmark_data(;
+    df = CTBenchmarks.benchmark_data(;
         problems=[:beam, :chain],
         solver_models=[:ipopt => [:JuMP, :adnlp, :exa], :madnlp => [:JuMP, :adnlp, :exa]],
         grid_sizes=[50, 100],
@@ -199,7 +199,7 @@ function test_utils()
 
     # Test with only 1 problem, 1 solver, 2 models, 1 grid size
     # Expected rows: 1 * 1 * 2 * 1 = 2
-    df_subset = benchmark_data(;
+    df_subset = CTBenchmarks.benchmark_data(;
         problems=[:beam],
         solver_models=[:ipopt => [:JuMP, :adnlp]],
         grid_sizes=[50],

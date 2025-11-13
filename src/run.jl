@@ -3,20 +3,26 @@ Run the benchmarks for a specific version.
 
 # Arguments
 - `version::Symbol`: version to run (:complete or :minimal)
-- `outpath::Union{AbstractString, Nothing}`: directory path to save results (nothing for no saving)
+- `filepath::Union{AbstractString, Nothing}`: optional path to the JSON file where results
+  should be saved. When provided, it must end with `.json`.
 - `print_trace::Bool`: whether to print the trace of the solver
 
 # Returns
-- `nothing`
+- `Dict` containing benchmark results and metadata
 """
 function run(
     version::Symbol=:complete;
-    outpath::Union{AbstractString,Nothing}=nothing,
+    filepath::Union{AbstractString,Nothing}=nothing,
     print_trace::Bool=false,
 )
-    if version == :complete
-        CTBenchmarks.benchmark(;
-            outpath=outpath,
+    if filepath !== nothing && !endswith(lowercase(filepath), ".json")
+        throw(CTBase.IncorrectArgument(
+            "The file path provided to run() must end with .json (got: $filepath)",
+        ))
+    end
+
+    results = if version == :complete
+        benchmark(;
             problems=[
                 :beam,
                 :chain,
@@ -45,8 +51,7 @@ function run(
             max_wall_time=500.0,
         )
     elseif version == :minimal
-        CTBenchmarks.benchmark(;
-            outpath=outpath,
+        benchmark(;
             problems=[:beam],
             solver_models=[
                 :ipopt => [:JuMP, :adnlp, :exa], :madnlp => [:JuMP, :adnlp, :exa, :exa_gpu]
@@ -62,5 +67,11 @@ function run(
     else
         error("undefined version: $version. Please choose :complete or :minimal.")
     end
-    return nothing
+
+    if filepath !== nothing
+        println("💾 Saving benchmark results to $filepath")
+        save_json(results, filepath)
+    end
+
+    return results
 end

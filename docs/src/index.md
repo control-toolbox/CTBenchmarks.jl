@@ -81,22 +81,21 @@ This runs 14 optimal control problems with:
 To save benchmark results to a directory:
 
 ```julia
-CTBenchmarks.run(:minimal; outpath="my_results")
+results = CTBenchmarks.run(:minimal; filepath="my_results/minimal.json")
 ```
 
-This creates a directory containing:
+This returns the benchmark payload as a `Dict` and saves it to `my_results/minimal.json` (the
+directory is created automatically if needed). The `filepath` argument is optional but, when
+provided, it must end with `.json`.
 
-- `data.json` - Benchmark results in JSON format
-- `Project.toml` - Package dependencies
-- `Manifest.toml` - Complete dependency tree
+- `my_results/minimal.json` – Benchmark results in JSON format
 
 ## Creating Custom Benchmarks
 
 For more control over your benchmarks, use the `CTBenchmarks.benchmark` function directly:
 
 ```julia
-CTBenchmarks.benchmark(;
-    outpath = "custom_benchmark",
+results = CTBenchmarks.benchmark(;
     problems = [:beam, :chain, :robot],
     solver_models = [
         :ipopt => [:JuMP, :adnlp, :exa],
@@ -110,6 +109,8 @@ CTBenchmarks.benchmark(;
     max_iter = 1000,
     max_wall_time = 500.0
 )
+
+CTBenchmarks.save_json(results, "custom_benchmark.json")
 ```
 
 ### Available Problems
