@@ -3,7 +3,7 @@
 
 function main()
     project_dir = normpath(@__DIR__, "..")
-    outpath = joinpath(project_dir, "docs", "src", "assets", "benchmarks", "core-moonshot")
+    outpath = joinpath(project_dir, "docs", "src", "assets", "benchmarks", "core-moonshot-gpu")
     CTBenchmarks.benchmark(;
         outpath=outpath,
         problems=[
@@ -23,7 +23,7 @@ function main()
             :vanderpol,
         ],
         solver_models=[:madnlp => [:exa, :exa_gpu]],
-        grid_sizes=[1000, 5000, 10000],
+        grid_sizes=[1000, 5000, 10000, 20000],
         disc_methods=[:trapeze],
         tol=1e-6,
         ipopt_mu_strategy="adaptive",

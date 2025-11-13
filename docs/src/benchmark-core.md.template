@@ -37,6 +37,10 @@ ENV_NAME = BENCH
 ### 📊 Results
 
 ```@example BENCH
+_plot_results(BENCH_CORE_UBUNTU) # hide
+```
+
+```@example BENCH
 _print_results(BENCH_CORE_UBUNTU) # hide
 nothing # hide
 ```
