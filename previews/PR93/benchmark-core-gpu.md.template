@@ -7,15 +7,22 @@ include(joinpath(@__DIR__, "assets", "jl", "utils.jl"))
 const BENCH_CORE_MOONSHOT_GPU = "core-moonshot-gpu"
 ```
 
-## Moonshot GPU
+## Moonshot
 
 This benchmark suite evaluates optimal control problems on GPU-accelerated hardware, focusing on large-scale problems.
 
 **Benchmark Configuration:**
 
+```@raw html
+<div class="benchmark-config" style="margin-bottom: 1.5em;">
+```
+
 ```@example BENCH
 _print_config(BENCH_CORE_MOONSHOT_GPU) # hide
-nothing # hide
+```
+
+```@raw html
+</div>
 ```
 
 This configuration demonstrates GPU acceleration capabilities with ExaModels on large-scale problems, comparing CPU vs GPU performance for the same modelling framework.
@@ -38,5 +45,4 @@ _plot_performance_profiles(BENCH_CORE_MOONSHOT_GPU) # hide
 
 ```@example BENCH
 _print_benchmark_log(BENCH_CORE_MOONSHOT_GPU) # hide
-nothing # hide
 ```

@@ -8,6 +8,10 @@ using Plots
 using Plots.PlotMeasures
 using Statistics
 
+function _plot_font_settings()
+    return font(10, Plots.default(:fontfamily)), 10
+end
+
 """
     _get_bench_data(bench_id::AbstractString)
 
@@ -25,7 +29,7 @@ The file is expected to be located at `benchmarks/<bench_id>/<bench_id>.json`.
 """
 function _get_bench_data(bench_id::AbstractString)
     json_filename = string(bench_id, ".json")
-    path = joinpath(@__DIR__, "benchmarks", bench_id, json_filename)
+    path = joinpath(@__DIR__, "..", "benchmarks", bench_id, json_filename)
     return _read_benchmark_json(path)
 end
 
@@ -118,6 +122,7 @@ function _basic_metadata(bench_id)
     else
         println("⚠️  No benchmark data available")
     end
+    return nothing
 end
 
 """
@@ -141,6 +146,7 @@ function _bench_data(bench_id)
     else
         println("⚠️  No benchmark data available")
     end
+    return nothing
 end
 
 """
@@ -164,6 +170,7 @@ function _package_status(bench_id)
     else
         println("⚠️  No benchmark data available")
     end
+    return nothing
 end
 
 """
@@ -188,85 +195,77 @@ function _complete_manifest(bench_id)
     else
         println("⚠️  No benchmark data available")
     end
+    return nothing
 end
 
 """
     _print_config(bench_id)
 
-Display benchmark configuration parameters.
+Render benchmark configuration parameters as Markdown.
 
 # Arguments
 - `bench_id`: Benchmark identifier string
 
-# Details
-Prints the benchmark configuration including:
-- Problems tested
-- Solvers used (ipopt, madnlp)
-- Models (JuMP, adnlp, exa, exa_gpu)
-- Grid sizes
-- Discretization methods
-- Solver tolerances
-- Ipopt mu strategy
-- Iteration and wall time limits
+# Returns
+- `Markdown.MD`: Formatted configuration block
 """
 function _print_config(bench_id)
     bench_data = _get_bench_data(bench_id)
     if bench_data === nothing
-        println("⚠️  No configuration available because the benchmark file is missing.")
-    else
-        meta = get(bench_data, "metadata", Dict())
-        config = get(meta, "configuration", nothing)
-        
-        if config === nothing
-            println("⚠️  No configuration recorded in the benchmark file.")
-        else
-            # Extract configuration parameters
-            problems = get(config, "problems", [])
-            solver_models = get(config, "solver_models", [])
-            grid_sizes = get(config, "grid_sizes", [])
-            disc_methods = get(config, "disc_methods", [])
-            tol = get(config, "tol", "n/a")
-            ipopt_mu_strategy = get(config, "ipopt_mu_strategy", "n/a")
-            max_iter = get(config, "max_iter", "n/a")
-            max_wall_time = get(config, "max_wall_time", "n/a")
-            
-            # Format solver_models for display
-            # solver_models is stored as a vector of Pair objects in JSON
-            # Each Pair is stored as a Dict with "first" and "second" keys
-            solvers = Set{String}()
-            models = Set{String}()
-            
-            for pair in solver_models
-                if isa(pair, Dict)
-                    # JSON format: {"first": "solver", "second": ["model1", "model2"]}
-                    solver = get(pair, "first", "")
-                    push!(solvers, string(solver))
-                    for model in get(pair, "second", [])
-                        push!(models, string(model))
-                    end
-                elseif isa(pair, Pair)
-                    # Direct Pair format (if not serialized)
-                    push!(solvers, string(pair.first))
-                    for model in pair.second
-                        push!(models, string(model))
-                    end
-                end
+        return Markdown.parse("⚠️  No configuration available because the benchmark file is missing.")
+    end
+
+    meta = get(bench_data, "metadata", Dict())
+    config = get(meta, "configuration", nothing)
+
+    if config === nothing
+        return Markdown.parse("⚠️  No configuration recorded in the benchmark file.")
+    end
+
+    problems = get(config, "problems", [])
+    solver_models = get(config, "solver_models", [])
+    grid_sizes = get(config, "grid_sizes", [])
+    disc_methods = get(config, "disc_methods", [])
+    tol = get(config, "tol", "n/a")
+    ipopt_mu_strategy = get(config, "ipopt_mu_strategy", "n/a")
+    max_iter = get(config, "max_iter", "n/a")
+    max_wall_time = get(config, "max_wall_time", "n/a")
+
+    solvers = Set{String}()
+    models = Set{String}()
+    for pair in solver_models
+        if isa(pair, Dict)
+            solver = get(pair, "first", "")
+            push!(solvers, string(solver))
+            for model in get(pair, "second", [])
+                push!(models, string(model))
             end
-            
-            solvers_str = join(sort(collect(solvers)), ", ")
-            models_str = join(sort(collect(models)), ", ")
-            
-            # Print configuration in a structured format
-            println("- **Problems:** ", join(problems, ", "))
-            println("- **Solvers:** ", solvers_str)
-            println("- **Models:** ", models_str)
-            println("- **Grid sizes:** ", join(grid_sizes, ", "), " discretization points")
-            println("- **Discretization:** ", join(disc_methods, ", "), " method")
-            println("- **Tolerance:** ", tol)
-            println("- **Ipopt strategy:** ", ipopt_mu_strategy, " barrier parameter")
-            println("- **Limits:** ", max_iter, " iterations max, ", max_wall_time, "s wall time")
+        elseif isa(pair, Pair)
+            push!(solvers, string(pair.first))
+            for model in pair.second
+                push!(models, string(model))
+            end
         end
     end
+
+    solvers_str = isempty(solvers) ? "n/a" : join(sort(collect(solvers)), ", ")
+    models_str = isempty(models) ? "n/a" : join(sort(collect(models)), ", ")
+    problems_str = isempty(problems) ? "n/a" : join(string.(problems), ", ")
+    grid_sizes_str = isempty(grid_sizes) ? "n/a" : join(string.(grid_sizes), ", ")
+    disc_methods_str = isempty(disc_methods) ? "n/a" : join(string.(disc_methods), ", ")
+
+    lines = String[
+        "- **Problems:** $problems_str",
+        "- **Solvers:** $solvers_str",
+        "- **Models:** $models_str",
+        "- **Grid sizes:** $grid_sizes_str discretization points",
+        "- **Discretization:** $disc_methods_str method",
+        "- **Tolerance:** $(string(tol))",
+        "- **Ipopt strategy:** $(string(ipopt_mu_strategy)) barrier parameter",
+        "- **Limits:** $(string(max_iter)) iterations max, $(string(max_wall_time))s wall time",
+    ]
+
+    return Markdown.parse(join(lines, "\n"))
 end
 
 """
@@ -387,6 +386,7 @@ function _print_benchmark_log(bench_id; problems=nothing)
             end
         end
     end
+    return nothing
 end
 
 """
@@ -445,6 +445,31 @@ function _plot_performance_profiles(bench_id)
 
     function performance_profile(df)
         combos = unique(df.combo)
+        colors = [
+            :blue, :red, :green, :orange, :purple, :brown, :pink, :gray,
+            :cyan, :magenta, :teal, :olive, :gold, :navy, :darkred
+        ]
+        title_font, label_font_size = _plot_font_settings()
+        
+        # Total number of unique problems (problem × grid_size combinations)
+        total_problems = nrow(combine(groupby(df, [:problem, :grid_size]), nrow => :count))
+        
+        # Compute max ratio across all curves for xlim
+        min_ratio = Inf
+        max_ratio = 1.0
+        for c in combos
+            sub = filter(row -> row.combo == c, df)
+            ratios = collect(skipmissing(sub.ratio))
+            if !isempty(ratios)
+                max_ratio = max(max_ratio, maximum(ratios))
+                min_ratio = min(min_ratio, minimum(ratios))
+            end
+        end
+        gap = log2(max_ratio) - log2(min_ratio)
+        factor = 0.02
+        xlim_max = max_ratio * (1+factor*gap)
+        xlim_min = 1.0 * (1-factor*gap)
+        
         plt = plot(
             xlabel = "τ (Performance ratio)",
             ylabel = "Proportion of solved instances ≤ τ",
@@ -452,22 +477,210 @@ function _plot_performance_profiles(bench_id)
             legend = :bottomright,
             xscale = :log2,
             grid = true,
-            lw = 2,
-            size = (900, 600)
+            size = (900, 600),
+            titlefont = title_font,
+            xguidefontsize = label_font_size,
+            yguidefontsize = label_font_size,
+            xticks = ([1, 2, 4, 10, 50, 100], ["1", "2", "4", "10", "50", "100"]),
+            xlims = (xlim_min, xlim_max),
+            ylims = (-0.05, 1.05),
+            yticks = ([0.0, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0], ["0", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]),
+            left_margin = 5mm,
+            bottom_margin = 5mm,
+            top_margin = 5mm,
         )
 
-        for c in combos
+        for (idx, c) in enumerate(combos)
+            color = colors[mod1(idx, length(colors))]
             sub = filter(row -> row.combo == c, df)
             ratios = sort(collect(skipmissing(sub.ratio)))
-            n = length(ratios)
-            y = (1:n) ./ n
-            plot!(ratios, y, label = c)
+            
+            if !isempty(ratios)
+                # Compute ρ_s(τ) = (1/n_p) * count(r_{p,s} ≤ τ)
+                # For each ratio value, count how many ratios are ≤ to it
+                y = [count(x -> x <= tau, ratios) / total_problems for tau in ratios]
+                
+                # Plot the curve
+                plot!(ratios, y, label = c, lw = 1.5, color = color)
+                
+                # Add marker on the first point of the curve
+                plot!([ratios[1]], [y[1]], seriestype = :scatter, label = "",
+                      markersize = 4, markerstrokewidth = 0, color = color)
+            end
         end
+        
+        # Add reference lines with low z-order (plot them last)
+        vline!([1.0], color = :black, lw = 0.5, label = "", linestyle = :solid, z_order = 1)
+        hline!([0.0], color = :black, lw = 0.5, label = "", linestyle = :solid, z_order = 1)
+        hline!([1.0], color = :black, lw = 0.5, label = "", linestyle = :solid, z_order = 1)
 
         return plt
     end
 
     plt = performance_profile(df_successful)
     println("✅ Global performance profile generated.")
+    return plt
+end
+
+function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
+    raw = _get_bench_data(bench_id)
+    if raw === nothing
+        println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
+        return plot()
+    end
+
+    rows = get(raw, "results", Any[])
+    if isempty(rows)
+        println("⚠️ No ('results') recorded in the benchmark file.")
+        return plot()
+    end
+
+    df = DataFrame(rows)
+    df_successful = filter(row -> row.success == true && row.benchmark !== nothing && row.problem == problem, df)
+    if isempty(df_successful)
+        println("⚠️ No successful benchmark entry to analyze for problem: $problem")
+        return plot()
+    end
+
+    df_successful.time = [row.benchmark["time"] for row in eachrow(df_successful)]
+    select!(df_successful, [:model, :solver, :grid_size, :time])
+    df_successful = dropmissing(df_successful, :time)
+    sort!(df_successful, [:grid_size, :model, :solver])
+
+    df_successful.combo = string.("(", df_successful.model, ", ", df_successful.solver, ")")
+    combos = unique(df_successful.combo)
+    colors = [
+        :blue, :red, :green, :orange, :purple, :brown, :pink, :gray,
+        :cyan, :magenta, :teal, :olive, :gold, :navy, :darkred
+    ]
+    title_font, label_font_size = _plot_font_settings()
+
+    min_N = minimum(df_successful.grid_size)
+    max_N = maximum(df_successful.grid_size)
+    span_N = max_N - min_N
+    padding = span_N > 0 ? 0.05 * span_N : 1
+    x_min = max(0, min_N - padding)
+    x_max = max_N + padding
+
+    plt = plot(
+        xlabel = "Grid size N",
+        ylabel = "Solve time (s)",
+        title = "Solve time vs grid size — $problem",
+        legend = :bottomright,
+        grid = true,
+        size = (900, 600),
+        xticks = sort(unique(df_successful.grid_size)),
+        xlims = (x_min, x_max),
+        left_margin = 5mm,
+        bottom_margin = 5mm,
+        top_margin = 5mm,
+        titlefont = title_font,
+        xguidefontsize = label_font_size,
+        yguidefontsize = label_font_size,
+    )
+
+    for (idx, c) in enumerate(combos)
+        color = colors[mod1(idx, length(colors))]
+        sub = filter(row -> row.combo == c, df_successful)
+        grouped = combine(groupby(sub, :grid_size), :time => mean => :mean_time)
+        sort!(grouped, :grid_size)
+        xs = grouped.grid_size
+        ys = grouped.mean_time
+
+        plot!(xs, ys, label = c, lw = 1.5, color = color,
+              marker = :circle, markersize = 4, markerstrokewidth = 0)
+    end
+
+    println("✅ Time vs grid size plot generated for problem: $problem and bench_id: $bench_id")
+    return plt
+end
+
+function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
+    raw = _get_bench_data(bench_id)
+    if raw === nothing
+        println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
+        return plot()
+    end
+
+    rows = get(raw, "results", Any[])
+    if isempty(rows)
+        println("⚠️ No ('results') recorded in the benchmark file.")
+        return plot()
+    end
+
+    df = DataFrame(rows)
+    df_successful = filter(row -> row.success == true && row.benchmark !== nothing && row.problem == problem, df)
+    if isempty(df_successful)
+        println("⚠️ No successful benchmark entry to analyze for problem: $problem")
+        return plot()
+    end
+
+    df_successful.time = [row.benchmark["time"] for row in eachrow(df_successful)]
+    select!(df_successful, [:model, :solver, :grid_size, :time])
+    df_successful = dropmissing(df_successful, :time)
+    sort!(df_successful, [:grid_size, :model, :solver])
+
+    df_successful.combo = string.("(", df_successful.model, ", ", df_successful.solver, ")")
+    combos = unique(df_successful.combo)
+    colors = [
+        :blue, :red, :green, :orange, :purple, :brown, :pink, :gray,
+        :cyan, :magenta, :teal, :olive, :gold, :navy, :darkred
+    ]
+    title_font, label_font_size = _plot_font_settings()
+
+    Ns = sort(unique(df_successful.grid_size))
+    nN = length(Ns)
+    nC = length(combos)
+
+    # Base positions for each grid size (treated as categorical)
+    x_base = collect(1:nN)
+    xtick_labels = string.(Ns)
+
+    # Width of a group and spacing/width for individual bars
+    group_width = 0.7
+    center_spacing = group_width / max(nC, 1)
+    bar_width = 0.6 * center_spacing  # bars narrower than spacing → visible gap
+    offsets = (collect(0:nC-1) .- (nC - 1) / 2) .* center_spacing
+
+    plt = plot(
+        xlabel = "Grid size N",
+        ylabel = "Solve time (s)",
+        title = "Solve time vs grid size (bar) — $problem",
+        legend = :topleft,
+        grid = true,
+        size = (900, 600),
+        xticks = (x_base, xtick_labels),
+        left_margin = 5mm,
+        bottom_margin = 5mm,
+        top_margin = 5mm,
+        titlefont = title_font,
+        xguidefontsize = label_font_size,
+        yguidefontsize = label_font_size,
+    )
+
+    for (j, c) in enumerate(combos)
+        sub = filter(row -> row.combo == c, df_successful)
+        grouped = combine(groupby(sub, :grid_size), :time => mean => :mean_time)
+
+        # Map mean times to each grid size index
+        yj = fill(NaN, nN)
+        for row in eachrow(grouped)
+            i = findfirst(==(row.grid_size), Ns)
+            yj[i] = row.mean_time
+        end
+
+        xj = x_base .+ offsets[j]
+        color = colors[mod1(j, length(colors))]
+
+        bar!(xj, yj;
+             bar_width = bar_width,
+             label = c,
+             color = color,
+             linecolor = :transparent,
+             linewidth = 0,
+        )
+    end
+
+    println("✅ Time vs grid size bar plot generated for problem: $problem and bench_id: $bench_id")
     return plt
 end
