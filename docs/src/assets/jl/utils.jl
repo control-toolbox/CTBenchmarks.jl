@@ -441,6 +441,30 @@ function _plot_performance_profiles(bench_id)
 
     function performance_profile(df)
         combos = unique(df.combo)
+        colors = [
+            :blue, :red, :green, :orange, :purple, :brown, :pink, :gray,
+            :cyan, :magenta, :teal, :olive, :gold, :navy, :darkred
+        ]
+        
+        # Total number of unique problems (problem × grid_size combinations)
+        total_problems = nrow(combine(groupby(df, [:problem, :grid_size]), nrow => :count))
+        
+        # Compute max ratio across all curves for xlim
+        min_ratio = Inf
+        max_ratio = 1.0
+        for c in combos
+            sub = filter(row -> row.combo == c, df)
+            ratios = collect(skipmissing(sub.ratio))
+            if !isempty(ratios)
+                max_ratio = max(max_ratio, maximum(ratios))
+                min_ratio = min(min_ratio, minimum(ratios))
+            end
+        end
+        gap = log2(max_ratio) - log2(min_ratio)
+        factor = 0.02
+        xlim_max = max_ratio * (1+factor*gap)
+        xlim_min = 1.0 * (1-factor*gap)
+        
         plt = plot(
             xlabel = "τ (Performance ratio)",
             ylabel = "Proportion of solved instances ≤ τ",
@@ -448,17 +472,38 @@ function _plot_performance_profiles(bench_id)
             legend = :bottomright,
             xscale = :log2,
             grid = true,
-            lw = 2,
-            size = (900, 600)
+            size = (900, 600),
+            xticks = ([1, 2, 4, 10, 50, 100], ["1", "2", "4", "10", "50", "100"]),
+            xlims = (xlim_min, xlim_max),
+            ylims = (-0.05, 1.05),
+            yticks = ([0.0, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0], ["0", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]),
+            left_margin = 5mm,
+            bottom_margin = 5mm
         )
 
-        for c in combos
+        for (idx, c) in enumerate(combos)
+            color = colors[mod1(idx, length(colors))]
             sub = filter(row -> row.combo == c, df)
             ratios = sort(collect(skipmissing(sub.ratio)))
-            n = length(ratios)
-            y = (1:n) ./ n
-            plot!(ratios, y, label = c)
+            
+            if !isempty(ratios)
+                # Compute ρ_s(τ) = (1/n_p) * count(r_{p,s} ≤ τ)
+                # For each ratio value, count how many ratios are ≤ to it
+                y = [count(x -> x <= tau, ratios) / total_problems for tau in ratios]
+                
+                # Plot the curve
+                plot!(ratios, y, label = c, lw = 1.5, color = color)
+                
+                # Add marker on the first point of the curve
+                plot!([ratios[1]], [y[1]], seriestype = :scatter, label = "",
+                      markersize = 4, markerstrokewidth = 0, color = color)
+            end
         end
+        
+        # Add reference lines with low z-order (plot them last)
+        vline!([1.0], color = :black, lw = 0.5, label = "", linestyle = :solid, z_order = 1)
+        hline!([0.0], color = :black, lw = 0.5, label = "", linestyle = :solid, z_order = 1)
+        hline!([1.0], color = :black, lw = 0.5, label = "", linestyle = :solid, z_order = 1)
 
         return plt
     end
