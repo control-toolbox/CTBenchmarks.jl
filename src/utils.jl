@@ -54,6 +54,7 @@ A NamedTuple with fields:
 - `status::Any`: termination status (type depends on solver/model)
 - `success::Bool`: whether the solve succeeded
 - `criterion::Union{String, Missing}`: optimization sense ("min" or "max", missing if failed)
+- `solution::Union{Any, Missing}`: the solution object (JuMP model or OCP solution, missing if failed)
 """
 function solve_and_extract_data(
     problem::Symbol,
@@ -133,7 +134,6 @@ function solve_and_extract_data(
                 success=success,
                 criterion=criterion,
                 solution=bt_nlp,
-                solution_type=:jump,
             )
         catch e
             println("ERROR in JuMP solve: ", e)
@@ -149,7 +149,6 @@ function solve_and_extract_data(
                 success=false,
                 criterion=missing,
                 solution=missing,
-                solution_type=missing,
             )
         end
     elseif model == :exa_gpu
@@ -208,7 +207,6 @@ function solve_and_extract_data(
                 success=success,
                 criterion=criterion,
                 solution=ocp_sol,
-                solution_type=:ocp,
             )
         catch e
             println("ERROR in GPU solve: ", e)
@@ -232,7 +230,6 @@ function solve_and_extract_data(
                 success=false,
                 criterion=missing,
                 solution=missing,
-                solution_type=missing,
             )
         end
     else
@@ -313,7 +310,6 @@ function solve_and_extract_data(
                 success=success,
                 criterion=criterion,
                 solution=ocp_sol,
-                solution_type=:ocp,
             )
         catch e
             println("ERROR in OptimalControl solve: ", e)
@@ -329,7 +325,6 @@ function solve_and_extract_data(
                 success=false,
                 criterion=missing,
                 solution=missing,
-                solution_type=missing,
             )
         end
     end
@@ -455,7 +450,6 @@ function benchmark_data(;
         success=Bool[],
         criterion=Union{String,Missing}[],
         solution=Any[],
-        solution_type=Union{Symbol,Missing}[],
     )
 
     # Main loop over all combinations
@@ -546,7 +540,6 @@ function benchmark_data(;
                             success=stats.success,
                             criterion=stats.criterion,
                             solution=stats.solution,
-                            solution_type=stats.solution_type,
                         ),
                     )
                 end
@@ -632,12 +625,11 @@ and reconstruction.
 Solutions are extracted and kept in memory (not serialized to JSON) for later plot generation.
 """
 function build_payload(results::DataFrame, meta::Dict, config::Dict)
-    # Extract solutions and solution_types BEFORE conversion to JSON
+    # Extract solutions BEFORE conversion to JSON
     solutions = results.solution
-    solution_types = results.solution_type
     
-    # Create a copy of DataFrame WITHOUT solution columns
-    results_for_json = select(results, Not([:solution, :solution_type]))
+    # Create a copy of DataFrame WITHOUT solution column
+    results_for_json = select(results, Not(:solution))
     
     # Convert DataFrame to vector of dictionaries using Tables.jl interface
     # This preserves all column names and types automatically
@@ -650,7 +642,6 @@ function build_payload(results::DataFrame, meta::Dict, config::Dict)
         "metadata" => meta_with_config,
         "results" => results_vec,
         "solutions" => solutions,  # Kept in memory, not in JSON
-        "solution_types" => solution_types,  # Kept in memory, not in JSON
     )
 end
 
@@ -661,14 +652,14 @@ Save a JSON payload to a file. Creates the parent directory if needed.
 Uses pretty printing for readability.
 Sanitizes NaN and Inf values to null for JSON compatibility.
 
-Solutions and solution_types are excluded from JSON serialization (kept only in memory).
+Solutions are excluded from JSON serialization (kept only in memory).
 """
 function save_json(payload::Dict, outpath::AbstractString)
     mkpath(dirname(outpath))
     
-    # Filter out solutions and solution_types before JSON serialization
+    # Filter out solutions before JSON serialization
     json_payload = Dict(
-        k => v for (k, v) in payload if k ∉ ("solutions", "solution_types")
+        k => v for (k, v) in payload if k != "solutions"
     )
     
     open(outpath, "w") do io
