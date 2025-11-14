@@ -109,7 +109,7 @@ function print_benchmark_line(model::Symbol, stats::NamedTuple)
         rpad(@sprintf("%.6e", stats.objective), 13)
     end
     iter_str =
-        ismissing(stats.iterations) ? rpad("N/A", 6) : rpad(string(stats.iterations), 6)
+        ismissing(stats.iterations) ? rpad("N/A", 5) : rpad(string(stats.iterations), 5)
     
     # Format criterion (min/max)
     criterion_str = if haskey(stats, :criterion) && !ismissing(stats.criterion)
