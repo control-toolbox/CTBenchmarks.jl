@@ -157,9 +157,10 @@ jobs:
 
             bench_id = ENV["BENCHMARK_ID"]
             outpath = ENV["BENCHMARK_OUTPUT_DIR"]
-            
+            figures_dir = joinpath(outpath, "figures")
+
             println("📊 Generating solution plots...")
-            CTBenchmarks.plot_solutions(results, outpath)
+            CTBenchmarks.plot_solutions(results, figures_dir)
             
             json_path = joinpath(outpath, string(bench_id, ".json"))
             println("💾 Saving results to ", json_path)
@@ -305,10 +306,11 @@ jobs:
           DIR_NAME=$(basename "$OUTPUT_DIR")
 
           ARTIFACTS=(
-            "$OUTPUT_DIR/data.json"
+            "$OUTPUT_DIR/$DIR_NAME.json"
             "$OUTPUT_DIR/Project.toml"
             "$OUTPUT_DIR/Manifest.toml"
             "$OUTPUT_DIR/$DIR_NAME.jl"
+            "$OUTPUT_DIR/figures"
           )
 
           # Add only benchmark artifacts
@@ -323,7 +325,7 @@ jobs:
 
           echo "📝 Committing $STAGED file(s) to branch $BRANCH_NAME..."
           git commit -m "📊 Add benchmark results (${DIR_NAME})" \
-                      -m "Results saved to ${OUTPUT_DIR}/data.json" \
+                      -m "Results saved to ${OUTPUT_DIR}/${DIR_NAME}.json" \
                       -m "Includes environment TOMLs and benchmark script" \
                       >/dev/null 2>&1 || {
             echo "❌ Commit failed"
@@ -362,9 +364,10 @@ jobs:
             exit 1
           fi
 
+          DIR_NAME=$(basename "$OUTPUT_DIR")
           echo "📊 Benchmark workflow summary:"
           echo "✅ Benchmark execution: SUCCESS"
-          echo "📁 Results saved to: $OUTPUT_DIR/data.json"
+          echo "📁 Results saved to: $OUTPUT_DIR/$DIR_NAME.json"
           echo "🌳 Results committed to: ${{ github.head_ref || github.ref_name }} branch"
           echo "📘 Ready for documentation generation"
           echo "🎉 Reusable benchmark workflow completed successfully!"

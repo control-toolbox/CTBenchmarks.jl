@@ -646,23 +646,27 @@ function build_payload(results::DataFrame, meta::Dict, config::Dict)
 end
 
 """
-    save_json(payload::Dict, outpath::AbstractString)
+    save_json(payload::Dict, filepath::AbstractString)
 
 Save a JSON payload to a file. Creates the parent directory if needed.
 Uses pretty printing for readability.
 Sanitizes NaN and Inf values to null for JSON compatibility.
 
+# Arguments
+- `payload::Dict`: Benchmark results with metadata
+- `filepath::AbstractString`: Full path to the output JSON file (including filename)
+
 Solutions are excluded from JSON serialization (kept only in memory).
 """
-function save_json(payload::Dict, outpath::AbstractString)
-    mkpath(dirname(outpath))
+function save_json(payload::Dict, filepath::AbstractString)
+    mkpath(dirname(filepath))
     
     # Filter out solutions before JSON serialization
     json_payload = Dict(
         k => v for (k, v) in payload if k != "solutions"
     )
     
-    open(outpath, "w") do io
+    open(filepath, "w") do io
         JSON.print(io, json_payload, 4)    # pretty printed with 4-space indent
         write(io, '\n')            # add trailing newline
     end

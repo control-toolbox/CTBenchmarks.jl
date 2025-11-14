@@ -71,7 +71,7 @@ Generate PDF plots comparing solutions for each (problem, grid_size) pair.
 - `output_dir::AbstractString`: Directory where to save PDF files
 
 # Details
-Creates one PDF per (problem, grid_size) combination in `output_dir/figures/`.
+Creates one PDF per (problem, grid_size) combination directly inside `output_dir`.
 Each plot overlays all solver-model combinations for comparison.
 Filename format: `<problem>_N<grid_size>.pdf`
 
@@ -79,9 +79,8 @@ Solutions are plotted in order: OptimalControl solutions first (easy overlay),
 then JuMP solutions last (for proper layout).
 """
 function plot_solutions(payload::Dict, output_dir::AbstractString)
-    # Create the figures directory
-    figures_dir = joinpath(output_dir, "figures")
-    mkpath(figures_dir)
+    # Ensure the target directory exists
+    mkpath(output_dir)
     
     # Retrieve the data
     results_vec = payload["results"]
@@ -115,7 +114,7 @@ function plot_solutions(payload::Dict, output_dir::AbstractString)
             
             # Save as PDF
             filename = "$(problem)_N$(grid_size).pdf"
-            filepath = joinpath(figures_dir, filename)
+            filepath = joinpath(output_dir, filename)
             savefig(plt, filepath)
             
             println("    ✓ Saved: $filename")
@@ -125,7 +124,7 @@ function plot_solutions(payload::Dict, output_dir::AbstractString)
         end
     end
     
-    println("✅ All solution plots generated in $figures_dir")
+    println("✅ All solution plots generated in $output_dir")
 end
 
 """

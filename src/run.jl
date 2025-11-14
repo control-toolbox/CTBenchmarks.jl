@@ -3,8 +3,8 @@ Run the benchmarks for a specific version.
 
 # Arguments
 - `version::Symbol`: version to run (:complete or :minimal)
-- `filepath::Union{AbstractString, Nothing}`: optional path to the JSON file where results
-  should be saved. When provided, it must end with `.json`.
+- `filepath::Union{AbstractString, Nothing}`: optional full path to the JSON output file 
+  (including directory and filename). When provided, it must end with `.json`.
 - `print_trace::Bool`: whether to print the trace of the solver
 
 # Returns

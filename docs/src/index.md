@@ -106,7 +106,7 @@ results = CTBenchmarks.benchmark(;
     max_wall_time = 500.0
 )
 
-CTBenchmarks.save_json(results, "custom_benchmark.json")
+CTBenchmarks.save_json(results, "path/to/custom_benchmark.json")
 ```
 
 ### Available Problems

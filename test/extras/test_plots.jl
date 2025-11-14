@@ -395,10 +395,10 @@ results = CTBenchmarks.benchmark(;
 
 println("\n📊 Generating plots from benchmark results...")
 output_dir = joinpath(@__DIR__)
-CTBenchmarks.plot_solutions(results, output_dir)
+figures_dir = joinpath(output_dir, "figures")
+CTBenchmarks.plot_solutions(results, figures_dir)
 
 println("\n✅ plot_solutions test completed!")
-figures_path = joinpath(output_dir, "figures")
-println("   Figures saved in: $figures_path")
+println("   Figures saved in: $figures_dir")
 
 # ============================================================================
