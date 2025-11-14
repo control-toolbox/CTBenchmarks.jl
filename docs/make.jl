@@ -7,7 +7,7 @@ for filename in ("Manifest.toml", "Project.toml")
     # Copy the documentation environment files for reproducibility
     cp(
         joinpath(@__DIR__, filename),
-        joinpath(@__DIR__, "src", "assets", filename);
+        joinpath(@__DIR__, "src", "assets", "toml", filename);
         force=true,
     )
 end

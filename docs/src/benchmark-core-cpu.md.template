@@ -14,9 +14,16 @@ This benchmark suite evaluates optimal control problems on a standard CPU platfo
 
 **Benchmark Configuration:**
 
+```@raw html
+<div class="benchmark-config" style="margin-bottom: 1.5em;">
+```
+
 ```@example BENCH
 _print_config(BENCH_CORE_UBUNTU) # hide
-nothing # hide
+```
+
+```@raw html
+</div>
 ```
 
 This configuration focuses on CPU-based solvers and provides a comprehensive comparison across different modelling frameworks.
@@ -39,18 +46,24 @@ _plot_performance_profiles(BENCH_CORE_UBUNTU) # hide
 
 ```@example BENCH
 _print_benchmark_log(BENCH_CORE_UBUNTU) # hide
-nothing # hide
 ```
 
-## Moonshot CPU
+## Moonshot
 
 This benchmark suite evaluates optimal control problems on self-hosted CPU hardware.
 
 **Benchmark Configuration:**
 
+```@raw html
+<div class="benchmark-config" style="margin-bottom: 1.5em;">
+```
+
 ```@example BENCH
 _print_config(BENCH_CORE_MOONSHOT_CPU) # hide
-nothing # hide
+```
+
+```@raw html
+</div>
 ```
 
 This configuration tests larger grid sizes on dedicated hardware, comparing performance with the GitHub Actions runner.
@@ -73,5 +86,4 @@ _plot_performance_profiles(BENCH_CORE_MOONSHOT_CPU) # hide
 
 ```@example BENCH
 _print_benchmark_log(BENCH_CORE_MOONSHOT_CPU) # hide
-nothing # hide
 ```

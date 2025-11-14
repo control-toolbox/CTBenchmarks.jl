@@ -11,15 +11,22 @@ const BENCH_CORE_MOONSHOT_GPU = "core-moonshot-gpu"
 
 This page presents benchmark results for the **beam** problem across different platforms and configurations.
 
-## Ubuntu Latest - Beam Problem
+## Ubuntu Latest - CPU
 
 Results for the beam problem on GitHub Actions runners (Ubuntu latest).
 
 **Benchmark Configuration:**
 
+```@raw html
+<div class="benchmark-config" style="margin-bottom: 1.5em;">
+```
+
 ```@example BENCH
 _print_config(BENCH_CORE_UBUNTU) # hide
-nothing # hide
+```
+
+```@raw html
+</div>
 ```
 
 This configuration focuses on CPU-based solvers and provides a comprehensive comparison across different modelling frameworks.
@@ -31,18 +38,24 @@ This configuration focuses on CPU-based solvers and provides a comprehensive com
 
 ```@example BENCH
 _print_benchmark_log(BENCH_CORE_UBUNTU; problems=["beam"]) # hide
-nothing # hide
 ```
 
-## Moonshot CPU - Beam Problem
+## Moonshot - CPU
 
 Results for the beam problem on self-hosted CPU hardware.
 
 **Benchmark Configuration:**
 
+```@raw html
+<div class="benchmark-config" style="margin-bottom: 1.5em;">
+```
+
 ```@example BENCH
 _print_config(BENCH_CORE_MOONSHOT_CPU) # hide
-nothing # hide
+```
+
+```@raw html
+</div>
 ```
 
 This configuration tests larger grid sizes on dedicated hardware, comparing performance with the GitHub Actions runner.
@@ -54,18 +67,24 @@ This configuration tests larger grid sizes on dedicated hardware, comparing perf
 
 ```@example BENCH
 _print_benchmark_log(BENCH_CORE_MOONSHOT_CPU; problems=["beam"]) # hide
-nothing # hide
 ```
 
-## Moonshot GPU - Beam Problem
+## Moonshot - GPU
 
 Results for the beam problem on GPU-accelerated hardware.
 
 **Benchmark Configuration:**
 
+```@raw html
+<div class="benchmark-config" style="margin-bottom: 1.5em;">
+```
+
 ```@example BENCH
 _print_config(BENCH_CORE_MOONSHOT_GPU) # hide
-nothing # hide
+```
+
+```@raw html
+</div>
 ```
 
 This configuration demonstrates GPU acceleration capabilities with ExaModels on large-scale problems, comparing CPU vs GPU performance for the same modelling framework.
@@ -77,5 +96,4 @@ This configuration demonstrates GPU acceleration capabilities with ExaModels on 
 
 ```@example BENCH
 _print_benchmark_log(BENCH_CORE_MOONSHOT_GPU; problems=["beam"]) # hide
-nothing # hide
 ```

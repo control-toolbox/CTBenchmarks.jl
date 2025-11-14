@@ -25,7 +25,7 @@ The file is expected to be located at `benchmarks/<bench_id>/<bench_id>.json`.
 """
 function _get_bench_data(bench_id::AbstractString)
     json_filename = string(bench_id, ".json")
-    path = joinpath(@__DIR__, "benchmarks", bench_id, json_filename)
+    path = joinpath(@__DIR__, "..", "benchmarks", bench_id, json_filename)
     return _read_benchmark_json(path)
 end
 
@@ -118,6 +118,7 @@ function _basic_metadata(bench_id)
     else
         println("⚠️  No benchmark data available")
     end
+    return nothing
 end
 
 """
@@ -141,6 +142,7 @@ function _bench_data(bench_id)
     else
         println("⚠️  No benchmark data available")
     end
+    return nothing
 end
 
 """
@@ -164,6 +166,7 @@ function _package_status(bench_id)
     else
         println("⚠️  No benchmark data available")
     end
+    return nothing
 end
 
 """
@@ -188,85 +191,77 @@ function _complete_manifest(bench_id)
     else
         println("⚠️  No benchmark data available")
     end
+    return nothing
 end
 
 """
     _print_config(bench_id)
 
-Display benchmark configuration parameters.
+Render benchmark configuration parameters as Markdown.
 
 # Arguments
 - `bench_id`: Benchmark identifier string
 
-# Details
-Prints the benchmark configuration including:
-- Problems tested
-- Solvers used (ipopt, madnlp)
-- Models (JuMP, adnlp, exa, exa_gpu)
-- Grid sizes
-- Discretization methods
-- Solver tolerances
-- Ipopt mu strategy
-- Iteration and wall time limits
+# Returns
+- `Markdown.MD`: Formatted configuration block
 """
 function _print_config(bench_id)
     bench_data = _get_bench_data(bench_id)
     if bench_data === nothing
-        println("⚠️  No configuration available because the benchmark file is missing.")
-    else
-        meta = get(bench_data, "metadata", Dict())
-        config = get(meta, "configuration", nothing)
-        
-        if config === nothing
-            println("⚠️  No configuration recorded in the benchmark file.")
-        else
-            # Extract configuration parameters
-            problems = get(config, "problems", [])
-            solver_models = get(config, "solver_models", [])
-            grid_sizes = get(config, "grid_sizes", [])
-            disc_methods = get(config, "disc_methods", [])
-            tol = get(config, "tol", "n/a")
-            ipopt_mu_strategy = get(config, "ipopt_mu_strategy", "n/a")
-            max_iter = get(config, "max_iter", "n/a")
-            max_wall_time = get(config, "max_wall_time", "n/a")
-            
-            # Format solver_models for display
-            # solver_models is stored as a vector of Pair objects in JSON
-            # Each Pair is stored as a Dict with "first" and "second" keys
-            solvers = Set{String}()
-            models = Set{String}()
-            
-            for pair in solver_models
-                if isa(pair, Dict)
-                    # JSON format: {"first": "solver", "second": ["model1", "model2"]}
-                    solver = get(pair, "first", "")
-                    push!(solvers, string(solver))
-                    for model in get(pair, "second", [])
-                        push!(models, string(model))
-                    end
-                elseif isa(pair, Pair)
-                    # Direct Pair format (if not serialized)
-                    push!(solvers, string(pair.first))
-                    for model in pair.second
-                        push!(models, string(model))
-                    end
-                end
+        return Markdown.parse("⚠️  No configuration available because the benchmark file is missing.")
+    end
+
+    meta = get(bench_data, "metadata", Dict())
+    config = get(meta, "configuration", nothing)
+
+    if config === nothing
+        return Markdown.parse("⚠️  No configuration recorded in the benchmark file.")
+    end
+
+    problems = get(config, "problems", [])
+    solver_models = get(config, "solver_models", [])
+    grid_sizes = get(config, "grid_sizes", [])
+    disc_methods = get(config, "disc_methods", [])
+    tol = get(config, "tol", "n/a")
+    ipopt_mu_strategy = get(config, "ipopt_mu_strategy", "n/a")
+    max_iter = get(config, "max_iter", "n/a")
+    max_wall_time = get(config, "max_wall_time", "n/a")
+
+    solvers = Set{String}()
+    models = Set{String}()
+    for pair in solver_models
+        if isa(pair, Dict)
+            solver = get(pair, "first", "")
+            push!(solvers, string(solver))
+            for model in get(pair, "second", [])
+                push!(models, string(model))
             end
-            
-            solvers_str = join(sort(collect(solvers)), ", ")
-            models_str = join(sort(collect(models)), ", ")
-            
-            # Print configuration in a structured format
-            println("- **Problems:** ", join(problems, ", "))
-            println("- **Solvers:** ", solvers_str)
-            println("- **Models:** ", models_str)
-            println("- **Grid sizes:** ", join(grid_sizes, ", "), " discretization points")
-            println("- **Discretization:** ", join(disc_methods, ", "), " method")
-            println("- **Tolerance:** ", tol)
-            println("- **Ipopt strategy:** ", ipopt_mu_strategy, " barrier parameter")
-            println("- **Limits:** ", max_iter, " iterations max, ", max_wall_time, "s wall time")
+        elseif isa(pair, Pair)
+            push!(solvers, string(pair.first))
+            for model in pair.second
+                push!(models, string(model))
+            end
         end
     end
+
+    solvers_str = isempty(solvers) ? "n/a" : join(sort(collect(solvers)), ", ")
+    models_str = isempty(models) ? "n/a" : join(sort(collect(models)), ", ")
+    problems_str = isempty(problems) ? "n/a" : join(string.(problems), ", ")
+    grid_sizes_str = isempty(grid_sizes) ? "n/a" : join(string.(grid_sizes), ", ")
+    disc_methods_str = isempty(disc_methods) ? "n/a" : join(string.(disc_methods), ", ")
+
+    lines = String[
+        "- **Problems:** $problems_str",
+        "- **Solvers:** $solvers_str",
+        "- **Models:** $models_str",
+        "- **Grid sizes:** $grid_sizes_str discretization points",
+        "- **Discretization:** $disc_methods_str method",
+        "- **Tolerance:** $(string(tol))",
+        "- **Ipopt strategy:** $(string(ipopt_mu_strategy)) barrier parameter",
+        "- **Limits:** $(string(max_iter)) iterations max, $(string(max_wall_time))s wall time",
+    ]
+
+    return Markdown.parse(join(lines, "\n"))
 end
 
 """
@@ -387,6 +382,7 @@ function _print_benchmark_log(bench_id; problems=nothing)
             end
         end
     end
+    return nothing
 end
 
 """
