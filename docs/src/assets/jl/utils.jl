@@ -8,6 +8,10 @@ using Plots
 using Plots.PlotMeasures
 using Statistics
 
+function _plot_font_settings()
+    return font(10, Plots.default(:fontfamily)), 10
+end
+
 """
     _get_bench_data(bench_id::AbstractString)
 
@@ -445,6 +449,7 @@ function _plot_performance_profiles(bench_id)
             :blue, :red, :green, :orange, :purple, :brown, :pink, :gray,
             :cyan, :magenta, :teal, :olive, :gold, :navy, :darkred
         ]
+        title_font, label_font_size = _plot_font_settings()
         
         # Total number of unique problems (problem × grid_size combinations)
         total_problems = nrow(combine(groupby(df, [:problem, :grid_size]), nrow => :count))
@@ -473,12 +478,16 @@ function _plot_performance_profiles(bench_id)
             xscale = :log2,
             grid = true,
             size = (900, 600),
+            titlefont = title_font,
+            xguidefontsize = label_font_size,
+            yguidefontsize = label_font_size,
             xticks = ([1, 2, 4, 10, 50, 100], ["1", "2", "4", "10", "50", "100"]),
             xlims = (xlim_min, xlim_max),
             ylims = (-0.05, 1.05),
             yticks = ([0.0, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0], ["0", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]),
             left_margin = 5mm,
-            bottom_margin = 5mm
+            bottom_margin = 5mm,
+            top_margin = 5mm,
         )
 
         for (idx, c) in enumerate(combos)
@@ -510,5 +519,168 @@ function _plot_performance_profiles(bench_id)
 
     plt = performance_profile(df_successful)
     println("✅ Global performance profile generated.")
+    return plt
+end
+
+function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
+    raw = _get_bench_data(bench_id)
+    if raw === nothing
+        println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
+        return plot()
+    end
+
+    rows = get(raw, "results", Any[])
+    if isempty(rows)
+        println("⚠️ No ('results') recorded in the benchmark file.")
+        return plot()
+    end
+
+    df = DataFrame(rows)
+    df_successful = filter(row -> row.success == true && row.benchmark !== nothing && row.problem == problem, df)
+    if isempty(df_successful)
+        println("⚠️ No successful benchmark entry to analyze for problem: $problem")
+        return plot()
+    end
+
+    df_successful.time = [row.benchmark["time"] for row in eachrow(df_successful)]
+    select!(df_successful, [:model, :solver, :grid_size, :time])
+    df_successful = dropmissing(df_successful, :time)
+    sort!(df_successful, [:grid_size, :model, :solver])
+
+    df_successful.combo = string.("(", df_successful.model, ", ", df_successful.solver, ")")
+    combos = unique(df_successful.combo)
+    colors = [
+        :blue, :red, :green, :orange, :purple, :brown, :pink, :gray,
+        :cyan, :magenta, :teal, :olive, :gold, :navy, :darkred
+    ]
+    title_font, label_font_size = _plot_font_settings()
+
+    min_N = minimum(df_successful.grid_size)
+    max_N = maximum(df_successful.grid_size)
+    span_N = max_N - min_N
+    padding = span_N > 0 ? 0.05 * span_N : 1
+    x_min = max(0, min_N - padding)
+    x_max = max_N + padding
+
+    plt = plot(
+        xlabel = "Grid size N",
+        ylabel = "Solve time (s)",
+        title = "Solve time vs grid size — $problem",
+        legend = :bottomright,
+        grid = true,
+        size = (900, 600),
+        xticks = sort(unique(df_successful.grid_size)),
+        xlims = (x_min, x_max),
+        left_margin = 5mm,
+        bottom_margin = 5mm,
+        top_margin = 5mm,
+        titlefont = title_font,
+        xguidefontsize = label_font_size,
+        yguidefontsize = label_font_size,
+    )
+
+    for (idx, c) in enumerate(combos)
+        color = colors[mod1(idx, length(colors))]
+        sub = filter(row -> row.combo == c, df_successful)
+        grouped = combine(groupby(sub, :grid_size), :time => mean => :mean_time)
+        sort!(grouped, :grid_size)
+        xs = grouped.grid_size
+        ys = grouped.mean_time
+
+        plot!(xs, ys, label = c, lw = 1.5, color = color,
+              marker = :circle, markersize = 4, markerstrokewidth = 0)
+    end
+
+    println("✅ Time vs grid size plot generated for problem: $problem and bench_id: $bench_id")
+    return plt
+end
+
+function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
+    raw = _get_bench_data(bench_id)
+    if raw === nothing
+        println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
+        return plot()
+    end
+
+    rows = get(raw, "results", Any[])
+    if isempty(rows)
+        println("⚠️ No ('results') recorded in the benchmark file.")
+        return plot()
+    end
+
+    df = DataFrame(rows)
+    df_successful = filter(row -> row.success == true && row.benchmark !== nothing && row.problem == problem, df)
+    if isempty(df_successful)
+        println("⚠️ No successful benchmark entry to analyze for problem: $problem")
+        return plot()
+    end
+
+    df_successful.time = [row.benchmark["time"] for row in eachrow(df_successful)]
+    select!(df_successful, [:model, :solver, :grid_size, :time])
+    df_successful = dropmissing(df_successful, :time)
+    sort!(df_successful, [:grid_size, :model, :solver])
+
+    df_successful.combo = string.("(", df_successful.model, ", ", df_successful.solver, ")")
+    combos = unique(df_successful.combo)
+    colors = [
+        :blue, :red, :green, :orange, :purple, :brown, :pink, :gray,
+        :cyan, :magenta, :teal, :olive, :gold, :navy, :darkred
+    ]
+    title_font, label_font_size = _plot_font_settings()
+
+    Ns = sort(unique(df_successful.grid_size))
+    nN = length(Ns)
+    nC = length(combos)
+
+    # Base positions for each grid size (treated as categorical)
+    x_base = collect(1:nN)
+    xtick_labels = string.(Ns)
+
+    # Width of a group and spacing/width for individual bars
+    group_width = 0.7
+    center_spacing = group_width / max(nC, 1)
+    bar_width = 0.6 * center_spacing  # bars narrower than spacing → visible gap
+    offsets = (collect(0:nC-1) .- (nC - 1) / 2) .* center_spacing
+
+    plt = plot(
+        xlabel = "Grid size N",
+        ylabel = "Solve time (s)",
+        title = "Solve time vs grid size (bar) — $problem",
+        legend = :topleft,
+        grid = true,
+        size = (900, 600),
+        xticks = (x_base, xtick_labels),
+        left_margin = 5mm,
+        bottom_margin = 5mm,
+        top_margin = 5mm,
+        titlefont = title_font,
+        xguidefontsize = label_font_size,
+        yguidefontsize = label_font_size,
+    )
+
+    for (j, c) in enumerate(combos)
+        sub = filter(row -> row.combo == c, df_successful)
+        grouped = combine(groupby(sub, :grid_size), :time => mean => :mean_time)
+
+        # Map mean times to each grid size index
+        yj = fill(NaN, nN)
+        for row in eachrow(grouped)
+            i = findfirst(==(row.grid_size), Ns)
+            yj[i] = row.mean_time
+        end
+
+        xj = x_base .+ offsets[j]
+        color = colors[mod1(j, length(colors))]
+
+        bar!(xj, yj;
+             bar_width = bar_width,
+             label = c,
+             color = color,
+             linecolor = :transparent,
+             linewidth = 0,
+        )
+    end
+
+    println("✅ Time vs grid size bar plot generated for problem: $problem and bench_id: $bench_id")
     return plt
 end

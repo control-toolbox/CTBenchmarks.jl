@@ -7,6 +7,7 @@ include(joinpath(@__DIR__, "assets", "jl", "utils.jl"))
 const BENCH_CORE_UBUNTU = "core-ubuntu-latest"
 const BENCH_CORE_MOONSHOT_CPU = "core-moonshot-cpu"
 const BENCH_CORE_MOONSHOT_GPU = "core-moonshot-gpu"
+const PROBLEM = "beam"
 ```
 
 This page presents benchmark results for the **beam** problem across different platforms and configurations.
@@ -37,7 +38,15 @@ This configuration focuses on CPU-based solvers and provides a comprehensive com
 ### 📊 Ubuntu Results
 
 ```@example BENCH
-_print_benchmark_log(BENCH_CORE_UBUNTU; problems=["beam"]) # hide
+_plot_time_vs_grid_size(PROBLEM, BENCH_CORE_UBUNTU) # hide
+```
+
+```@example BENCH
+_plot_time_vs_grid_size_bar(PROBLEM, BENCH_CORE_UBUNTU) # hide
+```
+
+```@example BENCH
+_print_benchmark_log(BENCH_CORE_UBUNTU; problems=[PROBLEM]) # hide
 ```
 
 ## Moonshot - CPU
@@ -66,7 +75,15 @@ This configuration tests larger grid sizes on dedicated hardware, comparing perf
 ### ⚡ Moonshot CPU Results
 
 ```@example BENCH
-_print_benchmark_log(BENCH_CORE_MOONSHOT_CPU; problems=["beam"]) # hide
+_plot_time_vs_grid_size(PROBLEM, BENCH_CORE_MOONSHOT_CPU) # hide
+```
+
+```@example BENCH
+_plot_time_vs_grid_size_bar(PROBLEM, BENCH_CORE_MOONSHOT_CPU) # hide
+```
+
+```@example BENCH
+_print_benchmark_log(BENCH_CORE_MOONSHOT_CPU; problems=[PROBLEM]) # hide
 ```
 
 ## Moonshot - GPU
@@ -95,5 +112,13 @@ This configuration demonstrates GPU acceleration capabilities with ExaModels on 
 ### 🚀 Moonshot GPU Results
 
 ```@example BENCH
-_print_benchmark_log(BENCH_CORE_MOONSHOT_GPU; problems=["beam"]) # hide
+_plot_time_vs_grid_size(PROBLEM, BENCH_CORE_MOONSHOT_GPU) # hide
+```
+
+```@example BENCH
+_plot_time_vs_grid_size_bar(PROBLEM, BENCH_CORE_MOONSHOT_GPU) # hide
+```
+
+```@example BENCH
+_print_benchmark_log(BENCH_CORE_MOONSHOT_GPU; problems=[PROBLEM]) # hide
 ```
