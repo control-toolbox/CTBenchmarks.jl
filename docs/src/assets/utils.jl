@@ -187,11 +187,11 @@ function _print_results(bench_id)
 end
 
 # write in english
-    # use log base 2 instead of log base 1
-    # group the graphs by solver–model pairs
-    # on Moonshot, plot two curves: one for GPU and one for CPU
-    # plot with respect to the number of iterations
-    # set time to infinity if it does not converge
+# use log base 2 instead of log base 1
+# group the graphs by solver–model pairs
+# on Moonshot, plot two curves: one for GPU and one for CPU
+# plot with respect to the number of iterations
+# set time to infinity if it does not converge
 function _plot_results(bench_id)
     raw = _get_bench_data(bench_id)
     if raw === nothing
@@ -217,23 +217,25 @@ function _plot_results(bench_id)
     df_successful = dropmissing(df_successful, :time)
     sort!(df_successful, [:problem, :grid_size, :model, :solver])
 
-    df_min = combine(groupby(df_successful, [:problem, :grid_size]), :time => minimum => :min_time)
-    df_successful = leftjoin(df_successful, df_min, on = [:problem, :grid_size])
+    df_min = combine(
+        groupby(df_successful, [:problem, :grid_size]), :time => minimum => :min_time
+    )
+    df_successful = leftjoin(df_successful, df_min; on=[:problem, :grid_size])
     df_successful.ratio = df_successful.time ./ df_successful.min_time
 
     df_successful.combo = string.("(", df_successful.model, ", ", df_successful.solver, ")")
 
     function performance_profile(df)
         combos = unique(df.combo)
-        plt = plot(
-            xlabel = "τ (Performance ratio)",
-            ylabel = "Proportion of solved instances ≤ τ",
-            title = "Performance profile — Global models × solvers",
-            legend = :bottomright,
-            xscale = :log2,
-            grid = true,
-            lw = 2,
-            size = (900, 600)
+        plt = plot(;
+            xlabel="τ (Performance ratio)",
+            ylabel="Proportion of solved instances ≤ τ",
+            title="Performance profile — Global models × solvers",
+            legend=:bottomright,
+            xscale=:log2,
+            grid=true,
+            lw=2,
+            size=(900, 600),
         )
 
         for c in combos
@@ -241,7 +243,7 @@ function _plot_results(bench_id)
             ratios = sort(collect(skipmissing(sub.ratio)))
             n = length(ratios)
             y = (1:n) ./ n
-            plot!(ratios, y, label = c)
+            plot!(ratios, y; label=c)
         end
 
         return plt
