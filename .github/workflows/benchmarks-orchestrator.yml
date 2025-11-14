@@ -256,7 +256,7 @@ jobs:
           script: |
             console.log('🚨 Workflow failure detected - posting/updating comment...');
 
-            const marker = '<!-- ctbenchmarks-failure-comment -->';
+            const marker = '<!-- ctbenchmarks-status-comment -->';
             const prNumber = context.payload.pull_request.number;
             const failedJobs = [];
 
@@ -348,7 +348,7 @@ jobs:
           script: |
             console.log('🎉 Workflow success detected - posting/updating comment...');
 
-            const marker = '<!-- ctbenchmarks-success-comment -->';
+            const marker = '<!-- ctbenchmarks-status-comment -->';
             const prNumber = context.payload.pull_request.number;
             const previewUrl = `https://control-toolbox.org/CTBenchmarks.jl/previews/PR${prNumber}/index.html`;
             const benchmarksSummary = process.env.BENCHMARKS_SUMMARY;
