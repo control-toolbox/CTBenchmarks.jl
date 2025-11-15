@@ -2,6 +2,12 @@
 #  This Source Code Form is subject to the terms of the Mozilla Public
 #  License, v. 2.0. If a copy of the MPL was not distributed with this
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+#  Modified November 2025 for CTBenchmarks.jl:
+#  - Separated public and private API documentation into distinct pages
+#  - Added robust handling for missing docstrings (warnings instead of errors)
+#  - Included non-exported symbols in API reference
+#  - Filtered internal compiler-generated symbols (starting with '#')
 
 module DocumenterReference
 

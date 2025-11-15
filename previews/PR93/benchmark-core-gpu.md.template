@@ -1,9 +1,5 @@
 # Core GPU Benchmark
 
-```@meta
-CollapsedDocStrings = true
-```
-
 ```@setup BENCH
 include(joinpath(@__DIR__, "assets", "jl", "utils.jl"))
 
