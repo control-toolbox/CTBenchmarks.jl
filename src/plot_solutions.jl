@@ -4,28 +4,27 @@
 Return a consistent color for a given (model, solver) pair.
 
 Fixed mapping for known pairs:
-- (andlp, ipopt)  => :blue
+- (adnlp, ipopt)  => :blue
 - (exa,   ipopt)  => :red
-- (andlp, madnlp) => :green
+- (adnlp, madnlp) => :green
 - (exa,   madnlp) => :orange
 - (jump,  ipopt)  => :purple
 - (jump,  madnlp) => :brown
 
 If the pair is not in the dictionary, fall back to the provided palette using idx.
 """
-function get_color(model::Symbol, solver::Symbol, idx::Int; palette::Vector = [:blue, :red, :green, :orange, :purple, :brown, :pink, :gray, :cyan, :magenta, :teal, :olive, :gold, :navy, :darkred])
-    m = String(model)
-    s = String(solver)
+function get_color(model::String, solver::String, idx::Int)
+    palette = [:blue, :red, :green, :orange, :purple, :brown, :pink, :gray, :cyan, :magenta, :teal, :olive, :gold, :navy, :darkred]
     fixed = Dict(
-        ("andlp",   "ipopt")  => :blue,
+        ("adnlp",   "ipopt")  => :blue,
         ("exa",     "ipopt")  => :red,
-        ("andlp",   "madnlp") => :green,
+        ("adnlp",   "madnlp") => :green,
         ("exa",     "madnlp") => :orange,
         ("jump",    "ipopt")  => :purple,
         ("jump",    "madnlp") => :brown,
         ("exa_gpu", "madnlp") => :cyan,
     )
-    return get(fixed, (m, s), palette[mod1(idx, length(palette))])
+    return get(fixed, (model, solver), palette[mod1(idx, length(palette))])
 end
 
 # -----------------------------------
@@ -57,9 +56,9 @@ costate_multiplier(criterion) =
 Get marker shape and spacing for a given (model, solver) pair and curve index.
 
 Fixed mapping for known (model, solver) pairs:
-- (andlp, ipopt)  => :circle
+- (adnlp, ipopt)  => :circle
 - (exa,   ipopt)  => :square
-- (andlp, madnlp) => :diamond
+- (adnlp, madnlp) => :diamond
 - (exa,   madnlp) => :utriangle
 - (jump,  ipopt)  => :dtriangle
 - (jump,  madnlp) => :star5
@@ -71,20 +70,23 @@ marker list using `idx`.
 Returns `(marker_shape, marker_interval)` where `marker_interval` is calculated
 as `grid_size/M` with `M = 6` to have approximately `M` markers per curve.
 """
-function get_marker_style(model::Symbol, solver::Symbol, idx::Int, grid_size::Int)
+function get_marker_style(model::String, solver::String, idx::Int)
     markers = [:circle, :square, :diamond, :utriangle, :dtriangle, :star5, :hexagon, :cross]
-    m = String(model)
-    s = String(solver)
     fixed = Dict(
-        ("andlp",   "ipopt")  => :circle,
+        ("adnlp",   "ipopt")  => :circle,
         ("exa",     "ipopt")  => :square,
-        ("andlp",   "madnlp") => :diamond,
+        ("adnlp",   "madnlp") => :diamond,
         ("exa",     "madnlp") => :utriangle,
         ("jump",    "ipopt")  => :dtriangle,
         ("jump",    "madnlp") => :star5,
         ("exa_gpu", "madnlp") => :hexagon,
     )
-    marker = get(fixed, (m, s), markers[mod1(idx, length(markers))])
+    marker = get(fixed, (model, solver), markers[mod1(idx, length(markers))])
+    return marker
+end
+
+function get_marker_style(model::String, solver::String, idx::Int, grid_size::Int)
+    marker = get_marker_style(model, solver, idx)
     # Calculate interval to have approximately 6 markers per curve
     M = 6
     marker_interval = max(1, div(grid_size, M))
