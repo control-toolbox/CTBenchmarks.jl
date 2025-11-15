@@ -3,6 +3,29 @@
 
 Format a duration `t` expressed in **seconds** into a human-readable string with
 three decimal places and adaptive units (ns, μs, ms, s).
+
+The function automatically selects the most appropriate unit based on the magnitude
+of the input value, ensuring readable output across a wide range of timescales.
+
+# Arguments
+- `t::Real`: Duration in seconds (can be positive or negative)
+
+# Returns
+- `String`: Formatted time string with three decimal places and unit suffix
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> CTBenchmarks.prettytime(0.001234)
+"1.234 ms"
+
+julia> CTBenchmarks.prettytime(1.5)
+"1.500 s "
+
+julia> CTBenchmarks.prettytime(5.6e-7)
+"560.000 ns"
+```
 """
 function prettytime(t)
     t_abs = abs(t)
@@ -23,6 +46,29 @@ end
 
 Format a memory footprint `bytes` into a human-readable string using binary
 prefixes (bytes, KiB, MiB, GiB) with two decimal places.
+
+The function uses standard binary units (1024 bytes = 1 KiB) and automatically
+selects the most appropriate unit based on the magnitude of the input value.
+
+# Arguments
+- `bytes::Integer`: Memory size in bytes (must be non-negative)
+
+# Returns
+- `String`: Formatted memory string with two decimal places and unit suffix
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> CTBenchmarks.prettymemory(512)
+"512 bytes"
+
+julia> CTBenchmarks.prettymemory(1048576)
+"1.00 MiB"
+
+julia> CTBenchmarks.prettymemory(2147483648)
+"2.00 GiB"
+```
 """
 function prettymemory(b)
     if b < 1024
@@ -41,9 +87,49 @@ end
     print_benchmark_line(model::Symbol, stats::NamedTuple)
 
 Print a formatted line summarizing benchmark statistics for `model` with colors.
-Handles both CPU benchmarks (from @btimed) and GPU benchmarks (from CUDA.@timed).
 
-Displays: time, allocations/memory, objective, iterations, and success status
+This function formats and displays benchmark results in a human-readable table row,
+including execution time, memory usage, solver objective value, iteration count,
+and success status. It automatically detects and handles both CPU benchmarks
+(from `@btimed`) and GPU benchmarks (from `CUDA.@timed`).
+
+# Arguments
+- `model::Symbol`: Name of the model being benchmarked (e.g., `:jump`, `:adnlp`)
+- `stats::NamedTuple`: Statistics dictionary containing:
+  - `benchmark`: Timing and memory data (Dict or NamedTuple) with fields:
+    - `:time`: Execution time in seconds
+    - `:bytes` or `:cpu_bytes`, `:gpu_bytes`: Memory allocation
+  - `objective`: Solver objective value (or `missing`)
+  - `iterations`: Number of solver iterations (or `missing`)
+  - `success`: Boolean indicating successful completion
+  - `criterion`: Optimization criterion (e.g., `:min`, `:max`) or `missing`
+  - `status`: Error message (used when benchmark is missing)
+
+# Output
+Prints a colored, formatted line to stdout with:
+- Success indicator (✓ in green or ✗ in red)
+- Model name in magenta
+- Formatted execution time
+- Iteration count
+- Objective value in scientific notation
+- Criterion type
+- Memory usage (CPU and/or GPU)
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> stats = (
+           benchmark = (time = 0.123, bytes = 1048576),
+           objective = 42.5,
+           iterations = 100,
+           success = true,
+           criterion = :min
+       )
+
+julia> CTBenchmarks.print_benchmark_line(:jump, stats)
+  ✓ | jump     | time:      0.123 s  | iters:   100 | obj: 4.250000e+01 (min) | CPU:       1.00 MiB
+```
 """
 function print_benchmark_line(model::Symbol, stats::NamedTuple)
     bench = stats.benchmark

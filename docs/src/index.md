@@ -218,7 +218,7 @@ _downloads_toml() # hide
 ```
 
 ```@raw html
-<details style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Version info</summary>
+<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Version info</summary>
 ```
 
 ```@example main
@@ -230,7 +230,7 @@ versioninfo() # hide
 ```
 
 ```@raw html
-<details style="margin-bottom: 0.5em;"><summary>📦 Package status</summary>
+<details class="ct-collapse" style="margin-bottom: 0.5em;"><summary>📦 Package status</summary>
 ```
 
 ```@example main
@@ -242,7 +242,7 @@ Pkg.status() # hide
 ```
 
 ```@raw html
-<details style="margin-bottom: 0.5em;"><summary>📚 Complete manifest</summary>
+<details class="ct-collapse" style="margin-bottom: 0.5em;"><summary>📚 Complete manifest</summary>
 ```
 
 ```@example main

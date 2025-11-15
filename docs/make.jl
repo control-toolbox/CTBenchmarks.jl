@@ -48,6 +48,7 @@ with_processed_templates(
             assets=[
                 asset("https://control-toolbox.org/assets/css/documentation.css"),
                 asset("https://control-toolbox.org/assets/js/documentation.js"),
+                joinpath("assets", "js", "ctbenchmarks-details.js"),
             ],
         ),
         # Expose the available documentation pages in the navigation sidebar

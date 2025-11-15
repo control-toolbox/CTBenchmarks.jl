@@ -1,14 +1,43 @@
 """
-Run the benchmarks for a specific version.
+    run(version::Symbol=:complete; filepath=nothing, print_trace=false)
+
+Run comprehensive benchmarks on optimal control problems with various solvers and discretization methods.
+
+This function executes a predefined benchmark suite that evaluates the performance of different 
+optimal control solvers (Ipopt, MadNLP) across multiple models (JuMP, ADNLP, Exa, Exa-GPU) and 
+problems. Results are collected in a structured dictionary and optionally saved to JSON.
 
 # Arguments
-- `version::Symbol`: version to run (:complete or :minimal)
-- `filepath::Union{AbstractString, Nothing}`: optional full path to the JSON output file 
-  (including directory and filename). When provided, it must end with `.json`.
-- `print_trace::Bool`: whether to print the trace of the solver
+- `version::Symbol`: Benchmark suite version to run (default: `:complete`)
+  - `:complete`: Full suite with 14 problems, multiple grid sizes (100, 200, 500), and two discretization methods
+  - `:minimal`: Quick suite with only the beam problem and grid size 100 (useful for testing)
+- `filepath::Union{AbstractString, Nothing}`: Optional path to save results as JSON file (must end with `.json`). 
+  If `nothing`, results are only returned in memory.
+- `print_trace::Bool`: Whether to print solver trace information during execution (default: `false`)
 
 # Returns
-- `Dict` containing benchmark results and metadata
+- `Dict`: Benchmark results containing timing data, solver statistics, and metadata for each problem-solver-model combination
+
+# Throws
+- `CTBase.IncorrectArgument`: If `filepath` is provided but does not end with `.json`
+- `ErrorException`: If `version` is neither `:complete` nor `:minimal`
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> # Run minimal benchmark and save results
+julia> results = run(:minimal; filepath="results.json")
+
+julia> # Run complete benchmark without saving
+julia> results = run(:complete)
+
+julia> # Run with solver trace output
+julia> results = run(:minimal; print_trace=true)
+```
+
+# See Also
+- [`benchmark`](@ref): Core benchmarking function with full customization
 """
 function run(
     version::Symbol=:complete;
