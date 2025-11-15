@@ -9,7 +9,8 @@ using CUDA
 #
 @testset verbose = true showtiming = true "CTBenchmarks tests" begin
     for name in (
-        # :aqua, 
+        :aqua, 
+        :run,
         :utils,
     )
         @testset "$(name)" begin

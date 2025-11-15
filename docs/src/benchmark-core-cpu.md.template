@@ -1,0 +1,89 @@
+# Core CPU Benchmarks
+
+```@setup BENCH
+include(joinpath(@__DIR__, "assets", "jl", "utils.jl"))
+
+# Define benchmark IDs
+const BENCH_CORE_UBUNTU = "core-ubuntu-latest"
+const BENCH_CORE_MOONSHOT_CPU = "core-moonshot-cpu"
+```
+
+## Ubuntu Latest
+
+This benchmark suite evaluates optimal control problems on a standard CPU platform using GitHub Actions runners.
+
+**Benchmark Configuration:**
+
+```@raw html
+<div class="benchmark-config" style="margin-bottom: 1.5em;">
+```
+
+```@example BENCH
+_print_config(BENCH_CORE_UBUNTU) # hide
+```
+
+```@raw html
+</div>
+```
+
+This configuration focuses on CPU-based solvers and provides a comprehensive comparison across different modelling frameworks.
+
+!!! note
+    The linear solver is MUMPS for all experiments.
+
+### 🖥️ Environment
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = BENCH_CORE_UBUNTU
+ENV_NAME = BENCH
+-->
+
+### 📊 Results
+
+```@example BENCH
+_plot_performance_profiles(BENCH_CORE_UBUNTU) # hide
+```
+
+```@example BENCH
+_print_benchmark_log(BENCH_CORE_UBUNTU) # hide
+```
+
+## Moonshot
+
+This benchmark suite evaluates optimal control problems on self-hosted CPU hardware.
+
+**Benchmark Configuration:**
+
+```@raw html
+<div class="benchmark-config" style="margin-bottom: 1.5em;">
+```
+
+```@example BENCH
+_print_config(BENCH_CORE_MOONSHOT_CPU) # hide
+```
+
+```@raw html
+</div>
+```
+
+This configuration tests larger grid sizes on dedicated hardware, comparing performance with the GitHub Actions runner.
+
+!!! note
+    The linear solver is MUMPS for all experiments.
+
+### 🚀 Environment
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = BENCH_CORE_MOONSHOT_CPU
+ENV_NAME = BENCH
+-->
+
+### ⚡ Results
+
+```@example BENCH
+_plot_performance_profiles(BENCH_CORE_MOONSHOT_CPU) # hide
+```
+
+```@example BENCH
+_print_benchmark_log(BENCH_CORE_MOONSHOT_CPU) # hide
+```

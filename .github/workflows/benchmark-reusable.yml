@@ -116,6 +116,18 @@ jobs:
         run: |
           echo "🚀 Starting benchmark execution..."
           
+          BENCH_FILENAME=$(basename "$SCRIPT_PATH")
+          BENCH_ID="${BENCH_FILENAME%.jl}"
+          OUTPUT_DIR="docs/src/assets/benchmarks/$BENCH_ID"
+          mkdir -p "$OUTPUT_DIR"
+          export BENCHMARK_OUTPUT_DIR="$OUTPUT_DIR"
+          export BENCHMARK_ID="$BENCH_ID"
+          echo "BENCHMARK_OUTPUT_DIR=$OUTPUT_DIR" >> $GITHUB_ENV
+          echo "BENCHMARK_ID=$BENCH_ID" >> $GITHUB_ENV
+
+          echo "🏷️  Benchmark ID: $BENCH_ID"
+          echo "📁 Output directory (pre-created): $OUTPUT_DIR"
+
           julia --color=yes -e '
             using Pkg
             
@@ -134,17 +146,34 @@ jobs:
             
             println("🔄 Loading CTBenchmarks package...")
             using CTBenchmarks
-            
+
             include(ENV["SCRIPT_PATH"])
-            out = main()
-            println("📄 Output file: ", out)
-            open(ENV["BENCHMARK_OUTPUT_FILE"], "w") do f
-              write(f, string(out))
+            if !isdefined(Main, :run)
+              error("Benchmark script must define a run() function that returns benchmark results")
             end
-            println("💾 Output path saved to ", ENV["BENCHMARK_OUTPUT_FILE"])
+
+            println("▶️  Running benchmark script...")
+            results = run()
+
+            bench_id = ENV["BENCHMARK_ID"]
+            outpath = ENV["BENCHMARK_OUTPUT_DIR"]
+            figures_dir = joinpath(outpath, "figures")
+
+            println("📊 Generating solution plots...")
+            CTBenchmarks.plot_solutions(results, figures_dir)
+            
+            json_path = joinpath(outpath, string(bench_id, ".json"))
+            println("💾 Saving results to ", json_path)
+            CTBenchmarks.save_json(results, json_path)
+            println("📄 JSON file created: ", json_path)
+            open(ENV["GITHUB_ENV"], "a") do io
+              println(io, "BENCHMARK_JSON=$json_path")
+            end
           '
           
           echo "✅ Benchmark execution completed"
+          echo "$OUTPUT_DIR" > "$BENCHMARK_OUTPUT_FILE"
+          echo "💾 Output path saved to $BENCHMARK_OUTPUT_FILE"
           echo "benchmark_success=true" >> $GITHUB_OUTPUT
 
       # ---------------------------
@@ -202,7 +231,8 @@ jobs:
             OUTPUT_DIR=$(cat "$BENCHMARK_OUTPUT_FILE")
             echo "✅ Benchmark output directory found: $OUTPUT_DIR"
             
-            DATA_JSON_PATH="$OUTPUT_DIR/data.json"
+            BENCH_ID="${BENCHMARK_ID:-$(basename "$OUTPUT_DIR") }"
+            DATA_JSON_PATH="$OUTPUT_DIR/$BENCH_ID.json"
             echo "📄 Resolved JSON path: $DATA_JSON_PATH"
             
             if [ -f "$DATA_JSON_PATH" ]; then
@@ -276,10 +306,11 @@ jobs:
           DIR_NAME=$(basename "$OUTPUT_DIR")
 
           ARTIFACTS=(
-            "$OUTPUT_DIR/data.json"
+            "$OUTPUT_DIR/$DIR_NAME.json"
             "$OUTPUT_DIR/Project.toml"
             "$OUTPUT_DIR/Manifest.toml"
             "$OUTPUT_DIR/$DIR_NAME.jl"
+            "$OUTPUT_DIR/figures"
           )
 
           # Add only benchmark artifacts
@@ -294,7 +325,7 @@ jobs:
 
           echo "📝 Committing $STAGED file(s) to branch $BRANCH_NAME..."
           git commit -m "📊 Add benchmark results (${DIR_NAME})" \
-                      -m "Results saved to ${OUTPUT_DIR}/data.json" \
+                      -m "Results saved to ${OUTPUT_DIR}/${DIR_NAME}.json" \
                       -m "Includes environment TOMLs and benchmark script" \
                       >/dev/null 2>&1 || {
             echo "❌ Commit failed"
@@ -333,9 +364,10 @@ jobs:
             exit 1
           fi
 
+          DIR_NAME=$(basename "$OUTPUT_DIR")
           echo "📊 Benchmark workflow summary:"
           echo "✅ Benchmark execution: SUCCESS"
-          echo "📁 Results saved to: $OUTPUT_DIR/data.json"
+          echo "📁 Results saved to: $OUTPUT_DIR/$DIR_NAME.json"
           echo "🌳 Results committed to: ${{ github.head_ref || github.ref_name }} branch"
           echo "📘 Ready for documentation generation"
           echo "🎉 Reusable benchmark workflow completed successfully!"
