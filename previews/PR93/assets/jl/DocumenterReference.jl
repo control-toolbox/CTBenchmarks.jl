@@ -30,6 +30,7 @@ struct _Config
     subdirectory::String
     modules::Dict{Module,<:Vector}
     sort_by::Function
+    exclude::Set{Symbol}
 end
 
 const CONFIG = _Config[]
@@ -41,22 +42,24 @@ Documenter.Selectors.order(::Type{APIBuilder}) = 0.0
 """
     automatic_reference_documentation(;
         subdirectory::String,
-        modules::Dict{Module,Vector{Pair{String,DocType}}},
+        modules,
         sort_by::Function = identity,
+        exclude::Vector{Symbol} = Symbol[],
     )
 
-Automatically creates the API reference documentation for `current_module` and
+Automatically creates the API reference documentation for one or more modules and
 returns a `Vector` which can be used in the `pages` argument of
 `Documenter.makedocs`.
 
 ## Arguments
 
- * `current_module`: the module from which to create an API reference.
  * `subdirectory`: the directory relative to the documentation root in which to
    write the API files.
- * `modules`: a dictionary mapping modules to a vector of non-exported
-   docstrings to include in the API reference. Each element is a pair which maps
-   the docstring signature to a [`DocumenterReference.DocType`](@ref) enum.
+ * `modules`: a vector of modules or `module => extras` pairs. Extras are
+   currently unused but reserved for future extensions.
+ * `sort_by`: a custom sort function applied to symbol lists.
+ * `exclude`: vector of symbol names to skip from the generated API (applied to
+   both public and private symbols).
 
 ## Multiple instances
 
@@ -67,15 +70,17 @@ function automatic_reference_documentation(;
     subdirectory::String,
     modules::Vector,
     sort_by::Function = identity,
+    exclude::Vector{Symbol} = Symbol[],
 )
     _to_extras(m::Module) = m => Any[]
     _to_extras(m::Pair) = m
     _modules = Dict(_to_extras(m) for m in modules)
+    exclude_set = Set(exclude)
     
     # For single-module case, return Public/Private structure directly
     if length(modules) == 1
         current_module = first(_to_extras(modules[1]))
-        push!(CONFIG, _Config(current_module, subdirectory, _modules, sort_by))
+        push!(CONFIG, _Config(current_module, subdirectory, _modules, sort_by, exclude_set))
         return "API Reference" => [
             "Public" => "$subdirectory/public.md",
             "Private" => "$subdirectory/private.md",
@@ -91,6 +96,7 @@ function automatic_reference_documentation(;
             subdirectory,
             modules = _modules,
             sort_by,
+            exclude = exclude_set,
         )
         push!(list_of_pages, "$current_module" => pages)
     end
@@ -102,8 +108,9 @@ function _automatic_reference_documentation(
     subdirectory::String,
     modules::Dict{Module,<:Vector},
     sort_by::Function,
+    exclude::Set{Symbol},
 )
-    push!(CONFIG, _Config(current_module, subdirectory, modules, sort_by))
+    push!(CONFIG, _Config(current_module, subdirectory, modules, sort_by, exclude))
     return "$subdirectory/$current_module.md"
 end
 
@@ -167,6 +174,9 @@ function _iterate_over_symbols(f, config, symbol_list)
     current_module = config.current_module
     for (key, type) in sort!(symbol_list; by = config.sort_by)
         if key isa Symbol
+            if key in config.exclude
+                continue
+            end
             doc = Base.Docs.doc(Base.Docs.Binding(current_module, key))
             missing_doc = doc === nothing || occursin("No documentation found.", string(doc))
             if missing_doc
