@@ -24,6 +24,10 @@ using MadNLPMumps                       # MadNLP with MUMPS linear solver
 using MadNLPGPU                         # MadNLP with GPU support
 using CUDA                              # CUDA GPU support
 
+# Plots
+using Plots
+using Plots.PlotMeasures
+
 const ITERATION = Ref{Int}(0)
 
 include("utils.jl")

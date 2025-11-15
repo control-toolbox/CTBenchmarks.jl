@@ -1,10 +1,3 @@
-# prettypercent(p) = string(@sprintf("%.2f", p * 100), "%")
-
-# function prettydiff(p)
-#     diff = p - 1.0
-#     return string(diff >= 0.0 ? "+" : "", @sprintf("%.2f", diff * 100), "%")
-# end
-
 """
     prettytime(t::Real) -> String
 

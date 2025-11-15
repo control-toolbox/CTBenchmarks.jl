@@ -25,7 +25,7 @@ with_processed_templates(
         "benchmark-core-beam.md",
     ],  # List of template files to process
     joinpath(@__DIR__, "src"),
-    joinpath(@__DIR__, "src", "assets", "templates"),
+    joinpath(@__DIR__, "src", "assets", "md"),
 ) do
     # Configure and build the documentation set
     makedocs(;

@@ -1,10 +1,3 @@
-using Plots
-using Plots.PlotMeasures
-using OptimalControl
-using OptimalControlProblems
-using JuMP
-using DataFrames
-
 """
     get_color(model::Symbol, solver::Symbol, idx::Int; palette::Vector = [:blue, :red, :green, :orange, :purple, :brown, :pink, :gray])
 
@@ -20,7 +13,7 @@ Fixed mapping for known pairs:
 
 If the pair is not in the dictionary, fall back to the provided palette using idx.
 """
-function get_color(model::Symbol, solver::Symbol, idx::Int; palette::Vector = [:blue, :red, :green, :orange, :purple, :brown, :pink, :gray])
+function get_color(model::Symbol, solver::Symbol, idx::Int; palette::Vector = [:blue, :red, :green, :orange, :purple, :brown, :pink, :gray, :cyan, :magenta, :teal, :olive, :gold, :navy, :darkred])
     m = String(model)
     s = String(solver)
     fixed = Dict(
@@ -30,7 +23,7 @@ function get_color(model::Symbol, solver::Symbol, idx::Int; palette::Vector = [:
         ("exa",     "madnlp") => :orange,
         ("jump",    "ipopt")  => :purple,
         ("jump",    "madnlp") => :brown,
-        ("exa_gpu", "madnlp") => :pink,
+        ("exa_gpu", "madnlp") => :cyan,
     )
     return get(fixed, (m, s), palette[mod1(idx, length(palette))])
 end
