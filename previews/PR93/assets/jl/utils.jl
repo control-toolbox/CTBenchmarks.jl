@@ -12,6 +12,13 @@ function _plot_font_settings()
     return font(10, Plots.default(:fontfamily)), 10
 end
 
+function _get_color(model, solver, idx::Int; palette::Vector = [
+            :blue, :red, :green, :orange, :purple, :brown, :pink, :gray,
+            :cyan, :magenta, :teal, :olive, :gold, :navy, :darkred
+        ])
+    return CTBenchmarks.get_color(Symbol(model), Symbol(solver), idx; palette=palette)
+end
+
 """
     _get_bench_data(bench_id::AbstractString)
 
@@ -411,6 +418,64 @@ The plot uses:
 
 Only successful benchmarks with valid timing data are included.
 Returns an empty plot if no benchmark data or successful runs are found.
+
+## Definition of the performance profile
+
+We follow the classical performance profile definition à la Dolan–Moré, adapted to
+this benchmark structure:
+
+- Each *instance* is a pair `(problem, grid_size)` appearing in the benchmark
+  results, regardless of whether it was successfully solved by any solver.
+- Each *solver-model combination* `s` is identified by `(model, solver)`.
+
+For each instance `p = (problem, grid_size)` and solver-model `s`:
+
+1. If the run `(p, s)` has `success == true` and a valid benchmark object,
+   we extract the CPU wall time
+
+   - `t_{p,s} = row.benchmark["time"]`.
+
+2. Among all solver-models `s` that succeeded on the same instance `p`, we
+   compute the best (minimal) time
+
+   - `t_p^* = min_s t_{p,s}`.
+
+3. For every successful run `(p, s)` we define the performance ratio
+
+   - `r_{p,s} = t_{p,s} / t_p^* ≥ 1`.
+
+   Instances where `s` failed (or has no valid timing) are treated conceptually
+   as having `r_{p,s} = +∞`: they never contribute to the counts of
+   `r_{p,s} ≤ τ` for any finite `τ`.
+
+We then define the performance profile of each solver-model combination `s` as a
+piecewise-constant, non-decreasing function
+
+```text
+ρ_s(τ) = (1 / N) * # { instances p : r_{p,s} ≤ τ },
+```
+
+where `N` is the **total** number of distinct `(problem, grid_size)` instances
+present in the JSON file (including those where all solvers failed).
+
+- The x-axis samples `τ` over the sorted finite ratios `r_{p,s}` for each `s`.
+- The y-axis value at each `τ` is the fraction of all instances on which
+  solver-model `s` has a performance ratio at most `τ`.
+
+## Treatment of failures and unsolved problems
+
+- Only instances with `success == true` and a valid timing contribute ratios
+  `r_{p,s}` and hence can increase `ρ_s(τ)`.
+- Instances where a given solver-model fails are counted in `N` but never in the
+  numerator `# { r_{p,s} ≤ τ }` for that solver-model.
+- Instances where **all** solver-models fail are still included in `N` but do
+  not contribute any `r_{p,s}` for any solver-model.
+
+As a consequence, if there exist problem-grid instances that are not solved by a
+given solver-model combination, its curve `ρ_s(τ)` will plateau strictly below
+`1` (100%). If some instances are unsolved by *all* solver-models, then **no**
+curve can reach `1`, clearly indicating that there are problems for which none
+of the tested approaches succeeded.
 """
 function _plot_performance_profiles(bench_id)
     raw = _get_bench_data(bench_id)
@@ -426,6 +491,15 @@ function _plot_performance_profiles(bench_id)
     end
 
     df = DataFrame(rows)
+
+    # All problem × grid_size instances that were attempted (for any solver/model)
+    df_instances = unique(select(df, [:problem, :grid_size]))
+    if isempty(df_instances)
+        println("⚠️ No problem-grid instances found in benchmark results.")
+        return plot()
+    end
+
+    # Keep only successful runs with a recorded benchmark for ratio computation
     df_successful = filter(row -> row.success == true && row.benchmark !== nothing, df)
     if isempty(df_successful)
         println("⚠️ No successful benchmark entry to analyze.")
@@ -451,8 +525,10 @@ function _plot_performance_profiles(bench_id)
         ]
         title_font, label_font_size = _plot_font_settings()
         
-        # Total number of unique problems (problem × grid_size combinations)
-        total_problems = nrow(combine(groupby(df, [:problem, :grid_size]), nrow => :count))
+        # Total number of unique problems (problem × grid_size combinations),
+        # including instances where all solvers failed. This ensures curves
+        # plateau below 1 when some problems are unsolved.
+        total_problems = nrow(df_instances)
         
         # Compute max ratio across all curves for xlim
         min_ratio = Inf
@@ -496,7 +572,7 @@ function _plot_performance_profiles(bench_id)
             
             if !isempty(ratios)
                 first_row = first(eachrow(sub))
-                color = CTBenchmarks.get_color(Symbol(first_row.model), Symbol(first_row.solver), idx; palette=colors)
+                color = _get_color(first_row.model, first_row.solver, idx; palette=colors)
                 # Compute ρ_s(τ) = (1/n_p) * count(r_{p,s} ≤ τ)
                 # For each ratio value, count how many ratios are ≤ to it
                 y = [count(x -> x <= tau, ratios) / total_problems for tau in ratios]
@@ -588,7 +664,7 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
         ys = grouped.mean_time
 
         first_row = first(eachrow(sub))
-        color = CTBenchmarks.get_color(Symbol(first_row.model), Symbol(first_row.solver), idx; palette=colors)
+        color = _get_color(first_row.model, first_row.solver, idx; palette=colors)
 
         plot!(xs, ys, label = c, lw = 1.5, color = color,
               marker = :circle, markersize = 4, markerstrokewidth = 0)
@@ -674,7 +750,7 @@ function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
 
         xj = x_base .+ offsets[j]
         first_row = first(eachrow(sub))
-        color = CTBenchmarks.get_color(Symbol(first_row.model), Symbol(first_row.solver), j; palette=colors)
+        color = _get_color(first_row.model, first_row.solver, j; palette=colors)
 
         bar!(xj, yj;
              bar_width = bar_width,
