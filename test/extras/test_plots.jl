@@ -84,7 +84,7 @@ println("Test 1: plot_ocp_solution (beam with adnlp)")
 if beam_ocp_ipopt_result.success
     n_beam, m_beam = CTBenchmarks.get_solution_dimensions(beam_ocp_ipopt_result.solution)
     grid_size_beam = 200
-    marker, marker_interval = CTBenchmarks.get_marker_style(1, grid_size_beam)
+    marker, marker_interval = CTBenchmarks.get_marker_style(:adnlp, :ipopt, 1, grid_size_beam)
     plt1 = CTBenchmarks.plot_ocp_solution(
         beam_ocp_ipopt_result.solution,
         :adnlp,
@@ -109,7 +109,7 @@ println("\nTest 2: plot_ocp_solution (space_shuttle with adnlp)")
 if shuttle_ocp_ipopt_result.success
     n_shuttle, m_shuttle = CTBenchmarks.get_solution_dimensions(shuttle_ocp_ipopt_result.solution)
     grid_size_shuttle = 500
-    marker, marker_interval = CTBenchmarks.get_marker_style(2, grid_size_shuttle)
+    marker, marker_interval = CTBenchmarks.get_marker_style(:adnlp, :ipopt, 2, grid_size_shuttle)
     plt2 = CTBenchmarks.plot_ocp_solution(
         shuttle_ocp_ipopt_result.solution,
         :adnlp,
@@ -134,7 +134,7 @@ println("\nTest 3: plot_jump_solution (beam with JuMP)")
 if beam_jump_ipopt_result.success
     n_beam_jump, m_beam_jump = CTBenchmarks.get_solution_dimensions(beam_jump_ipopt_result.solution)
     grid_size_beam_jump = 200
-    marker, marker_interval = CTBenchmarks.get_marker_style(3, grid_size_beam_jump)
+    marker, marker_interval = CTBenchmarks.get_marker_style(:jump, :ipopt, 3, grid_size_beam_jump)
     plt3 = CTBenchmarks.plot_jump_solution(
         beam_jump_ipopt_result.solution,
         :jump,
@@ -160,7 +160,7 @@ println("\nTest 4: plot_jump_solution (space_shuttle with JuMP)")
 if shuttle_jump_ipopt_result.success
     n_shuttle_jump, m_shuttle_jump = CTBenchmarks.get_solution_dimensions(shuttle_jump_ipopt_result.solution)
     grid_size_shuttle_jump = 500
-    marker, marker_interval = CTBenchmarks.get_marker_style(4, grid_size_shuttle_jump)
+    marker, marker_interval = CTBenchmarks.get_marker_style(:jump, :ipopt, 4, grid_size_shuttle_jump)
     plt4 = CTBenchmarks.plot_jump_solution(
         shuttle_jump_ipopt_result.solution,
         :jump,
@@ -192,7 +192,7 @@ println("\n🎯 Testing plot overlays on existing figures...\n")
 println("Test 5: overlay JuMP solution on beam OCP plot")
 if beam_ocp_ipopt_result.success && beam_jump_ipopt_result.success
     grid_size_beam_jump = 200
-    marker, marker_interval = CTBenchmarks.get_marker_style(3, grid_size_beam_jump)
+    marker, marker_interval = CTBenchmarks.get_marker_style(:jump, :ipopt, 3, grid_size_beam_jump)
     CTBenchmarks.plot_jump_solution!(
         plt1,
         beam_jump_ipopt_result.solution,
@@ -218,7 +218,7 @@ end
 println("\nTest 6: overlay JuMP solution on space_shuttle OCP plot")
 if shuttle_ocp_ipopt_result.success && shuttle_jump_ipopt_result.success
     grid_size_shuttle_jump = 500
-    marker, marker_interval = CTBenchmarks.get_marker_style(4, grid_size_shuttle_jump)
+    marker, marker_interval = CTBenchmarks.get_marker_style(:jump, :ipopt, 4, grid_size_shuttle_jump)
     CTBenchmarks.plot_jump_solution!(
         plt2,
         shuttle_jump_ipopt_result.solution,

@@ -1,6 +1,7 @@
 module CTBenchmarks
 
 # Core utilities
+using DocStringExtensions       # Docstring extensions
 using Dates                     # Date and time functionality
 using JSON                      # JSON serialization/deserialization
 using InteractiveUtils          # Interactive utilities (e.g., versioninfo)

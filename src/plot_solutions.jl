@@ -52,17 +52,41 @@ costate_multiplier(criterion) =
 # Helper: marker style for better visibility
 # -----------------------------------
 """
-    get_marker_style(idx::Int, grid_size::Int)
+    get_marker_style(model::Symbol, solver::Symbol, idx::Int, grid_size::Int)
 
-Get marker shape and spacing for the idx-th curve to improve visibility when curves overlap.
-Returns (marker_shape, marker_interval) where marker_interval is calculated as grid_size/M with M=10
-to have approximately M markers per curve.
+Get marker shape and spacing for a given (model, solver) pair and curve index.
+
+Fixed mapping for known (model, solver) pairs:
+- (andlp, ipopt)  => :circle
+- (exa,   ipopt)  => :square
+- (andlp, madnlp) => :diamond
+- (exa,   madnlp) => :utriangle
+- (jump,  ipopt)  => :dtriangle
+- (jump,  madnlp) => :star5
+- (exa_gpu, madnlp) => :hexagon
+
+If the pair is not in the dictionary, fall back to cycling through a default
+marker list using `idx`.
+
+Returns `(marker_shape, marker_interval)` where `marker_interval` is calculated
+as `grid_size/M` with `M = 6` to have approximately `M` markers per curve.
 """
-function get_marker_style(idx::Int, grid_size::Int)
+function get_marker_style(model::Symbol, solver::Symbol, idx::Int, grid_size::Int)
     markers = [:circle, :square, :diamond, :utriangle, :dtriangle, :star5, :hexagon, :cross]
-    marker = markers[mod1(idx, length(markers))]
-    # Calculate interval to have approximately 10 markers per curve
-    M = 10
+    m = String(model)
+    s = String(solver)
+    fixed = Dict(
+        ("andlp",   "ipopt")  => :circle,
+        ("exa",     "ipopt")  => :square,
+        ("andlp",   "madnlp") => :diamond,
+        ("exa",     "madnlp") => :utriangle,
+        ("jump",    "ipopt")  => :dtriangle,
+        ("jump",    "madnlp") => :star5,
+        ("exa_gpu", "madnlp") => :hexagon,
+    )
+    marker = get(fixed, (m, s), markers[mod1(idx, length(markers))])
+    # Calculate interval to have approximately 6 markers per curve
+    M = 6
     marker_interval = max(1, div(grid_size, M))
     return (marker, marker_interval)
 end
@@ -209,7 +233,7 @@ function plot_ocp_group(ocp_rows::SubDataFrame, plt, colors::Vector, color_idx::
     
     # For the first OCP solution: create the base plot
     first_row = ocp_rows[1, :]
-    marker, marker_interval = get_marker_style(color_idx, grid_size)
+    marker, marker_interval = get_marker_style(first_row.model, first_row.solver, color_idx, grid_size)
     base_color = get_color(first_row.model, first_row.solver, color_idx; palette=colors)
     plt = plot_ocp_solution(
         first_row.solution,
@@ -230,7 +254,7 @@ function plot_ocp_group(ocp_rows::SubDataFrame, plt, colors::Vector, color_idx::
     
     # Add the remaining OCP solutions
     for row in eachrow(ocp_rows)[2:end]
-        marker, marker_interval = get_marker_style(color_idx, grid_size)
+        marker, marker_interval = get_marker_style(row.model, row.solver, color_idx, grid_size)
         color = get_color(row.model, row.solver, color_idx; palette=colors)
         plt = plot_ocp_solution!(
             plt,
@@ -389,7 +413,7 @@ function plot_jump_group(jump_rows::SubDataFrame, plt, colors::Vector, color_idx
     
     for row in eachrow(jump_rows)
         current_color = get_color(row.model, row.solver, color_idx; palette=colors)
-        marker, marker_interval = get_marker_style(color_idx, grid_size)
+        marker, marker_interval = get_marker_style(row.model, row.solver, color_idx, grid_size)
 
         if plt === nothing
             # Create layout without plotting first
