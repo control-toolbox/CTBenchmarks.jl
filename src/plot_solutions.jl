@@ -5,6 +5,36 @@ using OptimalControlProblems
 using JuMP
 using DataFrames
 
+"""
+    get_color(model::Symbol, solver::Symbol, idx::Int; palette::Vector = [:blue, :red, :green, :orange, :purple, :brown, :pink, :gray])
+
+Return a consistent color for a given (model, solver) pair.
+
+Fixed mapping for known pairs:
+- (andlp, ipopt)  => :blue
+- (exa,   ipopt)  => :red
+- (andlp, madnlp) => :green
+- (exa,   madnlp) => :orange
+- (jump,  ipopt)  => :purple
+- (jump,  madnlp) => :brown
+
+If the pair is not in the dictionary, fall back to the provided palette using idx.
+"""
+function get_color(model::Symbol, solver::Symbol, idx::Int; palette::Vector = [:blue, :red, :green, :orange, :purple, :brown, :pink, :gray])
+    m = String(model)
+    s = String(solver)
+    fixed = Dict(
+        ("andlp",   "ipopt")  => :blue,
+        ("exa",     "ipopt")  => :red,
+        ("andlp",   "madnlp") => :green,
+        ("exa",     "madnlp") => :orange,
+        ("jump",    "ipopt")  => :purple,
+        ("jump",    "madnlp") => :brown,
+        ("exa_gpu", "madnlp") => :pink,
+    )
+    return get(fixed, (m, s), palette[mod1(idx, length(palette))])
+end
+
 # -----------------------------------
 # Helper: left margin for plots
 # -----------------------------------
@@ -187,12 +217,13 @@ function plot_ocp_group(ocp_rows::SubDataFrame, plt, colors::Vector, color_idx::
     # For the first OCP solution: create the base plot
     first_row = ocp_rows[1, :]
     marker, marker_interval = get_marker_style(color_idx, grid_size)
+    base_color = get_color(first_row.model, first_row.solver, color_idx; palette=colors)
     plt = plot_ocp_solution(
         first_row.solution,
         first_row.model,
         first_row.solver,
         first_row.success,
-        colors[color_idx],
+        base_color,
         problem,
         grid_size,
         n,
@@ -207,13 +238,14 @@ function plot_ocp_group(ocp_rows::SubDataFrame, plt, colors::Vector, color_idx::
     # Add the remaining OCP solutions
     for row in eachrow(ocp_rows)[2:end]
         marker, marker_interval = get_marker_style(color_idx, grid_size)
+        color = get_color(row.model, row.solver, color_idx; palette=colors)
         plt = plot_ocp_solution!(
             plt,
             row.solution,
             row.model,
             row.solver,
             row.success,
-            colors[mod1(color_idx, length(colors))],
+            color,
             n,
             m,
             marker,
@@ -363,7 +395,7 @@ function plot_jump_group(jump_rows::SubDataFrame, plt, colors::Vector, color_idx
     card_g = isnothing(card_g_override) ? nrow(jump_rows) : card_g_override
     
     for row in eachrow(jump_rows)
-        current_color = colors[mod1(color_idx, length(colors))]
+        current_color = get_color(row.model, row.solver, color_idx; palette=colors)
         marker, marker_interval = get_marker_style(color_idx, grid_size)
 
         if plt === nothing
