@@ -189,11 +189,11 @@ function _print_config(bench_id)
         end
     end
 
-    solvers_str = isempty(solvers) ? "n/a" : join(sort(collect(solvers)), ", ")
-    models_str = isempty(models) ? "n/a" : join(sort(collect(models)), ", ")
-    problems_str = isempty(problems) ? "n/a" : join(string.(problems), ", ")
+    solvers_str = isempty(solvers) ? "n/a" : join(replace.(sort(collect(solvers)), "_" => "\\_"), ", ")
+    models_str = isempty(models) ? "n/a" : join(replace.(sort(collect(models)), "_" => "\\_"), ", ")
+    problems_str = isempty(problems) ? "n/a" : join(replace.(string.(problems), "_" => "\\_"), ", ")
     grid_sizes_str = isempty(grid_sizes) ? "n/a" : join(string.(grid_sizes), ", ")
-    disc_methods_str = isempty(disc_methods) ? "n/a" : join(string.(disc_methods), ", ")
+    disc_methods_str = isempty(disc_methods) ? "n/a" : join(replace.(string.(disc_methods), "_" => "\\_"), ", ")
 
     lines = String[
         "- **Problems:** $problems_str",

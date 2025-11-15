@@ -15,6 +15,9 @@ end
 # Process template files before building documentation
 include(joinpath(@__DIR__, "src", "assets", "jl", "template_processor.jl"))
 
+# Automatic API reference generation (adapted from JuMP)
+include(joinpath(@__DIR__, "src", "assets", "jl", "DocumenterReference.jl"))
+
 repo_url = "github.com/control-toolbox/CTBenchmarks.jl"
 
 # Process templates, build documentation, and clean up generated files
@@ -30,7 +33,7 @@ with_processed_templates(
     # Configure and build the documentation set
     makedocs(;
         remotes=nothing,
-        warnonly=:cross_references,
+        warnonly=true,
         sitename="CTBenchmarks",
         format=Documenter.HTML(;
             ansicolor=true,
@@ -57,7 +60,10 @@ with_processed_templates(
                     "Beam" => "benchmark-core-beam.md",
                 ]
             ],
-            "API" => "api.md",
+            DocumenterReference.automatic_reference_documentation(
+                subdirectory="api",
+                modules=[CTBenchmarks],
+            ),
             "Development Guidelines" => "dev.md",
         ],
     )

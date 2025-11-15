@@ -13,7 +13,9 @@ Fixed mapping for known pairs:
 
 If the pair is not in the dictionary, fall back to the provided palette using idx.
 """
-function get_color(model::String, solver::String, idx::Int)
+function get_color(model::T, solver::T, idx::Int) where {T<:Union{String,Symbol}}
+    model = lowercase(string(model))
+    solver = lowercase(string(solver))
     palette = [:blue, :red, :green, :orange, :purple, :brown, :pink, :gray, :cyan, :magenta, :teal, :olive, :gold, :navy, :darkred]
     fixed = Dict(
         ("adnlp",   "ipopt")  => :blue,
@@ -70,7 +72,9 @@ marker list using `idx`.
 Returns `(marker_shape, marker_interval)` where `marker_interval` is calculated
 as `grid_size/M` with `M = 6` to have approximately `M` markers per curve.
 """
-function get_marker_style(model::String, solver::String, idx::Int)
+function get_marker_style(model::T, solver::T, idx::Int) where {T<:Union{String,Symbol}}
+    model = lowercase(string(model))
+    solver = lowercase(string(solver))
     markers = [:circle, :square, :diamond, :utriangle, :dtriangle, :star5, :hexagon, :cross]
     fixed = Dict(
         ("adnlp",   "ipopt")  => :circle,
@@ -85,7 +89,9 @@ function get_marker_style(model::String, solver::String, idx::Int)
     return marker
 end
 
-function get_marker_style(model::String, solver::String, idx::Int, grid_size::Int)
+function get_marker_style(model::T, solver::T, idx::Int, grid_size::Int) where {T<:Union{String,Symbol}}
+    model = lowercase(string(model))
+    solver = lowercase(string(solver))
     marker = get_marker_style(model, solver, idx)
     # Calculate interval to have approximately 6 markers per curve
     M = 6
@@ -189,7 +195,6 @@ Layout: 2 columns for states/costates, then controls below in full width
 """
 function plot_solution_comparison(group::SubDataFrame, problem::Symbol, grid_size::Int)
     plt = nothing
-    colors = [:blue, :red, :green, :orange, :purple, :brown, :pink, :gray]
     color_idx = 1
     
     # Determine dimensions n and m
@@ -206,7 +211,7 @@ function plot_solution_comparison(group::SubDataFrame, problem::Symbol, grid_siz
     if !isempty(ocp_indices)
         ocp_rows = view(group, ocp_indices, :)
         # Pass card_g_total and starting idx (color_idx)
-        plt, color_idx = plot_ocp_group(ocp_rows, plt, colors, color_idx, problem, grid_size, n, m, card_g_total)
+        plt, color_idx = plot_ocp_group(ocp_rows, plt, color_idx, problem, grid_size, n, m, card_g_total)
     end
     
     # 2. Plot JuMP solutions last
@@ -214,21 +219,21 @@ function plot_solution_comparison(group::SubDataFrame, problem::Symbol, grid_siz
     if !isempty(jump_indices)
         jump_rows = view(group, jump_indices, :)
         # Pass card_g_total and current color_idx
-        plt, color_idx = plot_jump_group(jump_rows, plt, colors, color_idx, problem, grid_size, n, m, card_g_total)
+        plt, color_idx = plot_jump_group(jump_rows, plt, color_idx, problem, grid_size, n, m, card_g_total)
     end
     
     return plt
 end
 
 """
-    plot_ocp_group(ocp_rows::SubDataFrame, plt, colors::Vector, color_idx::Int, 
+    plot_ocp_group(ocp_rows::SubDataFrame, plt, color_idx::Int, 
                    problem::Symbol, grid_size::Int, n::Int, m::Int)
 
 Plot all OptimalControl solutions in a group. Creates the base plot if plt is nothing.
 
 Returns: (plt, updated_color_idx)
 """
-function plot_ocp_group(ocp_rows::SubDataFrame, plt, colors::Vector, color_idx::Int,
+function plot_ocp_group(ocp_rows::SubDataFrame, plt, color_idx::Int,
                         problem::Symbol, grid_size::Int, n::Int, m::Int, card_g_override::Union{Int,Nothing}=nothing)
     # Use override if provided, otherwise calculate from local group
     card_g = isnothing(card_g_override) ? nrow(ocp_rows) : card_g_override
@@ -236,7 +241,7 @@ function plot_ocp_group(ocp_rows::SubDataFrame, plt, colors::Vector, color_idx::
     # For the first OCP solution: create the base plot
     first_row = ocp_rows[1, :]
     marker, marker_interval = get_marker_style(first_row.model, first_row.solver, color_idx, grid_size)
-    base_color = get_color(first_row.model, first_row.solver, color_idx; palette=colors)
+    base_color = get_color(first_row.model, first_row.solver, color_idx)
     plt = plot_ocp_solution(
         first_row.solution,
         first_row.model,
@@ -257,7 +262,7 @@ function plot_ocp_group(ocp_rows::SubDataFrame, plt, colors::Vector, color_idx::
     # Add the remaining OCP solutions
     for row in eachrow(ocp_rows)[2:end]
         marker, marker_interval = get_marker_style(row.model, row.solver, color_idx, grid_size)
-        color = get_color(row.model, row.solver, color_idx; palette=colors)
+        color = get_color(row.model, row.solver, color_idx)
         plt = plot_ocp_solution!(
             plt,
             row.solution,
@@ -401,20 +406,20 @@ function plot_ocp_solution!(plt, solution, model::Symbol, solver::Symbol, succes
 end
 
 """
-    plot_jump_group(jump_rows::SubDataFrame, plt, colors::Vector, color_idx::Int,
+    plot_jump_group(jump_rows::SubDataFrame, plt, color_idx::Int,
                     problem::Symbol, grid_size::Int, n::Int, m::Int)
 
 Plot all JuMP solutions in a group. Creates the layout if plt is nothing.
 
 Returns: (plt, updated_color_idx)
 """
-function plot_jump_group(jump_rows::SubDataFrame, plt, colors::Vector, color_idx::Int,
+function plot_jump_group(jump_rows::SubDataFrame, plt, color_idx::Int,
                          problem::Symbol, grid_size::Int, n::Int, m::Int, card_g_override::Union{Int,Nothing}=nothing)
     # Use override if provided, otherwise calculate from local group
     card_g = isnothing(card_g_override) ? nrow(jump_rows) : card_g_override
     
     for row in eachrow(jump_rows)
-        current_color = get_color(row.model, row.solver, color_idx; palette=colors)
+        current_color = get_color(row.model, row.solver, color_idx)
         marker, marker_interval = get_marker_style(row.model, row.solver, color_idx, grid_size)
 
         if plt === nothing

@@ -8,8 +8,8 @@ using Plots
 using Plots.PlotMeasures
 using Statistics
 
-include("common.jl")
-include("print_env_config.jl")
-include("print_log_results.jl")
-include("plot_performance_profile.jl")
-include("plot_time_vs_grid_size.jl")
+include(joinpath(@__DIR__, "common.jl"))
+include(joinpath(@__DIR__, "print_env_config.jl"))
+include(joinpath(@__DIR__, "print_log_results.jl"))
+include(joinpath(@__DIR__, "plot_performance_profile.jl"))
+include(joinpath(@__DIR__, "plot_time_vs_grid_size.jl"))

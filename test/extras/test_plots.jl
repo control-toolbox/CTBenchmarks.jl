@@ -263,11 +263,9 @@ if beam_ocp_ipopt_result.success && beam_ocp_madnlp_result.success
     grouped = groupby(ocp_df, [:problem, :grid_size])
     ocp_group = grouped[1]  # Get the first (and only) group
     
-    colors = [:blue, :red, :green, :orange]
     plt7, _ = CTBenchmarks.plot_ocp_group(
         ocp_group,
         nothing,  # no existing plot
-        colors,
         1,  # color_idx
         :beam,
         200,
@@ -298,11 +296,9 @@ if beam_jump_ipopt_result.success && beam_jump_madnlp_result.success
     grouped = groupby(jump_df, [:problem, :grid_size])
     jump_group = grouped[1]  # Get the first (and only) group
     
-    colors = [:blue, :red, :green, :orange]
     plt8, _ = CTBenchmarks.plot_jump_group(
         jump_group,
         nothing,  # no existing plot
-        colors,
         1,  # color_idx
         :beam,
         200,
