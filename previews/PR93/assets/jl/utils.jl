@@ -491,11 +491,12 @@ function _plot_performance_profiles(bench_id)
         )
 
         for (idx, c) in enumerate(combos)
-            color = colors[mod1(idx, length(colors))]
             sub = filter(row -> row.combo == c, df)
             ratios = sort(collect(skipmissing(sub.ratio)))
             
             if !isempty(ratios)
+                first_row = first(eachrow(sub))
+                color = CTBenchmarks.get_color(Symbol(first_row.model), Symbol(first_row.solver), idx; palette=colors)
                 # Compute ρ_s(τ) = (1/n_p) * count(r_{p,s} ≤ τ)
                 # For each ratio value, count how many ratios are ≤ to it
                 y = [count(x -> x <= tau, ratios) / total_problems for tau in ratios]
@@ -580,12 +581,14 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
     )
 
     for (idx, c) in enumerate(combos)
-        color = colors[mod1(idx, length(colors))]
         sub = filter(row -> row.combo == c, df_successful)
         grouped = combine(groupby(sub, :grid_size), :time => mean => :mean_time)
         sort!(grouped, :grid_size)
         xs = grouped.grid_size
         ys = grouped.mean_time
+
+        first_row = first(eachrow(sub))
+        color = CTBenchmarks.get_color(Symbol(first_row.model), Symbol(first_row.solver), idx; palette=colors)
 
         plot!(xs, ys, label = c, lw = 1.5, color = color,
               marker = :circle, markersize = 4, markerstrokewidth = 0)
@@ -670,7 +673,8 @@ function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
         end
 
         xj = x_base .+ offsets[j]
-        color = colors[mod1(j, length(colors))]
+        first_row = first(eachrow(sub))
+        color = CTBenchmarks.get_color(Symbol(first_row.model), Symbol(first_row.solver), j; palette=colors)
 
         bar!(xj, yj;
              bar_width = bar_width,
