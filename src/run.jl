@@ -1,5 +1,5 @@
 """
-    run(version::Symbol=:complete; filepath=nothing, print_trace=false)
+    $(TYPEDSIGNATURES)
 
 Run comprehensive benchmarks on optimal control problems with various solvers and discretization methods.
 

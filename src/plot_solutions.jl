@@ -1,17 +1,39 @@
 """
-    get_color(model::Symbol, solver::Symbol, idx::Int; palette::Vector = [:blue, :red, :green, :orange, :purple, :brown, :pink, :gray])
+    $(TYPEDSIGNATURES)
 
 Return a consistent color for a given (model, solver) pair.
 
-Fixed mapping for known pairs:
-- (adnlp, ipopt)  => :blue
-- (exa,   ipopt)  => :red
-- (adnlp, madnlp) => :green
-- (exa,   madnlp) => :orange
-- (jump,  ipopt)  => :purple
-- (jump,  madnlp) => :brown
+This function ensures visual consistency across plots by assigning fixed colors to known
+(model, solver) combinations. For unknown combinations, it cycles through a default palette
+based on the provided index.
 
-If the pair is not in the dictionary, fall back to the provided palette using idx.
+# Fixed Mappings
+- `(adnlp, ipopt)` → `:blue`
+- `(exa, ipopt)` → `:red`
+- `(adnlp, madnlp)` → `:green`
+- `(exa, madnlp)` → `:orange`
+- `(jump, ipopt)` → `:purple`
+- `(jump, madnlp)` → `:brown`
+- `(exa_gpu, madnlp)` → `:cyan`
+
+# Arguments
+- `model::Union{Symbol,String}`: Model name (case-insensitive)
+- `solver::Union{Symbol,String}`: Solver name (case-insensitive)
+- `idx::Int`: Index for palette fallback (used if pair not in fixed mappings)
+
+# Returns
+- `Symbol`: Color symbol suitable for Plots.jl (e.g., `:blue`, `:red`)
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> CTBenchmarks.get_color(:adnlp, :ipopt, 1)
+:blue
+
+julia> CTBenchmarks.get_color(:unknown, :solver, 2)
+:red
+```
 """
 function get_color(model::T, solver::T, idx::Int) where {T<:Union{String,Symbol}}
     model = lowercase(string(model))
@@ -33,10 +55,29 @@ end
 # Helper: left margin for plots
 # -----------------------------------
 """
-    get_left_margin(problem::Symbol)
+    $(TYPEDSIGNATURES)
 
 Get the left margin for plots based on the problem.
-Returns 5mm for :beam, 20mm for all other problems.
+
+Different problems may require different margins to accommodate axis labels and titles.
+The beam problem uses a smaller margin (5mm) while other problems use 20mm.
+
+# Arguments
+- `problem::Symbol`: Problem name (e.g., `:beam`, `:shuttle`)
+
+# Returns
+- `Plots.Measure`: Left margin in millimeters (5mm or 20mm)
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> CTBenchmarks.get_left_margin(:beam)
+5 mm
+
+julia> CTBenchmarks.get_left_margin(:shuttle)
+20 mm
+```
 """
 function get_left_margin(problem::Symbol)
     margins = Dict(:beam => 5mm)
@@ -46,6 +87,32 @@ end
 # -----------------------------------
 # Helper: costate sign based on criterion
 # -----------------------------------
+"""
+    $(TYPEDSIGNATURES)
+
+Determine the sign used to plot costates based on the optimization criterion.
+
+For maximisation problems, costates are plotted with a positive sign. For
+minimisation problems (the default), costates are plotted with a negative sign
+so that their visual behaviour matches the usual optimal control conventions.
+
+# Arguments
+- `criterion`: Optimization criterion (`:min`, `:max`, or `missing`).
+
+# Returns
+- `Int`: `+1` if the problem is a maximisation, `-1` otherwise.
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> CTBenchmarks.costate_multiplier(:min)
+-1
+
+julia> CTBenchmarks.costate_multiplier(:max)
+1
+```
+"""
 costate_multiplier(criterion) =
     lowercase(string(ismissing(criterion) ? "min" : criterion)) == "max" ? 1 : -1
 
@@ -53,24 +120,44 @@ costate_multiplier(criterion) =
 # Helper: marker style for better visibility
 # -----------------------------------
 """
-    get_marker_style(model::Symbol, solver::Symbol, idx::Int, grid_size::Int)
+    $(TYPEDSIGNATURES)
 
-Get marker shape and spacing for a given (model, solver) pair and curve index.
+Get marker shape and spacing for a given (model, solver) pair.
 
-Fixed mapping for known (model, solver) pairs:
-- (adnlp, ipopt)  => :circle
-- (exa,   ipopt)  => :square
-- (adnlp, madnlp) => :diamond
-- (exa,   madnlp) => :utriangle
-- (jump,  ipopt)  => :dtriangle
-- (jump,  madnlp) => :star5
-- (exa_gpu, madnlp) => :hexagon
+This function provides consistent marker styles for known (model, solver) combinations
+and automatically calculates appropriate marker spacing based on grid size to avoid
+visual clutter while maintaining visibility.
 
-If the pair is not in the dictionary, fall back to cycling through a default
-marker list using `idx`.
+# Fixed Mappings
+- `(adnlp, ipopt)` → `:circle`
+- `(exa, ipopt)` → `:square`
+- `(adnlp, madnlp)` → `:diamond`
+- `(exa, madnlp)` → `:utriangle`
+- `(jump, ipopt)` → `:dtriangle`
+- `(jump, madnlp)` → `:star5`
+- `(exa_gpu, madnlp)` → `:hexagon`
 
-Returns `(marker_shape, marker_interval)` where `marker_interval` is calculated
-as `grid_size/M` with `M = 6` to have approximately `M` markers per curve.
+# Arguments
+- `model::Union{Symbol,String}`: Model name (case-insensitive)
+- `solver::Union{Symbol,String}`: Solver name (case-insensitive)
+- `idx::Int`: Index for marker fallback (used if pair not in fixed mappings)
+- `grid_size::Int`: Number of grid points on the curve
+
+# Returns
+- `Tuple{Symbol, Int}`: `(marker_shape, marker_interval)` where:
+  - `marker_shape`: Symbol for marker type (e.g., `:circle`, `:square`)
+  - `marker_interval`: Spacing between markers (calculated as `max(1, grid_size ÷ 6)`)
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> CTBenchmarks.get_marker_style(:adnlp, :ipopt, 1, 200)
+(:circle, 33)
+
+julia> CTBenchmarks.get_marker_style(:unknown, :solver, 2, 100)
+(:square, 16)
+```
 """
 function get_marker_style(model::T, solver::T, idx::Int) where {T<:Union{String,Symbol}}
     model = lowercase(string(model))
@@ -100,13 +187,38 @@ function get_marker_style(model::T, solver::T, idx::Int, grid_size::Int) where {
 end
 
 """
-    get_marker_indices(idx::Int, card_g::Int, grid_size::Int, marker_interval::Int)
+    $(TYPEDSIGNATURES)
 
 Calculate marker indices with offset to avoid superposition between curves.
-For curve idx out of card_g curves, the first marker is offset by:
-    offset = (idx - 1) * marker_interval / card_g
 
-Returns the range of indices for markers.
+When multiple curves are overlaid on the same plot, markers can overlap and obscure the visualization.
+This function staggers the marker positions across curves by applying an offset based on the curve index.
+
+# Arguments
+- `idx::Int`: Curve index (1-based)
+- `card_g::Int`: Total number of curves
+- `grid_size::Int`: Number of grid points on the curve
+- `marker_interval::Int`: Base spacing between markers
+
+# Returns
+- `UnitRange{Int}`: Range of indices for marker placement
+
+# Details
+For curve `idx` out of `card_g` curves, the first marker is offset by:
+```
+offset = (idx - 1) * marker_interval / card_g
+```
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> CTBenchmarks.get_marker_indices(1, 3, 100, 20)
+1:20:101
+
+julia> CTBenchmarks.get_marker_indices(2, 3, 100, 20)
+8:20:101
+```
 """
 function get_marker_indices(idx::Int, card_g::Int, grid_size::Int, marker_interval::Int)
     # Calculate offset for this curve
@@ -117,21 +229,52 @@ function get_marker_indices(idx::Int, card_g::Int, grid_size::Int, marker_interv
 end
 
 """
-    plot_solutions(payload::Dict, output_dir::AbstractString)
+    $(TYPEDSIGNATURES)
 
 Generate PDF plots comparing solutions for each (problem, grid_size) pair.
 
+This is the main entry point for visualizing benchmark results. It creates comprehensive
+comparison plots where all solver-model combinations for a given problem and grid size
+are overlaid on the same figure, enabling easy visual comparison of solution quality
+and convergence behavior.
+
 # Arguments
-- `payload::Dict`: Benchmark results with solutions
-- `output_dir::AbstractString`: Directory where to save PDF files
+- `payload::Dict`: Benchmark results dictionary containing:
+  - `"results"`: Vector of result dictionaries with fields: `problem`, `grid_size`, `model`, `solver`, etc.
+  - `"solutions"`: Vector of solution objects (OptimalControl.Solution or JuMP.Model)
+- `output_dir::AbstractString`: Directory where PDF files will be saved (created if not exists)
+
+# Output
+Generates one PDF file per (problem, grid_size) combination with filename format:
+`<problem>_N<grid_size>.pdf`
+
+Each plot displays:
+- State and costate trajectories (2 columns)
+- Control trajectories (full width below)
+- All solver-model combinations overlaid with consistent colors and markers
+- Success/failure indicators (✓/✗) in legend
 
 # Details
-Creates one PDF per (problem, grid_size) combination directly inside `output_dir`.
-Each plot overlays all solver-model combinations for comparison.
-Filename format: `<problem>_N<grid_size>.pdf`
+- OptimalControl solutions are plotted first (simple overlay)
+- JuMP solutions are plotted last (for proper subplot layout)
+- Uses consistent color and marker schemes via `get_color` and `get_marker_style`
+- Handles missing or failed solutions gracefully
 
-Solutions are plotted in order: OptimalControl solutions first (easy overlay),
-then JuMP solutions last (for proper layout).
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> payload = Dict(
+           "results" => [...],  # benchmark results
+           "solutions" => [...]  # solution objects
+       )
+
+julia> CTBenchmarks.plot_solutions(payload, "plots/")
+📊 Generating solution plots...
+  - Plotting beam with N=100 (4 solutions)
+    ✓ Saved: beam_N100.pdf
+✅ All solution plots generated in plots/
+```
 """
 function plot_solutions(payload::Dict, output_dir::AbstractString)
     # Ensure the target directory exists
@@ -183,15 +326,31 @@ function plot_solutions(payload::Dict, output_dir::AbstractString)
 end
 
 """
-    plot_solution_comparison(group::SubDataFrame, problem::Symbol, grid_size::Int)
+    $(TYPEDSIGNATURES)
 
-Create a comparison plot for all solutions in a group (same problem, same grid_size).
+Create a comprehensive comparison plot for all solutions in a group.
 
-Strategy:
-1. Plot OptimalControl solutions first (easy with plot!)
-2. Plot JuMP solutions last (to get proper layout)
+This function orchestrates the plotting of all OptimalControl and JuMP solutions for a given
+problem and grid size, arranging them in a multi-panel layout with consistent styling.
 
-Layout: 2 columns for states/costates, then controls below in full width
+# Arguments
+- `group::SubDataFrame`: DataFrame subset with rows for the same (problem, grid_size)
+- `problem::Symbol`: Problem name (used for plot styling, e.g., left margin)
+- `grid_size::Int`: Grid size (used for marker spacing calculations)
+
+# Returns
+- `Plots.Plot`: Multi-panel plot with states, costates, and controls
+
+# Layout
+- **Top panels**: State trajectories (n columns)
+- **Middle panels**: Costate trajectories (n columns)
+- **Bottom panels**: Control trajectories (m columns, full width)
+
+# Strategy
+1. OptimalControl solutions plotted first (simple overlay with `plot!`)
+2. JuMP solutions plotted last (for proper subplot layout)
+3. All solutions use consistent colors and markers via `get_color` and `get_marker_style`
+4. Success/failure indicators (✓/✗) shown in legend
 """
 function plot_solution_comparison(group::SubDataFrame, problem::Symbol, grid_size::Int)
     plt = nothing
@@ -226,12 +385,26 @@ function plot_solution_comparison(group::SubDataFrame, problem::Symbol, grid_siz
 end
 
 """
-    plot_ocp_group(ocp_rows::SubDataFrame, plt, color_idx::Int, 
-                   problem::Symbol, grid_size::Int, n::Int, m::Int)
+    $(TYPEDSIGNATURES)
 
-Plot all OptimalControl solutions in a group. Creates the base plot if plt is nothing.
+Plot all OptimalControl solutions in a group with consistent styling.
 
-Returns: (plt, updated_color_idx)
+This function creates the base plot if `plt` is nothing, then adds all OptimalControl solutions
+from the group with consistent colors and markers. It manages color indexing across multiple
+groups to ensure visual consistency.
+
+# Arguments
+- `ocp_rows::SubDataFrame`: Rows containing OptimalControl solutions
+- `plt`: Existing plot (or `nothing` to create new)
+- `color_idx::Int`: Current color index for consistent styling
+- `problem::Symbol`: Problem name
+- `grid_size::Int`: Grid size
+- `n::Int`: Number of states
+- `m::Int`: Number of controls
+- `card_g_override::Union{Int,Nothing}`: Override for total number of curves (for marker offset)
+
+# Returns
+- `Tuple{Plots.Plot, Int}`: Updated plot and next color index
 """
 function plot_ocp_group(ocp_rows::SubDataFrame, plt, color_idx::Int,
                         problem::Symbol, grid_size::Int, n::Int, m::Int, card_g_override::Union{Int,Nothing}=nothing)
@@ -284,12 +457,30 @@ function plot_ocp_group(ocp_rows::SubDataFrame, plt, color_idx::Int,
 end
 
 """
-    plot_ocp_solution(solution, model::Symbol, solver::Symbol, success::Bool, color, 
-                      problem::Symbol, grid_size::Int, n::Int, m::Int, marker, marker_interval)
+    $(TYPEDSIGNATURES)
 
-Create a new plot for a single OptimalControl solution with markers for better visibility.
+Create a new multi-panel plot for a single OptimalControl solution.
 
-Returns: plt
+Generates a comprehensive visualization with state, costate, and control trajectories,
+with spaced markers for improved visibility and a legend entry indicating success status.
+
+# Arguments
+- `solution`: OptimalControl.Solution object
+- `model::Symbol`: Model name (for legend)
+- `solver::Symbol`: Solver name (for legend)
+- `success::Bool`: Whether the solution converged successfully
+- `color`: Color symbol (from `get_color`)
+- `problem::Symbol`: Problem name (for plot styling)
+- `grid_size::Int`: Grid size
+- `n::Int`: Number of states
+- `m::Int`: Number of controls
+- `marker`: Marker shape symbol (from `get_marker_style`)
+- `marker_interval::Int`: Spacing between markers
+- `idx::Int`: Curve index for marker offset (default: 1)
+- `card_g::Int`: Total number of curves for marker offset (default: 1)
+
+# Returns
+- `Plots.Plot`: Multi-panel plot with (n + n + m) subplots
 """
 function plot_ocp_solution(solution, model::Symbol, solver::Symbol, success::Bool, color,
                            problem::Symbol, grid_size::Int, n::Int, m::Int, marker, marker_interval,
@@ -346,11 +537,29 @@ function plot_ocp_solution(solution, model::Symbol, solver::Symbol, success::Boo
 end
 
 """
-    plot_ocp_solution!(plt, solution, model::Symbol, solver::Symbol, success::Bool, color, n::Int, m::Int, marker, marker_interval)
+    $(TYPEDSIGNATURES)
 
-Add an OptimalControl solution to an existing plot with markers for better visibility.
+Add an OptimalControl solution to an existing multi-panel plot.
 
-Returns: plt
+Appends state, costate, and control trajectories to existing subplots with spaced markers
+and consistent styling. Updates the legend with success status.
+
+# Arguments
+- `plt`: Existing Plots.Plot to modify
+- `solution`: OptimalControl.Solution object
+- `model::Symbol`: Model name (for legend)
+- `solver::Symbol`: Solver name (for legend)
+- `success::Bool`: Whether the solution converged successfully
+- `color`: Color symbol (from `get_color`)
+- `n::Int`: Number of states
+- `m::Int`: Number of controls
+- `marker`: Marker shape symbol (from `get_marker_style`)
+- `marker_interval::Int`: Spacing between markers
+- `idx::Int`: Curve index for marker offset (default: 1)
+- `card_g::Int`: Total number of curves for marker offset (default: 1)
+
+# Returns
+- `Plots.Plot`: Modified plot with new solution added
 """
 function plot_ocp_solution!(plt, solution, model::Symbol, solver::Symbol, success::Bool, color, n::Int, m::Int, marker, marker_interval,
                             idx::Int=1, card_g::Int=1)
@@ -406,12 +615,25 @@ function plot_ocp_solution!(plt, solution, model::Symbol, solver::Symbol, succes
 end
 
 """
-    plot_jump_group(jump_rows::SubDataFrame, plt, color_idx::Int,
-                    problem::Symbol, grid_size::Int, n::Int, m::Int)
+    $(TYPEDSIGNATURES)
 
-Plot all JuMP solutions in a group. Creates the layout if plt is nothing.
+Plot all JuMP solutions in a group with consistent styling.
 
-Returns: (plt, updated_color_idx)
+This function creates the plot layout if `plt` is nothing, then adds all JuMP solutions
+from the group. JuMP solutions require special layout handling compared to OptimalControl solutions.
+
+# Arguments
+- `jump_rows::SubDataFrame`: Rows containing JuMP solutions
+- `plt`: Existing plot (or `nothing` to create new)
+- `color_idx::Int`: Current color index for consistent styling
+- `problem::Symbol`: Problem name
+- `grid_size::Int`: Grid size
+- `n::Int`: Number of states
+- `m::Int`: Number of controls
+- `card_g_override::Union{Int,Nothing}`: Override for total number of curves (for marker offset)
+
+# Returns
+- `Tuple{Plots.Plot, Int}`: Updated plot and next color index
 """
 function plot_jump_group(jump_rows::SubDataFrame, plt, color_idx::Int,
                          problem::Symbol, grid_size::Int, n::Int, m::Int, card_g_override::Union{Int,Nothing}=nothing)
@@ -461,12 +683,31 @@ function plot_jump_group(jump_rows::SubDataFrame, plt, color_idx::Int,
 end
 
 """
-    plot_jump_solution(solution, model::Symbol, solver::Symbol, success::Bool, color,
-                       problem::Symbol, grid_size::Int, n::Int, m::Int, criterion)
+    $(TYPEDSIGNATURES)
 
-Create a fresh layout and plot a single JuMP solution.
+Create a new multi-panel plot for a single JuMP solution.
 
-Returns: plt
+Generates a comprehensive visualization with state, costate, and control trajectories
+from a JuMP model, with spaced markers and legend entry indicating success status.
+
+# Arguments
+- `solution`: JuMP.Model object
+- `model::Symbol`: Model name (for legend)
+- `solver::Symbol`: Solver name (for legend)
+- `success::Bool`: Whether the solution converged successfully
+- `color`: Color symbol (from `get_color`)
+- `problem::Symbol`: Problem name (for plot styling)
+- `grid_size::Int`: Grid size
+- `n::Int`: Number of states
+- `m::Int`: Number of controls
+- `criterion`: Optimization criterion (`:min` or `:max`, affects costate sign)
+- `marker`: Marker shape symbol (default: `:circle`)
+- `marker_interval::Int`: Spacing between markers (default: 10)
+- `idx::Int`: Curve index for marker offset (default: 1)
+- `card_g::Int`: Total number of curves for marker offset (default: 1)
+
+# Returns
+- `Plots.Plot`: Multi-panel plot with (n + n + m) subplots
 """
 function plot_jump_solution(solution, model::Symbol, solver::Symbol, success::Bool, color,
                             problem::Symbol, grid_size::Int, n::Int, m::Int, criterion, marker=:circle, marker_interval=10,
@@ -488,17 +729,36 @@ function plot_jump_solution(solution, model::Symbol, solver::Symbol, success::Bo
 end
 
 """
-    plot_jump_solution!(plt, solution, model::Symbol, solver::Symbol, success::Bool, color,
-                       n::Int, m::Int, criterion)
+    $(TYPEDSIGNATURES)
 
-Add a JuMP solution to an existing nested plot layout.
+Add a JuMP solution to an existing multi-panel plot.
 
-Even with the nested layout, subplots are accessed linearly:
-- plt[1:n] = states
-- plt[n+1:2n] = costates
-- plt[2n+1:2n+m] = controls
+Appends state, costate, and control trajectories from a JuMP model to existing subplots
+with spaced markers and consistent styling. Updates the legend with success status.
 
-Returns: plt
+# Arguments
+- `plt`: Existing Plots.Plot to modify
+- `solution`: JuMP.Model object
+- `model::Symbol`: Model name (for legend)
+- `solver::Symbol`: Solver name (for legend)
+- `success::Bool`: Whether the solution converged successfully
+- `color`: Color symbol (from `get_color`)
+- `n::Int`: Number of states
+- `m::Int`: Number of controls
+- `criterion`: Optimization criterion (`:min` or `:max`, affects costate sign)
+- `marker`: Marker shape symbol (default: `:none`)
+- `marker_interval::Int`: Spacing between markers (default: 10)
+- `idx::Int`: Curve index for marker offset (default: 1)
+- `card_g::Int`: Total number of curves for marker offset (default: 1)
+
+# Returns
+- `Plots.Plot`: Modified plot with new solution added
+
+# Note
+Even with nested layout, subplots are accessed linearly:
+- `plt[1:n]` = states
+- `plt[n+1:2n]` = costates
+- `plt[2n+1:2n+m]` = controls
 """
 function plot_jump_solution!(plt, solution, model::Symbol, solver::Symbol, success::Bool, color, n::Int, m::Int, criterion, marker=:none, marker_interval=10,
                              idx::Int=1, card_g::Int=1)
@@ -596,15 +856,65 @@ function plot_jump_solution!(plt, solution, model::Symbol, solver::Symbol, succe
     return plt
 end
 
+"""
+    $(TYPEDSIGNATURES)
+
+Format a short label for use in plot legends, combining success status with
+the model and solver names.
+
+The label starts with a tick or cross depending on whether the solution was
+successful, followed by `model-solver`.
+
+# Arguments
+- `model::Symbol`: Model name (e.g. `:jump`, `:adnlp`, `:exa`)
+- `solver::Symbol`: Solver name (e.g. `:ipopt`, `:madnlp`)
+- `success::Bool`: Whether the solve succeeded (`true`) or failed (`false`)
+
+# Returns
+- `String`: A label such as `"✓ jump-ipopt"` or `"✗ exa-madnlp"`
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> CTBenchmarks.format_solution_label(:jump, :ipopt, true)
+"✓ jump-ipopt"
+
+julia> CTBenchmarks.format_solution_label(:exa, :madnlp, false)
+"✗ exa-madnlp"
+```
+"""
 format_solution_label(model::Symbol, solver::Symbol, success::Bool) =
     string(success ? "✓" : "✗", " ", model, "-", solver)
 
+"""
+    $(TYPEDSIGNATURES)
+
+Extract state and control dimensions from an OptimalControl solution.
+
+# Arguments
+- `solution::OptimalControl.Solution`: OptimalControl solution object
+
+# Returns
+- `Tuple{Int, Int}`: `(n, m)` where n = number of states, m = number of controls
+"""
 function get_solution_dimensions(solution::OptimalControl.Solution)
     n = OptimalControl.state_dimension(solution)
     m = OptimalControl.control_dimension(solution)
     return (n, m)
 end
 
+"""
+    $(TYPEDSIGNATURES)
+
+Extract state and control dimensions from a JuMP model solution.
+
+# Arguments
+- `solution::JuMP.Model`: JuMP model solution object
+
+# Returns
+- `Tuple{Int, Int}`: `(n, m)` where n = number of states, m = number of controls
+"""
 function get_solution_dimensions(solution::JuMP.Model)
     n = OptimalControlProblems.state_dimension(solution)
     m = OptimalControlProblems.control_dimension(solution)
@@ -612,9 +922,26 @@ function get_solution_dimensions(solution::JuMP.Model)
 end
 
 """
-    get_dimensions(group::SubDataFrame) -> (Int, Int)
+    $(TYPEDSIGNATURES)
 
-Get state and control dimensions from the first successful solution in group.
+Get state and control dimensions from the first available solution in a group.
+
+Extracts the problem dimensions (number of states and controls) by examining the first
+solution in the group. Works with both OptimalControl.Solution and JuMP.Model objects.
+
+# Arguments
+- `group::SubDataFrame`: DataFrame subset with solution rows
+
+# Returns
+- `Tuple{Int, Int}`: `(n, m)` where n = number of states, m = number of controls
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> n, m = CTBenchmarks.get_dimensions(group)
+(3, 2)
+```
 """
 function get_dimensions(group::SubDataFrame)
     n = nothing
@@ -645,19 +972,44 @@ function get_dimensions(group::SubDataFrame)
 end
 
 """
-    create_jump_layout(n::Int, m::Int, problem::Symbol, grid_size::Int,
-                       state_labels::Vector{<:AbstractString},
-                       control_labels::Vector{<:AbstractString})
+    $(TYPEDSIGNATURES)
 
-Create a nested plot layout for JuMP solutions with states and costates in two columns,
-and controls below spanning the full width.
+Create a nested plot layout for JuMP solutions.
 
-Layout structure:
-- Individual plots for each state (with labels), combined vertically into p_state
-- Individual plots for each costate (mirroring state labels), combined vertically into p_costate
-- p_state and p_costate combined horizontally into p_state_costate
-- Individual plots for each control, combined vertically into p_control
-- p_state_costate and p_control combined vertically into p_final
+Generates a multi-panel layout with states and costates in two columns, and controls
+spanning the full width below. This layout facilitates easy visual comparison of multiple
+solutions overlaid on the same plots.
+
+# Arguments
+- `n::Int`: Number of states
+- `m::Int`: Number of controls
+- `problem::Symbol`: Problem name (for plot styling)
+- `grid_size::Int`: Grid size (used for sizing calculations)
+- `state_labels::Vector{<:AbstractString}`: Labels for state components
+- `control_labels::Vector{<:AbstractString}`: Labels for control components
+
+# Returns
+- `Plots.Plot`: Nested plot layout with (n + n + m) accessible subplots
+
+# Layout Structure
+- **Left column**: State trajectories (n subplots)
+- **Right column**: Costate trajectories (n subplots)
+- **Bottom**: Control trajectories (m subplots, full width)
+
+# Details
+Subplots are accessed linearly:
+- `plt[1:n]` = states
+- `plt[n+1:2n]` = costates
+- `plt[2n+1:2n+m]` = controls
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> state_labels = ["x₁", "x₂", "x₃"]
+julia> control_labels = ["u₁", "u₂"]
+julia> plt = CTBenchmarks.create_jump_layout(3, 2, :beam, 100, state_labels, control_labels)
+```
 """
 function create_jump_layout(n::Int, m::Int, problem::Symbol, grid_size::Int,
                             state_labels::Vector{<:AbstractString},

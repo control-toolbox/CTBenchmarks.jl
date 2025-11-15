@@ -1,12 +1,44 @@
-# ------------------------------
-# Internal helper functions
-# ------------------------------
-
 """
-    strip_benchmark_value(bench)
+    $(TYPEDSIGNATURES)
 
 Remove the `value` field from benchmark outputs (NamedTuple or Dict) to
 ensure JSON-serializable data while preserving all other statistics.
+
+The `value` field typically contains the actual return value from the benchmarked
+code, which may not be JSON-serializable. This function strips it out while keeping
+timing, memory allocation, and other benchmark statistics intact.
+
+# Arguments
+- `bench`: Benchmark output (NamedTuple, Dict, or other type)
+
+# Returns
+- Same type as input, with `value` field removed (if present)
+
+# Details
+Three methods are provided:
+- **Default**: Returns input unchanged (for types without a `value` field)
+- **NamedTuple**: Reconstructs NamedTuple without the `:value` key
+- **Dict**: Creates new Dict excluding both `:value` and `"value"` keys
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> bench_nt = (time=0.001, alloc=1024, value=42)
+(time = 0.001, alloc = 1024, value = 42)
+
+julia> CTBenchmarks.strip_benchmark_value(bench_nt)
+(time = 0.001, alloc = 1024)
+
+julia> bench_dict = Dict("time" => 0.001, "value" => 42)
+Dict{String, Float64} with 2 entries:
+  "time"  => 0.001
+  "value" => 42
+
+julia> CTBenchmarks.strip_benchmark_value(bench_dict)
+Dict{String, Float64} with 1 entry:
+  "time" => 0.001
+```
 """
 strip_benchmark_value(bench) = bench
 
@@ -26,35 +58,56 @@ function strip_benchmark_value(bench::Dict)
 end
 
 """
-    solve_and_extract_data(problem, solver, model, grid_size, disc_method, 
-                          tol, mu_strategy, print_level, max_iter, max_wall_time) -> NamedTuple
+    $(TYPEDSIGNATURES)
 
 Solve an optimal control problem and extract performance and solver statistics.
 
-This internal helper function handles the solve process and data extraction for
-different model types (JuMP, adnlp, exa, exa_gpu).
+This internal helper function orchestrates the solve process for different model types
+(JuMP, adnlp, exa, exa_gpu) and captures timing, memory, and solver statistics. It
+handles error cases gracefully by returning missing values instead of propagating exceptions.
 
 # Arguments
-- `problem::Symbol`: problem name (e.g., :beam, :chain)
-- `solver::Symbol`: solver to use (:ipopt or :madnlp)
-- `model::Symbol`: model type (:jump, :adnlp, :exa, or :exa_gpu)
+- `problem::Symbol`: problem name (e.g., `:beam`, `:chain`)
+- `solver::Symbol`: solver to use (`:ipopt` or `:madnlp`)
+- `model::Symbol`: model type (`:jump`, `:adnlp`, `:exa`, or `:exa_gpu`)
 - `grid_size::Int`: number of grid points
-- `disc_method::Symbol`: discretization method
+- `disc_method::Symbol`: discretization method (`:trapeze` or `:midpoint`)
 - `tol::Float64`: solver tolerance
 - `mu_strategy::Union{String, Missing}`: mu strategy for Ipopt (missing for MadNLP)
-- `print_level::Union{Int, MadNLP.LogLevels, Missing}`: print level for solver (Int for Ipopt, MadNLP.LogLevels for MadNLP)
+- `print_trace::Bool`: whether to emit detailed solver output
 - `max_iter::Int`: maximum number of iterations
 - `max_wall_time::Float64`: maximum wall time in seconds
 
 # Returns
 A NamedTuple with fields:
-- `benchmark`: full benchmark object from @btimed (CPU) or CUDA.@timed (GPU)
+- `benchmark`: full benchmark object from `@btimed` (CPU) or `CUDA.@timed` (GPU)
 - `objective::Union{Float64, Missing}`: objective function value (missing if failed)
 - `iterations::Union{Int, Missing}`: number of solver iterations (missing if failed)
 - `status::Any`: termination status (type depends on solver/model)
 - `success::Bool`: whether the solve succeeded
-- `criterion::Union{String, Missing}`: optimization sense ("min" or "max", missing if failed)
+- `criterion::Union{String, Missing}`: optimization sense (`"min"` or `"max"`, missing if failed)
 - `solution::Union{Any, Missing}`: the solution object (JuMP model or OCP solution, missing if failed)
+
+# Details
+
+**Model-specific logic**:
+- **JuMP** (`:jump`): Uses `@btimed` for CPU benchmarking, requires `:trapeze` discretization
+- **GPU** (`:exa_gpu`): Uses `CUDA.@timed` for GPU benchmarking, requires MadNLP solver and functional CUDA
+- **OptimalControl** (`:adnlp`, `:exa`): Uses `@btimed` for CPU benchmarking with OptimalControl backend
+
+**Solver configuration**:
+- **Ipopt**: Configured with MUMPS linear solver, mu strategy, and second-order barrier
+- **MadNLP**: Configured with MUMPS linear solver
+
+**Print level adjustment**: The solver print level is reduced after the first iteration to avoid
+excessive output during benchmarking (controlled by the `ITERATION` counter).
+
+**Error handling**: If any solve fails, returns a NamedTuple with `success=false` and missing
+values for objective, iterations, and solution, allowing batch processing to continue.
+
+# Throws
+- `AssertionError`: If GPU model is used without MadNLP, without functional CUDA, if JuMP model
+  uses non-trapeze discretization, or if Ipopt is used without mu_strategy.
 """
 function solve_and_extract_data(
     problem::Symbol,
@@ -330,58 +383,102 @@ function solve_and_extract_data(
     end
 end
 
-"""
-    is_cuda_on() -> Bool
+ """
+     $(TYPEDSIGNATURES)
 
-Return true if CUDA is functional on this machine.
-"""
-is_cuda_on() = CUDA.functional()
+ Check whether CUDA is available and functional on this machine.
+
+ This function is used to decide whether GPU-based models (those whose name ends
+ with `_gpu`) can be run in the benchmark suite.
+
+ # Returns
+ - `Bool`: `true` if CUDA is functional, `false` otherwise.
+
+ # Example
+ ```julia-repl
+ julia> using CTBenchmarks
+
+ julia> CTBenchmarks.is_cuda_on()
+ false
+ ```
+ """
+ is_cuda_on() = CUDA.functional()
+
+ """
+     $(TYPEDSIGNATURES)
+
+ Filter solver models depending on backend availability and discretization support.
+
+ - GPU models (ending with `_gpu`) are kept only if CUDA is available.
+ - JuMP models are kept only when `disc_method == :trapeze`.
+
+ # Arguments
+ - `models::Vector{Symbol}`: Candidate model types (e.g. `[:jump, :adnlp, :exa, :exa_gpu]`)
+ - `disc_method::Symbol`: Discretization method (`:trapeze` or `:midpoint`)
+
+ # Returns
+ - `Vector{Symbol}`: Filtered list of models that are compatible with the current
+   backend configuration.
+
+ # Example
+ ```julia-repl
+ julia> using CTBenchmarks
+
+ julia> CTBenchmarks.filter_models_for_backend([:jump, :exa, :exa_gpu], :trapeze)
+ 3-element Vector{Symbol}:
+  :jump
+  :exa
+  :exa_gpu
+ ```
+ """
+ function filter_models_for_backend(models::Vector{Symbol}, disc_method::Symbol)
+     cuda_on = is_cuda_on()
+     supports_jump = disc_method == :trapeze
+     return [
+         model for model in models if
+         endswith(string(model), "_gpu") ? cuda_on : (model != :jump || supports_jump)
+     ]
+ end
+
+ """
+     $(TYPEDSIGNATURES)
+
+ Set print level based on solver and `print_trace` flag.
+
+ For Ipopt, this returns an integer verbosity level. For MadNLP, it returns a
+ `MadNLP.LogLevels` value. The flag `print_trace` is typically propagated from
+ high-level benchmarking options.
+
+ # Arguments
+ - `solver::Symbol`: Solver name (`:ipopt` or `:madnlp`)
+ - `print_trace::Bool`: Whether detailed solver output should be printed
+
+ # Returns
+ - `Int` or `MadNLP.LogLevels`: Print level appropriate for the chosen solver
+
+ # Example
+ ```julia-repl
+ julia> using CTBenchmarks
+
+ julia> CTBenchmarks.set_print_level(:ipopt, true)
+ 5
+
+ julia> CTBenchmarks.set_print_level(:madnlp, false)
+ MadNLP.ERROR
+ ```
+ """
+ function set_print_level(solver::Symbol, print_trace::Bool)
+     if solver == :ipopt
+         return print_trace ? 5 : 0
+     elseif solver == :madnlp
+         return print_trace ? MadNLP.INFO : MadNLP.ERROR
+     else
+         error("undefined solver: $solver")
+     end
+ end
 
 """
-    filter_models_for_backend(models::Vector{Symbol}, disc_method::Symbol) -> Vector{Symbol}
-
-Filter solver models depending on backend availability and discretization support.
-
-- GPU models (ending with `_gpu`) are kept only if CUDA is available.
-- JuMP models are kept only when `disc_method == :trapeze`.
-"""
-function filter_models_for_backend(models::Vector{Symbol}, disc_method::Symbol)
-    cuda_on = is_cuda_on()
-    supports_jump = disc_method == :trapeze
-    return [
-        model for model in models if
-        endswith(string(model), "_gpu") ? cuda_on : (model != :jump || supports_jump)
-    ]
-end
-
-"""
-    set_print_level(solver::Symbol, print_trace::Bool) -> Int
-
-Set print level based on solver and print_trace flag.
-"""
-function set_print_level(solver::Symbol, print_trace::Bool)
-    if solver == :ipopt
-        return print_trace ? 5 : 0
-    elseif solver == :madnlp
-        return print_trace ? MadNLP.INFO : MadNLP.ERROR
-    else
-        error("undefined solver: $solver")
-    end
-end
-
-"""
-    benchmark_data(;
-        problems,
-        solver_models,
-        grid_sizes,
-        disc_methods,
-        tol,
-        ipopt_mu_strategy,
-        print_trace
-        max_iter,
-        max_wall_time,
-        grid_size_max_cpu
-    ) -> DataFrame
+    $(TYPEDSIGNATURES)
 
 Run benchmarks on optimal control problems and return results as a DataFrame.
 
@@ -411,7 +508,6 @@ A DataFrame with columns:
 - `grid_size`: Int - number of grid points
 - `tol`: Float64 - solver tolerance
 - `mu_strategy`: Union{String, Missing} - mu strategy for Ipopt (missing for MadNLP)
-- `print_level`: Any - print level for solver (Int for Ipopt, MadNLP.LogLevels for MadNLP)
 - `max_iter`: Int - maximum number of iterations
 - `max_wall_time`: Float64 - maximum wall time in seconds
 - `benchmark`: NamedTuple - full benchmark object from @btimed or CUDA.@timed
@@ -420,6 +516,7 @@ A DataFrame with columns:
 - `status`: Any - termination status (type depends on solver/model)
 - `success`: Bool - whether the solve succeeded
 - `criterion`: Union{String, Missing} - optimization sense ("min" or "max", missing if failed)
+- `solution`: Any - underlying solution object (JuMP model or OptimalControl solution)
 """
 function benchmark_data(;
     problems,
@@ -573,16 +670,34 @@ function benchmark_data(;
 end
 
 """
-    generate_metadata() -> Dict{String, String}
+    $(TYPEDSIGNATURES)
 
-Return metadata about the current environment:
-- `timestamp` (UTC, ISO8601)
-- `julia_version`
-- `os`
-- `machine` hostname
-- `pkg_status` - output of Pkg.status() with ANSI colors
-- `versioninfo` - output of versioninfo() with ANSI colors
-- `pkg_manifest` - output of Pkg.status(mode=PKGMODE_MANIFEST) with ANSI colors
+Collect metadata about the current Julia environment for benchmark reproducibility.
+
+The returned dictionary includes a timestamp, Julia version, OS and machine information,
+as well as textual snapshots of the package environment.
+
+# Returns
+- `Dict{String,String}`: Dictionary with keys
+  - `"timestamp"`: Current time in UTC (ISO8601-like formatting)
+  - `"julia_version"`: Julia version string
+  - `"os"`: Kernel/OS identifier
+  - `"machine"`: Hostname of the current machine
+  - `"pkg_status"`: Output of `Pkg.status()` with ANSI colours
+  - `"versioninfo"`: Output of `versioninfo()` with ANSI colours
+  - `"pkg_manifest"`: Output of `Pkg.status(mode=PKGMODE_MANIFEST)` with ANSI colours
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> meta = CTBenchmarks.generate_metadata()
+Dict{String, String} with 7 entries:
+  "timestamp"     => "2025-11-15 18:30:00 UTC"
+  "julia_version" => "1.10.0"
+  "os"            => "Linux"
+  ⋮
+```
 """
 function generate_metadata()
     # Capture Pkg.status() with colors
@@ -616,13 +731,35 @@ function generate_metadata()
 end
 
 """
-    build_payload(results::DataFrame, meta::Dict, config::Dict) -> Dict
+    $(TYPEDSIGNATURES)
 
-Combine benchmark results DataFrame, metadata, and configuration into a JSON-friendly dictionary.
-The DataFrame is converted to a vector of dictionaries (one per row) for easy JSON serialization
-and reconstruction.
+Combine benchmark results, metadata, and configuration into a JSON-friendly payload.
 
-Solutions are extracted and kept in memory (not serialized to JSON) for later plot generation.
+The results `DataFrame` is converted to a vector of dictionaries (one per row) for easy
+JSON serialisation and reconstruction. Solutions are extracted and kept in memory (not
+serialised to JSON) for later plot generation.
+
+# Arguments
+- `results::DataFrame`: Benchmark results table produced by `benchmark_data`
+- `meta::Dict`: Environment metadata produced by `generate_metadata`
+- `config::Dict`: Configuration describing the benchmark run (problems, solvers, grids, etc.)
+
+# Returns
+- `Dict`: Payload with three keys:
+  - `"metadata"` – merged metadata and configuration
+  - `"results"` – vector of row dictionaries obtained from `results`
+  - `"solutions"` – vector of solution objects (kept in memory only)
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> payload = CTBenchmarks.build_payload(results, meta, config)
+Dict{String, Any} with 3 entries:
+  "metadata"  => Dict{String, Any}(...)
+  "results"   => Vector{Dict}(...)
+  "solutions" => Any[...]
+```
 """
 function build_payload(results::DataFrame, meta::Dict, config::Dict)
     # Extract solutions BEFORE conversion to JSON
@@ -646,17 +783,29 @@ function build_payload(results::DataFrame, meta::Dict, config::Dict)
 end
 
 """
-    save_json(payload::Dict, filepath::AbstractString)
+    $(TYPEDSIGNATURES)
 
-Save a JSON payload to a file. Creates the parent directory if needed.
-Uses pretty printing for readability.
-Sanitizes NaN and Inf values to null for JSON compatibility.
+Save a JSON payload to a file. Creates the parent directory if needed and uses
+pretty printing for readability.
+
+The `payload` is typically produced by `build_payload`. The `"solutions"` entry is
+excluded from serialisation so that the JSON contains only metadata and results.
 
 # Arguments
 - `payload::Dict`: Benchmark results with metadata
 - `filepath::AbstractString`: Full path to the output JSON file (including filename)
 
-Solutions are excluded from JSON serialization (kept only in memory).
+# Returns
+- `Nothing`: Writes the JSON file as a side effect.
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> payload = CTBenchmarks.build_payload(results, meta, config)
+
+julia> CTBenchmarks.save_json(payload, "benchmarks.json")
+```
 """
 function save_json(payload::Dict, filepath::AbstractString)
     mkpath(dirname(filepath))
@@ -677,27 +826,16 @@ end
 # ------------------------------
 
 """
-    benchmark(;
-        problems,
-        solver_models,
-        grid_sizes,
-        disc_methods,
-        tol,
-        ipopt_mu_strategy,
-        print_trace,
-        max_iter,
-        max_wall_time,
-        grid_size_max_cpu
-    ) -> Nothing
+    $(TYPEDSIGNATURES)
 
-Run benchmarks on optimal control problems and save results to a JSON file.
+Run benchmarks on optimal control problems and build a JSON-ready payload.
 
 This function performs the following steps:
 1. Detects CUDA availability and filters out :exa_gpu if CUDA is not functional
 2. Runs benchmarks using `benchmark_data()` to generate a DataFrame of results
 3. Collects environment metadata (Julia version, OS, machine, timestamp)
 4. Builds a JSON-friendly payload combining results and metadata
-5. Returns the payload as a Dict
+5. Returns the payload as a `Dict`
 
 The JSON file can be easily loaded and converted back to a DataFrame using:
 ```julia
@@ -705,14 +843,6 @@ using JSON, DataFrames
 data = JSON.parsefile("path/to/data.json")
 df = DataFrame(data["results"])
 ```
-
-!!! note "File Management in CI"
-    When run in the GitHub Actions workflow, `Project.toml` and `Manifest.toml` are 
-    automatically copied to the output directory by the workflow itself. This ensures 
-    reproducibility of benchmark results.
-
-!!! note "Return Value"
-    This function returns `Dict`.
 
 # Arguments
 - `problems`: Vector of problem names (Symbols)
@@ -724,10 +854,30 @@ df = DataFrame(data["results"])
 - `print_trace`: Boolean - whether to print solver output (for debugging)
 - `max_iter`: Maximum number of iterations (Int)
 - `max_wall_time`: Maximum wall time in seconds (Float64)
-- `grid_size_max_cpu`: Maximum grid size for CPU models (Int)
 
 # Returns
 - `Dict`
+
+# Example
+```julia-repl
+julia> using CTBenchmarks
+
+julia> payload = CTBenchmarks.benchmark(
+           problems = [:beam],
+           solver_models = [:ipopt => [:jump]],
+           grid_sizes = [100],
+           disc_methods = [:trapeze],
+           tol = 1e-6,
+           ipopt_mu_strategy = "adaptive",
+           print_trace = false,
+           max_iter = 1000,
+           max_wall_time = 60.0,
+       )
+Dict{String, Any} with 3 entries:
+  "metadata"  => Dict{String, Any}(...)
+  "results"   => Vector{Dict}(...)
+  "solutions" => Any[...]
+```
 """
 function benchmark(;
     problems::Vector{Symbol},

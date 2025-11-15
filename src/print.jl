@@ -1,5 +1,5 @@
 """
-    prettytime(t::Real) -> String
+    $(TYPEDSIGNATURES)
 
 Format a duration `t` expressed in **seconds** into a human-readable string with
 three decimal places and adaptive units (ns, μs, ms, s).
@@ -42,7 +42,7 @@ function prettytime(t)
 end
 
 """
-    prettymemory(bytes::Integer) -> String
+    $(TYPEDSIGNATURES)
 
 Format a memory footprint `bytes` into a human-readable string using binary
 prefixes (bytes, KiB, MiB, GiB) with two decimal places.
@@ -84,7 +84,7 @@ function prettymemory(b)
 end
 
 """
-    print_benchmark_line(model::Symbol, stats::NamedTuple)
+    $(TYPEDSIGNATURES)
 
 Print a formatted line summarizing benchmark statistics for `model` with colors.
 

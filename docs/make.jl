@@ -64,6 +64,11 @@ with_processed_templates(
             DocumenterReference.automatic_reference_documentation(
                 subdirectory="api",
                 modules=[CTBenchmarks],
+                # Exclude internal or confusing bindings from API reference
+                exclude=Symbol[
+                    :include,  # module-local include from Base
+                    :eval,     # module-local eval from Base
+                ],
             ),
             "Development Guidelines" => "dev.md",
         ],
