@@ -121,7 +121,7 @@ function _plot_performance_profiles(bench_id)
 
     function performance_profile(df)
         combos = unique(df.combo)
-        title_font, label_font_size = _plot_font_settings()
+        title_font, label_font = _plot_font_settings()
         
         # Total number of unique problems (problem × grid_size combinations),
         # including instances where all solvers failed. This ensures curves
@@ -145,7 +145,7 @@ function _plot_performance_profiles(bench_id)
         function _nearest_index(xs, x)
             best_idx = 1
             best_dist = abs(xs[1] - x)
-            for i in 2:length(xs)
+            for i in eachindex(xs)[2:end]
                 d = abs(xs[i] - x)
                 if d < best_dist
                     best_dist = d
@@ -204,14 +204,14 @@ function _plot_performance_profiles(bench_id)
         plt = plot(
             xlabel = "τ (Performance ratio)",
             ylabel = "Proportion of solved instances ≤ τ",
-            title = "Performance profile — models × solvers",
+            title = "\nPerformance profile — models × solvers",
             legend = :bottomright,
             xscale = :log2,
             grid = true,
             size = (900, 600),
             titlefont = title_font,
-            xguidefontsize = label_font_size,
-            yguidefontsize = label_font_size,
+            xguidefont = label_font,
+            yguidefont = label_font,
             xticks = ([1, 2, 4, 10, 50, 100], ["1", "2", "4", "10", "50", "100"]),
             xlims = (xlim_min, xlim_max),
             ylims = (-0.05, 1.05),

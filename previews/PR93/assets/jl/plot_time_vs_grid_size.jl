@@ -1,3 +1,19 @@
+"""
+    _plot_time_vs_grid_size(problem, bench_id)
+
+Plot solve time versus grid size for a given problem and benchmark.
+
+Uses benchmark JSON data to aggregate successful runs by `(model, solver)` and
+plot the mean solve time per grid size for each combination.
+
+# Arguments
+- `problem::AbstractString`: Name of the problem to filter.
+- `bench_id`: Benchmark identifier used to locate the benchmark JSON file.
+
+# Returns
+- `Plots.Plot`: Line plot of solve time vs grid size. Returns an empty plot if
+  no data is available.
+"""
 function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
     raw = _get_bench_data(bench_id)
     if raw === nothing
@@ -25,7 +41,7 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
 
     df_successful.combo = string.("(", df_successful.model, ", ", df_successful.solver, ")")
     combos = unique(df_successful.combo)
-    title_font, label_font_size = _plot_font_settings()
+    title_font, label_font = _plot_font_settings()
 
     min_N = minimum(df_successful.grid_size)
     max_N = maximum(df_successful.grid_size)
@@ -37,7 +53,7 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
     plt = plot(
         xlabel = "Grid size N",
         ylabel = "Solve time (s)",
-        title = "Solve time vs grid size — $problem",
+        title = "\nSolve time vs grid size — $problem",
         legend = :bottomright,
         grid = true,
         size = (900, 600),
@@ -47,8 +63,8 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
         bottom_margin = 5mm,
         top_margin = 5mm,
         titlefont = title_font,
-        xguidefontsize = label_font_size,
-        yguidefontsize = label_font_size,
+        xguidefont = label_font,
+        yguidefont = label_font,
     )
 
     for (idx, c) in enumerate(combos)
@@ -70,6 +86,23 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
     return plt
 end
 
+"""
+    _plot_time_vs_grid_size_bar(problem, bench_id)
+
+Plot solve time versus grid size as grouped bars for each model–solver
+combination.
+
+Computes the mean solve time per grid size for each `(model, solver)` pair and
+displays the result as a grouped bar chart.
+
+# Arguments
+- `problem::AbstractString`: Name of the problem to filter.
+- `bench_id`: Benchmark identifier used to locate the benchmark JSON file.
+
+# Returns
+- `Plots.Plot`: Grouped bar plot of solve time vs grid size. Returns an empty
+  plot if no data is available.
+"""
 function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
     raw = _get_bench_data(bench_id)
     if raw === nothing
@@ -97,7 +130,7 @@ function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
 
     df_successful.combo = string.("(", df_successful.model, ", ", df_successful.solver, ")")
     combos = unique(df_successful.combo)
-    title_font, label_font_size = _plot_font_settings()
+    title_font, label_font = _plot_font_settings()
 
     Ns = sort(unique(df_successful.grid_size))
     nN = length(Ns)
@@ -116,7 +149,7 @@ function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
     plt = plot(
         xlabel = "Grid size N",
         ylabel = "Solve time (s)",
-        title = "Solve time vs grid size (bar) — $problem",
+        title = "\nSolve time vs grid size (bar) — $problem",
         legend = :topleft,
         grid = true,
         size = (900, 600),
@@ -125,8 +158,8 @@ function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
         bottom_margin = 5mm,
         top_margin = 5mm,
         titlefont = title_font,
-        xguidefontsize = label_font_size,
-        yguidefontsize = label_font_size,
+        xguidefont = label_font,
+        yguidefont = label_font,
     )
 
     for (j, c) in enumerate(combos)

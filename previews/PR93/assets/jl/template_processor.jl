@@ -56,10 +56,11 @@ function parse_include_params(param_block::AbstractString)
             continue
         end
 
-        # Match pattern: KEY = VALUE
-        m = match(r"^\s*(\w+)\s*=\s*(\w+)\s*$", line)
+        # Match pattern: KEY = VALUE, where VALUE can be any non-empty expression
+        m = match(r"^\s*(\w+)\s*=\s*(.+?)\s*$", line)
         if m !== nothing
             key, value = m.captures
+            value = strip(value)
             params[key] = value
             @info "  ✓ Parsed parameter: $key = $value"
         else
@@ -291,6 +292,22 @@ function process_templates(
     @info "" # Empty line for readability
 end
 
+function construct_template_files(template_files::Vector{String}, src_dir::String)
+    files = String[]
+    for file in template_files
+        if isfile(joinpath(src_dir, file * ".template"))
+            push!(files, file)
+        elseif isdir(joinpath(src_dir, file))
+            for f in readdir(joinpath(src_dir, file))
+                if endswith(f, ".md.template")
+                    push!(files, joinpath(file, f[1:end-9]))
+                end
+            end
+        end
+    end
+    return files
+end
+
 """
     with_processed_templates(f::Function, template_files::Vector{String}, src_dir::String, templates_dir::String)
 
@@ -335,6 +352,10 @@ function with_processed_templates(
     f::Function, template_files::Vector{String}, src_dir::String, templates_dir::String
 )
     # Process templates to generate .md files
+
+    println("------- Processing templates: " * join(template_files, ", "))
+    template_files = construct_template_files(template_files, src_dir)
+    println("------- Constructed templates: " * join(template_files, ", "))
     process_templates(template_files, src_dir, templates_dir)
 
     try

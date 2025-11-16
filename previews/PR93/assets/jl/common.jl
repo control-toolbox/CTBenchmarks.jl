@@ -1,5 +1,13 @@
+"""
+    _plot_font_settings()
+
+Return font settings for plot titles and axis labels.
+
+# Returns
+- `Tuple{Plots.Font, Plots.Font}`: A tuple of (title_font, label_font) where title_font is 14pt and label_font is 10pt
+"""
 function _plot_font_settings()
-    return font(10, Plots.default(:fontfamily)), 10
+    return font(14, Plots.default(:fontfamily)), font(10, Plots.default(:fontfamily))
 end
 
 """

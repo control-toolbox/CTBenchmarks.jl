@@ -1,0 +1,89 @@
+# Core benchmark: steering
+
+```@meta
+Draft = true
+```
+
+This page presents benchmark results for the **steering** problem across different platforms and configurations.
+
+!!! note
+    The linear solver is MUMPS for all experiments.
+
+```@setup BENCH
+include(normpath(joinpath(@__DIR__, "..", "..", "assets", "jl", "utils.jl")))
+```
+
+## Ubuntu Latest CPU
+
+This benchmark suite evaluates optimal control problems on a standard CPU platform using GitHub Actions runners.
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = "core-ubuntu-latest"
+ENV_NAME = BENCH
+-->
+
+### Time vs Grid Size (Ubuntu Latest CPU)
+
+```@example BENCH
+_plot_time_vs_grid_size("steering", "core-ubuntu-latest") # hide
+```
+
+```@example BENCH
+_plot_time_vs_grid_size_bar("steering", "core-ubuntu-latest") # hide
+```
+
+### Log (Ubuntu Latest CPU)
+
+```@example BENCH
+_print_benchmark_log("core-ubuntu-latest"; problems=["steering"]) # hide
+```
+
+## Moonshot CPU
+
+Results on self-hosted CPU hardware.
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = "core-moonshot-cpu"
+ENV_NAME = BENCH
+-->
+
+### Time vs Grid Size (Moonshot CPU)
+
+```@example BENCH
+_plot_time_vs_grid_size("steering", "core-moonshot-cpu") # hide
+```
+
+```@example BENCH
+_plot_time_vs_grid_size_bar("steering", "core-moonshot-cpu") # hide
+```
+
+### Log (Moonshot CPU)
+
+```@example BENCH
+_print_benchmark_log("core-moonshot-cpu"; problems=["steering"]) # hide
+```
+
+## Moonshot GPU
+
+Results on self-hosted GPU hardware.
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = "core-moonshot-gpu"
+ENV_NAME = BENCH
+-->
+
+### Time vs Grid Size (Moonshot GPU)
+
+```@example BENCH
+_plot_time_vs_grid_size("steering", "core-moonshot-gpu") # hide
+```
+
+```@example BENCH
+_plot_time_vs_grid_size_bar("steering", "core-moonshot-gpu") # hide
+```
+
+### Log (Moonshot GPU)
+
+```@example BENCH
+_print_benchmark_log("core-moonshot-gpu"; problems=["steering"]) # hide
+```
