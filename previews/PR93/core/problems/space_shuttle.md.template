@@ -1,7 +1,7 @@
 # Core benchmark: space_shuttle
 
 ```@meta
-Draft = true
+Draft = false
 ```
 
 This page presents benchmark results for the **space_shuttle** problem across different platforms and configurations.

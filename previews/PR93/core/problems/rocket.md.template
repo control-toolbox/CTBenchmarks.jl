@@ -1,7 +1,7 @@
 # Core benchmark: rocket
 
 ```@meta
-Draft = true
+Draft = false
 ```
 
 This page presents benchmark results for the **rocket** problem across different platforms and configurations.

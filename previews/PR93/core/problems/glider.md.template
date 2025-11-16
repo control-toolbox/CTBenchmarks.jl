@@ -1,7 +1,7 @@
 # Core benchmark: glider
 
 ```@meta
-Draft = true
+Draft = false
 ```
 
 This page presents benchmark results for the **glider** problem across different platforms and configurations.

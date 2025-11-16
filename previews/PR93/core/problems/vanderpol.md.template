@@ -1,7 +1,7 @@
 # Core benchmark: vanderpol
 
 ```@meta
-Draft = true
+Draft = false
 ```
 
 This page presents benchmark results for the **vanderpol** problem across different platforms and configurations.

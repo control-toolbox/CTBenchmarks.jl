@@ -1,7 +1,7 @@
 # Core benchmark: robbins
 
 ```@meta
-Draft = true
+Draft = false
 ```
 
 This page presents benchmark results for the **robbins** problem across different platforms and configurations.

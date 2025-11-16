@@ -1,7 +1,7 @@
 # Core benchmark: beam
 
 ```@meta
-Draft = true
+Draft = false
 ```
 
 This page presents benchmark results for the **beam** problem across different platforms and configurations.

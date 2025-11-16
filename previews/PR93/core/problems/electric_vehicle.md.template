@@ -1,7 +1,7 @@
 # Core benchmark: electric_vehicle
 
 ```@meta
-Draft = true
+Draft = false
 ```
 
 This page presents benchmark results for the **electric_vehicle** problem across different platforms and configurations.

@@ -1,7 +1,7 @@
 # Core benchmark: double_oscillator
 
 ```@meta
-Draft = true
+Draft = false
 ```
 
 This page presents benchmark results for the **double_oscillator** problem across different platforms and configurations.
