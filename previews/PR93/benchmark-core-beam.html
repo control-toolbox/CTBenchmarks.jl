@@ -17,54 +17,54 @@
 <li><p><strong>Limits:</strong> 1000 iterations max, 500.0s wall time</p>
 </li>
 </ul>
-</div></div><p>This configuration focuses on CPU-based solvers and provides a comprehensive comparison across different modelling frameworks.</p><div class="admonition is-info" id="Note-55d9b6cbda271aeb"><header class="admonition-header">Note<a class="admonition-anchor" href="#Note-55d9b6cbda271aeb" title="Permalink"></a></header><div class="admonition-body"><p>The linear solver is MUMPS for all experiments.</p></div></div><h3 id="Ubuntu-Results"><a class="docs-heading-anchor" href="#Ubuntu-Results">📊 Ubuntu Results</a><a id="Ubuntu-Results-1"></a><a class="docs-heading-anchor-permalink" href="#Ubuntu-Results" title="Permalink"></a></h3><img src="benchmark-core-beam-c930a457.svg" alt="Example block output"/><img src="benchmark-core-beam-0bc9996f.svg" alt="Example block output"/><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
+</div></div><p>This configuration focuses on CPU-based solvers and provides a comprehensive comparison across different modelling frameworks.</p><div class="admonition is-info" id="Note-55d9b6cbda271aeb"><header class="admonition-header">Note<a class="admonition-anchor" href="#Note-55d9b6cbda271aeb" title="Permalink"></a></header><div class="admonition-body"><p>The linear solver is MUMPS for all experiments.</p></div></div><h3 id="Ubuntu-Results"><a class="docs-heading-anchor" href="#Ubuntu-Results">📊 Ubuntu Results</a><a id="Ubuntu-Results-1"></a><a class="docs-heading-anchor-permalink" href="#Ubuntu-Results" title="Permalink"></a></h3><img src="benchmark-core-beam-a9fd84bb.svg" alt="Example block output"/><img src="benchmark-core-beam-d68b31d6.svg" alt="Example block output"/><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
 
 ┌─ Problem: beam
 │
 ├──┬ Solver: ipopt, Discretization: trapeze
 │  │
 │  │  N = 200
-│  │  ✓ | jump     | time:  15.007 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:  16.38 KiB
-│  │  ✓ | adnlp    | time:  19.717 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:   2.37 MiB
-│  │  ✓ | exa      | time:  15.118 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:  72.48 KiB
+│  │  ✓ | jump     | time:  14.860 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:  16.38 KiB
+│  │  ✓ | adnlp    | time:  19.782 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:   2.37 MiB
+│  │  ✓ | exa      | time:  15.053 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:  72.48 KiB
 │  │
 │  │  N = 500
-│  │  ✓ | jump     | time:  35.402 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:  18.41 KiB
-│  │  ✓ | adnlp    | time:  47.933 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   6.47 MiB
-│  │  ✓ | exa      | time:  35.180 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU: 137.61 KiB
+│  │  ✓ | jump     | time:  35.377 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:  18.41 KiB
+│  │  ✓ | adnlp    | time:  47.375 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   6.47 MiB
+│  │  ✓ | exa      | time:  34.868 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU: 137.61 KiB
 │  │
 │  │  N = 1000
-│  │  ✓ | jump     | time: 105.924 ms | iters: 30    | obj: 8.888987e+00  (min) | CPU:  28.56 KiB
-│  │  ✓ | adnlp    | time: 155.154 ms | iters: 33    | obj: 8.888988e+00  (min) | CPU:  22.54 MiB
-│  │  ✓ | exa      | time: 114.397 ms | iters: 33    | obj: 8.888987e+00  (min) | CPU: 258.77 KiB
+│  │  ✓ | jump     | time: 105.430 ms | iters: 30    | obj: 8.888987e+00  (min) | CPU:  28.56 KiB
+│  │  ✓ | adnlp    | time: 154.091 ms | iters: 33    | obj: 8.888988e+00  (min) | CPU:  22.54 MiB
+│  │  ✓ | exa      | time: 112.631 ms | iters: 33    | obj: 8.888987e+00  (min) | CPU: 258.77 KiB
 │  │
 │  │  N = 2000
-│  │  ✓ | jump     | time: 220.911 ms | iters: 32    | obj: 8.888914e+00  (min) | CPU:  30.25 KiB
-│  │  ✓ | adnlp    | time: 344.408 ms | iters: 34    | obj: 8.888913e+00  (min) | CPU:  46.25 MiB
-│  │  ✓ | exa      | time: 199.632 ms | iters: 29    | obj: 8.888915e+00  (min) | CPU: 465.58 KiB
+│  │  ✓ | jump     | time: 216.623 ms | iters: 32    | obj: 8.888914e+00  (min) | CPU:  30.25 KiB
+│  │  ✓ | adnlp    | time: 323.544 ms | iters: 34    | obj: 8.888913e+00  (min) | CPU:  46.25 MiB
+│  │  ✓ | exa      | time: 195.615 ms | iters: 29    | obj: 8.888915e+00  (min) | CPU: 465.58 KiB
 │  └─
 │
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 200
-│  │  ✓ | jump     | time:  11.826 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   2.16 MiB
-│  │  ✓ | adnlp    | time:  17.369 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   4.91 MiB
-│  │  ✓ | exa      | time:  12.369 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   2.07 MiB
+│  │  ✓ | jump     | time:  11.859 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   2.16 MiB
+│  │  ✓ | adnlp    | time:  17.688 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   4.91 MiB
+│  │  ✓ | exa      | time:  12.336 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   2.07 MiB
 │  │
 │  │  N = 500
-│  │  ✓ | jump     | time:  23.104 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   4.22 MiB
-│  │  ✓ | adnlp    | time:  34.441 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:  10.13 MiB
-│  │  ✓ | exa      | time:  23.789 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   4.06 MiB
+│  │  ✓ | jump     | time:  22.921 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   4.22 MiB
+│  │  ✓ | adnlp    | time:  34.822 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:  10.13 MiB
+│  │  ✓ | exa      | time:  23.780 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   4.06 MiB
 │  │
 │  │  N = 1000
-│  │  ✓ | jump     | time:  65.769 ms | iters: 28    | obj: 8.888987e+00  (min) | CPU:  10.25 MiB
-│  │  ✓ | adnlp    | time:  95.847 ms | iters: 26    | obj: 8.888987e+00  (min) | CPU:  26.56 MiB
-│  │  ✓ | exa      | time:  67.925 ms | iters: 28    | obj: 8.888987e+00  (min) | CPU:   9.78 MiB
+│  │  ✓ | jump     | time:  65.940 ms | iters: 28    | obj: 8.888987e+00  (min) | CPU:  10.25 MiB
+│  │  ✓ | adnlp    | time:  95.050 ms | iters: 26    | obj: 8.888987e+00  (min) | CPU:  26.56 MiB
+│  │  ✓ | exa      | time:  67.865 ms | iters: 28    | obj: 8.888987e+00  (min) | CPU:   9.78 MiB
 │  │
 │  │  N = 2000
-│  │  ✓ | jump     | time: 206.792 ms | iters: 39    | obj: 8.888914e+00  (min) | CPU:  24.93 MiB
-│  │  ✓ | adnlp    | time: 353.235 ms | iters: 40    | obj: 8.888914e+00  (min) | CPU:  76.33 MiB
-│  │  ✓ | exa      | time: 214.040 ms | iters: 37    | obj: 8.888913e+00  (min) | CPU:  22.69 MiB
+│  │  ✓ | jump     | time: 204.251 ms | iters: 39    | obj: 8.888914e+00  (min) | CPU:  24.93 MiB
+│  │  ✓ | adnlp    | time: 320.926 ms | iters: 40    | obj: 8.888914e+00  (min) | CPU:  76.33 MiB
+│  │  ✓ | exa      | time: 212.546 ms | iters: 37    | obj: 8.888913e+00  (min) | CPU:  22.69 MiB
 │  └─
 └─</code></pre><h2 id="Moonshot-CPU"><a class="docs-heading-anchor" href="#Moonshot-CPU">Moonshot - CPU</a><a id="Moonshot-CPU-1"></a><a class="docs-heading-anchor-permalink" href="#Moonshot-CPU" title="Permalink"></a></h2><p>Results for the beam problem on self-hosted CPU hardware.</p><p><strong>Benchmark Configuration:</strong></p><div class="benchmark-config" style="margin-bottom: 1.5em;"><div class="markdown"><ul>
 <li><p><strong>Problems:</strong> beam, chain, double_oscillator, electric_vehicle, glider, insurance, jackson, robbins, robot, rocket, space_shuttle, steering, vanderpol</p>
@@ -84,64 +84,64 @@
 <li><p><strong>Limits:</strong> 1000 iterations max, 400.0s wall time</p>
 </li>
 </ul>
-</div></div><p>This configuration tests larger grid sizes on dedicated hardware, comparing performance with the GitHub Actions runner.</p><div class="admonition is-info" id="Note-55d9b6cbda271aeb"><header class="admonition-header">Note<a class="admonition-anchor" href="#Note-55d9b6cbda271aeb" title="Permalink"></a></header><div class="admonition-body"><p>The linear solver is MUMPS for all experiments.</p></div></div><h3 id="Moonshot-CPU-Results"><a class="docs-heading-anchor" href="#Moonshot-CPU-Results">⚡ Moonshot CPU Results</a><a id="Moonshot-CPU-Results-1"></a><a class="docs-heading-anchor-permalink" href="#Moonshot-CPU-Results" title="Permalink"></a></h3><img src="benchmark-core-beam-2808d06d.svg" alt="Example block output"/><img src="benchmark-core-beam-b067e533.svg" alt="Example block output"/><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
+</div></div><p>This configuration tests larger grid sizes on dedicated hardware, comparing performance with the GitHub Actions runner.</p><div class="admonition is-info" id="Note-55d9b6cbda271aeb"><header class="admonition-header">Note<a class="admonition-anchor" href="#Note-55d9b6cbda271aeb" title="Permalink"></a></header><div class="admonition-body"><p>The linear solver is MUMPS for all experiments.</p></div></div><h3 id="Moonshot-CPU-Results"><a class="docs-heading-anchor" href="#Moonshot-CPU-Results">⚡ Moonshot CPU Results</a><a id="Moonshot-CPU-Results-1"></a><a class="docs-heading-anchor-permalink" href="#Moonshot-CPU-Results" title="Permalink"></a></h3><img src="benchmark-core-beam-6db62cb4.svg" alt="Example block output"/><img src="benchmark-core-beam-01147ffe.svg" alt="Example block output"/><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
 
 ┌─ Problem: beam
 │
 ├──┬ Solver: ipopt, Discretization: trapeze
 │  │
 │  │  N = 200
-│  │  ✓ | jump     | time:  17.550 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:  16.38 KiB
-│  │  ✓ | adnlp    | time:  23.815 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:   2.37 MiB
-│  │  ✓ | exa      | time:  17.466 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:  72.48 KiB
+│  │  ✓ | jump     | time:  18.426 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:  16.38 KiB
+│  │  ✓ | adnlp    | time:  23.223 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:   2.37 MiB
+│  │  ✓ | exa      | time:  17.536 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:  72.48 KiB
 │  │
 │  │  N = 500
-│  │  ✓ | jump     | time:  40.970 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:  18.41 KiB
-│  │  ✓ | adnlp    | time:  52.288 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   6.47 MiB
-│  │  ✓ | exa      | time:  37.537 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU: 137.61 KiB
+│  │  ✓ | jump     | time:  40.307 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:  18.41 KiB
+│  │  ✓ | adnlp    | time:  53.795 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   6.47 MiB
+│  │  ✓ | exa      | time:  39.553 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU: 137.61 KiB
 │  │
 │  │  N = 1000
-│  │  ✓ | jump     | time: 113.085 ms | iters: 30    | obj: 8.888987e+00  (min) | CPU:  28.56 KiB
-│  │  ✓ | adnlp    | time: 167.668 ms | iters: 33    | obj: 8.888988e+00  (min) | CPU:  22.54 MiB
-│  │  ✓ | exa      | time: 128.251 ms | iters: 35    | obj: 8.888987e+00  (min) | CPU: 260.83 KiB
+│  │  ✓ | jump     | time: 118.468 ms | iters: 30    | obj: 8.888987e+00  (min) | CPU:  28.56 KiB
+│  │  ✓ | adnlp    | time: 176.043 ms | iters: 33    | obj: 8.888988e+00  (min) | CPU:  22.54 MiB
+│  │  ✓ | exa      | time: 132.971 ms | iters: 35    | obj: 8.888987e+00  (min) | CPU: 260.83 KiB
 │  │
 │  │  N = 2000
-│  │  ✓ | jump     | time: 236.200 ms | iters: 32    | obj: 8.888914e+00  (min) | CPU:  30.25 KiB
-│  │  ✓ | adnlp    | time: 388.603 ms | iters: 34    | obj: 8.888913e+00  (min) | CPU:  46.25 MiB
-│  │  ✓ | exa      | time: 232.659 ms | iters: 28    | obj: 8.888915e+00  (min) | CPU: 464.55 KiB
+│  │  ✓ | jump     | time: 247.189 ms | iters: 32    | obj: 8.888914e+00  (min) | CPU:  30.25 KiB
+│  │  ✓ | adnlp    | time: 408.106 ms | iters: 34    | obj: 8.888913e+00  (min) | CPU:  46.25 MiB
+│  │  ✓ | exa      | time: 240.347 ms | iters: 28    | obj: 8.888915e+00  (min) | CPU: 464.55 KiB
 │  │
 │  │  N = 5000
-│  │  ✓ | jump     | time:   1.304 s  | iters: 53    | obj: 8.888895e+00  (min) | CPU:  47.97 KiB
-│  │  ✓ | adnlp    | time:   2.475 s  | iters: 60    | obj: 8.888894e+00  (min) | CPU: 198.84 MiB
-│  │  ✓ | exa      | time:   1.327 s  | iters: 52    | obj: 8.888895e+00  (min) | CPU:   1.10 MiB
+│  │  ✓ | jump     | time:   1.355 s  | iters: 53    | obj: 8.888895e+00  (min) | CPU:  47.97 KiB
+│  │  ✓ | adnlp    | time:   2.540 s  | iters: 60    | obj: 8.888894e+00  (min) | CPU: 198.84 MiB
+│  │  ✓ | exa      | time:   1.407 s  | iters: 52    | obj: 8.888895e+00  (min) | CPU:   1.10 MiB
 │  └─
 │
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 200
-│  │  ✓ | jump     | time:  13.079 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   2.16 MiB
-│  │  ✓ | adnlp    | time:  20.125 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   4.91 MiB
-│  │  ✓ | exa      | time:  13.361 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   2.07 MiB
+│  │  ✓ | jump     | time:  13.992 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   2.16 MiB
+│  │  ✓ | adnlp    | time:  21.046 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   4.91 MiB
+│  │  ✓ | exa      | time:  14.114 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   2.07 MiB
 │  │
 │  │  N = 500
-│  │  ✓ | jump     | time:  25.061 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   4.22 MiB
-│  │  ✓ | adnlp    | time:  41.187 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:  10.13 MiB
-│  │  ✓ | exa      | time:  27.373 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   4.06 MiB
+│  │  ✓ | jump     | time:  26.701 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   4.22 MiB
+│  │  ✓ | adnlp    | time:  41.111 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:  10.13 MiB
+│  │  ✓ | exa      | time:  26.849 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   4.06 MiB
 │  │
 │  │  N = 1000
-│  │  ✓ | jump     | time:  72.153 ms | iters: 26    | obj: 8.888987e+00  (min) | CPU:   9.78 MiB
-│  │  ✓ | adnlp    | time: 120.474 ms | iters: 28    | obj: 8.888987e+00  (min) | CPU:  28.42 MiB
-│  │  ✓ | exa      | time:  72.363 ms | iters: 26    | obj: 8.888987e+00  (min) | CPU:   9.30 MiB
+│  │  ✓ | jump     | time:  70.233 ms | iters: 26    | obj: 8.888987e+00  (min) | CPU:   9.78 MiB
+│  │  ✓ | adnlp    | time: 119.631 ms | iters: 28    | obj: 8.888987e+00  (min) | CPU:  28.42 MiB
+│  │  ✓ | exa      | time:  70.933 ms | iters: 26    | obj: 8.888987e+00  (min) | CPU:   9.30 MiB
 │  │
 │  │  N = 2000
-│  │  ✓ | jump     | time: 230.537 ms | iters: 38    | obj: 8.888914e+00  (min) | CPU:  24.51 MiB
-│  │  ✓ | adnlp    | time: 408.054 ms | iters: 40    | obj: 8.888914e+00  (min) | CPU:  76.33 MiB
-│  │  ✓ | exa      | time: 251.693 ms | iters: 37    | obj: 8.888914e+00  (min) | CPU:  22.63 MiB
+│  │  ✓ | jump     | time: 227.113 ms | iters: 38    | obj: 8.888914e+00  (min) | CPU:  24.51 MiB
+│  │  ✓ | adnlp    | time: 384.600 ms | iters: 40    | obj: 8.888914e+00  (min) | CPU:  76.34 MiB
+│  │  ✓ | exa      | time: 246.735 ms | iters: 37    | obj: 8.888914e+00  (min) | CPU:  22.63 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | jump     | time:   1.143 s  | iters: 80    | obj: 8.888895e+00  (min) | CPU: 103.93 MiB
-│  │  ✓ | adnlp    | time:   2.405 s  | iters: 80    | obj: 8.888895e+00  (min) | CPU: 359.45 MiB
-│  │  ✓ | exa      | time:   1.235 s  | iters: 79    | obj: 8.888895e+00  (min) | CPU:  99.12 MiB
+│  │  ✓ | jump     | time:   1.118 s  | iters: 80    | obj: 8.888895e+00  (min) | CPU: 103.92 MiB
+│  │  ✓ | adnlp    | time:   2.327 s  | iters: 80    | obj: 8.888895e+00  (min) | CPU: 359.43 MiB
+│  │  ✓ | exa      | time:   1.243 s  | iters: 79    | obj: 8.888895e+00  (min) | CPU:  99.12 MiB
 │  └─
 └─</code></pre><h2 id="Moonshot-GPU"><a class="docs-heading-anchor" href="#Moonshot-GPU">Moonshot - GPU</a><a id="Moonshot-GPU-1"></a><a class="docs-heading-anchor-permalink" href="#Moonshot-GPU" title="Permalink"></a></h2><p>Results for the beam problem on GPU-accelerated hardware.</p><p><strong>Benchmark Configuration:</strong></p><div class="benchmark-config" style="margin-bottom: 1.5em;"><div class="markdown"><ul>
 <li><p><strong>Problems:</strong> beam, chain, double_oscillator, electric_vehicle, glider, insurance, jackson, robbins, robot, rocket, space_shuttle, steering, vanderpol</p>
@@ -161,26 +161,26 @@
 <li><p><strong>Limits:</strong> 1000 iterations max, 1000.0s wall time</p>
 </li>
 </ul>
-</div></div><p>This configuration demonstrates GPU acceleration capabilities with ExaModels on large-scale problems, comparing CPU vs GPU performance for the same modelling framework.</p><div class="admonition is-info" id="Note-55d9b6cbda271aeb"><header class="admonition-header">Note<a class="admonition-anchor" href="#Note-55d9b6cbda271aeb" title="Permalink"></a></header><div class="admonition-body"><p>The linear solver is MUMPS for all experiments.</p></div></div><h3 id="Moonshot-GPU-Results"><a class="docs-heading-anchor" href="#Moonshot-GPU-Results">🚀 Moonshot GPU Results</a><a id="Moonshot-GPU-Results-1"></a><a class="docs-heading-anchor-permalink" href="#Moonshot-GPU-Results" title="Permalink"></a></h3><img src="benchmark-core-beam-12305560.svg" alt="Example block output"/><img src="benchmark-core-beam-bd8dec43.svg" alt="Example block output"/><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
+</div></div><p>This configuration demonstrates GPU acceleration capabilities with ExaModels on large-scale problems, comparing CPU vs GPU performance for the same modelling framework.</p><div class="admonition is-info" id="Note-55d9b6cbda271aeb"><header class="admonition-header">Note<a class="admonition-anchor" href="#Note-55d9b6cbda271aeb" title="Permalink"></a></header><div class="admonition-body"><p>The linear solver is MUMPS for all experiments.</p></div></div><h3 id="Moonshot-GPU-Results"><a class="docs-heading-anchor" href="#Moonshot-GPU-Results">🚀 Moonshot GPU Results</a><a id="Moonshot-GPU-Results-1"></a><a class="docs-heading-anchor-permalink" href="#Moonshot-GPU-Results" title="Permalink"></a></h3><img src="benchmark-core-beam-f719a5e4.svg" alt="Example block output"/><img src="benchmark-core-beam-667c7256.svg" alt="Example block output"/><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
 
 ┌─ Problem: beam
 │
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  61.907 ms | iters: 22    | obj: 8.889006e+00  (min) | CPU:   8.45 MiB
-│  │  ✓ | exa_gpu  | time: 158.789 ms | iters: 25    | obj: 8.827707e+00  (min) | CPU:  9.177 MiB | GPU: 11.901 MiB
+│  │  ✓ | exa      | time:  58.300 ms | iters: 22    | obj: 8.889006e+00  (min) | CPU:   8.45 MiB
+│  │  ✓ | exa_gpu  | time: 163.266 ms | iters: 25    | obj: 8.827707e+00  (min) | CPU:  9.110 MiB | GPU: 11.900 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 330.043 ms | iters: 17    | obj: 8.888990e+00  (min) | CPU:  34.86 MiB
-│  │  ✓ | exa_gpu  | time: 220.193 ms | iters: 31    | obj: 8.586481e+00  (min) | CPU: 13.000 MiB | GPU: 61.717 MiB
+│  │  ✓ | exa      | time: 334.468 ms | iters: 17    | obj: 8.888990e+00  (min) | CPU:  34.86 MiB
+│  │  ✓ | exa_gpu  | time: 221.286 ms | iters: 31    | obj: 8.586481e+00  (min) | CPU: 12.994 MiB | GPU: 61.717 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time: 726.747 ms | iters: 18    | obj: 8.889088e+00  (min) | CPU:  71.26 MiB
-│  │  ✓ | exa_gpu  | time: 213.756 ms | iters: 22    | obj: 8.291850e+00  (min) | CPU: 12.806 MiB | GPU: 116.519 MiB
+│  │  ✓ | exa      | time: 730.635 ms | iters: 18    | obj: 8.889088e+00  (min) | CPU:  71.26 MiB
+│  │  ✓ | exa_gpu  | time: 221.249 ms | iters: 22    | obj: 8.291850e+00  (min) | CPU: 12.801 MiB | GPU: 116.519 MiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time:   1.226 s  | iters: 13    | obj: 8.889279e+00  (min) | CPU: 121.36 MiB
-│  │  ✓ | exa_gpu  | time: 289.430 ms | iters: 20    | obj: 7.725138e+00  (min) | CPU: 17.211 MiB | GPU: 229.899 MiB
+│  │  ✓ | exa      | time:   1.238 s  | iters: 13    | obj: 8.889279e+00  (min) | CPU: 121.36 MiB
+│  │  ✓ | exa_gpu  | time: 300.588 ms | iters: 20    | obj: 7.725138e+00  (min) | CPU: 17.206 MiB | GPU: 229.899 MiB
 │  └─
-└─</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="benchmark-core-gpu.html">« GPU</a><a class="docs-footer-nextpage" href="api/public.html">Public »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.0 on <span class="colophon-date" title="Saturday 15 November 2025 19:41">Saturday 15 November 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+└─</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="benchmark-core-gpu.html">« GPU</a><a class="docs-footer-nextpage" href="api/public.html">Public »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.0 on <span class="colophon-date" title="Sunday 16 November 2025 05:40">Sunday 16 November 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
