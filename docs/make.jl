@@ -6,7 +6,7 @@ using CTBenchmarks
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # Draft mode: if true, @example blocks in markdown are not executed
-draft = true
+draft = false
 
 # Problems to exclude from draft mode (will still execute their @example blocks)
 exclude_problems_from_draft = Symbol[

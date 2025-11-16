@@ -298,7 +298,7 @@ function generate_template_problem_from_list(
     # Generate sections for each benchmark where the problem has results
     for (bench_id, bench_title, bench_desc) in benchmarks
         if is_problem_in_benchmark(bench_id, problem_name)
-            println("Generating template for $problem_name in $bench_id")
+            @info "  ✓ Generating section for problem '$problem_name' in benchmark '$bench_id'"
             md = generate_template_problem(problem_name, bench_id, bench_title, bench_desc, env_name)
             push!(blocks, md)
         end 
@@ -395,6 +395,7 @@ function write_core_benchmark_templates(
     problems = get_problems_in_benchmarks(benchmarks)
 
     # Generate template file for each problem
+    @info "📝 Generating template files for $(length(problems)) problem(s)"
     files_generated = String[]
     for problem_name in problems
         # Check if problem should be excluded from draft mode
@@ -410,7 +411,7 @@ function write_core_benchmark_templates(
         
         # Generate template content
         str = generate_template_problem_from_list(problem_name, benchmarks, title, desc; draft=draft_problem)
-        println("Generating template for $problem_name")
+        @info "  ✓ Generated template for problem '$problem_name' (draft=$(draft_problem))"
         
         # Write to file
         filepath = normpath(joinpath(problems_dir, "$(problem_name).md.template"))
@@ -446,21 +447,31 @@ function with_processed_template_problems(
     draft::Union{Bool,Nothing}=nothing, 
     exclude_problems_from_draft::Vector{Symbol}=Symbol[]
     )
+    @info ""
+    @info "═"^70
+    @info "🚀 Starting template problem generation"
+    @info "═"^70
+    @info "📋 Draft mode: $(isnothing(draft) ? "default" : draft)"
+    @info "📋 Excluded from draft: $(isempty(exclude_problems_from_draft) ? "none" : join(exclude_problems_from_draft, ", "))"
+    
     # Generate all template files
     core_files_generated, core_problems_dir = write_core_benchmark_templates(draft, exclude_problems_from_draft)
     
     # Extract problem names from file paths
     core_problems = [split(basename(filepath), ".")[1] for filepath in core_files_generated]
-    println("---------- Core problems: $(join(core_problems, ", "))")
+    @info "✅ Generated $(length(core_problems)) template(s): $(join(core_problems, ", "))"
+    @info "═"^70
     
     try
         # Execute user function with problem list
         return f(core_problems)
     finally
         # Cleanup: remove generated files (guaranteed to run)
+        @info "🧹 Cleaning up generated template files"
         for filepath in core_files_generated
             rm(filepath)
         end
         rm(core_problems_dir)
+        @info "✅ Cleanup complete"
     end
 end

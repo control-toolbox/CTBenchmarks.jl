@@ -352,10 +352,7 @@ function with_processed_templates(
     f::Function, template_files::Vector{String}, src_dir::String, templates_dir::String
 )
     # Process templates to generate .md files
-
-    println("------- Processing templates: " * join(template_files, ", "))
     template_files = construct_template_files(template_files, src_dir)
-    println("------- Constructed templates: " * join(template_files, ", "))
     process_templates(template_files, src_dir, templates_dir)
 
     try
