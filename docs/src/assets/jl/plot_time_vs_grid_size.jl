@@ -1,3 +1,19 @@
+"""
+    _plot_time_vs_grid_size(problem, bench_id)
+
+Plot solve time versus grid size for a given problem and benchmark.
+
+Uses benchmark JSON data to aggregate successful runs by `(model, solver)` and
+plot the mean solve time per grid size for each combination.
+
+# Arguments
+- `problem::AbstractString`: Name of the problem to filter.
+- `bench_id`: Benchmark identifier used to locate the benchmark JSON file.
+
+# Returns
+- `Plots.Plot`: Line plot of solve time vs grid size. Returns an empty plot if
+  no data is available.
+"""
 function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
     raw = _get_bench_data(bench_id)
     if raw === nothing
@@ -70,6 +86,23 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
     return plt
 end
 
+"""
+    _plot_time_vs_grid_size_bar(problem, bench_id)
+
+Plot solve time versus grid size as grouped bars for each model–solver
+combination.
+
+Computes the mean solve time per grid size for each `(model, solver)` pair and
+displays the result as a grouped bar chart.
+
+# Arguments
+- `problem::AbstractString`: Name of the problem to filter.
+- `bench_id`: Benchmark identifier used to locate the benchmark JSON file.
+
+# Returns
+- `Plots.Plot`: Grouped bar plot of solve time vs grid size. Returns an empty
+  plot if no data is available.
+"""
 function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
     raw = _get_bench_data(bench_id)
     if raw === nothing

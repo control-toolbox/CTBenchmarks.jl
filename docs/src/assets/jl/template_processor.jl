@@ -292,13 +292,13 @@ function process_templates(
     @info "" # Empty line for readability
 end
 
-function construct_template_files(template_files::Vector{String})
+function construct_template_files(template_files::Vector{String}, src_dir::String)
     files = String[]
     for file in template_files
-        if isfile(file * ".template")
+        if isfile(joinpath(src_dir, file * ".template"))
             push!(files, file)
-        elseif isdir(file)
-            for f in readdir(file)
+        elseif isdir(joinpath(src_dir, file))
+            for f in readdir(joinpath(src_dir, file))
                 if endswith(f, ".md.template")
                     push!(files, joinpath(file, f[1:end-9]))
                 end
@@ -352,7 +352,10 @@ function with_processed_templates(
     f::Function, template_files::Vector{String}, src_dir::String, templates_dir::String
 )
     # Process templates to generate .md files
-    template_files = construct_template_files(template_files)
+
+    println("------- Processing templates: " * join(template_files, ", "))
+    template_files = construct_template_files(template_files, src_dir)
+    println("------- Constructed templates: " * join(template_files, ", "))
     process_templates(template_files, src_dir, templates_dir)
 
     try

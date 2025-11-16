@@ -1,13 +1,86 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Template Problem Generator for CTBenchmarks Documentation
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# This module provides functions to automatically generate Markdown template files
+# for benchmark problem documentation pages. It creates structured documentation
+# that includes:
+# - Performance plots (time vs grid size)
+# - Solution visualizations (PNG/PDF figures)
+# - Benchmark logs and configuration details
+#
+# The generated templates are processed by template_processor.jl to create the
+# final documentation pages.
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
 using JSON
 using DataFrames
 
 include(joinpath(@__DIR__, "common.jl"))
 
-# Generate template problem
-# 
-# the function `generate_template_problem`
-# returns a Markdown string that can be saved to a file
-# 
+# ═══════════════════════════════════════════════════════════════════════════════
+# Helper Functions
+# ═══════════════════════════════════════════════════════════════════════════════
+
+"""
+    draft_meta(draft)
+
+Generate Documenter.jl draft metadata block.
+
+Controls whether @example blocks in the documentation are executed during the build.
+Useful for speeding up documentation builds during development.
+
+# Arguments
+- `draft::Union{Bool,Nothing}`: Draft mode flag
+  - `nothing`: No metadata block (default behavior)
+  - `true`: Add `Draft = true` (skip @example execution)
+  - `false`: Add `Draft = false` (force @example execution)
+
+# Returns
+- `String`: Markdown metadata block or empty string
+"""
+function draft_meta(draft::Union{Bool,Nothing})
+    if isnothing(draft)
+        return ""
+    elseif draft
+        return """```@meta\nDraft = true\n```"""
+    else
+        return """```@meta\nDraft = false\n```"""
+    end
+end
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Core Template Generation Functions
+# ═══════════════════════════════════════════════════════════════════════════════
+
+"""
+    generate_template_problem(problem_name, bench_id, bench_title, bench_desc, env_name)
+
+Generate a Markdown template section for a single benchmark configuration.
+
+Creates a documentation section containing performance plots, solution figures,
+and benchmark logs for a specific problem-benchmark combination.
+
+# Arguments
+- `problem_name::String`: Name of the optimal control problem (e.g., "beam", "robot")
+- `bench_id::String`: Benchmark identifier (e.g., "core-ubuntu-latest")
+- `bench_title::String`: Human-readable benchmark title (e.g., "Ubuntu Latest CPU")
+- `bench_desc::String`: Brief description of the benchmark configuration
+- `env_name::String`: Documenter @example environment name (typically "BENCH")
+
+# Returns
+- `String`: Markdown template section ready to be written to a .md.template file
+
+# Details
+The generated section includes:
+1. Section title (## level)
+2. Optional description
+3. INCLUDE_ENVIRONMENT block for configuration/environment info
+4. Performance plots (time vs grid size)
+5. Solution figures (automatically detected from figures/ directory)
+6. Benchmark log table
+"""
 function generate_template_problem(
     problem_name::String,
     bench_id::String, 
@@ -16,17 +89,30 @@ function generate_template_problem(
     env_name::String,
     )
 
+    # ───────────────────────────────────────────────────────────────────────────
+    # Build section title
+    # ───────────────────────────────────────────────────────────────────────────
     TITLE = "## " * bench_title * "\n"
 
+    # ───────────────────────────────────────────────────────────────────────────
+    # Add optional description
+    # ───────────────────────────────────────────────────────────────────────────
     DESC = isempty(bench_desc) ? "" : bench_desc * "\n"
     
+    # ───────────────────────────────────────────────────────────────────────────
+    # Generate INCLUDE_ENVIRONMENT block
+    # This will be replaced by template_processor.jl with actual environment info
+    # ───────────────────────────────────────────────────────────────────────────
     ENV = """
     <!-- INCLUDE_ENVIRONMENT:
-    bench_id = "$bench_id"
-    env_name = $env_name
+    BENCH_ID = "$bench_id"
+    ENV_NAME = $env_name
     -->
     """
 
+    # ───────────────────────────────────────────────────────────────────────────
+    # Generate performance plots section
+    # ───────────────────────────────────────────────────────────────────────────
     RESULTS = """
     ### Time vs Grid Size ($bench_title)
 
@@ -39,33 +125,41 @@ function generate_template_problem(
     ```
     """
 
-    # Build figure blocks for each available N where both PDF and PNG exist
-    # Figures are stored under docs/src/assets/benchmarks/<bench_id>/figures/
+    # ───────────────────────────────────────────────────────────────────────────
+    # Auto-detect and generate solution figure blocks
+    # ───────────────────────────────────────────────────────────────────────────
+    # Scan the figures directory for solution plots (PDF + PNG pairs)
+    # and generate clickable image blocks for each grid size N
     figures_dir = joinpath(@__DIR__, "..", "benchmarks", bench_id, "figures")
     figure_blocks = String[]
 
     if isdir(figures_dir)
         files = readdir(figures_dir)
-        # Match files like "beam_N200.pdf" for the given problem_name
+        # Pattern matches files like "beam_N200.pdf"
         pattern = Regex("^" * problem_name * "_N(\\d+)\\.pdf")
 
-        # Collect valid (N, block) pairs
+        # Store figure blocks indexed by N for sorted output
         blocks_by_N = Dict{Int,String}()
+        
         for filename in files
+            # Check if filename matches the pattern
             m = match(pattern, filename)
             m === nothing && continue
 
+            # Extract grid size N from filename
             N_str = m.captures[1]
             N = try
                 parse(Int, N_str)
             catch
-                continue
+                continue  # Skip if N is not a valid integer
             end
 
+            # Verify that corresponding PNG exists
             base, _ = splitext(filename)  # e.g., "beam_N200"
             png_name = base * ".png"
-            png_name in files || continue
+            png_name in files || continue  # Skip if PNG missing
 
+            # Generate Markdown block with clickable PDF link and PNG preview
             md_block = """
             ### Solution: N = $N ($bench_title)
 
@@ -84,6 +178,7 @@ function generate_template_problem(
             blocks_by_N[N] = md_block
         end
 
+        # Sort figure blocks by grid size N (ascending)
         for N in sort(collect(keys(blocks_by_N)))
             push!(figure_blocks, blocks_by_N[N])
         end
@@ -91,6 +186,9 @@ function generate_template_problem(
 
     FIGURES = isempty(figure_blocks) ? "" : join(figure_blocks, "\n")
 
+    # ───────────────────────────────────────────────────────────────────────────
+    # Generate benchmark log section
+    # ───────────────────────────────────────────────────────────────────────────
     LOG = """
     ### Log ($bench_title)
 
@@ -98,6 +196,9 @@ function generate_template_problem(
     _print_benchmark_log("$bench_id"; problems=["$problem_name"]) # hide
     ```"""
 
+    # ───────────────────────────────────────────────────────────────────────────
+    # Assemble all sections in order
+    # ───────────────────────────────────────────────────────────────────────────
     blocks = String[]
     push!(blocks, TITLE)
     isempty(DESC) || push!(blocks, DESC)
@@ -109,50 +210,84 @@ function generate_template_problem(
     return join(map(x -> x * "\n", blocks), "")
 end
 
-# function to check if a problem is part of a benchmark or not
-# inputs: 
-# - bench_id: the id of the benchmark
-# - problem_name: the name of the problem
-# outputs: 
-# - true if the problem is part of the benchmark, false otherwise
-function is_problem_in_benchmark(bench_id::String, problem_name::String)
+# ═══════════════════════════════════════════════════════════════════════════════
+# Benchmark Data Query Functions
+# ═══════════════════════════════════════════════════════════════════════════════
 
+"""
+    is_problem_in_benchmark(bench_id, problem_name)
+
+Check if a problem has benchmark results in a given benchmark configuration.
+
+Reads the benchmark JSON file and verifies that the problem has at least one
+successful benchmark result.
+
+# Arguments
+- `bench_id::String`: Benchmark identifier (e.g., "core-ubuntu-latest")
+- `problem_name::String`: Problem name (e.g., "beam", "robot")
+
+# Returns
+- `Bool`: `true` if problem has results in this benchmark, `false` otherwise
+"""
+function is_problem_in_benchmark(bench_id::String, problem_name::String)
+    # Load benchmark data from JSON file
     raw = _get_bench_data(bench_id)
     if raw === nothing
         return false
     end
 
+    # Extract results array
     rows = get(raw, "results", Any[])
     if isempty(rows)
         return false
     end
 
+    # Check if problem exists with valid benchmark data
     df = DataFrame(rows)
     df_successful = filter(row -> row.benchmark !== nothing && row.problem == problem_name, df)
     return !isempty(df_successful)
-
 end
 
-# function to generate the template for a given problem from a list of benchmarks
-# the elements of list of the benchmarks contains the triplet (bench_id, bench_title, bench_desc)
+"""
+    generate_template_problem_from_list(problem_name, benchmarks, title, desc; draft)
+
+Generate a complete problem documentation page from multiple benchmark configurations.
+
+Creates a full Markdown template file that includes sections for each benchmark
+configuration where the problem has results.
+
+# Arguments
+- `problem_name::String`: Problem name (e.g., "beam")
+- `benchmarks::Vector{Tuple{String, String, String}}`: List of (bench_id, bench_title, bench_desc) tuples
+- `title::String`: Page title (e.g., "Core benchmark: beam")
+- `desc::String`: Page description
+- `draft::Union{Bool,Nothing}`: Draft mode flag for Documenter
+
+# Returns
+- `String`: Complete Markdown template ready to be written to a .md.template file
+"""
 function generate_template_problem_from_list(
     problem_name::String,
     benchmarks::Vector{Tuple{String, String, String}},
     title::String,
-    desc::String,
+    desc::String;
+    draft::Union{Bool,Nothing},
     )
 
-    #
     env_name = "BENCH"
     blocks = String[]
 
-    # title
-    push!(blocks, "## " * title * "\n")
+    # Add page title (# level)
+    push!(blocks, "# " * title * "\n")
 
-    # description
+    # Add draft metadata if specified
+    DRAFT = draft_meta(draft)
+    push!(blocks, DRAFT * "\n")
+
+    # Add page description
     !isempty(desc) && push!(blocks, desc * "\n")
 
-    # setup
+    # Add Documenter @setup block to load utilities
     SETUP = """
     ```@setup $env_name
     include(normpath(joinpath(@__DIR__, "..", "..", "assets", "jl", "utils.jl")))
@@ -160,7 +295,7 @@ function generate_template_problem_from_list(
     """
     push!(blocks, SETUP)
 
-    #
+    # Generate sections for each benchmark where the problem has results
     for (bench_id, bench_title, bench_desc) in benchmarks
         if is_problem_in_benchmark(bench_id, problem_name)
             println("Generating template for $problem_name in $bench_id")
@@ -172,62 +307,160 @@ function generate_template_problem_from_list(
     return join(blocks, "\n")
 end
 
-# function to get all the problems available in a benchmark
+"""
+    get_problems_in_benchmark(bench_id)
+
+Retrieve list of all problems that have results in a benchmark.
+
+# Arguments
+- `bench_id::String`: Benchmark identifier
+
+# Returns
+- `Vector{String}`: List of unique problem names, or empty vector if no data
+"""
 function get_problems_in_benchmark(bench_id::String)
+    # Load benchmark data
     raw = _get_bench_data(bench_id)
     if raw === nothing
         return []
     end
+    
+    # Extract results
     rows = get(raw, "results", Any[])
     if isempty(rows)
         return []
     end
+    
+    # Get unique problem names
     df = DataFrame(rows)
     return unique(df.problem)
 end
 
-# function to get all the problems available in at least of the benchmark in the list
+"""
+    get_problems_in_benchmarks(benchmarks)
+
+Retrieve all problems that appear in at least one benchmark from a list.
+
+# Arguments
+- `benchmarks::Vector{Tuple{String, String, String}}`: List of benchmark configurations
+
+# Returns
+- `Vector{String}`: Unique list of problem names across all benchmarks
+"""
 function get_problems_in_benchmarks(benchmarks::Vector{Tuple{String, String, String}})
     problems = String[]
+    # Collect problems from each benchmark
     for (bench_id, _, _) in benchmarks
         append!(problems, get_problems_in_benchmark(bench_id))
     end
+    # Return unique list
     return unique(problems)
 end
 
-# function to write core benchmark templates for a list of problems
-function write_core_benchmark_templates()
+# ═══════════════════════════════════════════════════════════════════════════════
+# High-Level Template Generation
+# ═══════════════════════════════════════════════════════════════════════════════
+
+"""
+    write_core_benchmark_templates(draft, exclude_from_draft)
+
+Generate .md.template files for all core benchmark problems.
+
+Scans all core benchmarks (ubuntu-latest, moonshot-cpu, moonshot-gpu) for available
+problems and creates a documentation template file for each one.
+
+# Arguments
+- `draft::Union{Bool,Nothing}`: Draft mode for Documenter
+- `exclude_from_draft::Vector{Symbol}`: Problems to exclude from draft mode
+
+# Returns
+- `Tuple{Vector{String}, String}`: (list of generated file paths, problems directory path)
+"""
+function write_core_benchmark_templates(
+    draft::Union{Bool,Nothing}, 
+    exclude_from_draft::Vector{Symbol}
+)
+    # Create output directory
+    problems_dir = joinpath(@__DIR__, "..", "..", "core", "problems")
+    mkpath(problems_dir)
+
+    # Define core benchmark configurations
     benchmarks = [
         ("core-ubuntu-latest", "Ubuntu Latest CPU", "This benchmark suite evaluates optimal control problems on a standard CPU platform using GitHub Actions runners."),
         ("core-moonshot-cpu", "Moonshot CPU", "Results on self-hosted CPU hardware."),
         ("core-moonshot-gpu", "Moonshot GPU", "Results on self-hosted GPU hardware."),
     ]
+    
+    # Get all problems from all benchmarks
     problems = get_problems_in_benchmarks(benchmarks)
+
+    # Generate template file for each problem
     files_generated = String[]
     for problem_name in problems
-        title = "Core $problem_name Benchmark"
+        # Check if problem should be excluded from draft mode
+        draft_problem = Symbol(problem_name) ∈ exclude_from_draft ? false : draft
+        
+        # Set page metadata
+        title = "Core benchmark: $problem_name"
         desc = """
         This page presents benchmark results for the **$problem_name** problem across different platforms and configurations.
 
         !!! note
             The linear solver is MUMPS for all experiments."""
-        str = generate_template_problem_from_list(problem_name, benchmarks, title, desc)
+        
+        # Generate template content
+        str = generate_template_problem_from_list(problem_name, benchmarks, title, desc; draft=draft_problem)
         println("Generating template for $problem_name")
-        filepath = normpath(joinpath(@__DIR__, "..", "..", "core", "problems", "$(problem_name).md.template"))
+        
+        # Write to file
+        filepath = normpath(joinpath(problems_dir, "$(problem_name).md.template"))
         write(filepath, str)
         push!(files_generated, filepath)
     end
-    return files_generated
+    
+    return files_generated, problems_dir
 end
 
-# function with_processed_template_problems: that will process the template problems
-function with_processed_template_problems(f::Function)
-    files_generated = write_core_benchmark_templates()
+"""
+    with_processed_template_problems(f; draft, exclude_problems_from_draft)
+
+Generate problem templates, execute a function, then clean up.
+
+This function follows a resource management pattern:
+1. Generate .md.template files for all problems
+2. Execute the provided function with the list of problem names
+3. Clean up generated files (guaranteed via finally block)
+
+Used in docs/make.jl to generate templates before building documentation.
+
+# Arguments
+- `f::Function`: Function to execute with problem list (typically builds documentation)
+- `draft::Union{Bool,Nothing}`: Draft mode for Documenter
+- `exclude_problems_from_draft::Vector{Symbol}`: Problems to exclude from draft mode
+
+# Returns
+- Return value of `f(core_problems)`
+"""
+function with_processed_template_problems(
+    f::Function;
+    draft::Union{Bool,Nothing}=nothing, 
+    exclude_problems_from_draft::Vector{Symbol}=Symbol[]
+    )
+    # Generate all template files
+    core_files_generated, core_problems_dir = write_core_benchmark_templates(draft, exclude_problems_from_draft)
+    
+    # Extract problem names from file paths
+    core_problems = [split(basename(filepath), ".")[1] for filepath in core_files_generated]
+    println("---------- Core problems: $(join(core_problems, ", "))")
+    
     try
-        return f()
+        # Execute user function with problem list
+        return f(core_problems)
     finally
-        for filepath in files_generated
+        # Cleanup: remove generated files (guaranteed to run)
+        for filepath in core_files_generated
             rm(filepath)
         end
+        rm(core_problems_dir)
     end
 end

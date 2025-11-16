@@ -15,6 +15,13 @@ import Documenter
 import Markdown
 import MarkdownAST
 
+"""
+    DocType
+
+Enumeration of documentation element types recognized by the API reference generator.
+
+Types include: abstract types, constants, functions, macros, modules, and structs.
+"""
 @enum(
     DocType,
     DOCTYPE_ABSTRACT_TYPE,
@@ -25,6 +32,18 @@ import MarkdownAST
     DOCTYPE_STRUCT,
 )
 
+"""
+    _Config
+
+Internal configuration for API reference generation.
+
+# Fields
+- `current_module::Module`: The module being documented
+- `subdirectory::String`: Output directory for generated API pages
+- `modules::Dict{Module,<:Vector}`: Mapping of modules to document
+- `sort_by::Function`: Custom sort function for symbols
+- `exclude::Set{Symbol}`: Symbol names to exclude from documentation
+"""
 struct _Config
     current_module::Module
     subdirectory::String
@@ -103,6 +122,23 @@ function automatic_reference_documentation(;
     return "API Reference" => list_of_pages
 end
 
+"""
+    _automatic_reference_documentation(current_module; subdirectory, modules, sort_by, exclude)
+
+Internal helper for single-module API reference generation.
+
+Registers the module configuration and returns the output path for the generated documentation.
+
+# Arguments
+- `current_module::Module`: Module to document
+- `subdirectory::String`: Output directory for API pages
+- `modules::Dict{Module,<:Vector}`: Module mapping
+- `sort_by::Function`: Custom sort function
+- `exclude::Set{Symbol}`: Symbols to exclude
+
+# Returns
+- `String`: Path to the generated API documentation file
+"""
 function _automatic_reference_documentation(
     current_module::Module;
     subdirectory::String,
@@ -114,6 +150,20 @@ function _automatic_reference_documentation(
     return "$subdirectory/$current_module.md"
 end
 
+"""
+    _exported_symbols(mod)
+
+Classify all symbols in a module into exported and private categories.
+
+Inspects the module's public API and internal symbols, filtering out compiler-generated
+names and imported symbols. Classifies each symbol by type (function, struct, macro, etc.).
+
+# Arguments
+- `mod::Module`: Module to analyze
+
+# Returns
+- `NamedTuple`: With fields `exported` and `private`, each containing sorted lists of `(Symbol, DocType)` pairs
+"""
 function _exported_symbols(mod)
     exported = Pair{Symbol,DocType}[]
     private = Pair{Symbol,DocType}[]
@@ -170,6 +220,19 @@ function _exported_symbols(mod)
     return (exported=sort(exported; by=sort_fn), private=sort(private; by=sort_fn))
 end
 
+"""
+    _iterate_over_symbols(f, config, symbol_list)
+
+Iterate over symbols, apply a function to each documented symbol.
+
+Filters symbols based on exclusion list, checks for documentation, and applies the
+provided function to each valid symbol. Issues warnings for undocumented symbols.
+
+# Arguments
+- `f::Function`: Function to apply to each (symbol, type) pair
+- `config::_Config`: Configuration containing exclusion rules and module info
+- `symbol_list::Vector`: List of (Symbol, DocType) pairs to process
+"""
 function _iterate_over_symbols(f, config, symbol_list)
     current_module = config.current_module
     for (key, type) in sort!(symbol_list; by = config.sort_by)
@@ -197,6 +260,17 @@ function _iterate_over_symbols(f, config, symbol_list)
     return
 end
 
+"""
+    _to_string(x::DocType)
+
+Convert a DocType enumeration value to its string representation.
+
+# Arguments
+- `x::DocType`: Documentation type to convert
+
+# Returns
+- `String`: Human-readable name (e.g., "function", "struct", "macro")
+"""
 function _to_string(x::DocType)
     if x == DOCTYPE_ABSTRACT_TYPE
         return "abstract type"
@@ -213,6 +287,18 @@ function _to_string(x::DocType)
     end
 end
 
+"""
+    _build_api_page(document, config)
+
+Generate public and private API reference pages for a module.
+
+Creates two markdown pages: one listing exported symbols and one for internal symbols.
+Each page includes an overview and docstring references for all documented symbols.
+
+# Arguments
+- `document::Documenter.Document`: Documenter document object
+- `config::_Config`: Configuration for the module being documented
+"""
 function _build_api_page(document::Documenter.Document, config::_Config)
     subdir = config.subdirectory
     current_module = config.current_module
@@ -298,6 +384,17 @@ function _build_api_page(document::Documenter.Document, config::_Config)
     return
 end
 
+"""
+    Documenter.Selectors.runner(::Type{APIBuilder}, document)
+
+Documenter pipeline runner for API reference generation.
+
+Processes all registered module configurations and generates their API reference pages.
+This function is called automatically by Documenter during the documentation build.
+
+# Arguments
+- `document::Documenter.Document`: Documenter document object
+"""
 function Documenter.Selectors.runner(
     ::Type{APIBuilder},
     document::Documenter.Document,
