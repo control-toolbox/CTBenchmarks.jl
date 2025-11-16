@@ -1,5 +1,5 @@
 function _plot_font_settings()
-    return font(10, Plots.default(:fontfamily)), 10
+    return font(14, Plots.default(:fontfamily)), font(10, Plots.default(:fontfamily))
 end
 
 """

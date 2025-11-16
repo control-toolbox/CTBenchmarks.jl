@@ -25,7 +25,7 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
 
     df_successful.combo = string.("(", df_successful.model, ", ", df_successful.solver, ")")
     combos = unique(df_successful.combo)
-    title_font, label_font_size = _plot_font_settings()
+    title_font, label_font = _plot_font_settings()
 
     min_N = minimum(df_successful.grid_size)
     max_N = maximum(df_successful.grid_size)
@@ -37,7 +37,7 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
     plt = plot(
         xlabel = "Grid size N",
         ylabel = "Solve time (s)",
-        title = "Solve time vs grid size — $problem",
+        title = "\nSolve time vs grid size — $problem",
         legend = :bottomright,
         grid = true,
         size = (900, 600),
@@ -47,8 +47,8 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
         bottom_margin = 5mm,
         top_margin = 5mm,
         titlefont = title_font,
-        xguidefontsize = label_font_size,
-        yguidefontsize = label_font_size,
+        xguidefont = label_font,
+        yguidefont = label_font,
     )
 
     for (idx, c) in enumerate(combos)
@@ -97,7 +97,7 @@ function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
 
     df_successful.combo = string.("(", df_successful.model, ", ", df_successful.solver, ")")
     combos = unique(df_successful.combo)
-    title_font, label_font_size = _plot_font_settings()
+    title_font, label_font = _plot_font_settings()
 
     Ns = sort(unique(df_successful.grid_size))
     nN = length(Ns)
@@ -116,7 +116,7 @@ function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
     plt = plot(
         xlabel = "Grid size N",
         ylabel = "Solve time (s)",
-        title = "Solve time vs grid size (bar) — $problem",
+        title = "\nSolve time vs grid size (bar) — $problem",
         legend = :topleft,
         grid = true,
         size = (900, 600),
@@ -125,8 +125,8 @@ function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
         bottom_margin = 5mm,
         top_margin = 5mm,
         titlefont = title_font,
-        xguidefontsize = label_font_size,
-        yguidefontsize = label_font_size,
+        xguidefont = label_font,
+        yguidefont = label_font,
     )
 
     for (j, c) in enumerate(combos)

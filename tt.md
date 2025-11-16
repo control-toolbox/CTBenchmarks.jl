@@ -1,0 +1,137 @@
+## Core beam Benchmark
+
+This page presents benchmark results for the **beam** problem across different platforms and configurations.
+
+!!! note
+    The linear solver is MUMPS for all experiments.
+
+```@setup BENCH
+include(normpath(joinpath(@__DIR__, "..", "..", "assets", "jl", "utils.jl")))
+```
+
+## Ubuntu Latest CPU
+
+This benchmark suite evaluates optimal control problems on a standard CPU platform using GitHub Actions runners.
+
+<!-- INCLUDE_ENVIRONMENT:
+bench_id = "core-ubuntu-latest"
+env_name = BENCH
+-->
+
+### Time vs Grid Size (Ubuntu Latest CPU)
+
+```@example BENCH
+_plot_time_vs_grid_size("beam", "core-ubuntu-latest") # hide
+```
+
+```@example BENCH
+_plot_time_vs_grid_size_bar("beam", "core-ubuntu-latest") # hide
+```
+
+### Solution: N = 200 (Ubuntu Latest CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N200.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N200.png"
+  />
+</a>
+```
+
+### Solution: N = 500 (Ubuntu Latest CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N500.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N500.png"
+  />
+</a>
+```
+
+### Solution: N = 1000 (Ubuntu Latest CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N1000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N1000.png"
+  />
+</a>
+```
+
+### Solution: N = 2000 (Ubuntu Latest CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N2000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N2000.png"
+  />
+</a>
+```
+
+### Log (Ubuntu Latest CPU)
+
+```@example BENCH
+_print_benchmark_log("core-ubuntu-latest"; problems=["beam"]) # hide
+```
+
+## Moonshot CPU
+
+Results on self-hosted CPU hardware.
+
+<!-- INCLUDE_ENVIRONMENT:
+bench_id = "core-moonshot-cpu"
+env_name = BENCH
+-->
+
+### Time vs Grid Size (Moonshot CPU)
+
+```@example BENCH
+_plot_time_vs_grid_size("beam", "core-moonshot-cpu") # hide
+```
+
+```@example BENCH
+_plot_time_vs_grid_size_bar("beam", "core-moonshot-cpu") # hide
+```
+
+### Log (Moonshot CPU)
+
+```@example BENCH
+_print_benchmark_log("core-moonshot-cpu"; problems=["beam"]) # hide
+```
+
+## Moonshot GPU
+
+Results on self-hosted GPU hardware.
+
+<!-- INCLUDE_ENVIRONMENT:
+bench_id = "core-moonshot-gpu"
+env_name = BENCH
+-->
+
+### Time vs Grid Size (Moonshot GPU)
+
+```@example BENCH
+_plot_time_vs_grid_size("beam", "core-moonshot-gpu") # hide
+```
+
+```@example BENCH
+_plot_time_vs_grid_size_bar("beam", "core-moonshot-gpu") # hide
+```
+
+### Log (Moonshot GPU)
+
+```@example BENCH
+_print_benchmark_log("core-moonshot-gpu"; problems=["beam"]) # hide
+```

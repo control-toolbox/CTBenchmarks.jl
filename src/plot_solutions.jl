@@ -315,6 +315,11 @@ function plot_solutions(payload::Dict, output_dir::AbstractString)
             filepath = joinpath(output_dir, filename)
             savefig(plt, filepath)
             
+            # Save as PNG
+            filename = "$(problem)_N$(grid_size).png"
+            filepath = joinpath(output_dir, filename)
+            savefig(plt, filepath)
+
             println("    ✓ Saved: $filename")
         catch e
             println("    ✗ Error plotting $problem N=$grid_size: $e")
@@ -495,6 +500,7 @@ function plot_ocp_solution(solution, model::Symbol, solver::Symbol, success::Boo
         leftmargin=get_left_margin(problem),
         #plot_title="$problem - N=$grid_size",
         linewidth=1.5,
+        dpi=300,
     )
     
     # Get time grid and marker positions with offset
@@ -1018,7 +1024,7 @@ function create_jump_layout(n::Int, m::Int, problem::Symbol, grid_size::Int,
     
     # Font settings
     title_font = font(10, Plots.default(:fontfamily))
-    label_font_size = 10
+    label_font = 10
 
     # Create individual plots for states
     state_plots = []
@@ -1030,8 +1036,8 @@ function create_jump_layout(n::Int, m::Int, problem::Symbol, grid_size::Int,
             title=(i==1 ? "state" : ""),
             titlefont=title_font,
             leftmargin=lm,
-            xguidefontsize=label_font_size,
-            yguidefontsize=label_font_size,
+            xguidefontsize=label_font,
+            yguidefontsize=label_font,
             xlabel=i==n ? "time" : "",
             )
         push!(state_plots, p)
@@ -1046,8 +1052,8 @@ function create_jump_layout(n::Int, m::Int, problem::Symbol, grid_size::Int,
             leftmargin=lm,
             title=(i==1 ? "costate" : ""),
             titlefont=title_font,
-            xguidefontsize=label_font_size,
-            yguidefontsize=label_font_size,
+            xguidefontsize=label_font,
+            yguidefontsize=label_font,
             xlabel=i==n ? "time" : "",
             )
         push!(costate_plots, p)
@@ -1061,8 +1067,8 @@ function create_jump_layout(n::Int, m::Int, problem::Symbol, grid_size::Int,
             ylabel=label, 
             title=(i==1 ? "control" : ""),
             titlefont=title_font,
-            xguidefontsize=label_font_size,
-            yguidefontsize=label_font_size,
+            xguidefontsize=label_font,
+            yguidefontsize=label_font,
             xlabel=i==m ? "time" : "",
             leftmargin=lm,
             )
@@ -1090,7 +1096,8 @@ function create_jump_layout(n::Int, m::Int, problem::Symbol, grid_size::Int,
         p_control, 
         layout=grid(2, 1, heights=[n/(n+m), m/(n+m)]),
         size=(816, height),
-        #plot_title="$problem - N=$grid_size"
+        #plot_title="$problem - N=$grid_size",
+        dpi=300,
     )
     
     return p_final

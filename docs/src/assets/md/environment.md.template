@@ -3,6 +3,22 @@ INPUTS:
     BENCH_ID: The benchmark ID
     ENV_NAME: The environment name
 -->
+### ⚙️ Configuration
+
+```@raw html
+<div class="benchmark-config" style="margin-bottom: 0em;">
+```
+
+```@example BENCH
+_print_config(BENCH_ID) # hide
+```
+
+```@raw html
+</div>
+```
+
+### 🖥️ Environment
+
 ```@example ENV_NAME
 _basic_metadata(BENCH_ID) # hide
 ```

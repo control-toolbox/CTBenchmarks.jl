@@ -157,7 +157,7 @@ This documentation includes pre-computed benchmark results from continuous integ
 - **Ubuntu Latest** - Standard CPU benchmarks on GitHub Actions runners
 - **Moonshot** - GPU-accelerated benchmarks on dedicated hardware
 
-These results provide reference performance data and demonstrate the capabilities of different solver and model combinations. You can explore them in the [Core Benchmark](benchmark-core-cpu.md) section.
+These results provide reference performance data and demonstrate the capabilities of different solver and model combinations. You can explore them in the [Core Benchmark CPU](core/cpu.md) page.
 
 Each benchmark result page includes:
 
