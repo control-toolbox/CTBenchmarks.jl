@@ -7,20 +7,66 @@
 # ───────────────────────────────────────────────────────────────────────────────
 
 """
-    PerformanceProfile
+    ProfileCriterion{M}
 
-Immutable structure containing all data needed to plot and analyze a performance profile.
+Criterion used to extract and compare a scalar metric from benchmark runs.
+
+# Fields
+- `name::String`: Human-readable name of the criterion (e.g., "CPU time (s)").
+- `value::Function`: Function `row::DataFrameRow -> M` extracting the metric.
+- `better::Function`: Function `(a::M, b::M) -> Bool` returning `true` if `a`
+  is strictly better than `b` according to the criterion.
+"""
+struct ProfileCriterion{M}
+    name::String
+    value::Function
+    better::Function
+end
+
+"""
+    PerformanceProfileConfig{M}
+
+Configuration describing how to build a performance profile from a benchmark
+results table.
+
+# Fields
+- `instance_cols::Vector{Symbol}`: Columns defining an instance (e.g., `[:problem, :grid_size]`).
+- `solver_cols::Vector{Symbol}`: Columns defining a solver/model (e.g., `[:model, :solver]`).
+- `criterion::ProfileCriterion{M}`: Metric extraction and comparison rule.
+- `is_success::Function`: `row::DataFrameRow -> Bool`, selects successful runs.
+- `row_filter::Function`: `row::DataFrameRow -> Bool`, additional filtering.
+- `aggregate::Function`: Aggregation `xs::AbstractVector{M} -> M` when multiple
+  runs exist for the same instance/solver.
+"""
+struct PerformanceProfileConfig{M}
+    instance_cols::Vector{Symbol}
+    solver_cols::Vector{Symbol}
+    criterion::ProfileCriterion{M}
+    is_success::Function
+    row_filter::Function
+    aggregate::Function
+end
+
+"""
+    PerformanceProfile{M}
+
+Immutable structure containing all data needed to plot and analyze a performance
+profile, together with the configuration that was used to build it.
+
+# Type parameter
+- `M`: Metric type used in the underlying profile (e.g., `Float64` for CPU time).
 
 # Fields
 - `bench_id::String`: Benchmark identifier
 - `df_instances::DataFrame`: All (problem, grid_size) instances attempted
-- `df_successful::DataFrame`: Successful runs with timing and ratios
-- `combos::Vector{String}`: List of "(model, solver)" combinations
+- `df_successful::DataFrame`: Successful runs with aggregated metric and ratios
+- `combos::Vector{String}`: List of solver labels (typically "(model, solver)")
 - `total_problems::Int`: Total number of instances (N in Dolan–Moré)
 - `min_ratio::Float64`: Minimum performance ratio across all combos
 - `max_ratio::Float64`: Maximum performance ratio across all combos
+- `config::PerformanceProfileConfig{M}`: Configuration used to construct this profile
 """
-struct PerformanceProfile
+struct PerformanceProfile{M}
     bench_id::String
     df_instances::DataFrame
     df_successful::DataFrame
@@ -28,6 +74,7 @@ struct PerformanceProfile
     total_problems::Int
     min_ratio::Float64
     max_ratio::Float64
+    config::PerformanceProfileConfig{M}
 end
 
 # ───────────────────────────────────────────────────────────────────────────────
@@ -109,29 +156,92 @@ end
 
 Compute performance profile data from benchmark results.
 
-# Arguments
-- `bench_id`: Benchmark identifier
-- `src_dir`: Path to docs/src directory
-
-# Returns
-- `PerformanceProfile` if data is available and valid
-- `nothing` if no data or no successful runs
-
-# Details
-This function:
-1. Loads benchmark data from JSON
-2. Identifies all (problem, grid_size) instances
-3. Filters successful runs with valid timing
-4. Computes performance ratios r_{p,s} = t_{p,s} / t_p^*
-5. Aggregates all data into a PerformanceProfile struct
-
-Follows the classical Dolan–Moré performance profile definition:
-- Each *instance* is a pair `(problem, grid_size)`
-- Each *solver-model combination* is identified by `(model, solver)`
-- Performance ratio: r_{p,s} = t_{p,s} / min_s t_{p,s}
-- Profile function: ρ_s(τ) = (1/N) * #{instances p : r_{p,s} ≤ τ}
+Currently this uses the default CPU time criterion; see `compute_profile_default_cpu`.
 """
-function compute_performance_profile(bench_id::AbstractString, src_dir::AbstractString)
+
+function build_profile_from_df(df::DataFrame,
+                               bench_id::AbstractString,
+                               cfg::PerformanceProfileConfig{M}) where {M}
+    # All instances attempted (for any solver/model)
+    df_instances = unique(select(df, cfg.instance_cols...))
+    if isempty(df_instances)
+        @warn "No instances found in benchmark results."
+        return nothing
+    end
+
+    # Filter runs according to configuration
+    df_filtered = filter(row -> cfg.row_filter(row) && cfg.is_success(row), df)
+    if isempty(df_filtered)
+        @warn "No successful benchmark entry to analyze."
+        return nothing
+    end
+
+    # Extract metric
+    df_filtered.metric = [cfg.criterion.value(row) for row in eachrow(df_filtered)]
+    df_filtered = dropmissing(df_filtered, :metric)
+    if isempty(df_filtered)
+        @warn "No valid metric values available for performance profile."
+        return nothing
+    end
+
+    # Aggregate per (instance, solver)
+    group_cols = vcat(cfg.instance_cols, cfg.solver_cols)
+    grouped = groupby(df_filtered, group_cols)
+    df_metric = combine(grouped, :metric => (xs -> cfg.aggregate(xs)) => :metric)
+
+    # Best metric per instance according to the criterion
+    inst_grouped = groupby(df_metric, cfg.instance_cols)
+    function _best_metric(xs)
+        best = xs[1]
+        for i in 2:length(xs)
+            best = cfg.criterion.better(xs[i], best) ? xs[i] : best
+        end
+        return best
+    end
+    df_best = combine(inst_grouped, :metric => _best_metric => :best_metric)
+    df_metric = leftjoin(df_metric, df_best, on = cfg.instance_cols)
+
+    # Dolan–Moré ratio (assumes smaller is better for the chosen metric)
+    df_metric.ratio = df_metric.metric ./ df_metric.best_metric
+
+    # Solver/model combination labels
+    combos = String[]
+    for row in eachrow(df_metric)
+        parts = [string(row[c]) for c in cfg.solver_cols]
+        push!(combos, "(" * join(parts, ", ") * ")")
+    end
+    df_metric.combo = combos
+    unique_combos = unique(df_metric.combo)
+
+    # Ratio bounds across all combinations
+    min_ratio = Inf
+    max_ratio = 1.0
+    for c in unique_combos
+        sub = filter(row -> row.combo == c, df_metric)
+        ratios = collect(skipmissing(sub.ratio))
+        if !isempty(ratios)
+            max_ratio = max(max_ratio, maximum(ratios))
+            min_ratio = min(min_ratio, minimum(ratios))
+        end
+    end
+
+    total_instances = nrow(df_instances)
+
+    return PerformanceProfile(
+        String(bench_id),
+        df_instances,
+        df_metric,
+        unique_combos,
+        total_instances,
+        min_ratio,
+        max_ratio,
+        cfg,
+    )
+end
+
+function compute_profile_generic(bench_id::AbstractString,
+                                 src_dir::AbstractString,
+                                 cfg::PerformanceProfileConfig{M}) where {M}
     raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing
         @warn "No result (missing or invalid file) for bench_id: $bench_id"
@@ -145,57 +255,39 @@ function compute_performance_profile(bench_id::AbstractString, src_dir::Abstract
     end
 
     df = DataFrame(rows)
+    return build_profile_from_df(df, bench_id, cfg)
+end
 
-    # All problem × grid_size instances that were attempted (for any solver/model)
-    df_instances = unique(select(df, [:problem, :grid_size]))
-    if isempty(df_instances)
-        @warn "No problem-grid instances found in benchmark results."
-        return nothing
-    end
-
-    # Keep only successful runs with a recorded benchmark for ratio computation
-    df_successful = filter(row -> row.success == true && row.benchmark !== nothing, df)
-    if isempty(df_successful)
-        @warn "No successful benchmark entry to analyze."
-        return nothing
-    end
-
-    # Extract timing and compute ratios
-    df_successful.time = [row.benchmark["time"] for row in eachrow(df_successful)]
-    select!(df_successful, [:problem, :model, :solver, :grid_size, :time])
-    df_successful = dropmissing(df_successful, :time)
-    sort!(df_successful, [:problem, :grid_size, :model, :solver])
-
-    df_min = combine(groupby(df_successful, [:problem, :grid_size]), :time => minimum => :min_time)
-    df_successful = leftjoin(df_successful, df_min, on = [:problem, :grid_size])
-    df_successful.ratio = df_successful.time ./ df_successful.min_time
-
-    df_successful.combo = string.("(", df_successful.model, ", ", df_successful.solver, ")")
-    combos = unique(df_successful.combo)
-
-    # Compute ratio bounds
-    min_ratio = Inf
-    max_ratio = 1.0
-    for c in combos
-        sub = filter(row -> row.combo == c, df_successful)
-        ratios = collect(skipmissing(sub.ratio))
-        if !isempty(ratios)
-            max_ratio = max(max_ratio, maximum(ratios))
-            min_ratio = min(min_ratio, minimum(ratios))
-        end
-    end
-
-    total_problems = nrow(df_instances)
-
-    return PerformanceProfile(
-        bench_id,
-        df_instances,
-        df_successful,
-        combos,
-        total_problems,
-        min_ratio,
-        max_ratio
+function compute_profile_default_cpu(bench_id::AbstractString,
+                                     src_dir::AbstractString)
+    cpu_criterion = ProfileCriterion{Float64}(
+        "CPU time (s)",
+        row -> begin
+            bench = row.benchmark
+            if bench === nothing || ismissing(bench)
+                return NaN
+            end
+            time_raw = get(bench, "time", nothing)
+            time_raw === nothing && return NaN
+            return Float64(time_raw)
+        end,
+        (a, b) -> a <= b,
     )
+
+    cfg = PerformanceProfileConfig{Float64}(
+        [:problem, :grid_size],
+        [:model, :solver],
+        cpu_criterion,
+        row -> row.success == true && row.benchmark !== nothing,
+        row -> true,
+        xs -> mean(skipmissing(xs)),
+    )
+
+    return compute_profile_generic(bench_id, src_dir, cfg)
+end
+
+function compute_performance_profile(bench_id::AbstractString, src_dir::AbstractString)
+    return compute_profile_default_cpu(bench_id, src_dir)
 end
 
 # ───────────────────────────────────────────────────────────────────────────────
@@ -298,94 +390,22 @@ end
 # ───────────────────────────────────────────────────────────────────────────────
 
 """
-    _plot_performance_profiles(bench_id)
+    _plot_profile_default_cpu(bench_id, src_dir)
 
-Generate and display performance profile plots for benchmark results.
+Generate and display the default CPU-time performance profile plot for a
+benchmark.
 
-# Arguments
-- `bench_id`: Benchmark identifier string
-
-# Returns
-- `Plots.Plot`: Performance profile plot, or empty plot if no data available
-
-# Details
-Creates a performance profile plot showing the proportion of solved instances
-for each solver-model combination relative to the best solver for each problem.
-
-The plot uses:
-- Log scale (base 2) on the x-axis for performance ratio (τ)
-- Proportion of solved instances on the y-axis
-- One curve per (model, solver) combination
-
-Only successful benchmarks with valid timing data are included.
-Returns an empty plot if no benchmark data or successful runs are found.
-
-## Definition of the performance profile
-
-We follow the classical performance profile definition à la Dolan–Moré, adapted to
-this benchmark structure:
-
-- Each *instance* is a pair `(problem, grid_size)` appearing in the benchmark
-  results, regardless of whether it was successfully solved by any solver.
-- Each *solver-model combination* `s` is identified by `(model, solver)`.
-
-For each instance `p = (problem, grid_size)` and solver-model `s`:
-
-1. If the run `(p, s)` has `success == true` and a valid benchmark object,
-   we extract the CPU wall time
-
-   - `t_{p,s} = row.benchmark["time"]`.
-
-2. Among all solver-models `s` that succeeded on the same instance `p`, we
-   compute the best (minimal) time
-
-   - `t_p^* = min_s t_{p,s}`.
-
-3. For every successful run `(p, s)` we define the performance ratio
-
-   - `r_{p,s} = t_{p,s} / t_p^* ≥ 1`.
-
-   Instances where `s` failed (or has no valid timing) are treated conceptually
-   as having `r_{p,s} = +∞`: they never contribute to the counts of
-   `r_{p,s} ≤ τ` for any finite `τ`.
-
-We then define the performance profile of each solver-model combination `s` as a
-piecewise-constant, non-decreasing function
-
-```text
-ρ_s(τ) = (1 / N) * # { instances p : r_{p,s} ≤ τ },
-```
-
-where `N` is the **total** number of distinct `(problem, grid_size)` instances
-present in the JSON file (including those where all solvers failed).
-
-- The x-axis samples `τ` over the sorted finite ratios `r_{p,s}` for each `s`.
-- The y-axis value at each `τ` is the fraction of all instances on which
-  solver-model `s` has a performance ratio at most `τ`.
-
-## Treatment of failures and unsolved problems
-
-- Only instances with `success == true` and a valid timing contribute ratios
-  `r_{p,s}` and hence can increase `ρ_s(τ)`.
-- Instances where a given solver-model fails are counted in `N` but never in the
-  numerator `# { r_{p,s} ≤ τ }` for that solver-model.
-- Instances where **all** solver-models fail are still included in `N` but do
-  not contribute any `r_{p,s}` for any solver-model.
-
-As a consequence, if there exist problem-grid instances that are not solved by a
-given solver-model combination, its curve `ρ_s(τ)` will plateau strictly below
-`1` (100%). If some instances are unsolved by *all* solver-models, then **no**
-curve can reach `1`, clearly indicating that there are problems for which none
-of the tested approaches succeeded.
+This is a convenience wrapper around `compute_profile_default_cpu` and
+`plot_performance_profile`.
 """
-function _plot_performance_profiles(bench_id::AbstractString, src_dir::AbstractString)
-    pp = compute_performance_profile(bench_id, src_dir)
+function _plot_profile_default_cpu(bench_id::AbstractString, src_dir::AbstractString)
+    pp = compute_profile_default_cpu(bench_id, src_dir)
     if pp === nothing
         println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
         return plot()  # Empty plot on error
     end
-    
+
     plt = plot_performance_profile(pp)
-    @info "  ✅ Global performance profile generated."
+    @info "  ✅ Default CPU performance profile generated."
     return plt
 end

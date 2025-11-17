@@ -17,7 +17,7 @@ Registry of plotting functions that can be called from INCLUDE_FIGURE blocks.
 All registered functions must accept string arguments and return a Plots.Plot object.
 """
 const FIGURE_FUNCTIONS = Dict{String, Function}(
-    "_plot_performance_profiles" => _plot_performance_profiles,
+    "_plot_profile_default_cpu" => _plot_profile_default_cpu,
     "_plot_time_vs_grid_size" => _plot_time_vs_grid_size,
     "_plot_time_vs_grid_size_bar" => _plot_time_vs_grid_size_bar,
 )
@@ -39,7 +39,7 @@ Safely call a registered plotting function with string arguments.
 
 # Example
 ```julia
-plt = call_figure_function("_plot_performance_profiles", ["core-ubuntu-latest"])
+plt = call_figure_function("_plot_profile_default_cpu", ["core-ubuntu-latest"])
 ```
 """
 function call_figure_function(function_name::AbstractString, args::Vector{<:AbstractString})
@@ -67,7 +67,7 @@ Generate a unique basename for figure files based on template name, function, an
 
 # Arguments
 - `template_name::String`: Name of the template file (e.g., "cpu.md.template")
-- `function_name::String`: Name of the plotting function (e.g., "_plot_performance_profiles")
+- `function_name::String`: Name of the plotting function (e.g., "_plot_profile_default_cpu")
 - `args_str::String`: String representation of arguments (e.g., "core-ubuntu-latest")
 
 # Returns
@@ -75,8 +75,8 @@ Generate a unique basename for figure files based on template name, function, an
 
 # Example
 ```julia
-basename = generate_figure_basename("cpu.md.template", "_plot_performance_profiles", "core-ubuntu-latest")
-# Returns: "cpu_plot_performance_profiles_a3f2c1d4"
+basename = generate_figure_basename("cpu.md.template", "_plot_profile_default_cpu", "core-ubuntu-latest")
+# Returns: "cpu_plot_profile_default_cpu_a3f2c1d4"
 ```
 """
 function generate_figure_basename(template_name::AbstractString, function_name::AbstractString, args_str::AbstractString)
@@ -117,11 +117,11 @@ Generate SVG and PDF files for a figure and return their filenames.
 ```julia
 svg, pdf = generate_figure_files(
     "cpu.md.template",
-    "_plot_performance_profiles",
+    "_plot_profile_default_cpu",
     ["core-ubuntu-latest"],
     "docs/src/assets/plots"
 )
-# Returns: ("cpu_plot_performance_profiles_a3f2c1d4.svg", "cpu_plot_performance_profiles_a3f2c1d4.pdf")
+# Returns: ("cpu_plot_profile_default_cpu_a3f2c1d4.svg", "cpu_plot_profile_default_cpu_a3f2c1d4.pdf")
 ```
 """
 function generate_figure_files(

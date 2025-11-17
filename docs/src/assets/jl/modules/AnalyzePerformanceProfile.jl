@@ -27,8 +27,19 @@ function analyze_performance_profile(pp::PerformanceProfile)
     print(buf, "!!! info \"Performance Profile Analysis\"\n")
     print(buf, "    **Dataset overview for `$(pp.bench_id)`:**\n")
     print(buf, "    - **Problems**: ", length(unique(pp.df_instances.problem)), " unique optimal control problems\n")
-    print(buf, "    - **Instances**: ", pp.total_problems, " problem–grid_size pairs\n")
-    print(buf, "    - **Solver–model combinations**: ", length(pp.combos), "\n")
+    print(buf, "    - **Instances**: ", pp.total_problems, "\n")
+    print(buf, "    - **Solver combos**: ", length(pp.combos), "\n")
+
+    # Profile configuration (instances, combos, criterion)
+    cfg = pp.config
+    instance_cols = join(string.(cfg.instance_cols), ", ")
+    solver_cols = join(string.(cfg.solver_cols), ", ")
+
+    print(buf, "\n")
+    print(buf, "    **Profile configuration:**\n")
+    print(buf, "    - **Instance definition**: (", instance_cols, ")\n")
+    print(buf, "    - **Solver combos definition**: (", solver_cols, ")\n")
+    print(buf, "    - **Criterion**: ", cfg.criterion.name, "\n")
     
     # Compute total successful runs across all solver-model combinations
     # Total runs = total_problems × number of combos (each combo attempts each instance)
@@ -36,9 +47,14 @@ function analyze_performance_profile(pp::PerformanceProfile)
     n_successful_runs = nrow(pp.df_successful)
     success_percentage = round(100 * n_successful_runs / total_runs, digits=1)
     print(buf, "    - **Successful runs**: ", n_successful_runs, "/", total_runs, " (", success_percentage, "%)\n")
+
+    # Compute successful instances: instances with at least one successful combo
+    solved_instances = unique(select(pp.df_successful, [:problem, :grid_size]))
+    n_successful_instances = nrow(solved_instances)
+    success_instances_percentage = round(100 * n_successful_instances / pp.total_problems, digits=1)
+    print(buf, "    - **Successful instances**: ", n_successful_instances, "/", pp.total_problems, " (", success_instances_percentage, "%)\n")
     
     # Identify instances with no successful run for any solver-model combination
-    solved_instances = unique(select(pp.df_successful, [:problem, :grid_size]))
     solved_set = Set((row.problem, row.grid_size) for row in eachrow(solved_instances))
     unsuccessful_instances = [(row.problem, row.grid_size) for row in eachrow(pp.df_instances)
                               if !((row.problem, row.grid_size) in solved_set)]
@@ -107,12 +123,13 @@ function analyze_performance_profile(pp::PerformanceProfile)
 end
 
 """
-    _analyze_performance_profiles(bench_id::AbstractString, src_dir::AbstractString) -> String
+    _analyze_profile_default_cpu(bench_id::AbstractString, src_dir::AbstractString) -> String
 
-Compute a detailed textual analysis of a benchmark's performance profile data.
+Compute a detailed textual analysis of a benchmark's default CPU-time
+performance profile.
 
 This is a convenience wrapper that:
-1. Computes the performance profile data using `compute_performance_profile`
+1. Computes the performance profile data using `compute_profile_default_cpu`
 2. Generates the analysis using `analyze_performance_profile`
 
 # Arguments
@@ -122,8 +139,8 @@ This is a convenience wrapper that:
 # Returns
 - Markdown string with analysis, or a warning if no data is available
 """
-function _analyze_performance_profiles(bench_id::AbstractString, src_dir::AbstractString)
-    pp = compute_performance_profile(bench_id, src_dir)
+function _analyze_profile_default_cpu(bench_id::AbstractString, src_dir::AbstractString)
+    pp = compute_profile_default_cpu(bench_id, src_dir)
     if pp === nothing
         return "!!! warning\n    No benchmark data available for analysis for `$bench_id`.\n"
     end

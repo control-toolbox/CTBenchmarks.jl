@@ -26,7 +26,7 @@ function _print_benchmark_table_results_from_args(args...)
 
     bench_id = String(args[1])
     problems = if length(args) > 1
-        String[args[i] for i in 2:length(args)]
+        String[arg for arg in args[2:end]]
     else
         nothing
     end
@@ -35,7 +35,7 @@ function _print_benchmark_table_results_from_args(args...)
 end
 
 const ANALYSIS_FUNCTIONS = Dict{String, Function}(
-    "_analyze_performance_profiles" => _analyze_performance_profiles,
+    "_analyze_profile_default_cpu" => _analyze_profile_default_cpu,
     "_print_benchmark_table_results" => _print_benchmark_table_results_from_args,
 )
 
