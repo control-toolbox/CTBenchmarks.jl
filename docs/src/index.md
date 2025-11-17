@@ -157,7 +157,9 @@ This documentation includes pre-computed benchmark results from continuous integ
 - **Ubuntu Latest** - Standard CPU benchmarks on GitHub Actions runners
 - **Moonshot** - GPU-accelerated benchmarks on dedicated hardware
 
-These results provide reference performance data and demonstrate the capabilities of different solver and model combinations. You can explore them in the [Core Benchmark CPU](core/cpu.md) page.
+These results provide reference performance data and demonstrate the capabilities of different solver and model combinations. You can explore them in the [Core Benchmark CPU](core/cpu.md) and [Core Benchmark GPU](core/gpu.md) pages.
+
+These pages include Dolan–Moré performance profiles for CPU time and solver iterations. For details on how to read these profiles, see the [Performance Profiles](@ref performance-profiles) page.
 
 Each benchmark result page includes:
 

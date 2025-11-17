@@ -1,9 +1,9 @@
 # ═══════════════════════════════════════════════════════════════════════════════
-# Analysis Generation Module
+# Text Generation Module
 # ═══════════════════════════════════════════════════════════════════════════════
 
 """
-Registry of analysis functions that can be called from INCLUDE_ANALYSIS blocks.
+Registry of text-generating functions that can be called from INCLUDE_TEXT blocks.
 
 All registered functions must accept string arguments and return a Markdown
 string that will be inlined directly into the generated documentation.
@@ -12,7 +12,7 @@ string that will be inlined directly into the generated documentation.
 """
     _print_benchmark_table_results_from_args(args...)
 
-Internal adapter used by INCLUDE_ANALYSIS to call `_print_benchmark_table_results`.
+Internal adapter used by INCLUDE_TEXT to call `_print_benchmark_table_results`.
 
 Interpretation of arguments:
 - First argument: `bench_id`
@@ -34,35 +34,35 @@ function _print_benchmark_table_results_from_args(args...)
     return _print_benchmark_table_results(bench_id; problems=problems)
 end
 
-const ANALYSIS_FUNCTIONS = Dict{String, Function}(
+const TEXT_FUNCTIONS = Dict{String, Function}(
     "_analyze_profile_default_cpu" => _analyze_profile_default_cpu,
     "_analyze_profile_default_iter" => _analyze_profile_default_iter,
     "_print_benchmark_table_results" => _print_benchmark_table_results_from_args,
 )
 
 """
-    call_analysis_function(function_name::String, args::Vector{String})
+    call_text_function(function_name::String, args::Vector{String})
 
-Safely call a registered analysis function with string arguments.
+Safely call a registered text function with string arguments.
 
 # Arguments
-- `function_name::String`: Name of the function (must be in `ANALYSIS_FUNCTIONS`)
+- `function_name::String`: Name of the function (must be in `TEXT_FUNCTIONS`)
 - `args::Vector{String}`: Vector of string arguments to pass to the function
 
 # Returns
-- `String`: Markdown content produced by the analysis function
+- `String`: Markdown content produced by the text function
 
 # Throws
 - `ErrorException` if function not found in registry
 """
-function call_analysis_function(function_name::AbstractString, args::Vector{<:AbstractString})
-    if !haskey(ANALYSIS_FUNCTIONS, function_name)
-        available = join(sort(collect(keys(ANALYSIS_FUNCTIONS))), ", ")
-        error("Function '$function_name' not found in ANALYSIS_FUNCTIONS registry. Available: $available")
+function call_text_function(function_name::AbstractString, args::Vector{<:AbstractString})
+    if !haskey(TEXT_FUNCTIONS, function_name)
+        available = join(sort(collect(keys(TEXT_FUNCTIONS))), ", ")
+        error("Function '$function_name' not found in TEXT_FUNCTIONS registry. Available: $available")
     end
 
-    func = ANALYSIS_FUNCTIONS[function_name]
-    @info "  🧮 Calling $function_name($(join(args, ", ")))"
+    func = TEXT_FUNCTIONS[function_name]
+    @info "  📝 Calling $function_name($(join(args, ", ")))"
 
     return func(args...)
 end

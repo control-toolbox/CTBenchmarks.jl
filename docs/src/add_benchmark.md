@@ -5,8 +5,8 @@ This guide explains how to add a new benchmark to the CTBenchmarks.jl pipeline.
 !!! note
     This page focuses on the CI and configuration aspects of benchmarks. For a
     detailed explanation of how documentation pages are generated from
-    templates (including `INCLUDE_ENVIRONMENT`, `INCLUDE_FIGURE`, and
-    `@setup BENCH` blocks), see the
+    templates (including `INCLUDE_ENVIRONMENT`, `INCLUDE_FIGURE`,
+    `INCLUDE_TEXT`, and `@setup BENCH` blocks), see the
     [Documentation Generation Process](@ref documentation-process).
 
 ## Overview

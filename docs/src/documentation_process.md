@@ -30,7 +30,8 @@ The documentation build has three main stages:
    - Process template files (including manual templates) to produce temporary
      `.md` files that Documenter can read.
    - While processing templates, replace special blocks such as
-     `INCLUDE_ENVIRONMENT` and `INCLUDE_FIGURE`.
+     `INCLUDE_ENVIRONMENT`, `INCLUDE_FIGURE`, and `INCLUDE_TEXT` (with
+     legacy `INCLUDE_ANALYSIS` still supported as an alias).
 
 3. **Build and deploy documentation**
    - Call `makedocs` with the processed `.md` files.
@@ -113,8 +114,9 @@ The main steps in `docs/make.jl` are:
       template files/directories and:
       1. Resolves them to concrete template paths
          (e.g., `core/cpu.md.template`, `core/problems/*.md.template`).
-      2. Processes each template, replacing `INCLUDE_ENVIRONMENT` and
-         `INCLUDE_FIGURE` blocks and writing the resulting `.md` files.
+      2. Processes each template, replacing `INCLUDE_ENVIRONMENT`,
+         `INCLUDE_FIGURE`, and `INCLUDE_TEXT` blocks (and legacy
+         `INCLUDE_ANALYSIS` blocks) and writing the resulting `.md` files.
       3. Collects all figure paths generated during processing.
       4. Runs `makedocs`.
       5. Cleans up all generated `.md` files and figures in a `finally` block.
@@ -201,6 +203,7 @@ the form:
 
 - `<!-- INCLUDE_ENVIRONMENT: ... -->`
 - `<!-- INCLUDE_FIGURE: ... -->`
+- `<!-- INCLUDE_TEXT: ... -->`
 
 These are handled by `TemplateProcessor.jl`.
 
@@ -247,7 +250,7 @@ core/...md.template
 
 ```markdown
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_performance_profiles
+FUNCTION = _plot_profile_default_cpu
 ARGS = core-ubuntu-latest
 -->
 ```
@@ -256,8 +259,9 @@ During processing:
 
 - The function name and arguments are parsed from the block.
 - `FigureGeneration.jl` looks up the function in the `FIGURE_FUNCTIONS`
-  registry:
-  - `_plot_performance_profiles`
+  registry, which currently includes (among others):
+  - `_plot_profile_default_cpu`
+  - `_plot_profile_default_iter`
   - `_plot_time_vs_grid_size`
   - `_plot_time_vs_grid_size_bar`
 - The plotting function is called in the `BENCH` environment with string
@@ -273,23 +277,54 @@ version suitable for high-quality printing.
 
 ```text
 core/...md.template
-   └─ <!-- INCLUDE_FIGURE: FUNCTION = _plot_performance_profiles, ARGS = core-ubuntu-latest -->
+   └─ <!-- INCLUDE_FIGURE: FUNCTION = _plot_profile_default_cpu, ARGS = core-ubuntu-latest -->
         └─ replace_figure_blocks
              ├─ call_figure_function(FUNCTION, ARGS)
              ├─ generate_figure_files → SVG + PDF in assets/plots
              └─ emit @raw html block (img SVG, link PDF)
 ```
 
+### `INCLUDE_TEXT`
+
+`INCLUDE_TEXT` blocks are used to generate textual analysis or other Markdown
+from benchmark results, such as performance-profile summaries or tables.
+
+For example:
+
+```markdown
+<!-- INCLUDE_TEXT:
+FUNCTION = _analyze_profile_default_cpu
+ARGS = core-ubuntu-latest
+-->
+```
+
+During processing:
+
+- The function name and arguments are parsed from the block.
+- `TextGeneration.jl` looks up the function in the `TEXT_FUNCTIONS` registry,
+  which currently includes:
+  - `_analyze_profile_default_cpu`
+  - `_analyze_profile_default_iter`
+  - `_print_benchmark_table_results`
+- The text function is called with string arguments and must return a
+  Markdown string (for example, the output of
+  `analyze_performance_profile(pp)` or a benchmark table).
+- The returned Markdown is inlined directly into the generated `.md` file.
+
 ---
 
-## Figure Types and Helper Functions
+## Figure Types, Analysis, and Helper Functions
 
 Several helper modules provide the concrete plots and textual outputs:
 
-- **Performance profiles** — `PlotPerformanceProfile.jl`
-  - `_plot_performance_profiles(bench_id)`
-  - Plots Dolan–Moré-style performance profiles over (problem, grid_size)
-    instances and (model, solver) combinations.
+- **Performance profiles** — `PerformanceProfileCore.jl` + `PlotPerformanceProfile.jl` + `AnalyzePerformanceProfile.jl` + `TextGeneration.jl`
+  - `_plot_profile_default_cpu(bench_id)` / `_plot_profile_default_iter(bench_id)`
+    (called via `INCLUDE_FIGURE`)
+  - `_analyze_profile_default_cpu(bench_id)` / `_analyze_profile_default_iter(bench_id)`
+    (called via `INCLUDE_TEXT`)
+  - Together, these functions compute, plot, and summarize Dolan–Moré-style
+    performance profiles over `(problem, grid_size)` instances and
+    `(model, solver)` combinations.
 
 - **Time vs grid size** — `PlotTimeVsGridSize.jl`
   - `_plot_time_vs_grid_size(problem, bench_id, src_dir)`
@@ -355,11 +390,31 @@ The general pattern for such a page is:
      -->
      ```
 
-   - One or more `INCLUDE_FIGURE` blocks:
+   - One or more `INCLUDE_FIGURE` blocks, for example a CPU-time performance
+     profile and an iterations profile:
 
      ```markdown
      <!-- INCLUDE_FIGURE:
-     FUNCTION = _plot_performance_profiles
+     FUNCTION = _plot_profile_default_cpu
+     ARGS = core-ubuntu-latest
+     -->
+
+     <!-- INCLUDE_FIGURE:
+     FUNCTION = _plot_profile_default_iter
+     ARGS = core-ubuntu-latest
+     -->
+     ```
+
+   - Optional `INCLUDE_TEXT` blocks to insert textual analysis:
+
+     ```markdown
+     <!-- INCLUDE_TEXT:
+     FUNCTION = _analyze_profile_default_cpu
+     ARGS = core-ubuntu-latest
+     -->
+
+     <!-- INCLUDE_TEXT:
+     FUNCTION = _print_benchmark_table_results
      ARGS = core-ubuntu-latest
      -->
      ```
@@ -387,8 +442,9 @@ page for full details of the template processing pipeline.
   files, generating templates, processing them, and calling `makedocs`.
 - Problem pages for core benchmarks are generated automatically from benchmark
   results.
-- Template processing replaces `INCLUDE_ENVIRONMENT` and `INCLUDE_FIGURE`
-  blocks with rich content and clickable figures.
+- Template processing replaces `INCLUDE_ENVIRONMENT`, `INCLUDE_FIGURE`, and
+  `INCLUDE_TEXT` blocks (or legacy `INCLUDE_ANALYSIS` blocks) with rich
+  content, figures, and textual analyses.
 - Helper modules provide plotting, logging, and environment/configuration
   utilities.
 - To document a new benchmark, you can rely on the automatic problem pages and

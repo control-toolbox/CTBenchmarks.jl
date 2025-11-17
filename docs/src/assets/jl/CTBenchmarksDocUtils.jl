@@ -69,7 +69,7 @@ include(joinpath(@__DIR__, "modules", "PlotTimeVsGridSize.jl"))
 include(joinpath(@__DIR__, "modules", "FigureGeneration.jl"))
 include(joinpath(@__DIR__, "modules", "PrintBenchmarkResults.jl"))
 include(joinpath(@__DIR__, "modules", "AnalyzePerformanceProfile.jl"))
-include(joinpath(@__DIR__, "modules", "AnalysisGeneration.jl"))
+include(joinpath(@__DIR__, "modules", "TextGeneration.jl"))
 include(joinpath(@__DIR__, "modules", "TemplateProcessor.jl"))
 include(joinpath(@__DIR__, "modules", "TemplateGenerator.jl"))
 include(joinpath(@__DIR__, "modules", "DocumenterReference.jl"))
@@ -162,7 +162,7 @@ export _plot_profile_default_iter
 export _plot_time_vs_grid_size
 export _plot_time_vs_grid_size_bar
 
-# Analysis functions (used by INCLUDE_ANALYSIS blocks)
+# Text/analysis functions (used by INCLUDE_TEXT blocks)
 export _analyze_profile_default_cpu
 export _analyze_profile_default_iter
 export _print_benchmark_table_results
