@@ -195,6 +195,13 @@ function generate_template_problem(
     _print_benchmark_log("$bench_id"; problems=["$problem_name"]) # hide
     ```"""
 
+    TABLE = """
+    <!-- INCLUDE_ANALYSIS:
+    FUNCTION = _print_benchmark_table_results
+    ARGS = $bench_id, $problem_name
+    -->
+    """
+
     # ───────────────────────────────────────────────────────────────────────────
     # Assemble all sections in order
     # ───────────────────────────────────────────────────────────────────────────
@@ -204,6 +211,7 @@ function generate_template_problem(
     push!(blocks, ENV)
     push!(blocks, RESULTS)
     isempty(FIGURES) || push!(blocks, FIGURES)
+    push!(blocks, TABLE)
     push!(blocks, LOG)
 
     return join(map(x -> x * "\n", blocks), "")
@@ -404,6 +412,8 @@ function write_core_benchmark_templates(
     
     # Get all problems from all benchmarks
     problems = get_problems_in_benchmarks(benchmarks, src_dir)
+
+    # problems = String[]
 
     # Generate template file for each problem
     @info "📝 Generating template files for $(length(problems)) problem(s)"

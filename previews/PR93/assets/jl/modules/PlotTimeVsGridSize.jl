@@ -92,7 +92,7 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id::AbstractStri
 end
 
 """
-    _plot_time_vs_grid_size_bar(problem, bench_id, src_dir)
+    _plot_time_vs_grid_size_bar(problem, bench_id, src_dir; max_bar_width=0.18)
 
 Plot solve time versus grid size as grouped bars for each model–solver
 combination.
@@ -104,12 +104,18 @@ displays the result as a grouped bar chart.
 - `problem::AbstractString`: Name of the problem to filter.
 - `bench_id`: Benchmark identifier used to locate the benchmark JSON file.
 - `src_dir`: Path to docs/src directory
+- `max_bar_width::Real`: Maximum width of each bar in x-axis units.
 
 # Returns
 - `Plots.Plot`: Grouped bar plot of solve time vs grid size. Returns an empty
   plot if no data is available.
 """
-function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString)
+function _plot_time_vs_grid_size_bar(
+    problem::AbstractString,
+    bench_id::AbstractString,
+    src_dir::AbstractString;
+    max_bar_width::Real = 0.08,
+)
     raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing
         println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
@@ -149,7 +155,17 @@ function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id::Abstract
     # Width of a group and spacing/width for individual bars
     group_width = 0.7
     center_spacing = group_width / max(nC, 1)
-    bar_width = 0.6 * center_spacing  # bars narrower than spacing → visible gap
+    base_bar_width = 0.6 * center_spacing
+
+    # If bars are capped by max_bar_width, shrink the spacing so that bar
+    # centers stay proportional to the actual bar width (tighter grouping).
+    if base_bar_width <= max_bar_width
+        bar_width = base_bar_width
+    else
+        bar_width = max_bar_width
+        center_spacing = bar_width / 0.6
+    end
+
     offsets = (collect(0:nC-1) .- (nC - 1) / 2) .* center_spacing
 
     plt = plot(

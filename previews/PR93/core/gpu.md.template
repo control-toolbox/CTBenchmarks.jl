@@ -27,6 +27,16 @@ FUNCTION = _plot_performance_profiles
 ARGS = core-moonshot-gpu
 -->
 
+<!-- INCLUDE_ANALYSIS:
+FUNCTION = _analyze_performance_profiles
+ARGS = core-moonshot-gpu
+-->
+
+<!-- INCLUDE_ANALYSIS:
+FUNCTION = _print_benchmark_table_results
+ARGS = core-moonshot-gpu
+-->
+
 ```@example BENCH
 _print_benchmark_log("core-moonshot-gpu") # hide
 ```

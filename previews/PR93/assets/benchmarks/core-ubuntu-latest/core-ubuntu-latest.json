@@ -1,10 +1,10 @@
 {
     "metadata": {
         "julia_version": "1.11.7",
-        "versioninfo": "Julia Version 1.11.7\nCommit f2b3dbda30a (2025-09-08 12:10 UTC)\nBuild Info:\n  Official https://julialang.org/ release\nPlatform Info:\n  OS: Linux (x86_64-linux-gnu)\n  CPU: 4 × Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz\n  WORD_SIZE: 64\n  LLVM: libLLVM-16.0.6 (ORCJIT, icelake-server)\nThreads: 1 default, 0 interactive, 1 GC (on 4 virtual cores)\nEnvironment:\n  JULIA_PKG_SERVER_REGISTRY_PREFERENCE = eager\n",
+        "versioninfo": "Julia Version 1.11.7\nCommit f2b3dbda30a (2025-09-08 12:10 UTC)\nBuild Info:\n  Official https://julialang.org/ release\nPlatform Info:\n  OS: Linux (x86_64-linux-gnu)\n  CPU: 4 × AMD EPYC 7763 64-Core Processor\n  WORD_SIZE: 64\n  LLVM: libLLVM-16.0.6 (ORCJIT, znver3)\nThreads: 1 default, 0 interactive, 1 GC (on 4 virtual cores)\nEnvironment:\n  JULIA_PKG_SERVER_REGISTRY_PREFERENCE = eager\n",
         "pkg_manifest": "\u001b[36m\u001b[1mProject\u001b[22m\u001b[39m CTBenchmarks v0.2.3\n\u001b[32m\u001b[1mStatus\u001b[22m\u001b[39m `~/work/CTBenchmarks.jl/CTBenchmarks.jl/Manifest.toml`\n  \u001b[90m[54578032] \u001b[39mADNLPModels v0.8.13\n  \u001b[90m[47edcb42] \u001b[39mADTypes v1.19.0\n  \u001b[90m[14f7f29c] \u001b[39mAMD v0.5.3\n  \u001b[90m[621f4979] \u001b[39mAbstractFFTs v1.5.0\n  \u001b[90m[79e6a3ab] \u001b[39mAdapt v4.4.0\n  \u001b[90m[66dad0bd] \u001b[39mAliasTables v1.1.3\n  \u001b[90m[a9b6321e] \u001b[39mAtomix v1.1.2\n  \u001b[90m[13072b0f] \u001b[39mAxisAlgorithms v1.1.0\n  \u001b[90m[ab4f0b2a] \u001b[39mBFloat16s v0.6.0\n  \u001b[90m[6e4b80f9] \u001b[39mBenchmarkTools v1.6.3\n  \u001b[90m[d1d4a3ce] \u001b[39mBitFlags v0.1.9\n  \u001b[90m[fa961155] \u001b[39mCEnum v0.5.0\n\u001b[32m⌃\u001b[39m \u001b[90m[54762871] \u001b[39mCTBase v0.16.2\n  \u001b[90m[790bbbee] \u001b[39mCTDirect v0.17.4\n  \u001b[90m[1c39547c] \u001b[39mCTFlows v0.8.9\n  \u001b[90m[34c4fa32] \u001b[39mCTModels v0.6.9\n  \u001b[90m[32681960] \u001b[39mCTParser v0.7.1\n  \u001b[90m[052768ef] \u001b[39mCUDA v5.9.4\n  \u001b[90m[1af6417a] \u001b[39mCUDA_Runtime_Discovery v1.0.0\n  \u001b[90m[45b445bb] \u001b[39mCUDSS v0.6.1\n  \u001b[90m[d360d2e6] \u001b[39mChainRulesCore v1.26.0\n  \u001b[90m[523fee87] \u001b[39mCodecBzip2 v0.8.5\n  \u001b[90m[944b1d66] \u001b[39mCodecZlib v0.7.8\n  \u001b[90m[35d6a980] \u001b[39mColorSchemes v3.31.0\n  \u001b[90m[3da002f7] \u001b[39mColorTypes v0.12.1\n  \u001b[90m[c3611d14] \u001b[39mColorVectorSpace v0.11.0\n  \u001b[90m[5ae59095] \u001b[39mColors v0.13.1\n  \u001b[90m[38540f10] \u001b[39mCommonSolve v0.2.4\n  \u001b[90m[bbf7d656] \u001b[39mCommonSubexpressions v0.3.1\n  \u001b[90m[34da2185] \u001b[39mCompat v4.18.1\n  \u001b[90m[f0e56b4a] \u001b[39mConcurrentUtilities v2.5.0\n  \u001b[90m[d38c429a] \u001b[39mContour v0.6.3\n  \u001b[90m[a8cc5b0e] \u001b[39mCrayons v4.1.1\n  \u001b[90m[9a962f9c] \u001b[39mDataAPI v1.16.0\n  \u001b[90m[a93c6f00] \u001b[39mDataFrames v1.8.1\n  \u001b[90m[864edb3b] \u001b[39mDataStructures v0.19.3\n  \u001b[90m[e2d170a0] \u001b[39mDataValueInterfaces v1.0.0\n  \u001b[90m[8bb1440f] \u001b[39mDelimitedFiles v1.9.1\n  \u001b[90m[163ba53b] \u001b[39mDiffResults v1.1.0\n  \u001b[90m[b552c78f] \u001b[39mDiffRules v1.15.1\n  \u001b[90m[ffbed154] \u001b[39mDocStringExtensions v0.9.5\n  \u001b[90m[1037b233] \u001b[39mExaModels v0.9.2\n  \u001b[90m[460bff9d] \u001b[39mExceptionUnwrapping v0.1.11\n  \u001b[90m[e2ba6199] \u001b[39mExprTools v0.1.10\n  \u001b[90m[c87230d0] \u001b[39mFFMPEG v0.4.5\n  \u001b[90m[9aa1b823] \u001b[39mFastClosures v0.3.2\n  \u001b[90m[1a297f60] \u001b[39mFillArrays v1.15.0\n  \u001b[90m[53c48c17] \u001b[39mFixedPointNumbers v0.8.5\n  \u001b[90m[1fa38f19] \u001b[39mFormat v1.3.7\n  \u001b[90m[f6369f11] \u001b[39mForwardDiff v1.3.0\n  \u001b[90m[069b7b12] \u001b[39mFunctionWrappers v1.1.3\n  \u001b[90m[0c68f7d7] \u001b[39mGPUArrays v11.2.6\n  \u001b[90m[46192b85] \u001b[39mGPUArraysCore v0.2.0\n  \u001b[90m[61eb1bfa] \u001b[39mGPUCompiler v1.7.4\n  \u001b[90m[096a3bc2] \u001b[39mGPUToolbox v1.0.0\n  \u001b[90m[28b8d3ca] \u001b[39mGR v0.73.18\n  \u001b[90m[42e2da0e] \u001b[39mGrisu v1.0.2\n  \u001b[90m[34c5aeac] \u001b[39mHSL v0.5.2\n  \u001b[90m[cd3eb016] \u001b[39mHTTP v1.10.19\n  \u001b[90m[076d061b] \u001b[39mHashArrayMappedTries v0.2.0\n  \u001b[90m[842dd82b] \u001b[39mInlineStrings v1.4.5\n  \u001b[90m[a98d9a8b] \u001b[39mInterpolations v0.16.2\n  \u001b[90m[41ab1584] \u001b[39mInvertedIndices v1.3.1\n  \u001b[90m[b6b21f68] \u001b[39mIpopt v1.13.0\n  \u001b[90m[92d709cd] \u001b[39mIrrationalConstants v0.2.6\n  \u001b[90m[82899510] \u001b[39mIteratorInterfaceExtensions v1.0.0\n  \u001b[90m[1019f520] \u001b[39mJLFzf v0.1.11\n  \u001b[90m[692b3bcd] \u001b[39mJLLWrappers v1.7.1\n  \u001b[90m[682c06a0] \u001b[39mJSON v1.3.0\n  \u001b[90m[0f8b85d8] \u001b[39mJSON3 v1.14.3\n  \u001b[90m[4076af6c] \u001b[39mJuMP v1.29.3\n  \u001b[90m[63c18a36] \u001b[39mKernelAbstractions v0.9.39\n  \u001b[90m[40e66cde] \u001b[39mLDLFactorizations v0.10.1\n  \u001b[90m[929cbde3] \u001b[39mLLVM v9.4.4\n  \u001b[90m[8b046642] \u001b[39mLLVMLoopInfo v1.0.0\n  \u001b[90m[b964fa9f] \u001b[39mLaTeXStrings v1.4.0\n  \u001b[90m[23fbe1c1] \u001b[39mLatexify v0.16.10\n  \u001b[90m[5c8ed15e] \u001b[39mLinearOperators v2.11.0\n  \u001b[90m[2ab3a3ac] \u001b[39mLogExpFunctions v0.3.29\n  \u001b[90m[e6f89c97] \u001b[39mLoggingExtras v1.2.0\n  \u001b[90m[33e6dc65] \u001b[39mMKL v0.9.0\n  \u001b[90m[d8e11817] \u001b[39mMLStyle v0.4.17\n  \u001b[90m[1914dd2f] \u001b[39mMacroTools v0.5.16\n  \u001b[90m[2621e9c9] \u001b[39mMadNLP v0.8.12\n  \u001b[90m[d72a61cc] \u001b[39mMadNLPGPU v0.7.16\n  \u001b[90m[3b83494e] \u001b[39mMadNLPMumps v0.5.1\n  \u001b[90m[b8f27783] \u001b[39mMathOptInterface v1.46.0\n  \u001b[90m[739be429] \u001b[39mMbedTLS v1.1.9\n  \u001b[90m[442fdcdd] \u001b[39mMeasures v0.3.3\n  \u001b[90m[2679e427] \u001b[39mMetis v1.5.0\n  \u001b[90m[e1d29d7a] \u001b[39mMissings v1.2.0\n  \u001b[90m[d8a4904e] \u001b[39mMutableArithmetics v1.6.7\n  \u001b[90m[a4795742] \u001b[39mNLPModels v0.21.5\n  \u001b[90m[f4238b75] \u001b[39mNLPModelsIpopt v0.11.0\n  \u001b[90m[e01155f1] \u001b[39mNLPModelsModifiers v0.7.2\n  \u001b[90m[5da4648a] \u001b[39mNVTX v1.0.1\n  \u001b[90m[77ba4419] \u001b[39mNaNMath v1.1.3\n  \u001b[90m[6fe1bfb0] \u001b[39mOffsetArrays v1.17.0\n  \u001b[90m[4d8831e6] \u001b[39mOpenSSL v1.6.0\n  \u001b[90m[5f98b655] \u001b[39mOptimalControl v1.1.6\n  \u001b[90m[59046045] \u001b[39mOptimalControlProblems v0.3.2\n  \u001b[90m[bac558e1] \u001b[39mOrderedCollections v1.8.1\n  \u001b[90m[d96e819e] \u001b[39mParameters v0.12.3\n  \u001b[90m[69de0a69] \u001b[39mParsers v2.8.3\n  \u001b[90m[ccf2f8ad] \u001b[39mPlotThemes v3.3.0\n  \u001b[90m[995b91a9] \u001b[39mPlotUtils v1.4.4\n  \u001b[90m[91a5bcdd] \u001b[39mPlots v1.41.1\n  \u001b[90m[2dfb63ee] \u001b[39mPooledArrays v1.4.3\n\u001b[33m⌅\u001b[39m \u001b[90m[aea7be01] \u001b[39mPrecompileTools v1.2.1\n  \u001b[90m[21216c6a] \u001b[39mPreferences v1.5.0\n  \u001b[90m[08abe8d2] \u001b[39mPrettyTables v3.1.0\n  \u001b[90m[43287f4e] \u001b[39mPtrArrays v1.3.0\n  \u001b[90m[be4d8f0f] \u001b[39mQuadmath v0.5.13\n  \u001b[90m[74087812] \u001b[39mRandom123 v1.7.1\n  \u001b[90m[e6cf234a] \u001b[39mRandomNumbers v1.6.0\n  \u001b[90m[c84ed2f1] \u001b[39mRatios v0.4.5\n  \u001b[90m[3cdcf5f2] \u001b[39mRecipesBase v1.3.4\n  \u001b[90m[01d81517] \u001b[39mRecipesPipeline v0.6.12\n  \u001b[90m[189a3867] \u001b[39mReexport v1.2.2\n  \u001b[90m[05181044] \u001b[39mRelocatableFolders v1.0.1\n  \u001b[90m[ae029012] \u001b[39mRequires v1.3.1\n  \u001b[90m[37e2e3b7] \u001b[39mReverseDiff v1.16.1\n  \u001b[90m[7e506255] \u001b[39mScopedValues v1.5.0\n  \u001b[90m[6c6a2e73] \u001b[39mScratch v1.3.0\n  \u001b[90m[91c51154] \u001b[39mSentinelArrays v1.4.8\n  \u001b[90m[992d4aef] \u001b[39mShowoff v1.0.3\n  \u001b[90m[777ac1f9] \u001b[39mSimpleBufferStream v1.2.0\n  \u001b[90m[ff4d7338] \u001b[39mSolverCore v0.3.8\n  \u001b[90m[a2af1166] \u001b[39mSortingAlgorithms v1.2.2\n  \u001b[90m[9f842d2f] \u001b[39mSparseConnectivityTracer v1.1.3\n  \u001b[90m[0a514795] \u001b[39mSparseMatrixColorings v0.4.23\n  \u001b[90m[276daf66] \u001b[39mSpecialFunctions v2.6.1\n  \u001b[90m[860ef19b] \u001b[39mStableRNGs v1.0.4\n  \u001b[90m[90137ffa] \u001b[39mStaticArrays v1.9.15\n  \u001b[90m[1e83bf80] \u001b[39mStaticArraysCore v1.4.4\n  \u001b[90m[10745b16] \u001b[39mStatistics v1.11.1\n  \u001b[90m[82ae8749] \u001b[39mStatsAPI v1.7.1\n  \u001b[90m[2913bbd2] \u001b[39mStatsBase v0.34.8\n  \u001b[90m[892a3eda] \u001b[39mStringManipulation v0.4.1\n  \u001b[90m[856f2bd8] \u001b[39mStructTypes v1.11.0\n  \u001b[90m[ec057cc2] \u001b[39mStructUtils v2.6.0\n  \u001b[90m[3783bdb8] \u001b[39mTableTraits v1.0.1\n  \u001b[90m[bd369af6] \u001b[39mTables v1.12.1\n  \u001b[90m[62fd8b95] \u001b[39mTensorCore v0.1.1\n  \u001b[90m[a759f4b9] \u001b[39mTimerOutputs v0.5.29\n  \u001b[90m[e689c965] \u001b[39mTracy v0.1.6\n  \u001b[90m[3bb67fe8] \u001b[39mTranscodingStreams v0.11.3\n  \u001b[90m[5c2747f8] \u001b[39mURIs v1.6.1\n  \u001b[90m[3a884ed6] \u001b[39mUnPack v1.0.2\n  \u001b[90m[1cfade01] \u001b[39mUnicodeFun v0.4.1\n  \u001b[90m[013be700] \u001b[39mUnsafeAtomics v0.3.0\n  \u001b[90m[41fe7b60] \u001b[39mUnzip v0.2.0\n  \u001b[90m[efce3f68] \u001b[39mWoodburyMatrices v1.0.0\n  \u001b[90m[ae81ac8f] \u001b[39mASL_jll v0.1.3+0\n  \u001b[90m[6e34b625] \u001b[39mBzip2_jll v1.0.9+0\n  \u001b[90m[d1e2174e] \u001b[39mCUDA_Compiler_jll v0.3.0+0\n  \u001b[90m[4ee394cb] \u001b[39mCUDA_Driver_jll v13.0.2+0\n  \u001b[90m[76a88914] \u001b[39mCUDA_Runtime_jll v0.19.2+0\n  \u001b[90m[4889d778] \u001b[39mCUDSS_jll v0.7.1+0\n  \u001b[90m[83423d85] \u001b[39mCairo_jll v1.18.5+0\n  \u001b[90m[ee1fde0b] \u001b[39mDbus_jll v1.16.2+0\n  \u001b[90m[2702e6a9] \u001b[39mEpollShim_jll v0.0.20230411+1\n  \u001b[90m[2e619515] \u001b[39mExpat_jll v2.7.3+0\n  \u001b[90m[b22a6f82] \u001b[39mFFMPEG_jll v8.0.0+0\n  \u001b[90m[a3f928ae] \u001b[39mFontconfig_jll v2.17.1+0\n  \u001b[90m[d7e528f0] \u001b[39mFreeType2_jll v2.13.4+0\n  \u001b[90m[559328eb] \u001b[39mFriBidi_jll v1.0.17+0\n  \u001b[90m[0656b61e] \u001b[39mGLFW_jll v3.4.0+2\n  \u001b[90m[d2c73de3] \u001b[39mGR_jll v0.73.18+0\n  \u001b[90m[b0724c58] \u001b[39mGettextRuntime_jll v0.22.4+0\n  \u001b[90m[61579ee1] \u001b[39mGhostscript_jll v9.55.1+0\n  \u001b[90m[7746bdde] \u001b[39mGlib_jll v2.86.0+0\n  \u001b[90m[3b182d85] \u001b[39mGraphite2_jll v1.3.15+0\n  \u001b[90m[017b0a0e] \u001b[39mHSL_jll v4.0.4+0\n  \u001b[90m[2e76f6c2] \u001b[39mHarfBuzz_jll v8.5.1+0\n  \u001b[90m[e33a78d0] \u001b[39mHwloc_jll v2.12.2+0\n  \u001b[90m[1d5cc7b8] \u001b[39mIntelOpenMP_jll v2025.2.0+0\n  \u001b[90m[9cc047cb] \u001b[39mIpopt_jll v300.1400.1900+0\n  \u001b[90m[aacddb02] \u001b[39mJpegTurbo_jll v3.1.3+0\n  \u001b[90m[9c1d0b0a] \u001b[39mJuliaNVTXCallbacks_jll v0.2.1+0\n  \u001b[90m[c1c5ebd0] \u001b[39mLAME_jll v3.100.3+0\n  \u001b[90m[88015f11] \u001b[39mLERC_jll v4.0.1+0\n  \u001b[90m[dad2f222] \u001b[39mLLVMExtra_jll v0.0.38+0\n  \u001b[90m[1d63c593] \u001b[39mLLVMOpenMP_jll v18.1.8+0\n  \u001b[90m[dd4b983a] \u001b[39mLZO_jll v2.10.3+0\n  \u001b[90m[ad6e5548] \u001b[39mLibTracyClient_jll v0.9.1+6\n  \u001b[90m[e9f186c6] \u001b[39mLibffi_jll v3.4.7+0\n  \u001b[90m[7e76a0d4] \u001b[39mLibglvnd_jll v1.7.1+1\n  \u001b[90m[94ce4f54] \u001b[39mLibiconv_jll v1.18.0+0\n  \u001b[90m[4b2f31a3] \u001b[39mLibmount_jll v2.41.2+0\n  \u001b[90m[89763e89] \u001b[39mLibtiff_jll v4.7.2+0\n  \u001b[90m[38a345b3] \u001b[39mLibuuid_jll v2.41.2+0\n  \u001b[90m[d00139f3] \u001b[39mMETIS_jll v5.1.3+0\n  \u001b[90m[856f044c] \u001b[39mMKL_jll v2025.2.0+0\n  \u001b[90m[d7ed1dd3] \u001b[39mMUMPS_seq_jll v500.800.100+0\n  \u001b[90m[e98f9f5b] \u001b[39mNVTX_jll v3.2.2+0\n  \u001b[90m[e7412a2a] \u001b[39mOgg_jll v1.3.6+0\n  \u001b[90m[656ef2d0] \u001b[39mOpenBLAS32_jll v0.3.29+0\n  \u001b[90m[458c3c95] \u001b[39mOpenSSL_jll v3.5.4+0\n  \u001b[90m[efe28fd5] \u001b[39mOpenSpecFun_jll v0.5.6+0\n  \u001b[90m[91d4177d] \u001b[39mOpus_jll v1.5.2+0\n  \u001b[90m[36c8627f] \u001b[39mPango_jll v1.57.0+0\n\u001b[33m⌅\u001b[39m \u001b[90m[30392449] \u001b[39mPixman_jll v0.44.2+0\n  \u001b[90m[c0090381] \u001b[39mQt6Base_jll v6.8.2+2\n  \u001b[90m[629bc702] \u001b[39mQt6Declarative_jll v6.8.2+1\n  \u001b[90m[ce943373] \u001b[39mQt6ShaderTools_jll v6.8.2+1\n  \u001b[90m[e99dba38] \u001b[39mQt6Wayland_jll v6.8.2+2\n\u001b[33m⌅\u001b[39m \u001b[90m[319450e9] \u001b[39mSPRAL_jll v2025.5.20+0\n  \u001b[90m[a44049a8] \u001b[39mVulkan_Loader_jll v1.3.243+0\n  \u001b[90m[a2964d1f] \u001b[39mWayland_jll v1.24.0+0\n\u001b[33m⌅\u001b[39m \u001b[90m[02c8fc9c] \u001b[39mXML2_jll v2.13.9+0\n  \u001b[90m[ffd25f8a] \u001b[39mXZ_jll v5.8.1+0\n  \u001b[90m[f67eecfb] \u001b[39mXorg_libICE_jll v1.1.2+0\n  \u001b[90m[c834827a] \u001b[39mXorg_libSM_jll v1.2.6+0\n  \u001b[90m[4f6342f7] \u001b[39mXorg_libX11_jll v1.8.12+0\n  \u001b[90m[0c0b7dd1] \u001b[39mXorg_libXau_jll v1.0.13+0\n  \u001b[90m[935fb764] \u001b[39mXorg_libXcursor_jll v1.2.4+0\n  \u001b[90m[a3789734] \u001b[39mXorg_libXdmcp_jll v1.1.6+0\n  \u001b[90m[1082639a] \u001b[39mXorg_libXext_jll v1.3.7+0\n  \u001b[90m[d091e8ba] \u001b[39mXorg_libXfixes_jll v6.0.2+0\n  \u001b[90m[a51aa0fd] \u001b[39mXorg_libXi_jll v1.8.3+0\n  \u001b[90m[d1454406] \u001b[39mXorg_libXinerama_jll v1.1.6+0\n  \u001b[90m[ec84b674] \u001b[39mXorg_libXrandr_jll v1.5.5+0\n  \u001b[90m[ea2f1a96] \u001b[39mXorg_libXrender_jll v0.9.12+0\n  \u001b[90m[a65dc6b1] \u001b[39mXorg_libpciaccess_jll v0.18.1+0\n  \u001b[90m[c7cfdc94] \u001b[39mXorg_libxcb_jll v1.17.1+0\n  \u001b[90m[cc61e674] \u001b[39mXorg_libxkbfile_jll v1.1.3+0\n  \u001b[90m[e920d4aa] \u001b[39mXorg_xcb_util_cursor_jll v0.1.6+0\n  \u001b[90m[12413925] \u001b[39mXorg_xcb_util_image_jll v0.4.1+0\n  \u001b[90m[2def613f] \u001b[39mXorg_xcb_util_jll v0.4.1+0\n  \u001b[90m[975044d2] \u001b[39mXorg_xcb_util_keysyms_jll v0.4.1+0\n  \u001b[90m[0d47668e] \u001b[39mXorg_xcb_util_renderutil_jll v0.3.10+0\n  \u001b[90m[c22f9ab0] \u001b[39mXorg_xcb_util_wm_jll v0.4.2+0\n  \u001b[90m[35661453] \u001b[39mXorg_xkbcomp_jll v1.4.7+0\n  \u001b[90m[33bec58e] \u001b[39mXorg_xkeyboard_config_jll v2.44.0+0\n  \u001b[90m[c5fb5394] \u001b[39mXorg_xtrans_jll v1.6.0+0\n  \u001b[90m[3161d3a3] \u001b[39mZstd_jll v1.5.7+1\n  \u001b[90m[1e29f10c] \u001b[39mdemumble_jll v1.3.0+0\n  \u001b[90m[35ca27e7] \u001b[39meudev_jll v3.2.14+0\n  \u001b[90m[214eeab7] \u001b[39mfzf_jll v0.61.1+0\n  \u001b[90m[a4ae2306] \u001b[39mlibaom_jll v3.13.1+0\n  \u001b[90m[0ac62f75] \u001b[39mlibass_jll v0.17.4+0\n  \u001b[90m[1183f4f0] \u001b[39mlibdecor_jll v0.2.2+0\n  \u001b[90m[2db6ffa8] \u001b[39mlibevdev_jll v1.13.4+0\n  \u001b[90m[f638f0a6] \u001b[39mlibfdk_aac_jll v2.0.4+0\n  \u001b[90m[36db933b] \u001b[39mlibinput_jll v1.28.1+0\n  \u001b[90m[b53b4c65] \u001b[39mlibpng_jll v1.6.50+0\n  \u001b[90m[f27f6e37] \u001b[39mlibvorbis_jll v1.3.8+0\n  \u001b[90m[009596ad] \u001b[39mmtdev_jll v1.1.7+0\n  \u001b[90m[1317d2d5] \u001b[39moneTBB_jll v2022.0.0+1\n  \u001b[90m[1270edf5] \u001b[39mx264_jll v10164.0.1+0\n  \u001b[90m[dfaa095f] \u001b[39mx265_jll v4.1.0+0\n  \u001b[90m[d8fb68d0] \u001b[39mxkbcommon_jll v1.9.2+0\n  \u001b[90m[0dad84c5] \u001b[39mArgTools v1.1.2\n  \u001b[90m[56f22d72] \u001b[39mArtifacts v1.11.0\n  \u001b[90m[2a0f44e3] \u001b[39mBase64 v1.11.0\n  \u001b[90m[ade2ca70] \u001b[39mDates v1.11.0\n  \u001b[90m[8ba89e20] \u001b[39mDistributed v1.11.0\n  \u001b[90m[f43a241f] \u001b[39mDownloads v1.6.0\n  \u001b[90m[7b1f6079] \u001b[39mFileWatching v1.11.0\n  \u001b[90m[9fa8497b] \u001b[39mFuture v1.11.0\n  \u001b[90m[b77e0a4c] \u001b[39mInteractiveUtils v1.11.0\n  \u001b[90m[4af54fe1] \u001b[39mLazyArtifacts v1.11.0\n  \u001b[90m[b27032c2] \u001b[39mLibCURL v0.6.4\n  \u001b[90m[76f85450] \u001b[39mLibGit2 v1.11.0\n  \u001b[90m[8f399da3] \u001b[39mLibdl v1.11.0\n  \u001b[90m[37e2e46d] \u001b[39mLinearAlgebra v1.11.0\n  \u001b[90m[56ddb016] \u001b[39mLogging v1.11.0\n  \u001b[90m[d6f4376e] \u001b[39mMarkdown v1.11.0\n  \u001b[90m[a63ad114] \u001b[39mMmap v1.11.0\n  \u001b[90m[ca575930] \u001b[39mNetworkOptions v1.2.0\n  \u001b[90m[44cfe95a] \u001b[39mPkg v1.11.0\n  \u001b[90m[de0858da] \u001b[39mPrintf v1.11.0\n  \u001b[90m[9abbd945] \u001b[39mProfile v1.11.0\n  \u001b[90m[3fa0cd96] \u001b[39mREPL v1.11.0\n  \u001b[90m[9a3f8284] \u001b[39mRandom v1.11.0\n  \u001b[90m[ea8e919c] \u001b[39mSHA v0.7.0\n  \u001b[90m[9e88b42a] \u001b[39mSerialization v1.11.0\n  \u001b[90m[1a1011a3] \u001b[39mSharedArrays v1.11.0\n  \u001b[90m[6462fe0b] \u001b[39mSockets v1.11.0\n  \u001b[90m[2f01184e] \u001b[39mSparseArrays v1.11.0\n  \u001b[90m[f489334b] \u001b[39mStyledStrings v1.11.0\n  \u001b[90m[4607b0f0] \u001b[39mSuiteSparse\n  \u001b[90m[fa267f1f] \u001b[39mTOML v1.0.3\n  \u001b[90m[a4e569a6] \u001b[39mTar v1.10.0\n  \u001b[90m[8dfed614] \u001b[39mTest v1.11.0\n  \u001b[90m[cf7118a7] \u001b[39mUUIDs v1.11.0\n  \u001b[90m[4ec0a83e] \u001b[39mUnicode v1.11.0\n  \u001b[90m[e66e0078] \u001b[39mCompilerSupportLibraries_jll v1.1.1+0\n  \u001b[90m[deac9b47] \u001b[39mLibCURL_jll v8.6.0+0\n  \u001b[90m[e37daf67] \u001b[39mLibGit2_jll v1.7.2+0\n  \u001b[90m[29816b5a] \u001b[39mLibSSH2_jll v1.11.0+1\n  \u001b[90m[c8ffd9c3] \u001b[39mMbedTLS_jll v2.28.6+0\n  \u001b[90m[14a3606d] \u001b[39mMozillaCACerts_jll v2023.12.12\n  \u001b[90m[4536629a] \u001b[39mOpenBLAS_jll v0.3.27+1\n  \u001b[90m[05823500] \u001b[39mOpenLibm_jll v0.8.5+0\n  \u001b[90m[efcefdf7] \u001b[39mPCRE2_jll v10.42.0+1\n  \u001b[90m[bea87d4a] \u001b[39mSuiteSparse_jll v7.7.0+0\n  \u001b[90m[83775a58] \u001b[39mZlib_jll v1.2.13+1\n  \u001b[90m[8e850b90] \u001b[39mlibblastrampoline_jll v5.11.0+0\n  \u001b[90m[8e850ede] \u001b[39mnghttp2_jll v1.59.0+0\n  \u001b[90m[3f19e933] \u001b[39mp7zip_jll v17.4.0+2\n\u001b[36m\u001b[1mInfo\u001b[22m\u001b[39m Packages marked with \u001b[32m⌃\u001b[39m and \u001b[33m⌅\u001b[39m have new versions available. Those with \u001b[32m⌃\u001b[39m may be upgradable, but those with \u001b[33m⌅\u001b[39m are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`\n",
         "pkg_status": "\u001b[36m\u001b[1mProject\u001b[22m\u001b[39m CTBenchmarks v0.2.3\n\u001b[32m\u001b[1mStatus\u001b[22m\u001b[39m `~/work/CTBenchmarks.jl/CTBenchmarks.jl/Project.toml`\n  \u001b[90m[6e4b80f9] \u001b[39mBenchmarkTools v1.6.3\n\u001b[32m⌃\u001b[39m \u001b[90m[54762871] \u001b[39mCTBase v0.16.2\n  \u001b[90m[052768ef] \u001b[39mCUDA v5.9.4\n  \u001b[90m[a93c6f00] \u001b[39mDataFrames v1.8.1\n  \u001b[90m[ffbed154] \u001b[39mDocStringExtensions v0.9.5\n  \u001b[90m[b6b21f68] \u001b[39mIpopt v1.13.0\n  \u001b[90m[682c06a0] \u001b[39mJSON v1.3.0\n  \u001b[90m[4076af6c] \u001b[39mJuMP v1.29.3\n  \u001b[90m[d72a61cc] \u001b[39mMadNLPGPU v0.7.16\n  \u001b[90m[3b83494e] \u001b[39mMadNLPMumps v0.5.1\n  \u001b[90m[f4238b75] \u001b[39mNLPModelsIpopt v0.11.0\n  \u001b[90m[5f98b655] \u001b[39mOptimalControl v1.1.6\n  \u001b[90m[59046045] \u001b[39mOptimalControlProblems v0.3.2\n  \u001b[90m[91a5bcdd] \u001b[39mPlots v1.41.1\n  \u001b[90m[bd369af6] \u001b[39mTables v1.12.1\n  \u001b[90m[ade2ca70] \u001b[39mDates v1.11.0\n  \u001b[90m[b77e0a4c] \u001b[39mInteractiveUtils v1.11.0\n  \u001b[90m[44cfe95a] \u001b[39mPkg v1.11.0\n  \u001b[90m[de0858da] \u001b[39mPrintf v1.11.0\n  \u001b[90m[6462fe0b] \u001b[39mSockets v1.11.0\n\u001b[36m\u001b[1mInfo\u001b[22m\u001b[39m Packages marked with \u001b[32m⌃\u001b[39m have new versions available and may be upgradable.\n",
-        "timestamp": "2025-11-17 03:31:23 UTC",
+        "timestamp": "2025-11-17 15:16:44 UTC",
         "machine": "runnervmg1sw1",
         "os": "Linux",
         "configuration": {
@@ -61,7 +61,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.015293229,
+                "time": 0.01511801,
                 "bytes": 16768,
                 "alloc": 792,
                 "gctime": 0.0
@@ -79,11 +79,11 @@
             "problem": "beam",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 8.891335220246384,
+            "objective": 8.891335220246392,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.020951076,
+                "time": 0.019903809,
                 "bytes": 2481880,
                 "alloc": 37007,
                 "gctime": 0.0
@@ -105,7 +105,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.015413262,
+                "time": 0.015249154,
                 "bytes": 74224,
                 "alloc": 746,
                 "gctime": 0.0
@@ -123,11 +123,11 @@
             "problem": "beam",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 8.889281810168894,
+            "objective": 8.889281808580773,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.038115177,
+                "time": 0.036150032,
                 "bytes": 18848,
                 "alloc": 898,
                 "gctime": 0.0
@@ -145,11 +145,11 @@
             "problem": "beam",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 8.889281808581257,
+            "objective": 8.889281808581256,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.051326668,
+                "time": 0.047187192,
                 "bytes": 6786888,
                 "alloc": 100559,
                 "gctime": 0.0
@@ -167,11 +167,11 @@
             "problem": "beam",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 8.889281808580774,
+            "objective": 8.889281810168898,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.037596552,
+                "time": 0.035286867,
                 "bytes": 140912,
                 "alloc": 822,
                 "gctime": 0.0
@@ -193,7 +193,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.113526379,
+                "time": 0.106716826,
                 "bytes": 29248,
                 "alloc": 1404,
                 "gctime": 0.0
@@ -211,11 +211,11 @@
             "problem": "beam",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 8.888987552179923,
+            "objective": 8.888987552179772,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.167025055,
+                "time": 0.152334017,
                 "bytes": 23634352,
                 "alloc": 350699,
                 "gctime": 0.0
@@ -233,13 +233,13 @@
             "problem": "beam",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 8.88898688773386,
+            "objective": 8.888986819239935,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.126048779,
-                "bytes": 267088,
-                "alloc": 1468,
+                "time": 0.114305968,
+                "bytes": 264976,
+                "alloc": 1392,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -247,7 +247,7 @@
             "model": "exa",
             "criterion": "min",
             "grid_size": 1000,
-            "iterations": 35,
+            "iterations": 33,
             "disc_method": "trapeze"
         },
         {
@@ -255,11 +255,11 @@
             "problem": "beam",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 8.8889137236719,
+            "objective": 8.888913521295997,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.224445574,
+                "time": 0.218396306,
                 "bytes": 30976,
                 "alloc": 1488,
                 "gctime": 0.0
@@ -277,11 +277,11 @@
             "problem": "beam",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 8.888912974854588,
+            "objective": 8.88891307113629,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.357022885,
+                "time": 0.320230333,
                 "bytes": 48493768,
                 "alloc": 718775,
                 "gctime": 0.0
@@ -299,13 +299,13 @@
             "problem": "beam",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 8.888914656402724,
+            "objective": 8.888914619088254,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.196955607,
-                "bytes": 475696,
-                "alloc": 1202,
+                "time": 0.198646892,
+                "bytes": 476752,
+                "alloc": 1240,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -313,7 +313,7 @@
             "model": "exa",
             "criterion": "min",
             "grid_size": 2000,
-            "iterations": 28,
+            "iterations": 29,
             "disc_method": "trapeze"
         },
         {
@@ -321,11 +321,11 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.891335223755426,
+            "objective": 8.891335223754547,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.011436187,
+                "time": 0.011976421,
                 "bytes": 2264240,
                 "alloc": 10774,
                 "gctime": 0.0
@@ -343,11 +343,11 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.89133522375489,
+            "objective": 8.89133522375679,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.018127241,
+                "time": 0.017487402,
                 "bytes": 5147304,
                 "alloc": 57430,
                 "gctime": 0.0
@@ -365,11 +365,11 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.891335223757725,
+            "objective": 8.891335223756373,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.011619728,
+                "time": 0.012410224,
                 "bytes": 2169472,
                 "alloc": 10393,
                 "gctime": 0.0
@@ -387,11 +387,11 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.889282212945652,
+            "objective": 8.889282212752597,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.023281552,
+                "time": 0.022318043,
                 "bytes": 4423712,
                 "alloc": 10558,
                 "gctime": 0.0
@@ -409,13 +409,13 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.88928221277052,
+            "objective": 8.889282212439568,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.03592685,
-                "bytes": 10620888,
-                "alloc": 111103,
+                "time": 0.034663857,
+                "bytes": 10620344,
+                "alloc": 111094,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -431,11 +431,11 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.889282212845504,
+            "objective": 8.88928221284464,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.023181289,
+                "time": 0.023990312,
                 "bytes": 4252080,
                 "alloc": 10193,
                 "gctime": 0.0
@@ -453,40 +453,18 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.88898715684173,
+            "objective": 8.888986786481768,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.063092428,
-                "bytes": 10255320,
-                "alloc": 11936,
+                "time": 0.066161443,
+                "bytes": 10751912,
+                "alloc": 12377,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": "min",
-            "grid_size": 1000,
-            "iterations": 26,
-            "disc_method": "trapeze"
-        },
-        {
-            "success": true,
-            "problem": "beam",
-            "solver": "madnlp",
-            "mu_strategy": null,
-            "objective": 8.888986786374009,
-            "max_iter": 1000,
-            "tol": 1.0e-8,
-            "benchmark": {
-                "time": 0.104177292,
-                "bytes": 29796344,
-                "alloc": 315261,
-                "gctime": 0.0
-            },
-            "status": "SOLVE_SUCCEEDED",
-            "max_wall_time": 500.0,
-            "model": "adnlp",
             "criterion": "min",
             "grid_size": 1000,
             "iterations": 28,
@@ -497,18 +475,18 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.888987332195205,
+            "objective": 8.888987335501009,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.063253244,
-                "bytes": 9754432,
-                "alloc": 11460,
+                "time": 0.094095479,
+                "bytes": 27854992,
+                "alloc": 292744,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
-            "model": "exa",
+            "model": "adnlp",
             "criterion": "min",
             "grid_size": 1000,
             "iterations": 26,
@@ -519,21 +497,21 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.888913671055812,
+            "objective": 8.888986786489847,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.21273696,
-                "bytes": 25703536,
-                "alloc": 13978,
+                "time": 0.06850567,
+                "bytes": 10250320,
+                "alloc": 11871,
                 "gctime": 0.0
             },
-            "status": "LOCALLY_SOLVED",
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
-            "model": "jump",
+            "model": "exa",
             "criterion": "min",
-            "grid_size": 2000,
-            "iterations": 38,
+            "grid_size": 1000,
+            "iterations": 28,
             "disc_method": "trapeze"
         },
         {
@@ -541,11 +519,33 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.888913653180042,
+            "objective": 8.888913656874776,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.355503085,
+                "time": 0.205254174,
+                "bytes": 26142520,
+                "alloc": 14147,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
+            "max_wall_time": 500.0,
+            "model": "jump",
+            "criterion": "min",
+            "grid_size": 2000,
+            "iterations": 39,
+            "disc_method": "trapeze"
+        },
+        {
+            "success": true,
+            "problem": "beam",
+            "solver": "madnlp",
+            "mu_strategy": null,
+            "objective": 8.888913653288983,
+            "max_iter": 1000,
+            "tol": 1.0e-8,
+            "benchmark": {
+                "time": 0.324210299,
                 "bytes": 80041648,
                 "alloc": 855614,
                 "gctime": 0.0
@@ -563,13 +563,13 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.888913652214335,
+            "objective": 8.888913039854097,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.214373992,
-                "bytes": 23726152,
-                "alloc": 13207,
+                "time": 0.214587231,
+                "bytes": 23791656,
+                "alloc": 13265,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -585,11 +585,11 @@
             "problem": "chain",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 5.068917341242296,
+            "objective": 5.068917341242299,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.013087011,
+                "time": 0.012823585,
                 "bytes": 16048,
                 "alloc": 701,
                 "gctime": 0.0
@@ -607,11 +607,11 @@
             "problem": "chain",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 5.0689173412422965,
+            "objective": 5.068917341242296,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.015730183,
+                "time": 0.015516,
                 "bytes": 4618976,
                 "alloc": 87968,
                 "gctime": 0.0
@@ -633,7 +633,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.009304464,
+                "time": 0.009662611,
                 "bytes": 71744,
                 "alloc": 400,
                 "gctime": 0.0
@@ -651,11 +651,11 @@
             "problem": "chain",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 5.068577790026838,
+            "objective": 5.068577790026832,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.059876613,
+                "time": 0.057430904,
                 "bytes": 31776,
                 "alloc": 1384,
                 "gctime": 0.0
@@ -673,11 +673,11 @@
             "problem": "chain",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 5.068577790026837,
+            "objective": 5.068577790026836,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.06870685,
+                "time": 0.067312129,
                 "bytes": 21394360,
                 "alloc": 411666,
                 "gctime": 0.0
@@ -699,7 +699,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.040614453,
+                "time": 0.04041543,
                 "bytes": 150080,
                 "alloc": 708,
                 "gctime": 0.0
@@ -717,11 +717,11 @@
             "problem": "chain",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 5.0685100958256255,
+            "objective": 5.068510095825627,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.053260036,
+                "time": 0.05259168,
                 "bytes": 14144,
                 "alloc": 618,
                 "gctime": 0.0
@@ -739,11 +739,11 @@
             "problem": "chain",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 5.06851009582563,
+            "objective": 5.068510095825631,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.061818999,
+                "time": 0.062405119,
                 "bytes": 20288296,
                 "alloc": 386040,
                 "gctime": 0.0
@@ -765,7 +765,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.037925531,
+                "time": 0.038855472,
                 "bytes": 256288,
                 "alloc": 362,
                 "gctime": 0.0
@@ -783,11 +783,11 @@
             "problem": "chain",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 5.068488912144186,
+            "objective": 5.068488912144199,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.127776474,
+                "time": 0.128926701,
                 "bytes": 14144,
                 "alloc": 618,
                 "gctime": 0.0
@@ -805,11 +805,11 @@
             "problem": "chain",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 5.0684889121442005,
+            "objective": 5.068488912144191,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.150954683,
+                "time": 0.151518191,
                 "bytes": 40528296,
                 "alloc": 771040,
                 "gctime": 0.0
@@ -831,7 +831,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.083201229,
+                "time": 0.086774914,
                 "bytes": 488288,
                 "alloc": 362,
                 "gctime": 0.0
@@ -853,7 +853,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.013347434,
+                "time": 0.013551285,
                 "bytes": 6652000,
                 "alloc": 85995,
                 "gctime": 0.0
@@ -871,11 +871,11 @@
             "problem": "chain",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 5.068917341242299,
+            "objective": 5.0689173412423,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.013547426,
+                "time": 0.013708385,
                 "bytes": 6137288,
                 "alloc": 97321,
                 "gctime": 0.0
@@ -893,11 +893,11 @@
             "problem": "chain",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 5.068917341242685,
+            "objective": 5.068917341242682,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.007686384,
+                "time": 0.008312771,
                 "bytes": 1833128,
                 "alloc": 8283,
                 "gctime": 0.0
@@ -915,11 +915,11 @@
             "problem": "chain",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 5.068577790024215,
+            "objective": 5.068577790024223,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.056070301,
+                "time": 0.056056244,
                 "bytes": 16835256,
                 "alloc": 228088,
                 "gctime": 0.0
@@ -937,11 +937,11 @@
             "problem": "chain",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 5.068577790024221,
+            "objective": 5.068577790024219,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.060447965,
+                "time": 0.061512562,
                 "bytes": 25153728,
                 "alloc": 424034,
                 "gctime": 0.0
@@ -963,7 +963,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.033217931,
+                "time": 0.035773176,
                 "bytes": 4498800,
                 "alloc": 9394,
                 "gctime": 0.0
@@ -985,7 +985,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.057946855,
+                "time": 0.057154663,
                 "bytes": 33755800,
                 "alloc": 491672,
                 "gctime": 0.0
@@ -1003,11 +1003,11 @@
             "problem": "chain",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 5.068510095825629,
+            "objective": 5.068510095825633,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.055705667,
+                "time": 0.05502151,
                 "bytes": 25929904,
                 "alloc": 400875,
                 "gctime": 0.0
@@ -1025,11 +1025,11 @@
             "problem": "chain",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 5.068510095825684,
+            "objective": 5.068510095825685,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.028906063,
+                "time": 0.03084151,
                 "bytes": 7070592,
                 "alloc": 8138,
                 "gctime": 0.0
@@ -1047,11 +1047,11 @@
             "problem": "chain",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 5.068488912144179,
+            "objective": 5.068488912144202,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.163608428,
+                "time": 0.162825505,
                 "bytes": 65181176,
                 "alloc": 991693,
                 "gctime": 0.0
@@ -1069,13 +1069,13 @@
             "problem": "chain",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 5.068488912144185,
+            "objective": 5.068488912144198,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.172080165,
-                "bytes": 51373936,
-                "alloc": 792911,
+                "time": 0.163311614,
+                "bytes": 51374480,
+                "alloc": 792920,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1091,11 +1091,11 @@
             "problem": "chain",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 5.068488912144283,
+            "objective": 5.068488912144293,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.111330789,
+                "time": 0.104722801,
                 "bytes": 13666840,
                 "alloc": 8148,
                 "gctime": 0.0
@@ -1113,11 +1113,11 @@
             "problem": "double_oscillator",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.0009103361763707911,
+            "objective": 0.0009103361763707912,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.009609062,
+                "time": 0.009376441,
                 "bytes": 12240,
                 "alloc": 535,
                 "gctime": 0.0
@@ -1135,11 +1135,11 @@
             "problem": "double_oscillator",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.0009103361763707905,
+            "objective": 0.0009103361763707903,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.017593747,
+                "time": 0.017014593,
                 "bytes": 5444080,
                 "alloc": 112780,
                 "gctime": 0.0
@@ -1161,7 +1161,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.011035017,
+                "time": 0.011102231,
                 "bytes": 105264,
                 "alloc": 328,
                 "gctime": 0.0
@@ -1183,7 +1183,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.020888197,
+                "time": 0.020457494,
                 "bytes": 12240,
                 "alloc": 535,
                 "gctime": 0.0
@@ -1201,11 +1201,11 @@
             "problem": "double_oscillator",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.0009109230332518862,
+            "objective": 0.0009109230332518861,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.040384478,
+                "time": 0.040313661,
                 "bytes": 13534704,
                 "alloc": 280180,
                 "gctime": 0.0
@@ -1223,11 +1223,11 @@
             "problem": "double_oscillator",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.0009109230332518852,
+            "objective": 0.0009109230332518853,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.025828195,
+                "time": 0.02492895,
                 "bytes": 218288,
                 "alloc": 328,
                 "gctime": 0.0
@@ -1245,11 +1245,11 @@
             "problem": "double_oscillator",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.0009110069041873554,
+            "objective": 0.0009110069041873555,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.038005941,
+                "time": 0.038844304,
                 "bytes": 12240,
                 "alloc": 535,
                 "gctime": 0.0
@@ -1271,7 +1271,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.082879134,
+                "time": 0.089028499,
                 "bytes": 27018480,
                 "alloc": 559180,
                 "gctime": 0.0
@@ -1293,7 +1293,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.048579105,
+                "time": 0.047992927,
                 "bytes": 406064,
                 "alloc": 328,
                 "gctime": 0.0
@@ -1315,7 +1315,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.071882222,
+                "time": 0.075346228,
                 "bytes": 12240,
                 "alloc": 535,
                 "gctime": 0.0
@@ -1333,11 +1333,11 @@
             "problem": "double_oscillator",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.0009110278733863017,
+            "objective": 0.000911027873386302,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.194427245,
+                "time": 0.18632656,
                 "bytes": 53986480,
                 "alloc": 1117180,
                 "gctime": 0.0
@@ -1359,7 +1359,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.09778157,
+                "time": 0.094522831,
                 "bytes": 782064,
                 "alloc": 328,
                 "gctime": 0.0
@@ -1377,13 +1377,13 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009103361766514253,
+            "objective": 0.0009103361766514237,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.007613858,
-                "bytes": 3074440,
-                "alloc": 8322,
+                "time": 0.008423112,
+                "bytes": 3075528,
+                "alloc": 8340,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -1399,13 +1399,13 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009103361766514236,
+            "objective": 0.0009103361766514221,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.01568604,
-                "bytes": 7447152,
-                "alloc": 122411,
+                "time": 0.015698425,
+                "bytes": 7447696,
+                "alloc": 122420,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1421,11 +1421,11 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009103361766514207,
+            "objective": 0.0009103361766514198,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.008110359,
+                "time": 0.008241294,
                 "bytes": 3176152,
                 "alloc": 8062,
                 "gctime": 0.0
@@ -1443,11 +1443,11 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009109230332462016,
+            "objective": 0.0009109230332462023,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.019379153,
+                "time": 0.02010129,
                 "bytes": 7293224,
                 "alloc": 8617,
                 "gctime": 0.0
@@ -1465,13 +1465,13 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009109230332461983,
+            "objective": 0.0009109230332462006,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.04552096,
-                "bytes": 20019616,
-                "alloc": 333423,
+                "time": 0.046997317,
+                "bytes": 20020704,
+                "alloc": 333441,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1487,11 +1487,11 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009109230332462002,
+            "objective": 0.0009109230332462004,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.021803468,
+                "time": 0.021695945,
                 "bytes": 7378552,
                 "alloc": 8338,
                 "gctime": 0.0
@@ -1509,11 +1509,11 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009110069041486147,
+            "objective": 0.0009110069041486159,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.038028688,
+                "time": 0.039220519,
                 "bytes": 12147336,
                 "alloc": 8590,
                 "gctime": 0.0
@@ -1531,11 +1531,11 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009110069041486102,
+            "objective": 0.0009110069041486078,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.100662307,
+                "time": 0.097027514,
                 "bytes": 39516592,
                 "alloc": 657361,
                 "gctime": 0.0
@@ -1553,11 +1553,11 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009110069041486093,
+            "objective": 0.0009110069041486092,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.042213071,
+                "time": 0.042563902,
                 "bytes": 14244584,
                 "alloc": 8303,
                 "gctime": 0.0
@@ -1575,11 +1575,11 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009110278732126679,
+            "objective": 0.0009110278732126681,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.135418263,
+                "time": 0.125842497,
                 "bytes": 25421672,
                 "alloc": 8651,
                 "gctime": 0.0
@@ -1601,7 +1601,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.298214077,
+                "time": 0.264726925,
                 "bytes": 78531552,
                 "alloc": 1305406,
                 "gctime": 0.0
@@ -1623,7 +1623,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.189567828,
+                "time": 0.174449202,
                 "bytes": 27994936,
                 "alloc": 8366,
                 "gctime": 0.0
@@ -1641,11 +1641,11 @@
             "problem": "electric_vehicle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1228.6988798308516,
+            "objective": 1228.6988798308512,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.006319917,
+                "time": 0.005880415,
                 "bytes": 10064,
                 "alloc": 435,
                 "gctime": 0.0
@@ -1663,11 +1663,11 @@
             "problem": "electric_vehicle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1228.6988798308514,
+            "objective": 1228.6988798308519,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.008885346,
+                "time": 0.00853182,
                 "bytes": 2846632,
                 "alloc": 66425,
                 "gctime": 0.0
@@ -1685,11 +1685,11 @@
             "problem": "electric_vehicle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1228.6988798308525,
+            "objective": 1228.6988798308523,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.00443448,
+                "time": 0.004555727,
                 "bytes": 59712,
                 "alloc": 286,
                 "gctime": 0.0
@@ -1711,7 +1711,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.013603704,
+                "time": 0.012944065,
                 "bytes": 10336,
                 "alloc": 452,
                 "gctime": 0.0
@@ -1729,11 +1729,11 @@
             "problem": "electric_vehicle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1228.5992844813138,
+            "objective": 1228.5992844813131,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.020407579,
+                "time": 0.019292093,
                 "bytes": 7063272,
                 "alloc": 164825,
                 "gctime": 0.0
@@ -1751,11 +1751,11 @@
             "problem": "electric_vehicle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1228.5992844813138,
+            "objective": 1228.5992844813136,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.009313703,
+                "time": 0.009344279,
                 "bytes": 109952,
                 "alloc": 286,
                 "gctime": 0.0
@@ -1773,11 +1773,11 @@
             "problem": "electric_vehicle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1228.5850402695332,
+            "objective": 1228.585040269533,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.026092461,
+                "time": 0.023805723,
                 "bytes": 10336,
                 "alloc": 452,
                 "gctime": 0.0
@@ -1795,11 +1795,11 @@
             "problem": "electric_vehicle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1228.5850402695346,
+            "objective": 1228.5850402695362,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.042834251,
+                "time": 0.041684461,
                 "bytes": 14091432,
                 "alloc": 328825,
                 "gctime": 0.0
@@ -1817,11 +1817,11 @@
             "problem": "electric_vehicle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1228.5850402695355,
+            "objective": 1228.5850402695353,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.017233227,
+                "time": 0.017359582,
                 "bytes": 194112,
                 "alloc": 286,
                 "gctime": 0.0
@@ -1839,11 +1839,11 @@
             "problem": "electric_vehicle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1228.581477701004,
+            "objective": 1228.581477701003,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.050132625,
+                "time": 0.048451009,
                 "bytes": 10336,
                 "alloc": 452,
                 "gctime": 0.0
@@ -1861,11 +1861,11 @@
             "problem": "electric_vehicle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1228.5814777010082,
+            "objective": 1228.581477701006,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.100782505,
+                "time": 0.101430744,
                 "bytes": 28147432,
                 "alloc": 656825,
                 "gctime": 0.0
@@ -1887,7 +1887,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.032486047,
+                "time": 0.033531941,
                 "bytes": 362112,
                 "alloc": 286,
                 "gctime": 0.0
@@ -1909,7 +1909,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.007185782,
+                "time": 0.006964428,
                 "bytes": 4867392,
                 "alloc": 45201,
                 "gctime": 0.0
@@ -1927,11 +1927,11 @@
             "problem": "electric_vehicle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1228.698879830853,
+            "objective": 1228.6988798308523,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.008389747,
+                "time": 0.00807999,
                 "bytes": 4044408,
                 "alloc": 75635,
                 "gctime": 0.0
@@ -1949,13 +1949,13 @@
             "problem": "electric_vehicle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1228.6988798308523,
+            "objective": 1228.6988798308525,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.00363435,
-                "bytes": 1734040,
-                "alloc": 7845,
+                "time": 0.00389719,
+                "bytes": 1734584,
+                "alloc": 7854,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1975,7 +1975,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.017125414,
+                "time": 0.016296515,
                 "bytes": 11233536,
                 "alloc": 116505,
                 "gctime": 0.0
@@ -1993,11 +1993,11 @@
             "problem": "electric_vehicle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1228.5992844813125,
+            "objective": 1228.5992844813147,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.02010915,
+                "time": 0.018390677,
                 "bytes": 9414928,
                 "alloc": 176447,
                 "gctime": 0.0
@@ -2015,11 +2015,11 @@
             "problem": "electric_vehicle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1228.5992844813134,
+            "objective": 1228.5992844813136,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.007995985,
+                "time": 0.008332004,
                 "bytes": 3628544,
                 "alloc": 7857,
                 "gctime": 0.0
@@ -2037,11 +2037,11 @@
             "problem": "electric_vehicle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1228.5850402695316,
+            "objective": 1228.5850402695314,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.033104027,
+                "time": 0.03263695,
                 "bytes": 23292104,
                 "alloc": 256444,
                 "gctime": 0.0
@@ -2059,11 +2059,11 @@
             "problem": "electric_vehicle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1228.5850402695353,
+            "objective": 1228.585040269539,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.043489002,
+                "time": 0.042743619,
                 "bytes": 18367808,
                 "alloc": 344438,
                 "gctime": 0.0
@@ -2081,11 +2081,11 @@
             "problem": "electric_vehicle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1228.5850402695353,
+            "objective": 1228.5850402695348,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.014584205,
+                "time": 0.015455976,
                 "bytes": 6786120,
                 "alloc": 7849,
                 "gctime": 0.0
@@ -2103,11 +2103,11 @@
             "problem": "electric_vehicle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1228.5814777010041,
+            "objective": 1228.5814777010028,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.085510693,
+                "time": 0.08667975,
                 "bytes": 44518096,
                 "alloc": 518458,
                 "gctime": 0.0
@@ -2125,11 +2125,11 @@
             "problem": "electric_vehicle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1228.581477701009,
+            "objective": 1228.5814777010025,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.115439929,
+                "time": 0.121006969,
                 "bytes": 36272704,
                 "alloc": 680438,
                 "gctime": 0.0
@@ -2147,11 +2147,11 @@
             "problem": "electric_vehicle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1228.581477701005,
+            "objective": 1228.5814777010048,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.055770331,
+                "time": 0.054978153,
                 "bytes": 13103752,
                 "alloc": 7876,
                 "gctime": 0.0
@@ -2169,13 +2169,13 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1248.8963625892125,
+            "objective": 1248.8963625895253,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 9.590887489,
-                "bytes": 693456,
-                "alloc": 30239,
+                "time": 8.059383676,
+                "bytes": 589648,
+                "alloc": 25719,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -2183,7 +2183,7 @@
             "model": "jump",
             "criterion": "max",
             "grid_size": 200,
-            "iterations": 358,
+            "iterations": 306,
             "disc_method": "trapeze"
         },
         {
@@ -2191,13 +2191,13 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1248.8963625895346,
+            "objective": 1248.8963625895467,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 8.100699048,
-                "bytes": 407269808,
-                "alloc": 7382826,
+                "time": 6.589538202,
+                "bytes": 350836824,
+                "alloc": 6363769,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -2205,7 +2205,7 @@
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 200,
-            "iterations": 399,
+            "iterations": 343,
             "disc_method": "trapeze"
         },
         {
@@ -2213,13 +2213,13 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1248.8963625895346,
+            "objective": 1248.8963625895453,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 6.586450378,
-                "bytes": 596368,
-                "alloc": 14670,
+                "time": 5.529064773,
+                "bytes": 560080,
+                "alloc": 13370,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -2227,7 +2227,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 200,
-            "iterations": 378,
+            "iterations": 346,
             "disc_method": "trapeze"
         },
         {
@@ -2235,13 +2235,13 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1247.9784300207978,
+            "objective": 1247.9784300207941,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 25.593953412,
-                "bytes": 1384816,
-                "alloc": 60681,
+                "time": 23.614215956,
+                "bytes": 1310608,
+                "alloc": 57391,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -2249,7 +2249,7 @@
             "model": "jump",
             "criterion": "max",
             "grid_size": 500,
-            "iterations": 714,
+            "iterations": 677,
             "disc_method": "trapeze"
         },
         {
@@ -2257,21 +2257,21 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1247.978430022093,
+            "objective": 1247.9784300247832,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 14.776293602,
-                "bytes": 1893612520,
-                "alloc": 34231634,
-                "gctime": 0.256144399
+                "time": 19.211532937,
+                "bytes": 2210179624,
+                "alloc": 39926450,
+                "gctime": 0.27259046
             },
             "status": "first_order",
             "max_wall_time": 500.0,
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 500,
-            "iterations": 751,
+            "iterations": 878,
             "disc_method": "trapeze"
         },
         {
@@ -2279,13 +2279,13 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1247.978430021332,
+            "objective": 1247.9784300207946,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 7.78670528,
-                "bytes": 1158752,
-                "alloc": 30965,
+                "time": 7.191653797,
+                "bytes": 1038896,
+                "alloc": 26606,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -2293,7 +2293,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 500,
-            "iterations": 800,
+            "iterations": 690,
             "disc_method": "trapeze"
         },
         {
@@ -2301,11 +2301,11 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 460.2449841823139,
+            "objective": 456.87747573449326,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 76.267494847,
+                "time": 71.379625489,
                 "bytes": 1948240,
                 "alloc": 85679,
                 "gctime": 0.0
@@ -2323,14 +2323,14 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 455.77627358042787,
+            "objective": 457.0726457632398,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 56.59138785,
+                "time": 52.115351391,
                 "bytes": 5020135800,
                 "alloc": 90620276,
-                "gctime": 0.8378957
+                "gctime": 0.697946189
             },
             "status": "max_iter",
             "max_wall_time": 500.0,
@@ -2345,11 +2345,11 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 453.1676207511066,
+            "objective": 455.1520512620847,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 26.151382771,
+                "time": 24.777830323,
                 "bytes": 1558368,
                 "alloc": 38675,
                 "gctime": 0.0
@@ -2367,11 +2367,11 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 656.5465778943276,
+            "objective": 669.5913933836572,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 168.164899715,
+                "time": 150.474218338,
                 "bytes": 1948832,
                 "alloc": 85704,
                 "gctime": 0.0
@@ -2389,14 +2389,14 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 711.6508175832665,
+            "objective": 715.4264386710356,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 129.594626741,
+                "time": 126.58299533,
                 "bytes": 10030240832,
                 "alloc": 181025306,
-                "gctime": 2.02601553
+                "gctime": 1.566102833
             },
             "status": "max_iter",
             "max_wall_time": 500.0,
@@ -2411,11 +2411,11 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 672.0746297259959,
+            "objective": 651.2920130163079,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 63.595866757,
+                "time": 61.370437938,
                 "bytes": 1934704,
                 "alloc": 38686,
                 "gctime": 0.0
@@ -2433,13 +2433,13 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1248.8094267476438,
+            "objective": 1248.8094267780132,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.310049312,
-                "bytes": 73841016,
-                "alloc": 439801,
+                "time": 3.788450796,
+                "bytes": 74760000,
+                "alloc": 441758,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -2447,7 +2447,7 @@
             "model": "jump",
             "criterion": "max",
             "grid_size": 200,
-            "iterations": 292,
+            "iterations": 302,
             "disc_method": "trapeze"
         },
         {
@@ -2455,13 +2455,13 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1248.8094267459837,
+            "objective": 1248.8094267444835,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.82576709,
-                "bytes": 322357104,
-                "alloc": 5409400,
+                "time": 1.741738695,
+                "bytes": 301928472,
+                "alloc": 5063691,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2469,7 +2469,7 @@
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 200,
-            "iterations": 282,
+            "iterations": 264,
             "disc_method": "trapeze"
         },
         {
@@ -2477,13 +2477,13 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1248.809426747705,
+            "objective": 1248.8094267444826,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.878688536,
-                "bytes": 32984848,
-                "alloc": 62837,
+                "time": 0.938795627,
+                "bytes": 32803488,
+                "alloc": 62561,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2491,7 +2491,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 200,
-            "iterations": 296,
+            "iterations": 297,
             "disc_method": "trapeze"
         },
         {
@@ -2499,13 +2499,13 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1247.9784298961622,
+            "objective": 1247.9784298961417,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 22.813979545,
-                "bytes": 268027592,
-                "alloc": 1135076,
+                "time": 24.109285594,
+                "bytes": 266785616,
+                "alloc": 1134001,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -2513,7 +2513,7 @@
             "model": "jump",
             "criterion": "max",
             "grid_size": 500,
-            "iterations": 692,
+            "iterations": 691,
             "disc_method": "trapeze"
         },
         {
@@ -2521,21 +2521,21 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1247.9784298961729,
+            "objective": 1247.978429896157,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 11.726246273,
-                "bytes": 1820479784,
-                "alloc": 30414882,
-                "gctime": 0.221834833
+                "time": 12.631093131,
+                "bytes": 1893797312,
+                "alloc": 31658768,
+                "gctime": 0.282514028
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 500,
-            "iterations": 659,
+            "iterations": 685,
             "disc_method": "trapeze"
         },
         {
@@ -2543,13 +2543,13 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1247.9784298961654,
+            "objective": 1247.9784298965099,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 4.797847677,
-                "bytes": 155594792,
-                "alloc": 134324,
+                "time": 4.062013879,
+                "bytes": 135469672,
+                "alloc": 112910,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2557,7 +2557,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 500,
-            "iterations": 664,
+            "iterations": 543,
             "disc_method": "trapeze"
         },
         {
@@ -2565,13 +2565,13 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1247.9852156931443,
+            "objective": 1247.9852156936172,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 50.108031288,
-                "bytes": 538605424,
-                "alloc": 2147887,
+                "time": 48.039383885,
+                "bytes": 532592840,
+                "alloc": 2144999,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -2579,7 +2579,7 @@
             "model": "jump",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 720,
+            "iterations": 706,
             "disc_method": "trapeze"
         },
         {
@@ -2587,21 +2587,21 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1247.985215694141,
+            "objective": 1247.9852156939344,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 39.819701976,
-                "bytes": 4306438448,
-                "alloc": 71801899,
-                "gctime": 0.817179326
+                "time": 37.903054817,
+                "bytes": 3920864424,
+                "alloc": 65631499,
+                "gctime": 0.635668416
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 767,
+            "iterations": 712,
             "disc_method": "trapeze"
         },
         {
@@ -2609,13 +2609,13 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1247.9852156933084,
+            "objective": 1247.9852156935813,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 10.113340216,
-                "bytes": 321494248,
-                "alloc": 142272,
+                "time": 11.102152375,
+                "bytes": 331267808,
+                "alloc": 146738,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2623,7 +2623,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 704,
+            "iterations": 727,
             "disc_method": "trapeze"
         },
         {
@@ -2631,13 +2631,13 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1247.9869987366949,
+            "objective": 1247.9869987391883,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 33.513718689,
-                "bytes": 667161784,
-                "alloc": 4061637,
+                "time": 88.143604722,
+                "bytes": 1020467176,
+                "alloc": 4146306,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -2645,7 +2645,7 @@
             "model": "jump",
             "criterion": "max",
             "grid_size": 2000,
-            "iterations": 218,
+            "iterations": 633,
             "disc_method": "trapeze"
         },
         {
@@ -2653,21 +2653,21 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1247.986998739199,
+            "objective": 1247.9869987391644,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 23.946344012,
-                "bytes": 2506821464,
-                "alloc": 41876361,
-                "gctime": 0.339110044
+                "time": 111.239455862,
+                "bytes": 9456626488,
+                "alloc": 158208591,
+                "gctime": 1.238579472
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 2000,
-            "iterations": 215,
+            "iterations": 850,
             "disc_method": "trapeze"
         },
         {
@@ -2675,13 +2675,13 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1247.9869987374361,
+            "objective": 1247.9869987379107,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 20.032948478,
-                "bytes": 587077208,
-                "alloc": 125736,
+                "time": 19.475893124,
+                "bytes": 522615040,
+                "alloc": 113441,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2689,7 +2689,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 2000,
-            "iterations": 562,
+            "iterations": 532,
             "disc_method": "trapeze"
         },
         {
@@ -2697,13 +2697,13 @@
             "problem": "insurance",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 2.058580862304755,
+            "objective": 2.0585808636161516,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.454541575,
-                "bytes": 183584,
-                "alloc": 7996,
+                "time": 0.404531308,
+                "bytes": 183984,
+                "alloc": 8013,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -2719,13 +2719,13 @@
             "problem": "insurance",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 2.0585808690653633,
+            "objective": 2.05858083632532,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.567863257,
-                "bytes": 127251400,
-                "alloc": 1735387,
+                "time": 0.535867501,
+                "bytes": 126630720,
+                "alloc": 1725287,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -2741,13 +2741,13 @@
             "problem": "insurance",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 2.0585808481991923,
+            "objective": 2.058580869048118,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.329482327,
-                "bytes": 251920,
-                "alloc": 3726,
+                "time": 0.32108824,
+                "bytes": 251936,
+                "alloc": 3729,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -2755,7 +2755,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 200,
-            "iterations": 90,
+            "iterations": 91,
             "disc_method": "trapeze"
         },
         {
@@ -2763,13 +2763,13 @@
             "problem": "insurance",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 2.0592075949520563,
+            "objective": 2.0592143336153734,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.896801228,
-                "bytes": 172976,
-                "alloc": 7541,
+                "time": 1.06043023,
+                "bytes": 203040,
+                "alloc": 8852,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -2777,7 +2777,7 @@
             "model": "jump",
             "criterion": "max",
             "grid_size": 500,
-            "iterations": 89,
+            "iterations": 105,
             "disc_method": "trapeze"
         },
         {
@@ -2785,13 +2785,13 @@
             "problem": "insurance",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 2.059207594761786,
+            "objective": 2.0592143332449284,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.420894008,
-                "bytes": 297082120,
-                "alloc": 4021221,
+                "time": 1.544801178,
+                "bytes": 327160768,
+                "alloc": 4427859,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -2799,7 +2799,7 @@
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 500,
-            "iterations": 87,
+            "iterations": 96,
             "disc_method": "trapeze"
         },
         {
@@ -2807,13 +2807,13 @@
             "problem": "insurance",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 2.0592143276551114,
+            "objective": 2.0592143331527515,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.813568459,
-                "bytes": 439424,
-                "alloc": 3831,
+                "time": 0.894937457,
+                "bytes": 452096,
+                "alloc": 4287,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -2821,7 +2821,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 500,
-            "iterations": 97,
+            "iterations": 109,
             "disc_method": "trapeze"
         },
         {
@@ -2829,13 +2829,13 @@
             "problem": "insurance",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 2.0595114768695133,
+            "objective": 2.059511476885505,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.443818856,
-                "bytes": 296320,
-                "alloc": 12910,
+                "time": 3.148648837,
+                "bytes": 280096,
+                "alloc": 12208,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -2843,7 +2843,7 @@
             "model": "jump",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 150,
+            "iterations": 144,
             "disc_method": "trapeze"
         },
         {
@@ -2851,13 +2851,13 @@
             "problem": "insurance",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 2.0595114768692855,
+            "objective": 2.059511476865142,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 4.751416178,
-                "bytes": 953782680,
-                "alloc": 12916087,
+                "time": 4.880832927,
+                "bytes": 991976496,
+                "alloc": 13427119,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -2865,7 +2865,7 @@
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 140,
+            "iterations": 146,
             "disc_method": "trapeze"
         },
         {
@@ -2873,13 +2873,13 @@
             "problem": "insurance",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 2.059511476868133,
+            "objective": 2.059511476877577,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.944581756,
-                "bytes": 804736,
-                "alloc": 5891,
+                "time": 2.581407901,
+                "bytes": 787856,
+                "alloc": 5286,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -2887,7 +2887,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 149,
+            "iterations": 134,
             "disc_method": "trapeze"
         },
         {
@@ -2895,13 +2895,13 @@
             "problem": "insurance",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 2.059700280918735,
+            "objective": 2.059700280919198,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 9.934662259,
-                "bytes": 387216,
-                "alloc": 16875,
+                "time": 11.467872582,
+                "bytes": 428496,
+                "alloc": 18671,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -2909,7 +2909,7 @@
             "model": "jump",
             "criterion": "max",
             "grid_size": 2000,
-            "iterations": 199,
+            "iterations": 219,
             "disc_method": "trapeze"
         },
         {
@@ -2917,21 +2917,21 @@
             "problem": "insurance",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 2.0597002809192944,
+            "objective": 2.059700280918766,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 15.80697597,
-                "bytes": 2620435808,
-                "alloc": 35475853,
-                "gctime": 0.399972408
+                "time": 16.693827319,
+                "bytes": 2644870336,
+                "alloc": 35836215,
+                "gctime": 0.547551986
             },
             "status": "first_order",
             "max_wall_time": 500.0,
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 2000,
-            "iterations": 193,
+            "iterations": 194,
             "disc_method": "trapeze"
         },
         {
@@ -2939,13 +2939,13 @@
             "problem": "insurance",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 2.0597002809191087,
+            "objective": 2.059700280919358,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 8.076737906,
-                "bytes": 1501584,
-                "alloc": 8794,
+                "time": 6.746631065,
+                "bytes": 1468048,
+                "alloc": 7594,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -2953,7 +2953,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 2000,
-            "iterations": 223,
+            "iterations": 194,
             "disc_method": "trapeze"
         },
         {
@@ -2961,13 +2961,13 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 2.0585807111265026,
+            "objective": 2.058580711126502,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.490650789,
-                "bytes": 37901040,
-                "alloc": 197515,
+                "time": 0.451160421,
+                "bytes": 37901584,
+                "alloc": 197524,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -2987,9 +2987,9 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.670570003,
-                "bytes": 210303504,
-                "alloc": 2565427,
+                "time": 0.674460497,
+                "bytes": 210302960,
+                "alloc": 2565418,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3009,9 +3009,9 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.345379328,
-                "bytes": 27818976,
-                "alloc": 31643,
+                "time": 0.338466715,
+                "bytes": 27820064,
+                "alloc": 31661,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3027,13 +3027,13 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 2.0592134031655895,
+            "objective": 2.0592066682719707,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.012181429,
-                "bytes": 159853360,
-                "alloc": 483321,
+                "time": 2.775362883,
+                "bytes": 144886424,
+                "alloc": 478402,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -3041,7 +3041,7 @@
             "model": "jump",
             "criterion": "max",
             "grid_size": 500,
-            "iterations": 254,
+            "iterations": 255,
             "disc_method": "trapeze"
         },
         {
@@ -3049,13 +3049,13 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 2.0592134031655718,
+            "objective": 2.0592066682616093,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 6.400396384,
-                "bytes": 1407962784,
-                "alloc": 16909211,
+                "time": 6.799569167,
+                "bytes": 1635316592,
+                "alloc": 19593187,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3063,7 +3063,7 @@
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 500,
-            "iterations": 363,
+            "iterations": 409,
             "disc_method": "trapeze"
         },
         {
@@ -3071,13 +3071,13 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 2.0592134031655887,
+            "objective": 2.0592134031655727,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.438162797,
-                "bytes": 124331624,
-                "alloc": 57723,
+                "time": 3.20216388,
+                "bytes": 164208488,
+                "alloc": 74481,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3085,7 +3085,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 500,
-            "iterations": 264,
+            "iterations": 350,
             "disc_method": "trapeze"
         },
         {
@@ -3093,13 +3093,13 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 2.0595096194427267,
+            "objective": 2.0595107927933816,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 12.076359516,
-                "bytes": 491720824,
-                "alloc": 946590,
+                "time": 12.189581504,
+                "bytes": 548302376,
+                "alloc": 957633,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -3107,7 +3107,7 @@
             "model": "jump",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 494,
+            "iterations": 567,
             "disc_method": "trapeze"
         },
         {
@@ -3115,21 +3115,21 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 2.0595096194454046,
+            "objective": 2.059509619443226,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 23.238552582,
-                "bytes": 4848570464,
-                "alloc": 58236968,
-                "gctime": 0.91212113
+                "time": 17.577720392,
+                "bytes": 4040691752,
+                "alloc": 48522844,
+                "gctime": 0.679089568
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 635,
+            "iterations": 529,
             "disc_method": "trapeze"
         },
         {
@@ -3137,13 +3137,13 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 2.0595096195839115,
+            "objective": 2.059509619449037,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 12.581491598,
-                "bytes": 576929904,
-                "alloc": 124776,
+                "time": 9.231084816,
+                "bytes": 456604176,
+                "alloc": 99607,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3151,7 +3151,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 646,
+            "iterations": 520,
             "disc_method": "trapeze"
         },
         {
@@ -3159,13 +3159,13 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 2.059696604762029,
+            "objective": 2.0596966047620286,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 9.979005287,
-                "bytes": 436473360,
-                "alloc": 1741781,
+                "time": 10.04442705,
+                "bytes": 436472272,
+                "alloc": 1741763,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -3181,14 +3181,14 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 2.059696604762034,
+            "objective": 2.059696604762033,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 14.944443285,
-                "bytes": 2746197224,
-                "alloc": 32968034,
-                "gctime": 0.524215311
+                "time": 16.623738011,
+                "bytes": 2746197768,
+                "alloc": 32968043,
+                "gctime": 0.487695301
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
@@ -3203,13 +3203,13 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 2.05969660476203,
+            "objective": 2.0596966047620295,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 7.219968133,
-                "bytes": 337531480,
-                "alloc": 41108,
+                "time": 6.793264596,
+                "bytes": 337530392,
+                "alloc": 41090,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3225,11 +3225,11 @@
             "problem": "jackson",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.19186129727177784,
+            "objective": 0.1918612972717779,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.078366727,
+                "time": 0.075082726,
                 "bytes": 85088,
                 "alloc": 3708,
                 "gctime": 0.0
@@ -3247,11 +3247,11 @@
             "problem": "jackson",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.19186129727177786,
+            "objective": 0.19186129727177778,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.104258874,
+                "time": 0.102863367,
                 "bytes": 11332920,
                 "alloc": 129389,
                 "gctime": 0.0
@@ -3273,7 +3273,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.080335262,
+                "time": 0.081094191,
                 "bytes": 127280,
                 "alloc": 1776,
                 "gctime": 0.0
@@ -3291,11 +3291,11 @@
             "problem": "jackson",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.1918219473695531,
+            "objective": 0.19182194736952385,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.242069699,
+                "time": 0.242361535,
                 "bytes": 113952,
                 "alloc": 4968,
                 "gctime": 0.0
@@ -3313,11 +3313,11 @@
             "problem": "jackson",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.19182194736953315,
+            "objective": 0.1918219473695288,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.324744046,
+                "time": 0.329261315,
                 "bytes": 37946712,
                 "alloc": 426629,
                 "gctime": 0.0
@@ -3335,11 +3335,11 @@
             "problem": "jackson",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.19182194736953603,
+            "objective": 0.19182194736951827,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.253158456,
+                "time": 0.254785801,
                 "bytes": 232048,
                 "alloc": 2356,
                 "gctime": 0.0
@@ -3357,11 +3357,11 @@
             "problem": "jackson",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.1918162250817392,
+            "objective": 0.19181622508173912,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.135595058,
+                "time": 0.137077407,
                 "bytes": 42704,
                 "alloc": 1863,
                 "gctime": 0.0
@@ -3379,11 +3379,11 @@
             "problem": "jackson",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.19181622508173962,
+            "objective": 0.19181622508173976,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.209032819,
+                "time": 0.220467159,
                 "bytes": 28796960,
                 "alloc": 322164,
                 "gctime": 0.0
@@ -3405,7 +3405,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.13827675,
+                "time": 0.141741033,
                 "bytes": 340656,
                 "alloc": 936,
                 "gctime": 0.0
@@ -3423,11 +3423,11 @@
             "problem": "jackson",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.19181482186966478,
+            "objective": 0.19181482186966448,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.234238106,
+                "time": 0.230132683,
                 "bytes": 38896,
                 "alloc": 1697,
                 "gctime": 0.0
@@ -3445,11 +3445,11 @@
             "problem": "jackson",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.19181482186966067,
+            "objective": 0.19181482186966048,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.457051383,
+                "time": 0.527107306,
                 "bytes": 52460368,
                 "alloc": 585978,
                 "gctime": 0.0
@@ -3471,7 +3471,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.234648213,
+                "time": 0.23587506,
                 "bytes": 634544,
                 "alloc": 860,
                 "gctime": 0.0
@@ -3489,11 +3489,11 @@
             "problem": "jackson",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.19186101064160524,
+            "objective": 0.19186101064160532,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.047016286,
+                "time": 0.048491188,
                 "bytes": 7855224,
                 "alloc": 14898,
                 "gctime": 0.0
@@ -3511,13 +3511,13 @@
             "problem": "jackson",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.19186101064160566,
+            "objective": 0.19186101064160574,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.077661876,
-                "bytes": 16958488,
-                "alloc": 135283,
+                "time": 0.079628161,
+                "bytes": 16957944,
+                "alloc": 135274,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3537,7 +3537,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.048308773,
+                "time": 0.051224945,
                 "bytes": 7391584,
                 "alloc": 14206,
                 "gctime": 0.0
@@ -3555,13 +3555,13 @@
             "problem": "jackson",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.19182166125598601,
+            "objective": 0.1918216612559858,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.048254003,
-                "bytes": 13314320,
-                "alloc": 11310,
+                "time": 0.047255638,
+                "bytes": 13313776,
+                "alloc": 11301,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -3577,13 +3577,13 @@
             "problem": "jackson",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.19182166125598582,
+            "objective": 0.19182166125598588,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.095182369,
-                "bytes": 24438480,
-                "alloc": 180326,
+                "time": 0.093002172,
+                "bytes": 24439024,
+                "alloc": 180335,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3599,11 +3599,11 @@
             "problem": "jackson",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.19182166125598585,
+            "objective": 0.19182166125598588,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.047536551,
+                "time": 0.049109907,
                 "bytes": 12156200,
                 "alloc": 10819,
                 "gctime": 0.0
@@ -3621,13 +3621,13 @@
             "problem": "jackson",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.1918159008007888,
+            "objective": 0.1918159008007892,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.095398486,
-                "bytes": 28045568,
-                "alloc": 11485,
+                "time": 0.098250105,
+                "bytes": 28046112,
+                "alloc": 11494,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -3643,13 +3643,13 @@
             "problem": "jackson",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.191815900800789,
+            "objective": 0.1918159008007888,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.224912498,
-                "bytes": 50042928,
-                "alloc": 362548,
+                "time": 0.231238912,
+                "bytes": 50043472,
+                "alloc": 362557,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3669,7 +3669,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.096381675,
+                "time": 0.100396708,
                 "bytes": 24263376,
                 "alloc": 10977,
                 "gctime": 0.0
@@ -3691,7 +3691,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.241095829,
+                "time": 0.235532129,
                 "bytes": 48538296,
                 "alloc": 11469,
                 "gctime": 0.0
@@ -3709,11 +3709,11 @@
             "problem": "jackson",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.19181417455842426,
+            "objective": 0.19181417455842434,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.651751682,
+                "time": 0.666567515,
                 "bytes": 99427840,
                 "alloc": 712527,
                 "gctime": 0.0
@@ -3731,11 +3731,11 @@
             "problem": "jackson",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.1918141745584243,
+            "objective": 0.19181417455842426,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.278379286,
+                "time": 0.265659605,
                 "bytes": 47920160,
                 "alloc": 10974,
                 "gctime": 0.0
@@ -3753,11 +3753,11 @@
             "problem": "robbins",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 19.62626012454562,
+            "objective": 19.626260124545624,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.025776639,
+                "time": 0.024862882,
                 "bytes": 20512,
                 "alloc": 974,
                 "gctime": 0.0
@@ -3775,13 +3775,13 @@
             "problem": "robbins",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 19.62626012454559,
+            "objective": 19.626260124545585,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.036178879,
-                "bytes": 3669976,
-                "alloc": 44471,
+                "time": 0.0335422,
+                "bytes": 3648752,
+                "alloc": 44059,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -3801,7 +3801,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.024797952,
+                "time": 0.023499567,
                 "bytes": 97840,
                 "alloc": 874,
                 "gctime": 0.0
@@ -3823,7 +3823,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.055107667,
+                "time": 0.051743183,
                 "bytes": 18848,
                 "alloc": 898,
                 "gctime": 0.0
@@ -3841,11 +3841,11 @@
             "problem": "robbins",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 19.46663316312534,
+            "objective": 19.466633163125312,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.073404699,
+                "time": 0.070958151,
                 "bytes": 8474184,
                 "alloc": 100559,
                 "gctime": 0.0
@@ -3863,11 +3863,11 @@
             "problem": "robbins",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 19.466633163125298,
+            "objective": 19.4666331631253,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.054330431,
+                "time": 0.05192378,
                 "bytes": 185264,
                 "alloc": 822,
                 "gctime": 0.0
@@ -3885,11 +3885,11 @@
             "problem": "robbins",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 19.440190621502207,
+            "objective": 19.440190621502218,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.140994894,
+                "time": 0.136647976,
                 "bytes": 26656,
                 "alloc": 1278,
                 "gctime": 0.0
@@ -3907,11 +3907,11 @@
             "problem": "robbins",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 19.440190621502104,
+            "objective": 19.44019062150214,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.215193075,
+                "time": 0.210190726,
                 "bytes": 24467168,
                 "alloc": 290243,
                 "gctime": 0.0
@@ -3933,7 +3933,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.142368255,
+                "time": 0.139434951,
                 "bytes": 342672,
                 "alloc": 1164,
                 "gctime": 0.0
@@ -3951,11 +3951,11 @@
             "problem": "robbins",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 19.433914725471805,
+            "objective": 19.43391472546597,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.302339036,
+                "time": 0.301334619,
                 "bytes": 29248,
                 "alloc": 1404,
                 "gctime": 0.0
@@ -3973,11 +3973,11 @@
             "problem": "robbins",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 19.43391472546351,
+            "objective": 19.433914725465545,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.58299217,
+                "time": 0.582715106,
                 "bytes": 53877992,
                 "alloc": 638471,
                 "gctime": 0.0
@@ -3999,7 +3999,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.315475146,
+                "time": 0.320649035,
                 "bytes": 641840,
                 "alloc": 1278,
                 "gctime": 0.0
@@ -4017,11 +4017,11 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.626260295017406,
+            "objective": 19.626260295017413,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.024971287,
+                "time": 0.026700065,
                 "bytes": 3358800,
                 "alloc": 12640,
                 "gctime": 0.0
@@ -4039,11 +4039,11 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.626260295017428,
+            "objective": 19.62626029501744,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.044299602,
+                "time": 0.044030503,
                 "bytes": 8984712,
                 "alloc": 85756,
                 "gctime": 0.0
@@ -4065,7 +4065,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.025114009,
+                "time": 0.027560459,
                 "bytes": 3096736,
                 "alloc": 12103,
                 "gctime": 0.0
@@ -4083,40 +4083,18 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.46663332330736,
+            "objective": 19.466632918444336,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.04993573,
-                "bytes": 6673128,
-                "alloc": 12102,
+                "time": 0.056076799,
+                "bytes": 6952872,
+                "alloc": 12525,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": "min",
-            "grid_size": 500,
-            "iterations": 29,
-            "disc_method": "trapeze"
-        },
-        {
-            "success": true,
-            "problem": "robbins",
-            "solver": "madnlp",
-            "mu_strategy": null,
-            "objective": 19.466632918443786,
-            "max_iter": 1000,
-            "tol": 1.0e-8,
-            "benchmark": {
-                "time": 0.09158209,
-                "bytes": 19954960,
-                "alloc": 180536,
-                "gctime": 0.0
-            },
-            "status": "SOLVE_SUCCEEDED",
-            "max_wall_time": 500.0,
-            "model": "adnlp",
             "criterion": "min",
             "grid_size": 500,
             "iterations": 31,
@@ -4127,11 +4105,33 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.466633323307025,
+            "objective": 19.466633323307125,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.050758092,
+                "time": 0.086883662,
+                "bytes": 18726032,
+                "alloc": 168033,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
+            "max_wall_time": 500.0,
+            "model": "adnlp",
+            "criterion": "min",
+            "grid_size": 500,
+            "iterations": 29,
+            "disc_method": "trapeze"
+        },
+        {
+            "success": true,
+            "problem": "robbins",
+            "solver": "madnlp",
+            "mu_strategy": null,
+            "objective": 19.46663332330705,
+            "max_iter": 1000,
+            "tol": 1.0e-8,
+            "benchmark": {
+                "time": 0.053860726,
                 "bytes": 6269256,
                 "alloc": 11631,
                 "gctime": 0.0
@@ -4149,11 +4149,11 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.440191285887373,
+            "objective": 19.44019128588753,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.163419765,
+                "time": 0.171187469,
                 "bytes": 17925048,
                 "alloc": 15443,
                 "gctime": 0.0
@@ -4171,11 +4171,11 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.440191285886794,
+            "objective": 19.44019128588789,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.300482883,
+                "time": 0.332084245,
                 "bytes": 59150968,
                 "alloc": 537109,
                 "gctime": 0.0
@@ -4193,11 +4193,11 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.440191285885216,
+            "objective": 19.44019128588488,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.162012535,
+                "time": 0.172921658,
                 "bytes": 16514760,
                 "alloc": 14688,
                 "gctime": 0.0
@@ -4215,13 +4215,13 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.433915856799448,
+            "objective": 19.43391585476252,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.372637501,
-                "bytes": 30127776,
-                "alloc": 14442,
+                "time": 0.352248152,
+                "bytes": 30127232,
+                "alloc": 14433,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -4237,13 +4237,13 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.433915810682223,
+            "objective": 19.43391585499162,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.75644875,
-                "bytes": 104709928,
-                "alloc": 935978,
+                "time": 0.759363934,
+                "bytes": 102591696,
+                "alloc": 915828,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -4251,7 +4251,7 @@
             "model": "adnlp",
             "criterion": "min",
             "grid_size": 2000,
-            "iterations": 44,
+            "iterations": 43,
             "disc_method": "trapeze"
         },
         {
@@ -4259,11 +4259,11 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.433915855850724,
+            "objective": 19.43391585585573,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.401069962,
+                "time": 0.38456039,
                 "bytes": 29211152,
                 "alloc": 13656,
                 "gctime": 0.0
@@ -4285,7 +4285,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.106711036,
+                "time": 0.10101961,
                 "bytes": 38896,
                 "alloc": 1697,
                 "gctime": 0.0
@@ -4303,11 +4303,11 @@
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 9.141395458667647,
+            "objective": 9.141395458667645,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.12580648,
+                "time": 0.11960918,
                 "bytes": 14223920,
                 "alloc": 86806,
                 "gctime": 0.0
@@ -4329,7 +4329,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.076421516,
+                "time": 0.072824878,
                 "bytes": 186224,
                 "alloc": 860,
                 "gctime": 0.0
@@ -4347,11 +4347,11 @@
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 9.140990314797447,
+            "objective": 9.140990314797449,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.323369544,
+                "time": 0.304817993,
                 "bytes": 44608,
                 "alloc": 1946,
                 "gctime": 0.0
@@ -4369,11 +4369,11 @@
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 9.140990314797449,
+            "objective": 9.140990314797447,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.38832905,
+                "time": 0.363128777,
                 "bytes": 40391224,
                 "alloc": 242711,
                 "gctime": 0.0
@@ -4395,7 +4395,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.206782426,
+                "time": 0.201961212,
                 "bytes": 383568,
                 "alloc": 974,
                 "gctime": 0.0
@@ -4413,40 +4413,18 @@
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 9.140932453309969,
+            "objective": 9.140931262066482,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.162905882,
-                "bytes": 67152,
-                "alloc": 2927,
+                "time": 1.261243235,
+                "bytes": 70960,
+                "alloc": 3093,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": "min",
-            "grid_size": 1000,
-            "iterations": 33,
-            "disc_method": "trapeze"
-        },
-        {
-            "success": true,
-            "problem": "robot",
-            "solver": "ipopt",
-            "mu_strategy": "adaptive",
-            "objective": 9.1409312641889,
-            "max_iter": 1000,
-            "tol": 1.0e-8,
-            "benchmark": {
-                "time": 1.467555237,
-                "bytes": 125487952,
-                "alloc": 751798,
-                "gctime": 0.0
-            },
-            "status": "first_order",
-            "max_wall_time": 500.0,
-            "model": "adnlp",
             "criterion": "min",
             "grid_size": 1000,
             "iterations": 35,
@@ -4457,11 +4435,33 @@
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 9.140931552488706,
+            "objective": 9.14093253349245,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.665482503,
+                "time": 1.422131859,
+                "bytes": 118685472,
+                "alloc": 711488,
+                "gctime": 0.0
+            },
+            "status": "first_order",
+            "max_wall_time": 500.0,
+            "model": "adnlp",
+            "criterion": "min",
+            "grid_size": 1000,
+            "iterations": 33,
+            "disc_method": "trapeze"
+        },
+        {
+            "success": true,
+            "problem": "robot",
+            "solver": "ipopt",
+            "mu_strategy": "adaptive",
+            "objective": 9.140931552541456,
+            "max_iter": 1000,
+            "tol": 1.0e-8,
+            "benchmark": {
+                "time": 0.631095034,
                 "bytes": 718128,
                 "alloc": 1344,
                 "gctime": 0.0
@@ -4479,11 +4479,11 @@
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 9.14091658198517,
+            "objective": 9.140916581985172,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.482022601,
+                "time": 2.590731447,
                 "bytes": 59840,
                 "alloc": 2610,
                 "gctime": 0.0
@@ -4501,11 +4501,11 @@
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 9.140916581985161,
+            "objective": 9.140916581985154,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.683922494,
+                "time": 3.026292714,
                 "bytes": 215254840,
                 "alloc": 1280951,
                 "gctime": 0.0
@@ -4523,11 +4523,11 @@
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 9.140916581985165,
+            "objective": 9.140916581985179,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.565302493,
+                "time": 1.444186874,
                 "bytes": 1364240,
                 "alloc": 1278,
                 "gctime": 0.0
@@ -4545,40 +4545,18 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.141396951292828,
+            "objective": 9.141396951302246,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.142155386,
-                "bytes": 25460216,
-                "alloc": 242258,
+                "time": 0.114947844,
+                "bytes": 25061784,
+                "alloc": 241851,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": "min",
-            "grid_size": 200,
-            "iterations": 25,
-            "disc_method": "trapeze"
-        },
-        {
-            "success": true,
-            "problem": "robot",
-            "solver": "madnlp",
-            "mu_strategy": null,
-            "objective": 9.141396951302683,
-            "max_iter": 1000,
-            "tol": 1.0e-8,
-            "benchmark": {
-                "time": 0.157205424,
-                "bytes": 24319184,
-                "alloc": 114278,
-                "gctime": 0.0
-            },
-            "status": "SOLVE_SUCCEEDED",
-            "max_wall_time": 500.0,
-            "model": "adnlp",
             "criterion": "min",
             "grid_size": 200,
             "iterations": 23,
@@ -4589,13 +4567,35 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.141396951303527,
+            "objective": 9.141396951292775,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.080029109,
-                "bytes": 8635496,
-                "alloc": 11218,
+                "time": 0.157125825,
+                "bytes": 26094992,
+                "alloc": 123005,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
+            "max_wall_time": 500.0,
+            "model": "adnlp",
+            "criterion": "min",
+            "grid_size": 200,
+            "iterations": 25,
+            "disc_method": "trapeze"
+        },
+        {
+            "success": true,
+            "problem": "robot",
+            "solver": "madnlp",
+            "mu_strategy": null,
+            "objective": 9.141396951324907,
+            "max_iter": 1000,
+            "tol": 1.0e-8,
+            "benchmark": {
+                "time": 0.07543298,
+                "bytes": 8636040,
+                "alloc": 11227,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -4611,13 +4611,13 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.140991661607654,
+            "objective": 9.140991661607067,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.476048595,
-                "bytes": 66859760,
-                "alloc": 603038,
+                "time": 0.392982143,
+                "bytes": 65300168,
+                "alloc": 602321,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -4625,7 +4625,7 @@
             "model": "jump",
             "criterion": "min",
             "grid_size": 500,
-            "iterations": 32,
+            "iterations": 29,
             "disc_method": "trapeze"
         },
         {
@@ -4633,13 +4633,13 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.140991661605344,
+            "objective": 9.140991661607071,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.579746364,
-                "bytes": 75035328,
-                "alloc": 337457,
+                "time": 0.508020547,
+                "bytes": 73409064,
+                "alloc": 330285,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -4647,7 +4647,7 @@
             "model": "adnlp",
             "criterion": "min",
             "grid_size": 500,
-            "iterations": 30,
+            "iterations": 29,
             "disc_method": "trapeze"
         },
         {
@@ -4655,13 +4655,13 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.140991661607064,
+            "objective": 9.140991661607057,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.249871273,
-                "bytes": 23829040,
-                "alloc": 12379,
+                "time": 0.237410996,
+                "bytes": 23827952,
+                "alloc": 12361,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -4677,13 +4677,13 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.140938744842222,
+            "objective": 9.140938744843913,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.000377927,
-                "bytes": 131548528,
-                "alloc": 1212448,
+                "time": 1.004226534,
+                "bytes": 131549072,
+                "alloc": 1212457,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -4699,13 +4699,13 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.140938744844508,
+            "objective": 9.140938744842838,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.219795777,
-                "bytes": 140793288,
-                "alloc": 619928,
+                "time": 1.004351111,
+                "bytes": 140791656,
+                "alloc": 619901,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -4721,11 +4721,11 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.140938744843533,
+            "objective": 9.14093874484372,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.635048292,
+                "time": 0.570752524,
                 "bytes": 45573656,
                 "alloc": 12154,
                 "gctime": 0.0
@@ -4743,13 +4743,13 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.140931495464292,
+            "objective": 9.140931495457187,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.170684584,
-                "bytes": 281500512,
-                "alloc": 2435747,
+                "time": 16.756458905,
+                "bytes": 611427048,
+                "alloc": 2467994,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -4757,29 +4757,24 @@
             "model": "jump",
             "criterion": "min",
             "grid_size": 2000,
-            "iterations": 38,
+            "iterations": 182,
             "disc_method": "trapeze"
         },
         {
-            "success": true,
+            "success": false,
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.14092191797385,
+            "objective": null,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": {
-                "time": 5.64752308,
-                "bytes": 504725696,
-                "alloc": 2177596,
-                "gctime": 0.0
-            },
-            "status": "SOLVE_SUCCEEDED",
+            "benchmark": null,
+            "status": "ERROR: DomainError(Inf, \"sincos(x) is only defined for finite x.\")",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": "min",
+            "criterion": null,
             "grid_size": 2000,
-            "iterations": 46,
+            "iterations": null,
             "disc_method": "trapeze"
         },
         {
@@ -4787,13 +4782,13 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.140921917974156,
+            "objective": 9.140921917973955,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.991651096,
-                "bytes": 199160728,
-                "alloc": 21452,
+                "time": 2.623774495,
+                "bytes": 189424360,
+                "alloc": 20541,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -4801,7 +4796,7 @@
             "model": "exa",
             "criterion": "min",
             "grid_size": 2000,
-            "iterations": 53,
+            "iterations": 49,
             "disc_method": "trapeze"
         },
         {
@@ -4813,7 +4808,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.049946437,
+                "time": 0.048786893,
                 "bytes": 36992,
                 "alloc": 1614,
                 "gctime": 0.0
@@ -4831,11 +4826,11 @@
             "problem": "rocket",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1.012835686899079,
+            "objective": 1.0128356868990789,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.070380289,
+                "time": 0.065334166,
                 "bytes": 17730328,
                 "alloc": 362646,
                 "gctime": 0.0
@@ -4857,7 +4852,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.029973929,
+                "time": 0.027693749,
                 "bytes": 103376,
                 "alloc": 822,
                 "gctime": 0.0
@@ -4879,7 +4874,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.150735425,
+                "time": 0.147957658,
                 "bytes": 42704,
                 "alloc": 1863,
                 "gctime": 0.0
@@ -4897,11 +4892,11 @@
             "problem": "rocket",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1.0128367166830137,
+            "objective": 1.012836716683015,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.247712945,
+                "time": 0.217538544,
                 "bytes": 50708992,
                 "alloc": 1035659,
                 "gctime": 0.0
@@ -4923,7 +4918,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.078314474,
+                "time": 0.072887119,
                 "bytes": 195248,
                 "alloc": 936,
                 "gctime": 0.0
@@ -4945,7 +4940,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.467930661,
+                "time": 0.43087043,
                 "bytes": 48416,
                 "alloc": 2112,
                 "gctime": 0.0
@@ -4963,11 +4958,11 @@
             "problem": "rocket",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1.0128368565035106,
+            "objective": 1.0128368565035102,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.728294118,
+                "time": 0.587142063,
                 "bytes": 114503736,
                 "alloc": 2336834,
                 "gctime": 0.0
@@ -4989,7 +4984,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.164622192,
+                "time": 0.167252037,
                 "bytes": 346512,
                 "alloc": 1050,
                 "gctime": 0.0
@@ -5007,11 +5002,11 @@
             "problem": "rocket",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1.012836879278335,
+            "objective": 1.0128368792783349,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.883304373,
+                "time": 0.996051307,
                 "bytes": 46512,
                 "alloc": 2029,
                 "gctime": 0.0
@@ -5029,11 +5024,11 @@
             "problem": "rocket",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1.0128368792783407,
+            "objective": 1.0128368792783413,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.023133631,
+                "time": 0.933175977,
                 "bytes": 219902224,
                 "alloc": 4487609,
                 "gctime": 0.0
@@ -5055,7 +5050,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.380614601,
+                "time": 0.363288389,
                 "bytes": 641456,
                 "alloc": 1012,
                 "gctime": 0.0
@@ -5077,7 +5072,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.054642008,
+                "time": 0.053378304,
                 "bytes": 20955072,
                 "alloc": 192403,
                 "gctime": 0.0
@@ -5095,11 +5090,11 @@
             "problem": "rocket",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.0128349945495432,
+            "objective": 1.0128349945495427,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.064053123,
+                "time": 0.064080006,
                 "bytes": 24278224,
                 "alloc": 429095,
                 "gctime": 0.0
@@ -5121,7 +5116,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.022651367,
+                "time": 0.02329674,
                 "bytes": 4952856,
                 "alloc": 10709,
                 "gctime": 0.0
@@ -5143,7 +5138,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.138770392,
+                "time": 0.140250973,
                 "bytes": 52388072,
                 "alloc": 491889,
                 "gctime": 0.0
@@ -5161,11 +5156,11 @@
             "problem": "rocket",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.0128349840358275,
+            "objective": 1.012834984035828,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.174556594,
+                "time": 0.166378237,
                 "bytes": 62024352,
                 "alloc": 1095498,
                 "gctime": 0.0
@@ -5187,7 +5182,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.057124214,
+                "time": 0.059150998,
                 "bytes": 11717952,
                 "alloc": 10872,
                 "gctime": 0.0
@@ -5205,11 +5200,11 @@
             "problem": "rocket",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.0128356094402213,
+            "objective": 1.0128356094402209,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.33837066,
+                "time": 0.35201787,
                 "bytes": 104026880,
                 "alloc": 990481,
                 "gctime": 0.0
@@ -5227,11 +5222,11 @@
             "problem": "rocket",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.0128356094402151,
+            "objective": 1.012835609440218,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.402070248,
+                "time": 0.43117763,
                 "bytes": 133136752,
                 "alloc": 2356247,
                 "gctime": 0.0
@@ -5253,7 +5248,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.126487403,
+                "time": 0.132762041,
                 "bytes": 23817200,
                 "alloc": 11229,
                 "gctime": 0.0
@@ -5271,13 +5266,13 @@
             "problem": "rocket",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.0128299554209046,
+            "objective": 1.0128299554209053,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.771611731,
-                "bytes": 204567400,
-                "alloc": 1987007,
+                "time": 0.833681346,
+                "bytes": 204569032,
+                "alloc": 1987034,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -5293,11 +5288,11 @@
             "problem": "rocket",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.012829955420905,
+            "objective": 1.0128299554209028,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.890853341,
+                "time": 0.93227594,
                 "bytes": 235996688,
                 "alloc": 4155146,
                 "gctime": 0.0
@@ -5319,9 +5314,9 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.283626321,
-                "bytes": 44113280,
-                "alloc": 10787,
+                "time": 0.281310506,
+                "bytes": 44112192,
+                "alloc": 10769,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -5337,13 +5332,13 @@
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.38484906968275395,
+            "objective": 0.38537834995915726,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 4.749297729,
-                "bytes": 372688,
-                "alloc": 16243,
+                "time": 4.371215256,
+                "bytes": 278800,
+                "alloc": 12155,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -5351,7 +5346,7 @@
             "model": "jump",
             "criterion": "max",
             "grid_size": 200,
-            "iterations": 192,
+            "iterations": 145,
             "disc_method": "trapeze"
         },
         {
@@ -5359,11 +5354,11 @@
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.3853783499591533,
+            "objective": 0.38537834995915343,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.618494466,
+                "time": 1.553634936,
                 "bytes": 223574096,
                 "alloc": 2880825,
                 "gctime": 0.0
@@ -5385,7 +5380,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.956687488,
+                "time": 0.863838211,
                 "bytes": 341872,
                 "alloc": 4888,
                 "gctime": 0.0
@@ -5403,11 +5398,11 @@
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.5958750134251357,
+            "objective": 0.5958750134251393,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 7.54603271,
+                "time": 8.022963722,
                 "bytes": 221680,
                 "alloc": 9665,
                 "gctime": 0.0
@@ -5421,25 +5416,20 @@
             "disc_method": "trapeze"
         },
         {
-            "success": true,
+            "success": false,
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.5958750133842163,
+            "objective": null,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": {
-                "time": 9.355099716,
-                "bytes": 485642864,
-                "alloc": 6245425,
-                "gctime": 0.0
-            },
-            "status": "first_order",
+            "benchmark": null,
+            "status": "ERROR: DomainError(Inf, \"sincos(x) is only defined for finite x.\")",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": "max",
+            "criterion": null,
             "grid_size": 500,
-            "iterations": 109,
+            "iterations": null,
             "disc_method": "trapeze"
         },
         {
@@ -5447,11 +5437,11 @@
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.5958750133842169,
+            "objective": 0.5958750133842168,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.927560429,
+                "time": 1.841688193,
                 "bytes": 502576,
                 "alloc": 4280,
                 "gctime": 0.0
@@ -5469,13 +5459,13 @@
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.30357110435651224,
+            "objective": 0.30501973823764705,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 26.841807374,
-                "bytes": 333712,
-                "alloc": 14551,
+                "time": 22.892643069,
+                "bytes": 272480,
+                "alloc": 11888,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -5483,7 +5473,7 @@
             "model": "jump",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 172,
+            "iterations": 140,
             "disc_method": "trapeze"
         },
         {
@@ -5491,21 +5481,21 @@
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.305019747846128,
+            "objective": 0.30360919678838055,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 70.894319291,
-                "bytes": 2046412832,
-                "alloc": 26319480,
-                "gctime": 0.371199338
+                "time": 44.156902008,
+                "bytes": 2041124560,
+                "alloc": 26270390,
+                "gctime": 0.294296945
             },
             "status": "first_order",
             "max_wall_time": 500.0,
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 231,
+            "iterations": 230,
             "disc_method": "trapeze"
         },
         {
@@ -5513,13 +5503,13 @@
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.30501973415353123,
+            "objective": 0.30374247226523066,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 12.319207828,
-                "bytes": 866800,
-                "alloc": 6732,
+                "time": 13.413330323,
+                "bytes": 896768,
+                "alloc": 7811,
                 "gctime": 0.0
             },
             "status": "first_order",
@@ -5527,7 +5517,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 171,
+            "iterations": 201,
             "disc_method": "trapeze"
         },
         {
@@ -5535,13 +5525,13 @@
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": -0.06277312918663672,
+            "objective": -1.2578468076773948,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 357.05090839,
-                "bytes": 2571584,
-                "alloc": 112488,
+                "time": 303.876907888,
+                "bytes": 2504000,
+                "alloc": 109650,
                 "gctime": 0.0
             },
             "status": "ITERATION_LIMIT",
@@ -5557,21 +5547,21 @@
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.3367069897860234,
+            "objective": -0.016033497586012708,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 500.098846633,
-                "bytes": 12910457840,
-                "alloc": 169552402,
-                "gctime": 2.767494748
+                "time": 529.354417997,
+                "bytes": 2447270472,
+                "alloc": 32199819,
+                "gctime": 0.415754728
             },
             "status": "max_time",
             "max_wall_time": 500.0,
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 2000,
-            "iterations": 691,
+            "iterations": 129,
             "disc_method": "trapeze"
         },
         {
@@ -5579,13 +5569,13 @@
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": -0.19252703002283184,
+            "objective": -0.009001577398462331,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 526.235134784,
-                "bytes": 1714832,
-                "alloc": 15958,
+                "time": 654.078452013,
+                "bytes": 1418416,
+                "alloc": 5276,
                 "gctime": 0.0
             },
             "status": "max_time",
@@ -5593,7 +5583,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 2000,
-            "iterations": 387,
+            "iterations": 122,
             "disc_method": "trapeze"
         },
         {
@@ -5601,11 +5591,11 @@
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.3853794107939756,
+            "objective": 0.38537941079397586,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.585290238,
+                "time": 2.983996497,
                 "bytes": 155776544,
                 "alloc": 1494908,
                 "gctime": 0.0
@@ -5623,11 +5613,11 @@
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.3854933855455216,
+            "objective": 0.38549338554552115,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.131271316,
+                "time": 2.07563598,
                 "bytes": 317064928,
                 "alloc": 3659226,
                 "gctime": 0.0
@@ -5649,7 +5639,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.792791286,
+                "time": 0.792254982,
                 "bytes": 47146064,
                 "alloc": 38154,
                 "gctime": 0.0
@@ -5667,13 +5657,13 @@
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.5958750132963718,
+            "objective": 0.5958750132963722,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 4.620121064,
-                "bytes": 360045256,
-                "alloc": 3744890,
+                "time": 6.329948868,
+                "bytes": 360046888,
+                "alloc": 3744917,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -5689,11 +5679,11 @@
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.5958750133112896,
+            "objective": 0.59587501331129,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 9.238790409,
+                "time": 10.509532666,
                 "bytes": 726416488,
                 "alloc": 8344685,
                 "gctime": 0.0
@@ -5715,7 +5705,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.691620339,
+                "time": 1.764043003,
                 "bytes": 105207816,
                 "alloc": 34386,
                 "gctime": 0.0
@@ -5729,25 +5719,42 @@
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.14090040233169632,
+            "objective": 0.30501973150593326,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 85.187800906,
-                "bytes": 1382829424,
-                "alloc": 7641423,
-                "gctime": 0.0
+                "time": 222.187135692,
+                "bytes": 2463923840,
+                "alloc": 7863382,
+                "gctime": 0.503070347
             },
-            "status": "NUMERICAL_ERROR",
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 370,
+            "iterations": 866,
+            "disc_method": "trapeze"
+        },
+        {
+            "success": false,
+            "problem": "space_shuttle",
+            "solver": "madnlp",
+            "mu_strategy": null,
+            "objective": null,
+            "max_iter": 1000,
+            "tol": 1.0e-8,
+            "benchmark": null,
+            "status": "ERROR: DomainError(Inf, \"sincos(x) is only defined for finite x.\")",
+            "max_wall_time": 500.0,
+            "model": "adnlp",
+            "criterion": null,
+            "grid_size": 1000,
+            "iterations": null,
             "disc_method": "trapeze"
         },
         {
@@ -5755,35 +5762,13 @@
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.30501973333732824,
+            "objective": 0.3050197315060984,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 35.801800492,
-                "bytes": 4520561840,
-                "alloc": 53499898,
-                "gctime": 0.825931687
-            },
-            "status": "SOLVE_SUCCEEDED",
-            "max_wall_time": 500.0,
-            "model": "adnlp",
-            "criterion": "max",
-            "grid_size": 1000,
-            "iterations": 370,
-            "disc_method": "trapeze"
-        },
-        {
-            "success": true,
-            "problem": "space_shuttle",
-            "solver": "madnlp",
-            "mu_strategy": null,
-            "objective": 0.30501973152446865,
-            "max_iter": 1000,
-            "tol": 1.0e-8,
-            "benchmark": {
-                "time": 10.075430337,
-                "bytes": 543267792,
-                "alloc": 91880,
+                "time": 16.84206787,
+                "bytes": 1076594752,
+                "alloc": 181202,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -5791,7 +5776,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 1000,
-            "iterations": 291,
+            "iterations": 542,
             "disc_method": "trapeze"
         },
         {
@@ -5799,21 +5784,21 @@
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.23035483425734776,
+            "objective": 0.5828059658395397,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 468.918384624,
-                "bytes": 5418844776,
-                "alloc": 15433026,
-                "gctime": 0.943327367
+                "time": 171.617492766,
+                "bytes": 3123562608,
+                "alloc": 15179108,
+                "gctime": 0.82787471
             },
             "status": "NUMERICAL_ERROR",
             "max_wall_time": 500.0,
             "model": "jump",
             "criterion": "max",
             "grid_size": 2000,
-            "iterations": 894,
+            "iterations": 393,
             "disc_method": "trapeze"
         },
         {
@@ -5821,21 +5806,21 @@
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.3298265489909955,
+            "objective": 0.35830798712838263,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 55.750498899,
-                "bytes": 3854913376,
-                "alloc": 44088243,
-                "gctime": 0.650729226
+                "time": 76.284755295,
+                "bytes": 4355303968,
+                "alloc": 50065612,
+                "gctime": 0.861268868
             },
             "status": "RESTORATION_FAILED",
             "max_wall_time": 500.0,
             "model": "adnlp",
             "criterion": "max",
             "grid_size": 2000,
-            "iterations": 179,
+            "iterations": 201,
             "disc_method": "trapeze"
         },
         {
@@ -5843,13 +5828,13 @@
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.3316538945929159,
+            "objective": 0.3805993216858783,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 13.716739899,
-                "bytes": 555999008,
-                "alloc": 46932,
+                "time": 13.86237731,
+                "bytes": 584351824,
+                "alloc": 49587,
                 "gctime": 0.0
             },
             "status": "RESTORATION_FAILED",
@@ -5857,7 +5842,7 @@
             "model": "exa",
             "criterion": "max",
             "grid_size": 2000,
-            "iterations": 181,
+            "iterations": 190,
             "disc_method": "trapeze"
         },
         {
@@ -5869,7 +5854,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.034845803,
+                "time": 0.034727545,
                 "bytes": 25968,
                 "alloc": 1133,
                 "gctime": 0.0
@@ -5891,7 +5876,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.041896078,
+                "time": 0.044071432,
                 "bytes": 7276480,
                 "alloc": 119555,
                 "gctime": 0.0
@@ -5913,7 +5898,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.028758616,
+                "time": 0.028250779,
                 "bytes": 109408,
                 "alloc": 601,
                 "gctime": 0.0
@@ -5935,7 +5920,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.116255229,
+                "time": 0.116949942,
                 "bytes": 35488,
                 "alloc": 1548,
                 "gctime": 0.0
@@ -5953,11 +5938,11 @@
             "problem": "steering",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.5545718610369222,
+            "objective": 0.5545718610369226,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.141412063,
+                "time": 0.140273433,
                 "bytes": 24528344,
                 "alloc": 401678,
                 "gctime": 0.0
@@ -5975,11 +5960,11 @@
             "problem": "steering",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.5545718610369224,
+            "objective": 0.5545718610369222,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.094956644,
+                "time": 0.096845877,
                 "bytes": 227712,
                 "alloc": 791,
                 "gctime": 0.0
@@ -5997,11 +5982,11 @@
             "problem": "steering",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.5545711240839732,
+            "objective": 0.5545711240839737,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.263269522,
+                "time": 0.272800663,
                 "bytes": 37392,
                 "alloc": 1631,
                 "gctime": 0.0
@@ -6023,7 +6008,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.333579658,
+                "time": 0.344598707,
                 "bytes": 51515824,
                 "alloc": 842817,
                 "gctime": 0.0
@@ -6045,7 +6030,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.197047834,
+                "time": 0.210772292,
                 "bytes": 416544,
                 "alloc": 829,
                 "gctime": 0.0
@@ -6063,11 +6048,11 @@
             "problem": "steering",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.5545709397498642,
+            "objective": 0.5545709397498638,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.735984084,
+                "time": 0.761199009,
                 "bytes": 37392,
                 "alloc": 1631,
                 "gctime": 0.0
@@ -6085,11 +6070,11 @@
             "problem": "steering",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.5545709397498632,
+            "objective": 0.5545709397498645,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.736451521,
+                "time": 1.186574278,
                 "bytes": 102899824,
                 "alloc": 1682817,
                 "gctime": 0.0
@@ -6107,11 +6092,11 @@
             "problem": "steering",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 0.5545709397498642,
+            "objective": 0.5545709397498647,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.530552115,
+                "time": 0.502634824,
                 "bytes": 792544,
                 "alloc": 829,
                 "gctime": 0.0
@@ -6129,11 +6114,11 @@
             "problem": "steering",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.5545770161030459,
+            "objective": 0.5545770161030458,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.032492908,
+                "time": 0.034517594,
                 "bytes": 9836704,
                 "alloc": 113359,
                 "gctime": 0.0
@@ -6151,13 +6136,13 @@
             "problem": "steering",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.5545770161030463,
+            "objective": 0.5545770161030458,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.039536511,
-                "bytes": 10896904,
-                "alloc": 147050,
+                "time": 0.039643316,
+                "bytes": 10898536,
+                "alloc": 147077,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -6177,9 +6162,9 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.022889754,
-                "bytes": 3028256,
-                "alloc": 9558,
+                "time": 0.025092384,
+                "bytes": 3029344,
+                "alloc": 9576,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -6199,7 +6184,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.089564306,
+                "time": 0.091929948,
                 "bytes": 24383696,
                 "alloc": 297259,
                 "gctime": 0.0
@@ -6213,20 +6198,25 @@
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "steering",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": 0.5545718610889038,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: DomainError(Inf, \"sincos(x) is only defined for finite x.\")",
+            "benchmark": {
+                "time": 0.105810841,
+                "bytes": 27763856,
+                "alloc": 372275,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 500,
-            "iterations": null,
+            "iterations": 15,
             "disc_method": "trapeze"
         },
         {
@@ -6238,9 +6228,9 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.060154673,
-                "bytes": 6876264,
-                "alloc": 9922,
+                "time": 0.065216345,
+                "bytes": 6876808,
+                "alloc": 9931,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -6260,7 +6250,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.202272273,
+                "time": 0.204718276,
                 "bytes": 46958584,
                 "alloc": 599160,
                 "gctime": 0.0
@@ -6274,25 +6264,20 @@
             "disc_method": "trapeze"
         },
         {
-            "success": true,
+            "success": false,
             "problem": "steering",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.5545711240723339,
+            "objective": null,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": {
-                "time": 0.311388064,
-                "bytes": 54907072,
-                "alloc": 732788,
-                "gctime": 0.0
-            },
-            "status": "SOLVE_SUCCEEDED",
+            "benchmark": null,
+            "status": "ERROR: DomainError(Inf, \"sincos(x) is only defined for finite x.\")",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": "min",
+            "criterion": null,
             "grid_size": 1000,
-            "iterations": 15,
+            "iterations": null,
             "disc_method": "trapeze"
         },
         {
@@ -6304,9 +6289,9 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.13230743,
-                "bytes": 13191328,
-                "alloc": 9936,
+                "time": 0.14383939,
+                "bytes": 13191872,
+                "alloc": 9945,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -6326,9 +6311,9 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.529602443,
-                "bytes": 90197528,
-                "alloc": 1203067,
+                "time": 0.53663775,
+                "bytes": 90198072,
+                "alloc": 1203076,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -6344,11 +6329,11 @@
             "problem": "steering",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.5545709397282287,
+            "objective": 0.5545709397282291,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.688167628,
+                "time": 0.577046954,
                 "bytes": 103429872,
                 "alloc": 1369580,
                 "gctime": 0.0
@@ -6370,9 +6355,9 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.338126022,
-                "bytes": 25218968,
-                "alloc": 9847,
+                "time": 0.321690473,
+                "bytes": 25218424,
+                "alloc": 9838,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -6388,11 +6373,11 @@
             "problem": "vanderpol",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1.0478358025382755,
+            "objective": 1.0478358025382757,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.004683381,
+                "time": 0.004749241,
                 "bytes": 8208,
                 "alloc": 355,
                 "gctime": 0.0
@@ -6414,7 +6399,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.006511872,
+                "time": 0.006876796,
                 "bytes": 978144,
                 "alloc": 14086,
                 "gctime": 0.0
@@ -6436,7 +6421,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.003581471,
+                "time": 0.003735309,
                 "bytes": 54720,
                 "alloc": 248,
                 "gctime": 0.0
@@ -6458,7 +6443,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.010542867,
+                "time": 0.010185334,
                 "bytes": 8432,
                 "alloc": 369,
                 "gctime": 0.0
@@ -6476,11 +6461,11 @@
             "problem": "vanderpol",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1.0478115516287514,
+            "objective": 1.0478115516287518,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.014588828,
+                "time": 0.014176788,
                 "bytes": 2410784,
                 "alloc": 34486,
                 "gctime": 0.0
@@ -6502,7 +6487,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.007484729,
+                "time": 0.007571204,
                 "bytes": 104960,
                 "alloc": 248,
                 "gctime": 0.0
@@ -6524,7 +6509,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.019409249,
+                "time": 0.018737086,
                 "bytes": 8432,
                 "alloc": 369,
                 "gctime": 0.0
@@ -6542,11 +6527,11 @@
             "problem": "vanderpol",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1.0478080682279438,
+            "objective": 1.0478080682279443,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.031995403,
+                "time": 0.029824192,
                 "bytes": 4798944,
                 "alloc": 68486,
                 "gctime": 0.0
@@ -6568,7 +6553,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.013555519,
+                "time": 0.014123698,
                 "bytes": 189120,
                 "alloc": 248,
                 "gctime": 0.0
@@ -6586,11 +6571,11 @@
             "problem": "vanderpol",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1.0478071956653523,
+            "objective": 1.047807195665352,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.040085086,
+                "time": 0.037597754,
                 "bytes": 8432,
                 "alloc": 369,
                 "gctime": 0.0
@@ -6608,11 +6593,11 @@
             "problem": "vanderpol",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": 1.0478071956653539,
+            "objective": 1.0478071956653534,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.095588623,
+                "time": 0.067202122,
                 "bytes": 9574944,
                 "alloc": 136486,
                 "gctime": 0.0
@@ -6634,7 +6619,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.025881091,
+                "time": 0.027459325,
                 "bytes": 357120,
                 "alloc": 248,
                 "gctime": 0.0
@@ -6652,13 +6637,13 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.0478358025382744,
+            "objective": 1.0478358025382721,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.006122278,
-                "bytes": 4774792,
-                "alloc": 52231,
+                "time": 0.006050549,
+                "bytes": 4774248,
+                "alloc": 52222,
                 "gctime": 0.0
             },
             "status": "LOCALLY_SOLVED",
@@ -6674,11 +6659,11 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.0478358025382735,
+            "objective": 1.047835802538271,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.007151115,
+                "time": 0.006054736,
                 "bytes": 2114808,
                 "alloc": 21961,
                 "gctime": 0.0
@@ -6696,11 +6681,11 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.0478358025382748,
+            "objective": 1.0478358025382752,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.003010745,
+                "time": 0.003162614,
                 "bytes": 1731792,
                 "alloc": 7678,
                 "gctime": 0.0
@@ -6718,11 +6703,11 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.047811551628746,
+            "objective": 1.0478115516287543,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.014875669,
+                "time": 0.014048935,
                 "bytes": 11029592,
                 "alloc": 134281,
                 "gctime": 0.0
@@ -6740,11 +6725,11 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.047811551628749,
+            "objective": 1.0478115516287467,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.017509106,
+                "time": 0.013320618,
                 "bytes": 4616272,
                 "alloc": 42955,
                 "gctime": 0.0
@@ -6762,11 +6747,11 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.047811551628756,
+            "objective": 1.0478115516287536,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.006437876,
+                "time": 0.006783143,
                 "bytes": 3641832,
                 "alloc": 7681,
                 "gctime": 0.0
@@ -6784,11 +6769,11 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.047808068227957,
+            "objective": 1.0478080682279476,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.029151427,
+                "time": 0.028836944,
                 "bytes": 23008504,
                 "alloc": 292309,
                 "gctime": 0.0
@@ -6806,13 +6791,13 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.0478080682279467,
+            "objective": 1.0478080682279436,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.042814804,
-                "bytes": 8790416,
-                "alloc": 77988,
+                "time": 0.029924756,
+                "bytes": 8790960,
+                "alloc": 77997,
                 "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
@@ -6828,11 +6813,11 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.0478080682279256,
+            "objective": 1.0478080682279236,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.012005387,
+                "time": 0.012750712,
                 "bytes": 6829600,
                 "alloc": 7715,
                 "gctime": 0.0
@@ -6850,11 +6835,11 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.047807195665049,
+            "objective": 1.0478071956651096,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.076729579,
+                "time": 0.077544575,
                 "bytes": 45165824,
                 "alloc": 590321,
                 "gctime": 0.0
@@ -6872,11 +6857,11 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.0478071956655586,
+            "objective": 1.0478071956654187,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.108565329,
+                "time": 0.085128844,
                 "bytes": 17135312,
                 "alloc": 147988,
                 "gctime": 0.0
@@ -6898,7 +6883,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.050338321,
+                "time": 0.048810997,
                 "bytes": 13203712,
                 "alloc": 7751,
                 "gctime": 0.0

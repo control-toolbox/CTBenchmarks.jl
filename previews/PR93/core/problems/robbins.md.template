@@ -1,7 +1,7 @@
 # Core benchmark: robbins
 
 ```@meta
-Draft = true
+Draft = false
 ```
 
 This page presents benchmark results for the **robbins** problem across different platforms and configurations.
@@ -35,6 +35,63 @@ FUNCTION = _plot_time_vs_grid_size_bar
 ARGS = robbins, core-ubuntu-latest
 -->
 
+### Solution: N = 200 (Ubuntu Latest CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-ubuntu-latest/figures/robbins_N200.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/robbins_N200.svg"
+  />
+</a>
+```
+
+### Solution: N = 500 (Ubuntu Latest CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-ubuntu-latest/figures/robbins_N500.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/robbins_N500.svg"
+  />
+</a>
+```
+
+### Solution: N = 1000 (Ubuntu Latest CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-ubuntu-latest/figures/robbins_N1000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/robbins_N1000.svg"
+  />
+</a>
+```
+
+### Solution: N = 2000 (Ubuntu Latest CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-ubuntu-latest/figures/robbins_N2000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/robbins_N2000.svg"
+  />
+</a>
+```
+
+<!-- INCLUDE_ANALYSIS:
+FUNCTION = _print_benchmark_table_results
+ARGS = core-ubuntu-latest, robbins
+-->
+
 ### Log (Ubuntu Latest CPU)
 
 ```@example BENCH
@@ -62,6 +119,11 @@ FUNCTION = _plot_time_vs_grid_size_bar
 ARGS = robbins, core-moonshot-cpu
 -->
 
+<!-- INCLUDE_ANALYSIS:
+FUNCTION = _print_benchmark_table_results
+ARGS = core-moonshot-cpu, robbins
+-->
+
 ### Log (Moonshot CPU)
 
 ```@example BENCH
@@ -87,6 +149,11 @@ ARGS = robbins, core-moonshot-gpu
 <!-- INCLUDE_FIGURE:
 FUNCTION = _plot_time_vs_grid_size_bar
 ARGS = robbins, core-moonshot-gpu
+-->
+
+<!-- INCLUDE_ANALYSIS:
+FUNCTION = _print_benchmark_table_results
+ARGS = core-moonshot-gpu, robbins
 -->
 
 ### Log (Moonshot GPU)
