@@ -1,0 +1,280 @@
+# Core benchmark: beam
+
+```@meta
+Draft = false
+```
+
+This page presents benchmark results for the **beam** problem across different platforms and configurations.
+
+!!! note
+    The linear solver is MUMPS for all experiments.
+
+```@setup BENCH
+# Load utilities
+include(normpath(joinpath(@__DIR__, "..", "..", "assets", "jl", "utils.jl")))
+```
+
+## Ubuntu Latest CPU
+
+This benchmark suite evaluates optimal control problems on a standard CPU platform using GitHub Actions runners.
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = "core-ubuntu-latest"
+ENV_NAME = BENCH
+-->
+
+### Time vs Grid Size (Ubuntu Latest CPU)
+
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_time_vs_grid_size
+ARGS = beam, core-ubuntu-latest
+-->
+
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_time_vs_grid_size_bar
+ARGS = beam, core-ubuntu-latest
+-->
+
+### Solution: N = 200 (Ubuntu Latest CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N200.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N200.svg"
+  />
+</a>
+```
+
+### Solution: N = 500 (Ubuntu Latest CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N500.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N500.svg"
+  />
+</a>
+```
+
+### Solution: N = 1000 (Ubuntu Latest CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N1000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N1000.svg"
+  />
+</a>
+```
+
+### Solution: N = 2000 (Ubuntu Latest CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N2000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/beam_N2000.svg"
+  />
+</a>
+```
+
+<!-- INCLUDE_TEXT:
+FUNCTION = _print_benchmark_table_results
+ARGS = core-ubuntu-latest, beam
+-->
+
+### Log (Ubuntu Latest CPU)
+
+```@example BENCH
+_print_benchmark_log("core-ubuntu-latest"; problems=["beam"]) # hide
+```
+
+## Moonshot CPU
+
+Results on self-hosted CPU hardware.
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = "core-moonshot-cpu"
+ENV_NAME = BENCH
+-->
+
+### Time vs Grid Size (Moonshot CPU)
+
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_time_vs_grid_size
+ARGS = beam, core-moonshot-cpu
+-->
+
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_time_vs_grid_size_bar
+ARGS = beam, core-moonshot-cpu
+-->
+
+### Solution: N = 200 (Moonshot CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N200.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N200.svg"
+  />
+</a>
+```
+
+### Solution: N = 500 (Moonshot CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N500.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N500.svg"
+  />
+</a>
+```
+
+### Solution: N = 1000 (Moonshot CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N1000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N1000.svg"
+  />
+</a>
+```
+
+### Solution: N = 2000 (Moonshot CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N2000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N2000.svg"
+  />
+</a>
+```
+
+### Solution: N = 5000 (Moonshot CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N5000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N5000.svg"
+  />
+</a>
+```
+
+<!-- INCLUDE_TEXT:
+FUNCTION = _print_benchmark_table_results
+ARGS = core-moonshot-cpu, beam
+-->
+
+### Log (Moonshot CPU)
+
+```@example BENCH
+_print_benchmark_log("core-moonshot-cpu"; problems=["beam"]) # hide
+```
+
+## Moonshot GPU
+
+Results on self-hosted GPU hardware.
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = "core-moonshot-gpu"
+ENV_NAME = BENCH
+-->
+
+### Time vs Grid Size (Moonshot GPU)
+
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_time_vs_grid_size
+ARGS = beam, core-moonshot-gpu
+-->
+
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_time_vs_grid_size_bar
+ARGS = beam, core-moonshot-gpu
+-->
+
+### Solution: N = 1000 (Moonshot GPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N1000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N1000.svg"
+  />
+</a>
+```
+
+### Solution: N = 5000 (Moonshot GPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N5000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N5000.svg"
+  />
+</a>
+```
+
+### Solution: N = 10000 (Moonshot GPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N10000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N10000.svg"
+  />
+</a>
+```
+
+### Solution: N = 20000 (Moonshot GPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N20000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N20000.svg"
+  />
+</a>
+```
+
+<!-- INCLUDE_TEXT:
+FUNCTION = _print_benchmark_table_results
+ARGS = core-moonshot-gpu, beam
+-->
+
+### Log (Moonshot GPU)
+
+```@example BENCH
+_print_benchmark_log("core-moonshot-gpu"; problems=["beam"]) # hide
+```
