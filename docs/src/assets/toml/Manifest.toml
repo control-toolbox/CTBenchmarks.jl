@@ -670,9 +670,9 @@ version = "1.0.2"
 
 [[deps.HSL]]
 deps = ["HSL_jll", "Libdl", "LinearAlgebra", "OpenBLAS32_jll", "Quadmath", "SparseArrays"]
-git-tree-sha1 = "4898d678a6f7549c41bd9f187233f979da18bc36"
+git-tree-sha1 = "20e883b46d2a06ccd37d516b1f5415aa97d97655"
 uuid = "34c5aeac-e683-54a6-a0e9-6e0fdc586c50"
-version = "0.5.1"
+version = "0.5.2"
 
 [[deps.HSL_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl"]

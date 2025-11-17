@@ -2,6 +2,13 @@
 
 This guide explains how to add a new benchmark to the CTBenchmarks.jl pipeline.
 
+!!! note
+    This page focuses on the CI and configuration aspects of benchmarks. For a
+    detailed explanation of how documentation pages are generated from
+    templates (including `INCLUDE_ENVIRONMENT`, `INCLUDE_FIGURE`, and
+    `@setup BENCH` blocks), see the
+    [Documentation Generation Process](@ref documentation-process).
+
 ## Overview
 
 Adding a new benchmark involves creating several components:
@@ -115,6 +122,21 @@ Edit `benchmarks/benchmarks-config.json` and add your benchmark configuration:
 }
 ```
 
+Conceptually, each JSON entry is mapped directly to the inputs of the
+reusable workflow:
+
+```text
+benchmarks-config.json
+   └─ for each {id, julia_version, julia_arch, runs_on, runner}
+        └─ orchestrator matrix entry
+             └─ benchmark-reusable.yml inputs:
+                  script_path  = benchmarks/{id}.jl
+                  julia_version
+                  julia_arch
+                  runs_on
+                  runner
+```
+
 ### Automatic Workflow Execution
 
 **Good news!** You don't need to create a workflow file manually. The orchestrator automatically runs your benchmark based on the JSON configuration using a matrix strategy.
@@ -128,6 +150,25 @@ When you add a label to a PR (e.g., `run bench your-benchmark-id`), the orchestr
 5. Results are saved to `docs/src/assets/benchmarks/{id}/{id}.json`
 
 **Everything is automatic!** ✨
+
+The full CI/data flow is:
+
+```text
+GitHub label on PR: "run bench {id}" or "run bench {prefix}-all"
+   └─ Orchestrator workflow (benchmarks-orchestrator.yml)
+        ├─ Guard job:
+        │    ├─ read benchmarks/benchmarks-config.json
+        │    └─ build JSON matrix of selected benchmarks
+        ├─ Benchmark job (matrix over selected benchmarks)
+        │    └─ calls benchmark-reusable.yml with
+        │         script_path = benchmarks/{id}.jl
+        │         julia_version, julia_arch, runs_on, runner
+        │         └─ run Julia script → run() → results Dict
+        │              └─ save {id}.json + TOML + script under docs/src/assets/benchmarks/{id}/
+        └─ Docs job
+             └─ include("docs/make.jl")
+                  └─ build & deploy docs using latest JSON results
+```
 
 ### 3. Create the GitHub Label {#github-label}
 
@@ -224,72 +265,22 @@ jobs:
 
 ### 5. (Optional) Create Documentation Page {#documentation-page}
 
-If you want to display results in the documentation, create `docs/src/benchmark-<name>.md.template`:
+If you want to display results in the documentation, you can create a
+template file (for example `docs/src/core/cpu.md.template` for a family of
+benchmarks, or `docs/src/benchmark-<name>.md.template` for a single
+benchmark) and let the documentation pipeline generate the final `.md` page.
 
-````markdown
-# <Name> Benchmark
+At a high level, a benchmark documentation page:
 
-```@setup BENCH
-include(joinpath(@__DIR__, "assets", "jl", "utils.jl"))
+- Defines a single `@setup BENCH` block that includes `utils.jl`.
+- Uses `INCLUDE_ENVIRONMENT` blocks to display environment and configuration
+  information based on the benchmark ID.
+- Uses `INCLUDE_FIGURE` blocks to generate clickable figures (SVG + PDF).
+- Uses `@example BENCH` blocks with `_print_benchmark_log("<id>")` to show
+  detailed results.
 
-# Define benchmark ID
-const BENCH_ID = "<id>"
-```
-
-## Description
-
-Brief description of your benchmark configuration.
-
-**Benchmark Configuration:**
-
-- **Solvers:** List of solvers (e.g., Ipopt, MadNLP)
-- **Models:** List of models (e.g., JuMP, ADNLPModels, ExaModels)
-- **Grid sizes:** Discretisation points (e.g., 200, 500, 1000)
-- **Discretisation:** Method used (e.g., Trapeze)
-- **Tolerance:** 1e-6
-- **Limits:** Max iterations and wall time
-
-!!! note
-    Add any relevant notes about the benchmark setup (e.g., linear solver used)
-
-### 🖥️ Environment
-
-<!-- INCLUDE_ENVIRONMENT:
-BENCH_ID = BENCH_ID
-ENV_NAME = BENCH
--->
-
-### 📊 Results
-
-```@example BENCH
-_plot_performance_profiles(BENCH_ID) # hide
-```
-
-```@example BENCH
-_print_benchmark_log(BENCH_ID) # hide
-nothing # hide
-```
-````
-
-**Key points:**
-
-- Use a single `@setup BENCH` block for all benchmarks in the same page
-- Define `BENCH_ID` as a constant with your benchmark identifier
-- Use `_plot_performance_profiles(BENCH_ID)` to display performance plots (optional)
-- Use `_print_benchmark_log(BENCH_ID)` to display detailed results table
-- The `INCLUDE_ENVIRONMENT` comment is processed by the documentation build system
-
-Then add it to `docs/make.jl`:
-
-```julia
-pages = [
-    "Introduction" => "index.md",
-    "Core benchmark" => "benchmark-core.md",
-    "<Name> Benchmark" => "benchmark-<name>.md",
-    "API" => "api.md",
-    "Development Guidelines" => "dev.md",
-]
-```
+For a concrete template example and a full description of how these blocks are
+processed, see the [Documentation Generation Process](@ref documentation-process).
 
 ## Testing Your Benchmark
 

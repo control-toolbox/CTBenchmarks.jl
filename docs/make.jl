@@ -6,7 +6,7 @@ using CTBenchmarks
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # Draft mode: if true, @example blocks in markdown are not executed
-draft = false
+draft = true
 
 # Problems to exclude from draft mode (will still execute their @example blocks)
 exclude_problems_from_draft = Symbol[
@@ -103,6 +103,7 @@ with_processed_template_problems(
             ),
             pages=[
                 "Introduction" => "index.md",
+                "Performance Profile" => "performance_profile.md",
                 "Core benchmarks" => [
                     "CPU" => joinpath("core", "cpu.md"),
                     "GPU" => joinpath("core", "gpu.md"),
@@ -116,7 +117,10 @@ with_processed_template_problems(
                         :eval,
                     ],
                 ),
-                "Development Guidelines" => "dev.md",
+                "Developers Guidelines" => [
+                    "Add a New Benchmark" => "add_benchmark.md",
+                    "Documentation Process" => "documentation_process.md",
+                ],
             ],
         )
     end

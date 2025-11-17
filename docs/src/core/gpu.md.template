@@ -19,6 +19,9 @@ ENV_NAME = BENCH
 
 ### 📊 Results
 
+!!! note
+    The curves below are Dolan–Moré performance profiles comparing solver–model combinations on the set of optimal control problems and grid sizes. For a detailed explanation of how to read these profiles, see the [Performance Profiles](@ref performance-profiles) page.
+
 <!-- INCLUDE_FIGURE:
 FUNCTION = _plot_performance_profiles
 ARGS = core-moonshot-gpu

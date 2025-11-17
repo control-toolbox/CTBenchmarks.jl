@@ -194,7 +194,7 @@ Benchmarks results:
 - **obj** - Objective function value and criterion (min or max problem)
 - **Memory** - CPU memory usage (GPU memory shown separately for GPU models)
 
-## Documentation build environment
+## Documentation Build Environment
 
 ```@setup main
 using Pkg
