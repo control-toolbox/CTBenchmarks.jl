@@ -36,6 +36,7 @@ end
 
 const ANALYSIS_FUNCTIONS = Dict{String, Function}(
     "_analyze_profile_default_cpu" => _analyze_profile_default_cpu,
+    "_analyze_profile_default_iter" => _analyze_profile_default_iter,
     "_print_benchmark_table_results" => _print_benchmark_table_results_from_args,
 )
 

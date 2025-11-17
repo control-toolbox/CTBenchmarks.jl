@@ -146,3 +146,28 @@ function _analyze_profile_default_cpu(bench_id::AbstractString, src_dir::Abstrac
     end
     return analyze_performance_profile(pp)
 end
+
+"""
+    _analyze_profile_default_iter(bench_id::AbstractString, src_dir::AbstractString) -> String
+
+Compute a detailed textual analysis of a benchmark's default iterations
+performance profile.
+
+This is a convenience wrapper that:
+1. Computes the performance profile data using `compute_profile_default_iter`
+2. Generates the analysis using `analyze_performance_profile`
+
+# Arguments
+- `bench_id`: Benchmark identifier
+- `src_dir`: Path to docs/src directory
+
+# Returns
+- Markdown string with analysis, or a warning if no data is available
+"""
+function _analyze_profile_default_iter(bench_id::AbstractString, src_dir::AbstractString)
+    pp = compute_profile_default_iter(bench_id, src_dir)
+    if pp === nothing
+        return "!!! warning\n    No benchmark data available for analysis for `$bench_id`.\n"
+    end
+    return analyze_performance_profile(pp)
+end

@@ -19,6 +19,7 @@ benchmark documentation, including:
 
 ## Plotting Functions (for use in @example blocks)
 - `_plot_profile_default_cpu`: Plot default CPU-time performance profiles for a benchmark
+- `_plot_profile_default_iter`: Plot default iterations performance profiles for a benchmark
 - `_plot_time_vs_grid_size`: Plot solve time vs grid size
 - `_plot_time_vs_grid_size_bar`: Bar plot of solve time vs grid size
 
@@ -62,6 +63,7 @@ using Documenter
 include(joinpath(@__DIR__, "modules", "Common.jl"))
 include(joinpath(@__DIR__, "modules", "PrintEnvConfig.jl"))
 include(joinpath(@__DIR__, "modules", "PrintLogResults.jl"))
+include(joinpath(@__DIR__, "modules", "PerformanceProfileCore.jl"))
 include(joinpath(@__DIR__, "modules", "PlotPerformanceProfile.jl"))
 include(joinpath(@__DIR__, "modules", "PlotTimeVsGridSize.jl"))
 include(joinpath(@__DIR__, "modules", "FigureGeneration.jl"))
@@ -91,6 +93,10 @@ function _analyze_profile_default_cpu(bench_id::AbstractString)
     return _analyze_profile_default_cpu(bench_id, SRC_DIR)
 end
 
+function _analyze_profile_default_iter(bench_id::AbstractString)
+    return _analyze_profile_default_iter(bench_id, SRC_DIR)
+end
+
 function _print_benchmark_table_results(bench_id::AbstractString; problems::Union{Nothing, Vector{<:AbstractString}}=nothing)
     return _print_benchmark_table_results(bench_id, SRC_DIR; problems=problems)
 end
@@ -98,6 +104,10 @@ end
 # Plotting functions
 function _plot_profile_default_cpu(bench_id::AbstractString)
     return _plot_profile_default_cpu(bench_id, SRC_DIR)
+end
+
+function _plot_profile_default_iter(bench_id::AbstractString)
+    return _plot_profile_default_iter(bench_id, SRC_DIR)
 end
 
 function _plot_time_vs_grid_size(problem::AbstractString, bench_id::AbstractString)
@@ -148,11 +158,13 @@ export with_processed_template_problems
 
 # Plotting functions (used in templates)
 export _plot_profile_default_cpu
+export _plot_profile_default_iter
 export _plot_time_vs_grid_size
 export _plot_time_vs_grid_size_bar
 
 # Analysis functions (used by INCLUDE_ANALYSIS blocks)
 export _analyze_profile_default_cpu
+export _analyze_profile_default_iter
 export _print_benchmark_table_results
 
 # Environment display functions (used in templates)
