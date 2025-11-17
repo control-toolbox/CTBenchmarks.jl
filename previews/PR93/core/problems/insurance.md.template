@@ -1,7 +1,7 @@
 # Core benchmark: insurance
 
 ```@meta
-Draft = false
+Draft = true
 ```
 
 This page presents benchmark results for the **insurance** problem across different platforms and configurations.

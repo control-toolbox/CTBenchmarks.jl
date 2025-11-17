@@ -1,7 +1,7 @@
 # Core benchmark: robot
 
 ```@meta
-Draft = false
+Draft = true
 ```
 
 This page presents benchmark results for the **robot** problem across different platforms and configurations.

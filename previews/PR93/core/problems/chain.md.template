@@ -1,7 +1,7 @@
 # Core benchmark: chain
 
 ```@meta
-Draft = false
+Draft = true
 ```
 
 This page presents benchmark results for the **chain** problem across different platforms and configurations.

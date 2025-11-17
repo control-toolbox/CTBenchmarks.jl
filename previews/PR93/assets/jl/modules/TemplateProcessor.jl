@@ -178,25 +178,37 @@ end
         template_filename::String,
         figures_output_dir::String,
         relative_path::String
-    ) -> String
+    ) -> (String, Vector{String})
 
-Replace all INCLUDE_FIGURE blocks with HTML code for clickable PNG→PDF figures.
+Replace all INCLUDE_FIGURE blocks in the content with generated HTML that embeds SVG previews
+and links to PDF files.
 
-Generates PNG and PDF files by calling registered plotting functions, then inserts
-HTML with a clickable PNG preview that links to the high-quality PDF.
+This function scans the input content for blocks of the form:
+
+```html
+<!-- INCLUDE_FIGURE:
+FUNCTION = "_plot_time_vs_grid_size"
+ARGS     = "arg1, arg2"
+-->
+```
+
+For each block, it calls the corresponding function from the utilities module to generate
+a pair of figure files (SVG for preview, PDF for download) and replaces the block with
+an HTML snippet that embeds the SVG and links to the PDF.
 
 # Arguments
-- `content::String`: Template content containing INCLUDE_FIGURE blocks
+- `content::String`: Input markdown content
 - `template_filename::String`: Name of the template file (for basename generation)
 - `figures_output_dir::String`: Absolute path where figures will be saved
 - `relative_path::String`: Relative path from the .md file to the figures directory
 
 # Returns
-- `String`: Content with INCLUDE_FIGURE blocks replaced by HTML
+- `(String, Vector{String})`: Tuple containing the content with INCLUDE_FIGURE blocks replaced by
+  HTML, and a list of absolute paths to the generated figure files (SVG and PDF)
 
 # Example
 ```julia
-content = replace_figure_blocks(
+content, figure_paths = replace_figure_blocks(
     template_content,
     "cpu.md.template",
     "/path/to/docs/src/assets/plots",
@@ -213,6 +225,7 @@ function replace_figure_blocks(
     # Regex to match INCLUDE_FIGURE blocks
     pattern = r"<!-- INCLUDE_FIGURE:\s*\n(.*?)-->"s
     block_count = 0
+    figure_paths = String[]
     
     result = replace(content, pattern => function(match_str)
         block_count += 1
@@ -244,7 +257,7 @@ function replace_figure_blocks(
             [strip(strip(arg), ['"', '\'']) for arg in split(args_str, ',')]
         end
         
-        # Generate figures (SVG for preview, PDF for high-quality download)
+        # Generate figures (SVG for preview, PDF for download)
         try
             svg_file, pdf_file = generate_figure_files(
                 template_filename,
@@ -252,6 +265,10 @@ function replace_figure_blocks(
                 args,
                 figures_output_dir
             )
+
+            # Record absolute paths for later cleanup
+            push!(figure_paths, joinpath(figures_output_dir, svg_file))
+            push!(figure_paths, joinpath(figures_output_dir, pdf_file))
             
             # Generate HTML with clickable SVG→PDF
             html = """```@raw html
@@ -275,7 +292,7 @@ function replace_figure_blocks(
     end)
     
     @info "🖼️  Replaced $block_count INCLUDE_FIGURE block(s)"
-    return result
+    return result, figure_paths
 end
 
 """
@@ -285,7 +302,7 @@ end
         env_template::String,
         figures_output_dir::String,
         figures_relative_path::String
-    )
+    ) -> Vector{String}
 
 Process a single template file, replacing INCLUDE_ENVIRONMENT and INCLUDE_FIGURE blocks.
 
@@ -295,6 +312,10 @@ Process a single template file, replacing INCLUDE_ENVIRONMENT and INCLUDE_FIGURE
 - `env_template::String`: Environment template content
 - `figures_output_dir::String`: Absolute path where figures will be saved
 - `figures_relative_path::String`: Relative path from .md file to figures directory
+
+# Returns
+- `Vector{String}`: Absolute paths to all figure files (SVG and PDF) generated while
+  processing this template
 
 # Throws
 - `SystemError` if the input file doesn't exist or output cannot be written
@@ -320,8 +341,8 @@ function process_single_template(
     # Replace all INCLUDE_ENVIRONMENT blocks
     processed_content = replace_environment_blocks(content, env_template)
     
-    # Replace all INCLUDE_FIGURE blocks
-    processed_content = replace_figure_blocks(
+    # Replace all INCLUDE_FIGURE blocks and collect generated figure paths
+    processed_content, figure_paths = replace_figure_blocks(
         processed_content,
         template_filename,
         figures_output_dir,
@@ -333,6 +354,7 @@ function process_single_template(
     write(output_path, processed_content)
 
     @info "✅ Successfully processed: $(basename(input_path)) -> $(basename(output_path))"
+    return figure_paths
 end
 
 """
@@ -345,16 +367,20 @@ Process multiple template files, replacing INCLUDE_ENVIRONMENT and INCLUDE_FIGUR
 - `src_dir`: Source directory containing the template files
 - `templates_dir`: Assets directory containing `environment.md.template`
 
+# Returns
+- `Vector{String}`: Absolute paths to all figure files (SVG and PDF) generated while
+  processing all templates
+
 # Details
 For each file in `template_files`:
 1. Reads `<src_dir>/<filename>.template` (e.g., `benchmark-core.md.template`)
 2. Replaces all `<!-- INCLUDE_ENVIRONMENT: ... -->` blocks
-3. Replaces all `<!-- INCLUDE_FIGURE: ... -->` blocks (generates PNG/PDF files)
+3. Replaces all `<!-- INCLUDE_FIGURE: ... -->` blocks (generates SVG/PDF files)
 4. Writes the result to `<src_dir>/<filename>` (e.g., `benchmark-core.md`)
 
 # Example
 ```julia
-process_templates(
+figure_paths = process_templates(
     ["benchmark-core", "benchmark-minimal"],
     "docs/src",
     "docs/src/assets"
@@ -402,6 +428,8 @@ function process_templates(
 
     @info "" # Empty line for readability
 
+    all_figure_paths = String[]
+
     # Process each template file
     for (idx, filename) in enumerate(template_files)
         @info "─"^70
@@ -416,21 +444,22 @@ function process_templates(
         # Adjust if needed based on file location
         output_subdir = dirname(filename)
         if isempty(output_subdir) || output_subdir == "."
-            figures_relative_path = "assets/plots"
+            figures_relative_path = joinpath("assets", "plots")
         else
             # Count directory levels to go up
             levels = length(split(output_subdir, '/'))
-            figures_relative_path = join(fill("..", levels), "/") * "/assets/plots"
+            figures_relative_path = join(fill("..", levels), "/") * joinpath("/","assets", "plots")
         end
 
         try
-            process_single_template(
+            figure_paths = process_single_template(
                 input_path,
                 output_path,
                 env_template,
                 figures_output_dir,
                 figures_relative_path
             )
+            append!(all_figure_paths, figure_paths)
         catch e
             @error "❌ Failed to process template: $filename" exception=(
                 e, catch_backtrace()
@@ -445,8 +474,48 @@ function process_templates(
     @info "✅ Successfully processed $(length(template_files)) template file(s)"
     @info "═"^70
     @info "" # Empty line for readability
+
+    return all_figure_paths, figures_output_dir
 end
 
+"""
+    construct_template_files(template_files::Vector{String}, src_dir::String)::Vector{String}
+
+Construct a list of template files by resolving template file paths and discovering templates in directories.
+
+This function processes a list of template file specifications and returns a list of actual template files
+to be processed. It handles two cases: direct template files (with `.template` extension) and directories
+containing multiple `.md.template` files.
+
+# Arguments
+
+- `template_files::Vector{String}`: List of template file specifications. Each entry can be either:
+  - A template file name (e.g., `"benchmark-core.md"` → looks for `"benchmark-core.md.template"`)
+  - A directory name (e.g., `"benchmarks"` → discovers all `.md.template` files in that directory)
+- `src_dir::String`: Source directory where template files are located
+
+# Returns
+
+- `Vector{String}`: List of resolved template file paths (without `.template` extension), ready for processing
+
+# Example
+
+```julia
+# Direct template file
+files = construct_template_files(["benchmark-core.md"], "/path/to/docs/src")
+# Returns: ["benchmark-core.md"]
+
+# Directory with multiple templates
+files = construct_template_files(["benchmarks"], "/path/to/docs/src")
+# Returns: ["benchmarks/cpu.md", "benchmarks/gpu.md"] (if those .md.template files exist)
+```
+
+# Details
+
+- If a specification matches a file with `.template` extension, it is added to the result
+- If a specification matches a directory, all `.md.template` files in that directory are discovered and added
+- The returned paths have the `.template` extension removed for use in subsequent processing
+"""
 function construct_template_files(template_files::Vector{String}, src_dir::String)
     files = String[]
     for file in template_files
@@ -468,9 +537,9 @@ end
 
 Process template files, execute the provided function, and clean up generated files.
 
-This function ensures that generated .md files are always removed after use, even if an error occurs
-during the execution of `f`. This is useful for documentation generation where temporary files
-should not persist.
+This function ensures that generated .md files and any figures created during template processing
+are always removed after use, even if an error occurs during the execution of `f`. This is useful
+for documentation generation where temporary files should not persist.
 
 # Arguments
 - `f`: Function to execute after templates are processed (typically `makedocs`)
@@ -499,22 +568,23 @@ end
 The function follows this workflow:
 1. Process all template files (`.template` → `.md`)
 2. Execute the user function `f`
-3. Clean up all generated `.md` files in a `finally` block (guaranteed cleanup)
+3. Clean up all generated `.md` files and figure files in a `finally` block (guaranteed cleanup)
 
 This pattern is inspired by `with_problems_browser` from OptimalControlProblems.jl.
 """
 function with_processed_templates(
     f::Function, template_files::Vector{String}, src_dir::String, templates_dir::String
 )
-    # Process templates to generate .md files
+    # Process templates to generate .md files and collect generated figure paths
     template_files = construct_template_files(template_files, src_dir)
-    process_templates(template_files, src_dir, templates_dir)
+    figure_paths, figures_output_dir = process_templates(template_files, src_dir, templates_dir)
+    @info "📊 Collected $(length(figure_paths)) figure path(s) from process_templates"
 
     try
         # Execute the user function (typically makedocs)
         return f()
     finally
-        # Clean up generated .md files (guaranteed to run even on error)
+        # Clean up generated .md files and figures (guaranteed to run even on error)
         @info "" # Empty line for readability
         @info "🧹 Cleaning up generated template files..."
 
@@ -526,6 +596,25 @@ function with_processed_templates(
             else
                 @warn "  ⚠ File not found (already removed?): $(basename(output_file))"
             end
+        end
+
+        if !isempty(figure_paths)
+            @info "" # Empty line for readability
+            @info "🧹 Cleaning up generated figure files..."
+            for fig_path in figure_paths
+                if isfile(fig_path)
+                    rm(fig_path)
+                    @info "  ✓ Removed figure: $(basename(fig_path))"
+                else
+                    @warn "  ⚠ Figure file not found (already removed?): $(basename(fig_path))"
+                end
+            end
+        end
+
+        # Only remove directory if it's empty
+        if isdir(figures_output_dir) && isempty(readdir(figures_output_dir))
+            rm(figures_output_dir)
+            @info "  ✓ Removed empty directory: $(basename(figures_output_dir))"
         end
 
         @info "✅ Cleanup completed"
