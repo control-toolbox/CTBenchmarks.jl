@@ -32,7 +32,7 @@ _downloads_toml(BENCH_ID) # hide
 ```
 
 ```@example ENV_NAME
-_bench_data(BENCH_ID) # hide
+_version_info(BENCH_ID) # hide
 ```
 
 ```@raw html

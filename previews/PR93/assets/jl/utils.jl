@@ -1,15 +1,27 @@
-using CTBenchmarks
-using JSON
-using DataFrames
-using Markdown
-using Dates
-using Printf
-using Plots
-using Plots.PlotMeasures
-using Statistics
+# ═══════════════════════════════════════════════════════════════════════════════
+# CTBenchmarks Documentation Utilities
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# This file loads the CTBenchmarksDocUtils module and imports all exported functions
+# into the Main namespace for use in documentation templates and make.jl.
+#
+# ═══════════════════════════════════════════════════════════════════════════════
 
-include(joinpath(@__DIR__, "common.jl"))
-include(joinpath(@__DIR__, "print_env_config.jl"))
-include(joinpath(@__DIR__, "print_log_results.jl"))
-include(joinpath(@__DIR__, "plot_performance_profile.jl"))
-include(joinpath(@__DIR__, "plot_time_vs_grid_size.jl"))
+# Load the main module
+include(joinpath(@__DIR__, "CTBenchmarksDocUtils.jl"))
+
+# Import all exported functions into Main namespace
+using .CTBenchmarksDocUtils
+
+# Re-export for convenience (makes functions available without prefix)
+for name in names(CTBenchmarksDocUtils)
+    if name != :CTBenchmarksDocUtils
+        item = getfield(CTBenchmarksDocUtils, name)
+        # For modules, make them available directly
+        if item isa Module
+            @eval const $name = $item
+        else
+            @eval const $name = CTBenchmarksDocUtils.$name
+        end
+    end
+end

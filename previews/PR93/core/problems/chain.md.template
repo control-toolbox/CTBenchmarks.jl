@@ -10,6 +10,7 @@ This page presents benchmark results for the **chain** problem across different 
     The linear solver is MUMPS for all experiments.
 
 ```@setup BENCH
+# Load utilities
 include(normpath(joinpath(@__DIR__, "..", "..", "assets", "jl", "utils.jl")))
 ```
 
@@ -24,65 +25,15 @@ ENV_NAME = BENCH
 
 ### Time vs Grid Size (Ubuntu Latest CPU)
 
-```@example BENCH
-_plot_time_vs_grid_size("chain", "core-ubuntu-latest") # hide
-```
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_time_vs_grid_size
+ARGS = chain, core-ubuntu-latest
+-->
 
-```@example BENCH
-_plot_time_vs_grid_size_bar("chain", "core-ubuntu-latest") # hide
-```
-
-### Solution: N = 200 (Ubuntu Latest CPU)
-
-```@raw html
-<a href="../../assets/benchmarks/core-ubuntu-latest/figures/chain_N200.pdf">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="../../assets/benchmarks/core-ubuntu-latest/figures/chain_N200.png"
-  />
-</a>
-```
-
-### Solution: N = 500 (Ubuntu Latest CPU)
-
-```@raw html
-<a href="../../assets/benchmarks/core-ubuntu-latest/figures/chain_N500.pdf">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="../../assets/benchmarks/core-ubuntu-latest/figures/chain_N500.png"
-  />
-</a>
-```
-
-### Solution: N = 1000 (Ubuntu Latest CPU)
-
-```@raw html
-<a href="../../assets/benchmarks/core-ubuntu-latest/figures/chain_N1000.pdf">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="../../assets/benchmarks/core-ubuntu-latest/figures/chain_N1000.png"
-  />
-</a>
-```
-
-### Solution: N = 2000 (Ubuntu Latest CPU)
-
-```@raw html
-<a href="../../assets/benchmarks/core-ubuntu-latest/figures/chain_N2000.pdf">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="../../assets/benchmarks/core-ubuntu-latest/figures/chain_N2000.png"
-  />
-</a>
-```
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_time_vs_grid_size_bar
+ARGS = chain, core-ubuntu-latest
+-->
 
 ### Log (Ubuntu Latest CPU)
 
@@ -101,78 +52,15 @@ ENV_NAME = BENCH
 
 ### Time vs Grid Size (Moonshot CPU)
 
-```@example BENCH
-_plot_time_vs_grid_size("chain", "core-moonshot-cpu") # hide
-```
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_time_vs_grid_size
+ARGS = chain, core-moonshot-cpu
+-->
 
-```@example BENCH
-_plot_time_vs_grid_size_bar("chain", "core-moonshot-cpu") # hide
-```
-
-### Solution: N = 200 (Moonshot CPU)
-
-```@raw html
-<a href="../../assets/benchmarks/core-moonshot-cpu/figures/chain_N200.pdf">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="../../assets/benchmarks/core-moonshot-cpu/figures/chain_N200.png"
-  />
-</a>
-```
-
-### Solution: N = 500 (Moonshot CPU)
-
-```@raw html
-<a href="../../assets/benchmarks/core-moonshot-cpu/figures/chain_N500.pdf">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="../../assets/benchmarks/core-moonshot-cpu/figures/chain_N500.png"
-  />
-</a>
-```
-
-### Solution: N = 1000 (Moonshot CPU)
-
-```@raw html
-<a href="../../assets/benchmarks/core-moonshot-cpu/figures/chain_N1000.pdf">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="../../assets/benchmarks/core-moonshot-cpu/figures/chain_N1000.png"
-  />
-</a>
-```
-
-### Solution: N = 2000 (Moonshot CPU)
-
-```@raw html
-<a href="../../assets/benchmarks/core-moonshot-cpu/figures/chain_N2000.pdf">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="../../assets/benchmarks/core-moonshot-cpu/figures/chain_N2000.png"
-  />
-</a>
-```
-
-### Solution: N = 5000 (Moonshot CPU)
-
-```@raw html
-<a href="../../assets/benchmarks/core-moonshot-cpu/figures/chain_N5000.pdf">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="../../assets/benchmarks/core-moonshot-cpu/figures/chain_N5000.png"
-  />
-</a>
-```
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_time_vs_grid_size_bar
+ARGS = chain, core-moonshot-cpu
+-->
 
 ### Log (Moonshot CPU)
 
@@ -191,65 +79,15 @@ ENV_NAME = BENCH
 
 ### Time vs Grid Size (Moonshot GPU)
 
-```@example BENCH
-_plot_time_vs_grid_size("chain", "core-moonshot-gpu") # hide
-```
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_time_vs_grid_size
+ARGS = chain, core-moonshot-gpu
+-->
 
-```@example BENCH
-_plot_time_vs_grid_size_bar("chain", "core-moonshot-gpu") # hide
-```
-
-### Solution: N = 1000 (Moonshot GPU)
-
-```@raw html
-<a href="../../assets/benchmarks/core-moonshot-gpu/figures/chain_N1000.pdf">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="../../assets/benchmarks/core-moonshot-gpu/figures/chain_N1000.png"
-  />
-</a>
-```
-
-### Solution: N = 5000 (Moonshot GPU)
-
-```@raw html
-<a href="../../assets/benchmarks/core-moonshot-gpu/figures/chain_N5000.pdf">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="../../assets/benchmarks/core-moonshot-gpu/figures/chain_N5000.png"
-  />
-</a>
-```
-
-### Solution: N = 10000 (Moonshot GPU)
-
-```@raw html
-<a href="../../assets/benchmarks/core-moonshot-gpu/figures/chain_N10000.pdf">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="../../assets/benchmarks/core-moonshot-gpu/figures/chain_N10000.png"
-  />
-</a>
-```
-
-### Solution: N = 20000 (Moonshot GPU)
-
-```@raw html
-<a href="../../assets/benchmarks/core-moonshot-gpu/figures/chain_N20000.pdf">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="../../assets/benchmarks/core-moonshot-gpu/figures/chain_N20000.png"
-  />
-</a>
-```
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_time_vs_grid_size_bar
+ARGS = chain, core-moonshot-gpu
+-->
 
 ### Log (Moonshot GPU)
 
