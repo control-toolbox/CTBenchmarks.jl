@@ -1,5 +1,12 @@
+[default]
+locale = "en"
+
+[default.extend-identifiers]
+
 [files]
-# Ignore generated plot files
 extend-exclude = [
+  "*.json",
+  "*.toml",
+  "*.svg",
   "docs/src/assets/plots/*",
 ]
