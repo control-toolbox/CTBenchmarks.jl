@@ -18,7 +18,7 @@ benchmark documentation, including:
 - `with_processed_template_problems`: Generate and process problem-specific templates
 
 ## Plotting Functions (for use in @example blocks)
-- `_plot_performance_profiles`: Plot performance profiles for a benchmark
+- `_plot_profile_default_cpu`: Plot default CPU-time performance profiles for a benchmark
 - `_plot_time_vs_grid_size`: Plot solve time vs grid size
 - `_plot_time_vs_grid_size_bar`: Bar plot of solve time vs grid size
 
@@ -87,8 +87,8 @@ const SRC_DIR = normpath(joinpath(@__DIR__, "..", ".."))
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # Analysis functions
-function _analyze_performance_profiles(bench_id::AbstractString)
-    return _analyze_performance_profiles(bench_id, SRC_DIR)
+function _analyze_profile_default_cpu(bench_id::AbstractString)
+    return _analyze_profile_default_cpu(bench_id, SRC_DIR)
 end
 
 function _print_benchmark_table_results(bench_id::AbstractString; problems::Union{Nothing, Vector{<:AbstractString}}=nothing)
@@ -96,8 +96,8 @@ function _print_benchmark_table_results(bench_id::AbstractString; problems::Unio
 end
 
 # Plotting functions
-function _plot_performance_profiles(bench_id::AbstractString)
-    return _plot_performance_profiles(bench_id, SRC_DIR)
+function _plot_profile_default_cpu(bench_id::AbstractString)
+    return _plot_profile_default_cpu(bench_id, SRC_DIR)
 end
 
 function _plot_time_vs_grid_size(problem::AbstractString, bench_id::AbstractString)
@@ -147,12 +147,12 @@ export with_processed_templates
 export with_processed_template_problems
 
 # Plotting functions (used in templates)
-export _plot_performance_profiles
+export _plot_profile_default_cpu
 export _plot_time_vs_grid_size
 export _plot_time_vs_grid_size_bar
 
 # Analysis functions (used by INCLUDE_ANALYSIS blocks)
-export _analyze_performance_profiles
+export _analyze_profile_default_cpu
 export _print_benchmark_table_results
 
 # Environment display functions (used in templates)
