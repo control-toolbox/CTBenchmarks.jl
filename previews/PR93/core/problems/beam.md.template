@@ -109,6 +109,71 @@ _plot_time_vs_grid_size("beam", "core-moonshot-cpu") # hide
 _plot_time_vs_grid_size_bar("beam", "core-moonshot-cpu") # hide
 ```
 
+### Solution: N = 200 (Moonshot CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N200.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N200.png"
+  />
+</a>
+```
+
+### Solution: N = 500 (Moonshot CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N500.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N500.png"
+  />
+</a>
+```
+
+### Solution: N = 1000 (Moonshot CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N1000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N1000.png"
+  />
+</a>
+```
+
+### Solution: N = 2000 (Moonshot CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N2000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N2000.png"
+  />
+</a>
+```
+
+### Solution: N = 5000 (Moonshot CPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N5000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/beam_N5000.png"
+  />
+</a>
+```
+
 ### Log (Moonshot CPU)
 
 ```@example BENCH
@@ -132,6 +197,58 @@ _plot_time_vs_grid_size("beam", "core-moonshot-gpu") # hide
 
 ```@example BENCH
 _plot_time_vs_grid_size_bar("beam", "core-moonshot-gpu") # hide
+```
+
+### Solution: N = 1000 (Moonshot GPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N1000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N1000.png"
+  />
+</a>
+```
+
+### Solution: N = 5000 (Moonshot GPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N5000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N5000.png"
+  />
+</a>
+```
+
+### Solution: N = 10000 (Moonshot GPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N10000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N10000.png"
+  />
+</a>
+```
+
+### Solution: N = 20000 (Moonshot GPU)
+
+```@raw html
+<a href="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N20000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-gpu/figures/beam_N20000.png"
+  />
+</a>
 ```
 
 ### Log (Moonshot GPU)

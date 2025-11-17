@@ -17,7 +17,7 @@
 <li><p><strong>Limits:</strong> 1000 iterations max, 1000.0s wall time</p>
 </li>
 </ul>
-</div></div><h3 id="Environment"><a class="docs-heading-anchor" href="#Environment">🖥️ Environment</a><a id="Environment-1"></a><a class="docs-heading-anchor-permalink" href="#Environment" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2025-11-15 20:32:37 UTC
+</div></div><h3 id="Environment"><a class="docs-heading-anchor" href="#Environment">🖥️ Environment</a><a id="Environment-1"></a><a class="docs-heading-anchor-permalink" href="#Environment" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2025-11-17 10:15:44 UTC
 🔧 Julia version : 1.11.7
 💻 OS            : Linux
 🖥️ Machine       : moonshot</code></pre><div class="markdown"><p>You can download the exact environment used for this benchmark:</p>
@@ -125,7 +125,7 @@ Environment:
   <span class="sgr90">[096a3bc2] </span>GPUToolbox v1.0.0
   <span class="sgr90">[28b8d3ca] </span>GR v0.73.18
   <span class="sgr90">[42e2da0e] </span>Grisu v1.0.2
-  <span class="sgr90">[34c5aeac] </span>HSL v0.5.1
+  <span class="sgr90">[34c5aeac] </span>HSL v0.5.2
   <span class="sgr90">[cd3eb016] </span>HTTP v1.10.19
   <span class="sgr90">[076d061b] </span>HashArrayMappedTries v0.2.0
   <span class="sgr90">[842dd82b] </span>InlineStrings v1.4.5
@@ -370,27 +370,27 @@ Environment:
   <span class="sgr90">[8e850b90] </span>libblastrampoline_jll v5.11.0+0
   <span class="sgr90">[8e850ede] </span>nghttp2_jll v1.59.0+0
   <span class="sgr90">[3f19e933] </span>p7zip_jll v17.4.0+2
-<span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr32">⌃</span> and <span class="sgr33">⌅</span> have new versions available. Those with <span class="sgr32">⌃</span> may be upgradable, but those with <span class="sgr33">⌅</span> are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><h3 id="Results"><a class="docs-heading-anchor" href="#Results">📊 Results</a><a id="Results-1"></a><a class="docs-heading-anchor-permalink" href="#Results" title="Permalink"></a></h3><img src="gpu-d0388d61.svg" alt="Example block output"/><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
+<span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr32">⌃</span> and <span class="sgr33">⌅</span> have new versions available. Those with <span class="sgr32">⌃</span> may be upgradable, but those with <span class="sgr33">⌅</span> are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><h3 id="Results"><a class="docs-heading-anchor" href="#Results">📊 Results</a><a id="Results-1"></a><a class="docs-heading-anchor-permalink" href="#Results" title="Permalink"></a></h3><img src="gpu-c3f6ffea.svg" alt="Example block output"/><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
 
 ┌─ Problem: beam
 │
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  58.300 ms | iters: 22    | obj: 8.889006e+00  (min) | CPU:   8.45 MiB
-│  │  ✓ | exa_gpu  | time: 163.266 ms | iters: 25    | obj: 8.827707e+00  (min) | CPU:  9.110 MiB | GPU: 11.900 MiB
+│  │  ✓ | exa      | time:  58.494 ms | iters: 22    | obj: 8.889006e+00  (min) | CPU:   8.45 MiB
+│  │  ✓ | exa_gpu  | time: 145.580 ms | iters: 25    | obj: 8.827707e+00  (min) | CPU:  9.105 MiB | GPU: 11.900 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 334.468 ms | iters: 17    | obj: 8.888990e+00  (min) | CPU:  34.86 MiB
-│  │  ✓ | exa_gpu  | time: 221.286 ms | iters: 31    | obj: 8.586481e+00  (min) | CPU: 12.994 MiB | GPU: 61.717 MiB
+│  │  ✓ | exa      | time: 324.530 ms | iters: 17    | obj: 8.888990e+00  (min) | CPU:  34.86 MiB
+│  │  ✓ | exa_gpu  | time: 205.051 ms | iters: 31    | obj: 8.586481e+00  (min) | CPU: 12.987 MiB | GPU: 61.717 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time: 730.635 ms | iters: 18    | obj: 8.889088e+00  (min) | CPU:  71.26 MiB
-│  │  ✓ | exa_gpu  | time: 221.249 ms | iters: 22    | obj: 8.291850e+00  (min) | CPU: 12.801 MiB | GPU: 116.519 MiB
+│  │  ✓ | exa      | time: 706.509 ms | iters: 18    | obj: 8.889088e+00  (min) | CPU:  71.26 MiB
+│  │  ✓ | exa_gpu  | time: 210.698 ms | iters: 22    | obj: 8.291850e+00  (min) | CPU: 12.797 MiB | GPU: 116.519 MiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time:   1.238 s  | iters: 13    | obj: 8.889279e+00  (min) | CPU: 121.36 MiB
-│  │  ✓ | exa_gpu  | time: 300.588 ms | iters: 20    | obj: 7.725138e+00  (min) | CPU: 17.206 MiB | GPU: 229.899 MiB
+│  │  ✓ | exa      | time:   1.234 s  | iters: 13    | obj: 8.889279e+00  (min) | CPU: 121.36 MiB
+│  │  ✓ | exa_gpu  | time: 284.583 ms | iters: 20    | obj: 7.725138e+00  (min) | CPU: 17.202 MiB | GPU: 229.899 MiB
 │  └─
 └─
 
@@ -399,20 +399,20 @@ Environment:
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  34.317 ms | iters: 6     | obj: 5.068510e+00  (min) | CPU:   6.74 MiB
-│  │  ✓ | exa_gpu  | time: 108.018 ms | iters: 13    | obj: 5.065447e+00  (min) | CPU:  6.462 MiB | GPU: 19.022 MiB
+│  │  ✓ | exa      | time:  32.398 ms | iters: 6     | obj: 5.068510e+00  (min) | CPU:   6.74 MiB
+│  │  ✓ | exa_gpu  | time: 103.308 ms | iters: 13    | obj: 5.065447e+00  (min) | CPU:  6.520 MiB | GPU: 19.023 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 325.527 ms | iters: 5     | obj: 5.068475e+00  (min) | CPU:  31.13 MiB
-│  │  ✓ | exa_gpu  | time: 177.840 ms | iters: 16    | obj: 5.053179e+00  (min) | CPU: 11.572 MiB | GPU: 96.378 MiB
+│  │  ✓ | exa      | time: 318.101 ms | iters: 5     | obj: 5.068475e+00  (min) | CPU:  31.13 MiB
+│  │  ✓ | exa_gpu  | time: 169.715 ms | iters: 16    | obj: 5.053179e+00  (min) | CPU: 11.568 MiB | GPU: 96.378 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time: 680.821 ms | iters: 5     | obj: 5.068449e+00  (min) | CPU:  61.82 MiB
-│  │  ✓ | exa_gpu  | time:   3.488 s  | iters: 456   | obj: 5.037590e+00  (min) | CPU: 217.805 MiB | GPU: 604.935 MiB
+│  │  ✓ | exa      | time: 652.718 ms | iters: 5     | obj: 5.068449e+00  (min) | CPU:  61.82 MiB
+│  │  ✓ | exa_gpu  | time:   2.350 s  | iters: 245   | obj: 5.037701e+00  (min) | CPU: 130.565 MiB | GPU: 419.261 MiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time:   1.474 s  | iters: 5     | obj: 5.068381e+00  (min) | CPU: 123.19 MiB
-│  │  ✓ | exa_gpu  | time: 301.028 ms | iters: 10    | obj: 5.005905e+00  (min) | CPU: 23.876 MiB | GPU: 374.863 MiB
+│  │  ✓ | exa      | time:   1.528 s  | iters: 5     | obj: 5.068381e+00  (min) | CPU: 123.19 MiB
+│  │  ✓ | exa_gpu  | time: 256.132 ms | iters: 10    | obj: 5.005905e+00  (min) | CPU: 23.874 MiB | GPU: 374.863 MiB
 │  └─
 └─
 
@@ -421,20 +421,20 @@ Environment:
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  41.567 ms | iters: 5     | obj: 9.110070e-04  (min) | CPU:  13.30 MiB
-│  │  ✓ | exa_gpu  | time:  74.620 ms | iters: 8     | obj: 8.386344e-04  (min) | CPU:  6.156 MiB | GPU: 37.826 MiB
+│  │  ✓ | exa      | time:  43.500 ms | iters: 5     | obj: 9.110070e-04  (min) | CPU:  13.30 MiB
+│  │  ✓ | exa_gpu  | time:  77.556 ms | iters: 8     | obj: 8.386344e-04  (min) | CPU:  6.156 MiB | GPU: 37.826 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 491.702 ms | iters: 5     | obj: 9.110369e-04  (min) | CPU:  64.60 MiB
-│  │  ✓ | exa_gpu  | time: 103.973 ms | iters: 4     | obj: 9.079947e-04  (min) | CPU: 13.688 MiB | GPU: 186.410 MiB
+│  │  ✓ | exa      | time: 505.865 ms | iters: 5     | obj: 9.110369e-04  (min) | CPU:  64.60 MiB
+│  │  ✓ | exa_gpu  | time: 106.506 ms | iters: 4     | obj: 9.079947e-04  (min) | CPU: 13.688 MiB | GPU: 186.410 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time:   1.156 s  | iters: 5     | obj: 9.110439e-04  (min) | CPU: 128.74 MiB
-│  │  ✓ | exa_gpu  | time: 160.104 ms | iters: 4     | obj: 9.048850e-04  (min) | CPU: 24.683 MiB | GPU: 372.791 MiB
+│  │  ✓ | exa      | time:   1.182 s  | iters: 5     | obj: 9.110439e-04  (min) | CPU: 128.74 MiB
+│  │  ✓ | exa_gpu  | time: 192.879 ms | iters: 4     | obj: 9.048850e-04  (min) | CPU: 24.683 MiB | GPU: 372.791 MiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time:   2.422 s  | iters: 5     | obj: 9.110587e-04  (min) | CPU: 257.00 MiB
-│  │  ✓ | exa_gpu  | time: 273.984 ms | iters: 4     | obj: 8.986602e-04  (min) | CPU: 46.575 MiB | GPU: 745.534 MiB
+│  │  ✓ | exa      | time:   2.427 s  | iters: 5     | obj: 9.110587e-04  (min) | CPU: 257.00 MiB
+│  │  ✓ | exa_gpu  | time: 289.010 ms | iters: 4     | obj: 8.986602e-04  (min) | CPU: 46.575 MiB | GPU: 745.534 MiB
 │  └─
 └─
 
@@ -443,20 +443,20 @@ Environment:
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  14.222 ms | iters: 3     | obj: 1.228585e+03  (min) | CPU:   6.35 MiB
-│  │  ✓ | exa_gpu  | time:  83.289 ms | iters: 11    | obj: 1.227994e+03  (min) | CPU:  5.932 MiB | GPU: 17.560 MiB
+│  │  ✓ | exa      | time:  14.244 ms | iters: 3     | obj: 1.228585e+03  (min) | CPU:   6.35 MiB
+│  │  ✓ | exa_gpu  | time:  73.560 ms | iters: 11    | obj: 1.227994e+03  (min) | CPU:  5.932 MiB | GPU: 17.560 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 136.052 ms | iters: 3     | obj: 1.228581e+03  (min) | CPU:  29.99 MiB
-│  │  ✓ | exa_gpu  | time: 101.321 ms | iters: 12    | obj: 1.225635e+03  (min) | CPU: 10.411 MiB | GPU: 88.029 MiB
+│  │  ✓ | exa      | time: 134.040 ms | iters: 3     | obj: 1.228581e+03  (min) | CPU:  29.99 MiB
+│  │  ✓ | exa_gpu  | time:  92.029 ms | iters: 12    | obj: 1.225635e+03  (min) | CPU: 10.411 MiB | GPU: 88.029 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time: 297.276 ms | iters: 3     | obj: 1.228580e+03  (min) | CPU:  59.53 MiB
-│  │  ✓ | exa_gpu  | time: 118.448 ms | iters: 12    | obj: 1.222695e+03  (min) | CPU: 15.469 MiB | GPU: 176.031 MiB
+│  │  ✓ | exa      | time: 293.861 ms | iters: 3     | obj: 1.228580e+03  (min) | CPU:  59.53 MiB
+│  │  ✓ | exa_gpu  | time: 112.645 ms | iters: 12    | obj: 1.222695e+03  (min) | CPU: 15.530 MiB | GPU: 176.041 MiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time: 617.898 ms | iters: 3     | obj: 1.228580e+03  (min) | CPU: 118.61 MiB
-│  │  ✓ | exa_gpu  | time: 155.649 ms | iters: 12    | obj: 1.216825e+03  (min) | CPU: 25.722 MiB | GPU: 352.017 MiB
+│  │  ✓ | exa      | time: 653.924 ms | iters: 3     | obj: 1.228580e+03  (min) | CPU: 118.61 MiB
+│  │  ✓ | exa_gpu  | time: 142.114 ms | iters: 12    | obj: 1.216825e+03  (min) | CPU: 25.722 MiB | GPU: 352.017 MiB
 │  └─
 └─
 
@@ -465,20 +465,20 @@ Environment:
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  12.012 s  | iters: 734   | obj: 1.247985e+03  (max) | CPU: 318.59 MiB
-│  │  ✗ | exa_gpu  | time:  15.905 s  | iters: 1000  | obj: 5.052586e+02  (max) | CPU: 751.387 MiB | GPU: 230.148 MiB
+│  │  ✓ | exa      | time:  11.627 s  | iters: 734   | obj: 1.247985e+03  (max) | CPU: 318.58 MiB
+│  │  ✗ | exa_gpu  | time:  14.877 s  | iters: 1000  | obj: 5.293817e+02  (max) | CPU: 999.008 MiB | GPU: 222.827 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time:  65.146 s  | iters: 522   | obj: 1.247987e+03  (max) | CPU:   1.16 GiB
-│  │  ✗ | exa_gpu  | time:  51.113 s  | iters: 1000  | obj: 1.421156e+02  (max) | CPU: 803.282 MiB | GPU:  1.134 GiB
+│  │  ✓ | exa      | time:  63.876 s  | iters: 522   | obj: 1.247987e+03  (max) | CPU:   1.16 GiB
+│  │  ✗ | exa_gpu  | time:  48.676 s  | iters: 1000  | obj: 1.407700e+02  (max) | CPU: 918.771 MiB | GPU:  1.120 GiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time: 117.802 s  | iters: 459   | obj: 1.247987e+03  (max) | CPU:   2.02 GiB
-│  │  ✗ | exa_gpu  | time:  79.315 s  | iters: 1001  | obj: 6.235713e+02  (max) | CPU:  1.207 GiB | GPU:  2.081 GiB
+│  │  ✓ | exa      | time: 121.277 s  | iters: 459   | obj: 1.247987e+03  (max) | CPU:   2.02 GiB
+│  │  ✗ | exa_gpu  | time:  93.463 s  | iters: 1000  | obj: 6.297940e+02  (max) | CPU: 820.447 MiB | GPU:  2.223 GiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time: 472.190 s  | iters: 889   | obj: 1.247987e+03  (max) | CPU:   7.40 GiB
-│  │  ✗ | exa_gpu  | time: 179.787 s  | iters: 1000  | obj: 1.930756e+02  (max) | CPU: 845.872 MiB | GPU:  4.503 GiB
+│  │  ✓ | exa      | time: 476.709 s  | iters: 889   | obj: 1.247987e+03  (max) | CPU:   7.40 GiB
+│  │  ✗ | exa_gpu  | time: 178.461 s  | iters: 1000  | obj: 2.071377e+02  (max) | CPU: 847.644 MiB | GPU:  4.483 GiB
 │  └─
 └─
 
@@ -487,20 +487,20 @@ Environment:
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  10.302 s  | iters: 538   | obj: 2.059433e+00  (max) | CPU: 462.87 MiB
-│  │  ✓ | exa_gpu  | time: 577.952 ms | iters: 61    | obj: 1.175172e+00  (max) | CPU: 28.462 MiB | GPU: 57.504 MiB
+│  │  ✓ | exa      | time:  10.911 s  | iters: 538   | obj: 2.059433e+00  (max) | CPU: 462.87 MiB
+│  │  ✓ | exa_gpu  | time: 588.715 ms | iters: 61    | obj: 1.175172e+00  (max) | CPU: 28.222 MiB | GPU: 57.494 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time:  89.164 s  | iters: 752   | obj: 2.059534e+00  (max) | CPU:   3.20 GiB
-│  │  ✓ | exa_gpu  | time:   3.816 s  | iters: 235   | obj: 1.173336e+00  (max) | CPU: 109.299 MiB | GPU: 577.677 MiB
+│  │  ✓ | exa      | time:  91.531 s  | iters: 752   | obj: 2.059534e+00  (max) | CPU:   3.20 GiB
+│  │  ✓ | exa_gpu  | time:   3.841 s  | iters: 243   | obj: 1.173337e+00  (max) | CPU: 113.480 MiB | GPU: 592.065 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time: 147.241 s  | iters: 558   | obj: 2.059237e+00  (max) | CPU:   4.81 GiB
-│  │  ✓ | exa_gpu  | time:  10.219 s  | iters: 357   | obj: 1.171076e+00  (max) | CPU: 169.987 MiB | GPU:  1.537 GiB
+│  │  ✓ | exa      | time: 155.435 s  | iters: 558   | obj: 2.059237e+00  (max) | CPU:   4.81 GiB
+│  │  ✓ | exa_gpu  | time:   6.888 s  | iters: 240   | obj: 1.171076e+00  (max) | CPU: 120.471 MiB | GPU:  1.155 GiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time: 392.227 s  | iters: 636   | obj: 2.058537e+00  (max) | CPU:  12.56 GiB
-│  │  ✓ | exa_gpu  | time:   4.103 s  | iters: 78    | obj: 1.166456e+00  (max) | CPU: 72.381 MiB | GPU:  1.228 GiB
+│  │  ✓ | exa      | time: 400.185 s  | iters: 636   | obj: 2.058537e+00  (max) | CPU:  12.56 GiB
+│  │  ✓ | exa_gpu  | time:   3.983 s  | iters: 78    | obj: 1.166456e+00  (max) | CPU: 72.081 MiB | GPU:  1.227 GiB
 │  └─
 └─
 
@@ -509,20 +509,20 @@ Environment:
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  94.958 ms | iters: 20    | obj: 1.918046e-01  (max) | CPU:  21.63 MiB
-│  │  ✓ | exa_gpu  | time: 253.330 ms | iters: 31    | obj: -7.511061e-07 (max) | CPU: 13.234 MiB | GPU: 34.912 MiB
+│  │  ✓ | exa      | time:  96.861 ms | iters: 20    | obj: 1.918046e-01  (max) | CPU:  21.63 MiB
+│  │  ✓ | exa_gpu  | time: 240.300 ms | iters: 31    | obj: -7.511061e-07 (max) | CPU: 13.235 MiB | GPU: 34.912 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 813.659 ms | iters: 19    | obj: 1.917600e-01  (max) | CPU: 103.29 MiB
-│  │  ✓ | exa_gpu  | time: 247.000 ms | iters: 22    | obj: -3.468065e-07 (max) | CPU: 17.820 MiB | GPU: 167.117 MiB
+│  │  ✓ | exa      | time: 766.761 ms | iters: 19    | obj: 1.917600e-01  (max) | CPU: 103.29 MiB
+│  │  ✓ | exa_gpu  | time: 236.407 ms | iters: 22    | obj: -3.468065e-07 (max) | CPU: 17.820 MiB | GPU: 167.117 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time:   1.535 s  | iters: 18    | obj: 1.917093e-01  (max) | CPU: 200.21 MiB
-│  │  ✓ | exa_gpu  | time: 333.841 ms | iters: 23    | obj: -7.464148e-07 (max) | CPU: 27.899 MiB | GPU: 335.868 MiB
+│  │  ✓ | exa      | time:   1.479 s  | iters: 18    | obj: 1.917093e-01  (max) | CPU: 200.21 MiB
+│  │  ✓ | exa_gpu  | time: 367.314 ms | iters: 23    | obj: -7.464148e-07 (max) | CPU: 27.899 MiB | GPU: 335.868 MiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time:   3.217 s  | iters: 18    | obj: 1.916118e-01  (max) | CPU: 399.88 MiB
-│  │  ✓ | exa_gpu  | time: 496.338 ms | iters: 22    | obj: 5.098140e-07  (max) | CPU: 46.379 MiB | GPU: 667.967 MiB
+│  │  ✓ | exa      | time:   3.095 s  | iters: 18    | obj: 1.916118e-01  (max) | CPU: 399.88 MiB
+│  │  ✓ | exa_gpu  | time: 494.818 ms | iters: 22    | obj: 5.098140e-07  (max) | CPU: 46.380 MiB | GPU: 667.967 MiB
 │  └─
 └─
 
@@ -531,20 +531,20 @@ Environment:
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time: 181.597 ms | iters: 47    | obj: 1.944023e+01  (min) | CPU:  15.11 MiB
-│  │  ✓ | exa_gpu  | time: 218.268 ms | iters: 25    | obj: 1.942160e+01  (min) | CPU: 10.044 MiB | GPU: 17.509 MiB
+│  │  ✓ | exa      | time: 170.296 ms | iters: 47    | obj: 1.944023e+01  (min) | CPU:  15.11 MiB
+│  │  ✓ | exa_gpu  | time: 304.741 ms | iters: 25    | obj: 1.942160e+01  (min) | CPU: 10.044 MiB | GPU: 17.509 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time:   1.973 s  | iters: 63    | obj: 1.943235e+01  (min) | CPU:  89.39 MiB
-│  │  ✓ | exa_gpu  | time:   1.029 s  | iters: 107   | obj: 1.934096e+01  (min) | CPU: 39.932 MiB | GPU: 130.364 MiB
+│  │  ✓ | exa      | time:   1.899 s  | iters: 63    | obj: 1.943235e+01  (min) | CPU:  89.39 MiB
+│  │  ✓ | exa_gpu  | time: 936.139 ms | iters: 107   | obj: 1.934096e+01  (min) | CPU: 39.936 MiB | GPU: 130.364 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time:   3.043 s  | iters: 43    | obj: 1.943232e+01  (min) | CPU: 136.58 MiB
-│  │  ✓ | exa_gpu  | time: 970.133 ms | iters: 88    | obj: 1.925063e+01  (min) | CPU: 37.539 MiB | GPU: 240.557 MiB
+│  │  ✓ | exa      | time:   2.975 s  | iters: 43    | obj: 1.943232e+01  (min) | CPU: 136.58 MiB
+│  │  ✓ | exa_gpu  | time: 920.111 ms | iters: 88    | obj: 1.925063e+01  (min) | CPU: 37.542 MiB | GPU: 240.557 MiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time:   8.725 s  | iters: 60    | obj: 1.943274e+01  (min) | CPU: 342.63 MiB
-│  │  ✓ | exa_gpu  | time:   2.716 s  | iters: 203   | obj: 1.907192e+01  (min) | CPU: 82.771 MiB | GPU: 719.887 MiB
+│  │  ✓ | exa      | time:   8.329 s  | iters: 60    | obj: 1.943274e+01  (min) | CPU: 342.63 MiB
+│  │  ✓ | exa_gpu  | time:   2.594 s  | iters: 203   | obj: 1.907192e+01  (min) | CPU: 82.717 MiB | GPU: 719.872 MiB
 │  └─
 └─
 
@@ -553,20 +553,20 @@ Environment:
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time: 654.802 ms | iters: 27    | obj: 9.141204e+00  (min) | CPU:  42.55 MiB
-│  │  ✓ | exa_gpu  | time: 522.212 ms | iters: 30    | obj: 9.123238e+00  (min) | CPU: 18.657 MiB | GPU: 66.841 MiB
+│  │  ✓ | exa      | time: 596.894 ms | iters: 27    | obj: 9.141204e+00  (min) | CPU:  42.55 MiB
+│  │  ✓ | exa_gpu  | time: 523.730 ms | iters: 30    | obj: 9.123238e+00  (min) | CPU: 18.597 MiB | GPU: 66.837 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time:   7.549 s  | iters: 41    | obj: 9.142359e+00  (min) | CPU: 307.02 MiB
-│  │  ✓ | exa_gpu  | time:   1.691 s  | iters: 27    | obj: 9.053093e+00  (min) | CPU: 29.249 MiB | GPU: 329.227 MiB
+│  │  ✓ | exa      | time:   7.673 s  | iters: 41    | obj: 9.142359e+00  (min) | CPU: 307.02 MiB
+│  │  ✓ | exa_gpu  | time:   1.694 s  | iters: 27    | obj: 9.053093e+00  (min) | CPU: 29.250 MiB | GPU: 329.227 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time:  19.615 s  | iters: 47    | obj: 9.143634e+00  (min) | CPU: 754.05 MiB
-│  │  ✓ | exa_gpu  | time:   3.713 s  | iters: 32    | obj: 8.965878e+00  (min) | CPU: 47.575 MiB | GPU: 672.443 MiB
+│  │  ✓ | exa      | time:  19.400 s  | iters: 47    | obj: 9.143634e+00  (min) | CPU: 754.05 MiB
+│  │  ✓ | exa_gpu  | time:   3.627 s  | iters: 32    | obj: 8.965878e+00  (min) | CPU: 47.576 MiB | GPU: 672.443 MiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time:  31.600 s  | iters: 40    | obj: 9.146361e+00  (min) | CPU:   1.22 GiB
-│  │  ✓ | exa_gpu  | time:   8.827 s  | iters: 45    | obj: 8.792951e+00  (min) | CPU: 86.743 MiB | GPU:  1.383 GiB
+│  │  ✓ | exa      | time:  30.766 s  | iters: 40    | obj: 9.146361e+00  (min) | CPU:   1.22 GiB
+│  │  ✓ | exa_gpu  | time:   8.700 s  | iters: 45    | obj: 8.792951e+00  (min) | CPU: 86.744 MiB | GPU:  1.383 GiB
 │  └─
 └─
 
@@ -575,20 +575,20 @@ Environment:
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time: 118.764 ms | iters: 18    | obj: 1.012710e+00  (max) | CPU:  19.97 MiB
-│  │  ✓ | exa_gpu  | time: 581.128 ms | iters: 55    | obj: 1.000000e+00  (max) | CPU: 23.193 MiB | GPU: 44.889 MiB
+│  │  ✓ | exa      | time: 116.422 ms | iters: 18    | obj: 1.012710e+00  (max) | CPU:  19.97 MiB
+│  │  ✓ | exa_gpu  | time: 663.873 ms | iters: 56    | obj: 1.000000e+00  (max) | CPU: 23.732 MiB | GPU: 45.080 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 725.132 ms | iters: 18    | obj: 1.012223e+00  (max) | CPU:  97.64 MiB
-│  │  ✓ | exa_gpu  | time: 817.921 ms | iters: 27    | obj: 1.000007e+00  (max) | CPU: 21.799 MiB | GPU: 201.423 MiB
+│  │  ✓ | exa      | time: 737.468 ms | iters: 18    | obj: 1.012223e+00  (max) | CPU:  97.64 MiB
+│  │  ✓ | exa_gpu  | time: 805.212 ms | iters: 27    | obj: 1.000007e+00  (max) | CPU: 21.800 MiB | GPU: 201.423 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time:   1.518 s  | iters: 17    | obj: 1.011682e+00  (max) | CPU: 190.76 MiB
-│  │  ✓ | exa_gpu  | time:   1.273 s  | iters: 24    | obj: 1.000001e+00  (max) | CPU: 31.664 MiB | GPU: 397.830 MiB
+│  │  ✓ | exa      | time:   1.501 s  | iters: 17    | obj: 1.011682e+00  (max) | CPU: 190.76 MiB
+│  │  ✓ | exa_gpu  | time:   1.235 s  | iters: 24    | obj: 1.000001e+00  (max) | CPU: 31.664 MiB | GPU: 397.830 MiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time:   3.086 s  | iters: 17    | obj: 1.010835e+00  (max) | CPU: 380.97 MiB
-│  │  ✓ | exa_gpu  | time:   2.363 s  | iters: 26    | obj: 9.999998e-01  (max) | CPU: 54.037 MiB | GPU: 801.869 MiB
+│  │  ✓ | exa      | time:   3.074 s  | iters: 17    | obj: 1.010835e+00  (max) | CPU: 380.97 MiB
+│  │  ✓ | exa_gpu  | time:   2.266 s  | iters: 26    | obj: 9.999998e-01  (max) | CPU: 54.038 MiB | GPU: 801.869 MiB
 │  └─
 └─
 
@@ -597,20 +597,20 @@ Environment:
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  12.977 s  | iters: 340   | obj: 3.050195e-01  (max) | CPU: 599.43 MiB
-│  │  ✓ | exa_gpu  | time:   9.031 s  | iters: 338   | obj: -1.080170e-01 (max) | CPU: 262.214 MiB | GPU: 281.615 MiB
+│  │  ✓ | exa      | time:  13.389 s  | iters: 340   | obj: 3.050195e-01  (max) | CPU: 599.44 MiB
+│  │  ✓ | exa_gpu  | time:   9.693 s  | iters: 376   | obj: -7.699300e-02 (max) | CPU: 277.702 MiB | GPU: 293.810 MiB
 │  │
 │  │  N = 5000
-│  │  ✗ | exa      | time:  65.721 s  | iters: 301   | obj: -9.202651e-01 (max) | CPU:   1.95 GiB
-│  │  ✗ | exa_gpu  | time:  16.139 s  | iters: 197   | obj: 3.719315e-01  (max) | CPU: 216.840 MiB | GPU:  1.147 GiB
+│  │  ✗ | exa      | time:  66.128 s  | iters: 301   | obj: -9.202651e-01 (max) | CPU:   1.95 GiB
+│  │  ✗ | exa_gpu  | time:  17.621 s  | iters: 207   | obj: -5.818422e-01 (max) | CPU: 214.545 MiB | GPU:  1.157 GiB
 │  │
 │  │  N = 10000
-│  │  ✗ | exa      | time:  88.674 s  | iters: 185   | obj: 2.310158e-01  (max) | CPU:   2.92 GiB
-│  │  ✗ | exa_gpu  | time:  25.603 s  | iters: 184   | obj: 5.814099e-01  (max) | CPU: 259.925 MiB | GPU:  2.240 GiB
+│  │  ✗ | exa      | time:  90.163 s  | iters: 185   | obj: 2.310158e-01  (max) | CPU:   2.92 GiB
+│  │  ✗ | exa_gpu  | time:  23.729 s  | iters: 179   | obj: 5.830992e-01  (max) | CPU: 248.762 MiB | GPU:  2.230 GiB
 │  │
 │  │  N = 20000
-│  │  ✗ | exa      | time: 149.302 s  | iters: 147   | obj: 6.185205e-01  (max) | CPU:   4.85 GiB
-│  │  ✗ | exa_gpu  | time:  59.580 s  | iters: 290   | obj: 5.637777e-01  (max) | CPU: 579.702 MiB | GPU:  4.930 GiB
+│  │  ✗ | exa      | time: 150.514 s  | iters: 147   | obj: 6.185205e-01  (max) | CPU:   4.85 GiB
+│  │  ✗ | exa_gpu  | time:  39.930 s  | iters: 174   | obj: 4.837776e-01  (max) | CPU: 400.511 MiB | GPU:  4.376 GiB
 │  └─
 └─
 
@@ -619,20 +619,20 @@ Environment:
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time: 149.032 ms | iters: 15    | obj: 5.545711e-01  (min) | CPU:  12.58 MiB
-│  │  ✓ | exa_gpu  | time: 231.548 ms | iters: 14    | obj: 5.545599e-01  (min) | CPU:  8.121 MiB | GPU: 27.359 MiB
+│  │  ✓ | exa      | time: 150.723 ms | iters: 15    | obj: 5.545711e-01  (min) | CPU:  12.58 MiB
+│  │  ✓ | exa_gpu  | time: 222.719 ms | iters: 14    | obj: 5.545599e-01  (min) | CPU:  8.122 MiB | GPU: 27.359 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time:   1.186 s  | iters: 16    | obj: 5.545709e-01  (min) | CPU:  62.15 MiB
-│  │  ✓ | exa_gpu  | time: 810.316 ms | iters: 16    | obj: 5.545179e-01  (min) | CPU: 14.270 MiB | GPU: 138.008 MiB
+│  │  ✓ | exa      | time:   1.202 s  | iters: 16    | obj: 5.545709e-01  (min) | CPU:  62.15 MiB
+│  │  ✓ | exa_gpu  | time: 811.650 ms | iters: 16    | obj: 5.545179e-01  (min) | CPU: 14.271 MiB | GPU: 138.008 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time:   2.821 s  | iters: 18    | obj: 5.545709e-01  (min) | CPU: 129.56 MiB
-│  │  ✓ | exa_gpu  | time:   1.278 s  | iters: 16    | obj: 5.544658e-01  (min) | CPU: 21.188 MiB | GPU: 275.910 MiB
+│  │  ✓ | exa      | time:   2.886 s  | iters: 18    | obj: 5.545709e-01  (min) | CPU: 129.56 MiB
+│  │  ✓ | exa_gpu  | time:   1.268 s  | iters: 16    | obj: 5.544658e-01  (min) | CPU: 21.188 MiB | GPU: 275.910 MiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time:  11.470 s  | iters: 34    | obj: 5.545709e-01  (min) | CPU: 351.46 MiB
-│  │  ✓ | exa_gpu  | time:   2.889 s  | iters: 19    | obj: 5.543620e-01  (min) | CPU: 36.274 MiB | GPU: 559.601 MiB
+│  │  ✓ | exa      | time:  11.598 s  | iters: 34    | obj: 5.545709e-01  (min) | CPU: 351.46 MiB
+│  │  ✓ | exa_gpu  | time:   2.898 s  | iters: 19    | obj: 5.543620e-01  (min) | CPU: 36.335 MiB | GPU: 559.623 MiB
 │  └─
 └─
 
@@ -641,19 +641,19 @@ Environment:
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  13.916 ms | iters: 3     | obj: 1.047808e+00  (min) | CPU:   6.51 MiB
-│  │  ✓ | exa_gpu  | time:  72.693 ms | iters: 7     | obj: 1.045639e+00  (min) | CPU:  4.411 MiB | GPU: 17.544 MiB
+│  │  ✓ | exa      | time:  13.886 ms | iters: 3     | obj: 1.047808e+00  (min) | CPU:   6.51 MiB
+│  │  ✓ | exa_gpu  | time:  73.430 ms | iters: 7     | obj: 1.045639e+00  (min) | CPU:  4.411 MiB | GPU: 17.544 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 139.013 ms | iters: 3     | obj: 1.047807e+00  (min) | CPU:  30.82 MiB
-│  │  ✓ | exa_gpu  | time:  86.050 ms | iters: 7     | obj: 1.036994e+00  (min) | CPU:  8.678 MiB | GPU: 87.681 MiB
+│  │  ✓ | exa      | time: 142.065 ms | iters: 3     | obj: 1.047807e+00  (min) | CPU:  30.82 MiB
+│  │  ✓ | exa_gpu  | time:  86.593 ms | iters: 7     | obj: 1.036994e+00  (min) | CPU:  8.678 MiB | GPU: 87.681 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time: 317.211 ms | iters: 3     | obj: 1.047807e+00  (min) | CPU:  61.20 MiB
-│  │  ✓ | exa_gpu  | time: 159.414 ms | iters: 7     | obj: 1.026238e+00  (min) | CPU: 13.950 MiB | GPU: 175.349 MiB
+│  │  ✓ | exa      | time: 302.698 ms | iters: 3     | obj: 1.047807e+00  (min) | CPU:  61.20 MiB
+│  │  ✓ | exa_gpu  | time: 111.969 ms | iters: 7     | obj: 1.026238e+00  (min) | CPU: 13.950 MiB | GPU: 175.349 MiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time: 582.739 ms | iters: 2     | obj: 1.047731e+00  (min) | CPU: 119.67 MiB
-│  │  ✓ | exa_gpu  | time: 203.973 ms | iters: 7     | obj: 1.004888e+00  (min) | CPU: 24.455 MiB | GPU: 350.659 MiB
+│  │  ✓ | exa      | time: 567.217 ms | iters: 2     | obj: 1.047731e+00  (min) | CPU: 119.67 MiB
+│  │  ✓ | exa_gpu  | time: 217.714 ms | iters: 7     | obj: 1.004888e+00  (min) | CPU: 24.455 MiB | GPU: 350.659 MiB
 │  └─
-└─</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="cpu.html">« CPU</a><a class="docs-footer-nextpage" href="problems/beam.html">beam »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.0 on <span class="colophon-date" title="Sunday 16 November 2025 22:56">Sunday 16 November 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+└─</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="cpu.html">« CPU</a><a class="docs-footer-nextpage" href="problems/beam.html">beam »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.0 on <span class="colophon-date" title="Monday 17 November 2025 10:21">Monday 17 November 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

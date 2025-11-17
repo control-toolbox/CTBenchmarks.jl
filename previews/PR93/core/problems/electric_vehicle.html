@@ -17,7 +17,7 @@
 <li><p><strong>Limits:</strong> 1000 iterations max, 500.0s wall time</p>
 </li>
 </ul>
-</div></div><h3 id="Environment"><a class="docs-heading-anchor" href="#Environment">🖥️ Environment</a><a id="Environment-1"></a><a class="docs-heading-anchor-permalink" href="#Environment" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2025-11-15 22:52:59 UTC
+</div></div><h3 id="Environment"><a class="docs-heading-anchor" href="#Environment">🖥️ Environment</a><a id="Environment-1"></a><a class="docs-heading-anchor-permalink" href="#Environment" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2025-11-17 03:31:23 UTC
 🔧 Julia version : 1.11.7
 💻 OS            : Linux
 🖥️ Machine       : runnervmg1sw1</code></pre><div class="markdown"><p>You can download the exact environment used for this benchmark:</p>
@@ -36,9 +36,9 @@ Build Info:
   Official https://julialang.org/ release
 Platform Info:
   OS: Linux (x86_64-linux-gnu)
-  CPU: 4 × AMD EPYC 7763 64-Core Processor
+  CPU: 4 × Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz
   WORD_SIZE: 64
-  LLVM: libLLVM-16.0.6 (ORCJIT, znver3)
+  LLVM: libLLVM-16.0.6 (ORCJIT, icelake-server)
 Threads: 1 default, 0 interactive, 1 GC (on 4 virtual cores)
 Environment:
   JULIA_PKG_SERVER_REGISTRY_PREFERENCE = eager</code></pre></details><details class="ct-collapse" style="margin-bottom: 0.5em;"><summary>📦 Package status</summary><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr36"><span class="sgr1">Project</span></span> CTBenchmarks v0.2.3
@@ -122,7 +122,7 @@ Environment:
   <span class="sgr90">[096a3bc2] </span>GPUToolbox v1.0.0
   <span class="sgr90">[28b8d3ca] </span>GR v0.73.18
   <span class="sgr90">[42e2da0e] </span>Grisu v1.0.2
-  <span class="sgr90">[34c5aeac] </span>HSL v0.5.1
+  <span class="sgr90">[34c5aeac] </span>HSL v0.5.2
   <span class="sgr90">[cd3eb016] </span>HTTP v1.10.19
   <span class="sgr90">[076d061b] </span>HashArrayMappedTries v0.2.0
   <span class="sgr90">[842dd82b] </span>InlineStrings v1.4.5
@@ -367,54 +367,82 @@ Environment:
   <span class="sgr90">[8e850b90] </span>libblastrampoline_jll v5.11.0+0
   <span class="sgr90">[8e850ede] </span>nghttp2_jll v1.59.0+0
   <span class="sgr90">[3f19e933] </span>p7zip_jll v17.4.0+2
-<span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr32">⌃</span> and <span class="sgr33">⌅</span> have new versions available. Those with <span class="sgr32">⌃</span> may be upgradable, but those with <span class="sgr33">⌅</span> are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><h3 id="Time-vs-Grid-Size-(Ubuntu-Latest-CPU)"><a class="docs-heading-anchor" href="#Time-vs-Grid-Size-(Ubuntu-Latest-CPU)">Time vs Grid Size (Ubuntu Latest CPU)</a><a id="Time-vs-Grid-Size-(Ubuntu-Latest-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Time-vs-Grid-Size-(Ubuntu-Latest-CPU)" title="Permalink"></a></h3><img src="electric_vehicle-cb4b16f4.svg" alt="Example block output"/><img src="electric_vehicle-3900ac5a.svg" alt="Example block output"/><h3 id="Log-(Ubuntu-Latest-CPU)"><a class="docs-heading-anchor" href="#Log-(Ubuntu-Latest-CPU)">Log (Ubuntu Latest CPU)</a><a id="Log-(Ubuntu-Latest-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Log-(Ubuntu-Latest-CPU)" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
+<span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr32">⌃</span> and <span class="sgr33">⌅</span> have new versions available. Those with <span class="sgr32">⌃</span> may be upgradable, but those with <span class="sgr33">⌅</span> are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><h3 id="Time-vs-Grid-Size-(Ubuntu-Latest-CPU)"><a class="docs-heading-anchor" href="#Time-vs-Grid-Size-(Ubuntu-Latest-CPU)">Time vs Grid Size (Ubuntu Latest CPU)</a><a id="Time-vs-Grid-Size-(Ubuntu-Latest-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Time-vs-Grid-Size-(Ubuntu-Latest-CPU)" title="Permalink"></a></h3><img src="electric_vehicle-2649710b.svg" alt="Example block output"/><img src="electric_vehicle-6184081a.svg" alt="Example block output"/><h3 id="Solution:-N-200-(Ubuntu-Latest-CPU)"><a class="docs-heading-anchor" href="#Solution:-N-200-(Ubuntu-Latest-CPU)">Solution: N = 200 (Ubuntu Latest CPU)</a><a id="Solution:-N-200-(Ubuntu-Latest-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Solution:-N-200-(Ubuntu-Latest-CPU)" title="Permalink"></a></h3><a href="../../assets/benchmarks/core-ubuntu-latest/figures/electric_vehicle_N200.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/electric_vehicle_N200.png"
+  />
+</a><h3 id="Solution:-N-500-(Ubuntu-Latest-CPU)"><a class="docs-heading-anchor" href="#Solution:-N-500-(Ubuntu-Latest-CPU)">Solution: N = 500 (Ubuntu Latest CPU)</a><a id="Solution:-N-500-(Ubuntu-Latest-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Solution:-N-500-(Ubuntu-Latest-CPU)" title="Permalink"></a></h3><a href="../../assets/benchmarks/core-ubuntu-latest/figures/electric_vehicle_N500.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/electric_vehicle_N500.png"
+  />
+</a><h3 id="Solution:-N-1000-(Ubuntu-Latest-CPU)"><a class="docs-heading-anchor" href="#Solution:-N-1000-(Ubuntu-Latest-CPU)">Solution: N = 1000 (Ubuntu Latest CPU)</a><a id="Solution:-N-1000-(Ubuntu-Latest-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Solution:-N-1000-(Ubuntu-Latest-CPU)" title="Permalink"></a></h3><a href="../../assets/benchmarks/core-ubuntu-latest/figures/electric_vehicle_N1000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/electric_vehicle_N1000.png"
+  />
+</a><h3 id="Solution:-N-2000-(Ubuntu-Latest-CPU)"><a class="docs-heading-anchor" href="#Solution:-N-2000-(Ubuntu-Latest-CPU)">Solution: N = 2000 (Ubuntu Latest CPU)</a><a id="Solution:-N-2000-(Ubuntu-Latest-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Solution:-N-2000-(Ubuntu-Latest-CPU)" title="Permalink"></a></h3><a href="../../assets/benchmarks/core-ubuntu-latest/figures/electric_vehicle_N2000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-ubuntu-latest/figures/electric_vehicle_N2000.png"
+  />
+</a><h3 id="Log-(Ubuntu-Latest-CPU)"><a class="docs-heading-anchor" href="#Log-(Ubuntu-Latest-CPU)">Log (Ubuntu Latest CPU)</a><a id="Log-(Ubuntu-Latest-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Log-(Ubuntu-Latest-CPU)" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
 
 ┌─ Problem: electric_vehicle
 │
 ├──┬ Solver: ipopt, Discretization: trapeze
 │  │
 │  │  N = 200
-│  │  ✓ | jump     | time:   6.061 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   9.83 KiB
-│  │  ✓ | adnlp    | time:   8.625 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   2.71 MiB
-│  │  ✓ | exa      | time:   4.538 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:  58.31 KiB
+│  │  ✓ | jump     | time:   6.320 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   9.83 KiB
+│  │  ✓ | adnlp    | time:   8.885 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   2.71 MiB
+│  │  ✓ | exa      | time:   4.434 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:  58.31 KiB
 │  │
 │  │  N = 500
-│  │  ✓ | jump     | time:  12.850 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:  10.09 KiB
-│  │  ✓ | adnlp    | time:  19.474 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   6.74 MiB
-│  │  ✓ | exa      | time:   9.264 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU: 107.38 KiB
+│  │  ✓ | jump     | time:  13.604 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:  10.09 KiB
+│  │  ✓ | adnlp    | time:  20.408 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   6.74 MiB
+│  │  ✓ | exa      | time:   9.314 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU: 107.38 KiB
 │  │
 │  │  N = 1000
-│  │  ✓ | jump     | time:  24.321 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  10.09 KiB
-│  │  ✓ | adnlp    | time:  41.343 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  13.44 MiB
-│  │  ✓ | exa      | time:  17.201 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU: 189.56 KiB
+│  │  ✓ | jump     | time:  26.092 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  10.09 KiB
+│  │  ✓ | adnlp    | time:  42.834 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  13.44 MiB
+│  │  ✓ | exa      | time:  17.233 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU: 189.56 KiB
 │  │
 │  │  N = 2000
-│  │  ✓ | jump     | time:  51.037 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  10.09 KiB
-│  │  ✓ | adnlp    | time:  98.426 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  26.84 MiB
-│  │  ✓ | exa      | time:  33.073 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU: 353.62 KiB
+│  │  ✓ | jump     | time:  50.133 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  10.09 KiB
+│  │  ✓ | adnlp    | time: 100.783 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  26.84 MiB
+│  │  ✓ | exa      | time:  32.486 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU: 353.62 KiB
 │  └─
 │
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 200
-│  │  ✓ | jump     | time:   7.037 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   4.64 MiB
-│  │  ✓ | adnlp    | time:   8.005 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   3.86 MiB
-│  │  ✓ | exa      | time:   3.856 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   1.65 MiB
+│  │  ✓ | jump     | time:   7.186 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   4.64 MiB
+│  │  ✓ | adnlp    | time:   8.390 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   3.86 MiB
+│  │  ✓ | exa      | time:   3.634 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   1.65 MiB
 │  │
 │  │  N = 500
-│  │  ✓ | jump     | time:  16.561 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:  10.71 MiB
-│  │  ✓ | adnlp    | time:  18.671 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   8.98 MiB
-│  │  ✓ | exa      | time:   8.300 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   3.46 MiB
+│  │  ✓ | jump     | time:  17.125 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:  10.71 MiB
+│  │  ✓ | adnlp    | time:  20.109 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   8.98 MiB
+│  │  ✓ | exa      | time:   7.996 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   3.46 MiB
 │  │
 │  │  N = 1000
-│  │  ✓ | jump     | time:  32.927 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  22.21 MiB
-│  │  ✓ | adnlp    | time:  43.831 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  17.52 MiB
-│  │  ✓ | exa      | time:  15.375 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:   6.47 MiB
+│  │  ✓ | jump     | time:  33.104 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  22.21 MiB
+│  │  ✓ | adnlp    | time:  43.489 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  17.52 MiB
+│  │  ✓ | exa      | time:  14.584 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:   6.47 MiB
 │  │
 │  │  N = 2000
-│  │  ✓ | jump     | time:  87.896 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  42.46 MiB
-│  │  ✓ | adnlp    | time: 135.316 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  34.59 MiB
-│  │  ✓ | exa      | time:  54.722 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  12.50 MiB
+│  │  ✓ | jump     | time:  85.511 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  42.46 MiB
+│  │  ✓ | adnlp    | time: 115.440 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  34.59 MiB
+│  │  ✓ | exa      | time:  55.770 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  12.50 MiB
 │  └─
 └─</code></pre><h2 id="Moonshot-CPU"><a class="docs-heading-anchor" href="#Moonshot-CPU">Moonshot CPU</a><a id="Moonshot-CPU-1"></a><a class="docs-heading-anchor-permalink" href="#Moonshot-CPU" title="Permalink"></a></h2><p>Results on self-hosted CPU hardware.</p><h3 id="Configuration-2"><a class="docs-heading-anchor" href="#Configuration-2">⚙️ Configuration</a><a class="docs-heading-anchor-permalink" href="#Configuration-2" title="Permalink"></a></h3><div class="benchmark-config" style="margin-bottom: 0em;"><div class="markdown"><ul>
 <li><p><strong>Problems:</strong> beam, chain, double_oscillator, electric_vehicle, glider, insurance, jackson, robbins, robot, rocket, space_shuttle, steering, vanderpol</p>
@@ -434,7 +462,7 @@ Environment:
 <li><p><strong>Limits:</strong> 1000 iterations max, 400.0s wall time</p>
 </li>
 </ul>
-</div></div><h3 id="Environment-2"><a class="docs-heading-anchor" href="#Environment-2">🖥️ Environment</a><a class="docs-heading-anchor-permalink" href="#Environment-2" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2025-11-16 05:36:01 UTC
+</div></div><h3 id="Environment-2"><a class="docs-heading-anchor" href="#Environment-2">🖥️ Environment</a><a class="docs-heading-anchor-permalink" href="#Environment-2" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2025-11-17 07:54:22 UTC
 🔧 Julia version : 1.11.7
 💻 OS            : Linux
 🖥️ Machine       : moonshot</code></pre><div class="markdown"><p>You can download the exact environment used for this benchmark:</p>
@@ -542,7 +570,7 @@ Environment:
   <span class="sgr90">[096a3bc2] </span>GPUToolbox v1.0.0
   <span class="sgr90">[28b8d3ca] </span>GR v0.73.18
   <span class="sgr90">[42e2da0e] </span>Grisu v1.0.2
-  <span class="sgr90">[34c5aeac] </span>HSL v0.5.1
+  <span class="sgr90">[34c5aeac] </span>HSL v0.5.2
   <span class="sgr90">[cd3eb016] </span>HTTP v1.10.19
   <span class="sgr90">[076d061b] </span>HashArrayMappedTries v0.2.0
   <span class="sgr90">[842dd82b] </span>InlineStrings v1.4.5
@@ -787,64 +815,99 @@ Environment:
   <span class="sgr90">[8e850b90] </span>libblastrampoline_jll v5.11.0+0
   <span class="sgr90">[8e850ede] </span>nghttp2_jll v1.59.0+0
   <span class="sgr90">[3f19e933] </span>p7zip_jll v17.4.0+2
-<span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr32">⌃</span> and <span class="sgr33">⌅</span> have new versions available. Those with <span class="sgr32">⌃</span> may be upgradable, but those with <span class="sgr33">⌅</span> are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><h3 id="Time-vs-Grid-Size-(Moonshot-CPU)"><a class="docs-heading-anchor" href="#Time-vs-Grid-Size-(Moonshot-CPU)">Time vs Grid Size (Moonshot CPU)</a><a id="Time-vs-Grid-Size-(Moonshot-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Time-vs-Grid-Size-(Moonshot-CPU)" title="Permalink"></a></h3><img src="electric_vehicle-64511b16.svg" alt="Example block output"/><img src="electric_vehicle-f08f1b91.svg" alt="Example block output"/><h3 id="Log-(Moonshot-CPU)"><a class="docs-heading-anchor" href="#Log-(Moonshot-CPU)">Log (Moonshot CPU)</a><a id="Log-(Moonshot-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Log-(Moonshot-CPU)" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
+<span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr32">⌃</span> and <span class="sgr33">⌅</span> have new versions available. Those with <span class="sgr32">⌃</span> may be upgradable, but those with <span class="sgr33">⌅</span> are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><h3 id="Time-vs-Grid-Size-(Moonshot-CPU)"><a class="docs-heading-anchor" href="#Time-vs-Grid-Size-(Moonshot-CPU)">Time vs Grid Size (Moonshot CPU)</a><a id="Time-vs-Grid-Size-(Moonshot-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Time-vs-Grid-Size-(Moonshot-CPU)" title="Permalink"></a></h3><img src="electric_vehicle-f5baec84.svg" alt="Example block output"/><img src="electric_vehicle-9c03ece8.svg" alt="Example block output"/><h3 id="Solution:-N-200-(Moonshot-CPU)"><a class="docs-heading-anchor" href="#Solution:-N-200-(Moonshot-CPU)">Solution: N = 200 (Moonshot CPU)</a><a id="Solution:-N-200-(Moonshot-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Solution:-N-200-(Moonshot-CPU)" title="Permalink"></a></h3><a href="../../assets/benchmarks/core-moonshot-cpu/figures/electric_vehicle_N200.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/electric_vehicle_N200.png"
+  />
+</a><h3 id="Solution:-N-500-(Moonshot-CPU)"><a class="docs-heading-anchor" href="#Solution:-N-500-(Moonshot-CPU)">Solution: N = 500 (Moonshot CPU)</a><a id="Solution:-N-500-(Moonshot-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Solution:-N-500-(Moonshot-CPU)" title="Permalink"></a></h3><a href="../../assets/benchmarks/core-moonshot-cpu/figures/electric_vehicle_N500.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/electric_vehicle_N500.png"
+  />
+</a><h3 id="Solution:-N-1000-(Moonshot-CPU)"><a class="docs-heading-anchor" href="#Solution:-N-1000-(Moonshot-CPU)">Solution: N = 1000 (Moonshot CPU)</a><a id="Solution:-N-1000-(Moonshot-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Solution:-N-1000-(Moonshot-CPU)" title="Permalink"></a></h3><a href="../../assets/benchmarks/core-moonshot-cpu/figures/electric_vehicle_N1000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/electric_vehicle_N1000.png"
+  />
+</a><h3 id="Solution:-N-2000-(Moonshot-CPU)"><a class="docs-heading-anchor" href="#Solution:-N-2000-(Moonshot-CPU)">Solution: N = 2000 (Moonshot CPU)</a><a id="Solution:-N-2000-(Moonshot-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Solution:-N-2000-(Moonshot-CPU)" title="Permalink"></a></h3><a href="../../assets/benchmarks/core-moonshot-cpu/figures/electric_vehicle_N2000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/electric_vehicle_N2000.png"
+  />
+</a><h3 id="Solution:-N-5000-(Moonshot-CPU)"><a class="docs-heading-anchor" href="#Solution:-N-5000-(Moonshot-CPU)">Solution: N = 5000 (Moonshot CPU)</a><a id="Solution:-N-5000-(Moonshot-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Solution:-N-5000-(Moonshot-CPU)" title="Permalink"></a></h3><a href="../../assets/benchmarks/core-moonshot-cpu/figures/electric_vehicle_N5000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-cpu/figures/electric_vehicle_N5000.png"
+  />
+</a><h3 id="Log-(Moonshot-CPU)"><a class="docs-heading-anchor" href="#Log-(Moonshot-CPU)">Log (Moonshot CPU)</a><a id="Log-(Moonshot-CPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Log-(Moonshot-CPU)" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
 
 ┌─ Problem: electric_vehicle
 │
 ├──┬ Solver: ipopt, Discretization: trapeze
 │  │
 │  │  N = 200
-│  │  ✓ | jump     | time:   6.820 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   9.83 KiB
-│  │  ✓ | adnlp    | time:  10.307 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   2.71 MiB
-│  │  ✓ | exa      | time:   5.270 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:  58.31 KiB
+│  │  ✓ | jump     | time:   7.252 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   9.83 KiB
+│  │  ✓ | adnlp    | time:  10.631 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   2.71 MiB
+│  │  ✓ | exa      | time:   5.387 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:  58.31 KiB
 │  │
 │  │  N = 500
-│  │  ✓ | jump     | time:  15.529 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:  10.09 KiB
-│  │  ✓ | adnlp    | time:  26.158 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   6.74 MiB
-│  │  ✓ | exa      | time:  10.418 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU: 107.38 KiB
+│  │  ✓ | jump     | time:  15.633 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:  10.09 KiB
+│  │  ✓ | adnlp    | time:  27.627 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   6.74 MiB
+│  │  ✓ | exa      | time:  10.741 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU: 107.38 KiB
 │  │
 │  │  N = 1000
-│  │  ✓ | jump     | time:  27.000 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  10.09 KiB
-│  │  ✓ | adnlp    | time:  47.204 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  13.44 MiB
-│  │  ✓ | exa      | time:  18.508 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU: 189.56 KiB
+│  │  ✓ | jump     | time:  29.918 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  10.09 KiB
+│  │  ✓ | adnlp    | time:  76.907 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  13.44 MiB
+│  │  ✓ | exa      | time:  20.054 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU: 189.56 KiB
 │  │
 │  │  N = 2000
-│  │  ✓ | jump     | time:  59.396 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  10.09 KiB
-│  │  ✓ | adnlp    | time: 113.242 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  26.84 MiB
-│  │  ✓ | exa      | time:  35.763 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU: 353.62 KiB
+│  │  ✓ | jump     | time:  62.636 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  10.09 KiB
+│  │  ✓ | adnlp    | time: 120.053 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  26.84 MiB
+│  │  ✓ | exa      | time:  38.287 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU: 353.62 KiB
 │  │
 │  │  N = 5000
-│  │  ✓ | jump     | time: 176.104 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU:  10.09 KiB
-│  │  ✓ | adnlp    | time: 399.470 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU:  67.06 MiB
-│  │  ✓ | exa      | time:  88.982 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU: 845.81 KiB
+│  │  ✓ | jump     | time: 186.163 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU:  10.09 KiB
+│  │  ✓ | adnlp    | time: 431.479 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU:  67.06 MiB
+│  │  ✓ | exa      | time:  95.306 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU: 845.81 KiB
 │  └─
 │
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 200
-│  │  ✓ | jump     | time:   8.369 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   4.64 MiB
-│  │  ✓ | adnlp    | time:  10.894 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   3.86 MiB
-│  │  ✓ | exa      | time:   4.291 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   1.65 MiB
+│  │  ✓ | jump     | time:   8.788 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   4.64 MiB
+│  │  ✓ | adnlp    | time:   9.385 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   3.86 MiB
+│  │  ✓ | exa      | time:   4.507 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   1.65 MiB
 │  │
 │  │  N = 500
-│  │  ✓ | jump     | time:  19.444 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:  10.71 MiB
-│  │  ✓ | adnlp    | time:  26.853 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   8.98 MiB
-│  │  ✓ | exa      | time:   9.190 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   3.46 MiB
+│  │  ✓ | jump     | time:  20.265 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:  10.71 MiB
+│  │  ✓ | adnlp    | time:  22.849 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   8.98 MiB
+│  │  ✓ | exa      | time:   9.620 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   3.46 MiB
 │  │
 │  │  N = 1000
-│  │  ✓ | jump     | time:  38.494 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  22.21 MiB
-│  │  ✓ | adnlp    | time:  63.265 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  17.52 MiB
-│  │  ✓ | exa      | time:  16.776 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:   6.47 MiB
+│  │  ✓ | jump     | time:  41.132 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  22.21 MiB
+│  │  ✓ | adnlp    | time:  68.416 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  17.52 MiB
+│  │  ✓ | exa      | time:  17.683 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:   6.47 MiB
 │  │
 │  │  N = 2000
-│  │  ✓ | jump     | time: 105.447 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  42.46 MiB
-│  │  ✓ | adnlp    | time: 147.764 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  34.59 MiB
-│  │  ✓ | exa      | time:  60.869 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  12.50 MiB
+│  │  ✓ | jump     | time: 107.430 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  42.46 MiB
+│  │  ✓ | adnlp    | time: 158.824 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  34.59 MiB
+│  │  ✓ | exa      | time:  63.119 ms | iters: 4     | obj: 1.228581e+03  (min) | CPU:  12.50 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | jump     | time: 295.378 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU: 108.22 MiB
-│  │  ✓ | adnlp    | time: 414.156 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU:  85.82 MiB
-│  │  ✓ | exa      | time: 157.105 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU:  30.57 MiB
+│  │  ✓ | jump     | time: 306.700 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU: 108.22 MiB
+│  │  ✓ | adnlp    | time: 454.787 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU:  85.82 MiB
+│  │  ✓ | exa      | time: 162.698 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU:  30.57 MiB
 │  └─
 └─</code></pre><h2 id="Moonshot-GPU"><a class="docs-heading-anchor" href="#Moonshot-GPU">Moonshot GPU</a><a id="Moonshot-GPU-1"></a><a class="docs-heading-anchor-permalink" href="#Moonshot-GPU" title="Permalink"></a></h2><p>Results on self-hosted GPU hardware.</p><h3 id="Configuration-3"><a class="docs-heading-anchor" href="#Configuration-3">⚙️ Configuration</a><a class="docs-heading-anchor-permalink" href="#Configuration-3" title="Permalink"></a></h3><div class="benchmark-config" style="margin-bottom: 0em;"><div class="markdown"><ul>
 <li><p><strong>Problems:</strong> beam, chain, double_oscillator, electric_vehicle, glider, insurance, jackson, robbins, robot, rocket, space_shuttle, steering, vanderpol</p>
@@ -864,7 +927,7 @@ Environment:
 <li><p><strong>Limits:</strong> 1000 iterations max, 1000.0s wall time</p>
 </li>
 </ul>
-</div></div><h3 id="Environment-3"><a class="docs-heading-anchor" href="#Environment-3">🖥️ Environment</a><a class="docs-heading-anchor-permalink" href="#Environment-3" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2025-11-15 20:32:37 UTC
+</div></div><h3 id="Environment-3"><a class="docs-heading-anchor" href="#Environment-3">🖥️ Environment</a><a class="docs-heading-anchor-permalink" href="#Environment-3" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2025-11-17 10:15:44 UTC
 🔧 Julia version : 1.11.7
 💻 OS            : Linux
 🖥️ Machine       : moonshot</code></pre><div class="markdown"><p>You can download the exact environment used for this benchmark:</p>
@@ -972,7 +1035,7 @@ Environment:
   <span class="sgr90">[096a3bc2] </span>GPUToolbox v1.0.0
   <span class="sgr90">[28b8d3ca] </span>GR v0.73.18
   <span class="sgr90">[42e2da0e] </span>Grisu v1.0.2
-  <span class="sgr90">[34c5aeac] </span>HSL v0.5.1
+  <span class="sgr90">[34c5aeac] </span>HSL v0.5.2
   <span class="sgr90">[cd3eb016] </span>HTTP v1.10.19
   <span class="sgr90">[076d061b] </span>HashArrayMappedTries v0.2.0
   <span class="sgr90">[842dd82b] </span>InlineStrings v1.4.5
@@ -1217,26 +1280,54 @@ Environment:
   <span class="sgr90">[8e850b90] </span>libblastrampoline_jll v5.11.0+0
   <span class="sgr90">[8e850ede] </span>nghttp2_jll v1.59.0+0
   <span class="sgr90">[3f19e933] </span>p7zip_jll v17.4.0+2
-<span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr32">⌃</span> and <span class="sgr33">⌅</span> have new versions available. Those with <span class="sgr32">⌃</span> may be upgradable, but those with <span class="sgr33">⌅</span> are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><h3 id="Time-vs-Grid-Size-(Moonshot-GPU)"><a class="docs-heading-anchor" href="#Time-vs-Grid-Size-(Moonshot-GPU)">Time vs Grid Size (Moonshot GPU)</a><a id="Time-vs-Grid-Size-(Moonshot-GPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Time-vs-Grid-Size-(Moonshot-GPU)" title="Permalink"></a></h3><img src="electric_vehicle-c32578f4.svg" alt="Example block output"/><img src="electric_vehicle-7491e4eb.svg" alt="Example block output"/><h3 id="Log-(Moonshot-GPU)"><a class="docs-heading-anchor" href="#Log-(Moonshot-GPU)">Log (Moonshot GPU)</a><a id="Log-(Moonshot-GPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Log-(Moonshot-GPU)" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
+<span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr32">⌃</span> and <span class="sgr33">⌅</span> have new versions available. Those with <span class="sgr32">⌃</span> may be upgradable, but those with <span class="sgr33">⌅</span> are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><h3 id="Time-vs-Grid-Size-(Moonshot-GPU)"><a class="docs-heading-anchor" href="#Time-vs-Grid-Size-(Moonshot-GPU)">Time vs Grid Size (Moonshot GPU)</a><a id="Time-vs-Grid-Size-(Moonshot-GPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Time-vs-Grid-Size-(Moonshot-GPU)" title="Permalink"></a></h3><img src="electric_vehicle-2137760f.svg" alt="Example block output"/><img src="electric_vehicle-1e1f096f.svg" alt="Example block output"/><h3 id="Solution:-N-1000-(Moonshot-GPU)"><a class="docs-heading-anchor" href="#Solution:-N-1000-(Moonshot-GPU)">Solution: N = 1000 (Moonshot GPU)</a><a id="Solution:-N-1000-(Moonshot-GPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Solution:-N-1000-(Moonshot-GPU)" title="Permalink"></a></h3><a href="../../assets/benchmarks/core-moonshot-gpu/figures/electric_vehicle_N1000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-gpu/figures/electric_vehicle_N1000.png"
+  />
+</a><h3 id="Solution:-N-5000-(Moonshot-GPU)"><a class="docs-heading-anchor" href="#Solution:-N-5000-(Moonshot-GPU)">Solution: N = 5000 (Moonshot GPU)</a><a id="Solution:-N-5000-(Moonshot-GPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Solution:-N-5000-(Moonshot-GPU)" title="Permalink"></a></h3><a href="../../assets/benchmarks/core-moonshot-gpu/figures/electric_vehicle_N5000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-gpu/figures/electric_vehicle_N5000.png"
+  />
+</a><h3 id="Solution:-N-10000-(Moonshot-GPU)"><a class="docs-heading-anchor" href="#Solution:-N-10000-(Moonshot-GPU)">Solution: N = 10000 (Moonshot GPU)</a><a id="Solution:-N-10000-(Moonshot-GPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Solution:-N-10000-(Moonshot-GPU)" title="Permalink"></a></h3><a href="../../assets/benchmarks/core-moonshot-gpu/figures/electric_vehicle_N10000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-gpu/figures/electric_vehicle_N10000.png"
+  />
+</a><h3 id="Solution:-N-20000-(Moonshot-GPU)"><a class="docs-heading-anchor" href="#Solution:-N-20000-(Moonshot-GPU)">Solution: N = 20000 (Moonshot GPU)</a><a id="Solution:-N-20000-(Moonshot-GPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Solution:-N-20000-(Moonshot-GPU)" title="Permalink"></a></h3><a href="../../assets/benchmarks/core-moonshot-gpu/figures/electric_vehicle_N20000.pdf">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="../../assets/benchmarks/core-moonshot-gpu/figures/electric_vehicle_N20000.png"
+  />
+</a><h3 id="Log-(Moonshot-GPU)"><a class="docs-heading-anchor" href="#Log-(Moonshot-GPU)">Log (Moonshot GPU)</a><a id="Log-(Moonshot-GPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Log-(Moonshot-GPU)" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
 
 ┌─ Problem: electric_vehicle
 │
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  14.222 ms | iters: 3     | obj: 1.228585e+03  (min) | CPU:   6.35 MiB
-│  │  ✓ | exa_gpu  | time:  83.289 ms | iters: 11    | obj: 1.227994e+03  (min) | CPU:  5.932 MiB | GPU: 17.560 MiB
+│  │  ✓ | exa      | time:  14.244 ms | iters: 3     | obj: 1.228585e+03  (min) | CPU:   6.35 MiB
+│  │  ✓ | exa_gpu  | time:  73.560 ms | iters: 11    | obj: 1.227994e+03  (min) | CPU:  5.932 MiB | GPU: 17.560 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 136.052 ms | iters: 3     | obj: 1.228581e+03  (min) | CPU:  29.99 MiB
-│  │  ✓ | exa_gpu  | time: 101.321 ms | iters: 12    | obj: 1.225635e+03  (min) | CPU: 10.411 MiB | GPU: 88.029 MiB
+│  │  ✓ | exa      | time: 134.040 ms | iters: 3     | obj: 1.228581e+03  (min) | CPU:  29.99 MiB
+│  │  ✓ | exa_gpu  | time:  92.029 ms | iters: 12    | obj: 1.225635e+03  (min) | CPU: 10.411 MiB | GPU: 88.029 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time: 297.276 ms | iters: 3     | obj: 1.228580e+03  (min) | CPU:  59.53 MiB
-│  │  ✓ | exa_gpu  | time: 118.448 ms | iters: 12    | obj: 1.222695e+03  (min) | CPU: 15.469 MiB | GPU: 176.031 MiB
+│  │  ✓ | exa      | time: 293.861 ms | iters: 3     | obj: 1.228580e+03  (min) | CPU:  59.53 MiB
+│  │  ✓ | exa_gpu  | time: 112.645 ms | iters: 12    | obj: 1.222695e+03  (min) | CPU: 15.530 MiB | GPU: 176.041 MiB
 │  │
 │  │  N = 20000
-│  │  ✓ | exa      | time: 617.898 ms | iters: 3     | obj: 1.228580e+03  (min) | CPU: 118.61 MiB
-│  │  ✓ | exa_gpu  | time: 155.649 ms | iters: 12    | obj: 1.216825e+03  (min) | CPU: 25.722 MiB | GPU: 352.017 MiB
+│  │  ✓ | exa      | time: 653.924 ms | iters: 3     | obj: 1.228580e+03  (min) | CPU: 118.61 MiB
+│  │  ✓ | exa_gpu  | time: 142.114 ms | iters: 12    | obj: 1.216825e+03  (min) | CPU: 25.722 MiB | GPU: 352.017 MiB
 │  └─
-└─</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="double_oscillator.html">« double_oscillator</a><a class="docs-footer-nextpage" href="glider.html">glider »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.0 on <span class="colophon-date" title="Sunday 16 November 2025 22:56">Sunday 16 November 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+└─</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="double_oscillator.html">« double_oscillator</a><a class="docs-footer-nextpage" href="glider.html">glider »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.0 on <span class="colophon-date" title="Monday 17 November 2025 10:21">Monday 17 November 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
