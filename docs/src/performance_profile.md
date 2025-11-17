@@ -154,6 +154,68 @@ This definition has important consequences:
 
 ---
 
+### Implementation overview
+
+In the implementation, CTBenchmarks.jl separates the *definition* of a
+performance profile from its *computation* and *visualization*.
+
+- `ProfileCriterion{M}` describes the metric:
+  - a human-readable `name`,
+  - a function `row::DataFrameRow -> M` extracting the metric value from each
+    benchmark row,
+  - a comparison `better(a::M, b::M)` indicating when `a` is strictly better
+    than `b` (e.g., `a <= b` for a time or iteration count).
+- `PerformanceProfileConfig{M}` describes how to build a profile from a table of
+  benchmark results:
+  - `instance_cols`: columns that define an **instance** (in this
+    documentation: `[:problem, :grid_size]`),
+  - `solver_cols`: columns that define a **solver combination** (here:
+    `[:model, :solver]`),
+  - `criterion`: the `ProfileCriterion{M}` to use,
+  - `is_success`: predicate selecting **successful runs**,
+  - `row_filter`: additional filtering (e.g., by hardware or scenario),
+  - `aggregate`: how to aggregate multiple runs of the same
+    (instance, solver combination) into a single metric value.
+- `PerformanceProfile{M}` is an immutable structure that stores:
+  - the benchmark identifier,
+  - all instances and successful runs with their performance ratios,
+  - the list of solver combinations and the Dolan–Moré ratio bounds,
+  - the `PerformanceProfileConfig{M}` that was used to construct it.
+
+The main profiles used in this documentation are defined by two configurations:
+
+- **CPU-time profile** (default time-based profile)
+  - instances: `(problem, grid_size)`,
+  - solver combinations: `(model, solver)`,
+  - criterion: *CPU time*, using the `benchmark["time"]` field,
+  - successful runs: those with `success == true` and a valid benchmark object,
+  - aggregation: mean CPU time over repeated runs of the same
+    (instance, solver combination).
+
+- **Iterations profile** (iteration-based profile)
+  - instances: `(problem, grid_size)`,
+  - solver combinations: `(model, solver)`,
+  - criterion: *Iterations*, using the `iterations` field recorded in
+    benchmark results,
+  - successful runs: those with `success == true` and a valid, non-missing
+    `iterations` count,
+  - aggregation: mean number of iterations over repeated runs of the same
+    (instance, solver combination).
+
+The corresponding Julia functions are:
+
+- `compute_profile_default_cpu(bench_id, src_dir)` and
+  `compute_profile_default_iter(bench_id, src_dir)`, which build
+  `PerformanceProfile{Float64}` objects using the respective configurations,
+- `_plot_profile_default_cpu(bench_id, src_dir)` and
+  `_plot_profile_default_iter(bench_id, src_dir)`, which call
+  `plot_performance_profile` to generate the figures,
+- `_analyze_profile_default_cpu(bench_id, src_dir)` and
+  `_analyze_profile_default_iter(bench_id, src_dir)`, which call
+  `analyze_performance_profile` to produce the textual summaries.
+
+---
+
 ## Optimal Control and Discretization
 
 ### What are Optimal Control Problems?
@@ -432,13 +494,47 @@ When analyzing performance profiles in CTBenchmarks.jl:
 
 1. **Robustness**: Does the curve reach 100%? If not, which problems failed?
 
-2. **Efficiency**: How high is the curve at small $\tau$ (e.g., $\tau = 1, 2, 4$)?
+- **Dataset overview**
+  - *Problems*: number of distinct optimal control problems.
+  - *Instances*: $N = \#\{(problem, grid\_size)\}$.
+  - *Solver combos*: $S = \#\{(model, solver)\}$.
 
-3. **Consistency**: Is the curve smooth or does it have large jumps?
+- **Profile configuration**
+  - Printed directly from the stored `PerformanceProfileConfig{M}`:
+    - instance definition (columns used to define an instance),
+    - solver-combo definition (columns used to define a solver combination),
+    - name of the criterion (here: CPU time in seconds).
 
-4. **Comparison**: Which solver-model combination dominates for your use case?
-   - If you need to solve 90% of problems efficiently, look at small $\tau$
-   - If you need to solve all problems, look at the plateau
+- **Successful runs**
+  - A **run** is a pair (instance, solver combination).
+  - `Successful runs` reports
+    $\#\{(p,s) : \text{run } (p,s) \text{ succeeded}\} / (N \times S)$.
+  - This is the fraction of the full instance–solver grid for which we have a successful metric value.
+
+- **Successful / unsuccessful instances**
+  - An **instance** is called *successful* if at least one solver combination succeeded on it.
+  - `Successful instances` reports
+    $\#\{p : \exists s, \text{run } (p,s) \text{ succeeded}\} / N$.
+  - `Unsuccessful instances` are those for which **no** solver combination succeeded; they are listed explicitly.
+
+- **Robustness (per solver combination)**
+  - For each solver combination $s$, robustness is
+    $\#\{p : \text{run } (p,s) \text{ succeeded}\} / N$.
+  - This is the percentage of instances that each solver combination manages to solve at least once.
+
+- **Efficiency (per solver combination)**
+  - For each solver combination $s$, efficiency is
+    $\#\{p : r_{p,s} = 1\} / N$, i.e., the proportion of instances where this solver combination achieves the **best metric** (ratio $r_{p,s} = 1$).
+  - This corresponds to the height of its performance-profile curve at $\tau = 1$.
+
+- **Most robust / most efficient**
+  - The analysis identifies the solver combination(s) with the highest robustness and the highest efficiency and reports ties explicitly.
+
+Together with the performance-profile plot, this textual analysis helps to separate clearly:
+
+- how often each solver combination **succeeds** (robustness),
+- how often it is **best** (efficiency),
+- and how many instances are intrinsically difficult (unsuccessful for all combinations).
 
 ---
 
