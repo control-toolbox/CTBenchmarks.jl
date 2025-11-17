@@ -1,0 +1,5 @@
+[files]
+# Ignore generated plot files
+extend-exclude = [
+  "docs/src/assets/plots/*",
+]
