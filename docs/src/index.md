@@ -133,7 +133,7 @@ CTBenchmarks includes 14 optimal control problems from [OptimalControlProblems.j
 **Supported Solvers:**
 
 - `:ipopt` - Interior Point Optimizer
-- `:madnlp` - Matrix-free Augmented Lagrangian NLP solver
+- `:madnlp` - filter linesearch Interior Point Optimizer
 
 **Supported Models:**
 

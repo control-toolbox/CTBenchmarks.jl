@@ -27,6 +27,16 @@ FUNCTION = _plot_performance_profiles
 ARGS = core-ubuntu-latest
 -->
 
+<!-- INCLUDE_ANALYSIS:
+FUNCTION = _analyze_performance_profiles
+ARGS = core-ubuntu-latest
+-->
+
+<!-- INCLUDE_ANALYSIS:
+FUNCTION = _print_benchmark_table_results
+ARGS = core-ubuntu-latest
+-->
+
 ```@example BENCH
 _print_benchmark_log("core-ubuntu-latest") # hide
 ```
@@ -50,6 +60,16 @@ ENV_NAME = BENCH
 
 <!-- INCLUDE_FIGURE:
 FUNCTION = _plot_performance_profiles
+ARGS = core-moonshot-cpu
+-->
+
+<!-- INCLUDE_ANALYSIS:
+FUNCTION = _analyze_performance_profiles
+ARGS = core-moonshot-cpu
+-->
+
+<!-- INCLUDE_ANALYSIS:
+FUNCTION = _print_benchmark_table_results
 ARGS = core-moonshot-cpu
 -->
 

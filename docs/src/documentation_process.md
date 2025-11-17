@@ -1,4 +1,4 @@
-# Documentation Generation Process {#documentation-process}
+# [Documentation Generation Process](@id documentation-process)
 
 This page explains how the CTBenchmarks.jl documentation is generated and how
 benchmark results are turned into rich documentation pages with figures,

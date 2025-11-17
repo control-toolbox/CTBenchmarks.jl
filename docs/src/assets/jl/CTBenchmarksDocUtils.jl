@@ -65,6 +65,9 @@ include(joinpath(@__DIR__, "modules", "PrintLogResults.jl"))
 include(joinpath(@__DIR__, "modules", "PlotPerformanceProfile.jl"))
 include(joinpath(@__DIR__, "modules", "PlotTimeVsGridSize.jl"))
 include(joinpath(@__DIR__, "modules", "FigureGeneration.jl"))
+include(joinpath(@__DIR__, "modules", "PrintBenchmarkResults.jl"))
+include(joinpath(@__DIR__, "modules", "AnalyzePerformanceProfile.jl"))
+include(joinpath(@__DIR__, "modules", "AnalysisGeneration.jl"))
 include(joinpath(@__DIR__, "modules", "TemplateProcessor.jl"))
 include(joinpath(@__DIR__, "modules", "TemplateGenerator.jl"))
 include(joinpath(@__DIR__, "modules", "DocumenterReference.jl"))
@@ -82,6 +85,15 @@ const SRC_DIR = normpath(joinpath(@__DIR__, "..", ".."))
 # ═══════════════════════════════════════════════════════════════════════════════
 # Wrapper Functions (no src_dir parameter needed in templates)
 # ═══════════════════════════════════════════════════════════════════════════════
+
+# Analysis functions
+function _analyze_performance_profiles(bench_id::AbstractString)
+    return _analyze_performance_profiles(bench_id, SRC_DIR)
+end
+
+function _print_benchmark_table_results(bench_id::AbstractString; problems::Union{Nothing, Vector{<:AbstractString}}=nothing)
+    return _print_benchmark_table_results(bench_id, SRC_DIR; problems=problems)
+end
 
 # Plotting functions
 function _plot_performance_profiles(bench_id::AbstractString)
@@ -138,6 +150,10 @@ export with_processed_template_problems
 export _plot_performance_profiles
 export _plot_time_vs_grid_size
 export _plot_time_vs_grid_size_bar
+
+# Analysis functions (used by INCLUDE_ANALYSIS blocks)
+export _analyze_performance_profiles
+export _print_benchmark_table_results
 
 # Environment display functions (used in templates)
 export _print_config

@@ -154,7 +154,7 @@ This definition has important consequences:
 
 ---
 
-## Optimal Control Problems and Discretization
+## Optimal Control and Discretization
 
 ### What are Optimal Control Problems?
 
