@@ -196,7 +196,7 @@ function generate_template_problem(
     ```"""
 
     TABLE = """
-    <!-- INCLUDE_ANALYSIS:
+    <!-- INCLUDE_TEXT:
     FUNCTION = _print_benchmark_table_results
     ARGS = $bench_id, $problem_name
     -->

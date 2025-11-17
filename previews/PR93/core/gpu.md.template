@@ -27,7 +27,7 @@ FUNCTION = _plot_profile_default_cpu
 ARGS = core-moonshot-gpu
 -->
 
-<!-- INCLUDE_ANALYSIS:
+<!-- INCLUDE_TEXT:
 FUNCTION = _analyze_profile_default_cpu
 ARGS = core-moonshot-gpu
 -->
@@ -39,18 +39,26 @@ FUNCTION = _plot_profile_default_iter
 ARGS = core-moonshot-gpu
 -->
 
-<!-- INCLUDE_ANALYSIS:
+<!-- INCLUDE_TEXT:
 FUNCTION = _analyze_profile_default_iter
 ARGS = core-moonshot-gpu
 -->
 
 ### 📊 Tables of Results
 
-<!-- INCLUDE_ANALYSIS:
+<!-- INCLUDE_TEXT:
 FUNCTION = _print_benchmark_table_results
 ARGS = core-moonshot-gpu
 -->
 
+```@raw html
+<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Log</summary>
+```
+
 ```@example BENCH
 _print_benchmark_log("core-moonshot-gpu") # hide
+```
+
+```@raw html
+</details>
 ```

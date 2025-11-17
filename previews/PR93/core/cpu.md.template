@@ -27,7 +27,7 @@ FUNCTION = _plot_profile_default_cpu
 ARGS = core-ubuntu-latest
 -->
 
-<!-- INCLUDE_ANALYSIS:
+<!-- INCLUDE_TEXT:
 FUNCTION = _analyze_profile_default_cpu
 ARGS = core-ubuntu-latest
 -->
@@ -39,20 +39,28 @@ FUNCTION = _plot_profile_default_iter
 ARGS = core-ubuntu-latest
 -->
 
-<!-- INCLUDE_ANALYSIS:
+<!-- INCLUDE_TEXT:
 FUNCTION = _analyze_profile_default_iter
 ARGS = core-ubuntu-latest
 -->
 
 ### 📊 Tables of Results
 
-<!-- INCLUDE_ANALYSIS:
+<!-- INCLUDE_TEXT:
 FUNCTION = _print_benchmark_table_results
 ARGS = core-ubuntu-latest
 -->
 
+```@raw html
+<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Log</summary>
+```
+
 ```@example BENCH
 _print_benchmark_log("core-ubuntu-latest") # hide
+```
+
+```@raw html
+</details>
 ```
 
 ## Moonshot
@@ -77,7 +85,7 @@ FUNCTION = _plot_profile_default_cpu
 ARGS = core-moonshot-cpu
 -->
 
-<!-- INCLUDE_ANALYSIS:
+<!-- INCLUDE_TEXT:
 FUNCTION = _analyze_profile_default_cpu
 ARGS = core-moonshot-cpu
 -->
@@ -89,18 +97,26 @@ FUNCTION = _plot_profile_default_iter
 ARGS = core-moonshot-cpu
 -->
 
-<!-- INCLUDE_ANALYSIS:
+<!-- INCLUDE_TEXT:
 FUNCTION = _analyze_profile_default_iter
 ARGS = core-moonshot-cpu
 -->
 
 ### 📊 Tables of Results
 
-<!-- INCLUDE_ANALYSIS:
+<!-- INCLUDE_TEXT:
 FUNCTION = _print_benchmark_table_results
 ARGS = core-moonshot-cpu
 -->
 
+```@raw html
+<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Log</summary>
+```
+
 ```@example BENCH
 _print_benchmark_log("core-moonshot-cpu") # hide
+```
+
+```@raw html
+</details>
 ```
