@@ -1,5 +1,9 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Plot Time vs Grid Size Module
+# ═══════════════════════════════════════════════════════════════════════════════
+
 """
-    _plot_time_vs_grid_size(problem, bench_id)
+    _plot_time_vs_grid_size(problem, bench_id, src_dir)
 
 Plot solve time versus grid size for a given problem and benchmark.
 
@@ -9,13 +13,14 @@ plot the mean solve time per grid size for each combination.
 # Arguments
 - `problem::AbstractString`: Name of the problem to filter.
 - `bench_id`: Benchmark identifier used to locate the benchmark JSON file.
+- `src_dir`: Path to docs/src directory
 
 # Returns
 - `Plots.Plot`: Line plot of solve time vs grid size. Returns an empty plot if
   no data is available.
 """
-function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
-    raw = _get_bench_data(bench_id)
+function _plot_time_vs_grid_size(problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString)
+    raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing
         println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
         return plot()
@@ -82,12 +87,12 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id)
               marker = marker, markersize = 4, markerstrokewidth = 0)
     end
 
-    println("✅ Time vs grid size plot generated for problem: $problem and bench_id: $bench_id")
+    @info "  ✅ Time vs grid size plot generated for problem: $problem and bench_id: $bench_id"
     return plt
 end
 
 """
-    _plot_time_vs_grid_size_bar(problem, bench_id)
+    _plot_time_vs_grid_size_bar(problem, bench_id, src_dir)
 
 Plot solve time versus grid size as grouped bars for each model–solver
 combination.
@@ -98,13 +103,14 @@ displays the result as a grouped bar chart.
 # Arguments
 - `problem::AbstractString`: Name of the problem to filter.
 - `bench_id`: Benchmark identifier used to locate the benchmark JSON file.
+- `src_dir`: Path to docs/src directory
 
 # Returns
 - `Plots.Plot`: Grouped bar plot of solve time vs grid size. Returns an empty
   plot if no data is available.
 """
-function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
-    raw = _get_bench_data(bench_id)
+function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString)
+    raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing
         println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
         return plot()
@@ -186,6 +192,6 @@ function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id)
         )
     end
 
-    println("✅ Time vs grid size bar plot generated for problem: $problem and bench_id: $bench_id")
+    @info "  ✅ Time vs grid size bar plot generated for problem: $problem and bench_id: $bench_id"
     return plt
 end

@@ -311,16 +311,16 @@ function plot_solutions(payload::Dict, output_dir::AbstractString)
             plt = plot_solution_comparison(group, problem, grid_size)
             
             # Save as PDF
-            filename = "$(problem)_N$(grid_size).pdf"
-            filepath = joinpath(output_dir, filename)
-            savefig(plt, filepath)
+            pdf_filename = "$(problem)_N$(grid_size).pdf"
+            pdf_filepath = joinpath(output_dir, pdf_filename)
+            savefig(plt, pdf_filepath)
             
-            # Save as PNG
-            filename = "$(problem)_N$(grid_size).png"
-            filepath = joinpath(output_dir, filename)
-            savefig(plt, filepath)
+            # Save as SVG
+            svg_filename = "$(problem)_N$(grid_size).svg"
+            svg_filepath = joinpath(output_dir, svg_filename)
+            savefig(plt, svg_filepath)
 
-            println("    ✓ Saved: $filename")
+            println("    ✓ Saved: $pdf_filename and $svg_filename")
         catch e
             println("    ✗ Error plotting $problem N=$grid_size: $e")
             Base.show_backtrace(stdout, catch_backtrace())

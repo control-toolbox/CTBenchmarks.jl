@@ -1,3 +1,7 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Plot Performance Profile Module
+# ═══════════════════════════════════════════════════════════════════════════════
+
 """
     _plot_performance_profiles(bench_id)
 
@@ -79,8 +83,8 @@ given solver-model combination, its curve `ρ_s(τ)` will plateau strictly below
 curve can reach `1`, clearly indicating that there are problems for which none
 of the tested approaches succeeded.
 """
-function _plot_performance_profiles(bench_id)
-    raw = _get_bench_data(bench_id)
+function _plot_performance_profiles(bench_id::AbstractString, src_dir::AbstractString)
+    raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing
         println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
         return plot()
@@ -263,6 +267,6 @@ function _plot_performance_profiles(bench_id)
     end
 
     plt = performance_profile(df_successful)
-    println("✅ Global performance profile generated.")
+    @info "  ✅ Global performance profile generated."
     return plt
 end

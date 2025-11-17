@@ -27,17 +27,11 @@ for filename in ("Manifest.toml", "Project.toml")
 end
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# Include helper modules
+# Load documentation utilities
 # ═══════════════════════════════════════════════════════════════════════════════
 
-# Template problem generator: creates .md.template files for each problem
-include(joinpath(@__DIR__, "src", "assets", "jl", "generate_template_problem.jl"))
-
-# Template processor: replaces INCLUDE_ENVIRONMENT blocks with environment info
-include(joinpath(@__DIR__, "src", "assets", "jl", "template_processor.jl"))
-
-# API reference generator: creates automatic documentation from docstrings
-include(joinpath(@__DIR__, "src", "assets", "jl", "DocumenterReference.jl"))
+# Load all documentation utilities (templates, plotting, figure generation, etc.)
+include(joinpath(@__DIR__, "src", "assets", "jl", "utils.jl"))
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Repository configuration
@@ -49,7 +43,8 @@ repo_url = "github.com/control-toolbox/CTBenchmarks.jl"
 # Generate and process templates, then build documentation
 # ═══════════════════════════════════════════════════════════════════════════════
 
-with_processed_template_problems(;
+with_processed_template_problems(
+    joinpath(@__DIR__, "src");
     draft=draft,
     exclude_problems_from_draft=exclude_problems_from_draft,
 ) do core_problems

@@ -1,10 +1,15 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Print Environment Configuration Module
+# ═══════════════════════════════════════════════════════════════════════════════
+
 """
-    _downloads_toml(BENCH_ID)
+    _downloads_toml(bench_id, src_dir)
 
 Generate Markdown links for downloading benchmark environment files.
 
 # Arguments
-- `BENCH_ID`: Benchmark identifier string
+- `bench_id`: Benchmark identifier string
+- `src_dir`: Path to docs/src directory
 
 # Returns
 - `Markdown.MD`: Parsed Markdown content with download links for:
@@ -16,10 +21,11 @@ Generate Markdown links for downloading benchmark environment files.
 Creates a formatted Markdown block with links to the benchmark environment files,
 allowing users to reproduce the exact environment and results.
 """
-function _downloads_toml(BENCH_ID)
-    link_manifest = joinpath(@__DIR__, "benchmarks", BENCH_ID, "Manifest.toml")
-    link_project = joinpath(@__DIR__, "benchmarks", BENCH_ID, "Project.toml")
-    link_script = joinpath(@__DIR__, "benchmarks", BENCH_ID, "$BENCH_ID.jl")
+function _downloads_toml(bench_id::AbstractString, src_dir::AbstractString)
+    # Generate relative links from documentation pages to benchmark assets
+    link_manifest = joinpath(src_dir, "assets", "benchmarks", bench_id, "Manifest.toml")
+    link_project = joinpath(src_dir, "assets", "benchmarks", bench_id, "Project.toml")
+    link_script = joinpath(src_dir, "assets", "benchmarks", bench_id, "$bench_id.jl")
     return Markdown.parse("""
     You can download the exact environment used for this benchmark:
     - 📦 [Project.toml]($link_project) - Package dependencies
@@ -31,12 +37,13 @@ function _downloads_toml(BENCH_ID)
 end
 
 """
-    _basic_metadata(bench_id)
+    _basic_metadata(bench_id, src_dir)
 
 Display basic benchmark metadata (timestamp, Julia version, OS, machine).
 
 # Arguments
 - `bench_id`: Benchmark identifier string
+- `src_dir`: Path to docs/src directory
 
 # Details
 Prints formatted metadata including:
@@ -47,8 +54,8 @@ Prints formatted metadata including:
 
 Returns nothing if benchmark data is unavailable.
 """
-function _basic_metadata(bench_id)
-    bench_data = _get_bench_data(bench_id)
+function _basic_metadata(bench_id::AbstractString, src_dir::AbstractString)
+    bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data !== nothing
         meta = get(bench_data, "metadata", Dict())
         for (label, key) in (
@@ -67,19 +74,20 @@ function _basic_metadata(bench_id)
 end
 
 """
-    _bench_data(bench_id)
+    _version_info(bench_id, src_dir)
 
 Display detailed Julia version information from benchmark metadata.
 
 # Arguments
 - `bench_id`: Benchmark identifier string
+- `src_dir`: Path to docs/src directory
 
 # Details
 Prints the complete `versioninfo()` output that was captured during the benchmark run.
 This includes Julia version, platform, and build information.
 """
-function _bench_data(bench_id)
-    bench_data = _get_bench_data(bench_id)
+function _version_info(bench_id::AbstractString, src_dir::AbstractString)
+    bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data !== nothing
         meta = get(bench_data, "metadata", Dict())
         versioninfo_text = get(meta, "versioninfo", "No version info available")
@@ -91,19 +99,20 @@ function _bench_data(bench_id)
 end
 
 """
-    _package_status(bench_id)
+    _package_status(bench_id, src_dir)
 
 Display package status from benchmark metadata.
 
 # Arguments
 - `bench_id`: Benchmark identifier string
+- `src_dir`: Path to docs/src directory
 
 # Details
 Prints the `Pkg.status()` output that was captured during the benchmark run.
 Shows the list of active project dependencies and their versions.
 """
-function _package_status(bench_id)
-    bench_data = _get_bench_data(bench_id)
+function _package_status(bench_id::AbstractString, src_dir::AbstractString)
+    bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data !== nothing
         meta = get(bench_data, "metadata", Dict())
         pkg_status = get(meta, "pkg_status", "No package status available")
@@ -115,20 +124,21 @@ function _package_status(bench_id)
 end
 
 """
-    _complete_manifest(bench_id)
+    _complete_manifest(bench_id, src_dir)
 
 Display complete package manifest from benchmark metadata.
 
 # Arguments
 - `bench_id`: Benchmark identifier string
+- `src_dir`: Path to docs/src directory
 
 # Details
 Prints the complete `Pkg.status(mode=PKGMODE_MANIFEST)` output that was captured
 during the benchmark run. Shows all dependencies including transitive dependencies
 with their exact versions.
 """
-function _complete_manifest(bench_id)
-    bench_data = _get_bench_data(bench_id)
+function _complete_manifest(bench_id::AbstractString, src_dir::AbstractString)
+    bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data !== nothing
         meta = get(bench_data, "metadata", Dict())
         pkg_manifest = get(meta, "pkg_manifest", "No manifest available")
@@ -140,18 +150,19 @@ function _complete_manifest(bench_id)
 end
 
 """
-    _print_config(bench_id)
+    _print_config(bench_id, src_dir)
 
 Render benchmark configuration parameters as Markdown.
 
 # Arguments
 - `bench_id`: Benchmark identifier string
+- `src_dir`: Path to docs/src directory
 
 # Returns
 - `Markdown.MD`: Formatted configuration block
 """
-function _print_config(bench_id)
-    bench_data = _get_bench_data(bench_id)
+function _print_config(bench_id::AbstractString, src_dir::AbstractString)
+    bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data === nothing
         return Markdown.parse("⚠️  No configuration available because the benchmark file is missing.")
     end

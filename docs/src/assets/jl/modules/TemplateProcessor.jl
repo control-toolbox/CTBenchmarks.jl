@@ -1,10 +1,12 @@
-"""
-Template processor for benchmark documentation.
-
-This module provides functions to process template files that include environment
-information blocks. It replaces `<!-- INCLUDE_ENVIRONMENT: ... -->` blocks with
-the content from `environment.md.template`, substituting the specified variables.
-"""
+# ═══════════════════════════════════════════════════════════════════════════════
+# Template Processor Module
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# This module provides functions to process template files that include:
+# - `<!-- INCLUDE_ENVIRONMENT: ... -->` blocks: replaced with environment info
+# - `<!-- INCLUDE_FIGURE: ... -->` blocks: replaced with generated figure HTML
+#
+# ═══════════════════════════════════════════════════════════════════════════════
 
 """
     read_environment_template(templates_dir::String) -> String
@@ -171,20 +173,138 @@ function replace_environment_blocks(content::String, env_template::String)
 end
 
 """
-    process_single_template(input_path::String, output_path::String, env_template::String)
+    replace_figure_blocks(
+        content::String,
+        template_filename::String,
+        figures_output_dir::String,
+        relative_path::String
+    ) -> String
 
-Process a single template file, replacing INCLUDE_ENVIRONMENT blocks and writing the result.
+Replace all INCLUDE_FIGURE blocks with HTML code for clickable PNG→PDF figures.
+
+Generates PNG and PDF files by calling registered plotting functions, then inserts
+HTML with a clickable PNG preview that links to the high-quality PDF.
 
 # Arguments
-- `input_path`: Path to the input .template file
-- `output_path`: Path to the output .md file
-- `env_template`: Environment template content
+- `content::String`: Template content containing INCLUDE_FIGURE blocks
+- `template_filename::String`: Name of the template file (for basename generation)
+- `figures_output_dir::String`: Absolute path where figures will be saved
+- `relative_path::String`: Relative path from the .md file to the figures directory
+
+# Returns
+- `String`: Content with INCLUDE_FIGURE blocks replaced by HTML
+
+# Example
+```julia
+content = replace_figure_blocks(
+    template_content,
+    "cpu.md.template",
+    "/path/to/docs/src/assets/plots",
+    "../assets/plots"
+)
+```
+"""
+function replace_figure_blocks(
+    content::String,
+    template_filename::String,
+    figures_output_dir::String,
+    relative_path::String
+)
+    # Regex to match INCLUDE_FIGURE blocks
+    pattern = r"<!-- INCLUDE_FIGURE:\s*\n(.*?)-->"s
+    block_count = 0
+    
+    result = replace(content, pattern => function(match_str)
+        block_count += 1
+        @info "🖼️  Processing INCLUDE_FIGURE block #$block_count"
+        
+        # Extract the parameter block
+        m = match(pattern, match_str)
+        if m === nothing
+            @warn "  ✗ Failed to parse INCLUDE_FIGURE block"
+            return match_str
+        end
+        
+        param_block = m.captures[1]
+        params = parse_include_params(param_block)
+        
+        # Extract required parameters
+        function_name = get(params, "FUNCTION", nothing)
+        args_str = get(params, "ARGS", "")
+        
+        if function_name === nothing
+            @warn "  ✗ Missing FUNCTION parameter in INCLUDE_FIGURE block"
+            return match_str
+        end
+        
+        # Parse arguments (comma-separated, strip quotes and whitespace)
+        args = if isempty(args_str)
+            String[]
+        else
+            [strip(strip(arg), ['"', '\'']) for arg in split(args_str, ',')]
+        end
+        
+        # Generate figures (SVG for preview, PDF for high-quality download)
+        try
+            svg_file, pdf_file = generate_figure_files(
+                template_filename,
+                function_name,
+                args,
+                figures_output_dir
+            )
+            
+            # Generate HTML with clickable SVG→PDF
+            html = """```@raw html
+<a href="$relative_path/$pdf_file">
+  <img 
+    class="centering" 
+    width="100%" 
+    style="max-width:1400px" 
+    src="$relative_path/$svg_file"
+  />
+</a>
+```"""
+            
+            @info "  ✓ Replaced block #$block_count with figure: $svg_file"
+            return html
+            
+        catch e
+            @error "  ✗ Failed to generate figure" exception = (e, catch_backtrace())
+            return match_str  # Return original block on error
+        end
+    end)
+    
+    @info "🖼️  Replaced $block_count INCLUDE_FIGURE block(s)"
+    return result
+end
+
+"""
+    process_single_template(
+        input_path::String,
+        output_path::String,
+        env_template::String,
+        figures_output_dir::String,
+        figures_relative_path::String
+    )
+
+Process a single template file, replacing INCLUDE_ENVIRONMENT and INCLUDE_FIGURE blocks.
+
+# Arguments
+- `input_path::String`: Path to the input .template file
+- `output_path::String`: Path to the output .md file
+- `env_template::String`: Environment template content
+- `figures_output_dir::String`: Absolute path where figures will be saved
+- `figures_relative_path::String`: Relative path from .md file to figures directory
 
 # Throws
 - `SystemError` if the input file doesn't exist or output cannot be written
 """
 function process_single_template(
-    input_path::String, output_path::String, env_template::String
+    input_path::String,
+    output_path::String,
+    env_template::String,
+    figures_output_dir::String,
+    figures_relative_path::String
 )
     # Read the template file
     if !isfile(input_path)
@@ -193,9 +313,20 @@ function process_single_template(
 
     @info "📖 Reading template file: $input_path"
     content = read(input_path, String)
+    
+    # Extract template filename for figure generation
+    template_filename = basename(input_path)
 
     # Replace all INCLUDE_ENVIRONMENT blocks
     processed_content = replace_environment_blocks(content, env_template)
+    
+    # Replace all INCLUDE_FIGURE blocks
+    processed_content = replace_figure_blocks(
+        processed_content,
+        template_filename,
+        figures_output_dir,
+        figures_relative_path
+    )
 
     # Write the output file
     @info "💾 Writing processed file: $output_path"
@@ -207,7 +338,7 @@ end
 """
     process_templates(template_files::Vector{String}, src_dir::String, templates_dir::String)
 
-Process multiple template files, replacing INCLUDE_ENVIRONMENT blocks with the environment template.
+Process multiple template files, replacing INCLUDE_ENVIRONMENT and INCLUDE_FIGURE blocks.
 
 # Arguments
 - `template_files`: List of template file names (e.g., ["benchmark-core.md"]) to process
@@ -218,7 +349,8 @@ Process multiple template files, replacing INCLUDE_ENVIRONMENT blocks with the e
 For each file in `template_files`:
 1. Reads `<src_dir>/<filename>.template` (e.g., `benchmark-core.md.template`)
 2. Replaces all `<!-- INCLUDE_ENVIRONMENT: ... -->` blocks
-3. Writes the result to `<src_dir>/<filename>` (e.g., `benchmark-core.md`)
+3. Replaces all `<!-- INCLUDE_FIGURE: ... -->` blocks (generates PNG/PDF files)
+4. Writes the result to `<src_dir>/<filename>` (e.g., `benchmark-core.md`)
 
 # Example
 ```julia
@@ -262,6 +394,11 @@ function process_templates(
         env_template = join(env_template_lines[(comment_end + 1):end], '\n')
         @info "  ✓ Removed $comment_end line(s) from template header"
     end
+    
+    # Setup figures directory
+    figures_output_dir = joinpath(src_dir, "assets", "plots")
+    mkpath(figures_output_dir)
+    @info "📁 Figures output directory: $figures_output_dir"
 
     @info "" # Empty line for readability
 
@@ -273,9 +410,27 @@ function process_templates(
 
         input_path = joinpath(src_dir, filename * ".template")
         output_path = joinpath(src_dir, filename)
+        
+        # Determine relative path from output file to figures directory
+        # Most files are in src/core/, so relative path is ../assets/plots
+        # Adjust if needed based on file location
+        output_subdir = dirname(filename)
+        if isempty(output_subdir) || output_subdir == "."
+            figures_relative_path = "assets/plots"
+        else
+            # Count directory levels to go up
+            levels = length(split(output_subdir, '/'))
+            figures_relative_path = join(fill("..", levels), "/") * "/assets/plots"
+        end
 
         try
-            process_single_template(input_path, output_path, env_template)
+            process_single_template(
+                input_path,
+                output_path,
+                env_template,
+                figures_output_dir,
+                figures_relative_path
+            )
         catch e
             @error "❌ Failed to process template: $filename" exception=(
                 e, catch_backtrace()

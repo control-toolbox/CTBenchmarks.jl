@@ -62,10 +62,10 @@ in order to adjust the solver print level after the first iteration.
 """
 const ITERATION = Ref{Int}(0)
 
-include("utils.jl")
-include("print.jl")
-include("run.jl")
-include("plot_solutions.jl")
+include(joinpath(@__DIR__, "utils.jl"))
+include(joinpath(@__DIR__, "print.jl"))
+include(joinpath(@__DIR__, "run.jl"))
+include(joinpath(@__DIR__, "plot_solutions.jl"))
 
 export run, benchmark, plot_solutions
 

@@ -1,11 +1,16 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Print Log Results Module
+# ═══════════════════════════════════════════════════════════════════════════════
+
 """
-    _print_benchmark_log(bench_id; problems=nothing)
+    _print_benchmark_log(bench_id, src_dir; problems=nothing)
 
 Display benchmark results as a formatted log table.
 
 # Arguments
 - `bench_id`: Benchmark identifier string
-- `problems::Union{Nothing, Vector}`: Optional filter to display only specific problems
+- `src_dir`: Path to docs/src directory
+- `problems::Union{Nothing, Vector{<:AbstractString}}`: Optional filter to display only specific problems
 
 # Details
 Prints benchmark results in a hierarchical tree format with:
@@ -17,8 +22,9 @@ Prints benchmark results in a hierarchical tree format with:
 Results are displayed line-by-line with colored formatting for easy readability.
 If `problems` is specified, only results for those problems are shown.
 """
-function _print_benchmark_log(bench_id; problems=nothing)
-    bench_data = _get_bench_data(bench_id)
+function _print_benchmark_log(bench_id::AbstractString, src_dir::AbstractString; 
+    problems::Union{Nothing, Vector{<:AbstractString}}=nothing)
+    bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data === nothing
         println("⚠️  No results to display because the benchmark file is missing.")
     else

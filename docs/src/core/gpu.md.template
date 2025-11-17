@@ -1,10 +1,8 @@
 # Core GPU Benchmark
 
 ```@setup BENCH
+# Load utilities
 include(normpath(joinpath(@__DIR__, "..", "assets", "jl", "utils.jl")))
-
-# Define benchmark ID
-const BENCH_CORE_MOONSHOT_GPU = "core-moonshot-gpu"
 ```
 
 ## Moonshot
@@ -15,16 +13,17 @@ This benchmark suite evaluates optimal control problems on GPU-accelerated hardw
     The linear solver is MUMPS for all experiments.
 
 <!-- INCLUDE_ENVIRONMENT:
-BENCH_ID = BENCH_CORE_MOONSHOT_GPU
+BENCH_ID = "core-moonshot-gpu"
 ENV_NAME = BENCH
 -->
 
 ### 📊 Results
 
-```@example BENCH
-_plot_performance_profiles(BENCH_CORE_MOONSHOT_GPU) # hide
-```
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_performance_profiles
+ARGS = core-moonshot-gpu
+-->
 
 ```@example BENCH
-_print_benchmark_log(BENCH_CORE_MOONSHOT_GPU) # hide
+_print_benchmark_log("core-moonshot-gpu") # hide
 ```

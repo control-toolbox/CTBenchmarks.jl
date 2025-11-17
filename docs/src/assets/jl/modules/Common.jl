@@ -1,3 +1,7 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Common Utilities Module
+# ═══════════════════════════════════════════════════════════════════════════════
+
 """
     _plot_font_settings()
 
@@ -11,23 +15,24 @@ function _plot_font_settings()
 end
 
 """
-    _get_bench_data(bench_id::AbstractString)
+    _get_bench_data(bench_id::AbstractString, src_dir::AbstractString)
 
 Retrieve benchmark data from a JSON file based on the benchmark ID.
 
 # Arguments
 - `bench_id::AbstractString`: Identifier for the benchmark (e.g., "core-ubuntu-latest")
+- `src_dir::AbstractString`: Path to docs/src directory
 
 # Returns
 - `Dict` or `nothing`: Parsed benchmark data dictionary if file exists, `nothing` otherwise
 
 # Details
 Constructs the path to the benchmark JSON file using the benchmark ID and reads it.
-The file is expected to be located at `benchmarks/<bench_id>/<bench_id>.json`.
+The file is expected to be located at `src/assets/benchmarks/<bench_id>/<bench_id>.json`.
 """
-function _get_bench_data(bench_id::AbstractString)
+function _get_bench_data(bench_id::AbstractString, src_dir::AbstractString)
     json_filename = string(bench_id, ".json")
-    path = joinpath(@__DIR__, "..", "benchmarks", bench_id, json_filename)
+    path = joinpath(src_dir, "assets", "benchmarks", bench_id, json_filename)
     return _read_benchmark_json(path)
 end
 
@@ -54,4 +59,3 @@ function _read_benchmark_json(path::AbstractString)
         return JSON.parse(io)
     end
 end
-
