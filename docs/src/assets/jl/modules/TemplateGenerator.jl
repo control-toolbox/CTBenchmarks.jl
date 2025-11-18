@@ -111,7 +111,7 @@ function generate_template_problem(
     # Generate performance plots section via INCLUDE_FIGURE blocks
     # ───────────────────────────────────────────────────────────────────────────
     RESULTS = """
-    ### Time vs Grid Size ($bench_title)
+    ### 📈 Time vs Grid Size ($bench_title)
 
     <!-- INCLUDE_FIGURE:
     FUNCTION = _plot_time_vs_grid_size
@@ -160,7 +160,7 @@ function generate_template_problem(
 
             # Generate Markdown block with clickable PDF link and SVG preview
             md_block = """
-            ### Solution: N = $N ($bench_title)
+            ### 🧭 Solution: N = $N ($bench_title)
 
             ```@raw html
             <a href="../../assets/benchmarks/$bench_id/figures/$base.pdf">
@@ -188,19 +188,27 @@ function generate_template_problem(
     # ───────────────────────────────────────────────────────────────────────────
     # Generate benchmark log section
     # ───────────────────────────────────────────────────────────────────────────
-    LOG = """
-    ### Log ($bench_title)
-
-    ```@example $env_name
-    _print_benchmark_log("$bench_id"; problems=["$problem_name"]) # hide
-    ```"""
-
     TABLE = """
+    ### 📊 Table of Results ($bench_title)
+
     <!-- INCLUDE_TEXT:
     FUNCTION = _print_benchmark_table_results
     ARGS = $bench_id, $problem_name
     -->
     """
+
+    LOG = """
+    ```@raw html
+    <details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Log</summary>
+    ```
+
+    ```@example $env_name
+    _print_benchmark_log("$bench_id"; problems=["$problem_name"]) # hide
+    ```
+
+    ```@raw html
+    </details>
+    ```"""
 
     # ───────────────────────────────────────────────────────────────────────────
     # Assemble all sections in order

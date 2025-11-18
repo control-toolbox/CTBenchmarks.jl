@@ -276,6 +276,8 @@ At a high level, a benchmark documentation page:
 - Uses `INCLUDE_ENVIRONMENT` blocks to display environment and configuration
   information based on the benchmark ID.
 - Uses `INCLUDE_FIGURE` blocks to generate clickable figures (SVG + PDF).
+- Uses `INCLUDE_TEXT` blocks to insert performance-profile summaries or
+  tables when needed.
 - Uses `@example BENCH` blocks with `_print_benchmark_log("<id>")` to show
   detailed results.
 

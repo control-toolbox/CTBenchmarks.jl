@@ -286,8 +286,9 @@ core/...md.template
 
 ### `INCLUDE_TEXT`
 
-`INCLUDE_TEXT` blocks are used to generate textual analysis or other Markdown
-from benchmark results, such as performance-profile summaries or tables.
+`INCLUDE_TEXT` blocks are used to generate textual analysis or other
+Markdown-compatible content from benchmark results, such as
+performance-profile summaries or tables.
 
 For example:
 
@@ -307,9 +308,36 @@ During processing:
   - `_analyze_profile_default_iter`
   - `_print_benchmark_table_results`
 - The text function is called with string arguments and must return a
-  Markdown string (for example, the output of
-  `analyze_performance_profile(pp)` or a benchmark table).
-- The returned Markdown is inlined directly into the generated `.md` file.
+  Markdown-compatible string (for example, the output of
+  `analyze_performance_profile(pp)`, a benchmark table, or a string containing
+  `@raw html` blocks for more advanced layouts).
+- The returned content is inlined directly into the generated `.md` file.
+
+#### Example: Dynamic multi-problem benchmark table
+
+A common usage of `INCLUDE_TEXT` is to render benchmark-result tables via
+`_print_benchmark_table_results`:
+
+```markdown
+<!-- INCLUDE_TEXT:
+FUNCTION = _print_benchmark_table_results
+ARGS = core-ubuntu-latest
+-->
+```
+
+- If the benchmark contains **a single problem**, the function returns a
+  standard Markdown table.
+- If the benchmark contains **multiple problems**, it returns a
+  `@raw html` block containing:
+  - a `<select>` element listing all problems,
+  - one HTML table per problem, each wrapped in a `<div>` and toggled via
+    a small JavaScript snippet,
+  - persistence of the last selected problem using `window.localStorage`
+    with a key derived from the benchmark ID.
+
+This allows long per-problem tables to remain compact and navigable in the
+rendered documentation while being generated from a single `INCLUDE_TEXT`
+block in the template.
 
 ---
 
