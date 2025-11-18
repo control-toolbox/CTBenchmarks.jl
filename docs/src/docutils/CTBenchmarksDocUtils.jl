@@ -71,6 +71,7 @@ include(joinpath(@__DIR__, "modules", "PrintLogResults.jl"))
 include(joinpath(@__DIR__, "modules", "PerformanceProfileCore.jl"))
 include(joinpath(@__DIR__, "modules", "PlotPerformanceProfile.jl"))
 include(joinpath(@__DIR__, "modules", "PlotTimeVsGridSize.jl"))
+include(joinpath(@__DIR__, "modules", "PlotIterationsVsCpuTime.jl"))
 include(joinpath(@__DIR__, "modules", "FigureGeneration.jl"))
 include(joinpath(@__DIR__, "modules", "PrintBenchmarkResults.jl"))
 include(joinpath(@__DIR__, "modules", "AnalyzePerformanceProfile.jl"))
@@ -133,6 +134,10 @@ function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id::Abstract
     return _plot_time_vs_grid_size_bar(problem, bench_id, SRC_DIR)
 end
 
+function _plot_iterations_vs_cpu_time(problem::AbstractString, bench_id::AbstractString)
+    return _plot_iterations_vs_cpu_time(problem, bench_id, SRC_DIR)
+end
+
 # Environment display functions
 function _print_config(bench_id::AbstractString)
     return _print_config(bench_id, SRC_DIR)
@@ -177,6 +182,7 @@ export _plot_profile_default_cpu
 export _plot_profile_default_iter
 export _plot_time_vs_grid_size
 export _plot_time_vs_grid_size_bar
+export _plot_iterations_vs_cpu_time
 
 # Text/analysis functions (used by INCLUDE_TEXT blocks)
 export _analyze_profile_default_cpu

@@ -126,6 +126,13 @@ function generate_template_problem(
     FUNCTION = _plot_time_vs_grid_size_bar
     ARGS = $problem_name, $bench_id
     -->
+
+    ### 🔁 Iterations vs CPU time ($bench_title)
+
+    <!-- INCLUDE_FIGURE:
+    FUNCTION = _plot_iterations_vs_cpu_time
+    ARGS = $problem_name, $bench_id
+    -->
     """
 
     # ───────────────────────────────────────────────────────────────────────────
@@ -435,7 +442,7 @@ function write_core_benchmark_templates(
     # Get all problems from all benchmarks
     problems = get_problems_in_benchmarks(benchmarks, src_dir)
 
-    problems = String["beam"]
+    # problems = String["beam"]
 
     # Generate template file for each problem
     @info "📝 Generating template files for $(length(problems)) problem(s)"

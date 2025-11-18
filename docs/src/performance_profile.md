@@ -68,11 +68,9 @@ In words, $\rho_s(\tau)$ represents **the proportion of problems for which solve
 By definition, $\rho_s(\tau)$ has several important properties:
 
 1. **Range**: $0 \leq \rho_s(\tau) \leq 1$ for all $\tau$
-2. **At $\tau = 1$**: The value $\rho_s(1)$ gives the **percentage of problems where solver $s$ achieved the best performance**
-   - Note: The sum across all solvers may exceed 100% in case of ties
+2. **At $\tau = 1$**: The value $\rho_s(1)$ gives the **percentage of problems where solver $s$ achieved the best performance**. The sum across all solvers may exceed 100% in case of ties.
 3. **Monotonicity**: $\tau \mapsto \rho_s(\tau)$ is a **non-decreasing function**
-4. **Plateau**: For $\tau$ sufficiently large, all solvers should reach a plateau representing **the percentage of problems solved**
-   - If $\rho_s(\tau) < 1$ for all $\tau$, solver $s$ failed on some problems
+4. **Plateau**: For $\tau$ sufficiently large, all solvers should reach a plateau representing **the percentage of problems solved**. If $\rho_s(\tau) < 1$ for all $\tau$, solver $s$ failed on some problems.
 
 ---
 
@@ -84,7 +82,7 @@ In CTBenchmarks.jl, we adapt the classical Dolan–Moré definition to our speci
 
 #### Instances
 
-An **instance** is a pair $(problem, grid\_size)$ appearing in the benchmark results, regardless of whether it was successfully solved by any solver.
+An **instance** is a pair $(\mathrm{problem}, \mathrm{grid\_size})$ appearing in the benchmark results, regardless of whether it was successfully solved by any solver.
 
 For example:
 
@@ -108,7 +106,7 @@ are three distinct solver-model combinations.
 
 ### Performance Metric
 
-For each instance $p = (problem, grid\_size)$ and solver-model $s$:
+For each instance $p = (\mathrm{problem}, \mathrm{grid\_size})$ and solver-model $s$:
 
 1. If the run $(p, s)$ has `success == true` and a valid benchmark object, we extract the **CPU wall time**:
 
@@ -138,7 +136,7 @@ The performance profile of each solver-model combination $s$ is:
 \rho_s(\tau) = \frac{1}{N} \cdot \#\{ \text{instances } p : r_{p,s} \leq \tau \}
 ```
 
-where $N$ is the **total number of distinct $(problem, grid\_size)$ instances** present in the JSON file, **including those where all solvers failed**.
+where $N$ is the **total number of distinct $(\mathrm{problem}, \mathrm{grid\_size})$ instances** present in the JSON file, **including those where all solvers failed**.
 
 ### Treatment of Failures
 
@@ -313,7 +311,7 @@ In CTBenchmarks.jl, we benchmark each optimal control problem at **multiple grid
 - **Scalability**: How does solver performance degrade as $N$ increases?
 - **Accuracy vs. speed trade-offs**: Which solver-model combinations are efficient for coarse/fine grids?
 
-This is why an **instance** is defined as a pair $(problem, grid\_size)$: the same optimal control problem discretized with different $N$ values represents different computational challenges.
+This is why an **instance** is defined as a pair $(\mathrm{problem}, \mathrm{grid\_size})$: the same optimal control problem discretized with different $N$ values represents different computational challenges.
 
 ### Available Optimal Control Problems
 
@@ -387,7 +385,7 @@ In this plot:
   - `(JuMP, Ipopt)` (purple inverted triangles)
   - `(JuMP, MadNLP)` (brown stars)
 
-- **Multiple problem instances**: Each curve represents performance across all $(problem, grid\_size)$ pairs tested
+- **Multiple problem instances**: Each curve represents performance across all $(\mathrm{problem}, \mathrm{grid\_size})$ pairs tested
 
 **Key observations**:
 
@@ -501,8 +499,8 @@ When analyzing performance profiles in CTBenchmarks.jl:
 
 - **Dataset overview**
   - *Problems*: number of distinct optimal control problems.
-  - *Instances*: $N = \#\{(problem, grid\_size)\}$.
-  - *Solver combos*: $S = \#\{(model, solver)\}$.
+  - *Instances*: $N = \#\{(\mathrm{problem}, \mathrm{grid\_size})\}$.
+  - *Solver combos*: $S = \#\{(\mathrm{model}, \mathrm{solver})\}$.
 
 - **Profile configuration**
   - Printed directly from the stored `PerformanceProfileConfig{M}`:

@@ -88,6 +88,7 @@ const FIGURE_FUNCTIONS = Dict{String, Function}(
     "_plot_profile_default_iter" => _plot_profile_default_iter_from_args,
     "_plot_time_vs_grid_size" => _plot_time_vs_grid_size,
     "_plot_time_vs_grid_size_bar" => _plot_time_vs_grid_size_bar,
+    "_plot_iterations_vs_cpu_time" => _plot_iterations_vs_cpu_time,
 )
 
 """
