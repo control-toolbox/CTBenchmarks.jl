@@ -83,6 +83,12 @@ using .DocumenterReference
 
 # Path to docs/src directory (used by all wrapper functions)
 const SRC_DIR = normpath(joinpath(@__DIR__, ".."))
+const DOC_DEBUG = Ref(false)
+
+function set_doc_debug!(flag::Bool)
+    DOC_DEBUG[] = flag
+    return nothing
+end
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Wrapper Functions (no src_dir parameter needed in templates)
@@ -159,6 +165,7 @@ end
 # Template system
 export with_processed_templates
 export with_processed_template_problems
+export set_doc_debug!
 
 # Plotting functions (used in templates)
 export _plot_profile_default_cpu

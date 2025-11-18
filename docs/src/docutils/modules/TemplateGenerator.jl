@@ -375,7 +375,7 @@ function generate_template_problem_from_list(
     # Generate sections for each benchmark where the problem has results
     for (bench_id, bench_title, bench_desc) in benchmarks
         if is_problem_in_benchmark(bench_id, problem_name, src_dir)
-            @info "  ✓ Generating section for problem '$problem_name' in benchmark '$bench_id'"
+            DOC_DEBUG[] && @info "  ✓ Generating section for problem '$problem_name' in benchmark '$bench_id'"
             md = generate_template_problem(problem_name, bench_id, bench_title, bench_desc, env_name, src_dir, assets_href_prefix)
             push!(blocks, md)
         end 
@@ -427,7 +427,7 @@ function write_core_benchmark_templates(
     # Get all problems from all benchmarks
     problems = get_problems_in_benchmarks(benchmarks, src_dir)
 
-    # problems = String[]
+    problems = String["beam"]
 
     # Generate template file for each problem
     @info "📝 Generating template files for $(length(problems)) problem(s)"
@@ -446,7 +446,7 @@ function write_core_benchmark_templates(
         
         # Generate template content
         str = generate_template_problem_from_list(problem_name, benchmarks, title, desc, src_dir, assets_href_prefix; draft=draft_problem)
-        @info "  ✓ Generated template for problem '$problem_name' (draft=$(draft_problem))"
+        DOC_DEBUG[] && @info "  ✓ Generated template for problem '$problem_name' (draft=$(draft_problem))"
         
         # Write to file
         filepath = normpath(joinpath(problems_dir, "$(problem_name).md.template"))
@@ -484,11 +484,12 @@ function with_processed_template_problems(
     draft::Union{Bool,Nothing}=nothing, 
     exclude_problems_from_draft::Vector{Symbol}=Symbol[]
     )
-    @info ""
     @info "═"^70
+    @info "📚 CTBenchmarks documentation build"
     @info "🚀 Starting template problem generation"
     @info "═"^70
     @info "📋 Draft mode: $(isnothing(draft) ? "default" : draft)"
+    @info "📋 Debug mode: $(DOC_DEBUG[])"
     @info "📋 Excluded from draft: $(isempty(exclude_problems_from_draft) ? "none" : join(exclude_problems_from_draft, ", "))"
     
     # Generate all template files
@@ -505,15 +506,24 @@ function with_processed_template_problems(
     finally
         # Cleanup: remove generated .md.template files (guaranteed to run)
         @info "🧹 Cleaning up generated .md.template files"
+        deleted_count = 0
         for filepath in core_files_generated
             if isfile(filepath)
                 rm(filepath)
-                @info "  ✓ Removed: $(basename(filepath))"
+                deleted_count += 1
+                DOC_DEBUG[] && @info "  ✓ Removed: $(basename(filepath))"
             end
         end
+        @info "  ✓ Removed $deleted_count template file(s)"
+
         # Only remove directory if it's empty
+        removed_dir = false
         if isdir(core_problems_dir) && isempty(readdir(core_problems_dir))
             rm(core_problems_dir)
+            removed_dir = true
+            DOC_DEBUG[] && @info "  ✓ Removed empty directory: $(basename(core_problems_dir))"
+        end
+        if removed_dir && !DOC_DEBUG[]
             @info "  ✓ Removed empty directory: $(basename(core_problems_dir))"
         end
         @info "✅ Cleanup complete"

@@ -128,7 +128,7 @@ function call_text_function(function_name::AbstractString, args::Vector{<:Abstra
     end
 
     func = TEXT_FUNCTIONS[function_name]
-    @info "  📝 Calling $function_name($(join(args, ", ")))"
+    DOC_DEBUG[] && @info "  📝 Calling $function_name($(join(args, ", ")))"
 
     return func(args...)
 end

@@ -7,6 +7,7 @@ using CTBenchmarks
 
 # Draft mode: if true, @example blocks in markdown are not executed
 draft = false
+debug = false
 
 # Problems to exclude from draft mode (will still execute their @example blocks)
 exclude_problems_from_draft = Symbol[
@@ -32,6 +33,7 @@ end
 
 # Load all documentation utilities (templates, plotting, figure generation, etc.)
 include(joinpath(@__DIR__, "src", "docutils", "utils.jl"))
+set_doc_debug!(debug)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Repository configuration

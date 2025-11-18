@@ -118,7 +118,7 @@ function call_figure_function(function_name::AbstractString, args::Vector{<:Abst
     
     func = FIGURE_FUNCTIONS[function_name]
     
-    @info "  📞 Calling $function_name($(join(args, ", ")))"
+    DOC_DEBUG[] && @info "  📞 Calling $function_name($(join(args, ", ")))"
     
     # Call function with string arguments
     return func(args...)
@@ -206,7 +206,7 @@ function generate_figure_files(
     mkpath(output_dir)
     
     # Call the plotting function
-    @info "  🎨 Generating figure: $function_name($(join(["\"$arg\"" for arg in args], ", ")))"
+    DOC_DEBUG[] && @info "  🎨 Generating figure: $function_name($(join(["\"$arg\"" for arg in args], ", ")))"
     plt = call_figure_function(function_name, args)
     
     # Define file names
@@ -219,7 +219,7 @@ function generate_figure_files(
     savefig(plt, svg_path)
     savefig(plt, pdf_path)
     
-    @info "  ✓ Saved: $svg_file and $pdf_file"
+    DOC_DEBUG[] && @info "  ✓ Saved: $svg_file and $pdf_file"
     
     # Return just the filenames (not full paths)
     return (svg_file, pdf_file)

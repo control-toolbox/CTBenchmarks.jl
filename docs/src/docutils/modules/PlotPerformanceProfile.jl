@@ -190,7 +190,7 @@ function _plot_profile_default_cpu(bench_id::AbstractString, src_dir::AbstractSt
     end
 
     plt = plot_performance_profile(pp)
-    @info "  ✅ Default CPU performance profile generated."
+    DOC_DEBUG[] && @info "  ✅ Default CPU performance profile generated."
     return plt
 end
 
@@ -213,6 +213,6 @@ function _plot_profile_default_iter(bench_id::AbstractString, src_dir::AbstractS
     end
 
     plt = plot_performance_profile(pp)
-    @info "  ✅ Default iterations performance profile generated."
+    DOC_DEBUG[] && @info "  ✅ Default iterations performance profile generated."
     return plt
 end

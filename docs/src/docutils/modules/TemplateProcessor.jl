@@ -65,7 +65,7 @@ function parse_include_params(param_block::AbstractString)
             key, value = m.captures
             value = strip(value)
             params[key] = value
-            @info "  ✓ Parsed parameter: $key = $value"
+            DOC_DEBUG[] && @info "  ✓ Parsed parameter: $key = $value"
         else
             @warn "  ⚠ Skipping malformed parameter line: '$line'"
         end
@@ -142,7 +142,7 @@ function replace_environment_blocks(content::String, env_template::String)
         content,
         pattern => function (match_str)
             block_count += 1
-            @info "🔄 Processing INCLUDE_ENVIRONMENT block #$block_count"
+            DOC_DEBUG[] && @info "🔄 Processing INCLUDE_ENVIRONMENT block #$block_count"
 
             # Extract the parameter block (group 1)
             m = match(pattern, match_str)
@@ -163,7 +163,7 @@ function replace_environment_blocks(content::String, env_template::String)
 
             # Substitute variables in the template
             substituted = substitute_variables(env_template, params)
-            @info "  ✓ Successfully replaced block #$block_count with $(length(params)) parameter(s)"
+            DOC_DEBUG[] && @info "  ✓ Successfully replaced block #$block_count with $(length(params)) parameter(s)"
 
             return substituted
         end,
@@ -230,7 +230,7 @@ function replace_figure_blocks(
     
     result = replace(content, pattern => function(match_str)
         block_count += 1
-        @info "🖼️  Processing INCLUDE_FIGURE block #$block_count"
+        DOC_DEBUG[] && @info "🖼️  Processing INCLUDE_FIGURE block #$block_count"
         
         # Extract the parameter block
         m = match(pattern, match_str)
@@ -283,11 +283,15 @@ function replace_figure_blocks(
 </a>
 ```"""
             
-            @info "  ✓ Replaced block #$block_count with figure: $svg_file"
+            DOC_DEBUG[] && @info "  ✓ Replaced block #$block_count with figure: $svg_file"
             return html
             
         catch e
-            @error "  ✗ Failed to generate figure" exception = (e, catch_backtrace())
+            if DOC_DEBUG[]
+                @error "  ✗ Failed to generate figure" exception = (e, catch_backtrace())
+            else
+                @error "  ✗ Failed to generate figure: $(e)"
+            end
             return match_str  # Return original block on error
         end
     end)
@@ -320,7 +324,7 @@ function replace_text_blocks(content::String)
 
     result = replace(content, pattern => function(match_str)
         block_count += 1
-        @info "🧮 Processing INCLUDE_TEXT block #$block_count"
+        DOC_DEBUG[] && @info "🧮 Processing INCLUDE_TEXT block #$block_count"
 
         m = match(pattern, match_str)
         if m === nothing
@@ -347,10 +351,14 @@ function replace_text_blocks(content::String)
 
         try
             text_md = call_text_function(function_name, args)
-            @info "  ✓ Replaced INCLUDE_TEXT block #$block_count with generated Markdown"
+            DOC_DEBUG[] && @info "  ✓ Replaced INCLUDE_TEXT block #$block_count with generated Markdown"
             return text_md
         catch e
-            @error "  ✗ Failed to generate analysis" exception=(e, catch_backtrace())
+            if DOC_DEBUG[]
+                @error "  ✗ Failed to generate analysis" exception=(e, catch_backtrace())
+            else
+                @error "  ✗ Failed to generate analysis: $(e)"
+            end
             return match_str
         end
     end)
@@ -528,9 +536,13 @@ function process_templates(
             )
             append!(all_figure_paths, figure_paths)
         catch e
-            @error "❌ Failed to process template: $filename" exception=(
-                e, catch_backtrace()
-            )
+            if DOC_DEBUG[]
+                @error "❌ Failed to process template: $filename" exception=(
+                    e, catch_backtrace()
+                )
+            else
+                @error "❌ Failed to process template: $filename — $(e)"
+            end
             rethrow(e)
         end
 
@@ -654,33 +666,53 @@ function with_processed_templates(
         # Clean up generated .md files and figures (guaranteed to run even on error)
         @info "" # Empty line for readability
         @info "🧹 Cleaning up generated template files..."
-
+        deleted_templates = 0
+        missing_templates = 0
         for filename in template_files
             output_file = joinpath(src_dir, filename)
             if isfile(output_file)
                 rm(output_file)
-                @info "  ✓ Removed: $(basename(output_file))"
+                deleted_templates += 1
+                DOC_DEBUG[] && @info "  ✓ Removed: $(basename(output_file))"
             else
-                @warn "  ⚠ File not found (already removed?): $(basename(output_file))"
+                missing_templates += 1
+                DOC_DEBUG[] && @warn "  ⚠ File not found (already removed?): $(basename(output_file))"
             end
+        end
+        @info "  ✓ Removed $deleted_templates template file(s)"
+        if missing_templates > 0 && !DOC_DEBUG[]
+            @info "  ⚠ Skipped $missing_templates missing template file(s) (already removed?)"
         end
 
         if !isempty(figure_paths)
             @info "" # Empty line for readability
             @info "🧹 Cleaning up generated figure files..."
+            deleted_figs = 0
+            missing_figs = 0
             for fig_path in figure_paths
                 if isfile(fig_path)
                     rm(fig_path)
-                    @info "  ✓ Removed figure: $(basename(fig_path))"
+                    deleted_figs += 1
+                    DOC_DEBUG[] && @info "  ✓ Removed figure: $(basename(fig_path))"
                 else
-                    @warn "  ⚠ Figure file not found (already removed?): $(basename(fig_path))"
+                    missing_figs += 1
+                    DOC_DEBUG[] && @warn "  ⚠ Figure file not found (already removed?): $(basename(fig_path))"
                 end
+            end
+            @info "  ✓ Removed $deleted_figs figure file(s)"
+            if missing_figs > 0 && !DOC_DEBUG[]
+                @info "  ⚠ Skipped $missing_figs missing figure file(s) (already removed?)"
             end
         end
 
         # Only remove directory if it's empty
+        removed_fig_dir = false
         if isdir(figures_output_dir) && isempty(readdir(figures_output_dir))
             rm(figures_output_dir)
+            removed_fig_dir = true
+            DOC_DEBUG[] && @info "  ✓ Removed empty directory: $(basename(figures_output_dir))"
+        end
+        if removed_fig_dir && !DOC_DEBUG[]
             @info "  ✓ Removed empty directory: $(basename(figures_output_dir))"
         end
 

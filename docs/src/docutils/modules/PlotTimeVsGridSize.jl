@@ -87,7 +87,7 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id::AbstractStri
               marker = marker, markersize = 4, markerstrokewidth = 0)
     end
 
-    @info "  ✅ Time vs grid size plot generated for problem: $problem and bench_id: $bench_id"
+    DOC_DEBUG[] && @info "  ✅ Time vs grid size plot generated for problem: $problem and bench_id: $bench_id"
     return plt
 end
 
@@ -216,6 +216,6 @@ function _plot_time_vs_grid_size_bar(
         xlims!(plt, (x_min, x_max))
     end
 
-    @info "  ✅ Time vs grid size bar plot generated for problem: $problem and bench_id: $bench_id"
+    DOC_DEBUG[] && @info "  ✅ Time vs grid size bar plot generated for problem: $problem and bench_id: $bench_id"
     return plt
 end

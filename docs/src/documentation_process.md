@@ -80,6 +80,10 @@ The main steps in `docs/make.jl` are:
   - `draft = false` controls execution of `@example` blocks.
   - `exclude_problems_from_draft` can force specific problem pages to execute
     their examples even in draft mode.
+  - `debug = false` controls the verbosity of logs from documentation
+    utilities: when set to `true`, additional per-block messages and full
+    stacktraces are printed for easier debugging of template and figure
+    generation.
 
 - **Environment files**
   - `Project.toml` and `Manifest.toml` are copied into
