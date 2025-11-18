@@ -88,7 +88,7 @@ function _plot_iterations_vs_cpu_time(problem::AbstractString,
         xlabel = "Iterations",
         ylabel = "CPU time (s)",
         title = "\nIterations vs CPU time — $problem",
-        legend = :topleft,
+        legend = :best,
         grid = true,
         size = (900, 600),
         left_margin = 5mm,
@@ -97,6 +97,7 @@ function _plot_iterations_vs_cpu_time(problem::AbstractString,
         titlefont = title_font,
         xguidefont = label_font,
         yguidefont = label_font,
+        yscale = :log10,
     )
 
     for (idx, c) in enumerate(combos)
