@@ -149,7 +149,7 @@ version = "0.16.2"
 deps = ["BenchmarkTools", "CTBase", "CUDA", "DataFrames", "Dates", "DocStringExtensions", "InteractiveUtils", "Ipopt", "JSON", "JuMP", "MadNLPGPU", "MadNLPMumps", "NLPModelsIpopt", "OptimalControl", "OptimalControlProblems", "Pkg", "Plots", "Printf", "Sockets", "Tables"]
 path = "/home/runner/work/CTBenchmarks.jl/CTBenchmarks.jl"
 uuid = "db1dffaa-5ed3-4583-9a66-b5881c82ef11"
-version = "0.2.3"
+version = "0.3.0"
 
 [[deps.CTDirect]]
 deps = ["CTBase", "CTModels", "DocStringExtensions", "HSL", "MKL", "NLPModels", "SolverCore", "SparseArrays"]
