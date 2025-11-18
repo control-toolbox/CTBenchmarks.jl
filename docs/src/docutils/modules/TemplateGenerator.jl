@@ -210,7 +210,9 @@ function generate_template_problem(
 
     LOG = """
     ```@raw html
-    <details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Log</summary>
+    <div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+    <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
+    <div class="ctdetails-body">
     ```
 
     ```@example $env_name
@@ -218,7 +220,8 @@ function generate_template_problem(
     ```
 
     ```@raw html
-    </details>
+    </div>
+    </div>
     ```"""
 
     # ───────────────────────────────────────────────────────────────────────────
@@ -442,7 +445,7 @@ function write_core_benchmark_templates(
     # Get all problems from all benchmarks
     problems = get_problems_in_benchmarks(benchmarks, src_dir)
 
-    # problems = String["beam"]
+    # problems = String[]
 
     # Generate template file for each problem
     @info "📝 Generating template files for $(length(problems)) problem(s)"
