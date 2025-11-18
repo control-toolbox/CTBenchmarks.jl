@@ -102,7 +102,9 @@ ARGS = core-ubuntu-latest, insurance
 -->
 
 ```@raw html
-<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Log</summary>
+<div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+<div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
+<div class="ctdetails-body">
 ```
 
 ```@example BENCH
@@ -110,7 +112,8 @@ _print_benchmark_log("core-ubuntu-latest"; problems=["insurance"]) # hide
 ```
 
 ```@raw html
-</details>
+</div>
+</div>
 ```
 
 ## Moonshot CPU
@@ -214,7 +217,9 @@ ARGS = core-moonshot-cpu, insurance
 -->
 
 ```@raw html
-<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Log</summary>
+<div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+<div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
+<div class="ctdetails-body">
 ```
 
 ```@example BENCH
@@ -222,7 +227,8 @@ _print_benchmark_log("core-moonshot-cpu"; problems=["insurance"]) # hide
 ```
 
 ```@raw html
-</details>
+</div>
+</div>
 ```
 
 ## Moonshot GPU
@@ -313,7 +319,9 @@ ARGS = core-moonshot-gpu, insurance
 -->
 
 ```@raw html
-<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Log</summary>
+<div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+<div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
+<div class="ctdetails-body">
 ```
 
 ```@example BENCH
@@ -321,5 +329,6 @@ _print_benchmark_log("core-moonshot-gpu"; problems=["insurance"]) # hide
 ```
 
 ```@raw html
-</details>
+</div>
+</div>
 ```

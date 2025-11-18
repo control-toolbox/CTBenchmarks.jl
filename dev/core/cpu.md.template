@@ -62,7 +62,9 @@ ARGS = core-ubuntu-latest
 -->
 
 ```@raw html
-<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Log</summary>
+<div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+  <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
+  <div class="ctdetails-body">
 ```
 
 ```@example BENCH
@@ -70,7 +72,8 @@ _print_benchmark_log("core-ubuntu-latest") # hide
 ```
 
 ```@raw html
-</details>
+  </div>
+</div>
 ```
 
 ## Moonshot
@@ -126,7 +129,9 @@ ARGS = core-moonshot-cpu
 -->
 
 ```@raw html
-<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Log</summary>
+<div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+  <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
+  <div class="ctdetails-body">
 ```
 
 ```@example BENCH
@@ -134,5 +139,6 @@ _print_benchmark_log("core-moonshot-cpu") # hide
 ```
 
 ```@raw html
-</details>
+  </div>
+</div>
 ```
