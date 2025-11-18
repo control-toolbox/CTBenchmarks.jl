@@ -82,11 +82,31 @@ end
 # ───────────────────────────────────────────────────────────────────────────────
 
 """
-    compute_performance_profile(bench_id::AbstractString, src_dir::AbstractString) -> Union{PerformanceProfile, Nothing}
+    build_profile_from_df(
+        df::DataFrame,
+        bench_id::AbstractString,
+        cfg::PerformanceProfileConfig{M};
+        allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing,
+    ) where {M}
 
-Compute performance profile data from benchmark results.
+Build a `PerformanceProfile{M}` from a benchmark results table.
 
-Currently this uses the default CPU time criterion; see `compute_profile_default_cpu`.
+This helper takes a `DataFrame` of benchmark rows, applies the
+`PerformanceProfileConfig{M}` (instance/solver columns, criterion, filters and
+aggregation), and computes Dolan–Moré ratios and solver–model labels.
+
+# Arguments
+- `df::DataFrame`: raw benchmark results loaded from JSON.
+- `bench_id::AbstractString`: benchmark identifier.
+- `cfg::PerformanceProfileConfig{M}`: configuration describing how to extract
+  and aggregate the metric.
+- `allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}`: optional
+  list of `(model, solver)` combinations to keep; `nothing` uses all available
+  combinations.
+
+# Returns
+- `PerformanceProfile{M}` if at least one valid metric is available;
+  `nothing` if no instances or valid metrics are found.
 """
 
 function build_profile_from_df(df::DataFrame,
@@ -138,8 +158,8 @@ function build_profile_from_df(df::DataFrame,
     inst_grouped = groupby(df_metric, cfg.instance_cols)
     function _best_metric(xs)
         best = xs[1]
-        for i in 2:length(xs)
-            best = cfg.criterion.better(xs[i], best) ? xs[i] : best
+        for x in xs[2:end]
+            best = cfg.criterion.better(x, best) ? x : best
         end
         return best
     end
@@ -184,6 +204,20 @@ function build_profile_from_df(df::DataFrame,
     )
 end
 
+"""
+    compute_profile_generic(
+        bench_id::AbstractString,
+        src_dir::AbstractString,
+        cfg::PerformanceProfileConfig{M};
+        allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing,
+    ) where {M}
+
+Generic entry point to compute a `PerformanceProfile{M}` from a benchmark
+identified by `bench_id` using the provided configuration.
+
+This function loads the benchmark JSON file, converts it to a `DataFrame`, and
+delegates to `build_profile_from_df`.
+"""
 function compute_profile_generic(bench_id::AbstractString,
                                  src_dir::AbstractString,
                                  cfg::PerformanceProfileConfig{M};
@@ -204,6 +238,19 @@ function compute_profile_generic(bench_id::AbstractString,
     return build_profile_from_df(df, bench_id, cfg; allowed_combos=allowed_combos)
 end
 
+"""
+    compute_profile_default_cpu(
+        bench_id::AbstractString,
+        src_dir::AbstractString;
+        allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing,
+    ) -> Union{PerformanceProfile{Float64}, Nothing}
+
+Compute a default CPU-time performance profile for a benchmark.
+
+The underlying metric is the CPU time stored in `row.benchmark["time"]`, and
+instances are defined by `(problem, grid_size)` and solver combinations by
+`(model, solver)`.
+"""
 function compute_profile_default_cpu(bench_id::AbstractString,
                                      src_dir::AbstractString;
                                      allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
@@ -233,6 +280,19 @@ function compute_profile_default_cpu(bench_id::AbstractString,
     return compute_profile_generic(bench_id, src_dir, cfg; allowed_combos=allowed_combos)
 end
 
+"""
+    compute_profile_default_iter(
+        bench_id::AbstractString,
+        src_dir::AbstractString;
+        allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing,
+    ) -> Union{PerformanceProfile{Float64}, Nothing}
+
+Compute a default iterations-based performance profile for a benchmark.
+
+The underlying metric is the `iterations` field recorded in the benchmark
+results, using the same instance and solver-combination definitions as the
+CPU-time profile.
+"""
 function compute_profile_default_iter(bench_id::AbstractString,
                                       src_dir::AbstractString;
                                       allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
@@ -259,6 +319,14 @@ function compute_profile_default_iter(bench_id::AbstractString,
     return compute_profile_generic(bench_id, src_dir, cfg; allowed_combos=allowed_combos)
 end
 
+"""
+    compute_performance_profile(bench_id::AbstractString, src_dir::AbstractString)
+
+Convenience wrapper that calls `compute_profile_default_cpu`.
+
+This function is kept for backward compatibility with older templates that
+expect a single default performance profile.
+"""
 function compute_performance_profile(bench_id::AbstractString, src_dir::AbstractString)
     return compute_profile_default_cpu(bench_id, src_dir)
 end

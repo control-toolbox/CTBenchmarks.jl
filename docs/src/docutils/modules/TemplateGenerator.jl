@@ -50,7 +50,7 @@ end
 # ═══════════════════════════════════════════════════════════════════════════════
 
 """
-    generate_template_problem(problem_name, bench_id, bench_title, bench_desc, env_name, src_dir)
+    generate_template_problem(problem_name, bench_id, bench_title, bench_desc, env_name, src_dir, assets_href_prefix)
 
 Generate a Markdown template section for a single benchmark configuration.
 
@@ -58,12 +58,15 @@ Creates a documentation section containing performance plots, solution figures,
 and benchmark logs for a specific problem-benchmark combination.
 
 # Arguments
-- `problem_name::String`: Name of the optimal control problem (e.g., "beam", "robot")
-- `bench_id::String`: Benchmark identifier (e.g., "core-ubuntu-latest")
-- `bench_title::String`: Human-readable benchmark title (e.g., "Ubuntu Latest CPU")
-- `bench_desc::String`: Brief description of the benchmark configuration
-- `env_name::String`: Documenter @example environment name (typically "BENCH")
-- `src_dir::String`: Path to the docs/src directory
+- `problem_name::String`: Name of the optimal control problem (e.g., "beam", "robot").
+- `bench_id::String`: Benchmark identifier (e.g., "core-ubuntu-latest").
+- `bench_title::String`: Human-readable benchmark title (e.g., "Ubuntu Latest CPU").
+- `bench_desc::String`: Brief description of the benchmark configuration.
+- `env_name::String`: Documenter `@example` environment name (typically "BENCH").
+- `src_dir::String`: Path to the `docs/src` directory.
+- `assets_href_prefix::String`: relative href prefix from the generated problem
+  page to the `assets` directory, used when embedding links to benchmark
+  figures in `@raw html` blocks.
 
 # Returns
 - `String`: Markdown template section ready to be written to a .md.template file
@@ -330,12 +333,17 @@ Creates a full Markdown template file that includes sections for each benchmark
 configuration where the problem has results.
 
 # Arguments
-- `problem_name::String`: Problem name (e.g., "beam")
-- `benchmarks::Vector{Tuple{String, String, String}}`: List of (bench_id, bench_title, bench_desc) tuples
-- `title::String`: Page title (e.g., "Core benchmark: beam")
-- `desc::String`: Page description
-- `src_dir::String`: Path to the docs/src directory
-- `draft::Union{Bool,Nothing}`: Draft mode flag for Documenter
+- `problem_name::String`: Problem name (e.g., "beam").
+- `benchmarks::Vector{Tuple{String, String, String}}`: list of
+  `(bench_id, bench_title, bench_desc)` tuples describing each benchmark
+  configuration to include.
+- `title::String`: Page title (e.g., "Core benchmark: beam").
+- `desc::String`: Page description.
+- `src_dir::String`: Path to the `docs/src` directory.
+- `assets_href_prefix::String`: relative href prefix from the generated problem
+  page to the `assets` directory, propagated to `generate_template_problem` for
+  figure links.
+- `draft::Union{Bool,Nothing}`: Draft mode flag for Documenter.
 
 # Returns
 - `String`: Complete Markdown template ready to be written to a .md.template file

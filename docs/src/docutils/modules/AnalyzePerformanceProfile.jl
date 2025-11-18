@@ -8,18 +8,23 @@
 Generate a detailed textual analysis of a performance profile.
 
 # Arguments
-- `pp::PerformanceProfile`: Pre-computed performance profile data
+- `pp::PerformanceProfile`: pre-computed performance profile data used to
+  build Dolan–Moré performance profiles over `(problem, grid_size)` instances
+  and `(model, solver)` combinations.
 
 # Returns
-- Markdown string with analysis insights including:
-  - Dataset overview (problems, instances, solver-model combinations)
-  - Robustness metrics (% of instances solved per combination)
-  - Efficiency metrics (% of instances where each combination was fastest)
+- `String`: Markdown string with analysis insights including:
+  - dataset overview (problems, instances, solver–model combinations),
+  - robustness metrics (percentage of instances solved per combination),
+  - efficiency metrics (percentage of instances where each combination was
+    the fastest).
 
 # Details
 This function extracts key metrics from the performance profile:
-- **Robustness**: Proportion of instances successfully solved by each solver-model
-- **Efficiency**: Proportion of instances where each solver-model achieved the best time (ratio = 1.0)
+- **Robustness**: proportion of instances successfully solved by each
+  solver–model combination;
+- **Efficiency**: proportion of instances where each solver–model achieved the
+  best time (ratio `r_{p,s} = 1.0`).
 """
 function analyze_performance_profile(pp::PerformanceProfile)
     buf = IOBuffer()
@@ -130,15 +135,21 @@ Compute a detailed textual analysis of a benchmark's default CPU-time
 performance profile.
 
 This is a convenience wrapper that:
-1. Computes the performance profile data using `compute_profile_default_cpu`
-2. Generates the analysis using `analyze_performance_profile`
+1. computes the performance profile data using `compute_profile_default_cpu`,
+2. generates the analysis using `analyze_performance_profile`.
 
 # Arguments
-- `bench_id`: Benchmark identifier
-- `src_dir`: Path to docs/src directory
+- `bench_id::AbstractString`: benchmark identifier whose results should be
+  analysed.
+- `src_dir::AbstractString`: path to the `docs/src` directory containing the
+  benchmark JSON files for this documentation build.
+- `allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}`: optional
+  list of `(model, solver)` combinations to keep when building the performance
+  profile; `nothing` (the default) uses all available combinations.
 
 # Returns
-- Markdown string with analysis, or a warning if no data is available
+- `String`: Markdown string with analysis, or a warning if no data is
+  available for the given benchmark.
 """
 function _analyze_profile_default_cpu(bench_id::AbstractString, src_dir::AbstractString;
                                       allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
@@ -157,15 +168,21 @@ Compute a detailed textual analysis of a benchmark's default iterations
 performance profile.
 
 This is a convenience wrapper that:
-1. Computes the performance profile data using `compute_profile_default_iter`
-2. Generates the analysis using `analyze_performance_profile`
+1. computes the performance profile data using `compute_profile_default_iter`,
+2. generates the analysis using `analyze_performance_profile`.
 
 # Arguments
-- `bench_id`: Benchmark identifier
-- `src_dir`: Path to docs/src directory
+- `bench_id::AbstractString`: benchmark identifier whose results should be
+  analysed.
+- `src_dir::AbstractString`: path to the `docs/src` directory containing the
+  benchmark JSON files for this documentation build.
+- `allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}`: optional
+  list of `(model, solver)` combinations to keep when building the performance
+  profile; `nothing` (the default) uses all available combinations.
 
 # Returns
-- Markdown string with analysis, or a warning if no data is available
+- `String`: Markdown string with analysis, or a warning if no data is
+  available for the given benchmark.
 """
 function _analyze_profile_default_iter(bench_id::AbstractString, src_dir::AbstractString;
                                        allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)

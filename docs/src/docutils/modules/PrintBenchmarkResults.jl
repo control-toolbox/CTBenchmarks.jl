@@ -1,10 +1,16 @@
 """
-    _print_benchmark_table_results(bench_id::AbstractString, src_dir::AbstractString; problems::Union{Nothing, Vector{<:AbstractString}}=nothing) -> String
+    _print_benchmark_table_results(
+        bench_id::AbstractString,
+        src_dir::AbstractString;
+        problems::Union{Nothing, Vector{<:AbstractString}}=nothing,
+    ) -> String
 
-Generate a Markdown table-style summary of benchmark results for `bench_id`.
+Generate a Markdown-style summary of benchmark results for `bench_id`, suitable
+for inclusion in documentation pages (for example via an `INCLUDE_TEXT` block).
 
-The table is organized by problem, then grid size `N`, then model and solver,
-and includes columns for:
+The underlying data are organised by problem, then grid size `N`, then model
+and solver, and include columns for:
+
 - Success (whether the run converged)
 - N (grid size)
 - Model
@@ -12,8 +18,29 @@ and includes columns for:
 - Time in milliseconds
 - Iteration count
 - Objective value
-- Criterion (e.g. min/max)
-- Best (marks the fastest successful run for each N)
+- Criterion (for example min/max)
+- Best (marks the fastest successful run for each `N`)
+
+# Arguments
+- `bench_id::AbstractString`: benchmark identifier whose results should be
+  summarised.
+- `src_dir::AbstractString`: path to the `docs/src` directory containing the
+  benchmark JSON files.
+- `problems::Union{Nothing, Vector{<:AbstractString}}`: optional list of
+  problem names used to filter the results; `nothing` (the default) keeps all
+  problems present in the benchmark.
+
+# Returns
+- `String`: Markdown-compatible text. When the benchmark contains a **single
+  problem**, the function returns a standard Markdown table. When it contains
+  **multiple problems**, it returns a `@raw html` block that embeds:
+  - a `<select>` element listing all problems;
+  - one HTML table per problem, each wrapped in a `<div>`;
+  - a small JavaScript snippet to toggle visibility of the tables and persist
+    the last selected problem in `window.localStorage`.
+
+If no data are available, a Documenter-style `!!! warning` block is returned
+instead of tables.
 """
 function _print_benchmark_table_results(bench_id::AbstractString, src_dir::AbstractString;
     problems::Union{Nothing, Vector{<:AbstractString}}=nothing)

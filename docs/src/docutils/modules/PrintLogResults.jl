@@ -10,7 +10,12 @@ Display benchmark results as a formatted log table.
 # Arguments
 - `bench_id`: Benchmark identifier string
 - `src_dir`: Path to docs/src directory
-- `problems::Union{Nothing, Vector{<:AbstractString}}`: Optional filter to display only specific problems
+- `problems::Union{Nothing, Vector{<:AbstractString}}`: optional filter to
+  display only specific problems.
+
+# Returns
+- `Nothing`: this function prints the formatted log to standard output and does
+  not return a value.
 
 # Details
 Prints benchmark results in a hierarchical tree format with:
@@ -19,8 +24,9 @@ Prints benchmark results in a hierarchical tree format with:
 - Grid sizes
 - Model types with timing and convergence statistics
 
-Results are displayed line-by-line with colored formatting for easy readability.
-If `problems` is specified, only results for those problems are shown.
+Results are displayed line-by-line with coloured formatting for easy
+readability. If `problems` is specified, only results for those problems are
+shown.
 """
 function _print_benchmark_log(bench_id::AbstractString, src_dir::AbstractString; 
     problems::Union{Nothing, Vector{<:AbstractString}}=nothing)

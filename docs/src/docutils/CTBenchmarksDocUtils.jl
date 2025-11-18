@@ -34,6 +34,11 @@ benchmark documentation, including:
 ## Log Display Functions (for use in @example blocks)
 - `_print_benchmark_log`: Print benchmark execution log
 
+## Debug and Logging
+- `set_doc_debug!`: Enable or disable debug logging for documentation
+  utilities. When debug mode is on, additional per-block messages and full
+  stacktraces are printed during template and figure generation.
+
 ## Submodules
 - `DocumenterReference`: Module for automatic API reference generation
   - Use `DocumenterReference.automatic_reference_documentation(...)` to generate API docs
