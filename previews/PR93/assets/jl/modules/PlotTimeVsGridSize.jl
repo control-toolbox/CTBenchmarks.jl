@@ -208,6 +208,14 @@ function _plot_time_vs_grid_size_bar(
         )
     end
 
+    # When there are very few categories (<= 2), enlarge x-limits so bars
+    # do not visually occupy the entire horizontal range.
+    if nN <= 2
+        x_min = minimum(x_base) - 1
+        x_max = maximum(x_base) + 1
+        xlims!(plt, (x_min, x_max))
+    end
+
     @info "  ✅ Time vs grid size bar plot generated for problem: $problem and bench_id: $bench_id"
     return plt
 end

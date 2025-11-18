@@ -23,7 +23,7 @@ BENCH_ID = "core-ubuntu-latest"
 ENV_NAME = BENCH
 -->
 
-### Time vs Grid Size (Ubuntu Latest CPU)
+### 📈 Time vs Grid Size (Ubuntu Latest CPU)
 
 <!-- INCLUDE_FIGURE:
 FUNCTION = _plot_time_vs_grid_size
@@ -35,7 +35,7 @@ FUNCTION = _plot_time_vs_grid_size_bar
 ARGS = jackson, core-ubuntu-latest
 -->
 
-### Solution: N = 200 (Ubuntu Latest CPU)
+### 🧭 Solution: N = 200 (Ubuntu Latest CPU)
 
 ```@raw html
 <a href="../../assets/benchmarks/core-ubuntu-latest/figures/jackson_N200.pdf">
@@ -48,7 +48,7 @@ ARGS = jackson, core-ubuntu-latest
 </a>
 ```
 
-### Solution: N = 500 (Ubuntu Latest CPU)
+### 🧭 Solution: N = 500 (Ubuntu Latest CPU)
 
 ```@raw html
 <a href="../../assets/benchmarks/core-ubuntu-latest/figures/jackson_N500.pdf">
@@ -61,7 +61,7 @@ ARGS = jackson, core-ubuntu-latest
 </a>
 ```
 
-### Solution: N = 1000 (Ubuntu Latest CPU)
+### 🧭 Solution: N = 1000 (Ubuntu Latest CPU)
 
 ```@raw html
 <a href="../../assets/benchmarks/core-ubuntu-latest/figures/jackson_N1000.pdf">
@@ -74,7 +74,7 @@ ARGS = jackson, core-ubuntu-latest
 </a>
 ```
 
-### Solution: N = 2000 (Ubuntu Latest CPU)
+### 🧭 Solution: N = 2000 (Ubuntu Latest CPU)
 
 ```@raw html
 <a href="../../assets/benchmarks/core-ubuntu-latest/figures/jackson_N2000.pdf">
@@ -87,15 +87,23 @@ ARGS = jackson, core-ubuntu-latest
 </a>
 ```
 
+### 📊 Table of Results (Ubuntu Latest CPU)
+
 <!-- INCLUDE_TEXT:
 FUNCTION = _print_benchmark_table_results
 ARGS = core-ubuntu-latest, jackson
 -->
 
-### Log (Ubuntu Latest CPU)
+```@raw html
+<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Log</summary>
+```
 
 ```@example BENCH
 _print_benchmark_log("core-ubuntu-latest"; problems=["jackson"]) # hide
+```
+
+```@raw html
+</details>
 ```
 
 ## Moonshot CPU
@@ -107,7 +115,7 @@ BENCH_ID = "core-moonshot-cpu"
 ENV_NAME = BENCH
 -->
 
-### Time vs Grid Size (Moonshot CPU)
+### 📈 Time vs Grid Size (Moonshot CPU)
 
 <!-- INCLUDE_FIGURE:
 FUNCTION = _plot_time_vs_grid_size
@@ -119,7 +127,7 @@ FUNCTION = _plot_time_vs_grid_size_bar
 ARGS = jackson, core-moonshot-cpu
 -->
 
-### Solution: N = 200 (Moonshot CPU)
+### 🧭 Solution: N = 200 (Moonshot CPU)
 
 ```@raw html
 <a href="../../assets/benchmarks/core-moonshot-cpu/figures/jackson_N200.pdf">
@@ -132,7 +140,7 @@ ARGS = jackson, core-moonshot-cpu
 </a>
 ```
 
-### Solution: N = 500 (Moonshot CPU)
+### 🧭 Solution: N = 500 (Moonshot CPU)
 
 ```@raw html
 <a href="../../assets/benchmarks/core-moonshot-cpu/figures/jackson_N500.pdf">
@@ -145,7 +153,7 @@ ARGS = jackson, core-moonshot-cpu
 </a>
 ```
 
-### Solution: N = 1000 (Moonshot CPU)
+### 🧭 Solution: N = 1000 (Moonshot CPU)
 
 ```@raw html
 <a href="../../assets/benchmarks/core-moonshot-cpu/figures/jackson_N1000.pdf">
@@ -158,7 +166,7 @@ ARGS = jackson, core-moonshot-cpu
 </a>
 ```
 
-### Solution: N = 2000 (Moonshot CPU)
+### 🧭 Solution: N = 2000 (Moonshot CPU)
 
 ```@raw html
 <a href="../../assets/benchmarks/core-moonshot-cpu/figures/jackson_N2000.pdf">
@@ -171,7 +179,7 @@ ARGS = jackson, core-moonshot-cpu
 </a>
 ```
 
-### Solution: N = 5000 (Moonshot CPU)
+### 🧭 Solution: N = 5000 (Moonshot CPU)
 
 ```@raw html
 <a href="../../assets/benchmarks/core-moonshot-cpu/figures/jackson_N5000.pdf">
@@ -184,15 +192,23 @@ ARGS = jackson, core-moonshot-cpu
 </a>
 ```
 
+### 📊 Table of Results (Moonshot CPU)
+
 <!-- INCLUDE_TEXT:
 FUNCTION = _print_benchmark_table_results
 ARGS = core-moonshot-cpu, jackson
 -->
 
-### Log (Moonshot CPU)
+```@raw html
+<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Log</summary>
+```
 
 ```@example BENCH
 _print_benchmark_log("core-moonshot-cpu"; problems=["jackson"]) # hide
+```
+
+```@raw html
+</details>
 ```
 
 ## Moonshot GPU
@@ -204,7 +220,7 @@ BENCH_ID = "core-moonshot-gpu"
 ENV_NAME = BENCH
 -->
 
-### Time vs Grid Size (Moonshot GPU)
+### 📈 Time vs Grid Size (Moonshot GPU)
 
 <!-- INCLUDE_FIGURE:
 FUNCTION = _plot_time_vs_grid_size
@@ -216,7 +232,7 @@ FUNCTION = _plot_time_vs_grid_size_bar
 ARGS = jackson, core-moonshot-gpu
 -->
 
-### Solution: N = 1000 (Moonshot GPU)
+### 🧭 Solution: N = 1000 (Moonshot GPU)
 
 ```@raw html
 <a href="../../assets/benchmarks/core-moonshot-gpu/figures/jackson_N1000.pdf">
@@ -229,7 +245,7 @@ ARGS = jackson, core-moonshot-gpu
 </a>
 ```
 
-### Solution: N = 5000 (Moonshot GPU)
+### 🧭 Solution: N = 5000 (Moonshot GPU)
 
 ```@raw html
 <a href="../../assets/benchmarks/core-moonshot-gpu/figures/jackson_N5000.pdf">
@@ -242,7 +258,7 @@ ARGS = jackson, core-moonshot-gpu
 </a>
 ```
 
-### Solution: N = 10000 (Moonshot GPU)
+### 🧭 Solution: N = 10000 (Moonshot GPU)
 
 ```@raw html
 <a href="../../assets/benchmarks/core-moonshot-gpu/figures/jackson_N10000.pdf">
@@ -255,7 +271,7 @@ ARGS = jackson, core-moonshot-gpu
 </a>
 ```
 
-### Solution: N = 20000 (Moonshot GPU)
+### 🧭 Solution: N = 20000 (Moonshot GPU)
 
 ```@raw html
 <a href="../../assets/benchmarks/core-moonshot-gpu/figures/jackson_N20000.pdf">
@@ -268,13 +284,21 @@ ARGS = jackson, core-moonshot-gpu
 </a>
 ```
 
+### 📊 Table of Results (Moonshot GPU)
+
 <!-- INCLUDE_TEXT:
 FUNCTION = _print_benchmark_table_results
 ARGS = core-moonshot-gpu, jackson
 -->
 
-### Log (Moonshot GPU)
+```@raw html
+<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Log</summary>
+```
 
 ```@example BENCH
 _print_benchmark_log("core-moonshot-gpu"; problems=["jackson"]) # hide
+```
+
+```@raw html
+</details>
 ```
