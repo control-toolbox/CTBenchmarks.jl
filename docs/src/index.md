@@ -220,7 +220,9 @@ _downloads_toml() # hide
 ```
 
 ```@raw html
-<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Version info</summary>
+<div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+  <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Version info</div>
+  <div class="ctdetails-body">
 ```
 
 ```@example main
@@ -228,11 +230,14 @@ versioninfo() # hide
 ```
 
 ```@raw html
-</details>
+  </div>
+</div>
 ```
 
 ```@raw html
-<details class="ct-collapse" style="margin-bottom: 0.5em;"><summary>📦 Package status</summary>
+<div class="ctdetails" style="margin-bottom: 0.5em;">
+  <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">📦 Package status</div>
+  <div class="ctdetails-body">
 ```
 
 ```@example main
@@ -240,11 +245,14 @@ Pkg.status() # hide
 ```
 
 ```@raw html
-</details>
+  </div>
+</div>
 ```
 
 ```@raw html
-<details class="ct-collapse" style="margin-bottom: 0.5em;"><summary>📚 Complete manifest</summary>
+<div class="ctdetails" style="margin-bottom: 0.5em;">
+  <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">📚 Complete manifest</div>
+  <div class="ctdetails-body">
 ```
 
 ```@example main
@@ -252,5 +260,6 @@ Pkg.status(; mode = PKGMODE_MANIFEST) # hide
 ```
 
 ```@raw html
-</details>
+  </div>
+</div>
 ```

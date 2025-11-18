@@ -101,6 +101,7 @@ with_processed_template_problems(
                     asset("https://control-toolbox.org/assets/css/documentation.css"),
                     asset("https://control-toolbox.org/assets/js/documentation.js"),
                     joinpath("assets", "js", "ctbenchmarks-details.js"),
+                    joinpath("assets", "css", "ctbenchmarks-details.css"),
                 ],
             ),
             pages=[
