@@ -1,11 +1,8 @@
-# Benchmark script for core-mothra
+# Benchmark script for core-mothra-gpu
 # Setup (Pkg.activate, instantiate, update, using CTBenchmarks) is handled by the workflow
 
-function main()
-    project_dir = normpath(@__DIR__, "..")
-    outpath = joinpath(project_dir, "docs", "src", "assets", "benchmarks", "core-mothra-gpu")
-    CTBenchmarks.benchmark(;
-        outpath=outpath,
+function run()
+    results = CTBenchmarks.benchmark(;
         problems=[
             :beam,
             :chain,
@@ -32,7 +29,5 @@ function main()
         max_wall_time=1000.0,
     )
     println("✅ Benchmark completed successfully!")
-    return outpath
+    return results
 end
-
-main()

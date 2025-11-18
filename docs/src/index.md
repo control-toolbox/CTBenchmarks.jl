@@ -11,21 +11,17 @@ This package provides:
 
 ## Installation
 
-!!! warning "Development Package"
-    CTBenchmarks.jl is not yet registered in the Julia General Registry. You must clone the repository to use it.
-
-To install CTBenchmarks.jl, clone the repository and activate the project:
+CTBenchmarks.jl is registered in the Julia General Registry. Install it using the package manager:
 
 ```julia
 using Pkg
+Pkg.add("CTBenchmarks")
+```
 
-# Clone the repository
-Pkg.develop(url="https://github.com/control-toolbox/CTBenchmarks.jl")
+Or in the Julia REPL package mode (press `]`):
 
-# Or clone manually and activate
-# git clone https://github.com/control-toolbox/CTBenchmarks.jl.git
-# cd CTBenchmarks.jl
-# julia --project=.
+```julia-repl
+pkg> add CTBenchmarks
 ```
 
 Once installed, load the package:
@@ -51,7 +47,7 @@ CTBenchmarks.run(:minimal)
 This runs the `:beam` problem with:
 
 - Grid size: 100
-- Discretisation: trapeze
+- Discretization: trapeze
 - Solvers: Ipopt and MadNLP
 - Models: JuMP, adnlp, exa, exa_gpu
 
@@ -66,7 +62,7 @@ CTBenchmarks.run(:complete)
 This runs 14 optimal control problems with:
 
 - Grid sizes: 100, 200, 500
-- Discretisations: trapeze, midpoint
+- Discretizations: trapeze, midpoint
 - Solvers: Ipopt and MadNLP
 - Models: JuMP, adnlp, exa, exa_gpu
 
@@ -81,25 +77,24 @@ This runs 14 optimal control problems with:
 To save benchmark results to a directory:
 
 ```julia
-CTBenchmarks.run(:minimal; outpath="my_results")
+results = CTBenchmarks.run(:minimal; filepath="my_results/minimal.json")
 ```
 
-This creates a directory containing:
+This returns the benchmark payload as a `Dict` and saves it to `my_results/minimal.json` (the
+directory is created automatically if needed). The `filepath` argument is optional but, when
+provided, it must end with `.json`.
 
-- `data.json` - Benchmark results in JSON format
-- `Project.toml` - Package dependencies
-- `Manifest.toml` - Complete dependency tree
+- `my_results/minimal.json` – Benchmark results in JSON format
 
 ## Creating Custom Benchmarks
 
 For more control over your benchmarks, use the `CTBenchmarks.benchmark` function directly:
 
 ```julia
-CTBenchmarks.benchmark(;
-    outpath = "custom_benchmark",
+results = CTBenchmarks.benchmark(;
     problems = [:beam, :chain, :robot],
     solver_models = [
-        :ipopt => [:JuMP, :adnlp, :exa],
+        :ipopt => [:jump, :adnlp, :exa],
         :madnlp => [:exa, :exa_gpu]
     ],
     grid_sizes = [200, 500, 1000],
@@ -110,6 +105,8 @@ CTBenchmarks.benchmark(;
     max_iter = 1000,
     max_wall_time = 500.0
 )
+
+CTBenchmarks.save_json(results, "path/to/custom_benchmark.json")
 ```
 
 ### Available Problems
@@ -120,7 +117,7 @@ CTBenchmarks includes 14 optimal control problems from [OptimalControlProblems.j
 - `:chain` - Chain of masses
 - `:double_oscillator` - Double oscillator
 - `:ducted_fan` - Ducted fan control
-- `:electric_vehicle` - Electric vehicle optimisation
+- `:electric_vehicle` - Electric vehicle optimization
 - `:glider` - Glider trajectory
 - `:insurance` - Insurance problem
 - `:jackson` - Jackson problem
@@ -136,22 +133,22 @@ CTBenchmarks includes 14 optimal control problems from [OptimalControlProblems.j
 **Supported Solvers:**
 
 - `:ipopt` - Interior Point Optimizer
-- `:madnlp` - Matrix-free Augmented Lagrangian NLP solver
+- `:madnlp` - filter linesearch Interior Point Optimizer
 
 **Supported Models:**
 
-- `:JuMP` - JuMP modelling framework
+- `:jump` - JuMP modelling framework
 - `:adnlp` - Automatic differentiation NLP models
 - `:exa` - ExaModels (CPU)
 - `:exa_gpu` - ExaModels (GPU acceleration)
 
 ### Benchmark Parameters
 
-- `grid_sizes`: Number of discretisation points (e.g., `[100, 200, 500]`)
-- `disc_methods`: Discretisation schemes (`:trapeze`, `:midpoint`)
-- `tol`: Solver tolerance (default: `1e-6`)
-- `max_iter`: Maximum solver iterations (default: `1000`)
-- `max_wall_time`: Maximum wall time in seconds (default: `500.0`)
+- `grid_sizes`: Number of discretization points (e.g., `[100, 200, 500]`)
+- `disc_methods`: Discretization schemes (`:trapeze`, `:midpoint`)
+- `tol`: Solver tolerance (e.g., `1e-6`)
+- `max_iter`: Maximum solver iterations (e.g., `1000`)
+- `max_wall_time`: Maximum wall time in seconds (e.g., `500.0`)
 
 ## Benchmark Results in This Documentation
 
@@ -160,7 +157,9 @@ This documentation includes pre-computed benchmark results from continuous integ
 - **Ubuntu Latest** - Standard CPU benchmarks on GitHub Actions runners
 - **Moonshot** - GPU-accelerated benchmarks on dedicated hardware
 
-These results provide reference performance data and demonstrate the capabilities of different solver and model combinations. You can explore them in the [Core Benchmark](benchmark-core.md) section.
+These results provide reference performance data and demonstrate the capabilities of different solver and model combinations. You can explore them in the [Core Benchmark CPU](core/cpu.md) and [Core Benchmark GPU](core/gpu.md) pages.
+
+These pages include Dolan–Moré performance profiles for CPU time and solver iterations. For details on how to read these profiles, see the [Performance Profiles](@ref performance-profiles) page.
 
 Each benchmark result page includes:
 
@@ -181,9 +180,9 @@ Benchmarks results:
 ├──┬ solver: ipopt, disc_method: trapeze
 │  │
 │  │  N : 100
-│  │  ✓ | JuMP    | time:    1.234 s | iters: 42    | obj: 1.234567e+00 | CPU:    2.5 MiB
-│  │  ✓ | adnlp   | time:    0.987 s | iters: 42    | obj: 1.234567e+00 | CPU:    2.1 MiB
-│  │  ✓ | exa     | time:    0.765 s | iters: 42    | obj: 1.234567e+00 | CPU:    1.8 MiB
+│  │  ✓ | JuMP    | time:    1.234 s | iters: 42    | obj: 1.234567e+00 (min) | CPU:    2.5 MiB
+│  │  ✓ | adnlp   | time:    0.987 s | iters: 42    | obj: 1.234567e+00 (min) | CPU:    2.1 MiB
+│  │  ✓ | exa     | time:    0.765 s | iters: 42    | obj: 1.234567e+00 (min) | CPU:    1.8 MiB
 │  └─
 └─
 ```
@@ -194,10 +193,10 @@ Benchmarks results:
 - **Model** - Modelling framework (JuMP, ADNLPModels, ExaModels)
 - **time** - Total solve time
 - **iters** - Number of solver iterations
-- **obj** - Objective function value
+- **obj** - Objective function value and criterion (min or max problem)
 - **Memory** - CPU memory usage (GPU memory shown separately for GPU models)
 
-## Documentation build environment
+## Documentation Build Environment
 
 ```@setup main
 using Pkg
@@ -205,9 +204,9 @@ using InteractiveUtils
 using Markdown
 
 # Download links for the benchmark environment
-function _downloads_toml(DIR)
-    link_manifest = joinpath("assets", DIR, "Manifest.toml")
-    link_project = joinpath("assets", DIR, "Project.toml")
+function _downloads_toml()
+    link_manifest = joinpath("assets", "toml", "Manifest.toml")
+    link_project = joinpath("assets", "toml", "Project.toml")
     return Markdown.parse("""
     You can download the exact environment used to build this documentation:
     - 📦 [Project.toml]($link_project) - Package dependencies
@@ -217,11 +216,11 @@ end
 ```
 
 ```@example main
-_downloads_toml(".") # hide
+_downloads_toml() # hide
 ```
 
 ```@raw html
-<details style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Version info</summary>
+<details class="ct-collapse" style="margin-bottom: 0.5em; margin-top: 1em;"><summary>ℹ️ Version info</summary>
 ```
 
 ```@example main
@@ -233,7 +232,7 @@ versioninfo() # hide
 ```
 
 ```@raw html
-<details style="margin-bottom: 0.5em;"><summary>📦 Package status</summary>
+<details class="ct-collapse" style="margin-bottom: 0.5em;"><summary>📦 Package status</summary>
 ```
 
 ```@example main
@@ -245,7 +244,7 @@ Pkg.status() # hide
 ```
 
 ```@raw html
-<details style="margin-bottom: 0.5em;"><summary>📚 Complete manifest</summary>
+<details class="ct-collapse" style="margin-bottom: 0.5em;"><summary>📚 Complete manifest</summary>
 ```
 
 ```@example main

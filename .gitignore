@@ -357,3 +357,5 @@ Manifest.toml
 # ...except the one inside docs/
 !docs/src/assets/**/Manifest.toml
 tmp/
+test/build
+reports
