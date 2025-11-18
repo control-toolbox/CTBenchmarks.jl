@@ -172,16 +172,18 @@ end
 # ───────────────────────────────────────────────────────────────────────────────
 
 """
-    _plot_profile_default_cpu(bench_id, src_dir)
+    _plot_profile_default_cpu(bench_id, src_dir; allowed_combos=nothing)
 
 Generate and display the default CPU-time performance profile plot for a
 benchmark.
 
 This is a convenience wrapper around `compute_profile_default_cpu` and
-`plot_performance_profile`.
+`plot_performance_profile`. When `allowed_combos` is provided, only the
+specified `(model, solver)` combinations are included in the profile.
 """
-function _plot_profile_default_cpu(bench_id::AbstractString, src_dir::AbstractString)
-    pp = compute_profile_default_cpu(bench_id, src_dir)
+function _plot_profile_default_cpu(bench_id::AbstractString, src_dir::AbstractString;
+                                   allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+    pp = compute_profile_default_cpu(bench_id, src_dir; allowed_combos=allowed_combos)
     if pp === nothing
         println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
         return plot()  # Empty plot on error
@@ -193,16 +195,18 @@ function _plot_profile_default_cpu(bench_id::AbstractString, src_dir::AbstractSt
 end
 
 """
-    _plot_profile_default_iter(bench_id, src_dir)
+    _plot_profile_default_iter(bench_id, src_dir; allowed_combos=nothing)
 
 Generate and display the default iterations performance profile plot for a
 benchmark.
 
 This is a convenience wrapper around `compute_profile_default_iter` and
-`plot_performance_profile`.
+`plot_performance_profile`. When `allowed_combos` is provided, only the
+specified `(model, solver)` combinations are included in the profile.
 """
-function _plot_profile_default_iter(bench_id::AbstractString, src_dir::AbstractString)
-    pp = compute_profile_default_iter(bench_id, src_dir)
+function _plot_profile_default_iter(bench_id::AbstractString, src_dir::AbstractString;
+                                    allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+    pp = compute_profile_default_iter(bench_id, src_dir; allowed_combos=allowed_combos)
     if pp === nothing
         println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
         return plot()  # Empty plot on error

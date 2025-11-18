@@ -123,7 +123,8 @@ function analyze_performance_profile(pp::PerformanceProfile)
 end
 
 """
-    _analyze_profile_default_cpu(bench_id::AbstractString, src_dir::AbstractString) -> String
+    _analyze_profile_default_cpu(bench_id::AbstractString, src_dir::AbstractString;
+                                 allowed_combos=nothing) -> String
 
 Compute a detailed textual analysis of a benchmark's default CPU-time
 performance profile.
@@ -139,8 +140,9 @@ This is a convenience wrapper that:
 # Returns
 - Markdown string with analysis, or a warning if no data is available
 """
-function _analyze_profile_default_cpu(bench_id::AbstractString, src_dir::AbstractString)
-    pp = compute_profile_default_cpu(bench_id, src_dir)
+function _analyze_profile_default_cpu(bench_id::AbstractString, src_dir::AbstractString;
+                                      allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+    pp = compute_profile_default_cpu(bench_id, src_dir; allowed_combos=allowed_combos)
     if pp === nothing
         return "!!! warning\n    No benchmark data available for analysis for `$bench_id`.\n"
     end
@@ -148,7 +150,8 @@ function _analyze_profile_default_cpu(bench_id::AbstractString, src_dir::Abstrac
 end
 
 """
-    _analyze_profile_default_iter(bench_id::AbstractString, src_dir::AbstractString) -> String
+    _analyze_profile_default_iter(bench_id::AbstractString, src_dir::AbstractString;
+                                  allowed_combos=nothing) -> String
 
 Compute a detailed textual analysis of a benchmark's default iterations
 performance profile.
@@ -164,8 +167,9 @@ This is a convenience wrapper that:
 # Returns
 - Markdown string with analysis, or a warning if no data is available
 """
-function _analyze_profile_default_iter(bench_id::AbstractString, src_dir::AbstractString)
-    pp = compute_profile_default_iter(bench_id, src_dir)
+function _analyze_profile_default_iter(bench_id::AbstractString, src_dir::AbstractString;
+                                       allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+    pp = compute_profile_default_iter(bench_id, src_dir; allowed_combos=allowed_combos)
     if pp === nothing
         return "!!! warning\n    No benchmark data available for analysis for `$bench_id`.\n"
     end
