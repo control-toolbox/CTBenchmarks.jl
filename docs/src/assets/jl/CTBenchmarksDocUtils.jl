@@ -89,12 +89,14 @@ const SRC_DIR = normpath(joinpath(@__DIR__, "..", ".."))
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # Analysis functions
-function _analyze_profile_default_cpu(bench_id::AbstractString)
-    return _analyze_profile_default_cpu(bench_id, SRC_DIR)
+function _analyze_profile_default_cpu(bench_id::AbstractString;
+                                      combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+    return _analyze_profile_default_cpu(bench_id, SRC_DIR; allowed_combos=combos)
 end
 
-function _analyze_profile_default_iter(bench_id::AbstractString)
-    return _analyze_profile_default_iter(bench_id, SRC_DIR)
+function _analyze_profile_default_iter(bench_id::AbstractString;
+                                       combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+    return _analyze_profile_default_iter(bench_id, SRC_DIR; allowed_combos=combos)
 end
 
 function _print_benchmark_table_results(bench_id::AbstractString; problems::Union{Nothing, Vector{<:AbstractString}}=nothing)
@@ -102,12 +104,14 @@ function _print_benchmark_table_results(bench_id::AbstractString; problems::Unio
 end
 
 # Plotting functions
-function _plot_profile_default_cpu(bench_id::AbstractString)
-    return _plot_profile_default_cpu(bench_id, SRC_DIR)
+function _plot_profile_default_cpu(bench_id::AbstractString;
+                                   combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+    return _plot_profile_default_cpu(bench_id, SRC_DIR; allowed_combos=combos)
 end
 
-function _plot_profile_default_iter(bench_id::AbstractString)
-    return _plot_profile_default_iter(bench_id, SRC_DIR)
+function _plot_profile_default_iter(bench_id::AbstractString;
+                                    combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+    return _plot_profile_default_iter(bench_id, SRC_DIR; allowed_combos=combos)
 end
 
 function _plot_time_vs_grid_size(problem::AbstractString, bench_id::AbstractString)

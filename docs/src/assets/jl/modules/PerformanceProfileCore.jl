@@ -91,7 +91,8 @@ Currently this uses the default CPU time criterion; see `compute_profile_default
 
 function build_profile_from_df(df::DataFrame,
                                bench_id::AbstractString,
-                               cfg::PerformanceProfileConfig{M}) where {M}
+                               cfg::PerformanceProfileConfig{M};
+                               allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing) where {M}
     # All instances attempted (for any solver/model)
     df_instances = unique(select(df, cfg.instance_cols...))
     if isempty(df_instances)
@@ -101,6 +102,20 @@ function build_profile_from_df(df::DataFrame,
 
     # Filter runs according to configuration
     df_filtered = filter(row -> cfg.row_filter(row) && cfg.is_success(row), df)
+
+    # Optionally restrict to a subset of solver/model combinations
+    if allowed_combos !== nothing && !isempty(allowed_combos)
+        if cfg.solver_cols == [:model, :solver]
+            allowed_set = Set(allowed_combos)
+            df_filtered = filter(row -> begin
+                    hasproperty(row, :model) && hasproperty(row, :solver) &&
+                    (String(row.model), String(row.solver)) in allowed_set
+                end, df_filtered)
+        else
+            @warn "allowed_combos is only supported when solver_cols == [:model, :solver]; ignoring filter."
+        end
+    end
+
     if isempty(df_filtered)
         @warn "No successful benchmark entry to analyze."
         return nothing
@@ -171,7 +186,8 @@ end
 
 function compute_profile_generic(bench_id::AbstractString,
                                  src_dir::AbstractString,
-                                 cfg::PerformanceProfileConfig{M}) where {M}
+                                 cfg::PerformanceProfileConfig{M};
+                                 allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing) where {M}
     raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing
         @warn "No result (missing or invalid file) for bench_id: $bench_id"
@@ -185,11 +201,12 @@ function compute_profile_generic(bench_id::AbstractString,
     end
 
     df = DataFrame(rows)
-    return build_profile_from_df(df, bench_id, cfg)
+    return build_profile_from_df(df, bench_id, cfg; allowed_combos=allowed_combos)
 end
 
 function compute_profile_default_cpu(bench_id::AbstractString,
-                                     src_dir::AbstractString)
+                                     src_dir::AbstractString;
+                                     allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
     cpu_criterion = ProfileCriterion{Float64}(
         "CPU time",
         row -> begin
@@ -213,11 +230,12 @@ function compute_profile_default_cpu(bench_id::AbstractString,
         xs -> mean(skipmissing(xs)),
     )
 
-    return compute_profile_generic(bench_id, src_dir, cfg)
+    return compute_profile_generic(bench_id, src_dir, cfg; allowed_combos=allowed_combos)
 end
 
 function compute_profile_default_iter(bench_id::AbstractString,
-                                      src_dir::AbstractString)
+                                      src_dir::AbstractString;
+                                      allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
     iter_criterion = ProfileCriterion{Float64}(
         "Iterations",
         row -> begin
@@ -238,7 +256,7 @@ function compute_profile_default_iter(bench_id::AbstractString,
         xs -> mean(skipmissing(xs)),
     )
 
-    return compute_profile_generic(bench_id, src_dir, cfg)
+    return compute_profile_generic(bench_id, src_dir, cfg; allowed_combos=allowed_combos)
 end
 
 function compute_performance_profile(bench_id::AbstractString, src_dir::AbstractString)

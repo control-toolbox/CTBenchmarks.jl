@@ -5,12 +5,13 @@
 include(normpath(joinpath(@__DIR__, "..", "assets", "jl", "utils.jl")))
 ```
 
+!!! note
+    - The linear solver is MUMPS for all experiments.
+    - Below you can find Dolan–Moré performance profiles comparing solver–model combinations on the set of optimal control problems and grid sizes. For a detailed explanation of how to read these profiles, see the [Performance Profiles](@ref performance-profiles) page.
+
 ## Moonshot
 
 This benchmark suite evaluates optimal control problems on GPU-accelerated hardware, focusing on large-scale problems.
-
-!!! note
-    The linear solver is MUMPS for all experiments.
 
 <!-- INCLUDE_ENVIRONMENT:
 BENCH_ID = "core-moonshot-gpu"
@@ -18,9 +19,6 @@ ENV_NAME = BENCH
 -->
 
 ### 📈 Performance Profile GPU Time
-
-!!! note
-    The curves below are Dolan–Moré performance profiles comparing solver–model combinations on the set of optimal control problems and grid sizes. For a detailed explanation of how to read these profiles, see the [Performance Profiles](@ref performance-profiles) page.
 
 <!-- INCLUDE_FIGURE:
 FUNCTION = _plot_profile_default_cpu
