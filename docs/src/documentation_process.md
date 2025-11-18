@@ -22,7 +22,7 @@ The documentation build has three main stages:
 
 1. **Prepare the environment and utilities**
    - Copy `Project.toml` and `Manifest.toml` under `docs/src/assets/toml/`.
-   - Load documentation utilities from `docs/src/assets/jl/utils.jl`.
+   - Load documentation utilities from `docs/src/docutils/utils.jl`.
 
 2. **Generate and process templates**
    - Automatically generate `.md.template` files for per-problem pages
@@ -43,12 +43,32 @@ All of this is orchestrated by `docs/make.jl`.
 ```text
 docs/make.jl
    ├─ copy Project/Manifest → docs/src/assets/toml
-   ├─ include docs/src/assets/jl/utils.jl
+   ├─ include docs/src/docutils/utils.jl
    ├─ with_processed_template_problems("docs/src") do core_problems
    │    └─ with_processed_templates([core/cpu.md, core/gpu.md, core/problems], ... ) do
    │         └─ makedocs(...)
    └─ deploydocs(...)
 ```
+
+## Documentation Utilities Directory (`docs/src/docutils`)
+
+The `docs/src/docutils/` directory contains the Julia code used **only at
+documentation build time**:
+
+- `CTBenchmarksDocUtils.jl` – main module that includes all submodules and
+  exports the public API used in templates and `docs/make.jl`.
+- `utils.jl` – entry point loaded by
+  `include(joinpath(@__DIR__, "src", "docutils", "utils.jl"))` in
+  `docs/make.jl` and by `@setup BENCH` blocks via
+  `include(normpath(joinpath(@__DIR__, "..", "docutils", "utils.jl")))`.
+- `modules/` – helper modules implementing template generation/processing,
+  figure generation, performance profiles, environment/log printers, and
+  text generation.
+
+Unlike `docs/src/assets/`, which holds static files (TOML, benchmark JSON,
+generated figures) that are copied to the built site, the `docutils` directory
+is an **internal implementation detail** and is not deployed as part of the
+web assets.
 
 ---
 
@@ -67,7 +87,7 @@ The main steps in `docs/make.jl` are:
     documentation is preserved.
 
 - **Documentation utilities**
-  - `include("src/assets/jl/utils.jl")` loads all helper modules:
+  - `include("src/docutils/utils.jl")` loads all helper modules:
     template generation, template processing, figure generation, plotting, and
     log/environment printers.
 
@@ -403,7 +423,7 @@ The general pattern for such a page is:
    ````julia
    ```@setup BENCH
    # Load utilities
-   include(normpath(joinpath(@__DIR__, "..", "assets", "jl", "utils.jl")))
+   include(normpath(joinpath(@__DIR__, "..", "docutils", "utils.jl")))
    ```
    ````
 

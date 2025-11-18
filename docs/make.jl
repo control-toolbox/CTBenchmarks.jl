@@ -31,7 +31,7 @@ end
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # Load all documentation utilities (templates, plotting, figure generation, etc.)
-include(joinpath(@__DIR__, "src", "assets", "jl", "utils.jl"))
+include(joinpath(@__DIR__, "src", "docutils", "utils.jl"))
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Repository configuration

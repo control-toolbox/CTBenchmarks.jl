@@ -2,7 +2,7 @@
 
 ```@setup BENCH
 # Load utilities
-include(normpath(joinpath(@__DIR__, "..", "assets", "jl", "utils.jl")))
+include(normpath(joinpath(@__DIR__, "..", "docutils", "utils.jl")))
 ```
 
 !!! note
