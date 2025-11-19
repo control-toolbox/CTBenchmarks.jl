@@ -11,9 +11,9 @@
 
 module DocumenterReference
 
-import Documenter
-import Markdown
-import MarkdownAST
+using Documenter: Documenter
+using Markdown: Markdown
+using MarkdownAST: MarkdownAST
 
 """
     DocType
@@ -88,34 +88,28 @@ Each time you call this function, a new object is added to the global variable
 function automatic_reference_documentation(;
     subdirectory::String,
     modules::Vector,
-    sort_by::Function = identity,
-    exclude::Vector{Symbol} = Symbol[],
+    sort_by::Function=identity,
+    exclude::Vector{Symbol}=Symbol[],
 )
     _to_extras(m::Module) = m => Any[]
     _to_extras(m::Pair) = m
     _modules = Dict(_to_extras(m) for m in modules)
     exclude_set = Set(exclude)
-    
+
     # For single-module case, return Public/Private structure directly
     if length(modules) == 1
         current_module = first(_to_extras(modules[1]))
         push!(CONFIG, _Config(current_module, subdirectory, _modules, sort_by, exclude_set))
-        return "API Reference" => [
-            "Public" => "$subdirectory/public.md",
-            "Private" => "$subdirectory/private.md",
-        ]
+        return "API Reference" =>
+            ["Public" => "$subdirectory/public.md", "Private" => "$subdirectory/private.md"]
     end
-    
+
     # For multi-module case, keep original structure
     list_of_pages = Any[]
     for m in modules
         current_module = first(_to_extras(m))
         pages = _automatic_reference_documentation(
-            current_module;
-            subdirectory,
-            modules = _modules,
-            sort_by,
-            exclude = exclude_set,
+            current_module; subdirectory, modules=_modules, sort_by, exclude=exclude_set
         )
         push!(list_of_pages, "$current_module" => pages)
     end
@@ -168,7 +162,7 @@ function _exported_symbols(mod)
     exported = Pair{Symbol,DocType}[]
     private = Pair{Symbol,DocType}[]
     exported_names = Set(names(mod; all=false))  # Only exported symbols
-    
+
     # Use all=true, imported=false to include non-exported (private) symbols
     # defined in this module, but skip names imported from other modules.
     for n in names(mod; all=true, imported=false)
@@ -180,7 +174,7 @@ function _exported_symbols(mod)
         end
         f = getfield(mod, n)
         f_str = string(f)
-        
+
         local doc_type
         if startswith(f_str, "@")
             doc_type = DOCTYPE_MACRO
@@ -199,7 +193,7 @@ function _exported_symbols(mod)
         else
             doc_type = DOCTYPE_CONSTANT
         end
-        
+
         # Separate exported from private
         if n in exported_names
             push!(exported, n => doc_type)
@@ -207,7 +201,7 @@ function _exported_symbols(mod)
             push!(private, n => doc_type)
         end
     end
-    
+
     order = Dict(
         DOCTYPE_MODULE => 0,
         DOCTYPE_MACRO => 1,
@@ -235,13 +229,14 @@ provided function to each valid symbol. Issues warnings for undocumented symbols
 """
 function _iterate_over_symbols(f, config, symbol_list)
     current_module = config.current_module
-    for (key, type) in sort!(symbol_list; by = config.sort_by)
+    for (key, type) in sort!(symbol_list; by=config.sort_by)
         if key isa Symbol
             if key in config.exclude
                 continue
             end
             doc = Base.Docs.doc(Base.Docs.Binding(current_module, key))
-            missing_doc = doc === nothing || occursin("No documentation found.", string(doc))
+            missing_doc =
+                doc === nothing || occursin("No documentation found.", string(doc))
             if missing_doc
                 if type == DOCTYPE_MODULE
                     mod = getfield(current_module, key)
@@ -257,7 +252,7 @@ function _iterate_over_symbols(f, config, symbol_list)
         end
         f(key, type)
     end
-    return
+    return nothing
 end
 
 """
@@ -303,7 +298,7 @@ function _build_api_page(document::Documenter.Document, config::_Config)
     subdir = config.subdirectory
     current_module = config.current_module
     symbols = _exported_symbols(current_module)
-    
+
     # Build Public API page
     public_overview = """
     # Public API
@@ -324,13 +319,10 @@ function _build_api_page(document::Documenter.Document, config::_Config)
     public_docstrings = String[]
     _iterate_over_symbols(config, symbols.exported) do key, type
         if type == DOCTYPE_MODULE
-            return
+            return nothing
         end
-        push!(
-            public_docstrings,
-            "## `$key`\n\n```@docs\n$(current_module).$key\n```\n\n",
-        )
-        return
+        push!(public_docstrings, "## `$key`\n\n```@docs\n$(current_module).$key\n```\n\n")
+        return nothing
     end
     public_md = Markdown.parse(public_overview * join(public_docstrings, "\n"))
     public_filename = "$subdir/public.md"
@@ -342,7 +334,7 @@ function _build_api_page(document::Documenter.Document, config::_Config)
         Documenter.Globals(),
         convert(MarkdownAST.Node, public_md),
     )
-    
+
     # Build Private API page
     private_overview = """
     ```@meta
@@ -362,13 +354,10 @@ function _build_api_page(document::Documenter.Document, config::_Config)
     private_docstrings = String[]
     _iterate_over_symbols(config, symbols.private) do key, type
         if type == DOCTYPE_MODULE
-            return
+            return nothing
         end
-        push!(
-            private_docstrings,
-            "## `$key`\n\n```@docs\n$(current_module).$key\n```\n\n",
-        )
-        return
+        push!(private_docstrings, "## `$key`\n\n```@docs\n$(current_module).$key\n```\n\n")
+        return nothing
     end
     private_md = Markdown.parse(private_overview * join(private_docstrings, "\n"))
     private_filename = "$subdir/private.md"
@@ -380,8 +369,8 @@ function _build_api_page(document::Documenter.Document, config::_Config)
         Documenter.Globals(),
         convert(MarkdownAST.Node, private_md),
     )
-    
-    return
+
+    return nothing
 end
 
 """
@@ -395,15 +384,12 @@ This function is called automatically by Documenter during the documentation bui
 # Arguments
 - `document::Documenter.Document`: Documenter document object
 """
-function Documenter.Selectors.runner(
-    ::Type{APIBuilder},
-    document::Documenter.Document,
-)
+function Documenter.Selectors.runner(::Type{APIBuilder}, document::Documenter.Document)
     @info "APIBuilder: creating API reference"
     for config in CONFIG
         _build_api_page(document, config)
     end
-    return
+    return nothing
 end
 
 end  # module
