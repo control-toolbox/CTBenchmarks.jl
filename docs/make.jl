@@ -11,7 +11,7 @@ debug = false
 
 # Problems to exclude from draft mode (will still execute their @example blocks)
 exclude_problems_from_draft = Symbol[
-    # :beam   # example: exclude beam from draft docs
+# :beam   # example: exclude beam from draft docs
 ]
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -56,9 +56,7 @@ with_processed_template_problems(
     # ───────────────────────────────────────────────────────────────────────────
 
     size_threshold_ignore = [
-        "index.md",
-        joinpath("core", "cpu.md"),
-        joinpath("core", "gpu.md"),
+        "index.md", joinpath("core", "cpu.md"), joinpath("core", "gpu.md")
     ]
     for problem in core_problems
         push!(size_threshold_ignore, joinpath("core", "problems", "$(problem).md"))
@@ -68,7 +66,7 @@ with_processed_template_problems(
     # Build navigation menu for core problems
     # ───────────────────────────────────────────────────────────────────────────
 
-    core_problems_menu = Pair{String, String}[]
+    core_problems_menu = Pair{String,String}[]
     for problem in core_problems
         push!(core_problems_menu, problem => joinpath("core", "problems", "$(problem).md"))
     end
@@ -112,13 +110,10 @@ with_processed_template_problems(
                     "GPU" => joinpath("core", "gpu.md"),
                     "Problems" => core_problems_menu,
                 ],
-                DocumenterReference.automatic_reference_documentation(
+                DocumenterReference.automatic_reference_documentation(;
                     subdirectory="api",
                     modules=[CTBenchmarks],
-                    exclude=Symbol[
-                        :include,
-                        :eval,
-                    ],
+                    exclude=Symbol[:include, :eval],
                 ),
                 "Developers Guidelines" => [
                     "Add a New Benchmark" => "add_benchmark.md",

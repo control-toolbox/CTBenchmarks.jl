@@ -45,9 +45,11 @@ function run(
     print_trace::Bool=false,
 )
     if filepath !== nothing && !endswith(lowercase(filepath), ".json")
-        throw(CTBase.IncorrectArgument(
-            "The file path provided to run() must end with .json (got: $filepath)",
-        ))
+        throw(
+            CTBase.IncorrectArgument(
+                "The file path provided to run() must end with .json (got: $filepath)"
+            ),
+        )
     end
 
     results = if version == :complete
@@ -69,7 +71,8 @@ function run(
                 :vanderpol,
             ],
             solver_models=[
-                :ipopt => [:jump, :adnlp, :exa], :madnlp => [:jump, :adnlp, :exa, :exa_gpu]
+                :ipopt => [:jump, :adnlp, :exa],
+                :madnlp => [:jump, :adnlp, :exa, :exa_gpu],
             ],
             grid_sizes=[100, 200, 500],
             disc_methods=[:trapeze, :midpoint],
@@ -83,7 +86,8 @@ function run(
         benchmark(;
             problems=[:beam],
             solver_models=[
-                :ipopt => [:jump, :adnlp, :exa], :madnlp => [:jump, :adnlp, :exa, :exa_gpu]
+                :ipopt => [:jump, :adnlp, :exa],
+                :madnlp => [:jump, :adnlp, :exa, :exa_gpu],
             ],
             grid_sizes=[100],
             disc_methods=[:trapeze],

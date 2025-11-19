@@ -42,8 +42,11 @@ and solver, and include columns for:
 If no data are available, a Documenter-style `!!! warning` block is returned
 instead of tables.
 """
-function _print_benchmark_table_results(bench_id::AbstractString, src_dir::AbstractString;
-    problems::Union{Nothing, Vector{<:AbstractString}}=nothing)
+function _print_benchmark_table_results(
+    bench_id::AbstractString,
+    src_dir::AbstractString;
+    problems::Union{Nothing,Vector{<:AbstractString}}=nothing,
+)
     bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data === nothing
         return "!!! warning\n    No benchmark data available for `$bench_id`.\n"
@@ -76,7 +79,7 @@ function _print_benchmark_table_results(bench_id::AbstractString, src_dir::Abstr
     end
 
     # Render all tables for a single problem as Markdown/HTML
-    function render_problem_tables(problem, df; heading_mode::Symbol = :markdown)
+    function render_problem_tables(problem, df; heading_mode::Symbol=:markdown)
         prob_df = filter(row -> row.problem == problem, df)
         if isempty(prob_df)
             return ""
@@ -87,9 +90,11 @@ function _print_benchmark_table_results(bench_id::AbstractString, src_dir::Abstr
         sort!(prob_df, [:grid_size, :model, :solver])
 
         # Compute best (minimal) time per N for this problem
-        best_time_by_N = Dict{Any, Float64}()
+        best_time_by_N = Dict{Any,Float64}()
         for sub in groupby(prob_df, :grid_size)
-            sub_success = filter(row -> row.success == true && row.benchmark !== nothing, sub)
+            sub_success = filter(
+                row -> row.success == true && row.benchmark !== nothing, sub
+            )
             if isempty(sub_success)
                 continue
             end
@@ -118,8 +123,14 @@ function _print_benchmark_table_results(bench_id::AbstractString, src_dir::Abstr
                     print(local_buf, "\n\n")
                 end
 
-                print(local_buf, "| Success | N | Model | Solver | Time (ms) | Iters | Objective | Criterion | Best |\n")
-                print(local_buf, "|:------:|---:|:------|:-------|----------:|------:|----------:|:---------:|:----:|\n")
+                print(
+                    local_buf,
+                    "| Success | N | Model | Solver | Time (ms) | Iters | Objective | Criterion | Best |\n",
+                )
+                print(
+                    local_buf,
+                    "|:------:|---:|:------|:-------|----------:|------:|----------:|:---------:|:----:|\n",
+                )
 
                 subN_df = filter(row -> row.grid_size == Nval, prob_df)
 
@@ -141,7 +152,6 @@ function _print_benchmark_table_results(bench_id::AbstractString, src_dir::Abstr
                             time_val = Float64(time_raw)
                             time_ms_str = @sprintf("%.3f", time_val * 1000)
                         end
-
                     end
 
                     obj_str = if ismissing(row.objective) || row.objective === nothing
@@ -150,24 +160,51 @@ function _print_benchmark_table_results(bench_id::AbstractString, src_dir::Abstr
                         @sprintf("%.6f", row.objective)
                     end
 
-                    iter_str = (ismissing(row.iterations) || row.iterations === nothing) ? "N/A" : string(row.iterations)
-
-                    criterion_str = if hasproperty(row, :criterion) && !(ismissing(row.criterion) || row.criterion === nothing)
-                        string(row.criterion)
-                    else
+                    iter_str = if (ismissing(row.iterations) || row.iterations === nothing)
                         "N/A"
+                    else
+                        string(row.iterations)
                     end
+
+                    criterion_str =
+                        if hasproperty(row, :criterion) &&
+                            !(ismissing(row.criterion) || row.criterion === nothing)
+                            string(row.criterion)
+                        else
+                            "N/A"
+                        end
 
                     is_best = false
                     if success && haskey(best_time_by_N, N) && time_val !== nothing
                         best_time = best_time_by_N[N]
-                        is_best = abs(time_val - best_time) <= (eps(Float64) * max(1.0, abs(best_time)))
+                        is_best =
+                            abs(time_val - best_time) <=
+                            (eps(Float64) * max(1.0, abs(best_time)))
                     end
                     best_mark = is_best ? "✓" : ""
 
-                    print(local_buf, "| ", success_mark, " | ", N, " | `", model, "` | `", solver, "` | ",
-                          time_ms_str, " | ", iter_str, " | ", obj_str, " | ", criterion_str,
-                          " | ", best_mark, " |\n")
+                    print(
+                        local_buf,
+                        "| ",
+                        success_mark,
+                        " | ",
+                        N,
+                        " | `",
+                        model,
+                        "` | `",
+                        solver,
+                        "` | ",
+                        time_ms_str,
+                        " | ",
+                        iter_str,
+                        " | ",
+                        obj_str,
+                        " | ",
+                        criterion_str,
+                        " | ",
+                        best_mark,
+                        " |\n",
+                    )
                 end
             end
 
@@ -182,7 +219,10 @@ function _print_benchmark_table_results(bench_id::AbstractString, src_dir::Abstr
 
                 print(local_buf, "<table class=\"ct-benchmark-table\">\n")
                 print(local_buf, "  <thead>\n")
-                print(local_buf, "    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>\n")
+                print(
+                    local_buf,
+                    "    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>\n",
+                )
                 print(local_buf, "  </thead>\n")
                 print(local_buf, "  <tbody>\n")
 
@@ -206,7 +246,6 @@ function _print_benchmark_table_results(bench_id::AbstractString, src_dir::Abstr
                             time_val = Float64(time_raw)
                             time_ms_str = @sprintf("%.3f", time_val * 1000)
                         end
-
                     end
 
                     obj_str = if ismissing(row.objective) || row.objective === nothing
@@ -215,18 +254,26 @@ function _print_benchmark_table_results(bench_id::AbstractString, src_dir::Abstr
                         @sprintf("%.6f", row.objective)
                     end
 
-                    iter_str = (ismissing(row.iterations) || row.iterations === nothing) ? "N/A" : string(row.iterations)
-
-                    criterion_str = if hasproperty(row, :criterion) && !(ismissing(row.criterion) || row.criterion === nothing)
-                        string(row.criterion)
-                    else
+                    iter_str = if (ismissing(row.iterations) || row.iterations === nothing)
                         "N/A"
+                    else
+                        string(row.iterations)
                     end
+
+                    criterion_str =
+                        if hasproperty(row, :criterion) &&
+                            !(ismissing(row.criterion) || row.criterion === nothing)
+                            string(row.criterion)
+                        else
+                            "N/A"
+                        end
 
                     is_best = false
                     if success && haskey(best_time_by_N, N) && time_val !== nothing
                         best_time = best_time_by_N[N]
-                        is_best = abs(time_val - best_time) <= (eps(Float64) * max(1.0, abs(best_time)))
+                        is_best =
+                            abs(time_val - best_time) <=
+                            (eps(Float64) * max(1.0, abs(best_time)))
                     end
                     best_mark = is_best ? "✓" : ""
 
@@ -258,7 +305,7 @@ function _print_benchmark_table_results(bench_id::AbstractString, src_dir::Abstr
 
     # Single problem: keep the original long-form rendering
     if length(problems_in_df) == 1
-        return render_problem_tables(first(problems_in_df), df; heading_mode = :markdown)
+        return render_problem_tables(first(problems_in_df), df; heading_mode=:markdown)
     end
 
     # Multiple problems: build a selector + one table per problem, wrapped in @raw html
@@ -285,9 +332,16 @@ function _print_benchmark_table_results(bench_id::AbstractString, src_dir::Abstr
     for (idx, problem) in enumerate(problems_in_df)
         problem_key = sanitize_id(problem)
         display_style = idx == 1 ? "" : " style=\"display:none;\""
-        print(buf, "<div class=\"ct-problem-table\" data-problem=\"", problem_key, "\"", display_style, ">\n\n")
+        print(
+            buf,
+            "<div class=\"ct-problem-table\" data-problem=\"",
+            problem_key,
+            "\"",
+            display_style,
+            ">\n\n",
+        )
 
-        content = render_problem_tables(problem, df; heading_mode = :html)
+        content = render_problem_tables(problem, df; heading_mode=:html)
         if !isempty(content)
             print(buf, content)
         end
@@ -308,7 +362,10 @@ function _print_benchmark_table_results(bench_id::AbstractString, src_dir::Abstr
     print(buf, "    var blocks = container.querySelectorAll('.ct-problem-table');\n")
     print(buf, "    for (var i = 0; i < blocks.length; i++) {\n")
     print(buf, "      var b = blocks[i];\n")
-    print(buf, "      b.style.display = (b.getAttribute('data-problem') === value) ? '' : 'none';\n")
+    print(
+        buf,
+        "      b.style.display = (b.getAttribute('data-problem') === value) ? '' : 'none';\n",
+    )
     print(buf, "    }\n")
     print(buf, "  }\n")
     print(buf, "  // Try to restore last selection from localStorage\n")
@@ -316,7 +373,9 @@ function _print_benchmark_table_results(bench_id::AbstractString, src_dir::Abstr
     print(buf, "    if (window.localStorage) {\n")
     print(buf, "      var saved = localStorage.getItem(storageKey);\n")
     print(buf, "      if (saved) {\n")
-    print(buf, "        var opt = select.querySelector('option[value=\"' + saved + '\"]');\n")
+    print(
+        buf, "        var opt = select.querySelector('option[value=\"' + saved + '\"]');\n"
+    )
     print(buf, "        if (opt) { select.value = saved; }\n")
     print(buf, "      }\n")
     print(buf, "    }\n")
@@ -327,7 +386,9 @@ function _print_benchmark_table_results(bench_id::AbstractString, src_dir::Abstr
     print(buf, "    var value = this.value;\n")
     print(buf, "    showProblem(value);\n")
     print(buf, "    try {\n")
-    print(buf, "      if (window.localStorage) { localStorage.setItem(storageKey, value); }\n")
+    print(
+        buf, "      if (window.localStorage) { localStorage.setItem(storageKey, value); }\n"
+    )
     print(buf, "    } catch (e) {}\n")
     print(buf, "  });\n")
     print(buf, "})();\n")

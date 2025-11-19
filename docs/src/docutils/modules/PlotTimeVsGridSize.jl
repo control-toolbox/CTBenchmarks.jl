@@ -19,7 +19,9 @@ plot the mean solve time per grid size for each combination.
 - `Plots.Plot`: Line plot of solve time vs grid size. Returns an empty plot if
   no data is available.
 """
-function _plot_time_vs_grid_size(problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString)
+function _plot_time_vs_grid_size(
+    problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString
+)
     raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing
         println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
@@ -33,7 +35,10 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id::AbstractStri
     end
 
     df = DataFrame(rows)
-    df_successful = filter(row -> row.success == true && row.benchmark !== nothing && row.problem == problem, df)
+    df_successful = filter(
+        row -> row.success == true && row.benchmark !== nothing && row.problem == problem,
+        df,
+    )
     if isempty(df_successful)
         println("⚠️ No successful benchmark entry to analyze for problem: $problem")
         return plot()
@@ -55,21 +60,21 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id::AbstractStri
     x_min = max(0, min_N - padding)
     x_max = max_N + padding
 
-    plt = plot(
-        xlabel = "Grid size N",
-        ylabel = "Solve time (s)",
-        title = "\nSolve time vs grid size — $problem",
-        legend = :bottomright,
-        grid = true,
-        size = (900, 600),
-        xticks = sort(unique(df_successful.grid_size)),
-        xlims = (x_min, x_max),
-        left_margin = 5mm,
-        bottom_margin = 5mm,
-        top_margin = 5mm,
-        titlefont = title_font,
-        xguidefont = label_font,
-        yguidefont = label_font,
+    plt = plot(;
+        xlabel="Grid size N",
+        ylabel="Solve time (s)",
+        title="\nSolve time vs grid size — $problem",
+        legend=:bottomright,
+        grid=true,
+        size=(900, 600),
+        xticks=sort(unique(df_successful.grid_size)),
+        xlims=(x_min, x_max),
+        left_margin=5mm,
+        bottom_margin=5mm,
+        top_margin=5mm,
+        titlefont=title_font,
+        xguidefont=label_font,
+        yguidefont=label_font,
     )
 
     for (idx, c) in enumerate(combos)
@@ -83,11 +88,20 @@ function _plot_time_vs_grid_size(problem::AbstractString, bench_id::AbstractStri
         color = CTBenchmarks.get_color(first_row.model, first_row.solver, idx)
         marker = CTBenchmarks.get_marker_style(first_row.model, first_row.solver, idx)
 
-        plot!(xs, ys, label = c, lw = 1.5, color = color,
-              marker = marker, markersize = 4, markerstrokewidth = 0)
+        plot!(
+            xs,
+            ys;
+            label=c,
+            lw=1.5,
+            color=color,
+            marker=marker,
+            markersize=4,
+            markerstrokewidth=0,
+        )
     end
 
-    DOC_DEBUG[] && @info "  ✅ Time vs grid size plot generated for problem: $problem and bench_id: $bench_id"
+    DOC_DEBUG[] &&
+        @info "  ✅ Time vs grid size plot generated for problem: $problem and bench_id: $bench_id"
     return plt
 end
 
@@ -114,7 +128,7 @@ function _plot_time_vs_grid_size_bar(
     problem::AbstractString,
     bench_id::AbstractString,
     src_dir::AbstractString;
-    max_bar_width::Real = 0.08,
+    max_bar_width::Real=0.08,
 )
     raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing
@@ -129,7 +143,10 @@ function _plot_time_vs_grid_size_bar(
     end
 
     df = DataFrame(rows)
-    df_successful = filter(row -> row.success == true && row.benchmark !== nothing && row.problem == problem, df)
+    df_successful = filter(
+        row -> row.success == true && row.benchmark !== nothing && row.problem == problem,
+        df,
+    )
     if isempty(df_successful)
         println("⚠️ No successful benchmark entry to analyze for problem: $problem")
         return plot()
@@ -166,22 +183,22 @@ function _plot_time_vs_grid_size_bar(
         center_spacing = bar_width / 0.6
     end
 
-    offsets = (collect(0:nC-1) .- (nC - 1) / 2) .* center_spacing
+    offsets = (collect(0:(nC - 1)) .- (nC - 1) / 2) .* center_spacing
 
-    plt = plot(
-        xlabel = "Grid size N",
-        ylabel = "Solve time (s)",
-        title = "\nSolve time vs grid size (bar) — $problem",
-        legend = :topleft,
-        grid = true,
-        size = (900, 600),
-        xticks = (x_base, xtick_labels),
-        left_margin = 5mm,
-        bottom_margin = 5mm,
-        top_margin = 5mm,
-        titlefont = title_font,
-        xguidefont = label_font,
-        yguidefont = label_font,
+    plt = plot(;
+        xlabel="Grid size N",
+        ylabel="Solve time (s)",
+        title="\nSolve time vs grid size (bar) — $problem",
+        legend=:topleft,
+        grid=true,
+        size=(900, 600),
+        xticks=(x_base, xtick_labels),
+        left_margin=5mm,
+        bottom_margin=5mm,
+        top_margin=5mm,
+        titlefont=title_font,
+        xguidefont=label_font,
+        yguidefont=label_font,
     )
 
     for (j, c) in enumerate(combos)
@@ -199,12 +216,14 @@ function _plot_time_vs_grid_size_bar(
         first_row = first(eachrow(sub))
         color = CTBenchmarks.get_color(first_row.model, first_row.solver, j)
 
-        bar!(xj, yj;
-             bar_width = bar_width,
-             label = c,
-             color = color,
-             linecolor = :transparent,
-             linewidth = 0,
+        bar!(
+            xj,
+            yj;
+            bar_width=bar_width,
+            label=c,
+            color=color,
+            linecolor=:transparent,
+            linewidth=0,
         )
     end
 
@@ -216,6 +235,7 @@ function _plot_time_vs_grid_size_bar(
         xlims!(plt, (x_min, x_max))
     end
 
-    DOC_DEBUG[] && @info "  ✅ Time vs grid size bar plot generated for problem: $problem and bench_id: $bench_id"
+    DOC_DEBUG[] &&
+        @info "  ✅ Time vs grid size bar plot generated for problem: $problem and bench_id: $bench_id"
     return plt
 end

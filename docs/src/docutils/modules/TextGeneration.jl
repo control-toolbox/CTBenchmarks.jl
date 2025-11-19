@@ -69,7 +69,11 @@ function _analyze_profile_default_cpu_from_args(args...)
     for spec in args[2:end]
         parts = split(String(spec), ":")
         if length(parts) != 2
-            error("Invalid combo specification '" * String(spec) * "'. Expected 'model:solver'.")
+            error(
+                "Invalid combo specification '" *
+                String(spec) *
+                "'. Expected 'model:solver'.",
+            )
         end
         push!(combos, (parts[1], parts[2]))
     end
@@ -107,7 +111,11 @@ function _analyze_profile_default_iter_from_args(args...)
     for spec in args[2:end]
         parts = split(String(spec), ":")
         if length(parts) != 2
-            error("Invalid combo specification '" * String(spec) * "'. Expected 'model:solver'.")
+            error(
+                "Invalid combo specification '" *
+                String(spec) *
+                "'. Expected 'model:solver'.",
+            )
         end
         push!(combos, (parts[1], parts[2]))
     end
@@ -115,7 +123,7 @@ function _analyze_profile_default_iter_from_args(args...)
     return _analyze_profile_default_iter(bench_id; combos=combos)
 end
 
-const TEXT_FUNCTIONS = Dict{String, Function}(
+const TEXT_FUNCTIONS = Dict{String,Function}(
     "_analyze_profile_default_cpu" => _analyze_profile_default_cpu_from_args,
     "_analyze_profile_default_iter" => _analyze_profile_default_iter_from_args,
     "_print_benchmark_table_results" => _print_benchmark_table_results_from_args,
@@ -139,7 +147,9 @@ Safely call a registered text function with string arguments.
 function call_text_function(function_name::AbstractString, args::Vector{<:AbstractString})
     if !haskey(TEXT_FUNCTIONS, function_name)
         available = join(sort(collect(keys(TEXT_FUNCTIONS))), ", ")
-        error("Function '$function_name' not found in TEXT_FUNCTIONS registry. Available: $available")
+        error(
+            "Function '$function_name' not found in TEXT_FUNCTIONS registry. Available: $available",
+        )
     end
 
     func = TEXT_FUNCTIONS[function_name]
