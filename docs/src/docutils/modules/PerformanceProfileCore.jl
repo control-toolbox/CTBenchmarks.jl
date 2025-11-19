@@ -109,10 +109,12 @@ aggregation), and computes Dolan–Moré ratios and solver–model labels.
   `nothing` if no instances or valid metrics are found.
 """
 
-function build_profile_from_df(df::DataFrame,
-                               bench_id::AbstractString,
-                               cfg::PerformanceProfileConfig{M};
-                               allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing) where {M}
+function build_profile_from_df(
+    df::DataFrame,
+    bench_id::AbstractString,
+    cfg::PerformanceProfileConfig{M};
+    allowed_combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing,
+) where {M}
     # All instances attempted (for any solver/model)
     df_instances = unique(select(df, cfg.instance_cols...))
     if isempty(df_instances)
@@ -127,10 +129,14 @@ function build_profile_from_df(df::DataFrame,
     if allowed_combos !== nothing && !isempty(allowed_combos)
         if cfg.solver_cols == [:model, :solver]
             allowed_set = Set(allowed_combos)
-            df_filtered = filter(row -> begin
-                    hasproperty(row, :model) && hasproperty(row, :solver) &&
-                    (String(row.model), String(row.solver)) in allowed_set
-                end, df_filtered)
+            df_filtered = filter(
+                row -> begin
+                    hasproperty(row, :model) &&
+                        hasproperty(row, :solver) &&
+                        (String(row.model), String(row.solver)) in allowed_set
+                end,
+                df_filtered,
+            )
         else
             @warn "allowed_combos is only supported when solver_cols == [:model, :solver]; ignoring filter."
         end
@@ -164,7 +170,7 @@ function build_profile_from_df(df::DataFrame,
         return best
     end
     df_best = combine(inst_grouped, :metric => _best_metric => :best_metric)
-    df_metric = leftjoin(df_metric, df_best, on = cfg.instance_cols)
+    df_metric = leftjoin(df_metric, df_best; on=cfg.instance_cols)
 
     # Dolan–Moré ratio (assumes smaller is better for the chosen metric)
     df_metric.ratio = df_metric.metric ./ df_metric.best_metric
@@ -218,10 +224,12 @@ identified by `bench_id` using the provided configuration.
 This function loads the benchmark JSON file, converts it to a `DataFrame`, and
 delegates to `build_profile_from_df`.
 """
-function compute_profile_generic(bench_id::AbstractString,
-                                 src_dir::AbstractString,
-                                 cfg::PerformanceProfileConfig{M};
-                                 allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing) where {M}
+function compute_profile_generic(
+    bench_id::AbstractString,
+    src_dir::AbstractString,
+    cfg::PerformanceProfileConfig{M};
+    allowed_combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing,
+) where {M}
     raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing
         @warn "No result (missing or invalid file) for bench_id: $bench_id"
@@ -251,12 +259,13 @@ The underlying metric is the CPU time stored in `row.benchmark["time"]`, and
 instances are defined by `(problem, grid_size)` and solver combinations by
 `(model, solver)`.
 """
-function compute_profile_default_cpu(bench_id::AbstractString,
-                                     src_dir::AbstractString;
-                                     allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+function compute_profile_default_cpu(
+    bench_id::AbstractString,
+    src_dir::AbstractString;
+    allowed_combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing,
+)
     cpu_criterion = ProfileCriterion{Float64}(
-        "CPU time",
-        row -> begin
+        "CPU time", row -> begin
             bench = row.benchmark
             if bench === nothing || ismissing(bench)
                 return NaN
@@ -264,8 +273,7 @@ function compute_profile_default_cpu(bench_id::AbstractString,
             time_raw = get(bench, "time", nothing)
             time_raw === nothing && return NaN
             return Float64(time_raw)
-        end,
-        (a, b) -> a <= b,
+        end, (a, b) -> a <= b
     )
 
     cfg = PerformanceProfileConfig{Float64}(
@@ -293,9 +301,11 @@ The underlying metric is the `iterations` field recorded in the benchmark
 results, using the same instance and solver-combination definitions as the
 CPU-time profile.
 """
-function compute_profile_default_iter(bench_id::AbstractString,
-                                      src_dir::AbstractString;
-                                      allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+function compute_profile_default_iter(
+    bench_id::AbstractString,
+    src_dir::AbstractString;
+    allowed_combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing,
+)
     iter_criterion = ProfileCriterion{Float64}(
         "Iterations",
         row -> begin
@@ -311,7 +321,10 @@ function compute_profile_default_iter(bench_id::AbstractString,
         [:problem, :grid_size],
         [:model, :solver],
         iter_criterion,
-        row -> row.success == true && hasproperty(row, :iterations) && !ismissing(row.iterations),
+        row ->
+            row.success == true &&
+            hasproperty(row, :iterations) &&
+            !ismissing(row.iterations),
         row -> true,
         xs -> mean(skipmissing(xs)),
     )

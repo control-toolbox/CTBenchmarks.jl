@@ -101,28 +101,34 @@ end
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # Analysis functions
-function _analyze_profile_default_cpu(bench_id::AbstractString;
-                                      combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+function _analyze_profile_default_cpu(
+    bench_id::AbstractString; combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing
+)
     return _analyze_profile_default_cpu(bench_id, SRC_DIR; allowed_combos=combos)
 end
 
-function _analyze_profile_default_iter(bench_id::AbstractString;
-                                       combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+function _analyze_profile_default_iter(
+    bench_id::AbstractString; combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing
+)
     return _analyze_profile_default_iter(bench_id, SRC_DIR; allowed_combos=combos)
 end
 
-function _print_benchmark_table_results(bench_id::AbstractString; problems::Union{Nothing, Vector{<:AbstractString}}=nothing)
+function _print_benchmark_table_results(
+    bench_id::AbstractString; problems::Union{Nothing,Vector{<:AbstractString}}=nothing
+)
     return _print_benchmark_table_results(bench_id, SRC_DIR; problems=problems)
 end
 
 # Plotting functions
-function _plot_profile_default_cpu(bench_id::AbstractString;
-                                   combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+function _plot_profile_default_cpu(
+    bench_id::AbstractString; combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing
+)
     return _plot_profile_default_cpu(bench_id, SRC_DIR; allowed_combos=combos)
 end
 
-function _plot_profile_default_iter(bench_id::AbstractString;
-                                    combos::Union{Nothing, Vector{Tuple{String,String}}}=nothing)
+function _plot_profile_default_iter(
+    bench_id::AbstractString; combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing
+)
     return _plot_profile_default_iter(bench_id, SRC_DIR; allowed_combos=combos)
 end
 
@@ -164,7 +170,9 @@ function _complete_manifest(bench_id::AbstractString)
 end
 
 # Log display functions
-function _print_benchmark_log(bench_id::AbstractString; problems::Union{Nothing, Vector{<:AbstractString}}=nothing)
+function _print_benchmark_log(
+    bench_id::AbstractString; problems::Union{Nothing,Vector{<:AbstractString}}=nothing
+)
     return _print_benchmark_log(bench_id, SRC_DIR; problems=problems)
 end
 

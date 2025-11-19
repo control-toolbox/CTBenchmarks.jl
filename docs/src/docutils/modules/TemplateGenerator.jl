@@ -82,13 +82,13 @@ The generated section includes:
 """
 function generate_template_problem(
     problem_name::String,
-    bench_id::String, 
+    bench_id::String,
     bench_title::String,
     bench_desc::String,
     env_name::String,
     src_dir::String,
     assets_href_prefix::String,
-    )
+)
 
     # ───────────────────────────────────────────────────────────────────────────
     # Build section title
@@ -99,7 +99,7 @@ function generate_template_problem(
     # Add optional description
     # ───────────────────────────────────────────────────────────────────────────
     DESC = isempty(bench_desc) ? "" : bench_desc * "\n"
-    
+
     # ───────────────────────────────────────────────────────────────────────────
     # Generate INCLUDE_ENVIRONMENT block
     # This will be replaced by template_processor.jl with actual environment info
@@ -150,7 +150,7 @@ function generate_template_problem(
 
         # Store figure blocks indexed by N for sorted output
         blocks_by_N = Dict{Int,String}()
-        
+
         for filename in files
             # Check if filename matches the pattern
             m = match(pattern, filename)
@@ -274,7 +274,9 @@ function is_problem_in_benchmark(bench_id::String, problem_name::String, src_dir
 
     # Check if problem exists with valid benchmark data
     df = DataFrame(rows)
-    df_successful = filter(row -> row.benchmark !== nothing && row.problem == problem_name, df)
+    df_successful = filter(
+        row -> row.benchmark !== nothing && row.problem == problem_name, df
+    )
     return !isempty(df_successful)
 end
 
@@ -296,13 +298,13 @@ function get_problems_in_benchmark(bench_id::String, src_dir::String)
     if raw === nothing
         return []
     end
-    
+
     # Extract results
     rows = get(raw, "results", Any[])
     if isempty(rows)
         return []
     end
-    
+
     # Get unique problem names
     df = DataFrame(rows)
     return unique(df.problem)
@@ -320,7 +322,9 @@ Retrieve all problems that appear in at least one benchmark from a list.
 # Returns
 - `Vector{String}`: Unique list of problem names across all benchmarks
 """
-function get_problems_in_benchmarks(benchmarks::Vector{Tuple{String, String, String}}, src_dir::String)
+function get_problems_in_benchmarks(
+    benchmarks::Vector{Tuple{String,String,String}}, src_dir::String
+)
     problems = String[]
     # Collect problems from each benchmark
     for (bench_id, _, _) in benchmarks
@@ -360,14 +364,13 @@ configuration where the problem has results.
 """
 function generate_template_problem_from_list(
     problem_name::String,
-    benchmarks::Vector{Tuple{String, String, String}},
+    benchmarks::Vector{Tuple{String,String,String}},
     title::String,
     desc::String,
     src_dir::String,
     assets_href_prefix::String;
     draft::Union{Bool,Nothing},
-    )
-
+)
     env_name = "BENCH"
     blocks = String[]
 
@@ -393,12 +396,21 @@ function generate_template_problem_from_list(
     # Generate sections for each benchmark where the problem has results
     for (bench_id, bench_title, bench_desc) in benchmarks
         if is_problem_in_benchmark(bench_id, problem_name, src_dir)
-            DOC_DEBUG[] && @info "  ✓ Generating section for problem '$problem_name' in benchmark '$bench_id'"
-            md = generate_template_problem(problem_name, bench_id, bench_title, bench_desc, env_name, src_dir, assets_href_prefix)
+            DOC_DEBUG[] &&
+                @info "  ✓ Generating section for problem '$problem_name' in benchmark '$bench_id'"
+            md = generate_template_problem(
+                problem_name,
+                bench_id,
+                bench_title,
+                bench_desc,
+                env_name,
+                src_dir,
+                assets_href_prefix,
+            )
             push!(blocks, md)
-        end 
+        end
     end
-    
+
     return join(blocks, "\n")
 end
 
@@ -423,9 +435,7 @@ problems and creates a documentation template file for each one.
 - `Tuple{Vector{String}, String}`: (list of generated file paths, problems directory path)
 """
 function write_core_benchmark_templates(
-    src_dir::String,
-    draft::Union{Bool,Nothing}, 
-    exclude_from_draft::Vector{Symbol}
+    src_dir::String, draft::Union{Bool,Nothing}, exclude_from_draft::Vector{Symbol}
 )
     # Create output directory
     problems_dir = joinpath(src_dir, "core", "problems")
@@ -437,11 +447,15 @@ function write_core_benchmark_templates(
 
     # Define core benchmark configurations
     benchmarks = [
-        ("core-ubuntu-latest", "Ubuntu Latest CPU", "This benchmark suite evaluates optimal control problems on a standard CPU platform using GitHub Actions runners."),
+        (
+            "core-ubuntu-latest",
+            "Ubuntu Latest CPU",
+            "This benchmark suite evaluates optimal control problems on a standard CPU platform using GitHub Actions runners.",
+        ),
         ("core-moonshot-cpu", "Moonshot CPU", "Results on self-hosted CPU hardware."),
         ("core-moonshot-gpu", "Moonshot GPU", "Results on self-hosted GPU hardware."),
     ]
-    
+
     # Get all problems from all benchmarks
     problems = get_problems_in_benchmarks(benchmarks, src_dir)
 
@@ -453,7 +467,7 @@ function write_core_benchmark_templates(
     for problem_name in problems
         # Check if problem should be excluded from draft mode
         draft_problem = Symbol(problem_name) ∈ exclude_from_draft ? false : draft
-        
+
         # Set page metadata
         title = "Core benchmark: $problem_name"
         desc = """
@@ -461,17 +475,26 @@ function write_core_benchmark_templates(
 
         !!! note
             The linear solver is MUMPS for all experiments."""
-        
+
         # Generate template content
-        str = generate_template_problem_from_list(problem_name, benchmarks, title, desc, src_dir, assets_href_prefix; draft=draft_problem)
-        DOC_DEBUG[] && @info "  ✓ Generated template for problem '$problem_name' (draft=$(draft_problem))"
-        
+        str = generate_template_problem_from_list(
+            problem_name,
+            benchmarks,
+            title,
+            desc,
+            src_dir,
+            assets_href_prefix;
+            draft=draft_problem,
+        )
+        DOC_DEBUG[] &&
+            @info "  ✓ Generated template for problem '$problem_name' (draft=$(draft_problem))"
+
         # Write to file
         filepath = normpath(joinpath(problems_dir, "$(problem_name).md.template"))
         write(filepath, str)
         push!(files_generated, filepath)
     end
-    
+
     return files_generated, problems_dir
 end
 
@@ -499,9 +522,9 @@ Used in docs/make.jl to generate templates before building documentation.
 function with_processed_template_problems(
     f::Function,
     src_dir::String;
-    draft::Union{Bool,Nothing}=nothing, 
-    exclude_problems_from_draft::Vector{Symbol}=Symbol[]
-    )
+    draft::Union{Bool,Nothing}=nothing,
+    exclude_problems_from_draft::Vector{Symbol}=Symbol[],
+)
     @info "═"^70
     @info "📚 CTBenchmarks documentation build"
     @info "🚀 Starting template problem generation"
@@ -509,15 +532,17 @@ function with_processed_template_problems(
     @info "📋 Draft mode: $(isnothing(draft) ? "default" : draft)"
     @info "📋 Debug mode: $(DOC_DEBUG[])"
     @info "📋 Excluded from draft: $(isempty(exclude_problems_from_draft) ? "none" : join(exclude_problems_from_draft, ", "))"
-    
+
     # Generate all template files
-    core_files_generated, core_problems_dir = write_core_benchmark_templates(src_dir, draft, exclude_problems_from_draft)
-    
+    core_files_generated, core_problems_dir = write_core_benchmark_templates(
+        src_dir, draft, exclude_problems_from_draft
+    )
+
     # Extract problem names from file paths
     core_problems = [split(basename(filepath), ".")[1] for filepath in core_files_generated]
     @info "✅ Generated $(length(core_problems)) template(s): $(join(core_problems, ", "))"
     @info "═"^70
-    
+
     try
         # Execute user function with problem list
         return f(core_problems)
@@ -539,7 +564,8 @@ function with_processed_template_problems(
         if isdir(core_problems_dir) && isempty(readdir(core_problems_dir))
             rm(core_problems_dir)
             removed_dir = true
-            DOC_DEBUG[] && @info "  ✓ Removed empty directory: $(basename(core_problems_dir))"
+            DOC_DEBUG[] &&
+                @info "  ✓ Removed empty directory: $(basename(core_problems_dir))"
         end
         if removed_dir && !DOC_DEBUG[]
             @info "  ✓ Removed empty directory: $(basename(core_problems_dir))"

@@ -383,99 +383,99 @@ function solve_and_extract_data(
     end
 end
 
- """
-     $(TYPEDSIGNATURES)
+"""
+    $(TYPEDSIGNATURES)
 
- Check whether CUDA is available and functional on this machine.
+Check whether CUDA is available and functional on this machine.
 
- This function is used to decide whether GPU-based models (those whose name ends
- with `_gpu`) can be run in the benchmark suite.
+This function is used to decide whether GPU-based models (those whose name ends
+with `_gpu`) can be run in the benchmark suite.
 
- # Returns
- - `Bool`: `true` if CUDA is functional, `false` otherwise.
+# Returns
+- `Bool`: `true` if CUDA is functional, `false` otherwise.
 
- # Example
- ```julia-repl
- julia> using CTBenchmarks
+# Example
+```julia-repl
+julia> using CTBenchmarks
 
- julia> CTBenchmarks.is_cuda_on()
- false
- ```
- """
- is_cuda_on() = CUDA.functional()
+julia> CTBenchmarks.is_cuda_on()
+false
+```
+"""
+is_cuda_on() = CUDA.functional()
 
- """
-     $(TYPEDSIGNATURES)
+"""
+    $(TYPEDSIGNATURES)
 
- Filter solver models depending on backend availability and discretization support.
+Filter solver models depending on backend availability and discretization support.
 
- - GPU models (ending with `_gpu`) are kept only if CUDA is available.
- - JuMP models are kept only when `disc_method == :trapeze`.
+- GPU models (ending with `_gpu`) are kept only if CUDA is available.
+- JuMP models are kept only when `disc_method == :trapeze`.
 
- # Arguments
- - `models::Vector{Symbol}`: Candidate model types (e.g. `[:jump, :adnlp, :exa, :exa_gpu]`)
- - `disc_method::Symbol`: Discretization method (`:trapeze` or `:midpoint`)
+# Arguments
+- `models::Vector{Symbol}`: Candidate model types (e.g. `[:jump, :adnlp, :exa, :exa_gpu]`)
+- `disc_method::Symbol`: Discretization method (`:trapeze` or `:midpoint`)
 
- # Returns
- - `Vector{Symbol}`: Filtered list of models that are compatible with the current
-   backend configuration.
+# Returns
+- `Vector{Symbol}`: Filtered list of models that are compatible with the current
+  backend configuration.
 
- # Example
- ```julia-repl
- julia> using CTBenchmarks
+# Example
+```julia-repl
+julia> using CTBenchmarks
 
- julia> CTBenchmarks.filter_models_for_backend([:jump, :exa, :exa_gpu], :trapeze)
- 3-element Vector{Symbol}:
-  :jump
-  :exa
-  :exa_gpu
- ```
- """
- function filter_models_for_backend(models::Vector{Symbol}, disc_method::Symbol)
-     cuda_on = is_cuda_on()
-     supports_jump = disc_method == :trapeze
-     return [
-         model for model in models if
-         endswith(string(model), "_gpu") ? cuda_on : (model != :jump || supports_jump)
-     ]
- end
+julia> CTBenchmarks.filter_models_for_backend([:jump, :exa, :exa_gpu], :trapeze)
+3-element Vector{Symbol}:
+ :jump
+ :exa
+ :exa_gpu
+```
+"""
+function filter_models_for_backend(models::Vector{Symbol}, disc_method::Symbol)
+    cuda_on = is_cuda_on()
+    supports_jump = disc_method == :trapeze
+    return [
+        model for model in models if
+        endswith(string(model), "_gpu") ? cuda_on : (model != :jump || supports_jump)
+    ]
+end
 
- """
-     $(TYPEDSIGNATURES)
+"""
+    $(TYPEDSIGNATURES)
 
- Set print level based on solver and `print_trace` flag.
+Set print level based on solver and `print_trace` flag.
 
- For Ipopt, this returns an integer verbosity level. For MadNLP, it returns a
- `MadNLP.LogLevels` value. The flag `print_trace` is typically propagated from
- high-level benchmarking options.
+For Ipopt, this returns an integer verbosity level. For MadNLP, it returns a
+`MadNLP.LogLevels` value. The flag `print_trace` is typically propagated from
+high-level benchmarking options.
 
- # Arguments
- - `solver::Symbol`: Solver name (`:ipopt` or `:madnlp`)
- - `print_trace::Bool`: Whether detailed solver output should be printed
+# Arguments
+- `solver::Symbol`: Solver name (`:ipopt` or `:madnlp`)
+- `print_trace::Bool`: Whether detailed solver output should be printed
 
- # Returns
- - `Int` or `MadNLP.LogLevels`: Print level appropriate for the chosen solver
+# Returns
+- `Int` or `MadNLP.LogLevels`: Print level appropriate for the chosen solver
 
- # Example
- ```julia-repl
- julia> using CTBenchmarks
+# Example
+```julia-repl
+julia> using CTBenchmarks
 
- julia> CTBenchmarks.set_print_level(:ipopt, true)
- 5
+julia> CTBenchmarks.set_print_level(:ipopt, true)
+5
 
- julia> CTBenchmarks.set_print_level(:madnlp, false)
- MadNLP.ERROR
- ```
- """
- function set_print_level(solver::Symbol, print_trace::Bool)
-     if solver == :ipopt
-         return print_trace ? 5 : 0
-     elseif solver == :madnlp
-         return print_trace ? MadNLP.INFO : MadNLP.ERROR
-     else
-         error("undefined solver: $solver")
-     end
- end
+julia> CTBenchmarks.set_print_level(:madnlp, false)
+MadNLP.ERROR
+```
+"""
+function set_print_level(solver::Symbol, print_trace::Bool)
+    if solver == :ipopt
+        return print_trace ? 5 : 0
+    elseif solver == :madnlp
+        return print_trace ? MadNLP.INFO : MadNLP.ERROR
+    else
+        error("undefined solver: $solver")
+    end
+end
 
 """
     $(TYPEDSIGNATURES)
@@ -764,10 +764,10 @@ Dict{String, Any} with 3 entries:
 function build_payload(results::DataFrame, meta::Dict, config::Dict)
     # Extract solutions BEFORE conversion to JSON
     solutions = results.solution
-    
+
     # Create a copy of DataFrame WITHOUT solution column
     results_for_json = select(results, Not(:solution))
-    
+
     # Convert DataFrame to vector of dictionaries using Tables.jl interface
     # This preserves all column names and types automatically
     results_vec = [Dict(pairs(row)) for row in Tables.rows(results_for_json)]
@@ -809,12 +809,10 @@ julia> CTBenchmarks.save_json(payload, "benchmarks.json")
 """
 function save_json(payload::Dict, filepath::AbstractString)
     mkpath(dirname(filepath))
-    
+
     # Filter out solutions before JSON serialization
-    json_payload = Dict(
-        k => v for (k, v) in payload if k != "solutions"
-    )
-    
+    json_payload = Dict(k => v for (k, v) in payload if k != "solutions")
+
     open(filepath, "w") do io
         JSON.print(io, json_payload, 4)    # pretty printed with 4-space indent
         write(io, '\n')            # add trailing newline
