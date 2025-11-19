@@ -163,7 +163,8 @@ function replace_environment_blocks(content::String, env_template::String)
 
             # Substitute variables in the template
             substituted = substitute_variables(env_template, params)
-            DOC_DEBUG[] && @info "  ✓ Successfully replaced block #$block_count with $(length(params)) parameter(s)"
+            DOC_DEBUG[] &&
+                @info "  ✓ Successfully replaced block #$block_count with $(length(params)) parameter(s)"
 
             return substituted
         end,
@@ -221,81 +222,82 @@ function replace_figure_blocks(
     content::String,
     template_filename::String,
     figures_output_dir::String,
-    relative_path::String
+    relative_path::String,
 )
     # Regex to match INCLUDE_FIGURE blocks
     pattern = r"<!-- INCLUDE_FIGURE:\s*\n(.*?)-->"s
     block_count = 0
     figure_paths = String[]
-    
-    result = replace(content, pattern => function(match_str)
-        block_count += 1
-        DOC_DEBUG[] && @info "🖼️  Processing INCLUDE_FIGURE block #$block_count"
-        
-        # Extract the parameter block
-        m = match(pattern, match_str)
-        if m === nothing
-            @warn "  ✗ Failed to parse INCLUDE_FIGURE block"
-            return match_str
-        end
-        
-        param_block = m.captures[1]
-        params = parse_include_params(param_block)
-        
-        # Extract required parameters
-        function_name = get(params, "FUNCTION", nothing)
-        args_str = get(params, "ARGS", "")
-        
-        if function_name === nothing
-            @warn "  ✗ Missing FUNCTION parameter in INCLUDE_FIGURE block"
-            return match_str
-        end
-        
-        # Parse arguments (comma-separated, strip quotes and whitespace)
-        args = if isempty(args_str)
-            String[]
-        else
-            [strip(strip(arg), ['"', '\'']) for arg in split(args_str, ',')]
-        end
-        
-        # Generate figures (SVG for preview, PDF for download)
-        try
-            svg_file, pdf_file = generate_figure_files(
-                template_filename,
-                function_name,
-                args,
-                figures_output_dir
-            )
 
-            # Record absolute paths for later cleanup
-            push!(figure_paths, joinpath(figures_output_dir, svg_file))
-            push!(figure_paths, joinpath(figures_output_dir, pdf_file))
-            
-            # Generate HTML with clickable SVG→PDF
-            html = """```@raw html
-<a href="$relative_path/$pdf_file">
-  <img 
-    class="centering" 
-    width="100%" 
-    style="max-width:1400px" 
-    src="$relative_path/$svg_file"
-  />
-</a>
-```"""
-            
-            DOC_DEBUG[] && @info "  ✓ Replaced block #$block_count with figure: $svg_file"
-            return html
-            
-        catch e
-            if DOC_DEBUG[]
-                @error "  ✗ Failed to generate figure" exception = (e, catch_backtrace())
-            else
-                @error "  ✗ Failed to generate figure: $(e)"
+    result = replace(
+        content,
+        pattern => function (match_str)
+            block_count += 1
+            DOC_DEBUG[] && @info "🖼️  Processing INCLUDE_FIGURE block #$block_count"
+
+            # Extract the parameter block
+            m = match(pattern, match_str)
+            if m === nothing
+                @warn "  ✗ Failed to parse INCLUDE_FIGURE block"
+                return match_str
             end
-            return match_str  # Return original block on error
-        end
-    end)
-    
+
+            param_block = m.captures[1]
+            params = parse_include_params(param_block)
+
+            # Extract required parameters
+            function_name = get(params, "FUNCTION", nothing)
+            args_str = get(params, "ARGS", "")
+
+            if function_name === nothing
+                @warn "  ✗ Missing FUNCTION parameter in INCLUDE_FIGURE block"
+                return match_str
+            end
+
+            # Parse arguments (comma-separated, strip quotes and whitespace)
+            args = if isempty(args_str)
+                String[]
+            else
+                [strip(strip(arg), ['"', '\'']) for arg in split(args_str, ',')]
+            end
+
+            # Generate figures (SVG for preview, PDF for download)
+            try
+                svg_file, pdf_file = generate_figure_files(
+                    template_filename, function_name, args, figures_output_dir
+                )
+
+                # Record absolute paths for later cleanup
+                push!(figure_paths, joinpath(figures_output_dir, svg_file))
+                push!(figure_paths, joinpath(figures_output_dir, pdf_file))
+
+                # Generate HTML with clickable SVG→PDF
+                html = """```@raw html
+    <a href="$relative_path/$pdf_file">
+      <img 
+        class="centering" 
+        width="100%" 
+        style="max-width:1400px" 
+        src="$relative_path/$svg_file"
+      />
+    </a>
+    ```"""
+
+                DOC_DEBUG[] &&
+                    @info "  ✓ Replaced block #$block_count with figure: $svg_file"
+                return html
+
+            catch e
+                if DOC_DEBUG[]
+                    @error "  ✗ Failed to generate figure" exception = (e, catch_backtrace())
+                else
+                    @error "  ✗ Failed to generate figure: $(e)"
+                end
+                return match_str  # Return original block on error
+            end
+        end,
+    )
+
     @info "🖼️  Replaced $block_count INCLUDE_FIGURE block(s)"
     return result, figure_paths
 end
@@ -322,46 +324,50 @@ function replace_text_blocks(content::String)
     pattern = r"<!-- INCLUDE_(?:TEXT|ANALYSIS):\s*\n(.*?)-->"s
     block_count = 0
 
-    result = replace(content, pattern => function(match_str)
-        block_count += 1
-        DOC_DEBUG[] && @info "🧮 Processing INCLUDE_TEXT block #$block_count"
+    result = replace(
+        content,
+        pattern => function (match_str)
+            block_count += 1
+            DOC_DEBUG[] && @info "🧮 Processing INCLUDE_TEXT block #$block_count"
 
-        m = match(pattern, match_str)
-        if m === nothing
-            @warn "  ✗ Failed to parse INCLUDE_TEXT block"
-            return match_str
-        end
-
-        param_block = m.captures[1]
-        params = parse_include_params(param_block)
-
-        function_name = get(params, "FUNCTION", nothing)
-        args_str = get(params, "ARGS", "")
-
-        if function_name === nothing
-            @warn "  ✗ Missing FUNCTION parameter in INCLUDE_TEXT block"
-            return match_str
-        end
-
-        args = if isempty(args_str)
-            String[]
-        else
-            [strip(strip(arg), ['"', '\'']) for arg in split(args_str, ',')]
-        end
-
-        try
-            text_md = call_text_function(function_name, args)
-            DOC_DEBUG[] && @info "  ✓ Replaced INCLUDE_TEXT block #$block_count with generated Markdown"
-            return text_md
-        catch e
-            if DOC_DEBUG[]
-                @error "  ✗ Failed to generate analysis" exception=(e, catch_backtrace())
-            else
-                @error "  ✗ Failed to generate analysis: $(e)"
+            m = match(pattern, match_str)
+            if m === nothing
+                @warn "  ✗ Failed to parse INCLUDE_TEXT block"
+                return match_str
             end
-            return match_str
-        end
-    end)
+
+            param_block = m.captures[1]
+            params = parse_include_params(param_block)
+
+            function_name = get(params, "FUNCTION", nothing)
+            args_str = get(params, "ARGS", "")
+
+            if function_name === nothing
+                @warn "  ✗ Missing FUNCTION parameter in INCLUDE_TEXT block"
+                return match_str
+            end
+
+            args = if isempty(args_str)
+                String[]
+            else
+                [strip(strip(arg), ['"', '\'']) for arg in split(args_str, ',')]
+            end
+
+            try
+                text_md = call_text_function(function_name, args)
+                DOC_DEBUG[] &&
+                    @info "  ✓ Replaced INCLUDE_TEXT block #$block_count with generated Markdown"
+                return text_md
+            catch e
+                if DOC_DEBUG[]
+                    @error "  ✗ Failed to generate analysis" exception=(e, catch_backtrace())
+                else
+                    @error "  ✗ Failed to generate analysis: $(e)"
+                end
+                return match_str
+            end
+        end,
+    )
 
     @info "🧮 Replaced $block_count INCLUDE_TEXT block(s)"
     return result
@@ -397,7 +403,7 @@ function process_single_template(
     output_path::String,
     env_template::String,
     figures_output_dir::String,
-    figures_relative_path::String
+    figures_relative_path::String,
 )
     # Read the template file
     if !isfile(input_path)
@@ -406,19 +412,16 @@ function process_single_template(
 
     @info "📖 Reading template file: $input_path"
     content = read(input_path, String)
-    
+
     # Extract template filename for figure generation
     template_filename = basename(input_path)
 
     # Replace all INCLUDE_ENVIRONMENT blocks
     processed_content = replace_environment_blocks(content, env_template)
-    
+
     # Replace all INCLUDE_FIGURE blocks and collect generated figure paths
     processed_content, figure_paths = replace_figure_blocks(
-        processed_content,
-        template_filename,
-        figures_output_dir,
-        figures_relative_path
+        processed_content, template_filename, figures_output_dir, figures_relative_path
     )
 
     # Replace all INCLUDE_TEXT blocks
@@ -495,7 +498,7 @@ function process_templates(
         env_template = join(env_template_lines[(comment_end + 1):end], '\n')
         @info "  ✓ Removed $comment_end line(s) from template header"
     end
-    
+
     # Setup figures directory
     figures_output_dir = joinpath(src_dir, "assets", "plots")
     mkpath(figures_output_dir)
@@ -513,7 +516,7 @@ function process_templates(
 
         input_path = joinpath(src_dir, filename * ".template")
         output_path = joinpath(src_dir, filename)
-        
+
         # Determine relative path from output file to figures directory
         # Most files are in src/core/, so relative path is ../assets/plots
         # Adjust if needed based on file location
@@ -523,7 +526,8 @@ function process_templates(
         else
             # Count directory levels to go up
             levels = length(split(output_subdir, '/'))
-            figures_relative_path = join(fill("..", levels), "/") * joinpath("/","assets", "plots")
+            figures_relative_path =
+                join(fill("..", levels), "/") * joinpath("/", "assets", "plots")
         end
 
         try
@@ -532,7 +536,7 @@ function process_templates(
                 output_path,
                 env_template,
                 figures_output_dir,
-                figures_relative_path
+                figures_relative_path,
             )
             append!(all_figure_paths, figure_paths)
         catch e
@@ -603,7 +607,7 @@ function construct_template_files(template_files::Vector{String}, src_dir::Strin
         elseif isdir(joinpath(src_dir, file))
             for f in readdir(joinpath(src_dir, file))
                 if endswith(f, ".md.template")
-                    push!(files, joinpath(file, f[1:end-9]))
+                    push!(files, joinpath(file, f[1:(end - 9)]))
                 end
             end
         end
@@ -656,7 +660,9 @@ function with_processed_templates(
 )
     # Process templates to generate .md files and collect generated figure paths
     template_files = construct_template_files(template_files, src_dir)
-    figure_paths, figures_output_dir = process_templates(template_files, src_dir, templates_dir)
+    figure_paths, figures_output_dir = process_templates(
+        template_files, src_dir, templates_dir
+    )
     @info "📊 Collected $(length(figure_paths)) figure path(s) from process_templates"
 
     try
@@ -676,7 +682,8 @@ function with_processed_templates(
                 DOC_DEBUG[] && @info "  ✓ Removed: $(basename(output_file))"
             else
                 missing_templates += 1
-                DOC_DEBUG[] && @warn "  ⚠ File not found (already removed?): $(basename(output_file))"
+                DOC_DEBUG[] &&
+                    @warn "  ⚠ File not found (already removed?): $(basename(output_file))"
             end
         end
         @info "  ✓ Removed $deleted_templates template file(s)"
@@ -696,7 +703,8 @@ function with_processed_templates(
                     DOC_DEBUG[] && @info "  ✓ Removed figure: $(basename(fig_path))"
                 else
                     missing_figs += 1
-                    DOC_DEBUG[] && @warn "  ⚠ Figure file not found (already removed?): $(basename(fig_path))"
+                    DOC_DEBUG[] &&
+                        @warn "  ⚠ Figure file not found (already removed?): $(basename(fig_path))"
                 end
             end
             @info "  ✓ Removed $deleted_figs figure file(s)"
@@ -710,7 +718,8 @@ function with_processed_templates(
         if isdir(figures_output_dir) && isempty(readdir(figures_output_dir))
             rm(figures_output_dir)
             removed_fig_dir = true
-            DOC_DEBUG[] && @info "  ✓ Removed empty directory: $(basename(figures_output_dir))"
+            DOC_DEBUG[] &&
+                @info "  ✓ Removed empty directory: $(basename(figures_output_dir))"
         end
         if removed_fig_dir && !DOC_DEBUG[]
             @info "  ✓ Removed empty directory: $(basename(figures_output_dir))"
