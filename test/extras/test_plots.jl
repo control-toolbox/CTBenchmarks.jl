@@ -84,7 +84,9 @@ println("Test 1: plot_ocp_solution (beam with adnlp)")
 if beam_ocp_ipopt_result.success
     n_beam, m_beam = CTBenchmarks.get_solution_dimensions(beam_ocp_ipopt_result.solution)
     grid_size_beam = 200
-    marker, marker_interval = CTBenchmarks.get_marker_style(:adnlp, :ipopt, 1, grid_size_beam)
+    marker, marker_interval = CTBenchmarks.get_marker_style(
+        :adnlp, :ipopt, 1, grid_size_beam
+    )
     plt1 = CTBenchmarks.plot_ocp_solution(
         beam_ocp_ipopt_result.solution,
         :adnlp,
@@ -96,7 +98,7 @@ if beam_ocp_ipopt_result.success
         n_beam,
         m_beam,
         marker,
-        marker_interval
+        marker_interval,
     )
     println("  ✓ Created OCP plot for beam (n=$n_beam, m=$m_beam)")
     display(plt1)
@@ -107,9 +109,13 @@ end
 # Test 2: plot_ocp_solution (space_shuttle with adnlp)
 println("\nTest 2: plot_ocp_solution (space_shuttle with adnlp)")
 if shuttle_ocp_ipopt_result.success
-    n_shuttle, m_shuttle = CTBenchmarks.get_solution_dimensions(shuttle_ocp_ipopt_result.solution)
+    n_shuttle, m_shuttle = CTBenchmarks.get_solution_dimensions(
+        shuttle_ocp_ipopt_result.solution
+    )
     grid_size_shuttle = 500
-    marker, marker_interval = CTBenchmarks.get_marker_style(:adnlp, :ipopt, 2, grid_size_shuttle)
+    marker, marker_interval = CTBenchmarks.get_marker_style(
+        :adnlp, :ipopt, 2, grid_size_shuttle
+    )
     plt2 = CTBenchmarks.plot_ocp_solution(
         shuttle_ocp_ipopt_result.solution,
         :adnlp,
@@ -121,9 +127,11 @@ if shuttle_ocp_ipopt_result.success
         n_shuttle,
         m_shuttle,
         marker,
-        marker_interval
+        marker_interval,
     )
-    println("  ✓ Plotted space_shuttle with adnlp on fresh figure (n=$n_shuttle, m=$m_shuttle)")
+    println(
+        "  ✓ Plotted space_shuttle with adnlp on fresh figure (n=$n_shuttle, m=$m_shuttle)"
+    )
     display(plt2)
 else
     println("  ✗ Failed to solve space_shuttle with adnlp")
@@ -132,9 +140,13 @@ end
 # Test 3: plot_jump_solution (beam with JuMP)
 println("\nTest 3: plot_jump_solution (beam with JuMP)")
 if beam_jump_ipopt_result.success
-    n_beam_jump, m_beam_jump = CTBenchmarks.get_solution_dimensions(beam_jump_ipopt_result.solution)
+    n_beam_jump, m_beam_jump = CTBenchmarks.get_solution_dimensions(
+        beam_jump_ipopt_result.solution
+    )
     grid_size_beam_jump = 200
-    marker, marker_interval = CTBenchmarks.get_marker_style(:jump, :ipopt, 3, grid_size_beam_jump)
+    marker, marker_interval = CTBenchmarks.get_marker_style(
+        :jump, :ipopt, 3, grid_size_beam_jump
+    )
     plt3 = CTBenchmarks.plot_jump_solution(
         beam_jump_ipopt_result.solution,
         :jump,
@@ -147,7 +159,7 @@ if beam_jump_ipopt_result.success
         m_beam_jump,
         beam_jump_ipopt_result.criterion,
         marker,
-        marker_interval
+        marker_interval,
     )
     println("  ✓ Plotted beam with JuMP (n=$n_beam_jump, m=$m_beam_jump)")
     display(plt3)
@@ -158,9 +170,13 @@ end
 # Test 4: plot_jump_solution (space_shuttle with JuMP)
 println("\nTest 4: plot_jump_solution (space_shuttle with JuMP)")
 if shuttle_jump_ipopt_result.success
-    n_shuttle_jump, m_shuttle_jump = CTBenchmarks.get_solution_dimensions(shuttle_jump_ipopt_result.solution)
+    n_shuttle_jump, m_shuttle_jump = CTBenchmarks.get_solution_dimensions(
+        shuttle_jump_ipopt_result.solution
+    )
     grid_size_shuttle_jump = 500
-    marker, marker_interval = CTBenchmarks.get_marker_style(:jump, :ipopt, 4, grid_size_shuttle_jump)
+    marker, marker_interval = CTBenchmarks.get_marker_style(
+        :jump, :ipopt, 4, grid_size_shuttle_jump
+    )
     plt4 = CTBenchmarks.plot_jump_solution(
         shuttle_jump_ipopt_result.solution,
         :jump,
@@ -173,7 +189,7 @@ if shuttle_jump_ipopt_result.success
         m_shuttle_jump,
         shuttle_jump_ipopt_result.criterion,
         marker,
-        marker_interval
+        marker_interval,
     )
     println("  ✓ Plotted space_shuttle with JuMP (n=$n_shuttle_jump, m=$m_shuttle_jump)")
     display(plt4)
@@ -192,7 +208,9 @@ println("\n🎯 Testing plot overlays on existing figures...\n")
 println("Test 5: overlay JuMP solution on beam OCP plot")
 if beam_ocp_ipopt_result.success && beam_jump_ipopt_result.success
     grid_size_beam_jump = 200
-    marker, marker_interval = CTBenchmarks.get_marker_style(:jump, :ipopt, 3, grid_size_beam_jump)
+    marker, marker_interval = CTBenchmarks.get_marker_style(
+        :jump, :ipopt, 3, grid_size_beam_jump
+    )
     CTBenchmarks.plot_jump_solution!(
         plt1,
         beam_jump_ipopt_result.solution,
@@ -218,7 +236,9 @@ end
 println("\nTest 6: overlay JuMP solution on space_shuttle OCP plot")
 if shuttle_ocp_ipopt_result.success && shuttle_jump_ipopt_result.success
     grid_size_shuttle_jump = 500
-    marker, marker_interval = CTBenchmarks.get_marker_style(:jump, :ipopt, 4, grid_size_shuttle_jump)
+    marker, marker_interval = CTBenchmarks.get_marker_style(
+        :jump, :ipopt, 4, grid_size_shuttle_jump
+    )
     CTBenchmarks.plot_jump_solution!(
         plt2,
         shuttle_jump_ipopt_result.solution,
@@ -250,7 +270,7 @@ println("Test 7: plot_ocp_group (beam with adnlp, ipopt + madnlp)")
 if beam_ocp_ipopt_result.success && beam_ocp_madnlp_result.success
     using DataFrames
     # Create a DataFrame with both beam OCP solutions
-    ocp_df = DataFrame(
+    ocp_df = DataFrame(;
         solution=[beam_ocp_ipopt_result.solution, beam_ocp_madnlp_result.solution],
         model=[:adnlp, :adnlp],
         solver=[:ipopt, :madnlp],
@@ -258,11 +278,11 @@ if beam_ocp_ipopt_result.success && beam_ocp_madnlp_result.success
         problem=[:beam, :beam],
         grid_size=[200, 200],
     )
-    
+
     # Convert to SubDataFrame using groupby
     grouped = groupby(ocp_df, [:problem, :grid_size])
     ocp_group = grouped[1]  # Get the first (and only) group
-    
+
     plt7, _ = CTBenchmarks.plot_ocp_group(
         ocp_group,
         nothing,  # no existing plot
@@ -282,7 +302,7 @@ end
 println("\nTest 8: plot_jump_group (beam with JuMP, ipopt + madnlp)")
 if beam_jump_ipopt_result.success && beam_jump_madnlp_result.success
     # Create a DataFrame with both beam JuMP solutions
-    jump_df = DataFrame(
+    jump_df = DataFrame(;
         solution=[beam_jump_ipopt_result.solution, beam_jump_madnlp_result.solution],
         model=[:jump, :jump],
         solver=[:ipopt, :madnlp],
@@ -291,11 +311,11 @@ if beam_jump_ipopt_result.success && beam_jump_madnlp_result.success
         problem=[:beam, :beam],
         grid_size=[200, 200],
     )
-    
+
     # Convert to SubDataFrame using groupby
     grouped = groupby(jump_df, [:problem, :grid_size])
     jump_group = grouped[1]  # Get the first (and only) group
-    
+
     plt8, _ = CTBenchmarks.plot_jump_group(
         jump_group,
         nothing,  # no existing plot
@@ -320,15 +340,17 @@ println("\n🔀 Testing plot_solution_comparison...\n")
 
 # Test 9: plot_solution_comparison with beam (all 4 solutions: 2 OCP + 2 JuMP)
 println("Test 9: plot_solution_comparison (beam with all solutions)")
-if beam_ocp_ipopt_result.success && beam_ocp_madnlp_result.success && 
-   beam_jump_ipopt_result.success && beam_jump_madnlp_result.success
+if beam_ocp_ipopt_result.success &&
+    beam_ocp_madnlp_result.success &&
+    beam_jump_ipopt_result.success &&
+    beam_jump_madnlp_result.success
     # Create a DataFrame with all 4 beam solutions
-    all_beam_df = DataFrame(
+    all_beam_df = DataFrame(;
         solution=[
             beam_ocp_ipopt_result.solution,
             beam_ocp_madnlp_result.solution,
             beam_jump_ipopt_result.solution,
-            beam_jump_madnlp_result.solution
+            beam_jump_madnlp_result.solution,
         ],
         model=[:adnlp, :adnlp, :jump, :jump],
         solver=[:ipopt, :madnlp, :ipopt, :madnlp],
@@ -336,27 +358,23 @@ if beam_ocp_ipopt_result.success && beam_ocp_madnlp_result.success &&
             beam_ocp_ipopt_result.success,
             beam_ocp_madnlp_result.success,
             beam_jump_ipopt_result.success,
-            beam_jump_madnlp_result.success
+            beam_jump_madnlp_result.success,
         ],
         criterion=[
             beam_ocp_ipopt_result.criterion,
             beam_ocp_madnlp_result.criterion,
             beam_jump_ipopt_result.criterion,
-            beam_jump_madnlp_result.criterion
+            beam_jump_madnlp_result.criterion,
         ],
         problem=[:beam, :beam, :beam, :beam],
         grid_size=[200, 200, 200, 200],
     )
-    
+
     # Convert to SubDataFrame using groupby
     grouped = groupby(all_beam_df, [:problem, :grid_size])
     comparison_group = grouped[1]
-    
-    plt9 = CTBenchmarks.plot_solution_comparison(
-        comparison_group,
-        :beam,
-        200
-    )
+
+    plt9 = CTBenchmarks.plot_solution_comparison(comparison_group, :beam, 200)
     println("  ✓ Created comparison plot for beam with 4 solutions (2 OCP + 2 JuMP)")
     display(plt9)
 else
@@ -372,14 +390,8 @@ println("\n📈 Testing plot_solutions (full benchmark pipeline)...\n")
 
 println("Running small benchmark...")
 results = CTBenchmarks.benchmark(;
-    problems=[
-        :beam,
-        :space_shuttle,
-    ],
-    solver_models=[
-        :ipopt => [:jump, :adnlp],
-        :madnlp => [:jump, :adnlp],
-    ],
+    problems=[:beam, :space_shuttle],
+    solver_models=[:ipopt => [:jump, :adnlp], :madnlp => [:jump, :adnlp]],
     grid_sizes=[200, 500],
     disc_methods=[:trapeze],
     tol=1e-8,

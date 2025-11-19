@@ -164,7 +164,9 @@ Render benchmark configuration parameters as Markdown.
 function _print_config(bench_id::AbstractString, src_dir::AbstractString)
     bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data === nothing
-        return Markdown.parse("⚠️  No configuration available because the benchmark file is missing.")
+        return Markdown.parse(
+            "⚠️  No configuration available because the benchmark file is missing."
+        )
     end
 
     meta = get(bench_data, "metadata", Dict())
@@ -200,11 +202,21 @@ function _print_config(bench_id::AbstractString, src_dir::AbstractString)
         end
     end
 
-    solvers_str = isempty(solvers) ? "n/a" : join(replace.(sort(collect(solvers)), "_" => "\\_"), ", ")
-    models_str = isempty(models) ? "n/a" : join(replace.(sort(collect(models)), "_" => "\\_"), ", ")
-    problems_str = isempty(problems) ? "n/a" : join(replace.(string.(problems), "_" => "\\_"), ", ")
+    solvers_str = if isempty(solvers)
+        "n/a"
+    else
+        join(replace.(sort(collect(solvers)), "_" => "\\_"), ", ")
+    end
+    models_str =
+        isempty(models) ? "n/a" : join(replace.(sort(collect(models)), "_" => "\\_"), ", ")
+    problems_str =
+        isempty(problems) ? "n/a" : join(replace.(string.(problems), "_" => "\\_"), ", ")
     grid_sizes_str = isempty(grid_sizes) ? "n/a" : join(string.(grid_sizes), ", ")
-    disc_methods_str = isempty(disc_methods) ? "n/a" : join(replace.(string.(disc_methods), "_" => "\\_"), ", ")
+    disc_methods_str = if isempty(disc_methods)
+        "n/a"
+    else
+        join(replace.(string.(disc_methods), "_" => "\\_"), ", ")
+    end
 
     lines = String[
         "- **Problems:** $problems_str",

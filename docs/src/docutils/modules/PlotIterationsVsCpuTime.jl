@@ -21,9 +21,9 @@ in the `(iterations, CPU time)` plane.
 - `Plots.Plot`: Scatter plot of iteration count vs CPU time. Returns an empty
   plot if no data is available.
 """
-function _plot_iterations_vs_cpu_time(problem::AbstractString,
-                                      bench_id::AbstractString,
-                                      src_dir::AbstractString)
+function _plot_iterations_vs_cpu_time(
+    problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString
+)
     raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing
         println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
@@ -37,7 +37,10 @@ function _plot_iterations_vs_cpu_time(problem::AbstractString,
     end
 
     df = DataFrame(rows)
-    df_successful = filter(row -> row.success == true && row.benchmark !== nothing && row.problem == problem, df)
+    df_successful = filter(
+        row -> row.success == true && row.benchmark !== nothing && row.problem == problem,
+        df,
+    )
     if isempty(df_successful)
         println("⚠️ No successful benchmark entry to analyze for problem: $problem")
         return plot()
@@ -54,8 +57,10 @@ function _plot_iterations_vs_cpu_time(problem::AbstractString,
         time_raw = get(bench, "time", nothing)
         iter_raw = hasproperty(row, :iterations) ? row.iterations : nothing
 
-        if time_raw === nothing || ismissing(time_raw) ||
-           iter_raw === nothing || ismissing(iter_raw)
+        if time_raw === nothing ||
+            ismissing(time_raw) ||
+            iter_raw === nothing ||
+            ismissing(iter_raw)
             continue
         end
 
@@ -71,12 +76,7 @@ function _plot_iterations_vs_cpu_time(problem::AbstractString,
     end
 
     # Build a small DataFrame for plotting convenience
-    df_plot = DataFrame(
-        time = times,
-        iterations = iters,
-        model = models,
-        solver = solvers,
-    )
+    df_plot = DataFrame(; time=times, iterations=iters, model=models, solver=solvers)
 
     # Derive combination labels
     df_plot.combo = string.("(", df_plot.model, ", ", df_plot.solver, ")")
@@ -84,19 +84,19 @@ function _plot_iterations_vs_cpu_time(problem::AbstractString,
 
     title_font, label_font = _plot_font_settings()
 
-    plt = plot(
-        xlabel = "Iterations",
-        ylabel = "CPU time (s)",
-        title = "\nIterations vs CPU time — $problem",
-        legend = :topleft,
-        grid = true,
-        size = (900, 600),
-        left_margin = 5mm,
-        bottom_margin = 5mm,
-        top_margin = 5mm,
-        titlefont = title_font,
-        xguidefont = label_font,
-        yguidefont = label_font,
+    plt = plot(;
+        xlabel="Iterations",
+        ylabel="CPU time (s)",
+        title="\nIterations vs CPU time — $problem",
+        legend=:topleft,
+        grid=true,
+        size=(900, 600),
+        left_margin=5mm,
+        bottom_margin=5mm,
+        top_margin=5mm,
+        titlefont=title_font,
+        xguidefont=label_font,
+        yguidefont=label_font,
     )
 
     for (idx, c) in enumerate(combos)
@@ -112,14 +112,15 @@ function _plot_iterations_vs_cpu_time(problem::AbstractString,
         scatter!(
             sub.iterations,
             sub.time;
-            label = c,
-            color = color,
-            markershape = marker,
-            markersize = 6,
-            markerstrokewidth = 0,
+            label=c,
+            color=color,
+            markershape=marker,
+            markersize=6,
+            markerstrokewidth=0,
         )
     end
 
-    DOC_DEBUG[] && @info "  ✅ Iterations vs CPU time plot generated for problem: $problem and bench_id: $bench_id"
+    DOC_DEBUG[] &&
+        @info "  ✅ Iterations vs CPU time plot generated for problem: $problem and bench_id: $bench_id"
     return plt
 end

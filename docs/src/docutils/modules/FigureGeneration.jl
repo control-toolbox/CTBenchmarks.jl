@@ -42,7 +42,11 @@ function _plot_profile_default_cpu_from_args(args...)
     for spec in args[2:end]
         parts = split(String(spec), ":")
         if length(parts) != 2
-            error("Invalid combo specification '" * String(spec) * "'. Expected 'model:solver'.")
+            error(
+                "Invalid combo specification '" *
+                String(spec) *
+                "'. Expected 'model:solver'.",
+            )
         end
         push!(combos, (parts[1], parts[2]))
     end
@@ -75,7 +79,11 @@ function _plot_profile_default_iter_from_args(args...)
     for spec in args[2:end]
         parts = split(String(spec), ":")
         if length(parts) != 2
-            error("Invalid combo specification '" * String(spec) * "'. Expected 'model:solver'.")
+            error(
+                "Invalid combo specification '" *
+                String(spec) *
+                "'. Expected 'model:solver'.",
+            )
         end
         push!(combos, (parts[1], parts[2]))
     end
@@ -83,7 +91,7 @@ function _plot_profile_default_iter_from_args(args...)
     return _plot_profile_default_iter(bench_id; combos=combos)
 end
 
-const FIGURE_FUNCTIONS = Dict{String, Function}(
+const FIGURE_FUNCTIONS = Dict{String,Function}(
     "_plot_profile_default_cpu" => _plot_profile_default_cpu_from_args,
     "_plot_profile_default_iter" => _plot_profile_default_iter_from_args,
     "_plot_time_vs_grid_size" => _plot_time_vs_grid_size,
@@ -114,13 +122,15 @@ plt = call_figure_function("_plot_profile_default_cpu", ["core-ubuntu-latest"])
 function call_figure_function(function_name::AbstractString, args::Vector{<:AbstractString})
     if !haskey(FIGURE_FUNCTIONS, function_name)
         available = join(sort(collect(keys(FIGURE_FUNCTIONS))), ", ")
-        error("Function '$function_name' not found in FIGURE_FUNCTIONS registry. Available: $available")
+        error(
+            "Function '$function_name' not found in FIGURE_FUNCTIONS registry. Available: $available",
+        )
     end
-    
+
     func = FIGURE_FUNCTIONS[function_name]
-    
+
     DOC_DEBUG[] && @info "  📞 Calling $function_name($(join(args, ", ")))"
-    
+
     # Call function with string arguments
     return func(args...)
 end
@@ -148,18 +158,20 @@ basename = generate_figure_basename("cpu.md.template", "_plot_profile_default_cp
 # Returns: "cpu_plot_profile_default_cpu_a3f2c1d4"
 ```
 """
-function generate_figure_basename(template_name::AbstractString, function_name::AbstractString, args_str::AbstractString)
+function generate_figure_basename(
+    template_name::AbstractString, function_name::AbstractString, args_str::AbstractString
+)
     # Extract base name from template (remove .md.template)
     base = replace(template_name, r"\.md\.template$" => "")
-    
+
     # Clean function name (remove leading underscore)
     func_clean = replace(function_name, r"^_" => "")
-    
+
     # Generate short hash from function name + arguments for uniqueness
     hash_input = function_name * "_" * args_str
     hash_bytes = sha256(hash_input)
     hash_short = bytes2hex(hash_bytes)[1:8]
-    
+
     return "$(base)_$(func_clean)_$(hash_short)"
 end
 
@@ -197,31 +209,32 @@ function generate_figure_files(
     template_name::AbstractString,
     function_name::AbstractString,
     args::Vector{<:AbstractString},
-    output_dir::AbstractString
+    output_dir::AbstractString,
 )
     # Generate unique basename
     args_str = join(args, "_")
     basename = generate_figure_basename(template_name, function_name, args_str)
-    
+
     # Create output directory if it doesn't exist
     mkpath(output_dir)
-    
+
     # Call the plotting function
-    DOC_DEBUG[] && @info "  🎨 Generating figure: $function_name($(join(["\"$arg\"" for arg in args], ", ")))"
+    DOC_DEBUG[] &&
+        @info "  🎨 Generating figure: $function_name($(join(["\"$arg\"" for arg in args], ", ")))"
     plt = call_figure_function(function_name, args)
-    
+
     # Define file names
     svg_file = basename * ".svg"
     pdf_file = basename * ".pdf"
     svg_path = joinpath(output_dir, svg_file)
     pdf_path = joinpath(output_dir, pdf_file)
-    
+
     # Save both formats
     savefig(plt, svg_path)
     savefig(plt, pdf_path)
-    
+
     DOC_DEBUG[] && @info "  ✓ Saved: $svg_file and $pdf_file"
-    
+
     # Return just the filenames (not full paths)
     return (svg_file, pdf_file)
 end

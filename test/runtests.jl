@@ -8,11 +8,7 @@ using CUDA
 
 #
 @testset verbose = true showtiming = true "CTBenchmarks tests" begin
-    for name in (
-        :aqua, 
-        :run,
-        :utils,
-    )
+    for name in (:aqua, :run, :utils)
         @testset "$(name)" begin
             test_name = Symbol(:test_, name)
             include("$(test_name).jl")

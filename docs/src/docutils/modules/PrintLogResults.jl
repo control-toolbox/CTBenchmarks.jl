@@ -28,8 +28,11 @@ Results are displayed line-by-line with coloured formatting for easy
 readability. If `problems` is specified, only results for those problems are
 shown.
 """
-function _print_benchmark_log(bench_id::AbstractString, src_dir::AbstractString; 
-    problems::Union{Nothing, Vector{<:AbstractString}}=nothing)
+function _print_benchmark_log(
+    bench_id::AbstractString,
+    src_dir::AbstractString;
+    problems::Union{Nothing,Vector{<:AbstractString}}=nothing,
+)
     bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data === nothing
         println("⚠️  No results to display because the benchmark file is missing.")
@@ -104,7 +107,11 @@ function _print_benchmark_log(bench_id::AbstractString, src_dir::AbstractString;
                                 iterations=row.iterations,
                                 status=row.status,
                                 success=row.success,
-                                criterion=hasproperty(row, :criterion) ? row.criterion : missing,
+                                criterion=if hasproperty(row, :criterion)
+                                    row.criterion
+                                else
+                                    missing
+                                end,
                             )
                             print("│  │")
                             CTBenchmarks.print_benchmark_line(Symbol(row.model), stats)
