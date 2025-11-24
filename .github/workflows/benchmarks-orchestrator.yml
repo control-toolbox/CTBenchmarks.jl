@@ -19,7 +19,7 @@ jobs:
       benchmarks_summary: ${{ steps.check.outputs.benchmarks_summary }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       
       - name: Check which benchmarks should run
         id: check
@@ -178,7 +178,7 @@ jobs:
       # Checkout repository
       # ---------------------------
       - name: Checkout with latest changes
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref || github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
