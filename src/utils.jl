@@ -615,7 +615,7 @@ function benchmark_data(;
 
                     # Print the benchmark line with colors
                     print("│  │")
-                    print_benchmark_line(model, stats)
+                    print_benchmark_line(model, disc_method, stats)
 
                     # Store results in DataFrame
                     push!(

@@ -131,8 +131,11 @@ julia> CTBenchmarks.print_benchmark_line(:jump, stats)
   ✓ | jump     | time:      0.123 s  | iters:   100 | obj: 4.250000e+01 (min) | CPU:       1.00 MiB
 ```
 """
-function print_benchmark_line(model::Symbol, stats::NamedTuple)
+function print_benchmark_line(model::Symbol, disc_method::Symbol, stats::NamedTuple)
     bench = stats.benchmark
+
+    # Formatage de la colonne schéma (assez large pour "euler_implicit")
+    disc_str = rpad(string(disc_method), 14)
 
     # Handle error cases where benchmark is missing or nothing
     if ismissing(bench) || isnothing(bench)
@@ -140,6 +143,8 @@ function print_benchmark_line(model::Symbol, stats::NamedTuple)
         # Print with colored model name
         printstyled("  ✗ | "; color=:red, bold=true)
         printstyled(rpad(string(model), 8); color=:magenta, bold=true)
+        print(" | ")
+        printstyled(disc_str; color=:yellow)
         println(": $error_msg")
         return nothing
     end
@@ -206,6 +211,8 @@ function print_benchmark_line(model::Symbol, stats::NamedTuple)
 
     print(" | ")
     printstyled(rpad(string(model), 8); color=:magenta, bold=true)
+    print(" | ")
+    printstyled(disc_str; color=:yellow) # Affiche le schéma en jaune
     println(
         " | time: $time_str | iters: $iter_str | obj: $obj_str ($criterion_str) | $memory_display",
     )
