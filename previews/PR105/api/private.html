@@ -55,6 +55,7 @@ julia&gt; CTBenchmarks.filter_models_for_backend([:jump, :exa, :exa_gpu], :trape
  :exa_gpu</code></pre></div></section></details></article><h2 id="format_solution_label"><a class="docs-heading-anchor" href="#format_solution_label"><code>format_solution_label</code></a><a id="format_solution_label-1"></a><a class="docs-heading-anchor-permalink" href="#format_solution_label" title="Permalink"></a></h2><article><details class="docstring" open="true"><summary id="CTBenchmarks.format_solution_label"><a class="docstring-binding" href="#CTBenchmarks.format_solution_label"><code>CTBenchmarks.format_solution_label</code></a> — <span class="docstring-category">Function</span></summary><section><div><pre><code class="language-julia hljs">format_solution_label(
     model::Symbol,
     solver::Symbol,
+    disc_method::Union{String, Symbol},
     success::Bool
 ) -&gt; String
 </code></pre><p>Format a short label for use in plot legends, combining success status with the model and solver names.</p><p>The label starts with a tick or cross depending on whether the solution was successful, followed by <code>model-solver</code>.</p><p><strong>Arguments</strong></p><ul><li><code>model::Symbol</code>: Model name (e.g. <code>:jump</code>, <code>:adnlp</code>, <code>:exa</code>)</li><li><code>solver::Symbol</code>: Solver name (e.g. <code>:ipopt</code>, <code>:madnlp</code>)</li><li><code>success::Bool</code>: Whether the solve succeeded (<code>true</code>) or failed (<code>false</code>)</li></ul><p><strong>Returns</strong></p><ul><li><code>String</code>: A label such as <code>&quot;✓ jump-ipopt&quot;</code> or <code>&quot;✗ exa-madnlp&quot;</code></li></ul><p><strong>Example</strong></p><pre><code class="language-julia-repl hljs">julia&gt; using CTBenchmarks
@@ -74,6 +75,7 @@ Dict{String, String} with 7 entries:
   ⋮</code></pre></div></section></details></article><h2 id="get_color"><a class="docs-heading-anchor" href="#get_color"><code>get_color</code></a><a id="get_color-1"></a><a class="docs-heading-anchor-permalink" href="#get_color" title="Permalink"></a></h2><article><details class="docstring" open="true"><summary id="CTBenchmarks.get_color"><a class="docstring-binding" href="#CTBenchmarks.get_color"><code>CTBenchmarks.get_color</code></a> — <span class="docstring-category">Function</span></summary><section><div><pre><code class="language-julia hljs">get_color(
     model::Union{String, Symbol},
     solver::Union{String, Symbol},
+    disc_method::Union{String, Symbol},
     idx::Int64
 ) -&gt; Symbol
 </code></pre><p>Return a consistent color for a given (model, solver) pair.</p><p>This function ensures visual consistency across plots by assigning fixed colors to known (model, solver) combinations. For unknown combinations, it cycles through a default palette based on the provided index.</p><p><strong>Fixed Mappings</strong></p><ul><li><code>(adnlp, ipopt)</code> → <code>:blue</code></li><li><code>(exa, ipopt)</code> → <code>:red</code></li><li><code>(adnlp, madnlp)</code> → <code>:green</code></li><li><code>(exa, madnlp)</code> → <code>:orange</code></li><li><code>(jump, ipopt)</code> → <code>:purple</code></li><li><code>(jump, madnlp)</code> → <code>:brown</code></li><li><code>(exa_gpu, madnlp)</code> → <code>:cyan</code></li></ul><p><strong>Arguments</strong></p><ul><li><code>model::Union{Symbol,String}</code>: Model name (case-insensitive)</li><li><code>solver::Union{Symbol,String}</code>: Solver name (case-insensitive)</li><li><code>idx::Int</code>: Index for palette fallback (used if pair not in fixed mappings)</li></ul><p><strong>Returns</strong></p><ul><li><code>Symbol</code>: Color symbol suitable for Plots.jl (e.g., <code>:blue</code>, <code>:red</code>)</li></ul><p><strong>Example</strong></p><pre><code class="language-julia-repl hljs">julia&gt; using CTBenchmarks
@@ -110,6 +112,7 @@ julia&gt; CTBenchmarks.get_marker_indices(2, 3, 100, 20)
 8:20:101</code></pre></div></section></details></article><h2 id="get_marker_style"><a class="docs-heading-anchor" href="#get_marker_style"><code>get_marker_style</code></a><a id="get_marker_style-1"></a><a class="docs-heading-anchor-permalink" href="#get_marker_style" title="Permalink"></a></h2><article><details class="docstring" open="true"><summary id="CTBenchmarks.get_marker_style"><a class="docstring-binding" href="#CTBenchmarks.get_marker_style"><code>CTBenchmarks.get_marker_style</code></a> — <span class="docstring-category">Function</span></summary><section><div><pre><code class="language-julia hljs">get_marker_style(
     model::Union{String, Symbol},
     solver::Union{String, Symbol},
+    disc_method::Union{String, Symbol},
     idx::Int64
 ) -&gt; Symbol
 </code></pre><p>Get marker shape and spacing for a given (model, solver) pair.</p><p>This function provides consistent marker styles for known (model, solver) combinations and automatically calculates appropriate marker spacing based on grid size to avoid visual clutter while maintaining visibility.</p><p><strong>Fixed Mappings</strong></p><ul><li><code>(adnlp, ipopt)</code> → <code>:circle</code></li><li><code>(exa, ipopt)</code> → <code>:square</code></li><li><code>(adnlp, madnlp)</code> → <code>:diamond</code></li><li><code>(exa, madnlp)</code> → <code>:utriangle</code></li><li><code>(jump, ipopt)</code> → <code>:dtriangle</code></li><li><code>(jump, madnlp)</code> → <code>:star5</code></li><li><code>(exa_gpu, madnlp)</code> → <code>:hexagon</code></li></ul><p><strong>Arguments</strong></p><ul><li><code>model::Union{Symbol,String}</code>: Model name (case-insensitive)</li><li><code>solver::Union{Symbol,String}</code>: Solver name (case-insensitive)</li><li><code>idx::Int</code>: Index for marker fallback (used if pair not in fixed mappings)</li><li><code>grid_size::Int</code>: Number of grid points on the curve</li></ul><p><strong>Returns</strong></p><ul><li><code>Tuple{Symbol, Int}</code>: <code>(marker_shape, marker_interval)</code> where:<ul><li><code>marker_shape</code>: Symbol for marker type (e.g., <code>:circle</code>, <code>:square</code>)</li><li><code>marker_interval</code>: Spacing between markers (calculated as <code>max(1, grid_size ÷ 6)</code>)</li></ul></li></ul><p><strong>Example</strong></p><pre><code class="language-julia-repl hljs">julia&gt; using CTBenchmarks
@@ -158,7 +161,7 @@ plot_jump_group(
     n::Int64,
     m::Int64,
     criterion
-) -&gt; Any
+)
 plot_jump_solution(
     solution,
     model::Symbol,
@@ -171,7 +174,7 @@ plot_jump_solution(
     m::Int64,
     criterion,
     marker
-) -&gt; Any
+)
 plot_jump_solution(
     solution,
     model::Symbol,
@@ -185,7 +188,7 @@ plot_jump_solution(
     criterion,
     marker,
     marker_interval
-) -&gt; Any
+)
 plot_jump_solution(
     solution,
     model::Symbol,
@@ -200,7 +203,7 @@ plot_jump_solution(
     marker,
     marker_interval,
     idx::Int64
-) -&gt; Any
+)
 plot_jump_solution(
     solution,
     model::Symbol,
@@ -216,7 +219,7 @@ plot_jump_solution(
     marker_interval,
     idx::Int64,
     card_g::Int64
-) -&gt; Any
+)
 </code></pre><p>Create a new multi-panel plot for a single JuMP solution.</p><p>Generates a comprehensive visualization with state, costate, and control trajectories from a JuMP model, with spaced markers and legend entry indicating success status.</p><p><strong>Arguments</strong></p><ul><li><code>solution</code>: JuMP.Model object</li><li><code>model::Symbol</code>: Model name (for legend)</li><li><code>solver::Symbol</code>: Solver name (for legend)</li><li><code>success::Bool</code>: Whether the solution converged successfully</li><li><code>color</code>: Color symbol (from <code>get_color</code>)</li><li><code>problem::Symbol</code>: Problem name (for plot styling)</li><li><code>grid_size::Int</code>: Grid size</li><li><code>n::Int</code>: Number of states</li><li><code>m::Int</code>: Number of controls</li><li><code>criterion</code>: Optimization criterion (<code>:min</code> or <code>:max</code>, affects costate sign)</li><li><code>marker</code>: Marker shape symbol (default: <code>:circle</code>)</li><li><code>marker_interval::Int</code>: Spacing between markers (default: 10)</li><li><code>idx::Int</code>: Curve index for marker offset (default: 1)</li><li><code>card_g::Int</code>: Total number of curves for marker offset (default: 1)</li></ul><p><strong>Returns</strong></p><ul><li><code>Plots.Plot</code>: Multi-panel plot with (n + n + m) subplots</li></ul></div></section></details></article><h2 id="plot_jump_solution!"><a class="docs-heading-anchor" href="#plot_jump_solution!"><code>plot_jump_solution!</code></a><a id="plot_jump_solution!-1"></a><a class="docs-heading-anchor-permalink" href="#plot_jump_solution!" title="Permalink"></a></h2><article><details class="docstring" open="true"><summary id="CTBenchmarks.plot_jump_solution!"><a class="docstring-binding" href="#CTBenchmarks.plot_jump_solution!"><code>CTBenchmarks.plot_jump_solution!</code></a> — <span class="docstring-category">Function</span></summary><section><div><pre><code class="language-julia hljs">plot_jump_solution!(
     plt,
     solution,
@@ -227,7 +230,7 @@ plot_jump_solution(
     n::Int64,
     m::Int64,
     criterion
-) -&gt; Any
+)
 plot_jump_solution!(
     plt,
     solution,
@@ -239,7 +242,7 @@ plot_jump_solution!(
     m::Int64,
     criterion,
     marker
-) -&gt; Any
+)
 plot_jump_solution!(
     plt,
     solution,
@@ -252,7 +255,7 @@ plot_jump_solution!(
     criterion,
     marker,
     marker_interval
-) -&gt; Any
+)
 plot_jump_solution!(
     plt,
     solution,
@@ -266,7 +269,7 @@ plot_jump_solution!(
     marker,
     marker_interval,
     idx::Int64
-) -&gt; Any
+)
 plot_jump_solution!(
     plt,
     solution,
@@ -281,7 +284,7 @@ plot_jump_solution!(
     marker_interval,
     idx::Int64,
     card_g::Int64
-) -&gt; Any
+)
 </code></pre><p>Add a JuMP solution to an existing multi-panel plot.</p><p>Appends state, costate, and control trajectories from a JuMP model to existing subplots with spaced markers and consistent styling. Updates the legend with success status.</p><p><strong>Arguments</strong></p><ul><li><code>plt</code>: Existing Plots.Plot to modify</li><li><code>solution</code>: JuMP.Model object</li><li><code>model::Symbol</code>: Model name (for legend)</li><li><code>solver::Symbol</code>: Solver name (for legend)</li><li><code>success::Bool</code>: Whether the solution converged successfully</li><li><code>color</code>: Color symbol (from <code>get_color</code>)</li><li><code>n::Int</code>: Number of states</li><li><code>m::Int</code>: Number of controls</li><li><code>criterion</code>: Optimization criterion (<code>:min</code> or <code>:max</code>, affects costate sign)</li><li><code>marker</code>: Marker shape symbol (default: <code>:none</code>)</li><li><code>marker_interval::Int</code>: Spacing between markers (default: 10)</li><li><code>idx::Int</code>: Curve index for marker offset (default: 1)</li><li><code>card_g::Int</code>: Total number of curves for marker offset (default: 1)</li></ul><p><strong>Returns</strong></p><ul><li><code>Plots.Plot</code>: Modified plot with new solution added</li></ul><p><strong>Note</strong></p><p>Even with nested layout, subplots are accessed linearly:</p><ul><li><code>plt[1:n]</code> = states</li><li><code>plt[n+1:2n]</code> = costates</li><li><code>plt[2n+1:2n+m]</code> = controls</li></ul></div></section></details></article><h2 id="plot_ocp_group"><a class="docs-heading-anchor" href="#plot_ocp_group"><code>plot_ocp_group</code></a><a id="plot_ocp_group-1"></a><a class="docs-heading-anchor-permalink" href="#plot_ocp_group" title="Permalink"></a></h2><article><details class="docstring" open="true"><summary id="CTBenchmarks.plot_ocp_group"><a class="docstring-binding" href="#CTBenchmarks.plot_ocp_group"><code>CTBenchmarks.plot_ocp_group</code></a> — <span class="docstring-category">Function</span></summary><section><div><pre><code class="language-julia hljs">plot_ocp_group(
     ocp_rows::DataFrames.SubDataFrame,
     plt,
@@ -305,6 +308,7 @@ plot_ocp_group(
     solution,
     model::Symbol,
     solver::Symbol,
+    disc_method,
     success::Bool,
     color,
     problem::Symbol,
@@ -318,6 +322,7 @@ plot_ocp_solution(
     solution,
     model::Symbol,
     solver::Symbol,
+    disc_method,
     success::Bool,
     color,
     problem::Symbol,
@@ -332,6 +337,7 @@ plot_ocp_solution(
     solution,
     model::Symbol,
     solver::Symbol,
+    disc_method,
     success::Bool,
     color,
     problem::Symbol,
@@ -348,6 +354,7 @@ plot_ocp_solution(
     solution,
     model::Symbol,
     solver::Symbol,
+    disc_method,
     success::Bool,
     color,
     n::Int64,
@@ -360,6 +367,7 @@ plot_ocp_solution!(
     solution,
     model::Symbol,
     solver::Symbol,
+    disc_method,
     success::Bool,
     color,
     n::Int64,
@@ -373,6 +381,7 @@ plot_ocp_solution!(
     solution,
     model::Symbol,
     solver::Symbol,
+    disc_method,
     success::Bool,
     color,
     n::Int64,
@@ -462,4 +471,4 @@ Dict{String, Float64} with 2 entries:
 
 julia&gt; CTBenchmarks.strip_benchmark_value(bench_dict)
 Dict{String, Float64} with 1 entry:
-  &quot;time&quot; =&gt; 0.001</code></pre></div></section></details></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="public.html">« Public</a><a class="docs-footer-nextpage" href="../add_benchmark.html">Add a New Benchmark »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.1 on <span class="colophon-date" title="Wednesday 26 November 2025 22:06">Wednesday 26 November 2025</span>. Using Julia version 1.12.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+  &quot;time&quot; =&gt; 0.001</code></pre></div></section></details></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="public.html">« Public</a><a class="docs-footer-nextpage" href="../add_benchmark.html">Add a New Benchmark »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.1 on <span class="colophon-date" title="Wednesday 26 November 2025 22:33">Wednesday 26 November 2025</span>. Using Julia version 1.12.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
