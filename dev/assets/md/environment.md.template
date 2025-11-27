@@ -24,7 +24,7 @@ _basic_metadata(BENCH_ID) # hide
 ```
 
 ```@example ENV_NAME
-_downloads_toml(BENCH_ID) # hide
+_downloads_toml(BENCH_ID, @__DIR__) # hide
 ```
 
 ```@raw html

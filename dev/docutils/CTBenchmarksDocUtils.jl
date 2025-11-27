@@ -153,8 +153,8 @@ function _basic_metadata(bench_id::AbstractString)
     return _basic_metadata(bench_id, SRC_DIR)
 end
 
-function _downloads_toml(bench_id::AbstractString)
-    return _downloads_toml(bench_id, SRC_DIR)
+function _downloads_toml(bench_id::AbstractString, file_dir::AbstractString)
+    return _downloads_toml(bench_id, SRC_DIR, file_dir)
 end
 
 function _version_info(bench_id::AbstractString)

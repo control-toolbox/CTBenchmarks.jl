@@ -459,7 +459,7 @@ function write_core_benchmark_templates(
     # Get all problems from all benchmarks
     problems = get_problems_in_benchmarks(benchmarks, src_dir)
 
-    # problems = String[]
+    #problems = String[]
 
     # Generate template file for each problem
     @info "📝 Generating template files for $(length(problems)) problem(s)"
