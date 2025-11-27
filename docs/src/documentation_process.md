@@ -389,7 +389,7 @@ Several helper modules provide the concrete plots and textual outputs:
     and model, with colored formatting.
 
 - **Environment and configuration** — `PrintEnvConfig.jl`
-  - `_downloads_toml(bench_id, src_dir)`
+  - `_downloads_toml(bench_id, src_dir, file_dir)`
   - `_basic_metadata(bench_id, src_dir)`
   - `_version_info(bench_id, src_dir)`
   - `_complete_manifest(bench_id, src_dir)`

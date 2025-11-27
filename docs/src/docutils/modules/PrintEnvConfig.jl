@@ -3,13 +3,14 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 """
-    _downloads_toml(bench_id, src_dir)
+    _downloads_toml(bench_id, src_dir, file_dir)
 
 Generate Markdown links for downloading benchmark environment files.
 
 # Arguments
 - `bench_id`: Benchmark identifier string
 - `src_dir`: Path to docs/src directory
+- `file_dir`: Path to docs/src/core directory
 
 # Returns
 - `Markdown.MD`: Parsed Markdown content with download links for:
@@ -21,11 +22,16 @@ Generate Markdown links for downloading benchmark environment files.
 Creates a formatted Markdown block with links to the benchmark environment files,
 allowing users to reproduce the exact environment and results.
 """
-function _downloads_toml(bench_id::AbstractString, src_dir::AbstractString)
+function _downloads_toml(bench_id::AbstractString, src_dir::AbstractString, file_dir::AbstractString)
+
+    # Get the relative path to the benchmark directory
+    bench_dir = joinpath(src_dir, "assets", "benchmarks", bench_id)
+    bench_dir_rel = replace(relpath(bench_dir, file_dir), "\\" => "/")
+
     # Generate relative links from documentation pages to benchmark assets
-    link_manifest = joinpath(src_dir, "assets", "benchmarks", bench_id, "Manifest.toml")
-    link_project = joinpath(src_dir, "assets", "benchmarks", bench_id, "Project.toml")
-    link_script = joinpath(src_dir, "assets", "benchmarks", bench_id, "$bench_id.jl")
+    link_manifest = joinpath(bench_dir_rel, "Manifest.toml")
+    link_project = joinpath(bench_dir_rel, "Project.toml")
+    link_script = joinpath(bench_dir_rel, "$bench_id.jl")
     return Markdown.parse("""
     You can download the exact environment used for this benchmark:
     - 📦 [Project.toml]($link_project) - Package dependencies

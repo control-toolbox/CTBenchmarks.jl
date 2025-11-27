@@ -15,15 +15,15 @@ Adding a new benchmark involves creating several components:
 
 | Step | Description | Status |
 |------|-------------|--------|
-| [**Benchmark script**](#benchmark-script) | Julia script that runs the benchmark | Required |
-| [**JSON configuration**](#json-config) | Add benchmark config to JSON file | Required |
-| [**GitHub label**](#github-label) | Label to trigger the benchmark on pull requests | Required |
-| [**Individual workflow**](#individual-workflow) | Workflow for manual testing (reads from JSON) | Optional |
-| [**Documentation page**](#documentation-page) | Display benchmark results in the documentation | Optional |
+| [**Benchmark script**](@ref benchmark-script) | Julia script that runs the benchmark | Required |
+| [**JSON configuration**](@ref json-config) | Add benchmark config to JSON file | Required |
+| [**GitHub label**](@ref github-label) | Label to trigger the benchmark on pull requests | Required |
+| [**Individual workflow**](@ref individual-workflow) | Workflow for manual testing (reads from JSON) | Optional |
+| [**Documentation page**](@ref documentation-page) | Display benchmark results in the documentation | Optional |
 
 ## Step-by-Step Guide
 
-### 1. Create the Benchmark Script {#benchmark-script}
+### [1. Create the Benchmark Script](@id benchmark-script)
 
 Create a new Julia script in the `benchmarks/` directory. Choose a descriptive filename that will serve as your benchmark identifier.
 
@@ -62,7 +62,7 @@ end
 - **Available problems:** The list of problems you can choose is available in the [OptimalControlProblems.jl documentation](https://control-toolbox.org/OptimalControlProblems.jl/stable/problems_browser.html)
 - **For local testing:** See `benchmarks/local.jl` for an example that includes the setup code needed to run benchmarks locally
 
-### 2. Add Configuration to JSON {#json-config}
+### [2. Add Configuration to JSON](@id json-config)
 
 Edit `benchmarks/benchmarks-config.json` and add your benchmark configuration:
 
@@ -137,8 +137,6 @@ benchmarks-config.json
                   runner
 ```
 
-### Automatic Workflow Execution
-
 **Good news!** You don't need to create a workflow file manually. The orchestrator automatically runs your benchmark based on the JSON configuration using a matrix strategy.
 
 When you add a label to a PR (e.g., `run bench your-benchmark-id`), the orchestrator:
@@ -170,7 +168,7 @@ GitHub label on PR: "run bench {id}" or "run bench {prefix}-all"
                   └─ build & deploy docs using latest JSON results
 ```
 
-### 3. Create the GitHub Label {#github-label}
+### [3. Create the GitHub Label](@id github-label)
 
 On GitHub, create a new label for your benchmark:
 
@@ -210,7 +208,7 @@ To use group labels effectively, follow this naming convention:
 - `minimal-ubuntu-latest`, `minimal-moonshot-gpu`, `minimal-mothra-gpu` → `run bench minimal-all`
 - `gpu-cuda12`, `gpu-cuda13` → `run bench gpu-all`
 
-### 4. (Optional) Create Individual Workflow {#individual-workflow}
+### [4. (Optional) Create Individual Workflow](@id individual-workflow)
 
 !!! info "Optional Step"
     Individual workflows are **optional**. The orchestrator will automatically run your benchmark based on the JSON configuration. Individual workflows are useful for:
@@ -263,7 +261,7 @@ jobs:
 - **Can be called by orchestrator** via `workflow_call`
 - **No hardcoded values** - Everything comes from JSON configuration
 
-### 5. (Optional) Create Documentation Page {#documentation-page}
+### [5. (Optional) Create Documentation Page](@id documentation-page)
 
 If you want to display results in the documentation, you can create a
 template file (for example `docs/src/core/cpu.md.template` for a family of
