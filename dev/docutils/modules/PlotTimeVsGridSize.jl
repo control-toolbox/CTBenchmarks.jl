@@ -55,26 +55,38 @@ function _plot_time_vs_grid_size(
 
     min_N = minimum(df_successful.grid_size)
     max_N = maximum(df_successful.grid_size)
-    span_N = max_N - min_N
-    padding = span_N > 0 ? 0.05 * span_N : 1
-    x_min = max(0, min_N - padding)
-    x_max = max_N + padding
+    if min_N > 0 && max_N > min_N
+        log_min = log10(min_N)
+        log_max = log10(max_N)
+        span_log = log_max - log_min
+        padding_log = 0.05 * span_log
+        x_min = 10^(log_min - padding_log)
+        x_max = 10^(log_max + padding_log)
+    else
+        span_N = max_N - min_N
+        padding = span_N > 0 ? 0.05 * span_N : 1
+        x_min = max(0, min_N - padding)
+        x_max = max_N + padding
+    end
+    Ns = sort(unique(df_successful.grid_size))
 
-    plt = plot(;
-        xlabel="Grid size N",
-        ylabel="Solve time (s)",
-        title="\nSolve time vs grid size — $problem",
-        legend=:bottomright,
-        grid=true,
-        size=(900, 600),
-        xticks=sort(unique(df_successful.grid_size)),
-        xlims=(x_min, x_max),
-        left_margin=5mm,
-        bottom_margin=5mm,
-        top_margin=5mm,
-        titlefont=title_font,
-        xguidefont=label_font,
-        yguidefont=label_font,
+    plt = plot(
+        xlabel = "Grid size N",
+        ylabel = "Solve time (s)",
+        title = "\nSolve time vs grid size — $problem",
+        legend = :bottomright,
+        grid = true,
+        size = (900, 600),
+        xticks = (Ns, string.(Ns)),
+        xlims = (x_min, x_max),
+        left_margin = 5mm,
+        bottom_margin = 5mm,
+        top_margin = 5mm,
+        titlefont = title_font,
+        xguidefont = label_font,
+        yguidefont = label_font,
+        xscale = :log10,
+        yscale = :log10,
     )
 
     for (idx, c) in enumerate(combos)
