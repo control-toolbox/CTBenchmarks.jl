@@ -90,7 +90,7 @@ function run(
                 :madnlp => [:jump, :adnlp, :exa, :exa_gpu],
             ],
             grid_sizes=[100],
-            disc_methods=[:trapeze],
+            disc_methods=[:trapeze,:midpoint],
             tol=1e-6,
             ipopt_mu_strategy="adaptive",
             print_trace=print_trace,

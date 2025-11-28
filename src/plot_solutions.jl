@@ -35,36 +35,26 @@ julia> CTBenchmarks.get_color(:unknown, :solver, 2)
 :red
 ```
 """
-function get_color(model::T, solver::T, idx::Int) where {T<:Union{String,Symbol}}
+function get_color(model::T, solver::T, disc_method::T, idx::Int) where {T<:Union{String,Symbol}}
     model = lowercase(string(model))
     solver = lowercase(string(solver))
-    palette = [
-        :blue,
-        :red,
-        :green,
-        :orange,
-        :purple,
-        :brown,
-        :pink,
-        :gray,
-        :cyan,
-        :magenta,
-        :teal,
-        :olive,
-        :gold,
-        :navy,
-        :darkred,
-    ]
+    disc = lowercase(string(disc_method))
+    
+    # Palette de secours
+    palette = [:blue,:red,:green,:orange,:purple,:brown,:pink,:gray,:cyan,:magenta,:teal,:olive,:gold,:navy,:darkred]
+
     fixed = Dict(
-        ("adnlp", "ipopt") => :blue,
-        ("exa", "ipopt") => :red,
-        ("adnlp", "madnlp") => :green,
-        ("exa", "madnlp") => :orange,
-        ("jump", "ipopt") => :purple,
-        ("jump", "madnlp") => :brown,
-        ("exa_gpu", "madnlp") => :cyan,
+        ("adnlp",   "ipopt",  "trapeze") => :blue,
+        ("adnlp",   "madnlp", "trapeze") => :green,
+        ("jump",    "ipopt",  "trapeze") => :purple,
+        ("jump",    "madnlp", "trapeze") => :brown,
+        ("exa_gpu", "madnlp", "trapeze") => :cyan,
+        ("exa", "ipopt",  "trapeze") => :red,
+        ("exa", "madnlp", "trapeze") => :orange,
+        ("exa", "ipopt",  "midpoint") => :royalblue, 
+        ("exa", "madnlp", "midpoint") => :teal,
     )
-    return get(fixed, (model, solver), palette[mod1(idx, length(palette))])
+    return get(fixed, (model, solver, disc), palette[mod1(idx, length(palette))])
 end
 
 # -----------------------------------
@@ -176,30 +166,20 @@ julia> CTBenchmarks.get_marker_style(:unknown, :solver, 2, 100)
 (:square, 16)
 ```
 """
-function get_marker_style(model::T, solver::T, idx::Int) where {T<:Union{String,Symbol}}
-    model = lowercase(string(model))
+function get_marker_style(model::T, solver::T, disc_method::T, idx::Int) where {T<:Union{String,Symbol}}
     solver = lowercase(string(solver))
-    markers = [:circle, :square, :diamond, :utriangle, :dtriangle, :star5, :hexagon, :cross]
-    fixed = Dict(
-        ("adnlp", "ipopt") => :circle,
-        ("exa", "ipopt") => :square,
-        ("adnlp", "madnlp") => :diamond,
-        ("exa", "madnlp") => :utriangle,
-        ("jump", "ipopt") => :dtriangle,
-        ("jump", "madnlp") => :star5,
-        ("exa_gpu", "madnlp") => :hexagon,
-    )
-    marker = get(fixed, (model, solver), markers[mod1(idx, length(markers))])
-    return marker
+    if solver == "ipopt"
+        return :square
+    elseif solver == "madnlp"
+        return :circle
+    else
+        markers = [:dtriangle, :utriangle, :diamond, :hexagon, :cross]
+        return markers[mod1(idx, length(markers))]
+    end
 end
 
-function get_marker_style(
-    model::T, solver::T, idx::Int, grid_size::Int
-) where {T<:Union{String,Symbol}}
-    model = lowercase(string(model))
-    solver = lowercase(string(solver))
-    marker = get_marker_style(model, solver, idx)
-    # Calculate interval to have approximately 6 markers per curve
+function get_marker_style(model::T, solver::T, disc_method::T, idx::Int, grid_size::Int) where {T<:Union{String,Symbol}}
+    marker = get_marker_style(model, solver, disc_method, idx)
     M = 6
     marker_interval = max(1, div(grid_size, M))
     return (marker, marker_interval)
@@ -449,19 +429,24 @@ function plot_ocp_group(
     m::Int,
     card_g_override::Union{Int,Nothing}=nothing,
 )
-    # Use override if provided, otherwise calculate from local group
     card_g = isnothing(card_g_override) ? nrow(ocp_rows) : card_g_override
 
-    # For the first OCP solution: create the base plot
+    get_disc(row) = hasproperty(row, :disc_method) ? row.disc_method : "trapeze"
+
     first_row = ocp_rows[1, :]
+    disc = get_disc(first_row) 
+
     marker, marker_interval = get_marker_style(
-        first_row.model, first_row.solver, color_idx, grid_size
+        first_row.model, first_row.solver, disc, color_idx, grid_size 
     )
-    base_color = get_color(first_row.model, first_row.solver, color_idx)
+    base_color = get_color(first_row.model, first_row.solver, disc, color_idx) 
+    
+    
     plt = plot_ocp_solution(
         first_row.solution,
         first_row.model,
         first_row.solver,
+        disc,
         first_row.success,
         base_color,
         problem,
@@ -470,29 +455,33 @@ function plot_ocp_group(
         m,
         marker,
         marker_interval,
-        color_idx,  # Use color_idx as global idx
+        color_idx,
         card_g,
     )
     color_idx += 1
 
     # Add the remaining OCP solutions
     for row in eachrow(ocp_rows)[2:end]
+        disc = get_disc(row) 
+
         marker, marker_interval = get_marker_style(
-            row.model, row.solver, color_idx, grid_size
+            row.model, row.solver, disc, color_idx, grid_size 
         )
-        color = get_color(row.model, row.solver, color_idx)
+        color = get_color(row.model, row.solver, disc, color_idx) 
+        
         plt = plot_ocp_solution!(
             plt,
             row.solution,
             row.model,
             row.solver,
+            disc, 
             row.success,
             color,
             n,
             m,
             marker,
             marker_interval,
-            color_idx,  # Use color_idx as global idx
+            color_idx, 
             card_g,
         )
         color_idx += 1
@@ -527,102 +516,57 @@ with spaced markers for improved visibility and a legend entry indicating succes
 # Returns
 - `Plots.Plot`: Multi-panel plot with (n + n + m) subplots
 """
-function plot_ocp_solution(
-    solution,
-    model::Symbol,
-    solver::Symbol,
-    success::Bool,
-    color,
-    problem::Symbol,
-    grid_size::Int,
-    n::Int,
-    m::Int,
-    marker,
-    marker_interval,
-    idx::Int=1,
-    card_g::Int=1,
-)
+function plot_ocp_solution(solution, model::Symbol, solver::Symbol, disc_method, success::Bool, color,
+                           problem::Symbol, grid_size::Int, n::Int, m::Int, marker, marker_interval,
+                           idx::Int=1, card_g::Int=1)
     # Create the plot without markers (just lines)
     plt = plot(
         solution,
-        :state,
-        :costate,
-        :control;
+        :state, :costate, :control;
         color=color,
-        label=:none,  # No label yet
+        label=:none,
         size=(816, 240*(n+m)),
         leftmargin=get_left_margin(problem),
-        #plot_title="$problem - N=$grid_size",
         linewidth=1.5,
         dpi=300,
     )
-
+    
     # Get time grid and marker positions with offset
     t = OptimalControl.time_grid(solution)
     marker_indices = get_marker_indices(idx, card_g, grid_size, marker_interval)
     t_markers = t[marker_indices]
-
+    
     # Get state, costate, control values
     x_vals = OptimalControl.state(solution)
     p_vals = OptimalControl.costate(solution)
     u_vals = OptimalControl.control(solution)
+    
+    label_str = format_solution_label(model, solver, disc_method, success)
 
     # Add an invisible point with line+marker for the legend (only on first state plot)
-    plot!(
-        plt[1],
-        [t[1]],
-        [x_vals(t[1])[1]];
-        color=color,
-        linewidth=1.5,
-        markershape=marker,
-        markersize=3,
-        label=format_solution_label(model, solver, success),
-        markerstrokewidth=0,
-    )
-
+    plot!(plt[1], [t[1]], [x_vals(t[1])[1]];
+          color=color, linewidth=1.5, markershape=marker, markersize=3,
+          label=label_str, markerstrokewidth=0)
+    
     # Add spaced markers to states (plt[1:n])
     for i in 1:n
-        scatter!(
-            plt[i],
-            t_markers,
-            [x_vals(t_val)[i] for t_val in t_markers];
-            color=color,
-            markershape=marker,
-            markersize=3,
-            label=:none,
-            markerstrokewidth=0,
-        )
+        scatter!(plt[i], t_markers, [x_vals(t_val)[i] for t_val in t_markers];
+                 color=color, markershape=marker, markersize=3, label=:none, markerstrokewidth=0)
     end
-
+    
     # Add spaced markers to costates (plt[n+1:2n])
     for i in 1:n
-        scatter!(
-            plt[n + i],
-            t_markers,
-            [p_vals(t_val)[i] for t_val in t_markers];
-            color=color,
-            markershape=marker,
-            markersize=3,
-            label=:none,
-            markerstrokewidth=0,
-        )
+        scatter!(plt[n+i], t_markers, [p_vals(t_val)[i] for t_val in t_markers];
+                 color=color, markershape=marker, markersize=3, label=:none, markerstrokewidth=0)
     end
-
+    
     # Add spaced markers to controls (plt[2n+1:2n+m])
     for i in 1:m
-        scatter!(
-            plt[2n + i],
-            t_markers,
-            [u_vals(t_val)[i] for t_val in t_markers];
-            color=color,
-            markershape=marker,
-            markersize=3,
-            label=:none,
-            markerstrokewidth=0,
-        )
+        scatter!(plt[2n+i], t_markers, [u_vals(t_val)[i] for t_val in t_markers];
+                 color=color, markershape=marker, markersize=3, label=:none, markerstrokewidth=0)
     end
-
-    for i in 2:(2n + m)
+    
+    for i in 2:(2n+m)
         plot!(plt[i]; legend=:none)
     end
     return plt
@@ -653,100 +597,55 @@ and consistent styling. Updates the legend with success status.
 # Returns
 - `Plots.Plot`: Modified plot with new solution added
 """
-function plot_ocp_solution!(
-    plt,
-    solution,
-    model::Symbol,
-    solver::Symbol,
-    success::Bool,
-    color,
-    n::Int,
-    m::Int,
-    marker,
-    marker_interval,
-    idx::Int=1,
-    card_g::Int=1,
-)
+function plot_ocp_solution!(plt, solution, model::Symbol, solver::Symbol, disc_method, success::Bool, color, n::Int, m::Int, marker, marker_interval,
+                            idx::Int=1, card_g::Int=1)
     # Add line without markers
     plot!(
         plt,
         solution,
-        :state,
-        :costate,
-        :control;
+        :state, :costate, :control;
         color=color,
-        label=:none,  # No label yet
-        #linestyle=:dash,
+        label=:none,
         linewidth=1.5,
     )
-
+    
     # Get time grid and marker positions with offset
     t = OptimalControl.time_grid(solution)
     grid_size = length(t) - 1
     marker_indices = get_marker_indices(idx, card_g, grid_size, marker_interval)
     t_markers = t[marker_indices]
-
+    
     # Get state, costate, control values
     x_vals = OptimalControl.state(solution)
     p_vals = OptimalControl.costate(solution)
     u_vals = OptimalControl.control(solution)
+    
+    label_str = format_solution_label(model, solver, disc_method, success)
 
     # Add an invisible point with line+marker for the legend (only on first state plot)
-    plot!(
-        plt[1],
-        [t[1]],
-        [x_vals(t[1])[1]];
-        color=color,
-        linewidth=1.5,
-        markershape=marker,
-        markersize=3,
-        label=format_solution_label(model, solver, success),
-        markerstrokewidth=0,
-    )
-
+    plot!(plt[1], [t[1]], [x_vals(t[1])[1]];
+          color=color, linewidth=1.5, markershape=marker, markersize=3,
+          label=label_str, markerstrokewidth=0)
+    
     # Add spaced markers to states (plt[1:n])
     for i in 1:n
-        scatter!(
-            plt[i],
-            t_markers,
-            [x_vals(t_val)[i] for t_val in t_markers];
-            color=color,
-            markershape=marker,
-            markersize=3,
-            label=:none,
-            markerstrokewidth=0,
-        )
+        scatter!(plt[i], t_markers, [x_vals(t_val)[i] for t_val in t_markers];
+                 color=color, markershape=marker, markersize=3, label=:none, markerstrokewidth=0)
     end
-
+    
     # Add spaced markers to costates (plt[n+1:2n])
     for i in 1:n
-        scatter!(
-            plt[n + i],
-            t_markers,
-            [p_vals(t_val)[i] for t_val in t_markers];
-            color=color,
-            markershape=marker,
-            markersize=3,
-            label=:none,
-            markerstrokewidth=0,
-        )
+        scatter!(plt[n+i], t_markers, [p_vals(t_val)[i] for t_val in t_markers];
+                 color=color, markershape=marker, markersize=3, label=:none, markerstrokewidth=0)
     end
-
+    
     # Add spaced markers to controls (plt[2n+1:2n+m])
     for i in 1:m
-        scatter!(
-            plt[2n + i],
-            t_markers,
-            [u_vals(t_val)[i] for t_val in t_markers];
-            color=color,
-            markershape=marker,
-            markersize=3,
-            label=:none,
-            markerstrokewidth=0,
-        )
+        scatter!(plt[2n+i], t_markers, [u_vals(t_val)[i] for t_val in t_markers];
+                 color=color, markershape=marker, markersize=3, label=:none, markerstrokewidth=0)
     end
-
-    for i in 2:(2n + m)
+    
+    for i in 2:(2n+m)
         plot!(plt[i]; legend=:none)
     end
     return plt
@@ -1066,8 +965,11 @@ julia> CTBenchmarks.format_solution_label(:exa, :madnlp, false)
 "✗ exa-madnlp"
 ```
 """
-function format_solution_label(model::Symbol, solver::Symbol, success::Bool)
-    string(success ? "✓" : "✗", " ", model, "-", solver)
+function format_solution_label(model::Symbol, solver::Symbol, disc_method::Union{String,Symbol}, success::Bool)
+    disc_str = string(disc_method)
+    base = string(success ? "✓" : "✗", " ", model, "-", solver)
+    
+    return "$base ($disc_str)"
 end
 
 """
