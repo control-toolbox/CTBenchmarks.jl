@@ -249,9 +249,9 @@ version = "0.19.2+0"
 
 [[deps.CUDSS]]
 deps = ["CEnum", "CUDA", "CUDSS_jll", "GPUToolbox", "LinearAlgebra", "SparseArrays"]
-git-tree-sha1 = "bff863cd922a9fad87b1173962a0d42068d55afb"
+git-tree-sha1 = "1429e807b57bcc65be0a286de31897adc374fd56"
 uuid = "45b445bb-4962-46a0-9369-b4df9d0f772e"
-version = "0.6.2"
+version = "0.6.3"
 
 [[deps.CUDSS_jll]]
 deps = ["Artifacts", "CUDA_Runtime_jll", "CompilerSupportLibraries_jll", "JLLWrappers", "LazyArtifacts", "Libdl", "TOML"]

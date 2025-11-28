@@ -84,20 +84,20 @@ function _plot_iterations_vs_cpu_time(
 
     title_font, label_font = _plot_font_settings()
 
-    plt = plot(
-        xlabel = "Iterations",
-        ylabel = "CPU time (s)",
-        title = "\nIterations vs CPU time — $problem",
-        legend = :best,
-        grid = true,
-        size = (900, 600),
-        left_margin = 5mm,
-        bottom_margin = 5mm,
-        top_margin = 5mm,
-        titlefont = title_font,
-        xguidefont = label_font,
-        yguidefont = label_font,
-        yscale = :log10,
+    plt = plot(;
+        xlabel="Iterations",
+        ylabel="CPU time (s)",
+        title="\nIterations vs CPU time — $problem",
+        legend=:best,
+        grid=true,
+        size=(900, 600),
+        left_margin=5mm,
+        bottom_margin=5mm,
+        top_margin=5mm,
+        titlefont=title_font,
+        xguidefont=label_font,
+        yguidefont=label_font,
+        yscale=:log10,
     )
 
     for (idx, c) in enumerate(combos)

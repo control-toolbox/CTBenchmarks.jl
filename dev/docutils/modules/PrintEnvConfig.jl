@@ -22,7 +22,9 @@ Generate Markdown links for downloading benchmark environment files.
 Creates a formatted Markdown block with links to the benchmark environment files,
 allowing users to reproduce the exact environment and results.
 """
-function _downloads_toml(bench_id::AbstractString, src_dir::AbstractString, file_dir::AbstractString)
+function _downloads_toml(
+    bench_id::AbstractString, src_dir::AbstractString, file_dir::AbstractString
+)
 
     # Get the relative path to the benchmark directory
     bench_dir = joinpath(src_dir, "assets", "benchmarks", bench_id)
