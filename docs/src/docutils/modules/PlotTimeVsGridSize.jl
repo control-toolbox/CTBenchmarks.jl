@@ -70,23 +70,23 @@ function _plot_time_vs_grid_size(
     end
     Ns = sort(unique(df_successful.grid_size))
 
-    plt = plot(
-        xlabel = "Grid size N",
-        ylabel = "Solve time (s)",
-        title = "\nSolve time vs grid size — $problem",
-        legend = :bottomright,
-        grid = true,
-        size = (900, 600),
-        xticks = (Ns, string.(Ns)),
-        xlims = (x_min, x_max),
-        left_margin = 5mm,
-        bottom_margin = 5mm,
-        top_margin = 5mm,
-        titlefont = title_font,
-        xguidefont = label_font,
-        yguidefont = label_font,
-        xscale = :log10,
-        yscale = :log10,
+    plt = plot(;
+        xlabel="Grid size N",
+        ylabel="Solve time (s)",
+        title="\nSolve time vs grid size — $problem",
+        legend=:bottomright,
+        grid=true,
+        size=(900, 600),
+        xticks=(Ns, string.(Ns)),
+        xlims=(x_min, x_max),
+        left_margin=5mm,
+        bottom_margin=5mm,
+        top_margin=5mm,
+        titlefont=title_font,
+        xguidefont=label_font,
+        yguidefont=label_font,
+        xscale=:log10,
+        yscale=:log10,
     )
 
     for (idx, c) in enumerate(combos)
