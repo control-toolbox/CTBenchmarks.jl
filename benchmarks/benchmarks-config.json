@@ -20,6 +20,13 @@
       "julia_arch": "x64",
       "runs_on": "[\"moonshot\"]",
       "runner": "self-hosted"
+    },
+    {
+      "id": "core-midpoint",
+      "julia_version": "1.11",
+      "julia_arch": "x64",
+      "runs_on": "[\"midpoint\"]",
+      "runner": "github"
     }
   ]
 }

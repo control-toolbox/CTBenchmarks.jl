@@ -142,3 +142,70 @@ _print_benchmark_log("core-moonshot-cpu") # hide
   </div>
 </div>
 ```
+
+
+## Midpoint
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = "core-midpoint"
+ENV_NAME = BENCH
+-->
+
+### 📈 Performance Profile CPU Time
+
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_profile_default_cpu
+ARGS = core-midpoint
+-->
+
+<!-- INCLUDE_TEXT:
+FUNCTION = _analyze_profile_default_cpu
+ARGS = core-midpoint
+-->
+
+### 📈 Performance Profile CPU Time: two best combos
+
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_profile_default_cpu
+ARGS = core-midpoint, exa:madnlp, exa:ipopt
+-->
+
+<!-- INCLUDE_TEXT:
+FUNCTION = _analyze_profile_default_cpu
+ARGS = core-midpoint, exa:madnlp, exa:ipopt
+-->
+
+### 📈 Performance Profile Iterations
+
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_profile_default_iter
+ARGS = core-midpoint
+-->
+
+<!-- INCLUDE_TEXT:
+FUNCTION = _analyze_profile_default_iter
+ARGS = core-midpoint
+-->
+
+### 📊 Tables of Results
+
+<!-- INCLUDE_TEXT:
+FUNCTION = _print_benchmark_table_results
+ARGS = core-midpoint
+-->
+
+```@raw html
+<div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+  <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
+  <div class="ctdetails-body">
+```
+
+```@example BENCH
+_print_benchmark_log("core-midpoint") # hide
+```
+
+```@raw html
+  </div>
+</div>
+```
+
