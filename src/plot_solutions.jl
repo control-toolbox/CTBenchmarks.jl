@@ -38,34 +38,38 @@ julia> CTBenchmarks.get_color(:unknown, :solver, 2)
 function get_color(model::T, solver::T, idx::Int) where {T<:Union{String,Symbol}}
     model = lowercase(string(model))
     solver = lowercase(string(solver))
+
     palette = [
-        :blue,
-        :red,
-        :green,
-        :orange,
-        :purple,
-        :brown,
-        :pink,
-        :gray,
-        :cyan,
-        :magenta,
-        :teal,
-        :olive,
-        :gold,
+        :steelblue,
+        :tomato,
+        :seagreen,
+        :darkorange,
+        :mediumpurple,
+        :sienna,
+        :deeppink,
+        :slategray,
+        :cyan3,
+        :orchid,
+        :mediumturquoise,
+        :gold3,
         :navy,
-        :darkred,
+        :firebrick,
+        :darkolivegreen3,
     ]
+
     fixed = Dict(
-        ("adnlp", "ipopt") => :blue,
-        ("exa", "ipopt") => :red,
-        ("adnlp", "madnlp") => :green,
-        ("exa", "madnlp") => :orange,
-        ("jump", "ipopt") => :purple,
-        ("jump", "madnlp") => :brown,
-        ("exa_gpu", "madnlp") => :cyan,
+        ("adnlp", "ipopt")    => :steelblue,
+        ("exa", "ipopt")     => :tomato,
+        ("adnlp", "madnlp")  => :seagreen,
+        ("exa", "madnlp")    => :darkorange,
+        ("jump", "ipopt")     => :mediumpurple,
+        ("jump", "madnlp")   => :sienna,
+        ("exa_gpu", "madnlp") => :mediumturquoise,
     )
+
     return get(fixed, (model, solver), palette[mod1(idx, length(palette))])
 end
+
 
 # -----------------------------------
 # Helper: left margin for plots
