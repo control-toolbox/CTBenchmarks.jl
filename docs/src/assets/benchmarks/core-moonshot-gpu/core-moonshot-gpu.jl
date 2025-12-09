@@ -20,9 +20,9 @@ function run()
             :vanderpol,
         ],
         solver_models=[:madnlp => [:exa, :exa_gpu]],
-        grid_sizes=[1000, 5000, 10000, 20000],
+        grid_sizes=[1000, 5000, 10000], # debug: re-add 20000 and more when run is OK
         disc_methods=[:trapeze],
-        tol=1e-6,
+        tol=1e-8,
         ipopt_mu_strategy="adaptive",
         print_trace=false,
         max_iter=1000,
