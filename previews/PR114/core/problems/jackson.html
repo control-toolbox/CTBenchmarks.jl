@@ -982,18 +982,18 @@ Environment:
 </li>
 <li><p><strong>Models:</strong> exa, exa_gpu</p>
 </li>
-<li><p><strong>Grid sizes:</strong> 1000, 5000, 10000, 20000 discretization points</p>
+<li><p><strong>Grid sizes:</strong> 1000, 5000, 10000 discretization points</p>
 </li>
 <li><p><strong>Discretization:</strong> trapeze method</p>
 </li>
-<li><p><strong>Tolerance:</strong> 1.0e-6</p>
+<li><p><strong>Tolerance:</strong> 1.0e-8</p>
 </li>
 <li><p><strong>Ipopt strategy:</strong> adaptive barrier parameter</p>
 </li>
 <li><p><strong>Limits:</strong> 1000 iterations max, 1000.0s wall time</p>
 </li>
 </ul>
-</div></div><h3 id="Environment-3"><a class="docs-heading-anchor" href="#Environment-3">🖥️ Environment</a><a class="docs-heading-anchor-permalink" href="#Environment-3" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2025-11-17 22:08:51 UTC
+</div></div><h3 id="Environment-3"><a class="docs-heading-anchor" href="#Environment-3">🖥️ Environment</a><a class="docs-heading-anchor-permalink" href="#Environment-3" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2025-12-09 14:19:43 UTC
 🔧 Julia version : 1.11.7
 💻 OS            : Linux
 🖥️ Machine       : moonshot</code></pre><div class="markdown"><p>You can download the exact environment used for this benchmark:</p>
@@ -1025,11 +1025,11 @@ Environment:
   JULIA_NUM_THREADS = 16</code></pre>  </div>
 </div><div class="ctdetails" style="margin-bottom: 0.5em;">
   <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">📦 Package status</div>
-  <div class="ctdetails-body"><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr36"><span class="sgr1">Project</span></span> CTBenchmarks v0.2.3
+  <div class="ctdetails-body"><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr36"><span class="sgr1">Project</span></span> CTBenchmarks v0.3.1
 <span class="sgr32"><span class="sgr1">Status</span></span> `/scratch/github-actions/actions_runner_control_toolbox/_work/CTBenchmarks.jl/CTBenchmarks.jl/Project.toml`
   <span class="sgr90">[6e4b80f9] </span>BenchmarkTools v1.6.3
-<span class="sgr32">⌃</span> <span class="sgr90">[54762871] </span>CTBase v0.16.2
-  <span class="sgr90">[052768ef] </span>CUDA v5.9.4
+<span class="sgr33">⌅</span> <span class="sgr90">[54762871] </span>CTBase v0.16.2
+  <span class="sgr90">[052768ef] </span>CUDA v5.9.5
   <span class="sgr90">[a93c6f00] </span>DataFrames v1.8.1
   <span class="sgr90">[ffbed154] </span>DocStringExtensions v0.9.5
   <span class="sgr90">[b6b21f68] </span>Ipopt v1.13.0
@@ -1039,21 +1039,21 @@ Environment:
   <span class="sgr90">[3b83494e] </span>MadNLPMumps v0.5.1
   <span class="sgr90">[f4238b75] </span>NLPModelsIpopt v0.11.0
   <span class="sgr90">[5f98b655] </span>OptimalControl v1.1.6
-  <span class="sgr90">[59046045] </span>OptimalControlProblems v0.3.2
-  <span class="sgr90">[91a5bcdd] </span>Plots v1.41.1
+  <span class="sgr90">[59046045] </span>OptimalControlProblems v0.4.0
+  <span class="sgr90">[91a5bcdd] </span>Plots v1.41.2
   <span class="sgr90">[bd369af6] </span>Tables v1.12.1
   <span class="sgr90">[ade2ca70] </span>Dates v1.11.0
   <span class="sgr90">[b77e0a4c] </span>InteractiveUtils v1.11.0
   <span class="sgr90">[44cfe95a] </span>Pkg v1.11.0
   <span class="sgr90">[de0858da] </span>Printf v1.11.0
   <span class="sgr90">[6462fe0b] </span>Sockets v1.11.0
-<span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr32">⌃</span> have new versions available and may be upgradable.</code></pre>  </div>
+<span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr33">⌅</span> have new versions available but compatibility constraints restrict them from upgrading. To see why use `status --outdated`</code></pre>  </div>
 </div><div class="ctdetails" style="margin-bottom: 0.5em;">
   <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">📚 Complete manifest</div>
-  <div class="ctdetails-body"><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr36"><span class="sgr1">Project</span></span> CTBenchmarks v0.2.3
+  <div class="ctdetails-body"><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr36"><span class="sgr1">Project</span></span> CTBenchmarks v0.3.1
 <span class="sgr32"><span class="sgr1">Status</span></span> `/scratch/github-actions/actions_runner_control_toolbox/_work/CTBenchmarks.jl/CTBenchmarks.jl/Manifest.toml`
   <span class="sgr90">[54578032] </span>ADNLPModels v0.8.13
-  <span class="sgr90">[47edcb42] </span>ADTypes v1.19.0
+  <span class="sgr90">[47edcb42] </span>ADTypes v1.20.0
   <span class="sgr90">[14f7f29c] </span>AMD v0.5.3
   <span class="sgr90">[621f4979] </span>AbstractFFTs v1.5.0
   <span class="sgr90">[79e6a3ab] </span>Adapt v4.4.0
@@ -1064,14 +1064,14 @@ Environment:
   <span class="sgr90">[6e4b80f9] </span>BenchmarkTools v1.6.3
   <span class="sgr90">[d1d4a3ce] </span>BitFlags v0.1.9
   <span class="sgr90">[fa961155] </span>CEnum v0.5.0
-<span class="sgr32">⌃</span> <span class="sgr90">[54762871] </span>CTBase v0.16.2
+<span class="sgr33">⌅</span> <span class="sgr90">[54762871] </span>CTBase v0.16.2
   <span class="sgr90">[790bbbee] </span>CTDirect v0.17.4
   <span class="sgr90">[1c39547c] </span>CTFlows v0.8.9
-  <span class="sgr90">[34c4fa32] </span>CTModels v0.6.9
-  <span class="sgr90">[32681960] </span>CTParser v0.7.1
-  <span class="sgr90">[052768ef] </span>CUDA v5.9.4
+<span class="sgr33">⌅</span> <span class="sgr90">[34c4fa32] </span>CTModels v0.6.9
+  <span class="sgr90">[32681960] </span>CTParser v0.7.2
+  <span class="sgr90">[052768ef] </span>CUDA v5.9.5
   <span class="sgr90">[1af6417a] </span>CUDA_Runtime_Discovery v1.0.0
-  <span class="sgr90">[45b445bb] </span>CUDSS v0.6.1
+  <span class="sgr90">[45b445bb] </span>CUDSS v0.6.3
   <span class="sgr90">[d360d2e6] </span>ChainRulesCore v1.26.0
   <span class="sgr90">[523fee87] </span>CodecBzip2 v0.8.5
   <span class="sgr90">[944b1d66] </span>CodecZlib v0.7.8
@@ -1103,11 +1103,11 @@ Environment:
   <span class="sgr90">[1fa38f19] </span>Format v1.3.7
   <span class="sgr90">[f6369f11] </span>ForwardDiff v1.3.0
   <span class="sgr90">[069b7b12] </span>FunctionWrappers v1.1.3
-  <span class="sgr90">[0c68f7d7] </span>GPUArrays v11.2.6
+  <span class="sgr90">[0c68f7d7] </span>GPUArrays v11.3.1
   <span class="sgr90">[46192b85] </span>GPUArraysCore v0.2.0
-  <span class="sgr90">[61eb1bfa] </span>GPUCompiler v1.7.4
+  <span class="sgr90">[61eb1bfa] </span>GPUCompiler v1.7.5
   <span class="sgr90">[096a3bc2] </span>GPUToolbox v1.0.0
-  <span class="sgr90">[28b8d3ca] </span>GR v0.73.18
+  <span class="sgr90">[28b8d3ca] </span>GR v0.73.19
   <span class="sgr90">[42e2da0e] </span>Grisu v1.0.2
   <span class="sgr90">[34c5aeac] </span>HSL v0.5.2
   <span class="sgr90">[cd3eb016] </span>HTTP v1.10.19
@@ -1138,31 +1138,31 @@ Environment:
   <span class="sgr90">[2621e9c9] </span>MadNLP v0.8.12
   <span class="sgr90">[d72a61cc] </span>MadNLPGPU v0.7.16
   <span class="sgr90">[3b83494e] </span>MadNLPMumps v0.5.1
-  <span class="sgr90">[b8f27783] </span>MathOptInterface v1.46.0
+  <span class="sgr90">[b8f27783] </span>MathOptInterface v1.47.0
   <span class="sgr90">[739be429] </span>MbedTLS v1.1.9
   <span class="sgr90">[442fdcdd] </span>Measures v0.3.3
   <span class="sgr90">[2679e427] </span>Metis v1.5.0
   <span class="sgr90">[e1d29d7a] </span>Missings v1.2.0
   <span class="sgr90">[d8a4904e] </span>MutableArithmetics v1.6.7
-  <span class="sgr90">[a4795742] </span>NLPModels v0.21.5
+<span class="sgr33">⌅</span> <span class="sgr90">[a4795742] </span>NLPModels v0.21.5
   <span class="sgr90">[f4238b75] </span>NLPModelsIpopt v0.11.0
   <span class="sgr90">[e01155f1] </span>NLPModelsModifiers v0.7.2
   <span class="sgr90">[5da4648a] </span>NVTX v1.0.1
   <span class="sgr90">[77ba4419] </span>NaNMath v1.1.3
   <span class="sgr90">[6fe1bfb0] </span>OffsetArrays v1.17.0
-  <span class="sgr90">[4d8831e6] </span>OpenSSL v1.6.0
+  <span class="sgr90">[4d8831e6] </span>OpenSSL v1.6.1
   <span class="sgr90">[5f98b655] </span>OptimalControl v1.1.6
-  <span class="sgr90">[59046045] </span>OptimalControlProblems v0.3.2
+  <span class="sgr90">[59046045] </span>OptimalControlProblems v0.4.0
   <span class="sgr90">[bac558e1] </span>OrderedCollections v1.8.1
   <span class="sgr90">[d96e819e] </span>Parameters v0.12.3
   <span class="sgr90">[69de0a69] </span>Parsers v2.8.3
   <span class="sgr90">[ccf2f8ad] </span>PlotThemes v3.3.0
   <span class="sgr90">[995b91a9] </span>PlotUtils v1.4.4
-  <span class="sgr90">[91a5bcdd] </span>Plots v1.41.1
+  <span class="sgr90">[91a5bcdd] </span>Plots v1.41.2
   <span class="sgr90">[2dfb63ee] </span>PooledArrays v1.4.3
 <span class="sgr33">⌅</span> <span class="sgr90">[aea7be01] </span>PrecompileTools v1.2.1
   <span class="sgr90">[21216c6a] </span>Preferences v1.5.0
-  <span class="sgr90">[08abe8d2] </span>PrettyTables v3.1.0
+  <span class="sgr90">[08abe8d2] </span>PrettyTables v3.1.2
   <span class="sgr90">[43287f4e] </span>PtrArrays v1.3.0
   <span class="sgr90">[be4d8f0f] </span>Quadmath v0.5.13
   <span class="sgr90">[74087812] </span>Random123 v1.7.1
@@ -1179,7 +1179,7 @@ Environment:
   <span class="sgr90">[91c51154] </span>SentinelArrays v1.4.8
   <span class="sgr90">[992d4aef] </span>Showoff v1.0.3
   <span class="sgr90">[777ac1f9] </span>SimpleBufferStream v1.2.0
-  <span class="sgr90">[ff4d7338] </span>SolverCore v0.3.8
+  <span class="sgr90">[ff4d7338] </span>SolverCore v0.3.9
   <span class="sgr90">[a2af1166] </span>SortingAlgorithms v1.2.2
   <span class="sgr90">[9f842d2f] </span>SparseConnectivityTracer v1.1.3
   <span class="sgr90">[0a514795] </span>SparseMatrixColorings v0.4.23
@@ -1188,9 +1188,9 @@ Environment:
   <span class="sgr90">[90137ffa] </span>StaticArrays v1.9.15
   <span class="sgr90">[1e83bf80] </span>StaticArraysCore v1.4.4
   <span class="sgr90">[10745b16] </span>Statistics v1.11.1
-  <span class="sgr90">[82ae8749] </span>StatsAPI v1.7.1
-  <span class="sgr90">[2913bbd2] </span>StatsBase v0.34.8
-  <span class="sgr90">[892a3eda] </span>StringManipulation v0.4.1
+  <span class="sgr90">[82ae8749] </span>StatsAPI v1.8.0
+  <span class="sgr90">[2913bbd2] </span>StatsBase v0.34.9
+  <span class="sgr90">[892a3eda] </span>StringManipulation v0.4.2
   <span class="sgr90">[856f2bd8] </span>StructTypes v1.11.0
   <span class="sgr90">[ec057cc2] </span>StructUtils v2.6.0
   <span class="sgr90">[3783bdb8] </span>TableTraits v1.0.1
@@ -1219,11 +1219,11 @@ Environment:
   <span class="sgr90">[a3f928ae] </span>Fontconfig_jll v2.17.1+0
   <span class="sgr90">[d7e528f0] </span>FreeType2_jll v2.13.4+0
   <span class="sgr90">[559328eb] </span>FriBidi_jll v1.0.17+0
-  <span class="sgr90">[0656b61e] </span>GLFW_jll v3.4.0+2
-  <span class="sgr90">[d2c73de3] </span>GR_jll v0.73.18+0
+  <span class="sgr90">[0656b61e] </span>GLFW_jll v3.4.1+0
+  <span class="sgr90">[d2c73de3] </span>GR_jll v0.73.19+1
   <span class="sgr90">[b0724c58] </span>GettextRuntime_jll v0.22.4+0
   <span class="sgr90">[61579ee1] </span>Ghostscript_jll v9.55.1+0
-  <span class="sgr90">[7746bdde] </span>Glib_jll v2.86.0+0
+  <span class="sgr90">[7746bdde] </span>Glib_jll v2.86.2+0
   <span class="sgr90">[3b182d85] </span>Graphite2_jll v1.3.15+0
   <span class="sgr90">[017b0a0e] </span>HSL_jll v4.0.4+0
   <span class="sgr90">[2e76f6c2] </span>HarfBuzz_jll v8.5.1+0
@@ -1238,7 +1238,7 @@ Environment:
   <span class="sgr90">[1d63c593] </span>LLVMOpenMP_jll v18.1.8+0
   <span class="sgr90">[dd4b983a] </span>LZO_jll v2.10.3+0
   <span class="sgr90">[ad6e5548] </span>LibTracyClient_jll v0.9.1+6
-  <span class="sgr90">[e9f186c6] </span>Libffi_jll v3.4.7+0
+<span class="sgr33">⌅</span> <span class="sgr90">[e9f186c6] </span>Libffi_jll v3.4.7+0
   <span class="sgr90">[7e76a0d4] </span>Libglvnd_jll v1.7.1+1
   <span class="sgr90">[94ce4f54] </span>Libiconv_jll v1.18.0+0
   <span class="sgr90">[4b2f31a3] </span>Libmount_jll v2.41.2+0
@@ -1298,13 +1298,13 @@ Environment:
   <span class="sgr90">[2db6ffa8] </span>libevdev_jll v1.13.4+0
   <span class="sgr90">[f638f0a6] </span>libfdk_aac_jll v2.0.4+0
   <span class="sgr90">[36db933b] </span>libinput_jll v1.28.1+0
-  <span class="sgr90">[b53b4c65] </span>libpng_jll v1.6.50+0
+  <span class="sgr90">[b53b4c65] </span>libpng_jll v1.6.53+0
   <span class="sgr90">[f27f6e37] </span>libvorbis_jll v1.3.8+0
   <span class="sgr90">[009596ad] </span>mtdev_jll v1.1.7+0
   <span class="sgr90">[1317d2d5] </span>oneTBB_jll v2022.0.0+1
   <span class="sgr90">[1270edf5] </span>x264_jll v10164.0.1+0
   <span class="sgr90">[dfaa095f] </span>x265_jll v4.1.0+0
-  <span class="sgr90">[d8fb68d0] </span>xkbcommon_jll v1.9.2+0
+  <span class="sgr90">[d8fb68d0] </span>xkbcommon_jll v1.13.0+0
   <span class="sgr90">[0dad84c5] </span>ArgTools v1.1.2
   <span class="sgr90">[56f22d72] </span>Artifacts v1.11.0
   <span class="sgr90">[2a0f44e3] </span>Base64 v1.11.0
@@ -1354,7 +1354,7 @@ Environment:
   <span class="sgr90">[8e850b90] </span>libblastrampoline_jll v5.11.0+0
   <span class="sgr90">[8e850ede] </span>nghttp2_jll v1.59.0+0
   <span class="sgr90">[3f19e933] </span>p7zip_jll v17.4.0+2
-<span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr32">⌃</span> and <span class="sgr33">⌅</span> have new versions available. Those with <span class="sgr32">⌃</span> may be upgradable, but those with <span class="sgr33">⌅</span> are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre>  </div>
+<span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr33">⌅</span> have new versions available but compatibility constraints restrict them from upgrading. To see why use `status --outdated -m`</code></pre>  </div>
 </div><h3 id="Time-vs-Grid-Size-(Moonshot-GPU)"><a class="docs-heading-anchor" href="#Time-vs-Grid-Size-(Moonshot-GPU)">📈 Time vs Grid Size (Moonshot GPU)</a><a id="Time-vs-Grid-Size-(Moonshot-GPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Time-vs-Grid-Size-(Moonshot-GPU)" title="Permalink"></a></h3><a href="../../assets/plots/jackson_plot_time_vs_grid_size_31f9625f.pdf">
   <img 
     class="centering" 
@@ -1404,7 +1404,7 @@ Environment:
     style="max-width:1400px" 
     src="../../assets/benchmarks/core-moonshot-gpu/figures/jackson_N20000.svg"
   />
-</a><h3 id="Table-of-Results-(Moonshot-GPU)"><a class="docs-heading-anchor" href="#Table-of-Results-(Moonshot-GPU)">📊 Table of Results (Moonshot GPU)</a><a id="Table-of-Results-(Moonshot-GPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Table-of-Results-(Moonshot-GPU)" title="Permalink"></a></h3><h4 id="Problem:-jackson-3"><a class="docs-heading-anchor" href="#Problem:-jackson-3">Problem: <code>jackson</code></a><a class="docs-heading-anchor-permalink" href="#Problem:-jackson-3" title="Permalink"></a></h4><table><tr><th style="text-align: center">Success</th><th style="text-align: right">N</th><th style="text-align: left">Model</th><th style="text-align: left">Solver</th><th style="text-align: right">Time (ms)</th><th style="text-align: right">Iters</th><th style="text-align: right">Objective</th><th style="text-align: center">Criterion</th><th style="text-align: center">Best</th></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">1000</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">94.581</td><td style="text-align: right">20</td><td style="text-align: right">0.191805</td><td style="text-align: center">max</td><td style="text-align: center">✓</td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">1000</td><td style="text-align: left"><code>exa_gpu</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">237.568</td><td style="text-align: right">31</td><td style="text-align: right">-0.000001</td><td style="text-align: center">max</td><td style="text-align: center"></td></tr></table><table><tr><th style="text-align: center">Success</th><th style="text-align: right">N</th><th style="text-align: left">Model</th><th style="text-align: left">Solver</th><th style="text-align: right">Time (ms)</th><th style="text-align: right">Iters</th><th style="text-align: right">Objective</th><th style="text-align: center">Criterion</th><th style="text-align: center">Best</th></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">5000</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">831.018</td><td style="text-align: right">19</td><td style="text-align: right">0.191760</td><td style="text-align: center">max</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">5000</td><td style="text-align: left"><code>exa_gpu</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">244.894</td><td style="text-align: right">22</td><td style="text-align: right">-0.000000</td><td style="text-align: center">max</td><td style="text-align: center">✓</td></tr></table><table><tr><th style="text-align: center">Success</th><th style="text-align: right">N</th><th style="text-align: left">Model</th><th style="text-align: left">Solver</th><th style="text-align: right">Time (ms)</th><th style="text-align: right">Iters</th><th style="text-align: right">Objective</th><th style="text-align: center">Criterion</th><th style="text-align: center">Best</th></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">10000</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">1460.379</td><td style="text-align: right">18</td><td style="text-align: right">0.191709</td><td style="text-align: center">max</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">10000</td><td style="text-align: left"><code>exa_gpu</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">296.599</td><td style="text-align: right">23</td><td style="text-align: right">-0.000001</td><td style="text-align: center">max</td><td style="text-align: center">✓</td></tr></table><table><tr><th style="text-align: center">Success</th><th style="text-align: right">N</th><th style="text-align: left">Model</th><th style="text-align: left">Solver</th><th style="text-align: right">Time (ms)</th><th style="text-align: right">Iters</th><th style="text-align: right">Objective</th><th style="text-align: center">Criterion</th><th style="text-align: center">Best</th></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">20000</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">3131.030</td><td style="text-align: right">18</td><td style="text-align: right">0.191612</td><td style="text-align: center">max</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">20000</td><td style="text-align: left"><code>exa_gpu</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">483.652</td><td style="text-align: right">22</td><td style="text-align: right">0.000001</td><td style="text-align: center">max</td><td style="text-align: center">✓</td></tr></table><div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+</a><h3 id="Table-of-Results-(Moonshot-GPU)"><a class="docs-heading-anchor" href="#Table-of-Results-(Moonshot-GPU)">📊 Table of Results (Moonshot GPU)</a><a id="Table-of-Results-(Moonshot-GPU)-1"></a><a class="docs-heading-anchor-permalink" href="#Table-of-Results-(Moonshot-GPU)" title="Permalink"></a></h3><h4 id="Problem:-jackson-3"><a class="docs-heading-anchor" href="#Problem:-jackson-3">Problem: <code>jackson</code></a><a class="docs-heading-anchor-permalink" href="#Problem:-jackson-3" title="Permalink"></a></h4><table><tr><th style="text-align: center">Success</th><th style="text-align: right">N</th><th style="text-align: left">Model</th><th style="text-align: left">Solver</th><th style="text-align: right">Time (ms)</th><th style="text-align: right">Iters</th><th style="text-align: right">Objective</th><th style="text-align: center">Criterion</th><th style="text-align: center">Best</th></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">1000</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">108.823</td><td style="text-align: right">23</td><td style="text-align: right">-0.191816</td><td style="text-align: center">min</td><td style="text-align: center">✓</td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">1000</td><td style="text-align: left"><code>exa_gpu</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">145.335</td><td style="text-align: right">23</td><td style="text-align: right">-0.191838</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr></table><table><tr><th style="text-align: center">Success</th><th style="text-align: right">N</th><th style="text-align: left">Model</th><th style="text-align: left">Solver</th><th style="text-align: right">Time (ms)</th><th style="text-align: right">Iters</th><th style="text-align: right">Objective</th><th style="text-align: center">Criterion</th><th style="text-align: center">Best</th></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">5000</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">866.881</td><td style="text-align: right">23</td><td style="text-align: right">-0.191814</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">5000</td><td style="text-align: left"><code>exa_gpu</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">200.966</td><td style="text-align: right">24</td><td style="text-align: right">-0.191925</td><td style="text-align: center">min</td><td style="text-align: center">✓</td></tr></table><table><tr><th style="text-align: center">Success</th><th style="text-align: right">N</th><th style="text-align: left">Model</th><th style="text-align: left">Solver</th><th style="text-align: right">Time (ms)</th><th style="text-align: right">Iters</th><th style="text-align: right">Objective</th><th style="text-align: center">Criterion</th><th style="text-align: center">Best</th></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">10000</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">1906.956</td><td style="text-align: right">24</td><td style="text-align: right">-0.191813</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">10000</td><td style="text-align: left"><code>exa_gpu</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">282.105</td><td style="text-align: right">24</td><td style="text-align: right">-0.192035</td><td style="text-align: center">min</td><td style="text-align: center">✓</td></tr></table><div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
 <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
 <div class="ctdetails-body"><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
 
@@ -1413,20 +1413,16 @@ Environment:
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  94.581 ms | iters: 20    | obj: 1.918046e-01  (max) | CPU:  21.63 MiB
-│  │  ✓ | exa_gpu  | time: 237.568 ms | iters: 31    | obj: -7.511061e-07 (max) | CPU: 13.234 MiB | GPU: 34.912 MiB
+│  │  ✓ | exa      | time: 108.823 ms | iters: 23    | obj: -1.918159e-01 (min) | CPU:  23.14 MiB
+│  │  ✓ | exa_gpu  | time: 145.335 ms | iters: 23    | obj: -1.918383e-01 (min) | CPU: 11.309 MiB | GPU: 33.627 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 831.018 ms | iters: 19    | obj: 1.917600e-01  (max) | CPU: 103.29 MiB
-│  │  ✓ | exa_gpu  | time: 244.894 ms | iters: 22    | obj: -3.468065e-07 (max) | CPU: 17.820 MiB | GPU: 167.117 MiB
+│  │  ✓ | exa      | time: 866.881 ms | iters: 23    | obj: -1.918138e-01 (min) | CPU: 113.69 MiB
+│  │  ✓ | exa_gpu  | time: 200.966 ms | iters: 24    | obj: -1.919248e-01 (min) | CPU: 19.356 MiB | GPU: 168.861 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time:   1.460 s  | iters: 18    | obj: 1.917093e-01  (max) | CPU: 200.21 MiB
-│  │  ✓ | exa_gpu  | time: 296.599 ms | iters: 23    | obj: -7.464148e-07 (max) | CPU: 27.899 MiB | GPU: 335.868 MiB
-│  │
-│  │  N = 20000
-│  │  ✓ | exa      | time:   3.131 s  | iters: 18    | obj: 1.916118e-01  (max) | CPU: 399.88 MiB
-│  │  ✓ | exa_gpu  | time: 483.652 ms | iters: 22    | obj: 5.098141e-07  (max) | CPU: 46.379 MiB | GPU: 667.967 MiB
+│  │  ✓ | exa      | time:   1.907 s  | iters: 24    | obj: -1.918132e-01 (min) | CPU: 231.99 MiB
+│  │  ✓ | exa_gpu  | time: 282.105 ms | iters: 24    | obj: -1.920350e-01 (min) | CPU: 28.869 MiB | GPU: 337.576 MiB
 │  └─
 └─</code></pre></div>
-</div></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="insurance.html">« insurance</a><a class="docs-footer-nextpage" href="robbins.html">robbins »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.1 on <span class="colophon-date" title="Thursday 4 December 2025 17:13">Thursday 4 December 2025</span>. Using Julia version 1.12.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+</div></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="insurance.html">« insurance</a><a class="docs-footer-nextpage" href="robbins.html">robbins »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.1 on <span class="colophon-date" title="Tuesday 9 December 2025 14:26">Tuesday 9 December 2025</span>. Using Julia version 1.12.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

@@ -1,6 +1,6 @@
 name = "CTBenchmarks"
 uuid = "db1dffaa-5ed3-4583-9a66-b5881c82ef11"
-version = "0.2.3"
+version = "0.3.1"
 authors = ["Olivier Cots <olivier.cots@toulouse-inp.fr>"]
 
 [deps]
@@ -40,7 +40,7 @@ MadNLPGPU = "0.7"
 MadNLPMumps = "0.5"
 NLPModelsIpopt = "0.11"
 OptimalControl = "1"
-OptimalControlProblems = "0.3"
+OptimalControlProblems = "0.4"
 Pkg = "1"
 Plots = "1.41"
 Printf = "1"
