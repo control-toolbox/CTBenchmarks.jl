@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>GPU · CTBenchmarks</title><meta name="title" content="GPU · CTBenchmarks"/><meta property="og:title" content="GPU · CTBenchmarks"/><meta property="twitter:title" content="GPU · CTBenchmarks"/><meta name="description" content="Documentation for CTBenchmarks."/><meta property="og:description" content="Documentation for CTBenchmarks."/><meta property="twitter:description" content="Documentation for CTBenchmarks."/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script><link href="https://control-toolbox.org/assets/css/documentation.css" rel="stylesheet" type="text/css"/><script src="https://control-toolbox.org/assets/js/documentation.js"></script><script src="../assets/js/ctbenchmarks-details.js"></script><link href="../assets/css/ctbenchmarks-details.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../index.html">CTBenchmarks</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../index.html">Introduction</a></li><li><a class="tocitem" href="../performance_profile.html">Performance Profile</a></li><li><span class="tocitem">Core benchmarks</span><ul><li><a class="tocitem" href="cpu.html">CPU</a></li><li class="is-active"><a class="tocitem" href="gpu.html">GPU</a><ul class="internal"><li><a class="tocitem" href="#Moonshot"><span>Moonshot</span></a></li></ul></li><li><input class="collapse-toggle" id="menuitem-3-3" type="checkbox"/><label class="tocitem" for="menuitem-3-3"><span class="docs-label">Problems</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="problems/beam.html">beam</a></li><li><a class="tocitem" href="problems/chain.html">chain</a></li><li><a class="tocitem" href="problems/double_oscillator.html">double_oscillator</a></li><li><a class="tocitem" href="problems/electric_vehicle.html">electric_vehicle</a></li><li><a class="tocitem" href="problems/glider.html">glider</a></li><li><a class="tocitem" href="problems/insurance.html">insurance</a></li><li><a class="tocitem" href="problems/jackson.html">jackson</a></li><li><a class="tocitem" href="problems/robbins.html">robbins</a></li><li><a class="tocitem" href="problems/robot.html">robot</a></li><li><a class="tocitem" href="problems/rocket.html">rocket</a></li><li><a class="tocitem" href="problems/space_shuttle.html">space_shuttle</a></li><li><a class="tocitem" href="problems/steering.html">steering</a></li><li><a class="tocitem" href="problems/vanderpol.html">vanderpol</a></li></ul></li></ul></li><li><span class="tocitem">API Reference</span><ul><li><a class="tocitem" href="../api/public.html">Public</a></li><li><a class="tocitem" href="../api/private.html">Private</a></li></ul></li><li><span class="tocitem">Developers Guidelines</span><ul><li><a class="tocitem" href="../add_benchmark.html">Add a New Benchmark</a></li><li><a class="tocitem" href="../documentation_process.html">Documentation Process</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Core benchmarks</a></li><li class="is-active"><a href="gpu.html">GPU</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href="gpu.html">GPU</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/control-toolbox/CTBenchmarks.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Core-GPU-Benchmark"><a class="docs-heading-anchor" href="#Core-GPU-Benchmark">Core GPU Benchmark</a><a id="Core-GPU-Benchmark-1"></a><a class="docs-heading-anchor-permalink" href="#Core-GPU-Benchmark" title="Permalink"></a></h1><div class="admonition is-info" id="Note-f360341b554a0fae"><header class="admonition-header">Note<a class="admonition-anchor" href="#Note-f360341b554a0fae" title="Permalink"></a></header><div class="admonition-body"><ul><li>The linear solver is MUMPS for all experiments.</li><li>Below you can find Dolan–Moré performance profiles comparing solver–model combinations on the set of optimal control problems and grid sizes. For a detailed explanation of how to read these profiles, see the <a href="../performance_profile.html#performance-profiles">Performance Profiles</a> page.</li></ul></div></div><h2 id="Moonshot"><a class="docs-heading-anchor" href="#Moonshot">Moonshot</a><a id="Moonshot-1"></a><a class="docs-heading-anchor-permalink" href="#Moonshot" title="Permalink"></a></h2><p>This benchmark suite evaluates optimal control problems on GPU-accelerated hardware, focusing on large-scale problems.</p><h3 id="Configuration"><a class="docs-heading-anchor" href="#Configuration">⚙️ Configuration</a><a id="Configuration-1"></a><a class="docs-heading-anchor-permalink" href="#Configuration" title="Permalink"></a></h3><div class="benchmark-config" style="margin-bottom: 0em;"><div class="markdown"><ul>
-<li><p><strong>Problems:</strong> beam, chain, double_oscillator, electric_vehicle, glider, insurance, jackson, robbins, robot, rocket, space_shuttle, steering, vanderpol</p>
+<li><p><strong>Problems:</strong> beam, chain, double_oscillator, electric_vehicle, glider, jackson, robbins, rocket, vanderpol</p>
 </li>
 <li><p><strong>Solvers:</strong> madnlp</p>
 </li>
 <li><p><strong>Models:</strong> exa, exa_gpu</p>
 </li>
-<li><p><strong>Grid sizes:</strong> 1000, 5000, 10000 discretization points</p>
+<li><p><strong>Grid sizes:</strong> 1000, 5000, 10000, 20000 discretization points</p>
 </li>
-<li><p><strong>Discretization:</strong> trapeze method</p>
+<li><p><strong>Discretization:</strong> midpoint method</p>
 </li>
 <li><p><strong>Tolerance:</strong> 1.0e-8</p>
 </li>
 <li><p><strong>Ipopt strategy:</strong> adaptive barrier parameter</p>
 </li>
-<li><p><strong>Limits:</strong> 1000 iterations max, 1000.0s wall time</p>
+<li><p><strong>Limits:</strong> 1000 iterations max, 2000.0s wall time</p>
 </li>
 </ul>
-</div></div><h3 id="Environment"><a class="docs-heading-anchor" href="#Environment">🖥️ Environment</a><a id="Environment-1"></a><a class="docs-heading-anchor-permalink" href="#Environment" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2025-12-09 14:19:43 UTC
+</div></div><h3 id="Environment"><a class="docs-heading-anchor" href="#Environment">🖥️ Environment</a><a id="Environment-1"></a><a class="docs-heading-anchor-permalink" href="#Environment" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2025-12-09 16:46:43 UTC
 🔧 Julia version : 1.11.7
 💻 OS            : Linux
 🖥️ Machine       : moonshot</code></pre><div class="markdown"><p>You can download the exact environment used for this benchmark:</p>
@@ -386,14 +386,14 @@ Environment:
     style="max-width:1400px" 
     src="../assets/plots/gpu_plot_profile_default_cpu_cf8fbe3f.svg"
   />
-</a><div class="admonition is-info" id="Performance-Profile-Analysis-d41dee1525bf98c0"><header class="admonition-header">Performance Profile Analysis<a class="admonition-anchor" href="#Performance-Profile-Analysis-d41dee1525bf98c0" title="Permalink"></a></header><div class="admonition-body"><p><strong>Dataset overview for <code>core-moonshot-gpu</code>:</strong></p><ul><li><strong>Problems</strong>: 13 unique optimal control problems</li><li><strong>Instances</strong>: 39</li><li><strong>Solver combos</strong>: 2</li></ul><p><strong>Profile configuration:</strong></p><ul><li><strong>Instance definition</strong>: (problem, grid_size)</li><li><strong>Solver combos definition</strong>: (model, solver)</li><li><strong>Criterion</strong>: CPU time</li><li><strong>Successful runs</strong>: 51/78 (65.4%)</li><li><strong>Successful instances</strong>: 27/39 (69.2%)</li><li><strong>Unsuccessful instances</strong> (no solver converged):<ul><li><code>insurance</code> (N = 1000)</li><li><code>insurance</code> (N = 5000)</li><li><code>insurance</code> (N = 10000)</li><li><code>robot</code> (N = 1000)</li><li><code>robot</code> (N = 5000)</li><li><code>robot</code> (N = 10000)</li><li><code>space_shuttle</code> (N = 1000)</li><li><code>space_shuttle</code> (N = 5000)</li><li><code>space_shuttle</code> (N = 10000)</li><li><code>steering</code> (N = 1000)</li><li><code>steering</code> (N = 5000)</li><li><code>steering</code> (N = 10000)</li></ul></li></ul><p><strong>Robustness (% of instances solved):</strong></p><ul><li><code>(exa, madnlp)</code>: 69.2%</li><li><code>(exa_gpu, madnlp)</code>: 61.5%</li></ul><p><strong>Efficiency (% of instances where fastest):</strong></p><ul><li><code>(exa, madnlp)</code>: 30.8%</li><li><code>(exa_gpu, madnlp)</code>: 38.5%</li></ul><p><strong>Most robust</strong>: <code>(exa, madnlp)</code> solved 69.2% of instances.</p><p><strong>Most efficient</strong>: <code>(exa_gpu, madnlp)</code> was fastest on 38.5% of instances.</p><p><em>For detailed interpretation, see the <a href="../performance_profile.html#performance-profiles">Performance Profiles</a> page.</em></p></div></div><h3 id="Performance-Profile-Iterations"><a class="docs-heading-anchor" href="#Performance-Profile-Iterations">📈 Performance Profile Iterations</a><a id="Performance-Profile-Iterations-1"></a><a class="docs-heading-anchor-permalink" href="#Performance-Profile-Iterations" title="Permalink"></a></h3><a href="../assets/plots/gpu_plot_profile_default_iter_1f2455b1.pdf">
+</a><div class="admonition is-info" id="Performance-Profile-Analysis-107d8b37b170797b"><header class="admonition-header">Performance Profile Analysis<a class="admonition-anchor" href="#Performance-Profile-Analysis-107d8b37b170797b" title="Permalink"></a></header><div class="admonition-body"><p><strong>Dataset overview for <code>core-moonshot-gpu</code>:</strong></p><ul><li><strong>Problems</strong>: 9 unique optimal control problems</li><li><strong>Instances</strong>: 36</li><li><strong>Solver combos</strong>: 2</li></ul><p><strong>Profile configuration:</strong></p><ul><li><strong>Instance definition</strong>: (problem, grid_size)</li><li><strong>Solver combos definition</strong>: (model, solver)</li><li><strong>Criterion</strong>: CPU time</li><li><strong>Successful runs</strong>: 67/72 (93.1%)</li><li><strong>Successful instances</strong>: 35/36 (97.2%)</li><li><strong>Unsuccessful instances</strong> (no solver converged):<ul><li><code>glider</code> (N = 5000)</li></ul></li></ul><p><strong>Robustness (% of instances solved):</strong></p><ul><li><code>(exa, madnlp)</code>: 97.2%</li><li><code>(exa_gpu, madnlp)</code>: 88.9%</li></ul><p><strong>Efficiency (% of instances where fastest):</strong></p><ul><li><code>(exa, madnlp)</code>: 33.3%</li><li><code>(exa_gpu, madnlp)</code>: 63.9%</li></ul><p><strong>Most robust</strong>: <code>(exa, madnlp)</code> solved 97.2% of instances.</p><p><strong>Most efficient</strong>: <code>(exa_gpu, madnlp)</code> was fastest on 63.9% of instances.</p><p><em>For detailed interpretation, see the <a href="../performance_profile.html#performance-profiles">Performance Profiles</a> page.</em></p></div></div><h3 id="Performance-Profile-Iterations"><a class="docs-heading-anchor" href="#Performance-Profile-Iterations">📈 Performance Profile Iterations</a><a id="Performance-Profile-Iterations-1"></a><a class="docs-heading-anchor-permalink" href="#Performance-Profile-Iterations" title="Permalink"></a></h3><a href="../assets/plots/gpu_plot_profile_default_iter_1f2455b1.pdf">
   <img 
     class="centering" 
     width="100%" 
     style="max-width:1400px" 
     src="../assets/plots/gpu_plot_profile_default_iter_1f2455b1.svg"
   />
-</a><div class="admonition is-info" id="Performance-Profile-Analysis-5da6b04877e479af"><header class="admonition-header">Performance Profile Analysis<a class="admonition-anchor" href="#Performance-Profile-Analysis-5da6b04877e479af" title="Permalink"></a></header><div class="admonition-body"><p><strong>Dataset overview for <code>core-moonshot-gpu</code>:</strong></p><ul><li><strong>Problems</strong>: 13 unique optimal control problems</li><li><strong>Instances</strong>: 39</li><li><strong>Solver combos</strong>: 2</li></ul><p><strong>Profile configuration:</strong></p><ul><li><strong>Instance definition</strong>: (problem, grid_size)</li><li><strong>Solver combos definition</strong>: (model, solver)</li><li><strong>Criterion</strong>: Iterations</li><li><strong>Successful runs</strong>: 51/78 (65.4%)</li><li><strong>Successful instances</strong>: 27/39 (69.2%)</li><li><strong>Unsuccessful instances</strong> (no solver converged):<ul><li><code>insurance</code> (N = 1000)</li><li><code>insurance</code> (N = 5000)</li><li><code>insurance</code> (N = 10000)</li><li><code>robot</code> (N = 1000)</li><li><code>robot</code> (N = 5000)</li><li><code>robot</code> (N = 10000)</li><li><code>space_shuttle</code> (N = 1000)</li><li><code>space_shuttle</code> (N = 5000)</li><li><code>space_shuttle</code> (N = 10000)</li><li><code>steering</code> (N = 1000)</li><li><code>steering</code> (N = 5000)</li><li><code>steering</code> (N = 10000)</li></ul></li></ul><p><strong>Robustness (% of instances solved):</strong></p><ul><li><code>(exa, madnlp)</code>: 69.2%</li><li><code>(exa_gpu, madnlp)</code>: 61.5%</li></ul><p><strong>Efficiency (% of instances where fastest):</strong></p><ul><li><code>(exa, madnlp)</code>: 64.1%</li><li><code>(exa_gpu, madnlp)</code>: 17.9%</li></ul><p><strong>Most robust</strong>: <code>(exa, madnlp)</code> solved 69.2% of instances.</p><p><strong>Most efficient</strong>: <code>(exa, madnlp)</code> was fastest on 64.1% of instances.</p><p><em>For detailed interpretation, see the <a href="../performance_profile.html#performance-profiles">Performance Profiles</a> page.</em></p></div></div><h3 id="Tables-of-Results"><a class="docs-heading-anchor" href="#Tables-of-Results">📊 Tables of Results</a><a id="Tables-of-Results-1"></a><a class="docs-heading-anchor-permalink" href="#Tables-of-Results" title="Permalink"></a></h3><div class="ct-problem-table-selector">
+</a><div class="admonition is-info" id="Performance-Profile-Analysis-bca118abb22ef127"><header class="admonition-header">Performance Profile Analysis<a class="admonition-anchor" href="#Performance-Profile-Analysis-bca118abb22ef127" title="Permalink"></a></header><div class="admonition-body"><p><strong>Dataset overview for <code>core-moonshot-gpu</code>:</strong></p><ul><li><strong>Problems</strong>: 9 unique optimal control problems</li><li><strong>Instances</strong>: 36</li><li><strong>Solver combos</strong>: 2</li></ul><p><strong>Profile configuration:</strong></p><ul><li><strong>Instance definition</strong>: (problem, grid_size)</li><li><strong>Solver combos definition</strong>: (model, solver)</li><li><strong>Criterion</strong>: Iterations</li><li><strong>Successful runs</strong>: 67/72 (93.1%)</li><li><strong>Successful instances</strong>: 35/36 (97.2%)</li><li><strong>Unsuccessful instances</strong> (no solver converged):<ul><li><code>glider</code> (N = 5000)</li></ul></li></ul><p><strong>Robustness (% of instances solved):</strong></p><ul><li><code>(exa, madnlp)</code>: 97.2%</li><li><code>(exa_gpu, madnlp)</code>: 88.9%</li></ul><p><strong>Efficiency (% of instances where fastest):</strong></p><ul><li><code>(exa, madnlp)</code>: 91.7%</li><li><code>(exa_gpu, madnlp)</code>: 19.4%</li></ul><p><strong>Most robust</strong>: <code>(exa, madnlp)</code> solved 97.2% of instances.</p><p><strong>Most efficient</strong>: <code>(exa, madnlp)</code> was fastest on 91.7% of instances.</p><p><em>For detailed interpretation, see the <a href="../performance_profile.html#performance-profiles">Performance Profiles</a> page.</em></p></div></div><h3 id="Tables-of-Results"><a class="docs-heading-anchor" href="#Tables-of-Results">📊 Tables of Results</a><a id="Tables-of-Results-1"></a><a class="docs-heading-anchor-permalink" href="#Tables-of-Results" title="Permalink"></a></h3><div class="ct-problem-table-selector">
 <label for="bench-core-moonshot-gpu-problem-select">Problem:</label>
 <select id="bench-core-moonshot-gpu-problem-select">
   <option value="beam">beam</option>
@@ -401,13 +401,9 @@ Environment:
   <option value="double_oscillator">double_oscillator</option>
   <option value="electric_vehicle">electric_vehicle</option>
   <option value="glider">glider</option>
-  <option value="insurance">insurance</option>
   <option value="jackson">jackson</option>
   <option value="robbins">robbins</option>
-  <option value="robot">robot</option>
   <option value="rocket">rocket</option>
-  <option value="space_shuttle">space_shuttle</option>
-  <option value="steering">steering</option>
   <option value="vanderpol">vanderpol</option>
 </select>
 </div>
@@ -422,8 +418,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>73.370</td><td>26</td><td>8.888987</td><td>min</td><td>✓</td></tr>
-    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>489.858</td><td>66</td><td>8.888374</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>74.455</td><td>26</td><td>8.888914</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>277.577</td><td>48</td><td>8.888302</td><td>min</td><td></td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -431,8 +427,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>1237.902</td><td>79</td><td>8.888895</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>848.736</td><td>139</td><td>8.885842</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>1195.754</td><td>79</td><td>8.888892</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>947.418</td><td>138</td><td>8.885839</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -440,8 +436,17 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>5159.464</td><td>138</td><td>8.888894</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>1641.053</td><td>245</td><td>8.882792</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>5897.597</td><td>175</td><td>8.888893</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>1879.474</td><td>234</td><td>8.882791</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>20000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>13832.823</td><td>189</td><td>8.888898</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>20000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>2628.246</td><td>381</td><td>8.876698</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 
@@ -455,8 +460,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>34.289</td><td>6</td><td>5.068510</td><td>min</td><td>✓</td></tr>
-    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>135.600</td><td>15</td><td>5.068482</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>60.927</td><td>14</td><td>5.068480</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>125.344</td><td>15</td><td>5.068452</td><td>min</td><td></td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -464,8 +469,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>335.815</td><td>6</td><td>5.068482</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>179.743</td><td>16</td><td>5.068340</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>476.996</td><td>13</td><td>5.068480</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>175.897</td><td>16</td><td>5.068339</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -473,8 +478,17 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>761.239</td><td>6</td><td>5.068480</td><td>min</td><td>✓</td></tr>
-    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>7618.668</td><td>714</td><td>5.068198</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>1049.160</td><td>13</td><td>5.068480</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>29422.584</td><td>439</td><td>5.068201</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>20000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>3588.605</td><td>14</td><td>5.068480</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>20000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>302.681</td><td>15</td><td>5.067922</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 
@@ -488,8 +502,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>47.293</td><td>6</td><td>0.000911</td><td>min</td><td>✓</td></tr>
-    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>71.798</td><td>6</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>41.658</td><td>6</td><td>0.000911</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>90.534</td><td>6</td><td>0.000911</td><td>min</td><td></td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -497,8 +511,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>587.779</td><td>6</td><td>0.000911</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>148.027</td><td>6</td><td>0.000909</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>468.704</td><td>6</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>218.805</td><td>6</td><td>0.000909</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -506,8 +520,17 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>1284.150</td><td>6</td><td>0.000911</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>240.776</td><td>8</td><td>0.000911</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>1000.381</td><td>6</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>244.341</td><td>6</td><td>0.000907</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>20000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>2357.853</td><td>6</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>20000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>354.128</td><td>6</td><td>0.000904</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 
@@ -521,8 +544,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>16.956</td><td>4</td><td>1228.585040</td><td>min</td><td>✓</td></tr>
-    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>86.860</td><td>11</td><td>1228.579133</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>18.819</td><td>4</td><td>1228.582645</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>92.246</td><td>11</td><td>1228.576738</td><td>min</td><td></td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -530,8 +553,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>157.239</td><td>4</td><td>1228.580480</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>103.329</td><td>11</td><td>1228.551024</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>171.911</td><td>5</td><td>1228.580384</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>129.296</td><td>11</td><td>1228.550928</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -539,8 +562,17 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>369.807</td><td>4</td><td>1228.580337</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>128.253</td><td>10</td><td>1228.521446</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>380.696</td><td>5</td><td>1228.580313</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>137.367</td><td>10</td><td>1228.521422</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>20000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>852.533</td><td>5</td><td>1228.580296</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>20000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>191.228</td><td>10</td><td>1228.462535</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 
@@ -554,8 +586,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>11555.662</td><td>704</td><td>-1247.985216</td><td>min</td><td>✓</td></tr>
-    <tr><td>✗</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>13523.331</td><td>1000</td><td>-219.002572</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>10738.000</td><td>729</td><td>-1247.984921</td><td>min</td><td>✓</td></tr>
+    <tr><td>✗</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>13530.930</td><td>1000</td><td>-231.429151</td><td>min</td><td></td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -563,8 +595,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>59299.813</td><td>475</td><td>-1247.987504</td><td>min</td><td>✓</td></tr>
-    <tr><td>✗</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>2186.978</td><td>42</td><td>-55.363326</td><td>min</td><td></td></tr>
+    <tr><td>✗</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>114708.974</td><td>1000</td><td>-1215.926227</td><td>min</td><td></td></tr>
+    <tr><td>✗</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>6878.721</td><td>128</td><td>-101.371315</td><td>min</td><td></td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -572,23 +604,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>109347.808</td><td>419</td><td>-1247.987575</td><td>min</td><td>✓</td></tr>
-    <tr><td>✗</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>12496.370</td><td>151</td><td>-103.721965</td><td>min</td><td></td></tr>
-  </tbody>
-</table>
-
-</div>
-<div class="ct-problem-table" data-problem="insurance" style="display:none;">
-
-<br/>
-
-<table class="ct-benchmark-table">
-  <thead>
-    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>✗</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-    <tr><td>✗</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>171779.606</td><td>763</td><td>-1247.987574</td><td>min</td><td>✓</td></tr>
+    <tr><td>✗</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>10743.628</td><td>115</td><td>-108.364284</td><td>min</td><td></td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -596,17 +613,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✗</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-    <tr><td>✗</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-  </tbody>
-</table>
-<table class="ct-benchmark-table">
-  <thead>
-    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>✗</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-    <tr><td>✗</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
+    <tr><td>✓</td><td>20000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>230370.349</td><td>527</td><td>-1247.987593</td><td>min</td><td>✓</td></tr>
+    <tr><td>✗</td><td>20000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>174403.442</td><td>1000</td><td>-369.577904</td><td>min</td><td></td></tr>
   </tbody>
 </table>
 
@@ -620,8 +628,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>108.823</td><td>23</td><td>-0.191816</td><td>min</td><td>✓</td></tr>
-    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>145.335</td><td>23</td><td>-0.191838</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>100.998</td><td>23</td><td>-0.191815</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>175.808</td><td>22</td><td>-0.191837</td><td>min</td><td></td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -629,8 +637,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>866.881</td><td>23</td><td>-0.191814</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>200.966</td><td>24</td><td>-0.191925</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>697.461</td><td>21</td><td>-0.191813</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>266.524</td><td>25</td><td>-0.191925</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -638,8 +646,17 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>1906.956</td><td>24</td><td>-0.191813</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>282.105</td><td>24</td><td>-0.192035</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>1464.573</td><td>21</td><td>-0.191811</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>319.805</td><td>24</td><td>-0.192035</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>20000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>3335.336</td><td>20</td><td>-0.191808</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>20000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>549.393</td><td>21</td><td>-0.192256</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 
@@ -653,8 +670,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>188.759</td><td>50</td><td>19.440191</td><td>min</td><td>✓</td></tr>
-    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>286.056</td><td>44</td><td>19.440007</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>299.890</td><td>44</td><td>19.433173</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>368.758</td><td>44</td><td>19.432981</td><td>min</td><td></td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -662,8 +679,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>2385.044</td><td>77</td><td>19.432125</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>384.962</td><td>47</td><td>19.431224</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>2516.795</td><td>75</td><td>19.431842</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>492.927</td><td>48</td><td>19.430934</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -671,23 +688,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>4636.728</td><td>68</td><td>19.431878</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>770.988</td><td>78</td><td>19.430066</td><td>min</td><td>✓</td></tr>
-  </tbody>
-</table>
-
-</div>
-<div class="ct-problem-table" data-problem="robot" style="display:none;">
-
-<br/>
-
-<table class="ct-benchmark-table">
-  <thead>
-    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>✗</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-    <tr><td>✗</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>4205.116</td><td>63</td><td>19.431807</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>1067.169</td><td>95</td><td>19.429992</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -695,17 +697,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✗</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-    <tr><td>✗</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-  </tbody>
-</table>
-<table class="ct-benchmark-table">
-  <thead>
-    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>✗</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-    <tr><td>✗</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
+    <tr><td>✓</td><td>20000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>11830.686</td><td>71</td><td>19.431808</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>20000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>1255.035</td><td>91</td><td>19.428187</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 
@@ -719,8 +712,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>147.699</td><td>24</td><td>-1.012836</td><td>min</td><td>✓</td></tr>
-    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>213.139</td><td>24</td><td>-1.012870</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>144.374</td><td>23</td><td>-1.012833</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>346.080</td><td>24</td><td>-1.012870</td><td>min</td><td></td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -728,8 +721,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>1078.530</td><td>24</td><td>-1.012831</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>782.233</td><td>28</td><td>-1.013000</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>941.435</td><td>21</td><td>-1.012820</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>846.136</td><td>27</td><td>-1.013000</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -737,23 +730,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>2244.714</td><td>22</td><td>-1.012802</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>1292.959</td><td>27</td><td>-1.013162</td><td>min</td><td>✓</td></tr>
-  </tbody>
-</table>
-
-</div>
-<div class="ct-problem-table" data-problem="space_shuttle" style="display:none;">
-
-<br/>
-
-<table class="ct-benchmark-table">
-  <thead>
-    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>✗</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-    <tr><td>✗</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>2361.614</td><td>24</td><td>-1.012824</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>1535.140</td><td>27</td><td>-1.013162</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -761,50 +739,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✗</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-    <tr><td>✗</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-  </tbody>
-</table>
-<table class="ct-benchmark-table">
-  <thead>
-    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>✗</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-    <tr><td>✗</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-  </tbody>
-</table>
-
-</div>
-<div class="ct-problem-table" data-problem="steering" style="display:none;">
-
-<br/>
-
-<table class="ct-benchmark-table">
-  <thead>
-    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>✗</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-    <tr><td>✗</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-  </tbody>
-</table>
-<table class="ct-benchmark-table">
-  <thead>
-    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>✗</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-    <tr><td>✗</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-  </tbody>
-</table>
-<table class="ct-benchmark-table">
-  <thead>
-    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>✗</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
-    <tr><td>✗</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
+    <tr><td>✓</td><td>20000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>4140.687</td><td>21</td><td>-1.012767</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>20000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>2655.613</td><td>29</td><td>-1.013484</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 
@@ -818,8 +754,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>14.467</td><td>3</td><td>1.047808</td><td>min</td><td>✓</td></tr>
-    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>97.043</td><td>7</td><td>1.047789</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>23.107</td><td>4</td><td>1.047807</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>116.645</td><td>7</td><td>1.047787</td><td>min</td><td></td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -827,8 +763,8 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>149.677</td><td>3</td><td>1.047807</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>114.541</td><td>7</td><td>1.047710</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>149.856</td><td>4</td><td>1.047807</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>5000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>141.503</td><td>7</td><td>1.047710</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 <table class="ct-benchmark-table">
@@ -836,8 +772,17 @@ Environment:
     <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
   </thead>
   <tbody>
-    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>333.073</td><td>3</td><td>1.047807</td><td>min</td><td></td></tr>
-    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>124.431</td><td>7</td><td>1.047613</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>320.819</td><td>4</td><td>1.047807</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>10000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>191.049</td><td>8</td><td>1.047613</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>20000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>774.128</td><td>5</td><td>1.047807</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>20000</td><td><code>exa_gpu</code></td><td><code>madnlp</code></td><td>231.373</td><td>7</td><td>1.047420</td><td>min</td><td>✓</td></tr>
   </tbody>
 </table>
 
@@ -884,235 +829,199 @@ Environment:
 
 ┌─ Problem: beam
 │
-├──┬ Solver: madnlp, Discretization: trapeze
+├──┬ Solver: madnlp, Discretization: midpoint
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  73.370 ms | iters: 26    | obj: 8.888987e+00  (min) | CPU:   9.30 MiB
-│  │  ✓ | exa_gpu  | time: 489.858 ms | iters: 66    | obj: 8.888374e+00  (min) | CPU: 23.697 MiB | GPU: 15.076 MiB
+│  │  ✓ | exa      | time:  74.455 ms | iters: 26    | obj: 8.888914e+00  (min) | CPU:   8.89 MiB
+│  │  ✓ | exa_gpu  | time: 277.577 ms | iters: 48    | obj: 8.888302e+00  (min) | CPU: 16.613 MiB | GPU: 12.101 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time:   1.238 s  | iters: 79    | obj: 8.888895e+00  (min) | CPU:  99.12 MiB
-│  │  ✓ | exa_gpu  | time: 848.736 ms | iters: 139   | obj: 8.885842e+00  (min) | CPU: 49.631 MiB | GPU: 103.195 MiB
+│  │  ✓ | exa      | time:   1.196 s  | iters: 79    | obj: 8.888892e+00  (min) | CPU:  97.02 MiB
+│  │  ✓ | exa_gpu  | time: 947.418 ms | iters: 138   | obj: 8.885839e+00  (min) | CPU: 47.271 MiB | GPU: 94.855 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time:   5.159 s  | iters: 138   | obj: 8.888894e+00  (min) | CPU: 319.23 MiB
-│  │  ✓ | exa_gpu  | time:   1.641 s  | iters: 245   | obj: 8.882792e+00  (min) | CPU: 82.454 MiB | GPU: 286.707 MiB
+│  │  ✓ | exa      | time:   5.898 s  | iters: 175   | obj: 8.888893e+00  (min) | CPU: 391.56 MiB
+│  │  ✓ | exa_gpu  | time:   1.879 s  | iters: 234   | obj: 8.882791e+00  (min) | CPU: 91.258 MiB | GPU: 262.464 MiB
+│  │
+│  │  N = 20000
+│  │  ✓ | exa      | time:  13.833 s  | iters: 189   | obj: 8.888898e+00  (min) | CPU: 841.47 MiB
+│  │  ✓ | exa_gpu  | time:   2.628 s  | iters: 381   | obj: 8.876698e+00  (min) | CPU: 125.664 MiB | GPU: 747.316 MiB
 │  └─
 └─
 
 ┌─ Problem: chain
 │
-├──┬ Solver: madnlp, Discretization: trapeze
+├──┬ Solver: madnlp, Discretization: midpoint
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  34.289 ms | iters: 6     | obj: 5.068510e+00  (min) | CPU:   6.74 MiB
-│  │  ✓ | exa_gpu  | time: 135.600 ms | iters: 15    | obj: 5.068482e+00  (min) | CPU:  8.177 MiB | GPU: 19.216 MiB
+│  │  ✓ | exa      | time:  60.927 ms | iters: 14    | obj: 5.068480e+00  (min) | CPU:   6.74 MiB
+│  │  ✓ | exa_gpu  | time: 125.344 ms | iters: 15    | obj: 5.068452e+00  (min) | CPU:  7.756 MiB | GPU: 14.348 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 335.815 ms | iters: 6     | obj: 5.068482e+00  (min) | CPU:  31.90 MiB
-│  │  ✓ | exa_gpu  | time: 179.743 ms | iters: 16    | obj: 5.068340e+00  (min) | CPU: 12.623 MiB | GPU: 96.477 MiB
+│  │  ✓ | exa      | time: 476.996 ms | iters: 13    | obj: 5.068480e+00  (min) | CPU:  30.89 MiB
+│  │  ✓ | exa_gpu  | time: 175.897 ms | iters: 16    | obj: 5.068339e+00  (min) | CPU: 10.799 MiB | GPU: 72.133 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time: 761.239 ms | iters: 6     | obj: 5.068480e+00  (min) | CPU:  63.35 MiB
-│  │  ✓ | exa_gpu  | time:   7.619 s  | iters: 714   | obj: 5.068198e+00  (min) | CPU: 451.592 MiB | GPU: 874.878 MiB
+│  │  ✓ | exa      | time:   1.049 s  | iters: 13    | obj: 5.068480e+00  (min) | CPU:  61.26 MiB
+│  │  ✓ | exa_gpu  | time:  29.423 s  | iters: 439   | obj: 5.068201e+00  (min) | CPU:  1.633 GiB | GPU: 576.439 MiB
+│  │
+│  │  N = 20000
+│  │  ✓ | exa      | time:   3.589 s  | iters: 14    | obj: 5.068480e+00  (min) | CPU: 125.07 MiB
+│  │  ✓ | exa_gpu  | time: 302.681 ms | iters: 15    | obj: 5.067922e+00  (min) | CPU: 19.882 MiB | GPU: 286.336 MiB
 │  └─
 └─
 
 ┌─ Problem: double_oscillator
 │
-├──┬ Solver: madnlp, Discretization: trapeze
+├──┬ Solver: madnlp, Discretization: midpoint
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  47.293 ms | iters: 6     | obj: 9.110069e-04  (min) | CPU:  13.58 MiB
-│  │  ✓ | exa_gpu  | time:  71.798 ms | iters: 6     | obj: 9.106285e-04  (min) | CPU:  5.844 MiB | GPU: 37.572 MiB
+│  │  ✓ | exa      | time:  41.658 ms | iters: 6     | obj: 9.110011e-04  (min) | CPU:  10.65 MiB
+│  │  ✓ | exa_gpu  | time:  90.534 ms | iters: 6     | obj: 9.106227e-04  (min) | CPU:  6.238 MiB | GPU: 29.634 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 587.779 ms | iters: 6     | obj: 9.110337e-04  (min) | CPU:  66.02 MiB
-│  │  ✓ | exa_gpu  | time: 148.027 ms | iters: 6     | obj: 9.091474e-04  (min) | CPU: 14.806 MiB | GPU: 187.826 MiB
+│  │  ✓ | exa      | time: 468.704 ms | iters: 6     | obj: 9.110335e-04  (min) | CPU:  51.32 MiB
+│  │  ✓ | exa_gpu  | time: 218.805 ms | iters: 6     | obj: 9.091470e-04  (min) | CPU: 14.877 MiB | GPU: 148.459 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time:   1.284 s  | iters: 6     | obj: 9.110346e-04  (min) | CPU: 131.57 MiB
-│  │  ✓ | exa_gpu  | time: 240.776 ms | iters: 8     | obj: 9.110282e-04  (min) | CPU: 29.149 MiB | GPU: 379.069 MiB
+│  │  ✓ | exa      | time:   1.000 s  | iters: 6     | obj: 9.110345e-04  (min) | CPU: 102.16 MiB
+│  │  ✓ | exa_gpu  | time: 244.341 ms | iters: 6     | obj: 9.072690e-04  (min) | CPU: 20.132 MiB | GPU: 296.003 MiB
+│  │
+│  │  N = 20000
+│  │  ✓ | exa      | time:   2.358 s  | iters: 6     | obj: 9.110348e-04  (min) | CPU: 203.85 MiB
+│  │  ✓ | exa_gpu  | time: 354.128 ms | iters: 6     | obj: 9.035310e-04  (min) | CPU: 36.184 MiB | GPU: 591.891 MiB
 │  └─
 └─
 
 ┌─ Problem: electric_vehicle
 │
-├──┬ Solver: madnlp, Discretization: trapeze
+├──┬ Solver: madnlp, Discretization: midpoint
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  16.956 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:   6.47 MiB
-│  │  ✓ | exa_gpu  | time:  86.860 ms | iters: 11    | obj: 1.228579e+03  (min) | CPU:  6.708 MiB | GPU: 17.574 MiB
+│  │  ✓ | exa      | time:  18.819 ms | iters: 4     | obj: 1.228583e+03  (min) | CPU:   4.95 MiB
+│  │  ✓ | exa_gpu  | time:  92.246 ms | iters: 11    | obj: 1.228577e+03  (min) | CPU:  6.185 MiB | GPU: 13.167 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 157.239 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU:  30.57 MiB
-│  │  ✓ | exa_gpu  | time: 103.329 ms | iters: 11    | obj: 1.228551e+03  (min) | CPU: 11.337 MiB | GPU: 87.849 MiB
+│  │  ✓ | exa      | time: 171.911 ms | iters: 5     | obj: 1.228580e+03  (min) | CPU:  23.54 MiB
+│  │  ✓ | exa_gpu  | time: 129.296 ms | iters: 11    | obj: 1.228551e+03  (min) | CPU:  9.499 MiB | GPU: 65.806 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time: 369.807 ms | iters: 4     | obj: 1.228580e+03  (min) | CPU:  60.68 MiB
-│  │  ✓ | exa_gpu  | time: 128.253 ms | iters: 10    | obj: 1.228521e+03  (min) | CPU: 15.603 MiB | GPU: 175.008 MiB
+│  │  ✓ | exa      | time: 380.696 ms | iters: 5     | obj: 1.228580e+03  (min) | CPU:  46.63 MiB
+│  │  ✓ | exa_gpu  | time: 137.367 ms | iters: 10    | obj: 1.228521e+03  (min) | CPU: 12.157 MiB | GPU: 130.933 MiB
+│  │
+│  │  N = 20000
+│  │  ✓ | exa      | time: 852.533 ms | iters: 5     | obj: 1.228580e+03  (min) | CPU:  92.80 MiB
+│  │  ✓ | exa_gpu  | time: 191.228 ms | iters: 10    | obj: 1.228463e+03  (min) | CPU: 19.469 MiB | GPU: 261.839 MiB
 │  └─
 └─
 
 ┌─ Problem: glider
 │
-├──┬ Solver: madnlp, Discretization: trapeze
+├──┬ Solver: madnlp, Discretization: midpoint
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  11.556 s  | iters: 704   | obj: -1.247985e+03 (min) | CPU: 306.63 MiB
-│  │  ✗ | exa_gpu  | time:  13.523 s  | iters: 1000  | obj: -2.190026e+02 (min) | CPU: 731.839 MiB | GPU: 230.081 MiB
+│  │  ✓ | exa      | time:  10.738 s  | iters: 729   | obj: -1.247985e+03 (min) | CPU: 314.44 MiB
+│  │  ✗ | exa_gpu  | time:  13.531 s  | iters: 1000  | obj: -2.314292e+02 (min) | CPU: 854.804 MiB | GPU: 224.246 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time:  59.300 s  | iters: 475   | obj: -1.247988e+03 (min) | CPU:   1.08 GiB
-│  │  ✗ | exa_gpu  | time:   2.187 s  | iters: 42    | obj: -5.536333e+01 (min) | CPU: 63.380 MiB | GPU: 318.440 MiB
+│  │  ✗ | exa      | time: 114.709 s  | iters: 1000  | obj: -1.215926e+03 (min) | CPU:   2.10 GiB
+│  │  ✗ | exa_gpu  | time:   6.879 s  | iters: 128   | obj: -1.013713e+02 (min) | CPU: 143.923 MiB | GPU: 373.914 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time: 109.348 s  | iters: 419   | obj: -1.247988e+03 (min) | CPU:   1.87 GiB
-│  │  ✗ | exa_gpu  | time:  12.496 s  | iters: 151   | obj: -1.037220e+02 (min) | CPU: 168.494 MiB | GPU: 830.299 MiB
-│  └─
-└─
-
-┌─ Problem: insurance
-│
-├──┬ Solver: madnlp, Discretization: trapeze
+│  │  ✓ | exa      | time: 171.780 s  | iters: 763   | obj: -1.247988e+03 (min) | CPU:   3.22 GiB
+│  │  ✗ | exa_gpu  | time:  10.744 s  | iters: 115   | obj: -1.083643e+02 (min) | CPU: 138.935 MiB | GPU: 725.767 MiB
 │  │
-│  │  N = 1000
-│  │  ✗ | exa     : ERROR: UndefVarError(:insurance_s, CTBenchmarks)
-│  │  ✗ | exa_gpu : ERROR: UndefVarError(:insurance_s, CTBenchmarks)
-│  │
-│  │  N = 5000
-│  │  ✗ | exa     : ERROR: UndefVarError(:insurance_s, CTBenchmarks)
-│  │  ✗ | exa_gpu : ERROR: UndefVarError(:insurance_s, CTBenchmarks)
-│  │
-│  │  N = 10000
-│  │  ✗ | exa     : ERROR: UndefVarError(:insurance_s, CTBenchmarks)
-│  │  ✗ | exa_gpu : ERROR: UndefVarError(:insurance_s, CTBenchmarks)
+│  │  N = 20000
+│  │  ✓ | exa      | time: 230.370 s  | iters: 527   | obj: -1.247988e+03 (min) | CPU:   5.10 GiB
+│  │  ✗ | exa_gpu  | time: 174.403 s  | iters: 1000  | obj: -3.695779e+02 (min) | CPU: 865.837 MiB | GPU:  4.378 GiB
 │  └─
 └─
 
 ┌─ Problem: jackson
 │
-├──┬ Solver: madnlp, Discretization: trapeze
+├──┬ Solver: madnlp, Discretization: midpoint
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time: 108.823 ms | iters: 23    | obj: -1.918159e-01 (min) | CPU:  23.14 MiB
-│  │  ✓ | exa_gpu  | time: 145.335 ms | iters: 23    | obj: -1.918383e-01 (min) | CPU: 11.309 MiB | GPU: 33.627 MiB
+│  │  ✓ | exa      | time: 100.998 ms | iters: 23    | obj: -1.918150e-01 (min) | CPU:  20.88 MiB
+│  │  ✓ | exa_gpu  | time: 175.808 ms | iters: 22    | obj: -1.918374e-01 (min) | CPU: 10.130 MiB | GPU: 26.396 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 866.881 ms | iters: 23    | obj: -1.918138e-01 (min) | CPU: 113.69 MiB
-│  │  ✓ | exa_gpu  | time: 200.966 ms | iters: 24    | obj: -1.919248e-01 (min) | CPU: 19.356 MiB | GPU: 168.861 MiB
+│  │  ✓ | exa      | time: 697.461 ms | iters: 21    | obj: -1.918128e-01 (min) | CPU:  96.91 MiB
+│  │  ✓ | exa_gpu  | time: 266.524 ms | iters: 25    | obj: -1.919247e-01 (min) | CPU: 16.844 MiB | GPU: 134.356 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time:   1.907 s  | iters: 24    | obj: -1.918132e-01 (min) | CPU: 231.99 MiB
-│  │  ✓ | exa_gpu  | time: 282.105 ms | iters: 24    | obj: -1.920350e-01 (min) | CPU: 28.869 MiB | GPU: 337.576 MiB
+│  │  ✓ | exa      | time:   1.465 s  | iters: 21    | obj: -1.918111e-01 (min) | CPU: 193.26 MiB
+│  │  ✓ | exa_gpu  | time: 319.805 ms | iters: 24    | obj: -1.920350e-01 (min) | CPU: 23.312 MiB | GPU: 266.923 MiB
+│  │
+│  │  N = 20000
+│  │  ✓ | exa      | time:   3.335 s  | iters: 20    | obj: -1.918079e-01 (min) | CPU: 375.57 MiB
+│  │  ✓ | exa_gpu  | time: 549.393 ms | iters: 21    | obj: -1.922558e-01 (min) | CPU: 35.987 MiB | GPU: 523.752 MiB
 │  └─
 └─
 
 ┌─ Problem: robbins
 │
-├──┬ Solver: madnlp, Discretization: trapeze
+├──┬ Solver: madnlp, Discretization: midpoint
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time: 188.759 ms | iters: 50    | obj: 1.944019e+01  (min) | CPU:  15.75 MiB
-│  │  ✓ | exa_gpu  | time: 286.056 ms | iters: 44    | obj: 1.944001e+01  (min) | CPU: 18.909 MiB | GPU: 19.558 MiB
+│  │  ✓ | exa      | time: 299.890 ms | iters: 44    | obj: 1.943317e+01  (min) | CPU:  14.32 MiB
+│  │  ✓ | exa_gpu  | time: 368.758 ms | iters: 44    | obj: 1.943298e+01  (min) | CPU: 18.419 MiB | GPU: 18.398 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time:   2.385 s  | iters: 77    | obj: 1.943213e+01  (min) | CPU: 103.89 MiB
-│  │  ✓ | exa_gpu  | time: 384.962 ms | iters: 47    | obj: 1.943122e+01  (min) | CPU: 22.613 MiB | GPU: 99.165 MiB
+│  │  ✓ | exa      | time:   2.517 s  | iters: 75    | obj: 1.943184e+01  (min) | CPU: 100.74 MiB
+│  │  ✓ | exa_gpu  | time: 492.927 ms | iters: 48    | obj: 1.943093e+01  (min) | CPU: 21.902 MiB | GPU: 93.877 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time:   4.637 s  | iters: 68    | obj: 1.943188e+01  (min) | CPU: 189.07 MiB
-│  │  ✓ | exa_gpu  | time: 770.988 ms | iters: 78    | obj: 1.943007e+01  (min) | CPU: 40.930 MiB | GPU: 231.067 MiB
-│  └─
-└─
-
-┌─ Problem: robot
-│
-├──┬ Solver: madnlp, Discretization: trapeze
+│  │  ✓ | exa      | time:   4.205 s  | iters: 63    | obj: 1.943181e+01  (min) | CPU: 176.54 MiB
+│  │  ✓ | exa_gpu  | time:   1.067 s  | iters: 95    | obj: 1.942999e+01  (min) | CPU: 42.458 MiB | GPU: 236.838 MiB
 │  │
-│  │  N = 1000
-│  │  ✗ | exa     : ERROR: UndefVarError(:robot_s, CTBenchmarks)
-│  │  ✗ | exa_gpu : ERROR: UndefVarError(:robot_s, CTBenchmarks)
-│  │
-│  │  N = 5000
-│  │  ✗ | exa     : ERROR: UndefVarError(:robot_s, CTBenchmarks)
-│  │  ✗ | exa_gpu : ERROR: UndefVarError(:robot_s, CTBenchmarks)
-│  │
-│  │  N = 10000
-│  │  ✗ | exa     : ERROR: UndefVarError(:robot_s, CTBenchmarks)
-│  │  ✗ | exa_gpu : ERROR: UndefVarError(:robot_s, CTBenchmarks)
+│  │  N = 20000
+│  │  ✓ | exa      | time:  11.831 s  | iters: 71    | obj: 1.943181e+01  (min) | CPU: 386.90 MiB
+│  │  ✓ | exa_gpu  | time:   1.255 s  | iters: 91    | obj: 1.942819e+01  (min) | CPU: 49.573 MiB | GPU: 464.901 MiB
 │  └─
 └─
 
 ┌─ Problem: rocket
 │
-├──┬ Solver: madnlp, Discretization: trapeze
+├──┬ Solver: madnlp, Discretization: midpoint
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time: 147.699 ms | iters: 24    | obj: -1.012836e+00 (min) | CPU:  22.71 MiB
-│  │  ✓ | exa_gpu  | time: 213.139 ms | iters: 24    | obj: -1.012870e+00 (min) | CPU: 12.922 MiB | GPU: 39.846 MiB
+│  │  ✓ | exa      | time: 144.374 ms | iters: 23    | obj: -1.012833e+00 (min) | CPU:  21.07 MiB
+│  │  ✓ | exa_gpu  | time: 346.080 ms | iters: 24    | obj: -1.012870e+00 (min) | CPU: 12.503 MiB | GPU: 34.870 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time:   1.079 s  | iters: 24    | obj: -1.012831e+00 (min) | CPU: 111.20 MiB
-│  │  ✓ | exa_gpu  | time: 782.233 ms | iters: 28    | obj: -1.013000e+00 (min) | CPU: 23.357 MiB | GPU: 202.424 MiB
+│  │  ✓ | exa      | time: 941.435 ms | iters: 21    | obj: -1.012820e+00 (min) | CPU:  98.57 MiB
+│  │  ✓ | exa_gpu  | time: 846.136 ms | iters: 27    | obj: -1.013000e+00 (min) | CPU: 21.260 MiB | GPU: 176.718 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time:   2.245 s  | iters: 22    | obj: -1.012802e+00 (min) | CPU: 212.46 MiB
-│  │  ✓ | exa_gpu  | time:   1.293 s  | iters: 27    | obj: -1.013162e+00 (min) | CPU: 33.982 MiB | GPU: 403.051 MiB
-│  └─
-└─
-
-┌─ Problem: space_shuttle
-│
-├──┬ Solver: madnlp, Discretization: trapeze
+│  │  ✓ | exa      | time:   2.362 s  | iters: 24    | obj: -1.012824e+00 (min) | CPU: 210.32 MiB
+│  │  ✓ | exa_gpu  | time:   1.535 s  | iters: 27    | obj: -1.013162e+00 (min) | CPU: 30.619 MiB | GPU: 353.259 MiB
 │  │
-│  │  N = 1000
-│  │  ✗ | exa     : ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)
-│  │  ✗ | exa_gpu : ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)
-│  │
-│  │  N = 5000
-│  │  ✗ | exa     : ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)
-│  │  ✗ | exa_gpu : ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)
-│  │
-│  │  N = 10000
-│  │  ✗ | exa     : ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)
-│  │  ✗ | exa_gpu : ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)
-│  └─
-└─
-
-┌─ Problem: steering
-│
-├──┬ Solver: madnlp, Discretization: trapeze
-│  │
-│  │  N = 1000
-│  │  ✗ | exa     : ERROR: UndefVarError(:steering_s, CTBenchmarks)
-│  │  ✗ | exa_gpu : ERROR: UndefVarError(:steering_s, CTBenchmarks)
-│  │
-│  │  N = 5000
-│  │  ✗ | exa     : ERROR: UndefVarError(:steering_s, CTBenchmarks)
-│  │  ✗ | exa_gpu : ERROR: UndefVarError(:steering_s, CTBenchmarks)
-│  │
-│  │  N = 10000
-│  │  ✗ | exa     : ERROR: UndefVarError(:steering_s, CTBenchmarks)
-│  │  ✗ | exa_gpu : ERROR: UndefVarError(:steering_s, CTBenchmarks)
+│  │  N = 20000
+│  │  ✓ | exa      | time:   4.141 s  | iters: 21    | obj: -1.012767e+00 (min) | CPU: 392.57 MiB
+│  │  ✓ | exa_gpu  | time:   2.656 s  | iters: 29    | obj: -1.013484e+00 (min) | CPU: 50.085 MiB | GPU: 712.702 MiB
 │  └─
 └─
 
 ┌─ Problem: vanderpol
 │
-├──┬ Solver: madnlp, Discretization: trapeze
+├──┬ Solver: madnlp, Discretization: midpoint
 │  │
 │  │  N = 1000
-│  │  ✓ | exa      | time:  14.467 ms | iters: 3     | obj: 1.047808e+00  (min) | CPU:   6.51 MiB
-│  │  ✓ | exa_gpu  | time:  97.043 ms | iters: 7     | obj: 1.047789e+00  (min) | CPU:  6.601 MiB | GPU: 17.583 MiB
+│  │  ✓ | exa      | time:  23.107 ms | iters: 4     | obj: 1.047807e+00  (min) | CPU:   5.41 MiB
+│  │  ✓ | exa_gpu  | time: 116.645 ms | iters: 7     | obj: 1.047787e+00  (min) | CPU:  6.183 MiB | GPU: 13.701 MiB
 │  │
 │  │  N = 5000
-│  │  ✓ | exa      | time: 149.677 ms | iters: 3     | obj: 1.047807e+00  (min) | CPU:  30.82 MiB
-│  │  ✓ | exa_gpu  | time: 114.541 ms | iters: 7     | obj: 1.047710e+00  (min) | CPU: 10.989 MiB | GPU: 87.872 MiB
+│  │  ✓ | exa      | time: 149.856 ms | iters: 4     | obj: 1.047807e+00  (min) | CPU:  25.29 MiB
+│  │  ✓ | exa_gpu  | time: 141.503 ms | iters: 7     | obj: 1.047710e+00  (min) | CPU:  9.642 MiB | GPU: 68.475 MiB
 │  │
 │  │  N = 10000
-│  │  ✓ | exa      | time: 333.073 ms | iters: 3     | obj: 1.047807e+00  (min) | CPU:  61.20 MiB
-│  │  ✓ | exa_gpu  | time: 124.431 ms | iters: 7     | obj: 1.047613e+00  (min) | CPU: 15.348 MiB | GPU: 175.579 MiB
+│  │  ✓ | exa      | time: 320.819 ms | iters: 4     | obj: 1.047807e+00  (min) | CPU:  50.14 MiB
+│  │  ✓ | exa_gpu  | time: 191.049 ms | iters: 8     | obj: 1.047613e+00  (min) | CPU: 14.309 MiB | GPU: 137.547 MiB
+│  │
+│  │  N = 20000
+│  │  ✓ | exa      | time: 774.128 ms | iters: 5     | obj: 1.047807e+00  (min) | CPU: 102.12 MiB
+│  │  ✓ | exa_gpu  | time: 231.373 ms | iters: 7     | obj: 1.047420e+00  (min) | CPU: 21.355 MiB | GPU: 273.683 MiB
 │  └─
 └─</code></pre>  </div>
-</div></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="cpu.html">« CPU</a><a class="docs-footer-nextpage" href="problems/beam.html">beam »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.1 on <span class="colophon-date" title="Tuesday 9 December 2025 14:26">Tuesday 9 December 2025</span>. Using Julia version 1.12.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+</div></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="cpu.html">« CPU</a><a class="docs-footer-nextpage" href="problems/beam.html">beam »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.1 on <span class="colophon-date" title="Tuesday 9 December 2025 16:53">Tuesday 9 December 2025</span>. Using Julia version 1.12.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
