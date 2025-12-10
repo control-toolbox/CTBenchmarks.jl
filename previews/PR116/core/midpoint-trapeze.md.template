@@ -1,0 +1,57 @@
+# Midpoint vs Trapeze
+
+```@setup BENCH
+# Load utilities
+include(normpath(joinpath(@__DIR__, "..", "docutils", "utils.jl")))
+```
+
+## Midpoint vs Trapeze
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = "core-midpoint-trapeze"
+ENV_NAME = BENCH
+-->
+
+### 📈 Comparison of Discretization Methods (ExaModels)
+
+This benchmark evaluates the effect of two discretization methods —
+
+- **Midpoint**
+- **Trapeze**
+
+— combined with two nonlinear solvers —
+
+- **Ipopt**
+- **MadNLP**
+
+on the *exa* optimal control model.
+
+The comparison is therefore based on the four combinations (disc_method,solver) :
+
+1. (trapeze, ipopt)
+2. (trapeze, madnlp)
+3. (midpoint, ipopt)
+4. (midpoint, madnlp)
+
+
+### 📊 Result Tables
+
+<!-- INCLUDE_TEXT:
+FUNCTION = _print_benchmark_table_results
+ARGS = core-midpoint-trapeze
+-->
+
+```@raw html
+<div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+  <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
+  <div class="ctdetails-body">
+```
+
+```@example BENCH
+_print_benchmark_log("core-midpoint-trapeze") # hide
+```
+
+```@raw html
+  </div>
+</div>
+```
