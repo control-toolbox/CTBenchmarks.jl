@@ -12,10 +12,10 @@ BENCH_ID = "core-midpoint-trapeze"
 ENV_NAME = BENCH
 -->
 
-### 📈 Performance Profile CPU Time
+### 📈 Performance Profile: Midpoint vs Trapezoid
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_profile_default_cpu
+FUNCTION = _plot_profile_midpoint_trapeze_exa
 ARGS = core-midpoint-trapeze
 -->
 
