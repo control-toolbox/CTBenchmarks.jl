@@ -12,6 +12,18 @@ BENCH_ID = "core-midpoint-trapeze"
 ENV_NAME = BENCH
 -->
 
+### 📈 Performance Profile CPU Time
+
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_profile_default_cpu
+ARGS = core-midpoint-trapeze
+-->
+
+<!-- INCLUDE_TEXT:
+FUNCTION = _analyze_profile_default_cpu
+ARGS = core-midpoint-trapeze
+-->
+
 ### 📈 Comparison of Discretization Methods (ExaModels)
 
 This benchmark evaluates the effect of two discretization methods —
