@@ -332,6 +332,36 @@ function compute_profile_default_iter(
     return compute_profile_generic(bench_id, src_dir, cfg; allowed_combos=allowed_combos)
 end
 
+function compute_profile_midpoint_trapeze_exa(
+    bench_id::AbstractString, 
+    src_dir::AbstractString; 
+    allowed_combos::Union{Nothing,Vector{Tuple{String,String,String}}}=nothing
+)
+    cpu_criterion = ProfileCriterion{Float64}(
+        "CPU time", row -> begin
+            bench = row.benchmark
+            if bench === nothing || ismissing(bench)
+                return NaN
+            end
+            time_raw = get(bench, "time", nothing)
+            time_raw === nothing && return NaN
+            return Float64(time_raw)
+        end, 
+        (a, b) -> a <= b
+    )
+
+    cfg = PerformanceProfileConfig{Float64}(
+        [:problem, :grid_size],         
+        [:model, :solver, :disc_method], 
+        cpu_criterion,
+        row -> row.success == true && row.benchmark !== nothing,
+        row -> true,
+        xs -> mean(skipmissing(xs)),
+    )
+
+    return compute_profile_generic(bench_id, src_dir, cfg; allowed_combos=allowed_combos)
+end
+
 """
     compute_performance_profile(bench_id::AbstractString, src_dir::AbstractString)
 

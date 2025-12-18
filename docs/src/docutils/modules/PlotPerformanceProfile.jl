@@ -236,3 +236,20 @@ function _plot_profile_default_iter(
     DOC_DEBUG[] && @info "  ✅ Default iterations performance profile generated."
     return plt
 end
+
+function _plot_profile_midpoint_trapeze_exa(
+    bench_id::AbstractString, 
+    src_dir::AbstractString; 
+    allowed_combos::Union{Nothing,Vector{Tuple{String,String,String}}}=nothing
+)
+    pp = compute_profile_midpoint_trapeze_exa(bench_id, src_dir; allowed_combos=allowed_combos)
+    
+    if pp === nothing
+        println("⚠️ No result (missing or invalid file) for bench_id: $bench_id")
+        return plot()  # Empty plot on error
+    end
+
+    plt = _plot_performance_profile(pp);
+    DOC_DEBUG[] && @info "  ✅ Default iterations performance profile generated."
+    return plt;
+end

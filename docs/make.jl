@@ -56,7 +56,7 @@ with_processed_template_problems(
     # ───────────────────────────────────────────────────────────────────────────
 
     size_threshold_ignore = [
-        "index.md", joinpath("core", "cpu.md"), joinpath("core", "gpu.md")
+        "index.md", joinpath("core", "cpu.md"), joinpath("core", "gpu.md"), joinpath("core", "midpoint-trapeze.md")  #####
     ]
     for problem in core_problems
         push!(size_threshold_ignore, joinpath("core", "problems", "$(problem).md"))
@@ -80,6 +80,7 @@ with_processed_template_problems(
             joinpath("core", "cpu.md"),
             joinpath("core", "gpu.md"),
             joinpath("core", "problems"),
+            joinpath("core", "midpoint-trapeze.md"), ####
         ],
         joinpath(@__DIR__, "src"),
         joinpath(@__DIR__, "src", "assets", "md"),
@@ -106,7 +107,10 @@ with_processed_template_problems(
                 "Introduction" => "index.md",
                 "Performance Profile" => "performance_profile.md",
                 "Core benchmarks" => [
-                    "CPU" => joinpath("core", "cpu.md"),
+                    "CPU" => [ #### sous menu
+                        "General Benchmarks" => joinpath("core", "cpu.md"),
+                        "Midpoint vs Trapeze" => joinpath("core", "midpoint-trapeze.md"),
+                    ],
                     "GPU" => joinpath("core", "gpu.md"),
                     "Problems" => core_problems_menu,
                 ],
