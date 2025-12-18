@@ -242,14 +242,11 @@ function _plot_profile_midpoint_trapeze_exa(
     src_dir::AbstractString; 
     allowed_combos::Union{Nothing,Vector{Tuple{String,String,String}}}=nothing
 )
-    # 1. On appelle ta fonction de calcul spécifique à 4 courbes
     prof = compute_profile_midpoint_trapeze_exa(bench_id, src_dir; allowed_combos=allowed_combos)
     
-    # 2. On vérifie si le profil a pu être construit
     if prof === nothing
         return nothing
     end
 
-    # 3. On appelle la fonction de rendu graphique interne du projet
     return _plot_performance_profile(prof)
 end
