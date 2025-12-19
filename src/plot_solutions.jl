@@ -58,18 +58,17 @@ function get_color(model::T, solver::T, idx::Int) where {T<:Union{String,Symbol}
     ]
 
     fixed = Dict(
-        ("adnlp", "ipopt")    => :steelblue,
-        ("exa", "ipopt")     => :tomato,
-        ("adnlp", "madnlp")  => :seagreen,
-        ("exa", "madnlp")    => :darkorange,
-        ("jump", "ipopt")     => :mediumpurple,
-        ("jump", "madnlp")   => :sienna,
+        ("adnlp", "ipopt") => :steelblue,
+        ("exa", "ipopt") => :tomato,
+        ("adnlp", "madnlp") => :seagreen,
+        ("exa", "madnlp") => :darkorange,
+        ("jump", "ipopt") => :mediumpurple,
+        ("jump", "madnlp") => :sienna,
         ("exa_gpu", "madnlp") => :mediumturquoise,
     )
 
     return get(fixed, (model, solver), palette[mod1(idx, length(palette))])
 end
-
 
 # -----------------------------------
 # Helper: left margin for plots
