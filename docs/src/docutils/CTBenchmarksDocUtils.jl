@@ -144,8 +144,10 @@ function _plot_iterations_vs_cpu_time(problem::AbstractString, bench_id::Abstrac
     return _plot_iterations_vs_cpu_time(problem, bench_id, SRC_DIR)
 end
 
-function _plot_profile_midpoint_trapeze_exa(problem::AbstractString, bench_id::AbstractString)
-    return _plot_profile_midpoint_trapeze_exa(problem, bench_id, SRC_DIR)
+function _plot_profile_midpoint_trapeze_exa(
+    bench_id::AbstractString; combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing
+)
+    return _plot_profile_default_iter(bench_id, SRC_DIR; allowed_combos=combos)
 end
 
 # Environment display functions
