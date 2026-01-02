@@ -91,13 +91,40 @@ function _plot_profile_default_iter_from_args(args...)
     return _plot_profile_default_iter(bench_id; combos=combos)
 end
 
+function _plot_profile_midpoint_trapeze_exa_from_args(args...)
+    if isempty(args)
+        error("_plot_profile_default_iter requires at least a bench_id argument")
+    end
+
+    bench_id = String(args[1])
+
+    if length(args) == 1
+        return _plot_profile_midpoint_trapeze_exa(bench_id)
+    end
+
+    combos = Tuple{String,String}[]
+    for spec in args[2:end]
+        parts = split(String(spec), ":")
+        if length(parts) != 2
+            error(
+                "Invalid combo specification '" *
+                String(spec) *
+                "'. Expected 'model:solver'.",
+            )
+        end
+        push!(combos, (parts[1], parts[2]))
+    end
+
+    return _plot_profile_midpoint_trapeze_exa(bench_id; combos=combos)
+end
+
 const FIGURE_FUNCTIONS = Dict{String,Function}(
     "_plot_profile_default_cpu" => _plot_profile_default_cpu_from_args,
     "_plot_profile_default_iter" => _plot_profile_default_iter_from_args,
     "_plot_time_vs_grid_size" => _plot_time_vs_grid_size,
     "_plot_time_vs_grid_size_bar" => _plot_time_vs_grid_size_bar,
     "_plot_iterations_vs_cpu_time" => _plot_iterations_vs_cpu_time,
-    "_plot_profile_midpoint_trapeze_exa" => _plot_profile_midpoint_trapeze_exa
+    "_plot_profile_midpoint_trapeze_exa" => _plot_profile_midpoint_trapeze_exa_from_args,
 )
 
 """
