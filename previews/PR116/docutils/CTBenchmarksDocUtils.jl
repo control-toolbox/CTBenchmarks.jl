@@ -195,6 +195,7 @@ export _plot_profile_default_iter
 export _plot_time_vs_grid_size
 export _plot_time_vs_grid_size_bar
 export _plot_iterations_vs_cpu_time
+export _plot_profile_midpoint_trapeze_exa
 
 # Text/analysis functions (used by INCLUDE_TEXT blocks)
 export _analyze_profile_default_cpu
