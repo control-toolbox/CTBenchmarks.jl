@@ -97,6 +97,7 @@ const FIGURE_FUNCTIONS = Dict{String,Function}(
     "_plot_time_vs_grid_size" => _plot_time_vs_grid_size,
     "_plot_time_vs_grid_size_bar" => _plot_time_vs_grid_size_bar,
     "_plot_iterations_vs_cpu_time" => _plot_iterations_vs_cpu_time,
+    "_plot_profile_midpoint_trapeze_exa" => _plot_profile_midpoint_trapeze_exa
 )
 
 """
