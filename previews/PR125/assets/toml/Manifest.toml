@@ -146,7 +146,7 @@ uuid = "54762871-cc72-4466-b8e8-f6c8b58076cd"
 version = "0.16.2"
 
 [[deps.CTBenchmarks]]
-deps = ["BenchmarkTools", "CTBase", "CUDA", "DataFrames", "Dates", "DocStringExtensions", "InteractiveUtils", "Ipopt", "JSON", "JuMP", "MadNLPGPU", "MadNLPMumps", "NLPModelsIpopt", "OptimalControl", "OptimalControlProblems", "Pkg", "Plots", "Printf", "Sockets", "Tables"]
+deps = ["BenchmarkTools", "CTBase", "CUDA", "DataFrames", "Dates", "DocStringExtensions", "InteractiveUtils", "Ipopt", "JSON", "JuMP", "MadNLPGPU", "MadNLPMumps", "NLPModelsIpopt", "OptimalControl", "OptimalControlProblems", "Pkg", "Plots", "Printf", "Sockets", "Statistics", "Tables"]
 path = "/home/runner/work/CTBenchmarks.jl/CTBenchmarks.jl"
 uuid = "db1dffaa-5ed3-4583-9a66-b5881c82ef11"
 version = "0.3.1"
