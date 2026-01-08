@@ -61,32 +61,7 @@ using Statistics
 using SHA
 using Documenter
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# Include submodules
-# ═══════════════════════════════════════════════════════════════════════════════
-
-include(joinpath(@__DIR__, "modules", "Common.jl"))
-include(joinpath(@__DIR__, "modules", "PrintEnvConfig.jl"))
-include(joinpath(@__DIR__, "modules", "PrintLogResults.jl"))
-include(joinpath(@__DIR__, "modules", "PerformanceProfileCore.jl"))
-include(joinpath(@__DIR__, "modules", "PlotPerformanceProfile.jl"))
-include(joinpath(@__DIR__, "modules", "PlotTimeVsGridSize.jl"))
-include(joinpath(@__DIR__, "modules", "PlotIterationsVsCpuTime.jl"))
-include(joinpath(@__DIR__, "modules", "FigureGeneration.jl"))
-include(joinpath(@__DIR__, "modules", "PrintBenchmarkResults.jl"))
-include(joinpath(@__DIR__, "modules", "AnalyzePerformanceProfile.jl"))
-include(joinpath(@__DIR__, "modules", "TextGeneration.jl"))
-include(joinpath(@__DIR__, "modules", "TemplateProcessor.jl"))
-include(joinpath(@__DIR__, "modules", "TemplateGenerator.jl"))
-include(joinpath(@__DIR__, "modules", "DocumenterReference.jl"))
-
-# Make DocumenterReference submodule available
-using .DocumenterReference
-
-# ═══════════════════════════════════════════════════════════════════════════════
 # Shared Constants
-# ═══════════════════════════════════════════════════════════════════════════════
-
 # Path to docs/src directory (used by all wrapper functions)
 const SRC_DIR = normpath(joinpath(@__DIR__, ".."))
 const DOC_DEBUG = Ref(false)
@@ -97,20 +72,52 @@ function set_doc_debug!(flag::Bool)
 end
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# Include submodules
+# ═══════════════════════════════════════════════════════════════════════════════
+
+include(joinpath(@__DIR__, "modules", "Common.jl"))
+include(joinpath(@__DIR__, "ProfileRegistry.jl"))
+
+# Initialize registry with standard documentation profiles
+init_default_profiles!()
+
+include(joinpath(@__DIR__, "modules", "PrintEnvConfig.jl"))
+include(joinpath(@__DIR__, "modules", "PrintLogResults.jl"))
+include(joinpath(@__DIR__, "modules", "PlotTimeVsGridSize.jl"))
+include(joinpath(@__DIR__, "modules", "PlotIterationsVsCpuTime.jl"))
+include(joinpath(@__DIR__, "modules", "FigureGeneration.jl"))
+include(joinpath(@__DIR__, "modules", "PrintBenchmarkResults.jl"))
+include(joinpath(@__DIR__, "modules", "TextGeneration.jl"))
+include(joinpath(@__DIR__, "modules", "TemplateProcessor.jl"))
+include(joinpath(@__DIR__, "modules", "TemplateGenerator.jl"))
+include(joinpath(@__DIR__, "modules", "DocumenterReference.jl"))
+
+# Make DocumenterReference submodule available
+using .DocumenterReference
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # Wrapper Functions (no src_dir parameter needed in templates)
 # ═══════════════════════════════════════════════════════════════════════════════
 
+
+
 # Analysis functions
 function _analyze_profile_default_cpu(
-    bench_id::AbstractString; combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing
+    bench_id::AbstractString; combos::Union{Nothing,Vector{<:Tuple}}=nothing
 )
-    return _analyze_profile_default_cpu(bench_id, SRC_DIR; allowed_combos=combos)
+    return analyze_profile_from_registry("default_cpu", bench_id, SRC_DIR; combos=combos)
 end
 
 function _analyze_profile_default_iter(
-    bench_id::AbstractString; combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing
+    bench_id::AbstractString; combos::Union{Nothing,Vector{<:Tuple}}=nothing
 )
-    return _analyze_profile_default_iter(bench_id, SRC_DIR; allowed_combos=combos)
+    return analyze_profile_from_registry("default_iter", bench_id, SRC_DIR; combos=combos)
+end
+
+function _analyze_profile_from_registry(
+    name::String, bench_id::AbstractString; combos::Union{Nothing,Vector{<:Tuple}}=nothing
+)
+    return analyze_profile_from_registry(name, bench_id, SRC_DIR; combos=combos)
 end
 
 function _print_benchmark_table_results(
@@ -121,15 +128,21 @@ end
 
 # Plotting functions
 function _plot_profile_default_cpu(
-    bench_id::AbstractString; combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing
+    bench_id::AbstractString; combos::Union{Nothing,Vector{<:Tuple}}=nothing
 )
-    return _plot_profile_default_cpu(bench_id, SRC_DIR; allowed_combos=combos)
+    return plot_profile_from_registry("default_cpu", bench_id, SRC_DIR; combos=combos)
 end
 
 function _plot_profile_default_iter(
-    bench_id::AbstractString; combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing
+    bench_id::AbstractString; combos::Union{Nothing,Vector{<:Tuple}}=nothing
 )
-    return _plot_profile_default_iter(bench_id, SRC_DIR; allowed_combos=combos)
+    return plot_profile_from_registry("default_iter", bench_id, SRC_DIR; combos=combos)
+end
+
+function _plot_profile_from_registry(
+    name::String, bench_id::AbstractString; combos::Union{Nothing,Vector{<:Tuple}}=nothing
+)
+    return plot_profile_from_registry(name, bench_id, SRC_DIR; combos=combos)
 end
 
 function _plot_time_vs_grid_size(problem::AbstractString, bench_id::AbstractString)
@@ -188,6 +201,7 @@ export set_doc_debug!
 # Plotting functions (used in templates)
 export _plot_profile_default_cpu
 export _plot_profile_default_iter
+export _plot_profile_from_registry
 export _plot_time_vs_grid_size
 export _plot_time_vs_grid_size_bar
 export _plot_iterations_vs_cpu_time
@@ -195,7 +209,13 @@ export _plot_iterations_vs_cpu_time
 # Text/analysis functions (used by INCLUDE_TEXT blocks)
 export _analyze_profile_default_cpu
 export _analyze_profile_default_iter
+export _analyze_profile_from_registry
 export _print_benchmark_table_results
+
+# Registry-based functions
+export PROFILE_REGISTRY
+export plot_profile_from_registry
+export analyze_profile_from_registry
 
 # Environment display functions (used in templates)
 export _print_config
