@@ -299,24 +299,16 @@ end
 Filter benchmark rows based on configuration criteria and allowed combinations.
 """
 function _filter_benchmark_data(df, cfg, allowed_combos)
-    # Filter runs according to configuration
+    # Filter runs according to configuration (success and user row_filter)
     df_filtered = filter(row -> cfg.row_filter(row) && cfg.is_success(row), df)
 
     # Optionally restrict to a subset of solver/model combinations
-    if allowed_combos !== nothing && !isempty(allowed_combos)
-        if cfg.solver_cols == [:model, :solver]
-            allowed_set = Set(allowed_combos)
-            df_filtered = filter(
-                row -> begin
-                    hasproperty(row, :model) &&
-                        hasproperty(row, :solver) &&
-                        (String(row.model), String(row.solver)) in allowed_set
-                end,
-                df_filtered,
-            )
-        else
-            @warn "allowed_combos is only supported when solver_cols == [:model, :solver]; ignoring filter."
-        end
+    if !isnothing(allowed_combos) && !isempty(allowed_combos)
+        allowed_set = Set(allowed_combos)
+        df_filtered = filter(
+            row -> Tuple(row[c] for c in cfg.solver_cols) in allowed_set,
+            df_filtered,
+        )
     end
 
     return df_filtered
@@ -436,9 +428,9 @@ aggregation), and computes Dolan–Moré ratios and solver–model labels.
 - `bench_id::AbstractString`: benchmark identifier.
 - `cfg::PerformanceProfileConfig{M}`: configuration describing how to extract
   and aggregate the metric.
-- `allowed_combos::Union{Nothing, Vector{Tuple{String,String}}}`: optional
-  list of `(model, solver)` combinations to keep; `nothing` uses all available
-  combinations.
+- `allowed_combos::Union{Nothing, Vector{<:Tuple}}`: optional
+  list of solver combination tuples to keep (must match `cfg.solver_cols` dimension);
+  `nothing` uses all available combinations.
 
 # Returns
 - `PerformanceProfile{M}` if at least one valid metric is available;
@@ -448,7 +440,7 @@ function build_profile_from_df(
     df::DataFrame,
     bench_id::AbstractString,
     cfg::PerformanceProfileConfig{M};
-    allowed_combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing,
+    allowed_combos::Union{Nothing,Vector{<:Tuple}}=nothing,
 ) where {M}
     # Safety: Validate input data
     _validate_benchmark_df(df, cfg)

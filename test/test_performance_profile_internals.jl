@@ -45,6 +45,20 @@ function test_performance_profile_internals()
             filtered_restricted = CTBenchmarks._filter_benchmark_data(df, config, allowed)
             @test nrow(filtered_restricted) == 4 # Only (exa, ipopt) rows
             @test all(r -> (r.model == "exa" && r.solver == "ipopt"), eachrow(filtered_restricted))
+
+            # Test generic filtering with different solver_cols
+            config_gen = CTBenchmarks.PerformanceProfileConfig{Float64}(
+                [:problem],
+                [:model],
+                config.criterion,
+                row -> true,
+                row -> true,
+                xs -> Statistics.mean(xs)
+            )
+            allowed_gen = [("exb",)]
+            filtered_gen = CTBenchmarks._filter_benchmark_data(df, config_gen, allowed_gen)
+            @test nrow(filtered_gen) == 1
+            @test filtered_gen[1, :model] == "exb"
         end
 
         @testset "_extract_benchmark_metrics" begin
