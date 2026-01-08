@@ -292,6 +292,117 @@ end
 # Performance Profile Construction
 # ───────────────────────────────────────────────────────────────────────────────
 
+
+"""
+    _filter_benchmark_data(df, cfg, allowed_combos) -> DataFrame
+
+Filter benchmark rows based on configuration criteria and allowed combinations.
+"""
+function _filter_benchmark_data(df, cfg, allowed_combos)
+    # Filter runs according to configuration
+    df_filtered = filter(row -> cfg.row_filter(row) && cfg.is_success(row), df)
+
+    # Optionally restrict to a subset of solver/model combinations
+    if allowed_combos !== nothing && !isempty(allowed_combos)
+        if cfg.solver_cols == [:model, :solver]
+            allowed_set = Set(allowed_combos)
+            df_filtered = filter(
+                row -> begin
+                    hasproperty(row, :model) &&
+                        hasproperty(row, :solver) &&
+                        (String(row.model), String(row.solver)) in allowed_set
+                end,
+                df_filtered,
+            )
+        else
+            @warn "allowed_combos is only supported when solver_cols == [:model, :solver]; ignoring filter."
+        end
+    end
+
+    return df_filtered
+end
+
+"""
+    _extract_benchmark_metrics(df, cfg) -> DataFrame
+
+Extract the performance metric from each row using the criterion function.
+"""
+function _extract_benchmark_metrics(df, cfg)
+    df_metric = copy(df)
+    df_metric.metric = [cfg.criterion.value(row) for row in eachrow(df_metric)]
+    dropmissing!(df_metric, :metric)
+    return df_metric
+end
+
+"""
+    _aggregate_metrics(df, cfg) -> DataFrame
+
+Aggregate metrics when multiple runs exist for the same instance/solver combination.
+"""
+function _aggregate_metrics(df, cfg)
+    group_cols = vcat(cfg.instance_cols, cfg.solver_cols)
+    grouped = groupby(df, group_cols)
+
+    # Use aggregation function from config
+    return combine(grouped, :metric => (xs -> cfg.aggregate(xs)) => :metric)
+end
+
+"""
+    _compute_dolan_more_ratios(df, cfg) -> DataFrame
+
+Compute Dolan-Moré performance ratios (metric / best_metric).
+"""
+function _compute_dolan_more_ratios(df, cfg)
+    # Best metric per instance according to the criterion
+    inst_grouped = groupby(df, cfg.instance_cols)
+
+    function _best_metric(xs)
+        best = xs[1]
+        for x in xs[2:end]
+            best = cfg.criterion.better(x, best) ? x : best
+        end
+        return best
+    end
+
+    df_best = combine(inst_grouped, :metric => _best_metric => :best_metric)
+    df_with_best = leftjoin(df, df_best; on=cfg.instance_cols)
+
+    # Dolan–Moré ratio (assumes smaller is better for the chosen metric)
+    df_with_best.ratio = df_with_best.metric ./ df_with_best.best_metric
+
+    return df_with_best
+end
+
+"""
+    _compute_profile_metadata(df, cfg) -> (Vector{String}, Float64, Float64)
+
+Generate solver combination labels and compute min/max ratio bounds.
+"""
+function _compute_profile_metadata(df, cfg)
+    # Solver/model combination labels
+    combos = String[]
+    for row in eachrow(df)
+        parts = [string(row[c]) for c in cfg.solver_cols]
+        push!(combos, "(" * join(parts, ", ") * ")")
+    end
+    df.combo = combos
+    unique_combos = unique(df.combo)
+
+    # Ratio bounds across all combinations
+    min_ratio = Inf
+    max_ratio = 1.0
+    for c in unique_combos
+        sub = filter(row -> row.combo == c, df)
+        ratios = collect(skipmissing(sub.ratio))
+        if !isempty(ratios)
+            max_ratio = max(max_ratio, maximum(ratios))
+            min_ratio = min(min_ratio, minimum(ratios))
+        end
+    end
+
+    return unique_combos, min_ratio, max_ratio
+end
+
 """
     build_profile_from_df(
         df::DataFrame,
@@ -332,87 +443,35 @@ function build_profile_from_df(
         return nothing
     end
 
-    # Filter runs according to configuration
-    df_filtered = filter(row -> cfg.row_filter(row) && cfg.is_success(row), df)
-
-    # Optionally restrict to a subset of solver/model combinations
-    if allowed_combos !== nothing && !isempty(allowed_combos)
-        if cfg.solver_cols == [:model, :solver]
-            allowed_set = Set(allowed_combos)
-            df_filtered = filter(
-                row -> begin
-                    hasproperty(row, :model) &&
-                        hasproperty(row, :solver) &&
-                        (String(row.model), String(row.solver)) in allowed_set
-                end,
-                df_filtered,
-            )
-        else
-            @warn "allowed_combos is only supported when solver_cols == [:model, :solver]; ignoring filter."
-        end
-    end
-
+    # 1. Filter runs
+    df_filtered = _filter_benchmark_data(df, cfg, allowed_combos)
     if isempty(df_filtered)
         @warn "No successful benchmark entry to analyze."
         return nothing
     end
 
-    # Extract metric
-    df_filtered = copy(df_filtered)
-    df_filtered.metric = [cfg.criterion.value(row) for row in eachrow(df_filtered)]
-    df_filtered = dropmissing(df_filtered, :metric)
-    if isempty(df_filtered)
+    # 2. Extract metrics
+    df_metrics = _extract_benchmark_metrics(df_filtered, cfg)
+    if isempty(df_metrics)
         @warn "No valid metric values available for performance profile."
         return nothing
     end
 
-    # Aggregate per (instance, solver)
-    group_cols = vcat(cfg.instance_cols, cfg.solver_cols)
-    grouped = groupby(df_filtered, group_cols)
-    df_metric = combine(grouped, :metric => (xs -> cfg.aggregate(xs)) => :metric)
+    # 3. Aggregate multiple runs
+    df_agg = _aggregate_metrics(df_metrics, cfg)
 
-    # Best metric per instance according to the criterion
-    inst_grouped = groupby(df_metric, cfg.instance_cols)
-    function _best_metric(xs)
-        best = xs[1]
-        for x in xs[2:end]
-            best = cfg.criterion.better(x, best) ? x : best
-        end
-        return best
-    end
-    df_best = combine(inst_grouped, :metric => _best_metric => :best_metric)
-    df_metric = leftjoin(df_metric, df_best; on=cfg.instance_cols)
+    # 4. Compute ratios against best
+    df_ratios = _compute_dolan_more_ratios(df_agg, cfg)
 
-    # Dolan–Moré ratio (assumes smaller is better for the chosen metric)
-    df_metric.ratio = df_metric.metric ./ df_metric.best_metric
-
-    # Solver/model combination labels
-    combos = String[]
-    for row in eachrow(df_metric)
-        parts = [string(row[c]) for c in cfg.solver_cols]
-        push!(combos, "(" * join(parts, ", ") * ")")
-    end
-    df_metric.combo = combos
-    unique_combos = unique(df_metric.combo)
-
-    # Ratio bounds across all combinations
-    min_ratio = Inf
-    max_ratio = 1.0
-    for c in unique_combos
-        sub = filter(row -> row.combo == c, df_metric)
-        ratios = collect(skipmissing(sub.ratio))
-        if !isempty(ratios)
-            max_ratio = max(max_ratio, maximum(ratios))
-            min_ratio = min(min_ratio, minimum(ratios))
-        end
-    end
+    # 5. Compute metadata (combos, bounds)
+    unique_combos, min_ratio, max_ratio = _compute_profile_metadata(df_ratios, cfg)
 
     total_instances = nrow(df_instances)
 
     return PerformanceProfile(
         String(bench_id),
         df_instances,
-        df_metric,
+        df_ratios,
         unique_combos,
         total_instances,
         min_ratio,
@@ -508,44 +567,75 @@ end
 # ───────────────────────────────────────────────────────────────────────────────
 
 """
-    plot_performance_profile(pp::PerformanceProfile) -> Plots.Plot
+    PerformanceProfilePlotConfig
 
-Generate a Dolan–Moré performance profile plot from a PerformanceProfile struct.
+Configuration for performance profile plot styling.
 
-# Arguments
-- `pp::PerformanceProfile`: Pre-computed performance profile data
-
-# Returns
-- `Plots.Plot`: Performance profile visualization
-
-# Details
-Creates a performance profile plot showing the proportion of solved instances
-for each solver-model combination relative to the best solver for each problem.
-
-The plot uses:
-- Log scale (base 2) on the x-axis for performance ratio (τ)
-- Proportion of solved instances on the y-axis
-- One curve per (model, solver) combination
+# Fields
+- `size::Tuple{Int,Int}`: Plot size (width, height)
+- `xlabel::String`: X-axis label
+- `ylabel::String`: Y-axis label
+- `title_font::Plots.Font`: Font settings for the title
+- `label_font::Plots.Font`: Font settings for labels
+- `linewidth::Float64`: Width of the profile lines
+- `markersize::Int`: Size of the markers
+- `framestyle::Symbol`: Plot frame style
+- `legend_position::Symbol`: Legend position
 """
-function plot_performance_profile(pp::PerformanceProfile)
-    title_font, label_font = _plot_font_settings()
+struct PerformanceProfilePlotConfig
+    size::Tuple{Int,Int}
+    xlabel::String
+    ylabel::String
+    title_font::Plots.Font
+    label_font::Plots.Font
+    linewidth::Float64
+    markersize::Int
+    framestyle::Symbol
+    legend_position::Symbol
+end
 
+"""
+    default_plot_config() -> PerformanceProfilePlotConfig
+
+Create a default configuration for performance profile plots.
+"""
+function default_plot_config()
+    title_font, label_font = _plot_font_settings()
+    return PerformanceProfilePlotConfig(
+        (900, 600),
+        "τ (Performance ratio)",
+        "Proportion of solved instances ≤ τ",
+        title_font,
+        label_font,
+        1.5,
+        4,
+        :box,
+        :bottomright
+    )
+end
+
+"""
+    _init_profile_plot(pp, cfg) -> Plots.Plot
+
+Initialize the plot canvas with axes configuration.
+"""
+function _init_profile_plot(pp, cfg::PerformanceProfilePlotConfig)
     gap = log2(pp.max_ratio) - log2(pp.min_ratio)
     factor = 0.02
     xlim_max = pp.max_ratio * (1 + factor * gap)
     xlim_min = 1.0 * (1 - factor * gap)
 
-    plt = plot(;
-        xlabel="τ (Performance ratio)",
-        ylabel="Proportion of solved instances ≤ τ",
+    return plot(;
+        xlabel=cfg.xlabel,
+        ylabel=cfg.ylabel,
         title="\nPerformance profile — " * pp.config.criterion.name,
-        legend=:bottomright,
+        legend=cfg.legend_position,
         xscale=:log2,
         grid=true,
-        size=(900, 600),
-        titlefont=title_font,
-        xguidefont=label_font,
-        yguidefont=label_font,
+        size=cfg.size,
+        titlefont=cfg.title_font,
+        xguidefont=cfg.label_font,
+        yguidefont=cfg.label_font,
         xticks=([1, 2, 4, 10, 50, 100], ["1", "2", "4", "10", "50", "100"]),
         xlims=(xlim_min, xlim_max),
         ylims=(-0.05, 1.05),
@@ -556,7 +646,85 @@ function plot_performance_profile(pp::PerformanceProfile)
         left_margin=5mm,
         bottom_margin=5mm,
         top_margin=5mm,
+        framestyle=cfg.framestyle,
     )
+end
+
+"""
+    _compute_curve_points(ratios, total_problems) -> (Vector{Float64}, Vector{Float64})
+
+Compute the step function (x, y) points for the performance profile.
+"""
+function _compute_curve_points(ratios, total_problems)
+    # Compute ρ_s(τ) = (1/N) * count(r_{p,s} ≤ τ)
+    # For each ratio value, count how many ratios are ≤ to it
+    y = [count(x -> x <= tau, ratios) / total_problems for tau in ratios]
+    return ratios, y
+end
+
+"""
+    _add_combo_series!(plt, x, y, label, color, marker, cfg)
+
+Add a single solver combination series (line + markers) to the plot.
+"""
+function _add_combo_series!(plt, x, y, label, color, marker, cfg::PerformanceProfilePlotConfig)
+    # Plot the curve
+    plot!(plt, x, y; label="", lw=cfg.linewidth, color=color)
+
+    # Add markers at regular intervals
+    marker_indices = _marker_indices_for_curve(x)
+    x_markers = x[marker_indices]
+    y_markers = y[marker_indices]
+
+    scatter!(plt,
+        x_markers,
+        y_markers;
+        color=color,
+        markershape=marker,
+        markersize=cfg.markersize,
+        markerstrokewidth=0,
+        label="",
+    )
+
+    # Add marker/label entry on the first point of the curve for the legend
+    plot!(plt,
+        [x[1]],
+        [y[1]];
+        color=color,
+        linewidth=cfg.linewidth,
+        markershape=marker,
+        markersize=cfg.markersize,
+        label=label,
+        markerstrokewidth=0,
+    )
+end
+
+"""
+    _add_reference_lines!(plt)
+
+Add reference lines at y=0, y=1 and x=1.
+"""
+function _add_reference_lines!(plt)
+    vline!(plt, [1.0]; color=:black, lw=0.5, label="", linestyle=:solid, z_order=1)
+    hline!(plt, [0.0]; color=:black, lw=0.5, label="", linestyle=:solid, z_order=1)
+    hline!(plt, [1.0]; color=:black, lw=0.5, label="", linestyle=:solid, z_order=1)
+end
+
+"""
+    plot_performance_profile(pp::PerformanceProfile; plot_config=nothing) -> Plots.Plot
+
+Generate a Dolan–Moré performance profile plot from a PerformanceProfile struct.
+
+# Arguments
+- `pp::PerformanceProfile`: Pre-computed performance profile data
+- `plot_config::Union{Nothing, PerformanceProfilePlotConfig}`: Optional styling configuration
+
+# Returns
+- `Plots.Plot`: Performance profile visualization
+"""
+function plot_performance_profile(pp::PerformanceProfile; plot_config=nothing)
+    cfg = isnothing(plot_config) ? default_plot_config() : plot_config
+    plt = _init_profile_plot(pp, cfg)
 
     for (idx, c) in enumerate(pp.combos)
         sub = filter(row -> row.combo == c, pp.df_successful)
@@ -565,48 +733,14 @@ function plot_performance_profile(pp::PerformanceProfile)
         if !isempty(ratios)
             first_row = first(eachrow(sub))
             color = get_color(first_row.model, first_row.solver, idx)
-
-            # Compute ρ_s(τ) = (1/N) * count(r_{p,s} ≤ τ)
-            # For each ratio value, count how many ratios are ≤ to it
-            y = [count(x -> x <= tau, ratios) / pp.total_problems for tau in ratios]
-
-            marker_indices = _marker_indices_for_curve(ratios)
-            x_markers = ratios[marker_indices]
-            y_markers = y[marker_indices]
             marker = get_marker_style(first_row.model, first_row.solver, idx)
 
-            # Plot the curve
-            plot!(ratios, y; label="", lw=1.5, color=color)
-
-            scatter!(
-                x_markers,
-                y_markers;
-                color=color,
-                markershape=marker,
-                markersize=4,
-                markerstrokewidth=0,
-                label="",
-            )
-
-            # Add marker on the first point of the curve
-            plot!(
-                [ratios[1]],
-                [y[1]];
-                color=color,
-                linewidth=1.5,
-                markershape=marker,
-                markersize=4,
-                label=c,
-                markerstrokewidth=0,
-            )
+            x, y = _compute_curve_points(ratios, pp.total_problems)
+            _add_combo_series!(plt, x, y, c, color, marker, cfg)
         end
     end
 
-    # Add reference lines with low z-order (plot them last)
-    vline!([1.0]; color=:black, lw=0.5, label="", linestyle=:solid, z_order=1)
-    hline!([0.0]; color=:black, lw=0.5, label="", linestyle=:solid, z_order=1)
-    hline!([1.0]; color=:black, lw=0.5, label="", linestyle=:solid, z_order=1)
-
+    _add_reference_lines!(plt)
     return plt
 end
 
