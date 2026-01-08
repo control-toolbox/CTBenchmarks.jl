@@ -66,6 +66,7 @@ include(joinpath(@__DIR__, "utils.jl"))
 include(joinpath(@__DIR__, "print.jl"))
 include(joinpath(@__DIR__, "run.jl"))
 include(joinpath(@__DIR__, "plot_solutions.jl"))
+include(joinpath(@__DIR__, "performance_profile.jl"))
 
 export run, benchmark, plot_solutions
 

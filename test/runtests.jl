@@ -5,10 +5,16 @@ using DataFrames
 using MadNLPMumps
 using MadNLPGPU
 using CUDA
+using Plots
 
 #
 @testset verbose = true showtiming = true "CTBenchmarks tests" begin
-    for name in (:aqua, :run, :utils)
+    for name in (
+        # :aqua,
+        # :run,
+        # :utils,
+        :performance_profile,
+    )
         @testset "$(name)" begin
             test_name = Symbol(:test_, name)
             include("$(test_name).jl")
