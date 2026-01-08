@@ -14,12 +14,13 @@ This guide explains how to add a new benchmark to the CTBenchmarks.jl pipeline.
 Adding a new benchmark involves creating several components:
 
 | Step | Description | Status |
-|------|-------------|--------|
+| --- | --- | --- |
 | [**Benchmark script**](@ref benchmark-script) | Julia script that runs the benchmark | Required |
 | [**JSON configuration**](@ref json-config) | Add benchmark config to JSON file | Required |
 | [**GitHub label**](@ref github-label) | Label to trigger the benchmark on pull requests | Required |
 | [**Individual workflow**](@ref individual-workflow) | Workflow for manual testing (reads from JSON) | Optional |
 | [**Documentation page**](@ref documentation-page) | Display benchmark results in the documentation | Optional |
+| [**Performance profile**](@ref performance-profile) | Define custom performance criteria in registry | Optional |
 
 ## Step-by-Step Guide
 
@@ -281,6 +282,63 @@ At a high level, a benchmark documentation page:
 
 For a concrete template example and a full description of how these blocks are
 processed, see the [Documentation Generation Process](@ref documentation-process).
+
+### [6. (Optional) Add a Performance Profile](@id performance-profile)
+
+Performance profiles are used to compare the relative efficiency of different solver–model combinations. While the default profiles (CPU time and Iterations) are automatically available, you can register custom profiles in the `PROFILE_REGISTRY`.
+
+A profile is defined by a `PerformanceProfileConfig` which specifies:
+
+- **Instance columns**: Columns identifying a problem instance (e.g., `[:problem, :grid_size]`).
+- **Success criteria**: A function that determines if a run was successful.
+- **Metric criterion**: What value to compare (e.g., CPU time, cost error) and how to compare them (usually "smaller is better").
+- **Aggregation**: How to handle multiple runs of the same instance (e.g., taking the mean).
+
+#### Registering a Custom Profile
+
+To add a new profile, you can register it in `docs/src/docutils/ProfileRegistry.jl` or directly in a `@setup` block in your template.
+
+**Example**: Registering a profile based on objective value error.
+
+```julia
+using CTBenchmarks
+using Statistics
+
+# Define the criterion (Objective error)
+obj_criterion = PerformanceProfileCriterion{Float64}(
+    "Objective Error",
+    row -> abs(row.objective - row.reference_objective),
+    (a, b) -> a <= b
+)
+
+# Create the configuration
+obj_config = PerformanceProfileConfig{Float64}(
+    [:problem, :grid_size],
+    [:model, :solver],
+    obj_criterion,
+    row -> row.success == true,
+    xs -> Statistics.mean(skipmissing(xs))
+)
+
+# Register it
+CTBenchmarks.register!(PROFILE_REGISTRY, "objective_error", obj_config)
+```
+
+#### Using the Custom Profile in Templates
+
+Once registered, you can call it using the generic `_plot_profile_from_registry` and `_analyze_profile_from_registry` functions in your documentation templates:
+
+```markdown
+<!-- INCLUDE_FIGURE:
+FUNCTION = _plot_profile_from_registry
+ARGS = objective_error, core-ubuntu-latest
+-->
+
+<!-- INCLUDE_TEXT:
+FUNCTION = _analyze_profile_from_registry
+ARGS = objective_error, core-ubuntu-latest
+-->
+```
 
 ## Testing Your Benchmark
 
