@@ -105,6 +105,70 @@ struct PerformanceProfile{M}
     config::PerformanceProfileConfig{M}
 end
 
+"""
+    ProfileStats
+
+Statistical summary of a performance profile dataset.
+
+# Fields
+- `n_problems::Int`: Number of unique problems
+- `n_instances::Int`: Total number of instances (problem × grid_size combinations)
+- `n_combos::Int`: Number of solver combinations
+- `n_successful_runs::Int`: Number of successful runs across all combos
+- `n_successful_instances::Int`: Number of instances with at least one successful run
+- `unsuccessful_instances::Vector{Tuple}`: List of instances that failed for all combos
+- `instance_cols::Vector{Symbol}`: Instance column names
+- `solver_cols::Vector{Symbol}`: Solver column names
+- `criterion_name::String`: Name of the performance criterion
+"""
+struct ProfileStats
+    n_problems::Int
+    n_instances::Int
+    n_combos::Int
+    n_successful_runs::Int
+    n_successful_instances::Int
+    unsuccessful_instances::Vector{Tuple}
+    instance_cols::Vector{Symbol}
+    solver_cols::Vector{Symbol}
+    criterion_name::String
+end
+
+"""
+    ComboPerformance
+
+Performance metrics for a single solver combination.
+
+# Fields
+- `combo::String`: Solver combination label (e.g., "(exa, ipopt)")
+- `robustness::Float64`: Percentage of instances solved (0-100)
+- `efficiency::Float64`: Percentage of instances where this combo was fastest (0-100)
+"""
+struct ComboPerformance
+    combo::String
+    robustness::Float64
+    efficiency::Float64
+end
+
+"""
+    ProfileAnalysis
+
+Complete analysis results for a performance profile.
+
+# Fields
+- `bench_id::String`: Benchmark identifier
+- `stats::ProfileStats`: Statistical summary
+- `performances::Vector{ComboPerformance}`: Performance metrics for each combo
+- `most_robust::Vector{String}`: Combo(s) with highest robustness
+- `most_efficient::Vector{String}`: Combo(s) with highest efficiency
+"""
+struct ProfileAnalysis
+    bench_id::String
+    stats::ProfileStats
+    performances::Vector{ComboPerformance}
+    most_robust::Vector{String}
+    most_efficient::Vector{String}
+end
+
 # ───────────────────────────────────────────────────────────────────────────────
 # Registry
 # ───────────────────────────────────────────────────────────────────────────────
@@ -551,62 +615,133 @@ end
 # ───────────────────────────────────────────────────────────────────────────────
 
 """
-    analyze_performance_profile(pp::PerformanceProfile) -> String
+    compute_profile_stats(pp::PerformanceProfile) -> ProfileAnalysis
 
-Generate a detailed textual analysis of a performance profile.
+Compute statistical analysis of a performance profile.
+
+This function extracts and calculates all performance metrics without any
+formatting. It returns structured data that can be used for different
+presentation formats (Markdown, JSON, etc.).
 
 # Arguments
-- `pp::PerformanceProfile`: pre-computed performance profile data used to
-  build Dolan–Moré performance profiles over `(problem, grid_size)` instances
-  and `(model, solver)` combinations.
+- `pp::PerformanceProfile`: Pre-computed performance profile data
 
 # Returns
-- `String`: Markdown string with analysis insights including:
-  - dataset overview (problems, instances, solver–model combinations),
-  - robustness metrics (percentage of instances solved per combination),
-  - efficiency metrics (percentage of instances where each combination was
-    the fastest).
-
-# Details
-This function extracts key metrics from the performance profile:
-- **Robustness**: proportion of instances successfully solved by each
-  solver–model combination;
-- **Efficiency**: proportion of instances where each solver–model achieved the
-  best time (ratio `r_{p,s} = 1.0`).
+- `ProfileAnalysis`: Structured analysis results
 """
-function analyze_performance_profile(pp::PerformanceProfile)
-    buf = IOBuffer()
-
-    print(buf, "!!! info \"Performance Profile Analysis\"\n")
-    print(buf, "    **Dataset overview for `$(pp.bench_id)`:**\n")
-    print(
-        buf,
-        "    - **Problems**: ",
-        length(unique(pp.df_instances.problem)),
-        " unique optimal control problems\n",
-    )
-    print(buf, "    - **Instances**: ", pp.total_problems, "\n")
-    print(buf, "    - **Solver combos**: ", length(pp.combos), "\n")
-
-    # Profile configuration (instances, combos, criterion)
+function compute_profile_stats(pp::PerformanceProfile)
     cfg = pp.config
-    instance_cols = join(string.(cfg.instance_cols), ", ")
-    solver_cols = join(string.(cfg.solver_cols), ", ")
 
+    # Compute basic statistics
+    n_problems = length(unique(pp.df_instances.problem))
+    n_instances = pp.total_problems
+    n_combos = length(pp.combos)
+    total_runs = n_instances * n_combos
+    n_successful_runs = nrow(pp.df_successful)
+
+    # Compute successful instances
+    solved_instances = unique(select(pp.df_successful, cfg.instance_cols))
+    n_successful_instances = nrow(solved_instances)
+
+    # Identify unsuccessful instances
+    solved_set = Set(
+        Tuple(row[c] for c in cfg.instance_cols) for row in eachrow(solved_instances)
+    )
+    unsuccessful_instances = [
+        Tuple(row[c] for c in cfg.instance_cols) for row in eachrow(pp.df_instances) if
+        !(Tuple(row[c] for c in cfg.instance_cols) in solved_set)
+    ]
+    sort!(unsuccessful_instances)
+
+    # Create ProfileStats
+    stats = ProfileStats(
+        n_problems,
+        n_instances,
+        n_combos,
+        n_successful_runs,
+        n_successful_instances,
+        unsuccessful_instances,
+        cfg.instance_cols,
+        cfg.solver_cols,
+        cfg.criterion.name,
+    )
+
+    # Compute performance metrics for each combo
+    performances = ComboPerformance[]
+    for c in pp.combos
+        sub = filter(row -> row.combo == c, pp.df_successful)
+
+        # Robustness: % of instances solved
+        n_solved = nrow(unique(select(sub, cfg.instance_cols)))
+        robustness = round(100 * n_solved / n_instances; digits=1)
+
+        # Efficiency: % of instances where fastest
+        n_best = count(row -> row.ratio == 1.0, eachrow(sub))
+        efficiency = round(100 * n_best / n_instances; digits=1)
+
+        push!(performances, ComboPerformance(c, robustness, efficiency))
+    end
+
+    # Find most robust combos
+    if !isempty(performances)
+        best_robust_rate = maximum(p -> p.robustness, performances)
+        most_robust = [p.combo for p in performances if p.robustness == best_robust_rate]
+    else
+        most_robust = String[]
+    end
+
+    # Find most efficient combos
+    if !isempty(performances)
+        best_efficient_rate = maximum(p -> p.efficiency, performances)
+        most_efficient =
+            [p.combo for p in performances if p.efficiency == best_efficient_rate]
+    else
+        most_efficient = String[]
+    end
+
+    return ProfileAnalysis(
+        pp.bench_id, stats, performances, most_robust, most_efficient
+    )
+end
+
+"""
+    format_analysis_markdown(analysis::ProfileAnalysis) -> String
+
+Format a ProfileAnalysis as a Markdown string.
+
+# Arguments
+- `analysis::ProfileAnalysis`: Structured analysis results
+
+# Returns
+- `String`: Markdown-formatted analysis report
+"""
+function format_analysis_markdown(analysis::ProfileAnalysis)
+    buf = IOBuffer()
+    stats = analysis.stats
+
+    # Header
+    print(buf, "!!! info \"Performance Profile Analysis\"\n")
+    print(buf, "    **Dataset overview for `$(analysis.bench_id)`:**\n")
+    print(buf, "    - **Problems**: ", stats.n_problems, " unique optimal control problems\n")
+    print(buf, "    - **Instances**: ", stats.n_instances, "\n")
+    print(buf, "    - **Solver combos**: ", stats.n_combos, "\n")
+
+    # Configuration
+    instance_cols = join(string.(stats.instance_cols), ", ")
+    solver_cols = join(string.(stats.solver_cols), ", ")
     print(buf, "\n")
     print(buf, "    **Profile configuration:**\n")
     print(buf, "    - **Instance definition**: (", instance_cols, ")\n")
     print(buf, "    - **Solver combos definition**: (", solver_cols, ")\n")
-    print(buf, "    - **Criterion**: ", cfg.criterion.name, "\n")
+    print(buf, "    - **Criterion**: ", stats.criterion_name, "\n")
 
-    # Compute total successful runs across all solver-model combinations
-    total_runs = pp.total_problems * length(pp.combos)
-    n_successful_runs = nrow(pp.df_successful)
-    success_percentage = round(100 * n_successful_runs / total_runs; digits=1)
+    # Success statistics
+    total_runs = stats.n_instances * stats.n_combos
+    success_percentage = round(100 * stats.n_successful_runs / total_runs; digits=1)
     print(
         buf,
         "    - **Successful runs**: ",
-        n_successful_runs,
+        stats.n_successful_runs,
         "/",
         total_runs,
         " (",
@@ -614,103 +749,129 @@ function analyze_performance_profile(pp::PerformanceProfile)
         "%)\n",
     )
 
-    # Compute successful instances: instances with at least one successful combo
-    solved_instances = unique(select(pp.df_successful, cfg.instance_cols))
-    n_successful_instances = nrow(solved_instances)
     success_instances_percentage = round(
-        100 * n_successful_instances / pp.total_problems; digits=1
+        100 * stats.n_successful_instances / stats.n_instances; digits=1
     )
     print(
         buf,
         "    - **Successful instances**: ",
-        n_successful_instances,
+        stats.n_successful_instances,
         "/",
-        pp.total_problems,
+        stats.n_instances,
         " (",
         success_instances_percentage,
         "%)\n",
     )
 
-    # Identify instances with no successful run for any solver-model combination
-    solved_set = Set(Tuple(row[c] for c in cfg.instance_cols) for row in eachrow(solved_instances))
-    unsuccessful_instances = [
-        Tuple(row[c] for c in cfg.instance_cols) for
-        row in eachrow(pp.df_instances) if !(Tuple(row[c] for c in cfg.instance_cols) in solved_set)
-    ]
-
-    if isempty(unsuccessful_instances)
+    # Unsuccessful instances
+    if isempty(stats.unsuccessful_instances)
         print(
             buf,
             "    - **Unsuccessful instances**: none (every instance had at least one successful run)\n",
         )
     else
         print(buf, "    - **Unsuccessful instances** (no solver converged):\n")
-        sort!(unsuccessful_instances)
-        for inst in unsuccessful_instances
+        for inst in stats.unsuccessful_instances
             print(buf, "      - `", join(string.(inst), ", "), "`\n")
         end
     end
     print(buf, "\n")
 
-    # Compute robustness: % of instances solved by each combo
+    # Robustness
     print(buf, "    **Robustness (% of instances solved):**\n")
-    robustness_data = []
-    for c in pp.combos
-        sub = filter(row -> row.combo == c, pp.df_successful)
-        n_solved = nrow(unique(select(sub, cfg.instance_cols)))
-        success_rate = round(100 * n_solved / pp.total_problems; digits=1)
-        push!(robustness_data, (combo=c, rate=success_rate))
-        print(buf, "    - `$c`: $success_rate%\n")
+    for perf in analysis.performances
+        print(buf, "    - `", perf.combo, "`: ", perf.robustness, "%\n")
     end
 
-    # Compute efficiency: % of instances where fastest (ratio = 1.0)
+    # Efficiency
     print(buf, "    **Efficiency (% of instances where fastest):**\n")
-    efficiency_data = []
-    for c in pp.combos
-        sub = filter(row -> row.combo == c, pp.df_successful)
-        n_best = count(row -> row.ratio == 1.0, eachrow(sub))
-        best_rate = round(100 * n_best / pp.total_problems; digits=1)
-        push!(efficiency_data, (combo=c, rate=best_rate))
-        print(buf, "    - `$c`: $best_rate%\n")
+    for perf in analysis.performances
+        print(buf, "    - `", perf.combo, "`: ", perf.efficiency, "%\n")
     end
 
-    # Find best overall performer (highest robustness)
-    if !isempty(robustness_data)
-        best_robust = maximum(r -> r.rate, robustness_data)
-        best_robust_combos = [r.combo for r in robustness_data if r.rate == best_robust]
-        if length(best_robust_combos) == 1
+    # Best performers
+    if !isempty(analysis.most_robust)
+        if length(analysis.most_robust) == 1
+            best_rate = analysis.performances[findfirst(
+                p -> p.combo == analysis.most_robust[1], analysis.performances
+            )].robustness
             print(
                 buf,
-                "    **Most robust**: `$(best_robust_combos[1])` solved $best_robust% of instances.\n",
+                "    **Most robust**: `",
+                analysis.most_robust[1],
+                "` solved ",
+                best_rate,
+                "% of instances.\n",
             )
         else
+            best_rate = analysis.performances[findfirst(
+                p -> p.combo == analysis.most_robust[1], analysis.performances
+            )].robustness
             print(
                 buf,
-                "    **Most robust**: $(length(best_robust_combos)) combinations tied at $best_robust%.\n",
+                "    **Most robust**: ",
+                length(analysis.most_robust),
+                " combinations tied at ",
+                best_rate,
+                "%.\n",
             )
         end
     end
     print(buf, "\n")
 
-    # Find most efficient performer (highest efficiency)
-    if !isempty(efficiency_data)
-        best_efficient = maximum(e -> e.rate, efficiency_data)
-        best_efficient_combos = [
-            e.combo for e in efficiency_data if e.rate == best_efficient
-        ]
-        if length(best_efficient_combos) == 1
+    if !isempty(analysis.most_efficient)
+        if length(analysis.most_efficient) == 1
+            best_rate = analysis.performances[findfirst(
+                p -> p.combo == analysis.most_efficient[1], analysis.performances
+            )].efficiency
             print(
                 buf,
-                "    **Most efficient**: `$(best_efficient_combos[1])` was fastest on $best_efficient% of instances.\n",
+                "    **Most efficient**: `",
+                analysis.most_efficient[1],
+                "` was fastest on ",
+                best_rate,
+                "% of instances.\n",
             )
         else
+            best_rate = analysis.performances[findfirst(
+                p -> p.combo == analysis.most_efficient[1], analysis.performances
+            )].efficiency
             print(
                 buf,
-                "    **Most efficient**: $(length(best_efficient_combos)) combinations tied at $best_efficient%.\n",
+                "    **Most efficient**: ",
+                length(analysis.most_efficient),
+                " combinations tied at ",
+                best_rate,
+                "%.\n",
             )
         end
     end
     print(buf, "\n")
 
     return String(take!(buf))
+end
+
+"""
+    analyze_performance_profile(pp::PerformanceProfile) -> String
+
+Generate a detailed textual analysis of a performance profile.
+
+This is a convenience function that combines `compute_profile_stats` and
+`format_analysis_markdown`. For programmatic access to analysis data,
+use `compute_profile_stats` directly.
+
+# Arguments
+- `pp::PerformanceProfile`: Pre-computed performance profile data
+
+# Returns
+- `String`: Markdown-formatted analysis report
+
+# Details
+This function extracts key metrics from the performance profile:
+- **Robustness**: proportion of instances successfully solved by each combo
+- **Efficiency**: proportion of instances where each combo was fastest
+"""
+function analyze_performance_profile(pp::PerformanceProfile)
+    analysis = compute_profile_stats(pp)
+    return format_analysis_markdown(analysis)
 end
