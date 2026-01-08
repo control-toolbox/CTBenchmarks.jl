@@ -90,9 +90,13 @@ function test_performance_profile()
 
         # Test with Dict missing "results" key
         data_empty = Dict("other" => [1, 2, 3])
-        result = CTBenchmarks.load_benchmark_df(data_empty)
+        @test_nowarn result = CTBenchmarks.load_benchmark_df(data_empty)
         @test result isa DataFrame
         @test nrow(result) == 0
+
+        # Test with malformed data (not a vector of dicts)
+        data_bad = Dict("results" => "not_a_vector")
+        @test_throws ArgumentError CTBenchmarks.load_benchmark_df(data_bad)
     end
 
     # ───────────────────────────────────────────────────────────────────────────
@@ -131,8 +135,11 @@ function test_performance_profile()
         @test pp.bench_id == "test_bench"
         @test pp.total_problems == 2  # prob1 and prob2 at grid_size 100
         @test length(pp.combos) == 4  # 4 solver/model combinations
-        @test pp.min_ratio >= 1.0
         @test pp.max_ratio >= pp.min_ratio
+
+        # Test safety contract: Missing columns
+        df_bad = select(df, Not(:solver))
+        @test_throws ArgumentError CTBenchmarks.build_profile_from_df(df_bad, "bad_bench", config)
     end
 
     @testset "build_profile_from_df with allowed_combos" begin

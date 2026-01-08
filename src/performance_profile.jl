@@ -360,7 +360,20 @@ function _compute_dolan_more_ratios(df, cfg)
     df_with_best = leftjoin(df, df_best; on=cfg.instance_cols)
 
     # Dolan–Moré ratio (assumes smaller is better for the chosen metric)
-    df_with_best.ratio = df_with_best.metric ./ df_with_best.best_metric
+    ratios = Float64[]
+    for i in 1:nrow(df_with_best)
+        m = df_with_best.metric[i]
+        b = df_with_best.best_metric[i]
+        if isinf(b)
+            r = NaN # No solver succeeded for this instance
+        elseif m == b
+            r = 1.0
+        else
+            r = m / b
+        end
+        push!(ratios, r)
+    end
+    df_with_best.ratio = ratios
 
     return df_with_best
 end

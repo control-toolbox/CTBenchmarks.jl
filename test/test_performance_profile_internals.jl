@@ -108,6 +108,29 @@ function test_performance_profile_internals()
 
             sol3 = filter(r -> r.model == "exa" && r.solver == "ab", sub)[1, :]
             @test sol3.ratio == 4.0
+
+            # Edge case: 0.0 metric (best = 0.0)
+            df0 = DataFrame(
+                problem=["p1", "p1"],
+                grid_size=[10, 10],
+                model=["m1", "m2"],
+                solver=["s1", "s2"],
+                metric=[1.0, 0.0]
+            )
+            ratios0 = CTBenchmarks._compute_dolan_more_ratios(df0, config)
+            @test ratios0[1, :ratio] == Inf
+            @test ratios0[2, :ratio] == 1.0
+
+            # Edge case: All Fail (Inf)
+            dfinf = DataFrame(
+                problem=["p1", "p1"],
+                grid_size=[10, 10],
+                model=["m1", "m2"],
+                solver=["s1", "s2"],
+                metric=[Inf, Inf]
+            )
+            ratiosinf = CTBenchmarks._compute_dolan_more_ratios(dfinf, config)
+            @test all(isnan.(ratiosinf.ratio))
         end
 
         @testset "_compute_profile_metadata" begin
@@ -152,6 +175,51 @@ function test_performance_profile_internals()
             # Missing solver column
             df_bad2 = select(df, Not(:solver))
             @test_throws ArgumentError CTBenchmarks._validate_benchmark_df(df_bad2, config)
+        end
+
+        @testset "compute_profile_stats" begin
+            # 1. Ties: multiple solvers are best
+            df_ties = DataFrame(
+                problem=["p1", "p1", "p1"],
+                grid_size=[10, 10, 10],
+                model=["m1", "m2", "m3"],
+                solver=["s1", "s1", "s1"],
+                ratio=[1.0, 1.0, 2.0],
+                best_metric=[1.0, 1.0, 1.0],
+                combo=["(m1, s1)", "(m2, s1)", "(m3, s1)"]
+            )
+            pp_ties = CTBenchmarks.PerformanceProfile(
+                "ties",
+                DataFrame(problem=["p1"], grid_size=[10]),
+                df_ties,
+                ["(m1, s1)", "(m2, s1)", "(m3, s1)"],
+                1, 1.0, 2.0, config
+            )
+            stats = CTBenchmarks.compute_profile_stats(pp_ties)
+
+            # Efficiency at ratio 1.0 (in %)
+            eff = stats.performances
+            @test filter(p -> p.combo == "(m1, s1)", eff)[1].efficiency == 100.0
+            @test filter(p -> p.combo == "(m2, s1)", eff)[1].efficiency == 100.0
+            @test filter(p -> p.combo == "(m3, s1)", eff)[1].efficiency == 0.0
+
+            # 2. Total failure: one instance, no success
+            # Note: build_profile_from_df would return nothing, but we test the stats logic
+            df_fail_ratios = DataFrame(
+                problem=["p1"], grid_size=[10], model=["m1"], solver=["s1"],
+                ratio=[NaN], best_metric=[Inf], combo=["(m1, s1)"]
+            )
+            pp_fail = CTBenchmarks.PerformanceProfile(
+                "fail",
+                DataFrame(problem=["p1"], grid_size=[10]),
+                DataFrame(problem=String[], grid_size=Int[]), # Empty but has columns
+                ["(m1, s1)"],
+                1, 1.0, 1.0, config
+            )
+
+            stats_fail = CTBenchmarks.compute_profile_stats(pp_fail)
+            # Success rate 0% for fail test (empty df_successful for that combo)
+            @test stats_fail.performances[1].robustness == 0.0
         end
     end
 end
