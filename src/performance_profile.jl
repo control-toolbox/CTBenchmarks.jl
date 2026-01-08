@@ -839,9 +839,9 @@ function compute_profile_stats(pp::PerformanceProfile)
 end
 
 """
-    format_analysis_markdown(analysis::ProfileAnalysis) -> String
+    _format_analysis_markdown(analysis::ProfileAnalysis) -> String
 
-Format a ProfileAnalysis as a Markdown string.
+Format a ProfileAnalysis as a Markdown string. (Internal helper)
 
 # Arguments
 - `analysis::ProfileAnalysis`: Structured analysis results
@@ -849,7 +849,7 @@ Format a ProfileAnalysis as a Markdown string.
 # Returns
 - `String`: Markdown-formatted analysis report
 """
-function format_analysis_markdown(analysis::ProfileAnalysis)
+function _format_analysis_markdown(analysis::ProfileAnalysis)
     buf = IOBuffer()
     stats = analysis.stats
 
@@ -905,6 +905,7 @@ function format_analysis_markdown(analysis::ProfileAnalysis)
         )
     else
         print(buf, "    - **Unsuccessful instances** (no solver converged):\n")
+        sort!(stats.unsuccessful_instances)
         for inst in stats.unsuccessful_instances
             print(buf, "      - `", join(string.(inst), ", "), "`\n")
         end
@@ -925,28 +926,23 @@ function format_analysis_markdown(analysis::ProfileAnalysis)
 
     # Best performers
     if !isempty(analysis.most_robust)
+        best_robust = maximum(p -> p.robustness, analysis.performances)
         if length(analysis.most_robust) == 1
-            best_rate = analysis.performances[findfirst(
-                p -> p.combo == analysis.most_robust[1], analysis.performances
-            )].robustness
             print(
                 buf,
                 "    **Most robust**: `",
                 analysis.most_robust[1],
                 "` solved ",
-                best_rate,
+                best_robust,
                 "% of instances.\n",
             )
         else
-            best_rate = analysis.performances[findfirst(
-                p -> p.combo == analysis.most_robust[1], analysis.performances
-            )].robustness
             print(
                 buf,
                 "    **Most robust**: ",
                 length(analysis.most_robust),
                 " combinations tied at ",
-                best_rate,
+                best_robust,
                 "%.\n",
             )
         end
@@ -954,28 +950,23 @@ function format_analysis_markdown(analysis::ProfileAnalysis)
     print(buf, "\n")
 
     if !isempty(analysis.most_efficient)
+        best_efficient = maximum(p -> p.efficiency, analysis.performances)
         if length(analysis.most_efficient) == 1
-            best_rate = analysis.performances[findfirst(
-                p -> p.combo == analysis.most_efficient[1], analysis.performances
-            )].efficiency
             print(
                 buf,
                 "    **Most efficient**: `",
                 analysis.most_efficient[1],
                 "` was fastest on ",
-                best_rate,
+                best_efficient,
                 "% of instances.\n",
             )
         else
-            best_rate = analysis.performances[findfirst(
-                p -> p.combo == analysis.most_efficient[1], analysis.performances
-            )].efficiency
             print(
                 buf,
                 "    **Most efficient**: ",
                 length(analysis.most_efficient),
                 " combinations tied at ",
-                best_rate,
+                best_efficient,
                 "%.\n",
             )
         end
@@ -991,7 +982,7 @@ end
 Generate a detailed textual analysis of a performance profile.
 
 This is a convenience function that combines `compute_profile_stats` and
-`format_analysis_markdown`. For programmatic access to analysis data,
+`_format_analysis_markdown`. For programmatic access to analysis data,
 use `compute_profile_stats` directly.
 
 # Arguments
@@ -1007,5 +998,5 @@ This function extracts key metrics from the performance profile:
 """
 function analyze_performance_profile(pp::PerformanceProfile)
     analysis = compute_profile_stats(pp)
-    return format_analysis_markdown(analysis)
+    return _format_analysis_markdown(analysis)
 end
