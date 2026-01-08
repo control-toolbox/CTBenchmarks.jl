@@ -369,7 +369,7 @@ block in the template.
 
 Several helper modules provide the concrete plots and textual outputs:
 
-- **Performance profiles** — `PerformanceProfileCore.jl` + `PlotPerformanceProfile.jl` + `AnalyzePerformanceProfile.jl` + `TextGeneration.jl`
+- **Performance profiles** — `ProfileRegistry.jl` + `TextGeneration.jl` + `FigureGeneration.jl`
   - `_plot_profile_default_cpu(bench_id)` / `_plot_profile_default_iter(bench_id)`
     (called via `INCLUDE_FIGURE`)
   - `_analyze_profile_default_cpu(bench_id)` / `_analyze_profile_default_iter(bench_id)`

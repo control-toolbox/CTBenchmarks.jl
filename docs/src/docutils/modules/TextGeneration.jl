@@ -126,6 +126,7 @@ end
 const TEXT_FUNCTIONS = Dict{String,Function}(
     "_analyze_profile_default_cpu" => _analyze_profile_default_cpu_from_args,
     "_analyze_profile_default_iter" => _analyze_profile_default_iter_from_args,
+    "_analyze_profile_from_registry" => _analyze_profile_from_registry_from_args,
     "_print_benchmark_table_results" => _print_benchmark_table_results_from_args,
 )
 

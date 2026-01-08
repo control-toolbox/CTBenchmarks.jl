@@ -54,7 +54,7 @@ function test_performance_profile()
             row -> row.time,
             (a, b) -> a <= b
         )
-        config = CTBenchmarks.PerformanceProfileConfig{Float64}(
+        config1 = CTBenchmarks.PerformanceProfileConfig{Float64}(
             [:problem],
             [:solver],
             criterion,
@@ -62,13 +62,34 @@ function test_performance_profile()
             row -> true,
             xs -> mean(xs)
         )
+        config2 = CTBenchmarks.PerformanceProfileConfig{Float64}(
+            [:problem],
+            [:model],
+            criterion,
+            row -> true,
+            row -> true,
+            xs -> mean(xs)
+        )
 
-        CTBenchmarks.register!(registry, "test_profile", config)
-        @test "test_profile" in CTBenchmarks.list_profiles(registry)
+        # Basic registration
+        CTBenchmarks.register!(registry, "profile1", config1)
+        @test "profile1" in CTBenchmarks.list_profiles(registry)
+        @test length(CTBenchmarks.list_profiles(registry)) == 1
+        @test CTBenchmarks.get_config(registry, "profile1") === config1
 
-        retrieved = CTBenchmarks.get_config(registry, "test_profile")
-        @test retrieved === config
+        # Multiple registration
+        CTBenchmarks.register!(registry, "profile2", config2)
+        @test "profile1" in CTBenchmarks.list_profiles(registry)
+        @test "profile2" in CTBenchmarks.list_profiles(registry)
+        @test length(CTBenchmarks.list_profiles(registry)) == 2
+        @test CTBenchmarks.get_config(registry, "profile2") === config2
 
+        # Overwrite registration
+        CTBenchmarks.register!(registry, "profile1", config2)
+        @test CTBenchmarks.get_config(registry, "profile1") === config2
+        @test length(CTBenchmarks.list_profiles(registry)) == 2
+
+        # Error cases
         @test_throws KeyError CTBenchmarks.get_config(registry, "nonexistent")
     end
 
