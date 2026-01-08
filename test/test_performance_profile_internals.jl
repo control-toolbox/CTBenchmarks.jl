@@ -127,5 +127,17 @@ function test_performance_profile_internals()
             @test x2 == [1.0, 1.0, 2.0]
             @test y2 == [1.0, 1.0, 1.5]
         end
+        @testset "_validate_benchmark_df" begin
+            # Valid case
+            @test_nowarn CTBenchmarks._validate_benchmark_df(df, config)
+
+            # Missing instance column
+            df_bad = select(df, Not(:problem))
+            @test_throws ArgumentError CTBenchmarks._validate_benchmark_df(df_bad, config)
+
+            # Missing solver column
+            df_bad2 = select(df, Not(:solver))
+            @test_throws ArgumentError CTBenchmarks._validate_benchmark_df(df_bad2, config)
+        end
     end
 end

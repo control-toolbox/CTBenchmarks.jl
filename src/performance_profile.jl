@@ -404,6 +404,20 @@ function _compute_profile_metadata(df, cfg)
 end
 
 """
+    _validate_benchmark_df(df::DataFrame, cfg::PerformanceProfileConfig)
+
+Check that the benchmark DataFrame contains all required columns. (Internal helper)
+"""
+function _validate_benchmark_df(df::DataFrame, cfg::PerformanceProfileConfig)
+    needed = unique(vcat(cfg.instance_cols, cfg.solver_cols))
+    actual = propertynames(df)
+    missing_cols = filter(c -> !(c in actual), needed)
+    if !isempty(missing_cols)
+        throw(ArgumentError("Missing required columns in benchmark data: $missing_cols"))
+    end
+end
+
+"""
     build_profile_from_df(
         df::DataFrame,
         bench_id::AbstractString,
@@ -436,6 +450,9 @@ function build_profile_from_df(
     cfg::PerformanceProfileConfig{M};
     allowed_combos::Union{Nothing,Vector{Tuple{String,String}}}=nothing,
 ) where {M}
+    # Safety: Validate input data
+    _validate_benchmark_df(df, cfg)
+
     # All instances attempted (for any solver/model)
     df_instances = unique(select(df, cfg.instance_cols...))
     if isempty(df_instances)
