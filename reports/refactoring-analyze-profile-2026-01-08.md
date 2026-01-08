@@ -10,9 +10,9 @@
 
 Refactored 3 main functions in `src/performance_profile.jl` following **SRP**:
 
-1.  **`analyze_performance_profile`** -> `compute_profile_stats` + `format_analysis_markdown`
-2.  **`build_profile_from_df`** -> Broken down into 5 focused helper functions
-3.  **`plot_performance_profile`** -> Introduced `PerformanceProfilePlotConfig` + 3 plotting helpers
+1. **`analyze_performance_profile`** -> `compute_profile_stats` + `_format_analysis_markdown`
+2. **`build_profile_from_df`** -> Broken down into 5 focused helper functions
+3. **`plot_performance_profile`** -> Introduced `PerformanceProfilePlotConfig` + 3 plotting helpers
 
 ---
 
@@ -20,17 +20,17 @@ Refactored 3 main functions in `src/performance_profile.jl` following **SRP**:
 
 ### 1. Separation of Concerns (SRP)
 
--   **Analysis**: Separated statistical calculation (`ProfileStats`) from Markdown generation.
--   **Construction**: Split monolithic DataFrame processing into filtering, extraction, aggregation, and ratio computation.
--   **Visualization**: Decoupled plot configuration (`PerformanceProfilePlotConfig`) from rendering logic.
+- **Analysis**: Separated statistical calculation (`ProfileStats`) from Markdown generation.
+- **Construction**: Split monolithic DataFrame processing into filtering, extraction, aggregation, and ratio computation.
+- **Visualization**: Decoupled plot configuration (`PerformanceProfilePlotConfig`) from rendering logic.
 
 ### 2. Open/Closed Principle (OCP)
 
--   New structs (`ProfileCriterion`, `PerformanceProfilePlotConfig`) allow extending behavior/styling without modifying core logic.
+- New structs (`ProfileCriterion`, `PerformanceProfilePlotConfig`) allow extending behavior/styling without modifying core logic.
 
 ### 3. Dependency Inversion Principle (DIP)
 
--   High-level formatting functions depend on abstract data structures (`ProfileAnalysis`), not implementation details like DataFrame columns.
+- High-level formatting functions depend on abstract data structures (`ProfileAnalysis`), not implementation details like DataFrame columns.
 
 ---
 
@@ -40,28 +40,28 @@ Refactored 3 main functions in `src/performance_profile.jl` following **SRP**:
 
 Decomposed into:
 
--   **`compute_profile_stats(pp)`**: Pure calculation, returns `ProfileAnalysis` struct.
--   **`format_analysis_markdown(analysis)`**: Pure formatting, returns String.
--   **`analyze_performance_profile`**: Orchestrator (legacy wrapper).
+- **`compute_profile_stats(pp)`**: Pure calculation, returns `ProfileAnalysis` struct.
+- **`_format_analysis_markdown(analysis)`**: Pure formatting (Internal helper).
+- **`analyze_performance_profile`**: Orchestrator (legacy wrapper).
 
 ### Refactoring: `build_profile_from_df` (~110 lines)
 
 Original monolithic function decomposed into:
 
-1.  **`_filter_benchmark_data`**: Row filtering logic.
-2.  **`_extract_benchmark_metrics`**: Application of criterion.
-3.  **`_aggregate_metrics`**: Handling multiple runs.
-4.  **`_compute_dolan_more_ratios`**: Core profiling math.
-5.  **`_compute_profile_metadata`**: Label generation.
+1. **`_filter_benchmark_data`**: Row filtering logic.
+2. **`_extract_benchmark_metrics`**: Application of criterion.
+3. **`_aggregate_metrics`**: Handling multiple runs.
+4. **`_compute_dolan_more_ratios`**: Core profiling math.
+5. **`_compute_profile_metadata`**: Label generation.
 
 ### Refactoring: `plot_performance_profile` (~90 lines)
 
 Original monolithic function refactored to use:
 
--   **`PerformanceProfilePlotConfig`**: Struct for all visual settings (fonts, margins, colors).
--   **`_init_profile_plot`**: Canvas setup.
--   **`_compute_curve_points`**: Step function logic.
--   **`_add_combo_series!`**: Rendering individual curves.
+- **`PerformanceProfilePlotConfig`**: Struct for all visual settings (fonts, margins, colors).
+- **`_init_profile_plot`**: Canvas setup.
+- **`_compute_curve_points`**: Step function logic.
+- **`_add_combo_series!`**: Rendering individual curves.
 
 ---
 
@@ -69,14 +69,14 @@ Original monolithic function refactored to use:
 
 ### Unit Tests
 
--   Added `test/test_performance_profile_internals.jl` to test private helper functions using `CTBenchmarks.` prefix (non-exported).
--   Verified `build_profile_from_df` internals: filtering, aggregation, ratio computation.
--   Verified `plot_performance_profile` helpers: step function point generation.
+- Added `test/test_performance_profile_internals.jl` to test private helper functions using `CTBenchmarks.` prefix (non-exported).
+- Verified `build_profile_from_df` internals: filtering, aggregation, ratio computation.
+- Verified `plot_performance_profile` helpers: step function point generation.
 
 ### Integration Tests
 
--   Ran existing `test/test_performance_profile.jl` suite.
--   Result: **Passed** (All 32 initial tests + 21 internal tests passed).
+- Ran existing `test/test_performance_profile.jl` suite.
+- Result: **Passed** (All 32 initial tests + 21 internal tests passed).
 
 ---
 
@@ -93,4 +93,10 @@ Original monolithic function refactored to use:
 
 ## Conclusion
 
-This refactoring successfully applies SOLID principles to the entire `performance_profile.jl` module. The code is now modular, testable at a granular level, and extensible for future formats (JSON/HTML) or plot styles without risk of regression in core logic.
+This refactoring successfully applies SOLID principles and follows a strict naming convention:
+
+- **Public API**: `analyze_performance_profile`, `build_profile_from_df`, `plot_performance_profile`, `load_benchmark_df` (All exported).
+- **Advanced API**: `compute_profile_stats` (Accessible for structured data).
+- **Internal**: All helper functions prefixed with `_`.
+
+The code is now modular, testable at a granular level, and extensible for future formats (JSON/HTML) or plot styles without risk of regression in core logic.
