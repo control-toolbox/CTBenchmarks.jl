@@ -3,7 +3,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 """
-    _plot_iterations_vs_cpu_time(problem, bench_id, src_dir)
+    _plot_iterations_vs_cpu_time(src_dir, problem, bench_id)
 
 Plot the relationship between iteration count and CPU time for a given problem
 and benchmark.
@@ -13,16 +13,16 @@ across all `(model, solver)` combinations, and displays them as a scatter plot
 in the `(iterations, CPU time)` plane.
 
 # Arguments
-- `problem::AbstractString`: Name of the problem to filter.
-- `bench_id`: Benchmark identifier used to locate the benchmark JSON file.
-- `src_dir`: Path to `docs/src` directory.
+- `src_dir::AbstractString`: Path to `docs/src` directory (injected by framework)
+- `problem::AbstractString`: Name of the problem to filter
+- `bench_id::AbstractString`: Benchmark identifier used to locate the benchmark JSON file
 
 # Returns
 - `Plots.Plot`: Scatter plot of iteration count vs CPU time. Returns an empty
   plot if no data is available.
 """
 function _plot_iterations_vs_cpu_time(
-    problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString=SRC_DIR
+    src_dir::AbstractString, problem::AbstractString, bench_id::AbstractString
 )
     raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing

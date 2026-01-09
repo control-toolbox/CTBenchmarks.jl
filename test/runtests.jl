@@ -15,6 +15,7 @@ using Plots
         :utils,
         :performance_profile,
         :performance_profile_internals,
+        :plot_styling,
     )
         @testset "$(name)" begin
             test_name = Symbol(:test_, name)

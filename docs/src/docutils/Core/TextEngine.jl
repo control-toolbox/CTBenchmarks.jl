@@ -23,19 +23,24 @@ function register_text_handler!(name::AbstractString, func::Function)
 end
 
 """
-    call_text_function(function_name::String, args::Vector{String})
+    call_text_function(function_name::String, args::Vector{String}, extra_args::Tuple=())
 
 Safely call a registered text function with string arguments.
 
 # Arguments
 - `function_name::String`: Name of the function (must be in `TEXT_FUNCTIONS`)
-- `args::Vector{String}`: Vector of string arguments to pass to the function
+- `args::Vector{String}`: Vector of string arguments from the template
+- `extra_args::Tuple`: Extra arguments injected by the system (e.g., SRC_DIR)
 
 # Returns
 - `String`: Markdown content produced by the text function
 
 # Throws
 - `ErrorException` if function not found in registry
+
+# Note
+Arguments are passed as: `func(extra_args..., args...)` so that injected
+dependencies (like `src_dir`) come first, following the Dependency Inversion Principle.
 """
 function call_text_function(
     function_name::AbstractString,
@@ -52,5 +57,6 @@ function call_text_function(
     func = TEXT_FUNCTIONS[function_name]
     DOC_DEBUG[] && @info "  📝 Calling $function_name($(join(args, ", ")))"
 
-    return func(args..., extra_args...)
+    # Pass extra_args first (injected dependencies), then args (template arguments)
+    return func(extra_args..., args...)
 end

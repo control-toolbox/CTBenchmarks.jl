@@ -79,6 +79,7 @@ with_processed_template_problems(
         [
             joinpath("core", "cpu.md"),
             joinpath("core", "gpu.md"),
+            joinpath("core", "midpoint-trapeze.md"),
             joinpath("core", "problems"),
         ],
         joinpath(@__DIR__, "src"),
@@ -108,6 +109,7 @@ with_processed_template_problems(
                 "Core benchmarks" => [
                     "CPU" => joinpath("core", "cpu.md"),
                     "GPU" => joinpath("core", "gpu.md"),
+                    "Midpoint vs Trapeze" => joinpath("core", "midpoint-trapeze.md"),
                     "Problems" => core_problems_menu,
                 ],
                 DocumenterReference.automatic_reference_documentation(;
