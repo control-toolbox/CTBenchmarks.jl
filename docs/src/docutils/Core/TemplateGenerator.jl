@@ -118,19 +118,19 @@ function generate_template_problem(
     ### 📈 Time vs Grid Size ($bench_title)
 
     <!-- INCLUDE_FIGURE:
-    FUNCTION = _plot_time_vs_grid_size
+    NAME = plot_time_vs_grid_size
     ARGS = $problem_name, $bench_id
     -->
 
     <!-- INCLUDE_FIGURE:
-    FUNCTION = _plot_time_vs_grid_size_bar
+    NAME = plot_time_vs_grid_size_bar
     ARGS = $problem_name, $bench_id
     -->
 
     ### 🔁 Iterations vs CPU time ($bench_title)
 
     <!-- INCLUDE_FIGURE:
-    FUNCTION = _plot_iterations_vs_cpu_time
+    NAME = plot_iterations_vs_cpu_time
     ARGS = $problem_name, $bench_id
     -->
     """
@@ -203,7 +203,7 @@ function generate_template_problem(
     ### 📊 Table of Results ($bench_title)
 
     <!-- INCLUDE_TEXT:
-    FUNCTION = _print_benchmark_table_results
+    NAME = print_benchmark_table_results
     ARGS = $bench_id, $problem_name
     -->
     """

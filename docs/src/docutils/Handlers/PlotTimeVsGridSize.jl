@@ -251,3 +251,14 @@ function _plot_time_vs_grid_size_bar(
         @info "  ✅ Time vs grid size bar plot generated for problem: $problem and bench_id: $bench_id"
     return plt
 end
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Registration
+# ───────────────────────────────────────────────────────────────────────────────
+
+register_figure_handler!("plot_time_vs_grid_size", _plot_time_vs_grid_size)
+register_figure_handler!("plot_time_vs_grid_size_bar", _plot_time_vs_grid_size_bar)
+
+# Legacy support
+register_figure_handler!("_plot_time_vs_grid_size", _plot_time_vs_grid_size)
+register_figure_handler!("_plot_time_vs_grid_size_bar", _plot_time_vs_grid_size_bar)

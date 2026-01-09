@@ -125,3 +125,12 @@ function _plot_iterations_vs_cpu_time(
         @info "  ✅ Iterations vs CPU time plot generated for problem: $problem and bench_id: $bench_id"
     return plt
 end
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Registration
+# ───────────────────────────────────────────────────────────────────────────────
+
+register_figure_handler!("plot_iterations_vs_cpu_time", _plot_iterations_vs_cpu_time)
+
+# Legacy support
+register_figure_handler!("_plot_iterations_vs_cpu_time", _plot_iterations_vs_cpu_time)

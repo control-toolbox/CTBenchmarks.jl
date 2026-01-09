@@ -39,9 +39,17 @@ function _print_benchmark_table_results_from_args(args...)
     return _print_benchmark_table_results(bench_id; problems=problems)
 end
 
-const TEXT_FUNCTIONS = Dict{String,Function}(
-    "_print_benchmark_table_results" => _print_benchmark_table_results_from_args,
-)
+const TEXT_FUNCTIONS = Dict{String,Function}()
+
+"""
+    register_text_handler!(name::String, func::Function)
+
+Register a text-generating function in the global text registry.
+"""
+function register_text_handler!(name::AbstractString, func::Function)
+    TEXT_FUNCTIONS[String(name)] = func
+    return nothing
+end
 
 """
     call_text_function(function_name::String, args::Vector{String})

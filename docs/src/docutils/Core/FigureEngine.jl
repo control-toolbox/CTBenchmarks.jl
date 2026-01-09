@@ -17,11 +17,17 @@ Registry of plotting functions that can be called from INCLUDE_FIGURE blocks.
 All registered functions must accept string arguments and return a Plots.Plot object.
 """
 
-const FIGURE_FUNCTIONS = Dict{String,Function}(
-    "_plot_time_vs_grid_size" => _plot_time_vs_grid_size,
-    "_plot_time_vs_grid_size_bar" => _plot_time_vs_grid_size_bar,
-    "_plot_iterations_vs_cpu_time" => _plot_iterations_vs_cpu_time,
-)
+const FIGURE_FUNCTIONS = Dict{String,Function}()
+
+"""
+    register_figure_handler!(name::String, func::Function)
+
+Register a plotting function in the global figure registry.
+"""
+function register_figure_handler!(name::AbstractString, func::Function)
+    FIGURE_FUNCTIONS[String(name)] = func
+    return nothing
+end
 
 """
     call_figure_function(function_name::String, args::Vector{String})
