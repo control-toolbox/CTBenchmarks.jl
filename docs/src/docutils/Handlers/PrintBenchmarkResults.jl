@@ -1,8 +1,8 @@
 """
     _print_benchmark_table_results(
+        src_dir::AbstractString,
         bench_id::AbstractString,
         problem::Union{Nothing, AbstractString}=nothing,
-        src_dir::AbstractString=SRC_DIR,
     ) -> String
 
 Generate a Markdown-style summary of benchmark results for `bench_id`, suitable
@@ -22,12 +22,12 @@ and solver, and include columns for:
 - Best (marks the fastest successful run for each `N`)
 
 # Arguments
+- `src_dir::AbstractString`: path to the `docs/src` directory containing the
+  benchmark JSON files (injected automatically by the template system).
 - `bench_id::AbstractString`: benchmark identifier whose results should be
   summarised.
 - `problem::Union{Nothing, AbstractString}`: optional problem name to filter
   results; `nothing` (the default) shows all problems.
-- `src_dir::AbstractString`: path to the `docs/src` directory containing the
-  benchmark JSON files.
 
 # Returns
 - `String`: Markdown-compatible text. When the benchmark contains a **single
@@ -42,9 +42,9 @@ If no data are available, a Documenter-style `!!! warning` block is returned
 instead of tables.
 """
 function _print_benchmark_table_results(
+    src_dir::AbstractString,
     bench_id::AbstractString,
     problem::Union{Nothing,AbstractString}=nothing,
-    src_dir::AbstractString=SRC_DIR,
 )
     bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data === nothing
