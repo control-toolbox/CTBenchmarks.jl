@@ -1,8 +1,8 @@
 # ═══════════════════════════════════════════════════════════════════════════════
-# Figure Generation Module
+# Figure Engine Module
 # ═══════════════════════════════════════════════════════════════════════════════
 #
-# This module provides the INCLUDE_FIGURE system for generating PNG/PDF figure
+# This module provides the figure generation system for generating PNG/PDF figure
 # pairs from plotting functions and embedding them in documentation.
 #
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -17,11 +17,17 @@ Registry of plotting functions that can be called from INCLUDE_FIGURE blocks.
 All registered functions must accept string arguments and return a Plots.Plot object.
 """
 
-const FIGURE_FUNCTIONS = Dict{String,Function}(
-    "_plot_time_vs_grid_size" => _plot_time_vs_grid_size,
-    "_plot_time_vs_grid_size_bar" => _plot_time_vs_grid_size_bar,
-    "_plot_iterations_vs_cpu_time" => _plot_iterations_vs_cpu_time,
-)
+const FIGURE_FUNCTIONS = Dict{String,Function}()
+
+"""
+    register_figure_handler!(name::String, func::Function)
+
+Register a plotting function in the global figure registry.
+"""
+function register_figure_handler!(name::AbstractString, func::Function)
+    FIGURE_FUNCTIONS[String(name)] = func
+    return nothing
+end
 
 """
     call_figure_function(function_name::String, args::Vector{String})
@@ -43,7 +49,11 @@ Safely call a registered plotting function with string arguments.
 plt = call_figure_function("_plot_profile_default_cpu", ["core-ubuntu-latest"])
 ```
 """
-function call_figure_function(function_name::AbstractString, args::Vector{<:AbstractString})
+function call_figure_function(
+    function_name::AbstractString,
+    args::Vector{<:AbstractString},
+    extra_args::Tuple=()
+)
     if !haskey(FIGURE_FUNCTIONS, function_name)
         available = join(sort(collect(keys(FIGURE_FUNCTIONS))), ", ")
         error(
@@ -55,8 +65,8 @@ function call_figure_function(function_name::AbstractString, args::Vector{<:Abst
 
     DOC_DEBUG[] && @info "  📞 Calling $function_name($(join(args, ", ")))"
 
-    # Call function with string arguments
-    return func(args...)
+    # Call function with string arguments + extra arguments (e.g. SRC_DIR)
+    return func(args..., extra_args...)
 end
 
 # ───────────────────────────────────────────────────────────────────────────────
@@ -134,6 +144,7 @@ function generate_figure_files(
     function_name::AbstractString,
     args::Vector{<:AbstractString},
     output_dir::AbstractString,
+    extra_args::Tuple=(),
 )
     # Generate unique basename
     args_str = join(args, "_")
@@ -145,7 +156,7 @@ function generate_figure_files(
     # Call the plotting function
     DOC_DEBUG[] &&
         @info "  🎨 Generating figure: $function_name($(join(["\"$arg\"" for arg in args], ", ")))"
-    plt = call_figure_function(function_name, args)
+    plt = call_figure_function(function_name, args, extra_args)
 
     # Define file names
     svg_file = basename * ".svg"

@@ -59,7 +59,7 @@ BENCH_ID = core-ubuntu-latest
 ### 📊 Tables of Results
 
 <!-- INCLUDE_TEXT:
-FUNCTION = _print_benchmark_table_results
+NAME = print_benchmark_table_results
 ARGS = core-ubuntu-latest
 -->
 
@@ -128,7 +128,7 @@ BENCH_ID = core-moonshot-cpu
 ### 📊 Tables of Results
 
 <!-- INCLUDE_TEXT:
-FUNCTION = _print_benchmark_table_results
+NAME = print_benchmark_table_results
 ARGS = core-moonshot-cpu
 -->
 

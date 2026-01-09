@@ -1,8 +1,8 @@
 """
     _print_benchmark_table_results(
         bench_id::AbstractString,
-        src_dir::AbstractString;
-        problems::Union{Nothing, Vector{<:AbstractString}}=nothing,
+        problem::Union{Nothing, AbstractString}=nothing,
+        src_dir::AbstractString=SRC_DIR,
     ) -> String
 
 Generate a Markdown-style summary of benchmark results for `bench_id`, suitable
@@ -24,11 +24,10 @@ and solver, and include columns for:
 # Arguments
 - `bench_id::AbstractString`: benchmark identifier whose results should be
   summarised.
+- `problem::Union{Nothing, AbstractString}`: optional problem name to filter
+  results; `nothing` (the default) shows all problems.
 - `src_dir::AbstractString`: path to the `docs/src` directory containing the
   benchmark JSON files.
-- `problems::Union{Nothing, Vector{<:AbstractString}}`: optional list of
-  problem names used to filter the results; `nothing` (the default) keeps all
-  problems present in the benchmark.
 
 # Returns
 - `String`: Markdown-compatible text. When the benchmark contains a **single
@@ -44,8 +43,8 @@ instead of tables.
 """
 function _print_benchmark_table_results(
     bench_id::AbstractString,
-    src_dir::AbstractString;
-    problems::Union{Nothing,Vector{<:AbstractString}}=nothing,
+    problem::Union{Nothing,AbstractString}=nothing,
+    src_dir::AbstractString=SRC_DIR,
 )
     bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data === nothing
@@ -59,9 +58,9 @@ function _print_benchmark_table_results(
 
     df = DataFrame(rows)
 
-    # Optionally filter by a subset of problems, mirroring _print_benchmark_log
-    if problems !== nothing
-        df = filter(row -> row.problem in problems, df)
+    # Optionally filter by a single problem
+    if problem !== nothing
+        df = filter(row -> row.problem == problem, df)
     end
 
     # Helper to read from Dict or NamedTuple
@@ -399,3 +398,12 @@ function _print_benchmark_table_results(
 
     return String(take!(buf))
 end
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Registration
+# ───────────────────────────────────────────────────────────────────────────────
+
+register_text_handler!("print_benchmark_table_results", _print_benchmark_table_results)
+
+# Legacy support
+register_text_handler!("_print_benchmark_table_results", _print_benchmark_table_results)
