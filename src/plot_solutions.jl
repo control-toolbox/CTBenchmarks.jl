@@ -65,9 +65,39 @@ function get_color(model::T, solver::T, idx::Int) where {T<:Union{String,Symbol}
         ("jump", "ipopt")     => :mediumpurple,
         ("jump", "madnlp")   => :sienna,
         ("exa_gpu", "madnlp") => :mediumturquoise,
+        # Discretization method combinations
+        ("trapeze", "ipopt") => :steelblue,
+        ("trapeze", "madnlp") => :seagreen,
+        ("midpoint", "ipopt") => :tomato,
+        ("midpoint", "madnlp") => :darkorange,
     )
 
     return get(fixed, (model, solver), palette[mod1(idx, length(palette))])
+end
+
+"""
+    get_color(params::Vector, idx::Int) -> Symbol
+
+Variadic version of get_color that handles any number of solver parameters.
+Uses the first two parameters for color mapping, falling back to palette if not in fixed mappings.
+
+# Arguments
+- `params::Vector`: Vector of solver parameter values (e.g., [model, solver] or [disc_method, solver, ...])
+- `idx::Int`: Index for palette fallback
+
+# Returns
+- `Symbol`: Color symbol suitable for Plots.jl
+"""
+function get_color(params::Vector, idx::Int)
+    if length(params) >= 2
+        return get_color(params[1], params[2], idx)
+    elseif length(params) == 1
+        # Fallback: use palette based on idx
+        palette = [:steelblue, :tomato, :seagreen, :darkorange, :mediumpurple, :sienna]
+        return palette[mod1(idx, length(palette))]
+    else
+        error("get_color requires at least one parameter")
+    end
 end
 
 
@@ -192,6 +222,11 @@ function get_marker_style(model::T, solver::T, idx::Int) where {T<:Union{String,
         ("jump", "ipopt") => :dtriangle,
         ("jump", "madnlp") => :star5,
         ("exa_gpu", "madnlp") => :hexagon,
+        # Discretization method combinations
+        ("trapeze", "ipopt") => :circle,
+        ("trapeze", "madnlp") => :diamond,
+        ("midpoint", "ipopt") => :square,
+        ("midpoint", "madnlp") => :utriangle,
     )
     marker = get(fixed, (model, solver), markers[mod1(idx, length(markers))])
     return marker
@@ -204,6 +239,42 @@ function get_marker_style(
     solver = lowercase(string(solver))
     marker = get_marker_style(model, solver, idx)
     # Calculate interval to have approximately 6 markers per curve
+    M = 6
+    marker_interval = max(1, div(grid_size, M))
+    return (marker, marker_interval)
+end
+
+"""
+    get_marker_style(params::Vector, idx::Int) -> Symbol
+
+Variadic version of get_marker_style that handles any number of solver parameters.
+Uses the first two parameters for marker mapping.
+
+# Arguments
+- `params::Vector`: Vector of solver parameter values
+- `idx::Int`: Index for marker fallback
+
+# Returns
+- `Symbol`: Marker shape symbol
+"""
+function get_marker_style(params::Vector, idx::Int)
+    if length(params) >= 2
+        return get_marker_style(params[1], params[2], idx)
+    elseif length(params) == 1
+        markers = [:circle, :square, :diamond, :utriangle, :dtriangle, :star5]
+        return markers[mod1(idx, length(markers))]
+    else
+        error("get_marker_style requires at least one parameter")
+    end
+end
+
+"""
+    get_marker_style(params::Vector, idx::Int, grid_size::Int) -> Tuple{Symbol, Int}
+
+Variadic version with grid_size for marker interval calculation.
+"""
+function get_marker_style(params::Vector, idx::Int, grid_size::Int)
+    marker = get_marker_style(params, idx)
     M = 6
     marker_interval = max(1, div(grid_size, M))
     return (marker, marker_interval)

@@ -754,8 +754,14 @@ function plot_performance_profile(pp::PerformanceProfile; plot_config=nothing)
 
         if !isempty(ratios)
             first_row = first(eachrow(sub))
-            color = get_color(first_row.model, first_row.solver, idx)
-            marker = get_marker_style(first_row.model, first_row.solver, idx)
+
+            # Extract solver column values dynamically from config
+            # This works for any number of solver columns (2, 3, or more)
+            solver_vals = [first_row[col] for col in pp.config.solver_cols]
+
+            # Use variadic versions that handle any number of parameters
+            color = get_color(solver_vals, idx)
+            marker = get_marker_style(solver_vals, idx)
 
             x, y = _compute_curve_points(ratios, pp.total_problems)
             _add_combo_series!(plt, x, y, c, color, marker, cfg)
