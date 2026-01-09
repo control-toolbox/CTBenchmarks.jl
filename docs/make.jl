@@ -129,4 +129,4 @@ end
 # Deploy documentation to GitHub Pages
 # ═══════════════════════════════════════════════════════════════════════════════
 
-deploydocs(; repo=repo_url * ".git", devbranch="main", push_preview=true)
+deploydocs(; repo=repo_url * ".git", devbranch="main", push_preview=true, forcepush=true)
