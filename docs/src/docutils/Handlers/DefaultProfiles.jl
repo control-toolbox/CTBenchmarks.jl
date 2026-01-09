@@ -56,8 +56,10 @@ Initialize the global `PROFILE_REGISTRY` with standard performance profile
 configurations:
 - `"default_cpu"`: Based on `CPU_TIME_CRITERION`.
 - `"default_iter"`: Based on `ITERATIONS_CRITERION`.
+- `"midpoint_trapeze_cpu"`: Based on `CPU_TIME_CRITERION` for discretization method comparison.
 
-Both use `(problem, grid_size)` as instances and `(model, solver)` as combos.
+Default profiles use `(problem, grid_size)` as instances and `(model, solver)` as combos.
+The midpoint_trapeze profile uses `(disc_method, solver)` instead to compare discretization methods.
 """
 function init_default_profiles!()
     # 1. Default CPU Profile
@@ -81,6 +83,18 @@ function init_default_profiles!()
         xs -> Statistics.mean(skipmissing(xs))
     )
     CTBenchmarks.register!(PROFILE_REGISTRY, "default_iter", iter_config)
+
+    # 3. Midpoint vs Trapeze CPU Profile
+    # Uses disc_method instead of model to compare discretization methods
+    midpoint_trapeze_config = CTBenchmarks.PerformanceProfileConfig{Float64}(
+        [:problem, :grid_size],
+        [:disc_method, :solver],  # Key difference: disc_method instead of model
+        CPU_TIME_CRITERION,
+        row -> row.success == true && get(row, :benchmark, nothing) !== nothing,
+        row -> true,
+        xs -> Statistics.mean(skipmissing(xs))
+    )
+    CTBenchmarks.register!(PROFILE_REGISTRY, "midpoint_trapeze_cpu", midpoint_trapeze_config)
 
     return nothing
 end
