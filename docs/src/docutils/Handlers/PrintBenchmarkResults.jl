@@ -399,3 +399,12 @@ function _print_benchmark_table_results(
 
     return String(take!(buf))
 end
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Registration
+# ───────────────────────────────────────────────────────────────────────────────
+
+register_text_handler!("print_benchmark_table_results", _print_benchmark_table_results_from_args)
+
+# Legacy support
+register_text_handler!("_print_benchmark_table_results", _print_benchmark_table_results_from_args)

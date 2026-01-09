@@ -1,9 +1,11 @@
 # ═══════════════════════════════════════════════════════════════════════════════
-# Profile Registry for Documentation
+# Profile Engine Module
 # ═══════════════════════════════════════════════════════════════════════════════
-
-using CTBenchmarks
-using Statistics
+#
+# This module provides the infrastructure for registering and using performance
+# profile configurations.
+#
+# ═══════════════════════════════════════════════════════════════════════════════
 
 """
     PROFILE_REGISTRY
@@ -11,67 +13,6 @@ using Statistics
 Global registry for performance profile configurations used in the documentation.
 """
 const PROFILE_REGISTRY = CTBenchmarks.PerformanceProfileRegistry()
-
-"""
-    init_default_profiles!()
-
-Initialize the global `PROFILE_REGISTRY` with standard performance profile
-configurations:
-- `"default_cpu"`: Based on `row.benchmark["time"]` (CPU time).
-- `"default_iter"`: Based on `row.iterations`.
-
-Both use `(problem, grid_size)` as instances and `(model, solver)` as combos.
-"""
-function init_default_profiles!()
-    # 1. Default CPU Profile
-    cpu_criterion = CTBenchmarks.ProfileCriterion{Float64}(
-        "CPU time",
-        row -> begin
-            bench = get(row, :benchmark, nothing)
-            if bench === nothing || ismissing(bench)
-                return NaN
-            end
-            time_raw = get(bench, "time", nothing)
-            time_raw === nothing && return NaN
-            return Float64(time_raw)
-        end,
-        (a, b) -> a <= b
-    )
-
-    cpu_config = CTBenchmarks.PerformanceProfileConfig{Float64}(
-        [:problem, :grid_size],
-        [:model, :solver],
-        cpu_criterion,
-        row -> row.success == true && get(row, :benchmark, nothing) !== nothing,
-        row -> true,
-        xs -> Statistics.mean(skipmissing(xs))
-    )
-    CTBenchmarks.register!(PROFILE_REGISTRY, "default_cpu", cpu_config)
-
-    # 2. Default Iterations Profile
-    iter_criterion = CTBenchmarks.ProfileCriterion{Float64}(
-        "Iterations",
-        row -> begin
-            if !hasproperty(row, :iterations) || ismissing(row.iterations)
-                return NaN
-            end
-            return Float64(row.iterations)
-        end,
-        (a, b) -> a <= b
-    )
-
-    iter_config = CTBenchmarks.PerformanceProfileConfig{Float64}(
-        [:problem, :grid_size],
-        [:model, :solver],
-        iter_criterion,
-        row -> row.success == true && hasproperty(row, :iterations) && !ismissing(row.iterations),
-        row -> true,
-        xs -> Statistics.mean(skipmissing(xs))
-    )
-    CTBenchmarks.register!(PROFILE_REGISTRY, "default_iter", iter_config)
-
-    return nothing
-end
 
 # ───────────────────────────────────────────────────────────────────────────────
 # Registry-based Wrappers
@@ -144,5 +85,3 @@ function analyze_profile_from_registry(
 
     return CTBenchmarks.analyze_performance_profile(pp)
 end
-
-# End of Profile Registry utilities
