@@ -303,6 +303,247 @@ function replace_figure_blocks(
 end
 
 """
+    replace_profile_plot_blocks(
+        content::String,
+        template_filename::String,
+        figures_output_dir::String,
+        relative_path::String
+    ) -> (String, Vector{String})
+
+Replace all PROFILE_PLOT blocks in the content with generated HTML that embeds SVG previews
+and links to PDF files.
+
+This function scans the input content for blocks of the form:
+
+```html
+<!-- PROFILE_PLOT:
+NAME = default_cpu
+BENCH_ID = core-ubuntu-latest
+COMBOS = exa:ipopt, exa:madnlp
+-->
+```
+
+For each block, it calls the profile registry to generate a performance profile plot
+and replaces the block with an HTML snippet that embeds the SVG and links to the PDF.
+
+# Arguments
+- `content::String`: Input markdown content
+- `template_filename::String`: Name of the template file (for basename generation)
+- `figures_output_dir::String`: Absolute path where figures will be saved
+- `relative_path::String`: Relative path from the .md file to the figures directory
+
+# Returns
+- `(String, Vector{String})`: Tuple containing the content with PROFILE_PLOT blocks replaced by
+  HTML, and a list of absolute paths to the generated figure files (SVG and PDF)
+"""
+function replace_profile_plot_blocks(
+    content::String,
+    template_filename::String,
+    figures_output_dir::String,
+    relative_path::String,
+)
+    # Regex to match PROFILE_PLOT blocks
+    pattern = r"<!-- PROFILE_PLOT:\s*\n(.*?)-->"s
+    block_count = 0
+    figure_paths = String[]
+
+    result = replace(
+        content,
+        pattern => function (match_str)
+            block_count += 1
+            DOC_DEBUG[] && @info "📊 Processing PROFILE_PLOT block #$block_count"
+
+            # Extract the parameter block
+            m = match(pattern, match_str)
+            if m === nothing
+                @warn "  ✗ Failed to parse PROFILE_PLOT block"
+                return match_str
+            end
+
+            param_block = m.captures[1]
+            params = parse_include_params(param_block)
+
+            # Extract required parameters
+            profile_name = get(params, "NAME", nothing)
+            bench_id = get(params, "BENCH_ID", nothing)
+            combos_str = get(params, "COMBOS", "")
+
+            if profile_name === nothing
+                @warn "  ✗ Missing NAME parameter in PROFILE_PLOT block"
+                return match_str
+            end
+
+            if bench_id === nothing
+                @warn "  ✗ Missing BENCH_ID parameter in PROFILE_PLOT block"
+                return match_str
+            end
+
+            # Parse combos (comma-separated "model:solver" pairs)
+            combos = if isempty(combos_str)
+                nothing
+            else
+                combo_list = Tuple{String,String}[]
+                for combo_spec in split(combos_str, ',')
+                    parts = split(strip(combo_spec), ':')
+                    if length(parts) != 2
+                        @warn "  ✗ Invalid COMBOS specification: '$combo_spec'. Expected 'model:solver'"
+                        return match_str
+                    end
+                    push!(combo_list, (strip(parts[1]), strip(parts[2])))
+                end
+                combo_list
+            end
+
+            # Generate the plot using the registry
+            try
+                # Call the registry-based plotting function
+                plt = plot_profile_from_registry(profile_name, bench_id, SRC_DIR; combos=combos)
+
+                # Generate unique basename for the figure
+                args_str = bench_id * (isnothing(combos) ? "" : "_" * join(["$(m)_$(s)" for (m, s) in combos], "_"))
+                basename = generate_figure_basename(template_filename, "profile_plot_$(profile_name)", args_str)
+
+                # Create output directory if it doesn't exist
+                mkpath(figures_output_dir)
+
+                # Define file names
+                svg_file = basename * ".svg"
+                pdf_file = basename * ".pdf"
+                svg_path = joinpath(figures_output_dir, svg_file)
+                pdf_path = joinpath(figures_output_dir, pdf_file)
+
+                # Save both formats
+                savefig(plt, svg_path)
+                savefig(plt, pdf_path)
+
+                # Record absolute paths for later cleanup
+                push!(figure_paths, svg_path)
+                push!(figure_paths, pdf_path)
+
+                # Generate HTML with clickable SVG→PDF
+                html = """```@raw html
+    <a href="$relative_path/$pdf_file">
+      <img 
+        class="centering" 
+        width="100%" 
+        style="max-width:1400px" 
+        src="$relative_path/$svg_file"
+      />
+    </a>
+    ```"""
+
+                DOC_DEBUG[] &&
+                    @info "  ✓ Replaced PROFILE_PLOT block #$block_count: $profile_name for $bench_id"
+                return html
+
+            catch e
+                if DOC_DEBUG[]
+                    @error "  ✗ Failed to generate profile plot" exception = (e, catch_backtrace())
+                else
+                    @error "  ✗ Failed to generate profile plot: $(e)"
+                end
+                return match_str  # Return original block on error
+            end
+        end,
+    )
+
+    @info "📊 Replaced $block_count PROFILE_PLOT block(s)"
+    return result, figure_paths
+end
+
+"""
+    replace_profile_analysis_blocks(content::String) -> String
+
+Replace all PROFILE_ANALYSIS blocks in the content with Markdown generated by the profile registry.
+
+This function scans the input content for blocks of the form:
+
+```html
+<!-- PROFILE_ANALYSIS:
+NAME = default_cpu
+BENCH_ID = core-ubuntu-latest
+COMBOS = exa:ipopt, exa:madnlp
+-->
+```
+
+and replaces each block with the Markdown analysis returned by the registry.
+
+# Arguments
+- `content::String`: Input markdown content
+
+# Returns
+- `String`: Content with PROFILE_ANALYSIS blocks replaced by generated Markdown
+"""
+function replace_profile_analysis_blocks(content::String)
+    pattern = r"<!-- PROFILE_ANALYSIS:\s*\n(.*?)-->"s
+    block_count = 0
+
+    result = replace(
+        content,
+        pattern => function (match_str)
+            block_count += 1
+            DOC_DEBUG[] && @info "📈 Processing PROFILE_ANALYSIS block #$block_count"
+
+            m = match(pattern, match_str)
+            if m === nothing
+                @warn "  ✗ Failed to parse PROFILE_ANALYSIS block"
+                return match_str
+            end
+
+            param_block = m.captures[1]
+            params = parse_include_params(param_block)
+
+            profile_name = get(params, "NAME", nothing)
+            bench_id = get(params, "BENCH_ID", nothing)
+            combos_str = get(params, "COMBOS", "")
+
+            if profile_name === nothing
+                @warn "  ✗ Missing NAME parameter in PROFILE_ANALYSIS block"
+                return match_str
+            end
+
+            if bench_id === nothing
+                @warn "  ✗ Missing BENCH_ID parameter in PROFILE_ANALYSIS block"
+                return match_str
+            end
+
+            # Parse combos (comma-separated "model:solver" pairs)
+            combos = if isempty(combos_str)
+                nothing
+            else
+                combo_list = Tuple{String,String}[]
+                for combo_spec in split(combos_str, ',')
+                    parts = split(strip(combo_spec), ':')
+                    if length(parts) != 2
+                        @warn "  ✗ Invalid COMBOS specification: '$combo_spec'. Expected 'model:solver'"
+                        return match_str
+                    end
+                    push!(combo_list, (strip(parts[1]), strip(parts[2])))
+                end
+                combo_list
+            end
+
+            try
+                text_md = analyze_profile_from_registry(profile_name, bench_id, SRC_DIR; combos=combos)
+                DOC_DEBUG[] &&
+                    @info "  ✓ Replaced PROFILE_ANALYSIS block #$block_count: $profile_name for $bench_id"
+                return text_md
+            catch e
+                if DOC_DEBUG[]
+                    @error "  ✗ Failed to generate profile analysis" exception = (e, catch_backtrace())
+                else
+                    @error "  ✗ Failed to generate profile analysis: $(e)"
+                end
+                return match_str
+            end
+        end,
+    )
+
+    @info "📈 Replaced $block_count PROFILE_ANALYSIS block(s)"
+    return result
+end
+
+"""
     replace_text_blocks(content::String) -> String
 
 Replace all INCLUDE_TEXT (and legacy INCLUDE_ANALYSIS) blocks in the content
@@ -424,8 +665,17 @@ function process_single_template(
         processed_content, template_filename, figures_output_dir, figures_relative_path
     )
 
+    # Replace all PROFILE_PLOT blocks (new specialized syntax)
+    processed_content, profile_plot_paths = replace_profile_plot_blocks(
+        processed_content, template_filename, figures_output_dir, figures_relative_path
+    )
+    append!(figure_paths, profile_plot_paths)
+
     # Replace all INCLUDE_TEXT blocks
     processed_content = replace_text_blocks(processed_content)
+
+    # Replace all PROFILE_ANALYSIS blocks (new specialized syntax)
+    processed_content = replace_profile_analysis_blocks(processed_content)
 
     # Write the output file
     @info "💾 Writing processed file: $output_path"

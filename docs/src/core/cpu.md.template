@@ -20,38 +20,40 @@ ENV_NAME = BENCH
 
 ### 📈 Performance Profile CPU Time
 
-<!-- INCLUDE_FIGURE:
-FUNCTION = _plot_profile_default_cpu
-ARGS = core-ubuntu-latest
+<!-- PROFILE_PLOT:
+NAME = default_cpu
+BENCH_ID = core-ubuntu-latest
 -->
 
-<!-- INCLUDE_TEXT:
-FUNCTION = _analyze_profile_default_cpu
-ARGS = core-ubuntu-latest
+<!-- PROFILE_ANALYSIS:
+NAME = default_cpu
+BENCH_ID = core-ubuntu-latest
 -->
 
 ### 📈 Performance Profile CPU Time: two best combos
 
-<!-- INCLUDE_FIGURE:
-FUNCTION = _plot_profile_default_cpu
-ARGS = core-ubuntu-latest, exa:madnlp, exa:ipopt
+<!-- PROFILE_PLOT:
+NAME = default_cpu
+BENCH_ID = core-ubuntu-latest
+COMBOS = exa:madnlp, exa:ipopt
 -->
 
-<!-- INCLUDE_TEXT:
-FUNCTION = _analyze_profile_default_cpu
-ARGS = core-ubuntu-latest, exa:madnlp, exa:ipopt
+<!-- PROFILE_ANALYSIS:
+NAME = default_cpu
+BENCH_ID = core-ubuntu-latest
+COMBOS = exa:madnlp, exa:ipopt
 -->
 
 ### 📈 Performance Profile Iterations
 
-<!-- INCLUDE_FIGURE:
-FUNCTION = _plot_profile_default_iter
-ARGS = core-ubuntu-latest
+<!-- PROFILE_PLOT:
+NAME = default_iter
+BENCH_ID = core-ubuntu-latest
 -->
 
-<!-- INCLUDE_TEXT:
-FUNCTION = _analyze_profile_default_iter
-ARGS = core-ubuntu-latest
+<!-- PROFILE_ANALYSIS:
+NAME = default_iter
+BENCH_ID = core-ubuntu-latest
 -->
 
 ### 📊 Tables of Results
@@ -87,38 +89,40 @@ ENV_NAME = BENCH
 
 ### 📈 Performance Profile CPU Time
 
-<!-- INCLUDE_FIGURE:
-FUNCTION = _plot_profile_default_cpu
-ARGS = core-moonshot-cpu
+<!-- PROFILE_PLOT:
+NAME = default_cpu
+BENCH_ID = core-moonshot-cpu
 -->
 
-<!-- INCLUDE_TEXT:
-FUNCTION = _analyze_profile_default_cpu
-ARGS = core-moonshot-cpu
+<!-- PROFILE_ANALYSIS:
+NAME = default_cpu
+BENCH_ID = core-moonshot-cpu
 -->
 
 ### 📈 Performance Profile CPU Time: two best combos
 
-<!-- INCLUDE_FIGURE:
-FUNCTION = _plot_profile_default_cpu
-ARGS = core-moonshot-cpu, exa:madnlp, exa:ipopt
+<!-- PROFILE_PLOT:
+NAME = default_cpu
+BENCH_ID = core-moonshot-cpu
+COMBOS = exa:madnlp, exa:ipopt
 -->
 
-<!-- INCLUDE_TEXT:
-FUNCTION = _analyze_profile_default_cpu
-ARGS = core-moonshot-cpu, exa:madnlp, exa:ipopt
+<!-- PROFILE_ANALYSIS:
+NAME = default_cpu
+BENCH_ID = core-moonshot-cpu
+COMBOS = exa:madnlp, exa:ipopt
 -->
 
 ### 📈 Performance Profile Iterations
 
-<!-- INCLUDE_FIGURE:
-FUNCTION = _plot_profile_default_iter
-ARGS = core-moonshot-cpu
+<!-- PROFILE_PLOT:
+NAME = default_iter
+BENCH_ID = core-moonshot-cpu
 -->
 
-<!-- INCLUDE_TEXT:
-FUNCTION = _analyze_profile_default_iter
-ARGS = core-moonshot-cpu
+<!-- PROFILE_ANALYSIS:
+NAME = default_iter
+BENCH_ID = core-moonshot-cpu
 -->
 
 ### 📊 Tables of Results
