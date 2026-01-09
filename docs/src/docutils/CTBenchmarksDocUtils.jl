@@ -97,22 +97,28 @@ end
 # Include submodules
 # ═══════════════════════════════════════════════════════════════════════════════
 
-include(joinpath(@__DIR__, "modules", "Common.jl"))
-include(joinpath(@__DIR__, "ProfileRegistry.jl"))
+# Core Infrastructure
+include(joinpath(@__DIR__, "Core", "Common.jl"))
+include(joinpath(@__DIR__, "Core", "ProfileEngine.jl"))
+
+# Handlers (Specific content)
+include(joinpath(@__DIR__, "Handlers", "DefaultProfiles.jl"))
 
 # Initialize registry with standard documentation profiles
 init_default_profiles!()
 
-include(joinpath(@__DIR__, "modules", "PrintEnvConfig.jl"))
-include(joinpath(@__DIR__, "modules", "PrintLogResults.jl"))
-include(joinpath(@__DIR__, "modules", "PlotTimeVsGridSize.jl"))
-include(joinpath(@__DIR__, "modules", "PlotIterationsVsCpuTime.jl"))
-include(joinpath(@__DIR__, "modules", "FigureGeneration.jl"))
-include(joinpath(@__DIR__, "modules", "PrintBenchmarkResults.jl"))
-include(joinpath(@__DIR__, "modules", "TextGeneration.jl"))
-include(joinpath(@__DIR__, "modules", "TemplateProcessor.jl"))
-include(joinpath(@__DIR__, "modules", "TemplateGenerator.jl"))
-include(joinpath(@__DIR__, "modules", "DocumenterReference.jl"))
+include(joinpath(@__DIR__, "Handlers", "PrintEnvConfig.jl"))
+include(joinpath(@__DIR__, "Handlers", "PrintLogResults.jl"))
+include(joinpath(@__DIR__, "Handlers", "PlotTimeVsGridSize.jl"))
+include(joinpath(@__DIR__, "Handlers", "PlotIterationsVsCpuTime.jl"))
+include(joinpath(@__DIR__, "Handlers", "PrintBenchmarkResults.jl"))
+
+# Core Engines (Infrastructure)
+include(joinpath(@__DIR__, "Core", "FigureEngine.jl"))
+include(joinpath(@__DIR__, "Core", "TextEngine.jl"))
+include(joinpath(@__DIR__, "Core", "TemplateEngine.jl"))
+include(joinpath(@__DIR__, "Core", "TemplateGenerator.jl"))
+include(joinpath(@__DIR__, "Core", "DocumenterReference.jl"))
 
 # Make DocumenterReference submodule available
 using .DocumenterReference

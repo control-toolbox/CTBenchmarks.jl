@@ -102,7 +102,7 @@ function generate_template_problem(
 
     # ───────────────────────────────────────────────────────────────────────────
     # Generate INCLUDE_ENVIRONMENT block
-    # This will be replaced by template_processor.jl with actual environment info
+    # This will be replaced by TemplateEngine.jl with actual environment info
     # ───────────────────────────────────────────────────────────────────────────
     ENV = """
     <!-- INCLUDE_ENVIRONMENT:

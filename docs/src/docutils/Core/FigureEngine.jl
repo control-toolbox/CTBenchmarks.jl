@@ -1,8 +1,8 @@
 # ═══════════════════════════════════════════════════════════════════════════════
-# Figure Generation Module
+# Figure Engine Module
 # ═══════════════════════════════════════════════════════════════════════════════
 #
-# This module provides the INCLUDE_FIGURE system for generating PNG/PDF figure
+# This module provides the figure generation system for generating PNG/PDF figure
 # pairs from plotting functions and embedding them in documentation.
 #
 # ═══════════════════════════════════════════════════════════════════════════════
