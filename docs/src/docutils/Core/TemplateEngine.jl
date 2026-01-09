@@ -1,5 +1,5 @@
 # ═══════════════════════════════════════════════════════════════════════════════
-# Template Processor Module
+# Template Engine Module
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # This module provides functions to process template files that include:
