@@ -1,19 +1,44 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # Default Profiles (Specific Handlers)
 # ═══════════════════════════════════════════════════════════════════════════════
-#
-# This file defines the default performance profiles used in the documentation.
-#
+# Default Performance Profile Handlers
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # ───────────────────────────────────────────────────────────────────────────────
-# Profile Criteria (Reusable)
+# Common Filter and Aggregation Functions
 # ───────────────────────────────────────────────────────────────────────────────
 
 """
-    CPU_TIME_CRITERION
+Filter function: accepts rows where success is true and benchmark data is available.
+"""
+const IS_SUCCESS_WITH_BENCHMARK =
+    row -> row.success == true && get(row, :benchmark, nothing) !== nothing
 
-Criterion based on `row.benchmark["time"]` (CPU time).
+"""
+Filter function: accepts rows where success is true and iterations data is available.
+"""
+const IS_SUCCESS_WITH_ITERATIONS =
+    row -> row.success == true && hasproperty(row, :iterations) && !ismissing(row.iterations)
+
+"""
+Filter function: accepts all rows (no additional filtering).
+"""
+const NO_ADDITIONAL_FILTER = row -> true
+
+"""
+Aggregation function: computes the mean of values, skipping missing entries.
+"""
+const AGGREGATE_MEAN = xs -> Statistics.mean(skipmissing(xs))
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Performance Criteria
+# ───────────────────────────────────────────────────────────────────────────────
+
+"""
+Performance criterion based on CPU time from benchmark data.
+
+Extracts the `:time` field from the benchmark object and uses "smaller is better"
+comparison (a <= b). Returns NaN if benchmark data is missing or malformed.
 """
 const CPU_TIME_CRITERION = CTBenchmarks.ProfileCriterion{Float64}(
     "CPU time",
@@ -30,9 +55,10 @@ const CPU_TIME_CRITERION = CTBenchmarks.ProfileCriterion{Float64}(
 )
 
 """
-    ITERATIONS_CRITERION
+Performance criterion based on solver iteration count.
 
-Criterion based on `row.iterations`.
+Extracts the `:iterations` field and converts to Float64 for profile computation.
+Uses "smaller is better" comparison (a <= b). Returns NaN if iterations data is missing.
 """
 const ITERATIONS_CRITERION = CTBenchmarks.ProfileCriterion{Float64}(
     "Iterations",
@@ -67,9 +93,9 @@ function init_default_profiles!()
         [:problem, :grid_size],
         [:model, :solver],
         CPU_TIME_CRITERION,
-        row -> row.success == true && get(row, :benchmark, nothing) !== nothing,
-        row -> true,
-        xs -> Statistics.mean(skipmissing(xs))
+        IS_SUCCESS_WITH_BENCHMARK,
+        NO_ADDITIONAL_FILTER,
+        AGGREGATE_MEAN
     )
     CTBenchmarks.register!(PROFILE_REGISTRY, "default_cpu", cpu_config)
 
@@ -78,9 +104,9 @@ function init_default_profiles!()
         [:problem, :grid_size],
         [:model, :solver],
         ITERATIONS_CRITERION,
-        row -> row.success == true && hasproperty(row, :iterations) && !ismissing(row.iterations),
-        row -> true,
-        xs -> Statistics.mean(skipmissing(xs))
+        IS_SUCCESS_WITH_ITERATIONS,
+        NO_ADDITIONAL_FILTER,
+        AGGREGATE_MEAN
     )
     CTBenchmarks.register!(PROFILE_REGISTRY, "default_iter", iter_config)
 
@@ -90,9 +116,9 @@ function init_default_profiles!()
         [:problem, :grid_size],
         [:disc_method, :solver],  # Key difference: disc_method instead of model
         CPU_TIME_CRITERION,
-        row -> row.success == true && get(row, :benchmark, nothing) !== nothing,
-        row -> true,
-        xs -> Statistics.mean(skipmissing(xs))
+        IS_SUCCESS_WITH_BENCHMARK,
+        NO_ADDITIONAL_FILTER,
+        AGGREGATE_MEAN
     )
     CTBenchmarks.register!(PROFILE_REGISTRY, "midpoint_trapeze_cpu", midpoint_trapeze_config)
 
