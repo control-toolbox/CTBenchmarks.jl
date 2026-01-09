@@ -99,27 +99,7 @@ using .DocumenterReference
 # Wrapper Functions (no src_dir parameter needed in templates)
 # ═══════════════════════════════════════════════════════════════════════════════
 
-
-
 # Analysis functions
-function _analyze_profile_default_cpu(
-    bench_id::AbstractString; combos::Union{Nothing,Vector{<:Tuple}}=nothing
-)
-    return analyze_profile_from_registry("default_cpu", bench_id, SRC_DIR; combos=combos)
-end
-
-function _analyze_profile_default_iter(
-    bench_id::AbstractString; combos::Union{Nothing,Vector{<:Tuple}}=nothing
-)
-    return analyze_profile_from_registry("default_iter", bench_id, SRC_DIR; combos=combos)
-end
-
-function _analyze_profile_from_registry(
-    name::String, bench_id::AbstractString; combos::Union{Nothing,Vector{<:Tuple}}=nothing
-)
-    return analyze_profile_from_registry(name, bench_id, SRC_DIR; combos=combos)
-end
-
 function _print_benchmark_table_results(
     bench_id::AbstractString; problems::Union{Nothing,Vector{<:AbstractString}}=nothing
 )
@@ -127,23 +107,6 @@ function _print_benchmark_table_results(
 end
 
 # Plotting functions
-function _plot_profile_default_cpu(
-    bench_id::AbstractString; combos::Union{Nothing,Vector{<:Tuple}}=nothing
-)
-    return plot_profile_from_registry("default_cpu", bench_id, SRC_DIR; combos=combos)
-end
-
-function _plot_profile_default_iter(
-    bench_id::AbstractString; combos::Union{Nothing,Vector{<:Tuple}}=nothing
-)
-    return plot_profile_from_registry("default_iter", bench_id, SRC_DIR; combos=combos)
-end
-
-function _plot_profile_from_registry(
-    name::String, bench_id::AbstractString; combos::Union{Nothing,Vector{<:Tuple}}=nothing
-)
-    return plot_profile_from_registry(name, bench_id, SRC_DIR; combos=combos)
-end
 
 function _plot_time_vs_grid_size(problem::AbstractString, bench_id::AbstractString)
     return _plot_time_vs_grid_size(problem, bench_id, SRC_DIR)
