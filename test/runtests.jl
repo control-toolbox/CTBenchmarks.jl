@@ -10,9 +10,9 @@ using Plots
 #
 @testset verbose = true showtiming = true "CTBenchmarks tests" begin
     for name in (
-        # :aqua,
-        # :run,
-        # :utils,
+        :aqua,
+        :run,
+        :utils,
         :performance_profile,
         :performance_profile_internals,
     )
