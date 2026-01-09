@@ -117,6 +117,7 @@ with_processed_template_problems(
                 ),
                 "Developers Guidelines" => [
                     "Add a New Benchmark" => "add_benchmark.md",
+                    "Add a Custom Profile" => "add_performance_profile.md",
                     "Documentation Process" => "documentation_process.md",
                 ],
             ],
@@ -128,4 +129,4 @@ end
 # Deploy documentation to GitHub Pages
 # ═══════════════════════════════════════════════════════════════════════════════
 
-deploydocs(; repo=repo_url * ".git", devbranch="main", push_preview=true)
+deploydocs(; repo=repo_url * ".git", devbranch="main", push_preview=true, forcepush=true)

@@ -5,8 +5,8 @@ This guide explains how to add a new benchmark to the CTBenchmarks.jl pipeline.
 !!! note
     This page focuses on the CI and configuration aspects of benchmarks. For a
     detailed explanation of how documentation pages are generated from
-    templates (including `INCLUDE_ENVIRONMENT`, `INCLUDE_FIGURE`,
-    `INCLUDE_TEXT`, and `@setup BENCH` blocks), see the
+    templates (including `INCLUDE_ENVIRONMENT`, `PROFILE_PLOT`,
+    `PROFILE_ANALYSIS`, `INCLUDE_FIGURE`, `INCLUDE_TEXT`, and `@setup BENCH` blocks), see the
     [Documentation Generation Process](@ref documentation-process).
 
 ## Overview
@@ -14,12 +14,13 @@ This guide explains how to add a new benchmark to the CTBenchmarks.jl pipeline.
 Adding a new benchmark involves creating several components:
 
 | Step | Description | Status |
-|------|-------------|--------|
+| --- | --- | --- |
 | [**Benchmark script**](@ref benchmark-script) | Julia script that runs the benchmark | Required |
 | [**JSON configuration**](@ref json-config) | Add benchmark config to JSON file | Required |
 | [**GitHub label**](@ref github-label) | Label to trigger the benchmark on pull requests | Required |
 | [**Individual workflow**](@ref individual-workflow) | Workflow for manual testing (reads from JSON) | Optional |
 | [**Documentation page**](@ref documentation-page) | Display benchmark results in the documentation | Optional |
+| [**Performance profile**](@ref performance-profile) | Define custom performance criteria in registry | Optional |
 
 ## Step-by-Step Guide
 
@@ -273,14 +274,82 @@ At a high level, a benchmark documentation page:
 - Defines a single `@setup BENCH` block that includes `utils.jl`.
 - Uses `INCLUDE_ENVIRONMENT` blocks to display environment and configuration
   information based on the benchmark ID.
-- Uses `INCLUDE_FIGURE` blocks to generate clickable figures (SVG + PDF).
-- Uses `INCLUDE_TEXT` blocks to insert performance-profile summaries or
-  tables when needed.
+- Uses `PROFILE_PLOT` blocks to generate performance profiles (clickable SVG + PDF).
+- Uses `PROFILE_ANALYSIS` blocks to insert performance-profile textual summaries.
+- Uses `INCLUDE_FIGURE` blocks for other generic figures.
+- Uses `INCLUDE_TEXT` blocks for other generic analysis or tables.
 - Uses `@example BENCH` blocks with `_print_benchmark_log("<id>")` to show
   detailed results.
 
 For a concrete template example and a full description of how these blocks are
 processed, see the [Documentation Generation Process](@ref documentation-process).
+
+### [6. (Optional) Add a Performance Profile](@id performance-profile)
+
+Performance profiles are used to compare the relative efficiency of different solver–model combinations. While the default profiles (CPU time and Iterations) are automatically available, you can register custom profiles in the `PROFILE_REGISTRY`.
+
+A profile is defined by a `PerformanceProfileConfig` which specifies:
+
+- **Instance columns**: Columns identifying a problem instance (e.g., `[:problem, :grid_size]`).
+- **Success criteria**: A function that determines if a run was successful.
+- **Metric criterion**: What value to compare (e.g., CPU time, cost error) and how to compare them (usually "smaller is better").
+- **Aggregation**: How to handle multiple runs of the same instance (e.g., taking the mean).
+
+#### Registering a Custom Profile
+
+To add a new profile, you can register it in `docs/src/docutils/ProfileRegistry.jl` or directly in a `@setup` block in your template.
+
+**Example**: Registering a profile based on objective value error.
+
+```julia
+using CTBenchmarks
+using Statistics
+
+# Define the criterion (Objective error)
+obj_criterion = PerformanceProfileCriterion{Float64}(
+    "Objective Error",
+    row -> abs(row.objective - row.reference_objective),
+    (a, b) -> a <= b
+)
+
+# Create the configuration
+obj_config = PerformanceProfileConfig{Float64}(
+    [:problem, :grid_size],
+    [:model, :solver],
+    obj_criterion,
+    row -> row.success == true,
+    xs -> Statistics.mean(skipmissing(xs))
+)
+
+# Register it
+CTBenchmarks.register!(PROFILE_REGISTRY, "objective_error", obj_config)
+```
+
+#### Using the Custom Profile in Templates
+
+Once registered, you can use the specialized `PROFILE_PLOT` and `PROFILE_ANALYSIS` blocks in your documentation templates. This is the **preferred syntax** as it is more declarative and simplifies the workflow:
+
+```markdown
+<!-- PROFILE_PLOT:
+NAME = objective_error
+BENCH_ID = core-ubuntu-latest
+-->
+
+<!-- PROFILE_ANALYSIS:
+NAME = objective_error
+BENCH_ID = core-ubuntu-latest
+-->
+```
+
+You can also restrict the analysis to a specific subset of solver–model combinations using the `COMBOS` parameter:
+
+```markdown
+<!-- PROFILE_PLOT:
+NAME = objective_error
+BENCH_ID = core-ubuntu-latest
+COMBOS = exa:madnlp, exa:ipopt
+-->
+```
 
 ## Testing Your Benchmark
 
