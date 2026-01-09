@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>DocUtils Template System · CTBenchmarks</title><meta name="title" content="DocUtils Template System · CTBenchmarks"/><meta property="og:title" content="DocUtils Template System · CTBenchmarks"/><meta property="twitter:title" content="DocUtils Template System · CTBenchmarks"/><meta name="description" content="Documentation for CTBenchmarks."/><meta property="og:description" content="Documentation for CTBenchmarks."/><meta property="twitter:description" content="Documentation for CTBenchmarks."/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script><link href="https://control-toolbox.org/assets/css/documentation.css" rel="stylesheet" type="text/css"/><script src="https://control-toolbox.org/assets/js/documentation.js"></script><script src="../assets/js/ctbenchmarks-details.js"></script><link href="../assets/css/ctbenchmarks-details.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../index.html">CTBenchmarks</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../index.html">Introduction</a></li><li><a class="tocitem" href="../performance_profile.html">Performance Profile</a></li><li><span class="tocitem">Core benchmarks</span><ul><li><a class="tocitem" href="../core/cpu.html">CPU</a></li><li><a class="tocitem" href="../core/gpu.html">GPU</a></li><li><input class="collapse-toggle" id="menuitem-3-3" type="checkbox"/><label class="tocitem" for="menuitem-3-3"><span class="docs-label">Problems</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../core/problems/beam.html">beam</a></li><li><a class="tocitem" href="../core/problems/chain.html">chain</a></li><li><a class="tocitem" href="../core/problems/double_oscillator.html">double_oscillator</a></li><li><a class="tocitem" href="../core/problems/electric_vehicle.html">electric_vehicle</a></li><li><a class="tocitem" href="../core/problems/glider.html">glider</a></li><li><a class="tocitem" href="../core/problems/insurance.html">insurance</a></li><li><a class="tocitem" href="../core/problems/jackson.html">jackson</a></li><li><a class="tocitem" href="../core/problems/robbins.html">robbins</a></li><li><a class="tocitem" href="../core/problems/robot.html">robot</a></li><li><a class="tocitem" href="../core/problems/rocket.html">rocket</a></li><li><a class="tocitem" href="../core/problems/space_shuttle.html">space_shuttle</a></li><li><a class="tocitem" href="../core/problems/steering.html">steering</a></li><li><a class="tocitem" href="../core/problems/vanderpol.html">vanderpol</a></li></ul></li></ul></li><li><span class="tocitem">API Reference</span><ul><li><a class="tocitem" href="../api/public.html">Public</a></li><li><a class="tocitem" href="../api/private.html">Private</a></li></ul></li><li><span class="tocitem">Developers Guidelines</span><ul><li><a class="tocitem" href="../add_benchmark.html">Add a New Benchmark</a></li><li><a class="tocitem" href="../add_performance_profile.html">Add a Custom Profile</a></li><li class="is-active"><a class="tocitem" href="docutils_templates.html">DocUtils Template System</a><ul class="internal"><li><a class="tocitem" href="#Introduction"><span>Introduction</span></a></li><li><a class="tocitem" href="#Architecture"><span>Architecture</span></a></li><li><a class="tocitem" href="#Template-Block-Reference"><span>Template Block Reference</span></a></li><li><a class="tocitem" href="#Extension-Tutorial"><span>Extension Tutorial</span></a></li><li><a class="tocitem" href="#Debugging"><span>Debugging</span></a></li><li><a class="tocitem" href="#Best-Practices"><span>Best Practices</span></a></li><li><a class="tocitem" href="#Appendix:-Quick-Reference"><span>Appendix: Quick Reference</span></a></li></ul></li><li><a class="tocitem" href="../documentation_process.html">Documentation Process</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Developers Guidelines</a></li><li class="is-active"><a href="docutils_templates.html">DocUtils Template System</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href="docutils_templates.html">DocUtils Template System</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/control-toolbox/CTBenchmarks.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="DocUtils-Developer-Guide"><a class="docs-heading-anchor" href="#DocUtils-Developer-Guide">DocUtils Developer Guide</a><a id="DocUtils-Developer-Guide-1"></a><a class="docs-heading-anchor-permalink" href="#DocUtils-Developer-Guide" title="Permalink"></a></h1><p>This guide explains how to work with the CTBenchmarks.jl documentation template system, including how to create new documentation pages and extend the system with custom visualizations and analysis tools.</p><h2 id="Introduction"><a class="docs-heading-anchor" href="#Introduction">Introduction</a><a id="Introduction-1"></a><a class="docs-heading-anchor-permalink" href="#Introduction" title="Permalink"></a></h2><p>The DocUtils template system provides a powerful way to generate dynamic documentation pages that include:</p><ul><li>Benchmark results and analysis</li><li>Performance profiles and plots</li><li>Environment configuration details</li><li>Custom visualizations and tables</li></ul><p>The system is built around a <strong>registry pattern</strong> where handlers (functions that generate content) are registered and can be called from template files using special comment blocks.</p><h2 id="Architecture"><a class="docs-heading-anchor" href="#Architecture">Architecture</a><a id="Architecture-1"></a><a class="docs-heading-anchor-permalink" href="#Architecture" title="Permalink"></a></h2><p>The DocUtils system is organized into two main categories of modules:</p><h3 id="Core-Modules"><a class="docs-heading-anchor" href="#Core-Modules">Core Modules</a><a id="Core-Modules-1"></a><a class="docs-heading-anchor-permalink" href="#Core-Modules" title="Permalink"></a></h3><p>Core modules provide the infrastructure for template processing and content generation:</p><ul><li><p><strong><code>TextEngine.jl</code></strong>: Registry-based text generation system</p><ul><li>Manages <code>TEXT_FUNCTIONS</code> registry</li><li>Provides <code>register_text_handler!()</code> and <code>call_text_function()</code></li><li>Handlers return Markdown strings</li></ul></li><li><p><strong><code>FigureEngine.jl</code></strong>: Registry-based figure generation system</p><ul><li>Manages <code>FIGURE_FUNCTIONS</code> registry</li><li>Provides <code>register_figure_handler!()</code> and <code>call_figure_function()</code></li><li>Handlers return <code>Plots.Plot</code> objects</li><li>Automatically generates SVG/PDF pairs</li></ul></li><li><p><strong><code>TemplateEngine.jl</code></strong>: Orchestrates template processing</p><ul><li>Reads <code>.template</code> files</li><li>Replaces template blocks with generated content</li><li>Manages figure output and cleanup</li><li>Provides <code>with_processed_templates()</code> for documentation builds</li></ul></li><li><p><strong><code>ProfileEngine.jl</code></strong>: Performance profile wrappers</p><ul><li>Manages <code>PROFILE_REGISTRY</code> for profile configurations</li><li>Provides <code>plot_profile_from_registry()</code> and <code>analyze_profile_from_registry()</code></li><li>Wraps <code>CTBenchmarks.jl</code> performance profile functionality</li></ul></li><li><p><strong><code>TemplateGenerator.jl</code></strong>: Auto-generates problem documentation pages</p><ul><li>Creates <code>.template</code> files for benchmark problems</li><li>Provides <code>with_processed_template_problems()</code> for automatic page generation</li></ul></li></ul><h3 id="Handler-Modules"><a class="docs-heading-anchor" href="#Handler-Modules">Handler Modules</a><a id="Handler-Modules-1"></a><a class="docs-heading-anchor-permalink" href="#Handler-Modules" title="Permalink"></a></h3><p>Handler modules implement specific visualization and analysis functions:</p><ul><li><p><strong><code>DefaultProfiles.jl</code></strong>: Standard performance profile configurations</p><ul><li>Defines <code>default_cpu</code> and <code>default_iter</code> profiles</li><li>Initializes <code>PROFILE_REGISTRY</code> with standard configurations</li></ul></li><li><p><strong><code>PlotTimeVsGridSize.jl</code></strong>: Time vs grid size visualizations</p><ul><li><code>_plot_time_vs_grid_size()</code>: Line plot</li><li><code>_plot_time_vs_grid_size_bar()</code>: Bar chart</li></ul></li><li><p><strong><code>PlotIterationsVsCpuTime.jl</code></strong>: Iterations vs CPU time scatter plots</p><ul><li><code>_plot_iterations_vs_cpu_time()</code>: Scatter plot</li></ul></li><li><p><strong><code>PrintBenchmarkResults.jl</code></strong>: Benchmark result tables</p><ul><li><code>_print_benchmark_table_results()</code>: Generates Markdown/HTML tables</li></ul></li><li><p><strong><code>PrintEnvConfig.jl</code></strong>: Environment configuration display</p><ul><li><code>_print_config()</code>: Configuration summary</li><li><code>_basic_metadata()</code>, <code>_version_info()</code>, etc.: Environment details</li></ul></li><li><p><strong><code>PrintLogResults.jl</code></strong>: Benchmark log formatting</p><ul><li><code>_print_benchmark_log()</code>: Hierarchical log display</li></ul></li></ul><h3 id="Template-Processing-Flow"><a class="docs-heading-anchor" href="#Template-Processing-Flow">Template Processing Flow</a><a id="Template-Processing-Flow-1"></a><a class="docs-heading-anchor-permalink" href="#Template-Processing-Flow" title="Permalink"></a></h3><pre><code class="language-text hljs">┌─────────────────┐
+│  .template file │
+│  (Markdown with │
+│  special blocks)│
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│ TemplateEngine  │
+│ - Parses blocks │
+│ - Extracts args │
+└────────┬────────┘
+         │
+         ├─────────────────┬─────────────────┬─────────────────┐
+         ▼                 ▼                 ▼                 ▼
+┌────────────────┐ ┌────────────────┐ ┌────────────────┐ ┌────────────────┐
+│  TextEngine    │ │ FigureEngine   │ │ ProfileEngine  │ │ (Environment)  │
+│  - Looks up    │ │ - Looks up     │ │ - Looks up     │ │ - Direct       │
+│    handler in  │ │   handler in   │ │   config in    │ │   substitution │
+│    registry    │ │   registry     │ │   registry     │ │                │
+│  - Calls func  │ │ - Calls func   │ │ - Calls func   │ │                │
+└────────┬───────┘ └────────┬───────┘ └────────┬───────┘ └────────┬───────┘
+         │                  │                  │                  │
+         ▼                  ▼                  ▼                  ▼
+┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
+│  Handler        │ │  Handler        │ │  Handler        │ │  Template       │
+│  - Generates    │ │  - Generates    │ │  - Generates    │ │  - Variables    │
+│    Markdown     │ │    Plot         │ │    Plot/Text    │ │    replaced     │
+└────────┬────────┘ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘
+         │                  │                  │                  │
+         └──────────────────┴──────────────────┴──────────────────┘
+                                    │
+                                    ▼
+                            ┌───────────────┐
+                            │  .md file     │
+                            │  (Final       │
+                            │  Markdown)    │
+                            └───────────────┘</code></pre><h2 id="Template-Block-Reference"><a class="docs-heading-anchor" href="#Template-Block-Reference">Template Block Reference</a><a id="Template-Block-Reference-1"></a><a class="docs-heading-anchor-permalink" href="#Template-Block-Reference" title="Permalink"></a></h2><p>Template files use special HTML comment blocks that are replaced with generated content during the documentation build.</p><h3 id="INCLUDE_ENVIRONMENT"><a class="docs-heading-anchor" href="#INCLUDE_ENVIRONMENT"><code>INCLUDE_ENVIRONMENT</code></a><a id="INCLUDE_ENVIRONMENT-1"></a><a class="docs-heading-anchor-permalink" href="#INCLUDE_ENVIRONMENT" title="Permalink"></a></h3><p>Includes environment configuration information for a benchmark.</p><p><strong>Syntax</strong>:</p><pre><code class="language-markdown hljs">&lt;!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = &quot;core-ubuntu-latest&quot;
+ENV_NAME = BENCH
+--&gt;</code></pre><p><strong>Parameters</strong>:</p><ul><li><code>BENCH_ID</code>: Benchmark identifier (e.g., <code>&quot;core-ubuntu-latest&quot;</code>)</li><li><code>ENV_NAME</code>: Documenter <code>@example</code> environment name (typically <code>BENCH</code>)</li></ul><p><strong>Output</strong>: Markdown block with environment details, configuration, and download links.</p><hr/><h3 id="INCLUDE_FIGURE"><a class="docs-heading-anchor" href="#INCLUDE_FIGURE"><code>INCLUDE_FIGURE</code></a><a id="INCLUDE_FIGURE-1"></a><a class="docs-heading-anchor-permalink" href="#INCLUDE_FIGURE" title="Permalink"></a></h3><p>Generates a figure using a registered figure handler.</p><p><strong>Syntax</strong>:</p><pre><code class="language-markdown hljs">&lt;!-- INCLUDE_FIGURE:
+NAME = plot_time_vs_grid_size
+ARGS = beam, core-ubuntu-latest
+--&gt;</code></pre><p><strong>Parameters</strong>:</p><ul><li><code>NAME</code>: Name of the registered figure handler (without leading underscore)</li><li><code>ARGS</code>: Comma-separated arguments to pass to the handler</li></ul><p><strong>Output</strong>: HTML block with SVG preview and PDF download link.</p><p><strong>Example handlers</strong>:</p><ul><li><code>plot_time_vs_grid_size</code>: Line plot of solve time vs grid size</li><li><code>plot_time_vs_grid_size_bar</code>: Bar chart of solve time vs grid size</li><li><code>plot_iterations_vs_cpu_time</code>: Scatter plot of iterations vs CPU time</li></ul><hr/><h3 id="INCLUDE_TEXT"><a class="docs-heading-anchor" href="#INCLUDE_TEXT"><code>INCLUDE_TEXT</code></a><a id="INCLUDE_TEXT-1"></a><a class="docs-heading-anchor-permalink" href="#INCLUDE_TEXT" title="Permalink"></a></h3><p>Generates text content using a registered text handler.</p><p><strong>Syntax</strong>:</p><pre><code class="language-markdown hljs">&lt;!-- INCLUDE_TEXT:
+NAME = print_benchmark_table_results
+ARGS = core-ubuntu-latest, beam
+--&gt;</code></pre><p><strong>Parameters</strong>:</p><ul><li><code>NAME</code>: Name of the registered text handler (without leading underscore)</li><li><code>ARGS</code>: Comma-separated arguments to pass to the handler</li></ul><p><strong>Output</strong>: Markdown text (tables, lists, formatted output).</p><p><strong>Example handlers</strong>:</p><ul><li><code>print_benchmark_table_results</code>: Benchmark results table</li><li><code>print_benchmark_log</code>: Formatted benchmark log</li></ul><hr/><h3 id="PROFILE_PLOT"><a class="docs-heading-anchor" href="#PROFILE_PLOT"><code>PROFILE_PLOT</code></a><a id="PROFILE_PLOT-1"></a><a class="docs-heading-anchor-permalink" href="#PROFILE_PLOT" title="Permalink"></a></h3><p>Generates a performance profile plot using a registered profile configuration.</p><p><strong>Syntax</strong>:</p><pre><code class="language-markdown hljs">&lt;!-- PROFILE_PLOT:
+NAME = default_cpu
+BENCH_ID = core-ubuntu-latest
+COMBOS = exa:madnlp, exa:ipopt
+--&gt;</code></pre><p><strong>Parameters</strong>:</p><ul><li><code>NAME</code>: Name of the registered profile configuration (e.g., <code>default_cpu</code>, <code>default_iter</code>)</li><li><code>BENCH_ID</code>: Benchmark identifier</li><li><code>COMBOS</code> (optional): Comma-separated <code>model:solver</code> pairs to include</li></ul><p><strong>Output</strong>: HTML block with SVG preview and PDF download link.</p><hr/><h3 id="PROFILE_ANALYSIS"><a class="docs-heading-anchor" href="#PROFILE_ANALYSIS"><code>PROFILE_ANALYSIS</code></a><a id="PROFILE_ANALYSIS-1"></a><a class="docs-heading-anchor-permalink" href="#PROFILE_ANALYSIS" title="Permalink"></a></h3><p>Generates textual analysis of a performance profile.</p><p><strong>Syntax</strong>:</p><pre><code class="language-markdown hljs">&lt;!-- PROFILE_ANALYSIS:
+NAME = default_cpu
+BENCH_ID = core-ubuntu-latest
+COMBOS = exa:madnlp, exa:ipopt
+--&gt;</code></pre><p><strong>Parameters</strong>: Same as <code>PROFILE_PLOT</code></p><p><strong>Output</strong>: Markdown text with profile analysis (winner, statistics, etc.).</p><hr/><h2 id="Extension-Tutorial"><a class="docs-heading-anchor" href="#Extension-Tutorial">Extension Tutorial</a><a id="Extension-Tutorial-1"></a><a class="docs-heading-anchor-permalink" href="#Extension-Tutorial" title="Permalink"></a></h2><p>This tutorial shows how to add a new visualization or analysis tool to the DocUtils system.</p><h3 id="Creating-a-Figure-Handler"><a class="docs-heading-anchor" href="#Creating-a-Figure-Handler">Creating a Figure Handler</a><a id="Creating-a-Figure-Handler-1"></a><a class="docs-heading-anchor-permalink" href="#Creating-a-Figure-Handler" title="Permalink"></a></h3><p>Figure handlers generate plots that can be embedded in documentation.</p><p><strong>Step 1: Create the handler file</strong></p><p>Create a new file in <code>docs/src/docutils/Handlers/</code>, e.g., <code>PlotObjectiveConvergence.jl</code>:</p><pre><code class="language-julia hljs"># ═══════════════════════════════════════════════════════════════════════════════
+# Plot Objective Convergence Module
+# ═══════════════════════════════════════════════════════════════════════════════
+
+&quot;&quot;&quot;
+    _plot_objective_convergence(problem, bench_id, src_dir=SRC_DIR)
+
+Plot objective value convergence for a given problem and benchmark.
+
+# Arguments
+- `problem::AbstractString`: Problem name
+- `bench_id::AbstractString`: Benchmark identifier
+- `src_dir::AbstractString`: Path to docs/src directory (default: SRC_DIR)
+
+# Returns
+- `Plots.Plot`: Convergence plot or empty plot if no data
+&quot;&quot;&quot;
+function _plot_objective_convergence(
+    problem::AbstractString,
+    bench_id::AbstractString,
+    src_dir::AbstractString=SRC_DIR
+)
+    # Load benchmark data
+    raw = _get_bench_data(bench_id, src_dir)
+    if raw === nothing
+        println(&quot;⚠️ No data for bench_id: $bench_id&quot;)
+        return plot()
+    end
+
+    # Extract and process data
+    rows = get(raw, &quot;results&quot;, Any[])
+    if isempty(rows)
+        println(&quot;⚠️ No results in benchmark file&quot;)
+        return plot()
+    end
+
+    df = DataFrame(rows)
+    df_problem = filter(row -&gt; row.problem == problem &amp;&amp; row.success == true, df)
+    
+    if isempty(df_problem)
+        println(&quot;⚠️ No successful runs for problem: $problem&quot;)
+        return plot()
+    end
+
+    # Create plot
+    title_font, label_font = _plot_font_settings()
+    
+    plt = plot(;
+        xlabel=&quot;Iteration&quot;,
+        ylabel=&quot;Objective Value&quot;,
+        title=&quot;\\nObjective Convergence — $problem&quot;,
+        legend=:best,
+        grid=true,
+        size=(900, 600),
+        titlefont=title_font,
+        xguidefont=label_font,
+        yguidefont=label_font,
+    )
+
+    # Add data series (example - adapt to your data structure)
+    for row in eachrow(df_problem)
+        # Extract convergence data from row.benchmark
+        # This is problem-specific
+        # plot!(iterations, objectives; label=row.solver)
+    end
+
+    return plt
+end
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Registration
+# ───────────────────────────────────────────────────────────────────────────────
+
+register_figure_handler!(&quot;plot_objective_convergence&quot;, _plot_objective_convergence)</code></pre><p><strong>Step 2: Include the handler in <code>CTBenchmarksDocUtils.jl</code></strong></p><p>Add to <code>docs/src/docutils/CTBenchmarksDocUtils.jl</code>:</p><pre><code class="language-julia hljs"># Include handler modules
+include(&quot;Handlers/PlotObjectiveConvergence.jl&quot;)</code></pre><p><strong>Step 3: Use in templates</strong></p><p>In any <code>.template</code> file:</p><pre><code class="language-markdown hljs">### Objective Convergence
+
+&lt;!-- INCLUDE_FIGURE:
+NAME = plot_objective_convergence
+ARGS = beam, core-ubuntu-latest
+--&gt;</code></pre><h3 id="Creating-a-Text-Handler"><a class="docs-heading-anchor" href="#Creating-a-Text-Handler">Creating a Text Handler</a><a id="Creating-a-Text-Handler-1"></a><a class="docs-heading-anchor-permalink" href="#Creating-a-Text-Handler" title="Permalink"></a></h3><p>Text handlers generate Markdown content (tables, analysis, etc.).</p><p><strong>Step 1: Create the handler file</strong></p><p>Create <code>docs/src/docutils/Handlers/PrintSolverComparison.jl</code>:</p><pre><code class="language-julia hljs"># ═══════════════════════════════════════════════════════════════════════════════
+# Print Solver Comparison Module
+# ═══════════════════════════════════════════════════════════════════════════════
+
+&quot;&quot;&quot;
+    _print_solver_comparison(bench_id, src_dir=SRC_DIR)
+
+Generate a Markdown table comparing solver performance.
+
+# Arguments
+- `bench_id::AbstractString`: Benchmark identifier
+- `src_dir::AbstractString`: Path to docs/src directory (default: SRC_DIR)
+
+# Returns
+- `String`: Markdown table
+&quot;&quot;&quot;
+function _print_solver_comparison(
+    bench_id::AbstractString,
+    src_dir::AbstractString=SRC_DIR
+)
+    bench_data = _get_bench_data(bench_id, src_dir)
+    if bench_data === nothing
+        return &quot;!!! warning\\n    No benchmark data available.\\n&quot;
+    end
+
+    rows = get(bench_data, &quot;results&quot;, Any[])
+    if isempty(rows)
+        return &quot;!!! warning\\n    No results in benchmark file.\\n&quot;
+    end
+
+    df = DataFrame(rows)
+    
+    # Process data and build comparison
+    buf = IOBuffer()
+    println(buf, &quot;| Solver | Success Rate | Avg Time (s) | Avg Iterations |&quot;)
+    println(buf, &quot;|:-------|-------------:|-------------:|---------------:|&quot;)
+    
+    for solver in unique(df.solver)
+        solver_df = filter(row -&gt; row.solver == solver, df)
+        success_rate = count(solver_df.success) / nrow(solver_df) * 100
+        
+        # Calculate averages (adapt to your data structure)
+        avg_time = mean(skipmissing([
+            get(row.benchmark, &quot;time&quot;, NaN) 
+            for row in eachrow(solver_df) if row.success
+        ]))
+        avg_iters = mean(skipmissing([
+            row.iterations 
+            for row in eachrow(solver_df) if row.success
+        ]))
+        
+        println(buf, &quot;| `$solver` | $(round(success_rate, digits=1))% | &quot;,
+                &quot;$(round(avg_time, digits=3)) | $(round(Int, avg_iters)) |&quot;)
+    end
+    
+    return String(take!(buf))
+end
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Registration
+# ───────────────────────────────────────────────────────────────────────────────
+
+register_text_handler!(&quot;print_solver_comparison&quot;, _print_solver_comparison)</code></pre><p><strong>Step 2: Include the handler</strong></p><p>Add to <code>CTBenchmarksDocUtils.jl</code>:</p><pre><code class="language-julia hljs">include(&quot;Handlers/PrintSolverComparison.jl&quot;)</code></pre><p><strong>Step 3: Use in templates</strong></p><pre><code class="language-markdown hljs">### Solver Comparison
+
+&lt;!-- INCLUDE_TEXT:
+NAME = print_solver_comparison
+ARGS = core-ubuntu-latest
+--&gt;</code></pre><h3 id="Handler-Signature-Requirements"><a class="docs-heading-anchor" href="#Handler-Signature-Requirements">Handler Signature Requirements</a><a id="Handler-Signature-Requirements-1"></a><a class="docs-heading-anchor-permalink" href="#Handler-Signature-Requirements" title="Permalink"></a></h3><p><strong>Figure handlers</strong> must:</p><ul><li>Accept string arguments (problem, bench_id, etc.)</li><li>Accept optional <code>src_dir::AbstractString=SRC_DIR</code> as last argument</li><li>Return a <code>Plots.Plot</code> object</li><li>Return an empty <code>plot()</code> if data is unavailable</li></ul><p><strong>Text handlers</strong> must:</p><ul><li>Accept string arguments</li><li>Accept optional <code>src_dir::AbstractString=SRC_DIR</code> as last argument</li><li>Return a <code>String</code> (Markdown-formatted)</li><li>Return a warning message if data is unavailable</li></ul><p><strong>Important</strong>: The <code>TemplateEngine</code> automatically appends <code>SRC_DIR</code> as the last argument when calling handlers, so your handler signature should include it with a default value.</p><h3 id="Registration-Pattern"><a class="docs-heading-anchor" href="#Registration-Pattern">Registration Pattern</a><a id="Registration-Pattern-1"></a><a class="docs-heading-anchor-permalink" href="#Registration-Pattern" title="Permalink"></a></h3><p>All handlers must register themselves using the appropriate registration function:</p><pre><code class="language-julia hljs"># For figure handlers
+register_figure_handler!(&quot;handler_name&quot;, _handler_function)
+
+# For text handlers
+register_text_handler!(&quot;handler_name&quot;, _handler_function)</code></pre><p><strong>Convention</strong>:</p><ul><li>Handler function names start with <code>_</code> (e.g., <code>_plot_time_vs_grid_size</code>)</li><li>Registration uses the name without <code>_</code> (e.g., <code>&quot;plot_time_vs_grid_size&quot;</code>)</li><li>Both forms are typically registered for backward compatibility</li></ul><h2 id="Debugging"><a class="docs-heading-anchor" href="#Debugging">Debugging</a><a id="Debugging-1"></a><a class="docs-heading-anchor-permalink" href="#Debugging" title="Permalink"></a></h2><h3 id="Enabling-Debug-Mode"><a class="docs-heading-anchor" href="#Enabling-Debug-Mode">Enabling Debug Mode</a><a id="Enabling-Debug-Mode-1"></a><a class="docs-heading-anchor-permalink" href="#Enabling-Debug-Mode" title="Permalink"></a></h3><p>To see detailed logging during template processing, enable debug mode:</p><pre><code class="language-julia hljs">using CTBenchmarksDocUtils
+
+# Enable debug mode
+set_doc_debug!(true)
+
+# Process templates with verbose output
+with_processed_templates(...) do
+    # Documentation build
+end
+
+# Disable debug mode
+set_doc_debug!(false)</code></pre><p><strong>Debug output includes</strong>:</p><ul><li>Template file processing progress</li><li>Block parsing details</li><li>Handler function calls with arguments</li><li>Figure generation status</li><li>File cleanup operations</li></ul><h3 id="Common-Issues"><a class="docs-heading-anchor" href="#Common-Issues">Common Issues</a><a id="Common-Issues-1"></a><a class="docs-heading-anchor-permalink" href="#Common-Issues" title="Permalink"></a></h3><p><strong>Issue</strong>: <code>Function &#39;handler_name&#39; not found in TEXT_FUNCTIONS registry</code></p><p><strong>Solution</strong>:</p><ol><li>Verify the handler is registered: <code>register_text_handler!(&quot;handler_name&quot;, _handler_function)</code></li><li>Check that the handler file is included in <code>CTBenchmarksDocUtils.jl</code></li><li>Ensure the registration code is executed (not inside a conditional)</li></ol><hr/><p><strong>Issue</strong>: <code>Template parsing error</code></p><p><strong>Solution</strong>:</p><ol><li>Check block syntax: <code>&lt;!-- INCLUDE_FIGURE:</code> (with colon)</li><li>Ensure closing <code>--&gt;</code> is present</li><li>Verify parameter format: <code>KEY = value</code> (one per line)</li><li>Check for typos in parameter names (<code>NAME</code>, <code>ARGS</code>, etc.)</li></ol><hr/><p><strong>Issue</strong>: <code>Figure generation failed</code></p><p><strong>Solution</strong>:</p><ol><li>Check handler function signature matches template arguments</li><li>Verify <code>src_dir</code> is the last argument with default <code>SRC_DIR</code></li><li>Test handler function directly in REPL</li><li>Check for missing data files or incorrect paths</li><li>Enable debug mode to see detailed error messages</li></ol><hr/><p><strong>Issue</strong>: <code>Empty plot generated</code></p><p><strong>Solution</strong>:</p><ol><li>Verify benchmark data exists for the given <code>bench_id</code></li><li>Check that the problem name matches exactly (case-sensitive)</li><li>Ensure successful benchmark runs exist in the data</li><li>Add debug <code>println()</code> statements to check data loading</li></ol><h2 id="Best-Practices"><a class="docs-heading-anchor" href="#Best-Practices">Best Practices</a><a id="Best-Practices-1"></a><a class="docs-heading-anchor-permalink" href="#Best-Practices" title="Permalink"></a></h2><h3 id="Handler-Design"><a class="docs-heading-anchor" href="#Handler-Design">Handler Design</a><a id="Handler-Design-1"></a><a class="docs-heading-anchor-permalink" href="#Handler-Design" title="Permalink"></a></h3><ol><li><strong>Fail gracefully</strong>: Return empty plots or warning messages instead of throwing errors</li><li><strong>Validate inputs</strong>: Check for <code>nothing</code>, <code>missing</code>, and empty data</li><li><strong>Use default arguments</strong>: Always include <code>src_dir::AbstractString=SRC_DIR</code></li><li><strong>Document thoroughly</strong>: Include docstrings with examples</li><li><strong>Test independently</strong>: Handlers should be testable without template processing</li></ol><h3 id="Template-Organization"><a class="docs-heading-anchor" href="#Template-Organization">Template Organization</a><a id="Template-Organization-1"></a><a class="docs-heading-anchor-permalink" href="#Template-Organization" title="Permalink"></a></h3><ol><li><strong>Group related blocks</strong>: Keep environment, figures, and text blocks together</li><li><strong>Use descriptive names</strong>: Choose handler names that clearly indicate their purpose</li><li><strong>Comment complex templates</strong>: Add HTML comments to explain template structure</li><li><strong>Consistent formatting</strong>: Follow existing template conventions</li></ol><h3 id="Performance"><a class="docs-heading-anchor" href="#Performance">Performance</a><a id="Performance-1"></a><a class="docs-heading-anchor-permalink" href="#Performance" title="Permalink"></a></h3><ol><li><strong>Cache expensive computations</strong>: Avoid recomputing the same data multiple times</li><li><strong>Minimize file I/O</strong>: Load benchmark data once and reuse</li><li><strong>Use efficient data structures</strong>: DataFrames for tabular data, dictionaries for lookups</li><li><strong>Profile slow handlers</strong>: Use <code>@time</code> or <code>@benchmark</code> to identify bottlenecks</li></ol><h2 id="Appendix:-Quick-Reference"><a class="docs-heading-anchor" href="#Appendix:-Quick-Reference">Appendix: Quick Reference</a><a id="Appendix:-Quick-Reference-1"></a><a class="docs-heading-anchor-permalink" href="#Appendix:-Quick-Reference" title="Permalink"></a></h2><h3 id="Template-Block-Syntax"><a class="docs-heading-anchor" href="#Template-Block-Syntax">Template Block Syntax</a><a id="Template-Block-Syntax-1"></a><a class="docs-heading-anchor-permalink" href="#Template-Block-Syntax" title="Permalink"></a></h3><table><tr><th style="text-align: right">Block</th><th style="text-align: right">Purpose</th><th style="text-align: right">Required Parameters</th><th style="text-align: right">Optional Parameters</th></tr><tr><td style="text-align: right"><code>INCLUDE_ENVIRONMENT</code></td><td style="text-align: right">Environment info</td><td style="text-align: right"><code>BENCH_ID</code>, <code>ENV_NAME</code></td><td style="text-align: right">-</td></tr><tr><td style="text-align: right"><code>INCLUDE_FIGURE</code></td><td style="text-align: right">Custom figure</td><td style="text-align: right"><code>NAME</code>, <code>ARGS</code></td><td style="text-align: right">-</td></tr><tr><td style="text-align: right"><code>INCLUDE_TEXT</code></td><td style="text-align: right">Custom text</td><td style="text-align: right"><code>NAME</code>, <code>ARGS</code></td><td style="text-align: right">-</td></tr><tr><td style="text-align: right"><code>PROFILE_PLOT</code></td><td style="text-align: right">Profile plot</td><td style="text-align: right"><code>NAME</code>, <code>BENCH_ID</code></td><td style="text-align: right"><code>COMBOS</code></td></tr><tr><td style="text-align: right"><code>PROFILE_ANALYSIS</code></td><td style="text-align: right">Profile analysis</td><td style="text-align: right"><code>NAME</code>, <code>BENCH_ID</code></td><td style="text-align: right"><code>COMBOS</code></td></tr></table><h3 id="Registration-Functions"><a class="docs-heading-anchor" href="#Registration-Functions">Registration Functions</a><a id="Registration-Functions-1"></a><a class="docs-heading-anchor-permalink" href="#Registration-Functions" title="Permalink"></a></h3><pre><code class="language-julia hljs"># Text handlers
+register_text_handler!(name::String, func::Function)
+
+# Figure handlers
+register_figure_handler!(name::String, func::Function)
+
+# Profile configurations
+CTBenchmarks.register!(PROFILE_REGISTRY, name::String, config::PerformanceProfileConfig)</code></pre><h3 id="Utility-Functions"><a class="docs-heading-anchor" href="#Utility-Functions">Utility Functions</a><a id="Utility-Functions-1"></a><a class="docs-heading-anchor-permalink" href="#Utility-Functions" title="Permalink"></a></h3><pre><code class="language-julia hljs"># Get benchmark data
+_get_bench_data(bench_id::String, src_dir::String) -&gt; Union{Dict, Nothing}
+
+# Plot font settings
+_plot_font_settings() -&gt; (title_font, label_font)
+
+# Debug mode
+set_doc_debug!(enabled::Bool)</code></pre><h3 id="Example-Handler-Signatures"><a class="docs-heading-anchor" href="#Example-Handler-Signatures">Example Handler Signatures</a><a id="Example-Handler-Signatures-1"></a><a class="docs-heading-anchor-permalink" href="#Example-Handler-Signatures" title="Permalink"></a></h3><pre><code class="language-julia hljs"># Figure handler
+function _my_plot(problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString=SRC_DIR)
+    # ... implementation
+    return plt
+end
+
+# Text handler
+function _my_analysis(bench_id::AbstractString, src_dir::AbstractString=SRC_DIR)
+    # ... implementation
+    return markdown_string
+end
+
+# Text handler with optional argument
+function _my_table(bench_id::AbstractString, problem::Union{Nothing,AbstractString}=nothing, src_dir::AbstractString=SRC_DIR)
+    # ... implementation
+    return markdown_string
+end</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../add_performance_profile.html">« Add a Custom Profile</a><a class="docs-footer-nextpage" href="../documentation_process.html">Documentation Process »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.1 on <span class="colophon-date" title="Friday 9 January 2026 14:33">Friday 9 January 2026</span>. Using Julia version 1.12.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

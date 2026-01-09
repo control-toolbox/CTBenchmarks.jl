@@ -1,0 +1,65 @@
+# Core GPU Benchmark
+
+```@setup BENCH
+# Load utilities
+include(normpath(joinpath(@__DIR__, "..", "docutils", "utils.jl")))
+```
+
+!!! note
+    - The linear solver is MUMPS for all experiments.
+    - Below you can find Dolan–Moré performance profiles comparing solver–model combinations on the set of optimal control problems and grid sizes. For a detailed explanation of how to read these profiles, see the [Performance Profiles](@ref performance-profiles) page.
+
+## Moonshot
+
+This benchmark suite evaluates optimal control problems on GPU-accelerated hardware, focusing on large-scale problems.
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = "core-moonshot-gpu"
+ENV_NAME = BENCH
+-->
+
+### 📈 Performance Profile GPU Time
+
+<!-- PROFILE_PLOT:
+NAME = default_cpu
+BENCH_ID = core-moonshot-gpu
+-->
+
+<!-- PROFILE_ANALYSIS:
+NAME = default_cpu
+BENCH_ID = core-moonshot-gpu
+-->
+
+### 📈 Performance Profile Iterations
+
+<!-- PROFILE_PLOT:
+NAME = default_iter
+BENCH_ID = core-moonshot-gpu
+-->
+
+<!-- PROFILE_ANALYSIS:
+NAME = default_iter
+BENCH_ID = core-moonshot-gpu
+-->
+
+### 📊 Tables of Results
+
+<!-- INCLUDE_TEXT:
+FUNCTION = _print_benchmark_table_results
+ARGS = core-moonshot-gpu
+-->
+
+```@raw html
+<div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+  <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
+  <div class="ctdetails-body">
+```
+
+```@example BENCH
+_print_benchmark_log("core-moonshot-gpu") # hide
+```
+
+```@raw html
+  </div>
+</div>
+```
