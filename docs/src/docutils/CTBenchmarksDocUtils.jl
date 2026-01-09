@@ -184,17 +184,11 @@ export with_processed_template_problems
 export set_doc_debug!
 
 # Plotting functions (used in templates)
-export _plot_profile_default_cpu
-export _plot_profile_default_iter
-export _plot_profile_from_registry
 export _plot_time_vs_grid_size
 export _plot_time_vs_grid_size_bar
 export _plot_iterations_vs_cpu_time
 
 # Text/analysis functions (used by INCLUDE_TEXT blocks)
-export _analyze_profile_default_cpu
-export _analyze_profile_default_iter
-export _analyze_profile_from_registry
 export _print_benchmark_table_results
 
 # Registry-based functions
