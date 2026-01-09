@@ -97,22 +97,30 @@ end
 # Include submodules
 # ═══════════════════════════════════════════════════════════════════════════════
 
-include(joinpath(@__DIR__, "modules", "Common.jl"))
-include(joinpath(@__DIR__, "ProfileRegistry.jl"))
+# Core Infrastructure
+include(joinpath(@__DIR__, "Core", "Common.jl"))
+include(joinpath(@__DIR__, "Core", "ProfileEngine.jl"))
+
+# Core Engines (Infrastructure)
+include(joinpath(@__DIR__, "Core", "FigureEngine.jl"))
+include(joinpath(@__DIR__, "Core", "TextEngine.jl"))
+
+# Handlers (Specific content)
+include(joinpath(@__DIR__, "Handlers", "DefaultProfiles.jl"))
 
 # Initialize registry with standard documentation profiles
 init_default_profiles!()
 
-include(joinpath(@__DIR__, "modules", "PrintEnvConfig.jl"))
-include(joinpath(@__DIR__, "modules", "PrintLogResults.jl"))
-include(joinpath(@__DIR__, "modules", "PlotTimeVsGridSize.jl"))
-include(joinpath(@__DIR__, "modules", "PlotIterationsVsCpuTime.jl"))
-include(joinpath(@__DIR__, "modules", "FigureGeneration.jl"))
-include(joinpath(@__DIR__, "modules", "PrintBenchmarkResults.jl"))
-include(joinpath(@__DIR__, "modules", "TextGeneration.jl"))
-include(joinpath(@__DIR__, "modules", "TemplateProcessor.jl"))
-include(joinpath(@__DIR__, "modules", "TemplateGenerator.jl"))
-include(joinpath(@__DIR__, "modules", "DocumenterReference.jl"))
+include(joinpath(@__DIR__, "Handlers", "PrintEnvConfig.jl"))
+include(joinpath(@__DIR__, "Handlers", "PrintLogResults.jl"))
+include(joinpath(@__DIR__, "Handlers", "PlotTimeVsGridSize.jl"))
+include(joinpath(@__DIR__, "Handlers", "PlotIterationsVsCpuTime.jl"))
+include(joinpath(@__DIR__, "Handlers", "PrintBenchmarkResults.jl"))
+
+# Remaining Core Infrastructure
+include(joinpath(@__DIR__, "Core", "TemplateEngine.jl"))
+include(joinpath(@__DIR__, "Core", "TemplateGenerator.jl"))
+include(joinpath(@__DIR__, "Core", "DocumenterReference.jl"))
 
 # Make DocumenterReference submodule available
 using .DocumenterReference
@@ -121,58 +129,6 @@ using .DocumenterReference
 # Wrapper Functions (no src_dir parameter needed in templates)
 # ═══════════════════════════════════════════════════════════════════════════════
 
-# Analysis functions
-function _print_benchmark_table_results(
-    bench_id::AbstractString; problems::Union{Nothing,Vector{<:AbstractString}}=nothing
-)
-    return _print_benchmark_table_results(bench_id, SRC_DIR; problems=problems)
-end
-
-# Plotting functions
-
-function _plot_time_vs_grid_size(problem::AbstractString, bench_id::AbstractString)
-    return _plot_time_vs_grid_size(problem, bench_id, SRC_DIR)
-end
-
-function _plot_time_vs_grid_size_bar(problem::AbstractString, bench_id::AbstractString)
-    return _plot_time_vs_grid_size_bar(problem, bench_id, SRC_DIR)
-end
-
-function _plot_iterations_vs_cpu_time(problem::AbstractString, bench_id::AbstractString)
-    return _plot_iterations_vs_cpu_time(problem, bench_id, SRC_DIR)
-end
-
-# Environment display functions
-function _print_config(bench_id::AbstractString)
-    return _print_config(bench_id, SRC_DIR)
-end
-
-function _basic_metadata(bench_id::AbstractString)
-    return _basic_metadata(bench_id, SRC_DIR)
-end
-
-function _downloads_toml(bench_id::AbstractString, file_dir::AbstractString)
-    return _downloads_toml(bench_id, SRC_DIR, file_dir)
-end
-
-function _version_info(bench_id::AbstractString)
-    return _version_info(bench_id, SRC_DIR)
-end
-
-function _package_status(bench_id::AbstractString)
-    return _package_status(bench_id, SRC_DIR)
-end
-
-function _complete_manifest(bench_id::AbstractString)
-    return _complete_manifest(bench_id, SRC_DIR)
-end
-
-# Log display functions
-function _print_benchmark_log(
-    bench_id::AbstractString; problems::Union{Nothing,Vector{<:AbstractString}}=nothing
-)
-    return _print_benchmark_log(bench_id, SRC_DIR; problems=problems)
-end
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Exports
@@ -183,18 +139,16 @@ export with_processed_templates
 export with_processed_template_problems
 export set_doc_debug!
 
-# Plotting functions (used in templates)
-export _plot_time_vs_grid_size
-export _plot_time_vs_grid_size_bar
-export _plot_iterations_vs_cpu_time
-
-# Text/analysis functions (used by INCLUDE_TEXT blocks)
-export _print_benchmark_table_results
+# Registry management
+export register_figure_handler!
+export register_text_handler!
 
 # Registry-based functions
 export PROFILE_REGISTRY
 export plot_profile_from_registry
 export analyze_profile_from_registry
+export register_figure_handler!
+export register_text_handler!
 
 # Environment display functions (used in templates)
 export _print_config
@@ -204,8 +158,14 @@ export _version_info
 export _package_status
 export _complete_manifest
 
+# Plotting functions (for use in @example blocks)
+export _plot_time_vs_grid_size
+export _plot_time_vs_grid_size_bar
+export _plot_iterations_vs_cpu_time
+
 # Log display functions (used in templates)
 export _print_benchmark_log
+export _print_benchmark_table_results
 
 # Export DocumenterReference submodule
 export DocumenterReference
