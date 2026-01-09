@@ -30,7 +30,7 @@ shown.
 """
 function _print_benchmark_log(
     bench_id::AbstractString,
-    src_dir::AbstractString;
+    src_dir::AbstractString=SRC_DIR;
     problems::Union{Nothing,Vector{<:AbstractString}}=nothing,
 )
     bench_data = _get_bench_data(bench_id, src_dir)

@@ -49,7 +49,11 @@ Safely call a registered plotting function with string arguments.
 plt = call_figure_function("_plot_profile_default_cpu", ["core-ubuntu-latest"])
 ```
 """
-function call_figure_function(function_name::AbstractString, args::Vector{<:AbstractString})
+function call_figure_function(
+    function_name::AbstractString,
+    args::Vector{<:AbstractString},
+    extra_args::Tuple=()
+)
     if !haskey(FIGURE_FUNCTIONS, function_name)
         available = join(sort(collect(keys(FIGURE_FUNCTIONS))), ", ")
         error(
@@ -61,8 +65,8 @@ function call_figure_function(function_name::AbstractString, args::Vector{<:Abst
 
     DOC_DEBUG[] && @info "  📞 Calling $function_name($(join(args, ", ")))"
 
-    # Call function with string arguments
-    return func(args...)
+    # Call function with string arguments + extra arguments (e.g. SRC_DIR)
+    return func(args..., extra_args...)
 end
 
 # ───────────────────────────────────────────────────────────────────────────────
@@ -140,6 +144,7 @@ function generate_figure_files(
     function_name::AbstractString,
     args::Vector{<:AbstractString},
     output_dir::AbstractString,
+    extra_args::Tuple=(),
 )
     # Generate unique basename
     args_str = join(args, "_")
@@ -151,7 +156,7 @@ function generate_figure_files(
     # Call the plotting function
     DOC_DEBUG[] &&
         @info "  🎨 Generating figure: $function_name($(join(["\"$arg\"" for arg in args], ", ")))"
-    plt = call_figure_function(function_name, args)
+    plt = call_figure_function(function_name, args, extra_args)
 
     # Define file names
     svg_file = basename * ".svg"

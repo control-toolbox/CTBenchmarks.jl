@@ -245,14 +245,12 @@ function replace_figure_blocks(
             param_block = m.captures[1]
             params = parse_include_params(param_block)
 
-            # Extract parameters (Priority: NAME > FUNCTION)
-            name = get(params, "NAME", nothing)
-            legacy_func = get(params, "FUNCTION", nothing)
-            function_name = name !== nothing ? name : legacy_func
+            # Extract parameters
+            function_name = get(params, "NAME", nothing)
             args_str = get(params, "ARGS", "")
 
             if function_name === nothing
-                @warn "  ✗ Missing NAME or FUNCTION parameter in INCLUDE_FIGURE block"
+                @warn "  ✗ Missing NAME parameter in INCLUDE_FIGURE block"
                 return match_str
             end
 
@@ -266,7 +264,11 @@ function replace_figure_blocks(
             # Generate figures (SVG for preview, PDF for download)
             try
                 svg_file, pdf_file = generate_figure_files(
-                    template_filename, function_name, args, figures_output_dir
+                    template_filename,
+                    function_name,
+                    args,
+                    figures_output_dir,
+                    (SRC_DIR,),
                 )
 
                 # Record absolute paths for later cleanup
@@ -582,14 +584,12 @@ function replace_text_blocks(content::String)
             param_block = m.captures[1]
             params = parse_include_params(param_block)
 
-            # Extract parameters (Priority: NAME > FUNCTION)
-            name = get(params, "NAME", nothing)
-            legacy_func = get(params, "FUNCTION", nothing)
-            function_name = name !== nothing ? name : legacy_func
+            # Extract parameters
+            function_name = get(params, "NAME", nothing)
             args_str = get(params, "ARGS", "")
 
             if function_name === nothing
-                @warn "  ✗ Missing NAME or FUNCTION parameter in INCLUDE_TEXT block"
+                @warn "  ✗ Missing NAME parameter in INCLUDE_TEXT block"
                 return match_str
             end
 
@@ -600,7 +600,7 @@ function replace_text_blocks(content::String)
             end
 
             try
-                text_md = call_text_function(function_name, args)
+                text_md = call_text_function(function_name, args, (SRC_DIR,))
                 DOC_DEBUG[] &&
                     @info "  ✓ Replaced INCLUDE_TEXT block #$block_count with generated Markdown"
                 return text_md
