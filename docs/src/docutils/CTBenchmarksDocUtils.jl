@@ -129,37 +129,6 @@ using .DocumenterReference
 # Wrapper Functions (no src_dir parameter needed in templates)
 # ═══════════════════════════════════════════════════════════════════════════════
 
-# Environment display functions
-function _print_config(bench_id::AbstractString)
-    return _print_config(bench_id, SRC_DIR)
-end
-
-function _basic_metadata(bench_id::AbstractString)
-    return _basic_metadata(bench_id, SRC_DIR)
-end
-
-function _downloads_toml(bench_id::AbstractString, file_dir::AbstractString)
-    return _downloads_toml(bench_id, SRC_DIR, file_dir)
-end
-
-function _version_info(bench_id::AbstractString)
-    return _version_info(bench_id, SRC_DIR)
-end
-
-function _package_status(bench_id::AbstractString)
-    return _package_status(bench_id, SRC_DIR)
-end
-
-function _complete_manifest(bench_id::AbstractString)
-    return _complete_manifest(bench_id, SRC_DIR)
-end
-
-# Log display functions
-function _print_benchmark_log(
-    bench_id::AbstractString; problems::Union{Nothing,Vector{<:AbstractString}}=nothing
-)
-    return _print_benchmark_log(bench_id, SRC_DIR; problems=problems)
-end
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Exports
@@ -189,8 +158,14 @@ export _version_info
 export _package_status
 export _complete_manifest
 
+# Plotting functions (for use in @example blocks)
+export _plot_time_vs_grid_size
+export _plot_time_vs_grid_size_bar
+export _plot_iterations_vs_cpu_time
+
 # Log display functions (used in templates)
 export _print_benchmark_log
+export _print_benchmark_table_results
 
 # Export DocumenterReference submodule
 export DocumenterReference

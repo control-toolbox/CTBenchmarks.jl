@@ -20,7 +20,7 @@ plot the mean solve time per grid size for each combination.
   no data is available.
 """
 function _plot_time_vs_grid_size(
-    problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString
+    problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString=SRC_DIR
 )
     raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing
@@ -139,7 +139,7 @@ displays the result as a grouped bar chart.
 function _plot_time_vs_grid_size_bar(
     problem::AbstractString,
     bench_id::AbstractString,
-    src_dir::AbstractString;
+    src_dir::AbstractString=SRC_DIR;
     max_bar_width::Real=0.08,
 )
     raw = _get_bench_data(bench_id, src_dir)

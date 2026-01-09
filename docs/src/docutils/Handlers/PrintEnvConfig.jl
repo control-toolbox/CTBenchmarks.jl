@@ -23,7 +23,7 @@ Creates a formatted Markdown block with links to the benchmark environment files
 allowing users to reproduce the exact environment and results.
 """
 function _downloads_toml(
-    bench_id::AbstractString, src_dir::AbstractString, file_dir::AbstractString
+    bench_id::AbstractString, file_dir::AbstractString, src_dir::AbstractString=SRC_DIR
 )
 
     # Get the relative path to the benchmark directory
@@ -62,7 +62,7 @@ Prints formatted metadata including:
 
 Returns nothing if benchmark data is unavailable.
 """
-function _basic_metadata(bench_id::AbstractString, src_dir::AbstractString)
+function _basic_metadata(bench_id::AbstractString, src_dir::AbstractString=SRC_DIR)
     bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data !== nothing
         meta = get(bench_data, "metadata", Dict())
@@ -94,7 +94,7 @@ Display detailed Julia version information from benchmark metadata.
 Prints the complete `versioninfo()` output that was captured during the benchmark run.
 This includes Julia version, platform, and build information.
 """
-function _version_info(bench_id::AbstractString, src_dir::AbstractString)
+function _version_info(bench_id::AbstractString, src_dir::AbstractString=SRC_DIR)
     bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data !== nothing
         meta = get(bench_data, "metadata", Dict())
@@ -119,7 +119,7 @@ Display package status from benchmark metadata.
 Prints the `Pkg.status()` output that was captured during the benchmark run.
 Shows the list of active project dependencies and their versions.
 """
-function _package_status(bench_id::AbstractString, src_dir::AbstractString)
+function _package_status(bench_id::AbstractString, src_dir::AbstractString=SRC_DIR)
     bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data !== nothing
         meta = get(bench_data, "metadata", Dict())
@@ -145,7 +145,7 @@ Prints the complete `Pkg.status(mode=PKGMODE_MANIFEST)` output that was captured
 during the benchmark run. Shows all dependencies including transitive dependencies
 with their exact versions.
 """
-function _complete_manifest(bench_id::AbstractString, src_dir::AbstractString)
+function _complete_manifest(bench_id::AbstractString, src_dir::AbstractString=SRC_DIR)
     bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data !== nothing
         meta = get(bench_data, "metadata", Dict())
@@ -169,7 +169,7 @@ Render benchmark configuration parameters as Markdown.
 # Returns
 - `Markdown.MD`: Formatted configuration block
 """
-function _print_config(bench_id::AbstractString, src_dir::AbstractString)
+function _print_config(bench_id::AbstractString, src_dir::AbstractString=SRC_DIR)
     bench_data = _get_bench_data(bench_id, src_dir)
     if bench_data === nothing
         return Markdown.parse(

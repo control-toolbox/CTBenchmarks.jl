@@ -22,7 +22,7 @@ in the `(iterations, CPU time)` plane.
   plot if no data is available.
 """
 function _plot_iterations_vs_cpu_time(
-    problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString
+    problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString=SRC_DIR
 )
     raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing
