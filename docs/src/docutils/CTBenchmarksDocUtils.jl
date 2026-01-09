@@ -5,23 +5,45 @@ Main module for CTBenchmarks documentation utilities.
 
 This module provides all the functions needed for generating and processing
 benchmark documentation, including:
-- Template generation and processing
-- Figure generation (PNG/PDF)
-- Performance profile plotting
+- Template generation and processing with specialized block syntax
+- Figure generation (SVG/PDF)
+- Performance profile plotting and analysis
 - Environment configuration display
 - Benchmark log printing
+
+# Template Block Syntax
+
+The template system supports several specialized block types:
+
+## INCLUDE_ENVIRONMENT
+Inserts environment configuration information (Julia version, packages, etc.)
+
+## PROFILE_PLOT
+Generates performance profile plots using the profile registry.
+Parameters: NAME (profile name), BENCH_ID (benchmark ID), COMBOS (optional solver combinations)
+
+## PROFILE_ANALYSIS
+Generates textual analysis of performance profiles using the profile registry.
+Parameters: NAME (profile name), BENCH_ID (benchmark ID), COMBOS (optional solver combinations)
+
+## INCLUDE_FIGURE
+Generic figure generation for custom plotting functions.
+Parameters: FUNCTION (function name), ARGS (comma-separated arguments)
+
+## INCLUDE_TEXT
+Generic text generation for custom analysis functions.
+Parameters: FUNCTION (function name), ARGS (comma-separated arguments)
 
 # Exported Functions
 
 ## Template System
-- `with_processed_templates`: Process template files with INCLUDE_ENVIRONMENT/INCLUDE_FIGURE blocks
+- `with_processed_templates`: Process template files with specialized block syntax
 - `with_processed_template_problems`: Generate and process problem-specific templates
 
 ## Plotting Functions (for use in @example blocks)
-- `_plot_profile_default_cpu`: Plot default CPU-time performance profiles for a benchmark
-- `_plot_profile_default_iter`: Plot default iterations performance profiles for a benchmark
 - `_plot_time_vs_grid_size`: Plot solve time vs grid size
 - `_plot_time_vs_grid_size_bar`: Bar plot of solve time vs grid size
+- `_plot_iterations_vs_cpu_time`: Plot iterations vs CPU time
 
 ## Environment Display Functions (for use in @example blocks)
 - `_print_config`: Print benchmark configuration
