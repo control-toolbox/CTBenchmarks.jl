@@ -101,6 +101,10 @@ end
 include(joinpath(@__DIR__, "Core", "Common.jl"))
 include(joinpath(@__DIR__, "Core", "ProfileEngine.jl"))
 
+# Core Engines (Infrastructure)
+include(joinpath(@__DIR__, "Core", "FigureEngine.jl"))
+include(joinpath(@__DIR__, "Core", "TextEngine.jl"))
+
 # Handlers (Specific content)
 include(joinpath(@__DIR__, "Handlers", "DefaultProfiles.jl"))
 
@@ -113,9 +117,7 @@ include(joinpath(@__DIR__, "Handlers", "PlotTimeVsGridSize.jl"))
 include(joinpath(@__DIR__, "Handlers", "PlotIterationsVsCpuTime.jl"))
 include(joinpath(@__DIR__, "Handlers", "PrintBenchmarkResults.jl"))
 
-# Core Engines (Infrastructure)
-include(joinpath(@__DIR__, "Core", "FigureEngine.jl"))
-include(joinpath(@__DIR__, "Core", "TextEngine.jl"))
+# Remaining Core Infrastructure
 include(joinpath(@__DIR__, "Core", "TemplateEngine.jl"))
 include(joinpath(@__DIR__, "Core", "TemplateGenerator.jl"))
 include(joinpath(@__DIR__, "Core", "DocumenterReference.jl"))

@@ -189,12 +189,12 @@ This function scans the input content for blocks of the form:
 
 ```html
 <!-- INCLUDE_FIGURE:
-FUNCTION = "_plot_time_vs_grid_size"
-ARGS     = "arg1, arg2"
+NAME = "plot_time_vs_grid_size"
+ARGS = "arg1, arg2"
 -->
 ```
 
-For each block, it calls the corresponding function from the utilities module to generate
+For each block, it calls the corresponding function from the registries to generate
 a pair of figure files (SVG for preview, PDF for download) and replaces the block with
 an HTML snippet that embeds the SVG and links to the PDF.
 
@@ -245,12 +245,14 @@ function replace_figure_blocks(
             param_block = m.captures[1]
             params = parse_include_params(param_block)
 
-            # Extract required parameters
-            function_name = get(params, "FUNCTION", nothing)
+            # Extract parameters (Priority: NAME > FUNCTION)
+            name = get(params, "NAME", nothing)
+            legacy_func = get(params, "FUNCTION", nothing)
+            function_name = name !== nothing ? name : legacy_func
             args_str = get(params, "ARGS", "")
 
             if function_name === nothing
-                @warn "  ✗ Missing FUNCTION parameter in INCLUDE_FIGURE block"
+                @warn "  ✗ Missing NAME or FUNCTION parameter in INCLUDE_FIGURE block"
                 return match_str
             end
 
@@ -553,13 +555,13 @@ This function scans the input content for blocks of the form:
 
 ```html
 <!-- INCLUDE_TEXT:
-FUNCTION = "_analyze_profile_default_cpu"
-ARGS     = "core-ubuntu-latest"
+NAME = "print_benchmark_table_results"
+ARGS = "core-ubuntu-latest"
 -->
 ```
 
 and replaces each block with the Markdown string returned by the corresponding
-text function.
+text function from the registry.
 """
 function replace_text_blocks(content::String)
     pattern = r"<!-- INCLUDE_(?:TEXT|ANALYSIS):\s*\n(.*?)-->"s
@@ -580,11 +582,14 @@ function replace_text_blocks(content::String)
             param_block = m.captures[1]
             params = parse_include_params(param_block)
 
-            function_name = get(params, "FUNCTION", nothing)
+            # Extract parameters (Priority: NAME > FUNCTION)
+            name = get(params, "NAME", nothing)
+            legacy_func = get(params, "FUNCTION", nothing)
+            function_name = name !== nothing ? name : legacy_func
             args_str = get(params, "ARGS", "")
 
             if function_name === nothing
-                @warn "  ✗ Missing FUNCTION parameter in INCLUDE_TEXT block"
+                @warn "  ✗ Missing NAME or FUNCTION parameter in INCLUDE_TEXT block"
                 return match_str
             end
 
