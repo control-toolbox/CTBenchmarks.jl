@@ -379,9 +379,13 @@ Several helper modules provide the concrete plots and textual outputs:
     `(model, solver)` combinations.
 
 - **Time vs grid size** — `PlotTimeVsGridSize.jl`
-  - `_plot_time_vs_grid_size(problem, bench_id, src_dir)`
-  - `_plot_time_vs_grid_size_bar(problem, bench_id, src_dir)`
+  - `_plot_time_vs_grid_size(src_dir, problem, bench_id)`
+  - `_plot_time_vs_grid_size_bar(src_dir, problem, bench_id; max_bar_width)`
   - Line and bar plots showing mean solve time as a function of grid size.
+
+- **Iterations vs CPU time** — `PlotIterationsVsCpuTime.jl`
+  - `_plot_iterations_vs_cpu_time(src_dir, problem, bench_id)`
+  - Scatter plot of iteration count vs CPU time.
 
 - **Benchmark logs** — `PrintLogResults.jl`
   - `_print_benchmark_log(bench_id, src_dir; problems=nothing)`

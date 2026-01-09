@@ -258,22 +258,20 @@ Create a new file in `docs/src/docutils/Handlers/`, e.g., `PlotObjectiveConverge
 # ═══════════════════════════════════════════════════════════════════════════════
 
 """
-    _plot_objective_convergence(problem, bench_id, src_dir=SRC_DIR)
+    _plot_objective_convergence(src_dir, problem, bench_id)
 
 Plot objective value convergence for a given problem and benchmark.
 
 # Arguments
+- `src_dir::AbstractString`: Path to docs/src directory (injected by framework)
 - `problem::AbstractString`: Problem name
 - `bench_id::AbstractString`: Benchmark identifier
-- `src_dir::AbstractString`: Path to docs/src directory (default: SRC_DIR)
 
 # Returns
 - `Plots.Plot`: Convergence plot or empty plot if no data
 """
 function _plot_objective_convergence(
-    problem::AbstractString,
-    bench_id::AbstractString,
-    src_dir::AbstractString=SRC_DIR
+    src_dir::AbstractString, problem::AbstractString, bench_id::AbstractString
 )
     # Load benchmark data
     raw = _get_bench_data(bench_id, src_dir)
@@ -448,10 +446,12 @@ ARGS = core-ubuntu-latest
 
 **Figure handlers** must:
 
-- Accept string arguments (problem, bench_id, etc.)
-- Accept optional `src_dir::AbstractString=SRC_DIR` as last argument
+- Accept `src_dir::AbstractString` as **first argument** (injected by FigureEngine)
+- Accept additional string arguments (problem, bench_id, etc.) as needed
 - Return a `Plots.Plot` object
 - Return an empty `plot()` if data is unavailable
+
+**Example**: `_plot_time_vs_grid_size(src_dir, problem, bench_id)`
 
 **Text handlers** must:
 
@@ -460,7 +460,7 @@ ARGS = core-ubuntu-latest
 - Return a `String` (Markdown-formatted)
 - Return a warning message if data is unavailable
 
-**Important**: The `TemplateEngine` automatically appends `SRC_DIR` as the last argument when calling handlers, so your handler signature should include it with a default value.
+**Important**: The `FigureEngine` automatically appends `SRC_DIR` as the **first argument** when calling figure handlers (Dependency Inversion Principle). Text handlers called directly from `@example` blocks should include `src_dir` with a default value as the last argument.
 
 ### Registration Pattern
 
@@ -618,8 +618,8 @@ set_doc_debug!(enabled::Bool)
 ### Example Handler Signatures
 
 ```julia
-# Figure handler
-function _my_plot(problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString=SRC_DIR)
+# Figure handler (called via INCLUDE_FIGURE - receives src_dir first)
+function _my_plot(src_dir::AbstractString, problem::AbstractString, bench_id::AbstractString)
     # ... implementation
     return plt
 end
