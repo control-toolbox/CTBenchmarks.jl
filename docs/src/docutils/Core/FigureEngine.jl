@@ -65,8 +65,8 @@ function call_figure_function(
 
     DOC_DEBUG[] && @info "  📞 Calling $function_name($(join(args, ", ")))"
 
-    # Call function with string arguments + extra arguments (e.g. SRC_DIR)
-    return func(args..., extra_args...)
+    # Pass extra_args first (injected dependencies), then args (template arguments)
+    return func(extra_args..., args...)
 end
 
 # ───────────────────────────────────────────────────────────────────────────────

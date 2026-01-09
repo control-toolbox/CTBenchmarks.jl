@@ -3,7 +3,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 """
-    _plot_time_vs_grid_size(problem, bench_id, src_dir)
+    _plot_time_vs_grid_size(src_dir, problem, bench_id)
 
 Plot solve time versus grid size for a given problem and benchmark.
 
@@ -11,16 +11,16 @@ Uses benchmark JSON data to aggregate successful runs by `(model, solver)` and
 plot the mean solve time per grid size for each combination.
 
 # Arguments
-- `problem::AbstractString`: Name of the problem to filter.
-- `bench_id`: Benchmark identifier used to locate the benchmark JSON file.
-- `src_dir`: Path to docs/src directory
+- `src_dir::AbstractString`: Path to docs/src directory (injected by framework)
+- `problem::AbstractString`: Name of the problem to filter
+- `bench_id::AbstractString`: Benchmark identifier used to locate the benchmark JSON file
 
 # Returns
 - `Plots.Plot`: Line plot of solve time vs grid size. Returns an empty plot if
   no data is available.
 """
 function _plot_time_vs_grid_size(
-    problem::AbstractString, bench_id::AbstractString, src_dir::AbstractString=SRC_DIR
+    src_dir::AbstractString, problem::AbstractString, bench_id::AbstractString
 )
     raw = _get_bench_data(bench_id, src_dir)
     if raw === nothing
@@ -118,7 +118,7 @@ function _plot_time_vs_grid_size(
 end
 
 """
-    _plot_time_vs_grid_size_bar(problem, bench_id, src_dir; max_bar_width=0.18)
+    _plot_time_vs_grid_size_bar(src_dir, problem, bench_id; max_bar_width=0.08)
 
 Plot solve time versus grid size as grouped bars for each model–solver
 combination.
@@ -127,19 +127,19 @@ Computes the mean solve time per grid size for each `(model, solver)` pair and
 displays the result as a grouped bar chart.
 
 # Arguments
-- `problem::AbstractString`: Name of the problem to filter.
-- `bench_id`: Benchmark identifier used to locate the benchmark JSON file.
-- `src_dir`: Path to docs/src directory
-- `max_bar_width::Real`: Maximum width of each bar in x-axis units.
+- `src_dir::AbstractString`: Path to docs/src directory (injected by framework)
+- `problem::AbstractString`: Name of the problem to filter
+- `bench_id::AbstractString`: Benchmark identifier used to locate the benchmark JSON file
+- `max_bar_width::Real`: Maximum width of each bar in x-axis units
 
 # Returns
 - `Plots.Plot`: Grouped bar plot of solve time vs grid size. Returns an empty
   plot if no data is available.
 """
 function _plot_time_vs_grid_size_bar(
+    src_dir::AbstractString,
     problem::AbstractString,
-    bench_id::AbstractString,
-    src_dir::AbstractString=SRC_DIR;
+    bench_id::AbstractString;
     max_bar_width::Real=0.08,
 )
     raw = _get_bench_data(bench_id, src_dir)
