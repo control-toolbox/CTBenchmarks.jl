@@ -5,8 +5,8 @@ This guide explains how to add a new benchmark to the CTBenchmarks.jl pipeline.
 !!! note
     This page focuses on the CI and configuration aspects of benchmarks. For a
     detailed explanation of how documentation pages are generated from
-    templates (including `INCLUDE_ENVIRONMENT`, `INCLUDE_FIGURE`,
-    `INCLUDE_TEXT`, and `@setup BENCH` blocks), see the
+    templates (including `INCLUDE_ENVIRONMENT`, `PROFILE_PLOT`,
+    `PROFILE_ANALYSIS`, `INCLUDE_FIGURE`, `INCLUDE_TEXT`, and `@setup BENCH` blocks), see the
     [Documentation Generation Process](@ref documentation-process).
 
 ## Overview
@@ -274,9 +274,10 @@ At a high level, a benchmark documentation page:
 - Defines a single `@setup BENCH` block that includes `utils.jl`.
 - Uses `INCLUDE_ENVIRONMENT` blocks to display environment and configuration
   information based on the benchmark ID.
-- Uses `INCLUDE_FIGURE` blocks to generate clickable figures (SVG + PDF).
-- Uses `INCLUDE_TEXT` blocks to insert performance-profile summaries or
-  tables when needed.
+- Uses `PROFILE_PLOT` blocks to generate performance profiles (clickable SVG + PDF).
+- Uses `PROFILE_ANALYSIS` blocks to insert performance-profile textual summaries.
+- Uses `INCLUDE_FIGURE` blocks for other generic figures.
+- Uses `INCLUDE_TEXT` blocks for other generic analysis or tables.
 - Uses `@example BENCH` blocks with `_print_benchmark_log("<id>")` to show
   detailed results.
 
@@ -326,17 +327,27 @@ CTBenchmarks.register!(PROFILE_REGISTRY, "objective_error", obj_config)
 
 #### Using the Custom Profile in Templates
 
-Once registered, you can call it using the generic `_plot_profile_from_registry` and `_analyze_profile_from_registry` functions in your documentation templates:
+Once registered, you can use the specialized `PROFILE_PLOT` and `PROFILE_ANALYSIS` blocks in your documentation templates. This is the **preferred syntax** as it is more declarative and simplifies the workflow:
 
 ```markdown
-<!-- INCLUDE_FIGURE:
-FUNCTION = _plot_profile_from_registry
-ARGS = objective_error, core-ubuntu-latest
+<!-- PROFILE_PLOT:
+NAME = objective_error
+BENCH_ID = core-ubuntu-latest
 -->
 
-<!-- INCLUDE_TEXT:
-FUNCTION = _analyze_profile_from_registry
-ARGS = objective_error, core-ubuntu-latest
+<!-- PROFILE_ANALYSIS:
+NAME = objective_error
+BENCH_ID = core-ubuntu-latest
+-->
+```
+
+You can also restrict the analysis to a specific subset of solver–model combinations using the `COMBOS` parameter:
+
+```markdown
+<!-- PROFILE_PLOT:
+NAME = objective_error
+BENCH_ID = core-ubuntu-latest
+COMBOS = exa:madnlp, exa:ipopt
 -->
 ```
 
