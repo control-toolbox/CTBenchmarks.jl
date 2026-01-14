@@ -26,19 +26,19 @@ ENV_NAME = BENCH
 ### 📈 Time vs Grid Size (Ubuntu Latest CPU)
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_time_vs_grid_size
+NAME = plot_time_vs_grid_size
 ARGS = insurance, core-ubuntu-latest
 -->
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_time_vs_grid_size_bar
+NAME = plot_time_vs_grid_size_bar
 ARGS = insurance, core-ubuntu-latest
 -->
 
 ### 🔁 Iterations vs CPU time (Ubuntu Latest CPU)
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_iterations_vs_cpu_time
+NAME = plot_iterations_vs_cpu_time
 ARGS = insurance, core-ubuntu-latest
 -->
 
@@ -97,7 +97,7 @@ ARGS = insurance, core-ubuntu-latest
 ### 📊 Table of Results (Ubuntu Latest CPU)
 
 <!-- INCLUDE_TEXT:
-FUNCTION = _print_benchmark_table_results
+NAME = print_benchmark_table_results
 ARGS = core-ubuntu-latest, insurance
 -->
 
@@ -128,19 +128,19 @@ ENV_NAME = BENCH
 ### 📈 Time vs Grid Size (Moonshot CPU)
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_time_vs_grid_size
+NAME = plot_time_vs_grid_size
 ARGS = insurance, core-moonshot-cpu
 -->
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_time_vs_grid_size_bar
+NAME = plot_time_vs_grid_size_bar
 ARGS = insurance, core-moonshot-cpu
 -->
 
 ### 🔁 Iterations vs CPU time (Moonshot CPU)
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_iterations_vs_cpu_time
+NAME = plot_iterations_vs_cpu_time
 ARGS = insurance, core-moonshot-cpu
 -->
 
@@ -212,7 +212,7 @@ ARGS = insurance, core-moonshot-cpu
 ### 📊 Table of Results (Moonshot CPU)
 
 <!-- INCLUDE_TEXT:
-FUNCTION = _print_benchmark_table_results
+NAME = print_benchmark_table_results
 ARGS = core-moonshot-cpu, insurance
 -->
 

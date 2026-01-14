@@ -26,19 +26,19 @@ ENV_NAME = BENCH
 ### 📈 Time vs Grid Size (Ubuntu Latest CPU)
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_time_vs_grid_size
+NAME = plot_time_vs_grid_size
 ARGS = beam, core-ubuntu-latest
 -->
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_time_vs_grid_size_bar
+NAME = plot_time_vs_grid_size_bar
 ARGS = beam, core-ubuntu-latest
 -->
 
 ### 🔁 Iterations vs CPU time (Ubuntu Latest CPU)
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_iterations_vs_cpu_time
+NAME = plot_iterations_vs_cpu_time
 ARGS = beam, core-ubuntu-latest
 -->
 
@@ -97,7 +97,7 @@ ARGS = beam, core-ubuntu-latest
 ### 📊 Table of Results (Ubuntu Latest CPU)
 
 <!-- INCLUDE_TEXT:
-FUNCTION = _print_benchmark_table_results
+NAME = print_benchmark_table_results
 ARGS = core-ubuntu-latest, beam
 -->
 
@@ -128,19 +128,19 @@ ENV_NAME = BENCH
 ### 📈 Time vs Grid Size (Moonshot CPU)
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_time_vs_grid_size
+NAME = plot_time_vs_grid_size
 ARGS = beam, core-moonshot-cpu
 -->
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_time_vs_grid_size_bar
+NAME = plot_time_vs_grid_size_bar
 ARGS = beam, core-moonshot-cpu
 -->
 
 ### 🔁 Iterations vs CPU time (Moonshot CPU)
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_iterations_vs_cpu_time
+NAME = plot_iterations_vs_cpu_time
 ARGS = beam, core-moonshot-cpu
 -->
 
@@ -212,7 +212,7 @@ ARGS = beam, core-moonshot-cpu
 ### 📊 Table of Results (Moonshot CPU)
 
 <!-- INCLUDE_TEXT:
-FUNCTION = _print_benchmark_table_results
+NAME = print_benchmark_table_results
 ARGS = core-moonshot-cpu, beam
 -->
 
@@ -243,19 +243,19 @@ ENV_NAME = BENCH
 ### 📈 Time vs Grid Size (Moonshot GPU)
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_time_vs_grid_size
+NAME = plot_time_vs_grid_size
 ARGS = beam, core-moonshot-gpu
 -->
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_time_vs_grid_size_bar
+NAME = plot_time_vs_grid_size_bar
 ARGS = beam, core-moonshot-gpu
 -->
 
 ### 🔁 Iterations vs CPU time (Moonshot GPU)
 
 <!-- INCLUDE_FIGURE:
-FUNCTION = _plot_iterations_vs_cpu_time
+NAME = plot_iterations_vs_cpu_time
 ARGS = beam, core-moonshot-gpu
 -->
 
@@ -314,7 +314,7 @@ ARGS = beam, core-moonshot-gpu
 ### 📊 Table of Results (Moonshot GPU)
 
 <!-- INCLUDE_TEXT:
-FUNCTION = _print_benchmark_table_results
+NAME = print_benchmark_table_results
 ARGS = core-moonshot-gpu, beam
 -->
 
