@@ -11,9 +11,7 @@ function test_performance_profile()
 
     @testset "ProfileCriterion" begin
         criterion = CTBenchmarks.ProfileCriterion{Float64}(
-            "Test Criterion",
-            row -> row.time,
-            (a, b) -> a <= b
+            "Test Criterion", row -> row.time, (a, b) -> a <= b
         )
         @test criterion.name == "Test Criterion"
         @test criterion.value isa Function
@@ -24,9 +22,7 @@ function test_performance_profile()
 
     @testset "PerformanceProfileConfig" begin
         criterion = CTBenchmarks.ProfileCriterion{Float64}(
-            "CPU time",
-            row -> row.time,
-            (a, b) -> a <= b
+            "CPU time", row -> row.time, (a, b) -> a <= b
         )
         config = CTBenchmarks.PerformanceProfileConfig{Float64}(
             [:problem, :grid_size],
@@ -34,7 +30,7 @@ function test_performance_profile()
             criterion,
             row -> row.success == true,
             row -> true,
-            xs -> mean(xs)
+            xs -> mean(xs),
         )
         @test config.instance_cols == [:problem, :grid_size]
         @test config.solver_cols == [:model, :solver]
@@ -50,25 +46,13 @@ function test_performance_profile()
         @test isempty(CTBenchmarks.list_profiles(registry))
 
         criterion = CTBenchmarks.ProfileCriterion{Float64}(
-            "Test",
-            row -> row.time,
-            (a, b) -> a <= b
+            "Test", row -> row.time, (a, b) -> a <= b
         )
         config1 = CTBenchmarks.PerformanceProfileConfig{Float64}(
-            [:problem],
-            [:solver],
-            criterion,
-            row -> true,
-            row -> true,
-            xs -> mean(xs)
+            [:problem], [:solver], criterion, row -> true, row -> true, xs -> mean(xs)
         )
         config2 = CTBenchmarks.PerformanceProfileConfig{Float64}(
-            [:problem],
-            [:model],
-            criterion,
-            row -> true,
-            row -> true,
-            xs -> mean(xs)
+            [:problem], [:model], criterion, row -> true, row -> true, xs -> mean(xs)
         )
 
         # Basic registration
@@ -127,18 +111,20 @@ function test_performance_profile()
     @testset "build_profile_from_df" begin
         # Create mock benchmark data
         df = DataFrame(
-            problem=["prob1", "prob1", "prob1", "prob1", "prob2", "prob2", "prob2", "prob2"],
+            problem=[
+                "prob1", "prob1", "prob1", "prob1", "prob2", "prob2", "prob2", "prob2"
+            ],
             grid_size=[100, 100, 100, 100, 100, 100, 100, 100],
             model=["exa", "exa", "jump", "jump", "exa", "exa", "jump", "jump"],
-            solver=["ipopt", "madnlp", "ipopt", "madnlp", "ipopt", "madnlp", "ipopt", "madnlp"],
+            solver=[
+                "ipopt", "madnlp", "ipopt", "madnlp", "ipopt", "madnlp", "ipopt", "madnlp"
+            ],
             success=[true, true, true, true, true, true, true, true],
-            time=[1.0, 1.5, 2.0, 1.8, 1.2, 1.4, 2.2, 2.0]
+            time=[1.0, 1.5, 2.0, 1.8, 1.2, 1.4, 2.2, 2.0],
         )
 
         criterion = CTBenchmarks.ProfileCriterion{Float64}(
-            "CPU time (s)",
-            row -> row.time,
-            (a, b) -> a <= b
+            "CPU time (s)", row -> row.time, (a, b) -> a <= b
         )
         config = CTBenchmarks.PerformanceProfileConfig{Float64}(
             [:problem, :grid_size],
@@ -146,7 +132,7 @@ function test_performance_profile()
             criterion,
             row -> row.success == true,
             row -> true,
-            xs -> mean(xs)
+            xs -> mean(xs),
         )
 
         pp = CTBenchmarks.build_profile_from_df(df, "test_bench", config)
@@ -160,7 +146,9 @@ function test_performance_profile()
 
         # Test safety contract: Missing columns
         df_bad = select(df, Not(:solver))
-        @test_throws ArgumentError CTBenchmarks.build_profile_from_df(df_bad, "bad_bench", config)
+        @test_throws ArgumentError CTBenchmarks.build_profile_from_df(
+            df_bad, "bad_bench", config
+        )
     end
 
     @testset "build_profile_from_df with allowed_combos" begin
@@ -170,13 +158,11 @@ function test_performance_profile()
             model=["exa", "exa", "jump"],
             solver=["ipopt", "madnlp", "ipopt"],
             success=[true, true, true],
-            time=[1.0, 1.5, 2.0]
+            time=[1.0, 1.5, 2.0],
         )
 
         criterion = CTBenchmarks.ProfileCriterion{Float64}(
-            "CPU time",
-            row -> row.time,
-            (a, b) -> a <= b
+            "CPU time", row -> row.time, (a, b) -> a <= b
         )
         config = CTBenchmarks.PerformanceProfileConfig{Float64}(
             [:problem, :grid_size],
@@ -184,13 +170,12 @@ function test_performance_profile()
             criterion,
             row -> row.success == true,
             row -> true,
-            xs -> mean(xs)
+            xs -> mean(xs),
         )
 
         # Filter to only exa solvers
         pp = CTBenchmarks.build_profile_from_df(
-            df, "test_bench", config;
-            allowed_combos=[("exa", "ipopt"), ("exa", "madnlp")]
+            df, "test_bench", config; allowed_combos=[("exa", "ipopt"), ("exa", "madnlp")]
         )
 
         @test pp !== nothing
@@ -208,13 +193,11 @@ function test_performance_profile()
             model=["exa", "jump"],
             solver=["ipopt", "ipopt"],
             success=[true, true],
-            time=[1.0, 2.0]
+            time=[1.0, 2.0],
         )
 
         criterion = CTBenchmarks.ProfileCriterion{Float64}(
-            "CPU time",
-            row -> row.time,
-            (a, b) -> a <= b
+            "CPU time", row -> row.time, (a, b) -> a <= b
         )
         config = CTBenchmarks.PerformanceProfileConfig{Float64}(
             [:problem, :grid_size],
@@ -222,7 +205,7 @@ function test_performance_profile()
             criterion,
             row -> row.success == true,
             row -> true,
-            xs -> mean(xs)
+            xs -> mean(xs),
         )
 
         pp = CTBenchmarks.build_profile_from_df(df, "test_bench", config)
@@ -246,13 +229,11 @@ function test_performance_profile()
             model=["exa", "jump"],
             solver=["ipopt", "ipopt"],
             success=[true, true],
-            time=[1.0, 2.0]
+            time=[1.0, 2.0],
         )
 
         criterion = CTBenchmarks.ProfileCriterion{Float64}(
-            "CPU time",
-            row -> row.time,
-            (a, b) -> a <= b
+            "CPU time", row -> row.time, (a, b) -> a <= b
         )
         config = CTBenchmarks.PerformanceProfileConfig{Float64}(
             [:problem, :grid_size],
@@ -260,7 +241,7 @@ function test_performance_profile()
             criterion,
             row -> row.success == true,
             row -> true,
-            xs -> mean(xs)
+            xs -> mean(xs),
         )
 
         pp = CTBenchmarks.build_profile_from_df(df, "test_bench", config)
@@ -268,5 +249,4 @@ function test_performance_profile()
 
         @test plt isa Plots.Plot
     end
-
 end

@@ -11,7 +11,6 @@ string that will be inlined directly into the generated documentation.
 
 const TEXT_FUNCTIONS = Dict{String,Function}()
 
-
 """
     register_text_handler!(name::String, func::Function)
 
@@ -43,9 +42,7 @@ Arguments are passed as: `func(extra_args..., args...)` so that injected
 dependencies (like `src_dir`) come first, following the Dependency Inversion Principle.
 """
 function call_text_function(
-    function_name::AbstractString,
-    args::Vector{<:AbstractString},
-    extra_args::Tuple=()
+    function_name::AbstractString, args::Vector{<:AbstractString}, extra_args::Tuple=()
 )
     if !haskey(TEXT_FUNCTIONS, function_name)
         available = join(sort(collect(keys(TEXT_FUNCTIONS))), ", ")
