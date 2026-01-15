@@ -18,7 +18,8 @@ const IS_SUCCESS_WITH_BENCHMARK =
 Filter function: accepts rows where success is true and iterations data is available.
 """
 const IS_SUCCESS_WITH_ITERATIONS =
-    row -> row.success == true && hasproperty(row, :iterations) && !ismissing(row.iterations)
+    row ->
+        row.success == true && hasproperty(row, :iterations) && !ismissing(row.iterations)
 
 """
 Filter function: accepts all rows (no additional filtering).
@@ -41,8 +42,7 @@ Extracts the `:time` field from the benchmark object and uses "smaller is better
 comparison (a <= b). Returns NaN if benchmark data is missing or malformed.
 """
 const CPU_TIME_CRITERION = CTBenchmarks.ProfileCriterion{Float64}(
-    "CPU time",
-    row -> begin
+    "CPU time", row -> begin
         bench = get(row, :benchmark, nothing)
         if bench === nothing || ismissing(bench)
             return NaN
@@ -50,8 +50,7 @@ const CPU_TIME_CRITERION = CTBenchmarks.ProfileCriterion{Float64}(
         time_raw = get(bench, "time", nothing)
         time_raw === nothing && return NaN
         return Float64(time_raw)
-    end,
-    (a, b) -> a <= b
+    end, (a, b) -> a <= b
 )
 
 """
@@ -68,7 +67,7 @@ const ITERATIONS_CRITERION = CTBenchmarks.ProfileCriterion{Float64}(
         end
         return Float64(row.iterations)
     end,
-    (a, b) -> a <= b
+    (a, b) -> a <= b,
 )
 
 # ───────────────────────────────────────────────────────────────────────────────
@@ -95,7 +94,7 @@ function init_default_profiles!()
         CPU_TIME_CRITERION,
         IS_SUCCESS_WITH_BENCHMARK,
         NO_ADDITIONAL_FILTER,
-        AGGREGATE_MEAN
+        AGGREGATE_MEAN,
     )
     CTBenchmarks.register!(PROFILE_REGISTRY, "default_cpu", cpu_config)
 
@@ -106,7 +105,7 @@ function init_default_profiles!()
         ITERATIONS_CRITERION,
         IS_SUCCESS_WITH_ITERATIONS,
         NO_ADDITIONAL_FILTER,
-        AGGREGATE_MEAN
+        AGGREGATE_MEAN,
     )
     CTBenchmarks.register!(PROFILE_REGISTRY, "default_iter", iter_config)
 
@@ -118,9 +117,11 @@ function init_default_profiles!()
         CPU_TIME_CRITERION,
         IS_SUCCESS_WITH_BENCHMARK,
         NO_ADDITIONAL_FILTER,
-        AGGREGATE_MEAN
+        AGGREGATE_MEAN,
     )
-    CTBenchmarks.register!(PROFILE_REGISTRY, "midpoint_trapeze_cpu", midpoint_trapeze_config)
+    CTBenchmarks.register!(
+        PROFILE_REGISTRY, "midpoint_trapeze_cpu", midpoint_trapeze_config
+    )
 
     return nothing
 end

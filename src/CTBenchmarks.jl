@@ -69,7 +69,8 @@ include(joinpath(@__DIR__, "plot_solutions.jl"))
 include(joinpath(@__DIR__, "performance_profile.jl"))
 
 export run, benchmark, plot_solutions
-export analyze_performance_profile, build_profile_from_df, plot_performance_profile, load_benchmark_df
+export analyze_performance_profile,
+    build_profile_from_df, plot_performance_profile, load_benchmark_df
 export PerformanceProfileRegistry, PerformanceProfileConfig, ProfileCriterion
 
 end # module

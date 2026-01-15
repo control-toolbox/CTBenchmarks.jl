@@ -33,7 +33,7 @@ function plot_profile_from_registry(
     name::String,
     bench_id::AbstractString,
     src_dir::AbstractString;
-    combos::Union{Nothing,Vector{<:Tuple}}=nothing
+    combos::Union{Nothing,Vector{<:Tuple}}=nothing,
 )
     config = CTBenchmarks.get_config(PROFILE_REGISTRY, name)
     json_path = joinpath(src_dir, "assets", "benchmarks", bench_id, bench_id * ".json")
@@ -67,7 +67,7 @@ function analyze_profile_from_registry(
     name::String,
     bench_id::AbstractString,
     src_dir::AbstractString;
-    combos::Union{Nothing,Vector{<:Tuple}}=nothing
+    combos::Union{Nothing,Vector{<:Tuple}}=nothing,
 )
     config = CTBenchmarks.get_config(PROFILE_REGISTRY, name)
     json_path = joinpath(src_dir, "assets", "benchmarks", bench_id, bench_id * ".json")
