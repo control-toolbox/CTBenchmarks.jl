@@ -49,3 +49,6 @@ Sockets = "1"
 Statistics = "1"
 Tables = "1"
 julia = "1.10"
+
+[sources]
+OptimalControlProblems = {url = "https://github.com/control-toolbox/OptimalControlProblems.jl", rev = "194-new-inits-spaceshuttle-steering-robot-insurance"}
