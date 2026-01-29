@@ -1245,7 +1245,7 @@ version = "1.1.6"
 
 [[deps.OptimalControlProblems]]
 deps = ["ADNLPModels", "CTBase", "CTDirect", "CTModels", "DocStringExtensions", "ExaModels", "OrderedCollections", "SolverCore"]
-git-tree-sha1 = "9013234ecb52daf69e9db4896bbf026b8b97eef1"
+git-tree-sha1 = "728198bab03959f82f5c801bcd556953bf615411"
 repo-rev = "194-new-inits-spaceshuttle-steering-robot-insurance"
 repo-url = "https://github.com/control-toolbox/OptimalControlProblems.jl"
 uuid = "59046045-fb9c-4c23-964f-ff0a25704f96"
