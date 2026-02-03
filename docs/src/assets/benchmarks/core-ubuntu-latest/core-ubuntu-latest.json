@@ -2,9 +2,9 @@
     "metadata": {
         "julia_version": "1.11.8",
         "versioninfo": "Julia Version 1.11.8\nCommit cf1da5e20e3 (2025-11-06 17:49 UTC)\nBuild Info:\n  Official https://julialang.org/ release\nPlatform Info:\n  OS: Linux (x86_64-linux-gnu)\n  CPU: 4 × AMD EPYC 7763 64-Core Processor\n  WORD_SIZE: 64\n  LLVM: libLLVM-16.0.6 (ORCJIT, znver3)\nThreads: 1 default, 0 interactive, 1 GC (on 4 virtual cores)\nEnvironment:\n  JULIA_PKG_SERVER_REGISTRY_PREFERENCE = eager\n",
-        "pkg_manifest": "\u001b[36m\u001b[1mProject\u001b[22m\u001b[39m CTBenchmarks v0.3.1\n\u001b[32m\u001b[1mStatus\u001b[22m\u001b[39m `~/work/CTBenchmarks.jl/CTBenchmarks.jl/Manifest.toml`\n  \u001b[90m[54578032] \u001b[39mADNLPModels v0.8.13\n  \u001b[90m[47edcb42] \u001b[39mADTypes v1.21.0\n  \u001b[90m[14f7f29c] \u001b[39mAMD v0.5.3\n  \u001b[90m[621f4979] \u001b[39mAbstractFFTs v1.5.0\n  \u001b[90m[79e6a3ab] \u001b[39mAdapt v4.4.0\n  \u001b[90m[66dad0bd] \u001b[39mAliasTables v1.1.3\n  \u001b[90m[a9b6321e] \u001b[39mAtomix v1.1.2\n  \u001b[90m[13072b0f] \u001b[39mAxisAlgorithms v1.1.0\n  \u001b[90m[ab4f0b2a] \u001b[39mBFloat16s v0.6.1\n  \u001b[90m[6e4b80f9] \u001b[39mBenchmarkTools v1.6.3\n  \u001b[90m[d1d4a3ce] \u001b[39mBitFlags v0.1.9\n  \u001b[90m[fa961155] \u001b[39mCEnum v0.5.0\n\u001b[33m⌅\u001b[39m \u001b[90m[54762871] \u001b[39mCTBase v0.16.2\n  \u001b[90m[790bbbee] \u001b[39mCTDirect v0.17.4\n  \u001b[90m[1c39547c] \u001b[39mCTFlows v0.8.9\n\u001b[33m⌅\u001b[39m \u001b[90m[34c4fa32] \u001b[39mCTModels v0.6.9\n\u001b[33m⌅\u001b[39m \u001b[90m[32681960] \u001b[39mCTParser v0.7.2\n  \u001b[90m[052768ef] \u001b[39mCUDA v5.9.6\n  \u001b[90m[1af6417a] \u001b[39mCUDA_Runtime_Discovery v1.0.0\n  \u001b[90m[45b445bb] \u001b[39mCUDSS v0.6.6\n  \u001b[90m[d360d2e6] \u001b[39mChainRulesCore v1.26.0\n  \u001b[90m[523fee87] \u001b[39mCodecBzip2 v0.8.5\n  \u001b[90m[944b1d66] \u001b[39mCodecZlib v0.7.8\n  \u001b[90m[35d6a980] \u001b[39mColorSchemes v3.31.0\n  \u001b[90m[3da002f7] \u001b[39mColorTypes v0.12.1\n  \u001b[90m[c3611d14] \u001b[39mColorVectorSpace v0.11.0\n  \u001b[90m[5ae59095] \u001b[39mColors v0.13.1\n  \u001b[90m[38540f10] \u001b[39mCommonSolve v0.2.6\n  \u001b[90m[bbf7d656] \u001b[39mCommonSubexpressions v0.3.1\n  \u001b[90m[34da2185] \u001b[39mCompat v4.18.1\n  \u001b[90m[f0e56b4a] \u001b[39mConcurrentUtilities v2.5.0\n  \u001b[90m[d38c429a] \u001b[39mContour v0.6.3\n  \u001b[90m[a8cc5b0e] \u001b[39mCrayons v4.1.1\n  \u001b[90m[9a962f9c] \u001b[39mDataAPI v1.16.0\n  \u001b[90m[a93c6f00] \u001b[39mDataFrames v1.8.1\n  \u001b[90m[864edb3b] \u001b[39mDataStructures v0.19.3\n  \u001b[90m[e2d170a0] \u001b[39mDataValueInterfaces v1.0.0\n  \u001b[90m[8bb1440f] \u001b[39mDelimitedFiles v1.9.1\n  \u001b[90m[163ba53b] \u001b[39mDiffResults v1.1.0\n  \u001b[90m[b552c78f] \u001b[39mDiffRules v1.15.1\n  \u001b[90m[ffbed154] \u001b[39mDocStringExtensions v0.9.5\n  \u001b[90m[1037b233] \u001b[39mExaModels v0.9.3\n  \u001b[90m[460bff9d] \u001b[39mExceptionUnwrapping v0.1.11\n  \u001b[90m[e2ba6199] \u001b[39mExprTools v0.1.10\n  \u001b[90m[c87230d0] \u001b[39mFFMPEG v0.4.5\n  \u001b[90m[9aa1b823] \u001b[39mFastClosures v0.3.2\n  \u001b[90m[1a297f60] \u001b[39mFillArrays v1.16.0\n  \u001b[90m[53c48c17] \u001b[39mFixedPointNumbers v0.8.5\n  \u001b[90m[1fa38f19] \u001b[39mFormat v1.3.7\n  \u001b[90m[f6369f11] \u001b[39mForwardDiff v1.3.2\n  \u001b[90m[069b7b12] \u001b[39mFunctionWrappers v1.1.3\n  \u001b[90m[0c68f7d7] \u001b[39mGPUArrays v11.3.4\n  \u001b[90m[46192b85] \u001b[39mGPUArraysCore v0.2.0\n  \u001b[90m[61eb1bfa] \u001b[39mGPUCompiler v1.8.2\n  \u001b[90m[096a3bc2] \u001b[39mGPUToolbox v1.0.0\n  \u001b[90m[28b8d3ca] \u001b[39mGR v0.73.22\n  \u001b[90m[42e2da0e] \u001b[39mGrisu v1.0.2\n  \u001b[90m[34c5aeac] \u001b[39mHSL v0.5.2\n  \u001b[90m[cd3eb016] \u001b[39mHTTP v1.10.19\n  \u001b[90m[076d061b] \u001b[39mHashArrayMappedTries v0.2.0\n  \u001b[90m[842dd82b] \u001b[39mInlineStrings v1.4.5\n  \u001b[90m[a98d9a8b] \u001b[39mInterpolations v0.16.2\n  \u001b[90m[41ab1584] \u001b[39mInvertedIndices v1.3.1\n  \u001b[90m[b6b21f68] \u001b[39mIpopt v1.14.0\n  \u001b[90m[92d709cd] \u001b[39mIrrationalConstants v0.2.6\n  \u001b[90m[82899510] \u001b[39mIteratorInterfaceExtensions v1.0.0\n  \u001b[90m[1019f520] \u001b[39mJLFzf v0.1.11\n  \u001b[90m[692b3bcd] \u001b[39mJLLWrappers v1.7.1\n  \u001b[90m[682c06a0] \u001b[39mJSON v1.4.0\n  \u001b[90m[4076af6c] \u001b[39mJuMP v1.29.4\n  \u001b[90m[63c18a36] \u001b[39mKernelAbstractions v0.9.39\n  \u001b[90m[40e66cde] \u001b[39mLDLFactorizations v0.10.1\n  \u001b[90m[929cbde3] \u001b[39mLLVM v9.4.4\n  \u001b[90m[8b046642] \u001b[39mLLVMLoopInfo v1.0.0\n  \u001b[90m[b964fa9f] \u001b[39mLaTeXStrings v1.4.0\n  \u001b[90m[23fbe1c1] \u001b[39mLatexify v0.16.10\n  \u001b[90m[5c8ed15e] \u001b[39mLinearOperators v2.11.0\n  \u001b[90m[2ab3a3ac] \u001b[39mLogExpFunctions v0.3.29\n  \u001b[90m[e6f89c97] \u001b[39mLoggingExtras v1.2.0\n  \u001b[90m[33e6dc65] \u001b[39mMKL v0.9.0\n  \u001b[90m[d8e11817] \u001b[39mMLStyle v0.4.17\n  \u001b[90m[1914dd2f] \u001b[39mMacroTools v0.5.16\n  \u001b[90m[2621e9c9] \u001b[39mMadNLP v0.8.12\n  \u001b[90m[d72a61cc] \u001b[39mMadNLPGPU v0.7.18\n  \u001b[90m[3b83494e] \u001b[39mMadNLPMumps v0.5.1\n  \u001b[90m[b8f27783] \u001b[39mMathOptInterface v1.49.0\n  \u001b[90m[739be429] \u001b[39mMbedTLS v1.1.9\n  \u001b[90m[442fdcdd] \u001b[39mMeasures v0.3.3\n  \u001b[90m[2679e427] \u001b[39mMetis v1.5.0\n  \u001b[90m[e1d29d7a] \u001b[39mMissings v1.2.0\n  \u001b[90m[d8a4904e] \u001b[39mMutableArithmetics v1.6.7\n  \u001b[90m[a4795742] \u001b[39mNLPModels v0.21.7\n  \u001b[90m[f4238b75] \u001b[39mNLPModelsIpopt v0.11.1\n  \u001b[90m[e01155f1] \u001b[39mNLPModelsModifiers v0.7.3\n  \u001b[90m[5da4648a] \u001b[39mNVTX v1.0.3\n  \u001b[90m[77ba4419] \u001b[39mNaNMath v1.1.3\n  \u001b[90m[6fe1bfb0] \u001b[39mOffsetArrays v1.17.0\n  \u001b[90m[4d8831e6] \u001b[39mOpenSSL v1.6.1\n  \u001b[90m[5f98b655] \u001b[39mOptimalControl v1.1.6\n  \u001b[90m[59046045] \u001b[39mOptimalControlProblems v0.4.0 `https://github.com/control-toolbox/OptimalControlProblems.jl#194-new-inits-spaceshuttle-steering-robot-insurance`\n  \u001b[90m[bac558e1] \u001b[39mOrderedCollections v1.8.1\n  \u001b[90m[d96e819e] \u001b[39mParameters v0.12.3\n  \u001b[90m[69de0a69] \u001b[39mParsers v2.8.3\n  \u001b[90m[ccf2f8ad] \u001b[39mPlotThemes v3.3.0\n  \u001b[90m[995b91a9] \u001b[39mPlotUtils v1.4.4\n  \u001b[90m[91a5bcdd] \u001b[39mPlots v1.41.4\n  \u001b[90m[2dfb63ee] \u001b[39mPooledArrays v1.4.3\n\u001b[33m⌅\u001b[39m \u001b[90m[aea7be01] \u001b[39mPrecompileTools v1.2.1\n  \u001b[90m[21216c6a] \u001b[39mPreferences v1.5.1\n  \u001b[90m[08abe8d2] \u001b[39mPrettyTables v3.1.2\n  \u001b[90m[43287f4e] \u001b[39mPtrArrays v1.3.0\n  \u001b[90m[be4d8f0f] \u001b[39mQuadmath v0.5.13\n  \u001b[90m[74087812] \u001b[39mRandom123 v1.7.1\n  \u001b[90m[e6cf234a] \u001b[39mRandomNumbers v1.6.0\n  \u001b[90m[c84ed2f1] \u001b[39mRatios v0.4.5\n  \u001b[90m[3cdcf5f2] \u001b[39mRecipesBase v1.3.4\n  \u001b[90m[01d81517] \u001b[39mRecipesPipeline v0.6.12\n  \u001b[90m[189a3867] \u001b[39mReexport v1.2.2\n  \u001b[90m[05181044] \u001b[39mRelocatableFolders v1.0.1\n  \u001b[90m[ae029012] \u001b[39mRequires v1.3.1\n  \u001b[90m[37e2e3b7] \u001b[39mReverseDiff v1.16.2\n  \u001b[90m[7e506255] \u001b[39mScopedValues v1.5.0\n  \u001b[90m[6c6a2e73] \u001b[39mScratch v1.3.0\n  \u001b[90m[91c51154] \u001b[39mSentinelArrays v1.4.9\n  \u001b[90m[992d4aef] \u001b[39mShowoff v1.0.3\n  \u001b[90m[777ac1f9] \u001b[39mSimpleBufferStream v1.2.0\n  \u001b[90m[ff4d7338] \u001b[39mSolverCore v0.3.9\n  \u001b[90m[a2af1166] \u001b[39mSortingAlgorithms v1.2.2\n  \u001b[90m[9f842d2f] \u001b[39mSparseConnectivityTracer v1.1.3\n  \u001b[90m[0a514795] \u001b[39mSparseMatrixColorings v0.4.23\n  \u001b[90m[276daf66] \u001b[39mSpecialFunctions v2.6.1\n  \u001b[90m[860ef19b] \u001b[39mStableRNGs v1.0.4\n  \u001b[90m[90137ffa] \u001b[39mStaticArrays v1.9.16\n  \u001b[90m[1e83bf80] \u001b[39mStaticArraysCore v1.4.4\n  \u001b[90m[10745b16] \u001b[39mStatistics v1.11.1\n  \u001b[90m[82ae8749] \u001b[39mStatsAPI v1.8.0\n  \u001b[90m[2913bbd2] \u001b[39mStatsBase v0.34.10\n  \u001b[90m[892a3eda] \u001b[39mStringManipulation v0.4.2\n  \u001b[90m[ec057cc2] \u001b[39mStructUtils v2.6.2\n  \u001b[90m[3783bdb8] \u001b[39mTableTraits v1.0.1\n  \u001b[90m[bd369af6] \u001b[39mTables v1.12.1\n  \u001b[90m[62fd8b95] \u001b[39mTensorCore v0.1.1\n  \u001b[90m[a759f4b9] \u001b[39mTimerOutputs v0.5.29\n  \u001b[90m[e689c965] \u001b[39mTracy v0.1.6\n  \u001b[90m[3bb67fe8] \u001b[39mTranscodingStreams v0.11.3\n  \u001b[90m[5c2747f8] \u001b[39mURIs v1.6.1\n  \u001b[90m[3a884ed6] \u001b[39mUnPack v1.0.2\n  \u001b[90m[1cfade01] \u001b[39mUnicodeFun v0.4.1\n  \u001b[90m[013be700] \u001b[39mUnsafeAtomics v0.3.0\n  \u001b[90m[41fe7b60] \u001b[39mUnzip v0.2.0\n  \u001b[90m[efce3f68] \u001b[39mWoodburyMatrices v1.1.0\n  \u001b[90m[ae81ac8f] \u001b[39mASL_jll v0.1.3+0\n  \u001b[90m[6e34b625] \u001b[39mBzip2_jll v1.0.9+0\n  \u001b[90m[d1e2174e] \u001b[39mCUDA_Compiler_jll v0.4.1+1\n  \u001b[90m[4ee394cb] \u001b[39mCUDA_Driver_jll v13.1.0+2\n\u001b[33m⌅\u001b[39m \u001b[90m[76a88914] \u001b[39mCUDA_Runtime_jll v0.19.2+0\n  \u001b[90m[4889d778] \u001b[39mCUDSS_jll v0.7.1+0\n  \u001b[90m[83423d85] \u001b[39mCairo_jll v1.18.5+0\n  \u001b[90m[ee1fde0b] \u001b[39mDbus_jll v1.16.2+0\n  \u001b[90m[2702e6a9] \u001b[39mEpollShim_jll v0.0.20230411+1\n  \u001b[90m[2e619515] \u001b[39mExpat_jll v2.7.3+0\n  \u001b[90m[b22a6f82] \u001b[39mFFMPEG_jll v8.0.1+0\n  \u001b[90m[a3f928ae] \u001b[39mFontconfig_jll v2.17.1+0\n  \u001b[90m[d7e528f0] \u001b[39mFreeType2_jll v2.13.4+0\n  \u001b[90m[559328eb] \u001b[39mFriBidi_jll v1.0.17+0\n  \u001b[90m[0656b61e] \u001b[39mGLFW_jll v3.4.1+0\n  \u001b[90m[d2c73de3] \u001b[39mGR_jll v0.73.22+0\n  \u001b[90m[b0724c58] \u001b[39mGettextRuntime_jll v0.22.4+0\n  \u001b[90m[61579ee1] \u001b[39mGhostscript_jll v9.55.1+0\n  \u001b[90m[7746bdde] \u001b[39mGlib_jll v2.86.2+0\n  \u001b[90m[3b182d85] \u001b[39mGraphite2_jll v1.3.15+0\n  \u001b[90m[017b0a0e] \u001b[39mHSL_jll v4.0.4+0\n  \u001b[90m[2e76f6c2] \u001b[39mHarfBuzz_jll v8.5.1+0\n  \u001b[90m[e33a78d0] \u001b[39mHwloc_jll v2.12.2+0\n  \u001b[90m[1d5cc7b8] \u001b[39mIntelOpenMP_jll v2025.2.0+0\n  \u001b[90m[9cc047cb] \u001b[39mIpopt_jll v300.1400.1901+0\n  \u001b[90m[aacddb02] \u001b[39mJpegTurbo_jll v3.1.4+0\n  \u001b[90m[9c1d0b0a] \u001b[39mJuliaNVTXCallbacks_jll v0.2.1+0\n  \u001b[90m[c1c5ebd0] \u001b[39mLAME_jll v3.100.3+0\n  \u001b[90m[88015f11] \u001b[39mLERC_jll v4.0.1+0\n  \u001b[90m[dad2f222] \u001b[39mLLVMExtra_jll v0.0.38+0\n  \u001b[90m[1d63c593] \u001b[39mLLVMOpenMP_jll v18.1.8+0\n  \u001b[90m[dd4b983a] \u001b[39mLZO_jll v2.10.3+0\n  \u001b[90m[ad6e5548] \u001b[39mLibTracyClient_jll v0.13.1+0\n\u001b[33m⌅\u001b[39m \u001b[90m[e9f186c6] \u001b[39mLibffi_jll v3.4.7+0\n  \u001b[90m[7e76a0d4] \u001b[39mLibglvnd_jll v1.7.1+1\n  \u001b[90m[94ce4f54] \u001b[39mLibiconv_jll v1.18.0+0\n  \u001b[90m[4b2f31a3] \u001b[39mLibmount_jll v2.41.2+0\n  \u001b[90m[89763e89] \u001b[39mLibtiff_jll v4.7.2+0\n  \u001b[90m[38a345b3] \u001b[39mLibuuid_jll v2.41.2+0\n  \u001b[90m[d00139f3] \u001b[39mMETIS_jll v5.1.3+0\n  \u001b[90m[856f044c] \u001b[39mMKL_jll v2025.2.0+0\n  \u001b[90m[d7ed1dd3] \u001b[39mMUMPS_seq_jll v500.800.200+0\n  \u001b[90m[e98f9f5b] \u001b[39mNVTX_jll v3.2.2+0\n  \u001b[90m[e7412a2a] \u001b[39mOgg_jll v1.3.6+0\n  \u001b[90m[656ef2d0] \u001b[39mOpenBLAS32_jll v0.3.30+0\n  \u001b[90m[458c3c95] \u001b[39mOpenSSL_jll v3.5.5+0\n  \u001b[90m[efe28fd5] \u001b[39mOpenSpecFun_jll v0.5.6+0\n  \u001b[90m[91d4177d] \u001b[39mOpus_jll v1.6.0+0\n  \u001b[90m[36c8627f] \u001b[39mPango_jll v1.57.0+0\n\u001b[33m⌅\u001b[39m \u001b[90m[30392449] \u001b[39mPixman_jll v0.44.2+0\n  \u001b[90m[c0090381] \u001b[39mQt6Base_jll v6.8.2+2\n  \u001b[90m[629bc702] \u001b[39mQt6Declarative_jll v6.8.2+1\n  \u001b[90m[ce943373] \u001b[39mQt6ShaderTools_jll v6.8.2+1\n  \u001b[90m[e99dba38] \u001b[39mQt6Wayland_jll v6.8.2+2\n  \u001b[90m[319450e9] \u001b[39mSPRAL_jll v2025.9.18+0\n  \u001b[90m[a44049a8] \u001b[39mVulkan_Loader_jll v1.3.243+0\n  \u001b[90m[a2964d1f] \u001b[39mWayland_jll v1.24.0+0\n\u001b[33m⌅\u001b[39m \u001b[90m[02c8fc9c] \u001b[39mXML2_jll v2.13.9+0\n  \u001b[90m[ffd25f8a] \u001b[39mXZ_jll v5.8.2+0\n  \u001b[90m[f67eecfb] \u001b[39mXorg_libICE_jll v1.1.2+0\n  \u001b[90m[c834827a] \u001b[39mXorg_libSM_jll v1.2.6+0\n  \u001b[90m[4f6342f7] \u001b[39mXorg_libX11_jll v1.8.12+0\n  \u001b[90m[0c0b7dd1] \u001b[39mXorg_libXau_jll v1.0.13+0\n  \u001b[90m[935fb764] \u001b[39mXorg_libXcursor_jll v1.2.4+0\n  \u001b[90m[a3789734] \u001b[39mXorg_libXdmcp_jll v1.1.6+0\n  \u001b[90m[1082639a] \u001b[39mXorg_libXext_jll v1.3.7+0\n  \u001b[90m[d091e8ba] \u001b[39mXorg_libXfixes_jll v6.0.2+0\n  \u001b[90m[a51aa0fd] \u001b[39mXorg_libXi_jll v1.8.3+0\n  \u001b[90m[d1454406] \u001b[39mXorg_libXinerama_jll v1.1.6+0\n  \u001b[90m[ec84b674] \u001b[39mXorg_libXrandr_jll v1.5.5+0\n  \u001b[90m[ea2f1a96] \u001b[39mXorg_libXrender_jll v0.9.12+0\n  \u001b[90m[a65dc6b1] \u001b[39mXorg_libpciaccess_jll v0.18.1+0\n  \u001b[90m[c7cfdc94] \u001b[39mXorg_libxcb_jll v1.17.1+0\n  \u001b[90m[cc61e674] \u001b[39mXorg_libxkbfile_jll v1.1.3+0\n  \u001b[90m[e920d4aa] \u001b[39mXorg_xcb_util_cursor_jll v0.1.6+0\n  \u001b[90m[12413925] \u001b[39mXorg_xcb_util_image_jll v0.4.1+0\n  \u001b[90m[2def613f] \u001b[39mXorg_xcb_util_jll v0.4.1+0\n  \u001b[90m[975044d2] \u001b[39mXorg_xcb_util_keysyms_jll v0.4.1+0\n  \u001b[90m[0d47668e] \u001b[39mXorg_xcb_util_renderutil_jll v0.3.10+0\n  \u001b[90m[c22f9ab0] \u001b[39mXorg_xcb_util_wm_jll v0.4.2+0\n  \u001b[90m[35661453] \u001b[39mXorg_xkbcomp_jll v1.4.7+0\n  \u001b[90m[33bec58e] \u001b[39mXorg_xkeyboard_config_jll v2.44.0+0\n  \u001b[90m[c5fb5394] \u001b[39mXorg_xtrans_jll v1.6.0+0\n  \u001b[90m[3161d3a3] \u001b[39mZstd_jll v1.5.7+1\n  \u001b[90m[1e29f10c] \u001b[39mdemumble_jll v1.3.0+0\n  \u001b[90m[35ca27e7] \u001b[39meudev_jll v3.2.14+0\n  \u001b[90m[214eeab7] \u001b[39mfzf_jll v0.61.1+0\n  \u001b[90m[a4ae2306] \u001b[39mlibaom_jll v3.13.1+0\n  \u001b[90m[0ac62f75] \u001b[39mlibass_jll v0.17.4+0\n  \u001b[90m[1183f4f0] \u001b[39mlibdecor_jll v0.2.2+0\n  \u001b[90m[2db6ffa8] \u001b[39mlibevdev_jll v1.13.4+0\n  \u001b[90m[f638f0a6] \u001b[39mlibfdk_aac_jll v2.0.4+0\n  \u001b[90m[36db933b] \u001b[39mlibinput_jll v1.28.1+0\n  \u001b[90m[b53b4c65] \u001b[39mlibpng_jll v1.6.54+0\n  \u001b[90m[f27f6e37] \u001b[39mlibvorbis_jll v1.3.8+0\n  \u001b[90m[009596ad] \u001b[39mmtdev_jll v1.1.7+0\n  \u001b[90m[1317d2d5] \u001b[39moneTBB_jll v2022.0.0+1\n\u001b[33m⌅\u001b[39m \u001b[90m[1270edf5] \u001b[39mx264_jll v10164.0.1+0\n  \u001b[90m[dfaa095f] \u001b[39mx265_jll v4.1.0+0\n  \u001b[90m[d8fb68d0] \u001b[39mxkbcommon_jll v1.13.0+0\n  \u001b[90m[0dad84c5] \u001b[39mArgTools v1.1.2\n  \u001b[90m[56f22d72] \u001b[39mArtifacts v1.11.0\n  \u001b[90m[2a0f44e3] \u001b[39mBase64 v1.11.0\n  \u001b[90m[ade2ca70] \u001b[39mDates v1.11.0\n  \u001b[90m[8ba89e20] \u001b[39mDistributed v1.11.0\n  \u001b[90m[f43a241f] \u001b[39mDownloads v1.6.0\n  \u001b[90m[7b1f6079] \u001b[39mFileWatching v1.11.0\n  \u001b[90m[9fa8497b] \u001b[39mFuture v1.11.0\n  \u001b[90m[b77e0a4c] \u001b[39mInteractiveUtils v1.11.0\n  \u001b[90m[4af54fe1] \u001b[39mLazyArtifacts v1.11.0\n  \u001b[90m[b27032c2] \u001b[39mLibCURL v0.6.4\n  \u001b[90m[76f85450] \u001b[39mLibGit2 v1.11.0\n  \u001b[90m[8f399da3] \u001b[39mLibdl v1.11.0\n  \u001b[90m[37e2e46d] \u001b[39mLinearAlgebra v1.11.0\n  \u001b[90m[56ddb016] \u001b[39mLogging v1.11.0\n  \u001b[90m[d6f4376e] \u001b[39mMarkdown v1.11.0\n  \u001b[90m[a63ad114] \u001b[39mMmap v1.11.0\n  \u001b[90m[ca575930] \u001b[39mNetworkOptions v1.2.0\n  \u001b[90m[44cfe95a] \u001b[39mPkg v1.11.0\n  \u001b[90m[de0858da] \u001b[39mPrintf v1.11.0\n  \u001b[90m[9abbd945] \u001b[39mProfile v1.11.0\n  \u001b[90m[3fa0cd96] \u001b[39mREPL v1.11.0\n  \u001b[90m[9a3f8284] \u001b[39mRandom v1.11.0\n  \u001b[90m[ea8e919c] \u001b[39mSHA v0.7.0\n  \u001b[90m[9e88b42a] \u001b[39mSerialization v1.11.0\n  \u001b[90m[1a1011a3] \u001b[39mSharedArrays v1.11.0\n  \u001b[90m[6462fe0b] \u001b[39mSockets v1.11.0\n  \u001b[90m[2f01184e] \u001b[39mSparseArrays v1.11.0\n  \u001b[90m[f489334b] \u001b[39mStyledStrings v1.11.0\n  \u001b[90m[4607b0f0] \u001b[39mSuiteSparse\n  \u001b[90m[fa267f1f] \u001b[39mTOML v1.0.3\n  \u001b[90m[a4e569a6] \u001b[39mTar v1.10.0\n  \u001b[90m[8dfed614] \u001b[39mTest v1.11.0\n  \u001b[90m[cf7118a7] \u001b[39mUUIDs v1.11.0\n  \u001b[90m[4ec0a83e] \u001b[39mUnicode v1.11.0\n  \u001b[90m[e66e0078] \u001b[39mCompilerSupportLibraries_jll v1.1.1+0\n  \u001b[90m[deac9b47] \u001b[39mLibCURL_jll v8.6.0+0\n  \u001b[90m[e37daf67] \u001b[39mLibGit2_jll v1.7.2+0\n  \u001b[90m[29816b5a] \u001b[39mLibSSH2_jll v1.11.0+1\n  \u001b[90m[c8ffd9c3] \u001b[39mMbedTLS_jll v2.28.6+0\n  \u001b[90m[14a3606d] \u001b[39mMozillaCACerts_jll v2023.12.12\n  \u001b[90m[4536629a] \u001b[39mOpenBLAS_jll v0.3.27+1\n  \u001b[90m[05823500] \u001b[39mOpenLibm_jll v0.8.5+0\n  \u001b[90m[efcefdf7] \u001b[39mPCRE2_jll v10.42.0+1\n  \u001b[90m[bea87d4a] \u001b[39mSuiteSparse_jll v7.7.0+0\n  \u001b[90m[83775a58] \u001b[39mZlib_jll v1.2.13+1\n  \u001b[90m[8e850b90] \u001b[39mlibblastrampoline_jll v5.11.0+0\n  \u001b[90m[8e850ede] \u001b[39mnghttp2_jll v1.59.0+0\n  \u001b[90m[3f19e933] \u001b[39mp7zip_jll v17.4.0+2\n\u001b[36m\u001b[1mInfo\u001b[22m\u001b[39m Packages marked with \u001b[33m⌅\u001b[39m have new versions available but compatibility constraints restrict them from upgrading. To see why use `status --outdated -m`\n",
+        "pkg_manifest": "\u001b[36m\u001b[1mProject\u001b[22m\u001b[39m CTBenchmarks v0.3.1\n\u001b[32m\u001b[1mStatus\u001b[22m\u001b[39m `~/work/CTBenchmarks.jl/CTBenchmarks.jl/Manifest.toml`\n  \u001b[90m[54578032] \u001b[39mADNLPModels v0.8.13\n  \u001b[90m[47edcb42] \u001b[39mADTypes v1.21.0\n  \u001b[90m[14f7f29c] \u001b[39mAMD v0.5.3\n  \u001b[90m[621f4979] \u001b[39mAbstractFFTs v1.5.0\n  \u001b[90m[79e6a3ab] \u001b[39mAdapt v4.4.0\n  \u001b[90m[66dad0bd] \u001b[39mAliasTables v1.1.3\n  \u001b[90m[a9b6321e] \u001b[39mAtomix v1.1.2\n  \u001b[90m[13072b0f] \u001b[39mAxisAlgorithms v1.1.0\n  \u001b[90m[ab4f0b2a] \u001b[39mBFloat16s v0.6.1\n  \u001b[90m[6e4b80f9] \u001b[39mBenchmarkTools v1.6.3\n  \u001b[90m[d1d4a3ce] \u001b[39mBitFlags v0.1.9\n  \u001b[90m[fa961155] \u001b[39mCEnum v0.5.0\n\u001b[33m⌅\u001b[39m \u001b[90m[54762871] \u001b[39mCTBase v0.16.2\n  \u001b[90m[790bbbee] \u001b[39mCTDirect v0.17.4\n  \u001b[90m[1c39547c] \u001b[39mCTFlows v0.8.9\n\u001b[33m⌅\u001b[39m \u001b[90m[34c4fa32] \u001b[39mCTModels v0.6.9\n\u001b[33m⌅\u001b[39m \u001b[90m[32681960] \u001b[39mCTParser v0.7.2\n  \u001b[90m[052768ef] \u001b[39mCUDA v5.9.6\n  \u001b[90m[1af6417a] \u001b[39mCUDA_Runtime_Discovery v1.0.0\n  \u001b[90m[45b445bb] \u001b[39mCUDSS v0.6.6\n  \u001b[90m[d360d2e6] \u001b[39mChainRulesCore v1.26.0\n  \u001b[90m[523fee87] \u001b[39mCodecBzip2 v0.8.5\n  \u001b[90m[944b1d66] \u001b[39mCodecZlib v0.7.8\n  \u001b[90m[35d6a980] \u001b[39mColorSchemes v3.31.0\n  \u001b[90m[3da002f7] \u001b[39mColorTypes v0.12.1\n  \u001b[90m[c3611d14] \u001b[39mColorVectorSpace v0.11.0\n  \u001b[90m[5ae59095] \u001b[39mColors v0.13.1\n  \u001b[90m[38540f10] \u001b[39mCommonSolve v0.2.6\n  \u001b[90m[bbf7d656] \u001b[39mCommonSubexpressions v0.3.1\n  \u001b[90m[34da2185] \u001b[39mCompat v4.18.1\n  \u001b[90m[f0e56b4a] \u001b[39mConcurrentUtilities v2.5.0\n  \u001b[90m[d38c429a] \u001b[39mContour v0.6.3\n  \u001b[90m[a8cc5b0e] \u001b[39mCrayons v4.1.1\n  \u001b[90m[9a962f9c] \u001b[39mDataAPI v1.16.0\n  \u001b[90m[a93c6f00] \u001b[39mDataFrames v1.8.1\n  \u001b[90m[864edb3b] \u001b[39mDataStructures v0.19.3\n  \u001b[90m[e2d170a0] \u001b[39mDataValueInterfaces v1.0.0\n  \u001b[90m[8bb1440f] \u001b[39mDelimitedFiles v1.9.1\n  \u001b[90m[163ba53b] \u001b[39mDiffResults v1.1.0\n  \u001b[90m[b552c78f] \u001b[39mDiffRules v1.15.1\n  \u001b[90m[ffbed154] \u001b[39mDocStringExtensions v0.9.5\n  \u001b[90m[1037b233] \u001b[39mExaModels v0.9.3\n  \u001b[90m[460bff9d] \u001b[39mExceptionUnwrapping v0.1.11\n  \u001b[90m[e2ba6199] \u001b[39mExprTools v0.1.10\n  \u001b[90m[c87230d0] \u001b[39mFFMPEG v0.4.5\n  \u001b[90m[9aa1b823] \u001b[39mFastClosures v0.3.2\n  \u001b[90m[1a297f60] \u001b[39mFillArrays v1.16.0\n  \u001b[90m[53c48c17] \u001b[39mFixedPointNumbers v0.8.5\n  \u001b[90m[1fa38f19] \u001b[39mFormat v1.3.7\n  \u001b[90m[f6369f11] \u001b[39mForwardDiff v1.3.2\n  \u001b[90m[069b7b12] \u001b[39mFunctionWrappers v1.1.3\n  \u001b[90m[0c68f7d7] \u001b[39mGPUArrays v11.4.0\n  \u001b[90m[46192b85] \u001b[39mGPUArraysCore v0.2.0\n  \u001b[90m[61eb1bfa] \u001b[39mGPUCompiler v1.8.2\n  \u001b[90m[096a3bc2] \u001b[39mGPUToolbox v1.0.0\n  \u001b[90m[28b8d3ca] \u001b[39mGR v0.73.22\n  \u001b[90m[42e2da0e] \u001b[39mGrisu v1.0.2\n  \u001b[90m[34c5aeac] \u001b[39mHSL v0.5.2\n  \u001b[90m[cd3eb016] \u001b[39mHTTP v1.10.19\n  \u001b[90m[076d061b] \u001b[39mHashArrayMappedTries v0.2.0\n  \u001b[90m[842dd82b] \u001b[39mInlineStrings v1.4.5\n  \u001b[90m[a98d9a8b] \u001b[39mInterpolations v0.16.2\n  \u001b[90m[41ab1584] \u001b[39mInvertedIndices v1.3.1\n  \u001b[90m[b6b21f68] \u001b[39mIpopt v1.14.0\n  \u001b[90m[92d709cd] \u001b[39mIrrationalConstants v0.2.6\n  \u001b[90m[82899510] \u001b[39mIteratorInterfaceExtensions v1.0.0\n  \u001b[90m[1019f520] \u001b[39mJLFzf v0.1.11\n  \u001b[90m[692b3bcd] \u001b[39mJLLWrappers v1.7.1\n  \u001b[90m[682c06a0] \u001b[39mJSON v1.4.0\n  \u001b[90m[4076af6c] \u001b[39mJuMP v1.29.4\n  \u001b[90m[63c18a36] \u001b[39mKernelAbstractions v0.9.39\n  \u001b[90m[40e66cde] \u001b[39mLDLFactorizations v0.10.1\n  \u001b[90m[929cbde3] \u001b[39mLLVM v9.4.6\n  \u001b[90m[8b046642] \u001b[39mLLVMLoopInfo v1.0.0\n  \u001b[90m[b964fa9f] \u001b[39mLaTeXStrings v1.4.0\n  \u001b[90m[23fbe1c1] \u001b[39mLatexify v0.16.10\n  \u001b[90m[5c8ed15e] \u001b[39mLinearOperators v2.11.0\n  \u001b[90m[2ab3a3ac] \u001b[39mLogExpFunctions v0.3.29\n  \u001b[90m[e6f89c97] \u001b[39mLoggingExtras v1.2.0\n  \u001b[90m[33e6dc65] \u001b[39mMKL v0.9.0\n  \u001b[90m[d8e11817] \u001b[39mMLStyle v0.4.17\n  \u001b[90m[1914dd2f] \u001b[39mMacroTools v0.5.16\n  \u001b[90m[2621e9c9] \u001b[39mMadNLP v0.8.12\n  \u001b[90m[d72a61cc] \u001b[39mMadNLPGPU v0.7.18\n  \u001b[90m[3b83494e] \u001b[39mMadNLPMumps v0.5.1\n  \u001b[90m[b8f27783] \u001b[39mMathOptInterface v1.49.0\n  \u001b[90m[739be429] \u001b[39mMbedTLS v1.1.9\n  \u001b[90m[442fdcdd] \u001b[39mMeasures v0.3.3\n  \u001b[90m[2679e427] \u001b[39mMetis v1.5.0\n  \u001b[90m[e1d29d7a] \u001b[39mMissings v1.2.0\n  \u001b[90m[d8a4904e] \u001b[39mMutableArithmetics v1.6.7\n  \u001b[90m[a4795742] \u001b[39mNLPModels v0.21.7\n  \u001b[90m[f4238b75] \u001b[39mNLPModelsIpopt v0.11.1\n  \u001b[90m[e01155f1] \u001b[39mNLPModelsModifiers v0.7.3\n  \u001b[90m[5da4648a] \u001b[39mNVTX v1.0.3\n  \u001b[90m[77ba4419] \u001b[39mNaNMath v1.1.3\n  \u001b[90m[6fe1bfb0] \u001b[39mOffsetArrays v1.17.0\n  \u001b[90m[4d8831e6] \u001b[39mOpenSSL v1.6.1\n  \u001b[90m[5f98b655] \u001b[39mOptimalControl v1.1.6\n  \u001b[90m[59046045] \u001b[39mOptimalControlProblems v0.4.0 `https://github.com/control-toolbox/OptimalControlProblems.jl#194-new-inits-spaceshuttle-steering-robot-insurance`\n  \u001b[90m[bac558e1] \u001b[39mOrderedCollections v1.8.1\n  \u001b[90m[d96e819e] \u001b[39mParameters v0.12.3\n  \u001b[90m[69de0a69] \u001b[39mParsers v2.8.3\n  \u001b[90m[ccf2f8ad] \u001b[39mPlotThemes v3.3.0\n  \u001b[90m[995b91a9] \u001b[39mPlotUtils v1.4.4\n  \u001b[90m[91a5bcdd] \u001b[39mPlots v1.41.4\n  \u001b[90m[2dfb63ee] \u001b[39mPooledArrays v1.4.3\n\u001b[33m⌅\u001b[39m \u001b[90m[aea7be01] \u001b[39mPrecompileTools v1.2.1\n  \u001b[90m[21216c6a] \u001b[39mPreferences v1.5.1\n  \u001b[90m[08abe8d2] \u001b[39mPrettyTables v3.1.2\n  \u001b[90m[43287f4e] \u001b[39mPtrArrays v1.3.0\n  \u001b[90m[be4d8f0f] \u001b[39mQuadmath v0.5.13\n  \u001b[90m[74087812] \u001b[39mRandom123 v1.7.1\n  \u001b[90m[e6cf234a] \u001b[39mRandomNumbers v1.6.0\n  \u001b[90m[c84ed2f1] \u001b[39mRatios v0.4.5\n  \u001b[90m[3cdcf5f2] \u001b[39mRecipesBase v1.3.4\n  \u001b[90m[01d81517] \u001b[39mRecipesPipeline v0.6.12\n  \u001b[90m[189a3867] \u001b[39mReexport v1.2.2\n  \u001b[90m[05181044] \u001b[39mRelocatableFolders v1.0.1\n  \u001b[90m[ae029012] \u001b[39mRequires v1.3.1\n  \u001b[90m[37e2e3b7] \u001b[39mReverseDiff v1.16.2\n  \u001b[90m[7e506255] \u001b[39mScopedValues v1.5.0\n  \u001b[90m[6c6a2e73] \u001b[39mScratch v1.3.0\n  \u001b[90m[91c51154] \u001b[39mSentinelArrays v1.4.9\n  \u001b[90m[992d4aef] \u001b[39mShowoff v1.0.3\n  \u001b[90m[777ac1f9] \u001b[39mSimpleBufferStream v1.2.0\n  \u001b[90m[ff4d7338] \u001b[39mSolverCore v0.3.9\n  \u001b[90m[a2af1166] \u001b[39mSortingAlgorithms v1.2.2\n  \u001b[90m[9f842d2f] \u001b[39mSparseConnectivityTracer v1.1.3\n  \u001b[90m[0a514795] \u001b[39mSparseMatrixColorings v0.4.23\n  \u001b[90m[276daf66] \u001b[39mSpecialFunctions v2.6.1\n  \u001b[90m[860ef19b] \u001b[39mStableRNGs v1.0.4\n  \u001b[90m[90137ffa] \u001b[39mStaticArrays v1.9.16\n  \u001b[90m[1e83bf80] \u001b[39mStaticArraysCore v1.4.4\n  \u001b[90m[10745b16] \u001b[39mStatistics v1.11.1\n  \u001b[90m[82ae8749] \u001b[39mStatsAPI v1.8.0\n  \u001b[90m[2913bbd2] \u001b[39mStatsBase v0.34.10\n  \u001b[90m[892a3eda] \u001b[39mStringManipulation v0.4.2\n  \u001b[90m[ec057cc2] \u001b[39mStructUtils v2.6.2\n  \u001b[90m[3783bdb8] \u001b[39mTableTraits v1.0.1\n  \u001b[90m[bd369af6] \u001b[39mTables v1.12.1\n  \u001b[90m[62fd8b95] \u001b[39mTensorCore v0.1.1\n  \u001b[90m[a759f4b9] \u001b[39mTimerOutputs v0.5.29\n  \u001b[90m[e689c965] \u001b[39mTracy v0.1.6\n  \u001b[90m[3bb67fe8] \u001b[39mTranscodingStreams v0.11.3\n  \u001b[90m[5c2747f8] \u001b[39mURIs v1.6.1\n  \u001b[90m[3a884ed6] \u001b[39mUnPack v1.0.2\n  \u001b[90m[1cfade01] \u001b[39mUnicodeFun v0.4.1\n  \u001b[90m[013be700] \u001b[39mUnsafeAtomics v0.3.0\n  \u001b[90m[41fe7b60] \u001b[39mUnzip v0.2.0\n  \u001b[90m[efce3f68] \u001b[39mWoodburyMatrices v1.1.0\n  \u001b[90m[ae81ac8f] \u001b[39mASL_jll v0.1.3+0\n  \u001b[90m[6e34b625] \u001b[39mBzip2_jll v1.0.9+0\n  \u001b[90m[d1e2174e] \u001b[39mCUDA_Compiler_jll v0.4.1+1\n  \u001b[90m[4ee394cb] \u001b[39mCUDA_Driver_jll v13.1.0+2\n\u001b[33m⌅\u001b[39m \u001b[90m[76a88914] \u001b[39mCUDA_Runtime_jll v0.19.2+0\n  \u001b[90m[4889d778] \u001b[39mCUDSS_jll v0.7.1+0\n  \u001b[90m[83423d85] \u001b[39mCairo_jll v1.18.5+0\n  \u001b[90m[ee1fde0b] \u001b[39mDbus_jll v1.16.2+0\n  \u001b[90m[2702e6a9] \u001b[39mEpollShim_jll v0.0.20230411+1\n  \u001b[90m[2e619515] \u001b[39mExpat_jll v2.7.3+0\n  \u001b[90m[b22a6f82] \u001b[39mFFMPEG_jll v8.0.1+0\n  \u001b[90m[a3f928ae] \u001b[39mFontconfig_jll v2.17.1+0\n  \u001b[90m[d7e528f0] \u001b[39mFreeType2_jll v2.13.4+0\n  \u001b[90m[559328eb] \u001b[39mFriBidi_jll v1.0.17+0\n  \u001b[90m[0656b61e] \u001b[39mGLFW_jll v3.4.1+0\n  \u001b[90m[d2c73de3] \u001b[39mGR_jll v0.73.22+0\n  \u001b[90m[b0724c58] \u001b[39mGettextRuntime_jll v0.22.4+0\n  \u001b[90m[61579ee1] \u001b[39mGhostscript_jll v9.55.1+0\n  \u001b[90m[7746bdde] \u001b[39mGlib_jll v2.86.2+0\n  \u001b[90m[3b182d85] \u001b[39mGraphite2_jll v1.3.15+0\n  \u001b[90m[017b0a0e] \u001b[39mHSL_jll v4.0.4+0\n  \u001b[90m[2e76f6c2] \u001b[39mHarfBuzz_jll v8.5.1+0\n  \u001b[90m[e33a78d0] \u001b[39mHwloc_jll v2.12.2+0\n  \u001b[90m[1d5cc7b8] \u001b[39mIntelOpenMP_jll v2025.2.0+0\n  \u001b[90m[9cc047cb] \u001b[39mIpopt_jll v300.1400.1901+0\n  \u001b[90m[aacddb02] \u001b[39mJpegTurbo_jll v3.1.4+0\n  \u001b[90m[9c1d0b0a] \u001b[39mJuliaNVTXCallbacks_jll v0.2.1+0\n  \u001b[90m[c1c5ebd0] \u001b[39mLAME_jll v3.100.3+0\n  \u001b[90m[88015f11] \u001b[39mLERC_jll v4.0.1+0\n  \u001b[90m[dad2f222] \u001b[39mLLVMExtra_jll v0.0.38+0\n  \u001b[90m[1d63c593] \u001b[39mLLVMOpenMP_jll v18.1.8+0\n  \u001b[90m[dd4b983a] \u001b[39mLZO_jll v2.10.3+0\n  \u001b[90m[ad6e5548] \u001b[39mLibTracyClient_jll v0.13.1+0\n\u001b[33m⌅\u001b[39m \u001b[90m[e9f186c6] \u001b[39mLibffi_jll v3.4.7+0\n  \u001b[90m[7e76a0d4] \u001b[39mLibglvnd_jll v1.7.1+1\n  \u001b[90m[94ce4f54] \u001b[39mLibiconv_jll v1.18.0+0\n  \u001b[90m[4b2f31a3] \u001b[39mLibmount_jll v2.41.2+0\n  \u001b[90m[89763e89] \u001b[39mLibtiff_jll v4.7.2+0\n  \u001b[90m[38a345b3] \u001b[39mLibuuid_jll v2.41.2+0\n  \u001b[90m[d00139f3] \u001b[39mMETIS_jll v5.1.3+0\n  \u001b[90m[856f044c] \u001b[39mMKL_jll v2025.2.0+0\n  \u001b[90m[d7ed1dd3] \u001b[39mMUMPS_seq_jll v500.800.200+0\n  \u001b[90m[e98f9f5b] \u001b[39mNVTX_jll v3.2.2+0\n  \u001b[90m[e7412a2a] \u001b[39mOgg_jll v1.3.6+0\n  \u001b[90m[656ef2d0] \u001b[39mOpenBLAS32_jll v0.3.30+0\n  \u001b[90m[458c3c95] \u001b[39mOpenSSL_jll v3.5.5+0\n  \u001b[90m[efe28fd5] \u001b[39mOpenSpecFun_jll v0.5.6+0\n  \u001b[90m[91d4177d] \u001b[39mOpus_jll v1.6.1+0\n  \u001b[90m[36c8627f] \u001b[39mPango_jll v1.57.0+0\n\u001b[33m⌅\u001b[39m \u001b[90m[30392449] \u001b[39mPixman_jll v0.44.2+0\n  \u001b[90m[c0090381] \u001b[39mQt6Base_jll v6.8.2+2\n  \u001b[90m[629bc702] \u001b[39mQt6Declarative_jll v6.8.2+1\n  \u001b[90m[ce943373] \u001b[39mQt6ShaderTools_jll v6.8.2+1\n  \u001b[90m[e99dba38] \u001b[39mQt6Wayland_jll v6.8.2+2\n  \u001b[90m[319450e9] \u001b[39mSPRAL_jll v2025.9.18+0\n  \u001b[90m[a44049a8] \u001b[39mVulkan_Loader_jll v1.3.243+0\n  \u001b[90m[a2964d1f] \u001b[39mWayland_jll v1.24.0+0\n\u001b[33m⌅\u001b[39m \u001b[90m[02c8fc9c] \u001b[39mXML2_jll v2.13.9+0\n  \u001b[90m[ffd25f8a] \u001b[39mXZ_jll v5.8.2+0\n  \u001b[90m[f67eecfb] \u001b[39mXorg_libICE_jll v1.1.2+0\n  \u001b[90m[c834827a] \u001b[39mXorg_libSM_jll v1.2.6+0\n  \u001b[90m[4f6342f7] \u001b[39mXorg_libX11_jll v1.8.12+0\n  \u001b[90m[0c0b7dd1] \u001b[39mXorg_libXau_jll v1.0.13+0\n  \u001b[90m[935fb764] \u001b[39mXorg_libXcursor_jll v1.2.4+0\n  \u001b[90m[a3789734] \u001b[39mXorg_libXdmcp_jll v1.1.6+0\n  \u001b[90m[1082639a] \u001b[39mXorg_libXext_jll v1.3.7+0\n  \u001b[90m[d091e8ba] \u001b[39mXorg_libXfixes_jll v6.0.2+0\n  \u001b[90m[a51aa0fd] \u001b[39mXorg_libXi_jll v1.8.3+0\n  \u001b[90m[d1454406] \u001b[39mXorg_libXinerama_jll v1.1.6+0\n  \u001b[90m[ec84b674] \u001b[39mXorg_libXrandr_jll v1.5.5+0\n  \u001b[90m[ea2f1a96] \u001b[39mXorg_libXrender_jll v0.9.12+0\n  \u001b[90m[a65dc6b1] \u001b[39mXorg_libpciaccess_jll v0.18.1+0\n  \u001b[90m[c7cfdc94] \u001b[39mXorg_libxcb_jll v1.17.1+0\n  \u001b[90m[cc61e674] \u001b[39mXorg_libxkbfile_jll v1.1.3+0\n  \u001b[90m[e920d4aa] \u001b[39mXorg_xcb_util_cursor_jll v0.1.6+0\n  \u001b[90m[12413925] \u001b[39mXorg_xcb_util_image_jll v0.4.1+0\n  \u001b[90m[2def613f] \u001b[39mXorg_xcb_util_jll v0.4.1+0\n  \u001b[90m[975044d2] \u001b[39mXorg_xcb_util_keysyms_jll v0.4.1+0\n  \u001b[90m[0d47668e] \u001b[39mXorg_xcb_util_renderutil_jll v0.3.10+0\n  \u001b[90m[c22f9ab0] \u001b[39mXorg_xcb_util_wm_jll v0.4.2+0\n  \u001b[90m[35661453] \u001b[39mXorg_xkbcomp_jll v1.4.7+0\n  \u001b[90m[33bec58e] \u001b[39mXorg_xkeyboard_config_jll v2.44.0+0\n  \u001b[90m[c5fb5394] \u001b[39mXorg_xtrans_jll v1.6.0+0\n  \u001b[90m[3161d3a3] \u001b[39mZstd_jll v1.5.7+1\n  \u001b[90m[1e29f10c] \u001b[39mdemumble_jll v1.3.0+0\n  \u001b[90m[35ca27e7] \u001b[39meudev_jll v3.2.14+0\n  \u001b[90m[214eeab7] \u001b[39mfzf_jll v0.61.1+0\n  \u001b[90m[a4ae2306] \u001b[39mlibaom_jll v3.13.1+0\n  \u001b[90m[0ac62f75] \u001b[39mlibass_jll v0.17.4+0\n  \u001b[90m[1183f4f0] \u001b[39mlibdecor_jll v0.2.2+0\n  \u001b[90m[2db6ffa8] \u001b[39mlibevdev_jll v1.13.4+0\n  \u001b[90m[f638f0a6] \u001b[39mlibfdk_aac_jll v2.0.4+0\n  \u001b[90m[36db933b] \u001b[39mlibinput_jll v1.28.1+0\n  \u001b[90m[b53b4c65] \u001b[39mlibpng_jll v1.6.54+0\n  \u001b[90m[f27f6e37] \u001b[39mlibvorbis_jll v1.3.8+0\n  \u001b[90m[009596ad] \u001b[39mmtdev_jll v1.1.7+0\n  \u001b[90m[1317d2d5] \u001b[39moneTBB_jll v2022.0.0+1\n\u001b[33m⌅\u001b[39m \u001b[90m[1270edf5] \u001b[39mx264_jll v10164.0.1+0\n  \u001b[90m[dfaa095f] \u001b[39mx265_jll v4.1.0+0\n  \u001b[90m[d8fb68d0] \u001b[39mxkbcommon_jll v1.13.0+0\n  \u001b[90m[0dad84c5] \u001b[39mArgTools v1.1.2\n  \u001b[90m[56f22d72] \u001b[39mArtifacts v1.11.0\n  \u001b[90m[2a0f44e3] \u001b[39mBase64 v1.11.0\n  \u001b[90m[ade2ca70] \u001b[39mDates v1.11.0\n  \u001b[90m[8ba89e20] \u001b[39mDistributed v1.11.0\n  \u001b[90m[f43a241f] \u001b[39mDownloads v1.6.0\n  \u001b[90m[7b1f6079] \u001b[39mFileWatching v1.11.0\n  \u001b[90m[9fa8497b] \u001b[39mFuture v1.11.0\n  \u001b[90m[b77e0a4c] \u001b[39mInteractiveUtils v1.11.0\n  \u001b[90m[4af54fe1] \u001b[39mLazyArtifacts v1.11.0\n  \u001b[90m[b27032c2] \u001b[39mLibCURL v0.6.4\n  \u001b[90m[76f85450] \u001b[39mLibGit2 v1.11.0\n  \u001b[90m[8f399da3] \u001b[39mLibdl v1.11.0\n  \u001b[90m[37e2e46d] \u001b[39mLinearAlgebra v1.11.0\n  \u001b[90m[56ddb016] \u001b[39mLogging v1.11.0\n  \u001b[90m[d6f4376e] \u001b[39mMarkdown v1.11.0\n  \u001b[90m[a63ad114] \u001b[39mMmap v1.11.0\n  \u001b[90m[ca575930] \u001b[39mNetworkOptions v1.2.0\n  \u001b[90m[44cfe95a] \u001b[39mPkg v1.11.0\n  \u001b[90m[de0858da] \u001b[39mPrintf v1.11.0\n  \u001b[90m[9abbd945] \u001b[39mProfile v1.11.0\n  \u001b[90m[3fa0cd96] \u001b[39mREPL v1.11.0\n  \u001b[90m[9a3f8284] \u001b[39mRandom v1.11.0\n  \u001b[90m[ea8e919c] \u001b[39mSHA v0.7.0\n  \u001b[90m[9e88b42a] \u001b[39mSerialization v1.11.0\n  \u001b[90m[1a1011a3] \u001b[39mSharedArrays v1.11.0\n  \u001b[90m[6462fe0b] \u001b[39mSockets v1.11.0\n  \u001b[90m[2f01184e] \u001b[39mSparseArrays v1.11.0\n  \u001b[90m[f489334b] \u001b[39mStyledStrings v1.11.0\n  \u001b[90m[4607b0f0] \u001b[39mSuiteSparse\n  \u001b[90m[fa267f1f] \u001b[39mTOML v1.0.3\n  \u001b[90m[a4e569a6] \u001b[39mTar v1.10.0\n  \u001b[90m[8dfed614] \u001b[39mTest v1.11.0\n  \u001b[90m[cf7118a7] \u001b[39mUUIDs v1.11.0\n  \u001b[90m[4ec0a83e] \u001b[39mUnicode v1.11.0\n  \u001b[90m[e66e0078] \u001b[39mCompilerSupportLibraries_jll v1.1.1+0\n  \u001b[90m[deac9b47] \u001b[39mLibCURL_jll v8.6.0+0\n  \u001b[90m[e37daf67] \u001b[39mLibGit2_jll v1.7.2+0\n  \u001b[90m[29816b5a] \u001b[39mLibSSH2_jll v1.11.0+1\n  \u001b[90m[c8ffd9c3] \u001b[39mMbedTLS_jll v2.28.6+0\n  \u001b[90m[14a3606d] \u001b[39mMozillaCACerts_jll v2023.12.12\n  \u001b[90m[4536629a] \u001b[39mOpenBLAS_jll v0.3.27+1\n  \u001b[90m[05823500] \u001b[39mOpenLibm_jll v0.8.5+0\n  \u001b[90m[efcefdf7] \u001b[39mPCRE2_jll v10.42.0+1\n  \u001b[90m[bea87d4a] \u001b[39mSuiteSparse_jll v7.7.0+0\n  \u001b[90m[83775a58] \u001b[39mZlib_jll v1.2.13+1\n  \u001b[90m[8e850b90] \u001b[39mlibblastrampoline_jll v5.11.0+0\n  \u001b[90m[8e850ede] \u001b[39mnghttp2_jll v1.59.0+0\n  \u001b[90m[3f19e933] \u001b[39mp7zip_jll v17.4.0+2\n\u001b[36m\u001b[1mInfo\u001b[22m\u001b[39m Packages marked with \u001b[33m⌅\u001b[39m have new versions available but compatibility constraints restrict them from upgrading. To see why use `status --outdated -m`\n",
         "pkg_status": "\u001b[36m\u001b[1mProject\u001b[22m\u001b[39m CTBenchmarks v0.3.1\n\u001b[32m\u001b[1mStatus\u001b[22m\u001b[39m `~/work/CTBenchmarks.jl/CTBenchmarks.jl/Project.toml`\n  \u001b[90m[6e4b80f9] \u001b[39mBenchmarkTools v1.6.3\n\u001b[33m⌅\u001b[39m \u001b[90m[54762871] \u001b[39mCTBase v0.16.2\n  \u001b[90m[052768ef] \u001b[39mCUDA v5.9.6\n  \u001b[90m[a93c6f00] \u001b[39mDataFrames v1.8.1\n  \u001b[90m[ffbed154] \u001b[39mDocStringExtensions v0.9.5\n  \u001b[90m[b6b21f68] \u001b[39mIpopt v1.14.0\n  \u001b[90m[682c06a0] \u001b[39mJSON v1.4.0\n  \u001b[90m[4076af6c] \u001b[39mJuMP v1.29.4\n  \u001b[90m[d72a61cc] \u001b[39mMadNLPGPU v0.7.18\n  \u001b[90m[3b83494e] \u001b[39mMadNLPMumps v0.5.1\n  \u001b[90m[f4238b75] \u001b[39mNLPModelsIpopt v0.11.1\n  \u001b[90m[5f98b655] \u001b[39mOptimalControl v1.1.6\n  \u001b[90m[59046045] \u001b[39mOptimalControlProblems v0.4.0 `https://github.com/control-toolbox/OptimalControlProblems.jl#194-new-inits-spaceshuttle-steering-robot-insurance`\n  \u001b[90m[91a5bcdd] \u001b[39mPlots v1.41.4\n  \u001b[90m[10745b16] \u001b[39mStatistics v1.11.1\n  \u001b[90m[bd369af6] \u001b[39mTables v1.12.1\n  \u001b[90m[ade2ca70] \u001b[39mDates v1.11.0\n  \u001b[90m[b77e0a4c] \u001b[39mInteractiveUtils v1.11.0\n  \u001b[90m[44cfe95a] \u001b[39mPkg v1.11.0\n  \u001b[90m[de0858da] \u001b[39mPrintf v1.11.0\n  \u001b[90m[6462fe0b] \u001b[39mSockets v1.11.0\n\u001b[36m\u001b[1mInfo\u001b[22m\u001b[39m Packages marked with \u001b[33m⌅\u001b[39m have new versions available but compatibility constraints restrict them from upgrading. To see why use `status --outdated`\n",
-        "timestamp": "2026-01-30 13:38:54 UTC",
+        "timestamp": "2026-02-03 13:23:39 UTC",
         "machine": "runnervmkj6or",
         "os": "Linux",
         "configuration": {
@@ -61,7 +61,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.015720081,
+                "time": 0.015725988,
                 "bytes": 16768,
                 "alloc": 792,
                 "gctime": 0.0
@@ -83,7 +83,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.020389879,
+                "time": 0.020837199,
                 "bytes": 2481880,
                 "alloc": 37007,
                 "gctime": 0.0
@@ -105,7 +105,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.015422129,
+                "time": 0.015647054,
                 "bytes": 74224,
                 "alloc": 746,
                 "gctime": 0.0
@@ -127,7 +127,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.036804775,
+                "time": 0.036802714,
                 "bytes": 18848,
                 "alloc": 898,
                 "gctime": 0.0
@@ -149,7 +149,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.048939977,
+                "time": 0.048574477,
                 "bytes": 6786888,
                 "alloc": 100559,
                 "gctime": 0.0
@@ -171,7 +171,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.036040417,
+                "time": 0.036247202,
                 "bytes": 140912,
                 "alloc": 822,
                 "gctime": 0.0
@@ -193,7 +193,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.113931967,
+                "time": 0.109520263,
                 "bytes": 29248,
                 "alloc": 1404,
                 "gctime": 0.0
@@ -215,7 +215,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.179292307,
+                "time": 0.163434023,
                 "bytes": 23634352,
                 "alloc": 350699,
                 "gctime": 0.0
@@ -237,7 +237,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.120699104,
+                "time": 0.117374006,
                 "bytes": 264976,
                 "alloc": 1392,
                 "gctime": 0.0
@@ -259,7 +259,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.245409862,
+                "time": 0.226659537,
                 "bytes": 30976,
                 "alloc": 1488,
                 "gctime": 0.0
@@ -281,7 +281,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.373783044,
+                "time": 0.359304533,
                 "bytes": 48493768,
                 "alloc": 718775,
                 "gctime": 0.0
@@ -303,7 +303,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.213845796,
+                "time": 0.204064198,
                 "bytes": 476752,
                 "alloc": 1240,
                 "gctime": 0.0
@@ -325,7 +325,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.012317578,
+                "time": 0.012326925,
                 "bytes": 2264112,
                 "alloc": 10748,
                 "gctime": 0.0
@@ -347,7 +347,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.018128013,
+                "time": 0.017940684,
                 "bytes": 5146888,
                 "alloc": 57404,
                 "gctime": 0.0
@@ -369,7 +369,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.012855186,
+                "time": 0.012744908,
                 "bytes": 2169056,
                 "alloc": 10367,
                 "gctime": 0.0
@@ -391,7 +391,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.023671786,
+                "time": 0.023600069,
                 "bytes": 4423632,
                 "alloc": 10535,
                 "gctime": 0.0
@@ -413,7 +413,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.038850495,
+                "time": 0.035645938,
                 "bytes": 10619976,
                 "alloc": 111071,
                 "gctime": 0.0
@@ -435,7 +435,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.024586005,
+                "time": 0.024606559,
                 "bytes": 4251712,
                 "alloc": 10170,
                 "gctime": 0.0
@@ -457,7 +457,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.071103595,
+                "time": 0.067705526,
                 "bytes": 10751640,
                 "alloc": 12342,
                 "gctime": 0.0
@@ -479,7 +479,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.108263331,
+                "time": 0.098322949,
                 "bytes": 27854496,
                 "alloc": 292713,
                 "gctime": 0.0
@@ -501,7 +501,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.07251909,
+                "time": 0.070081977,
                 "bytes": 10249760,
                 "alloc": 11836,
                 "gctime": 0.0
@@ -523,7 +523,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.226019247,
+                "time": 0.214091016,
                 "bytes": 26142104,
                 "alloc": 14103,
                 "gctime": 0.0
@@ -545,7 +545,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.362351553,
+                "time": 0.371229344,
                 "bytes": 80040928,
                 "alloc": 855569,
                 "gctime": 0.0
@@ -567,7 +567,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.230354241,
+                "time": 0.219382222,
                 "bytes": 23790968,
                 "alloc": 13222,
                 "gctime": 0.0
@@ -589,7 +589,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.015168135,
+                "time": 0.013090251,
                 "bytes": 16048,
                 "alloc": 701,
                 "gctime": 0.0
@@ -611,7 +611,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.017068298,
+                "time": 0.016199331,
                 "bytes": 4618976,
                 "alloc": 87968,
                 "gctime": 0.0
@@ -633,7 +633,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.009989235,
+                "time": 0.009743218,
                 "bytes": 71744,
                 "alloc": 400,
                 "gctime": 0.0
@@ -655,7 +655,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.078561257,
+                "time": 0.060902982,
                 "bytes": 31776,
                 "alloc": 1384,
                 "gctime": 0.0
@@ -677,7 +677,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.079077781,
+                "time": 0.07150154,
                 "bytes": 21394360,
                 "alloc": 411666,
                 "gctime": 0.0
@@ -699,7 +699,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.041937549,
+                "time": 0.041063242,
                 "bytes": 150080,
                 "alloc": 708,
                 "gctime": 0.0
@@ -721,7 +721,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.079367936,
+                "time": 0.063623103,
                 "bytes": 14144,
                 "alloc": 618,
                 "gctime": 0.0
@@ -743,7 +743,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.073399893,
+                "time": 0.067797715,
                 "bytes": 20288296,
                 "alloc": 386040,
                 "gctime": 0.0
@@ -765,7 +765,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.041298446,
+                "time": 0.039823809,
                 "bytes": 256288,
                 "alloc": 362,
                 "gctime": 0.0
@@ -787,7 +787,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.175274823,
+                "time": 0.144330973,
                 "bytes": 14144,
                 "alloc": 618,
                 "gctime": 0.0
@@ -809,7 +809,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.161147313,
+                "time": 0.158945122,
                 "bytes": 40528296,
                 "alloc": 771040,
                 "gctime": 0.0
@@ -831,7 +831,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.091298527,
+                "time": 0.089115365,
                 "bytes": 488288,
                 "alloc": 362,
                 "gctime": 0.0
@@ -853,7 +853,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.016175861,
+                "time": 0.014894887,
                 "bytes": 8194496,
                 "alloc": 105983,
                 "gctime": 0.0
@@ -875,7 +875,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.014440621,
+                "time": 0.014254395,
                 "bytes": 6137096,
                 "alloc": 97309,
                 "gctime": 0.0
@@ -897,7 +897,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.008633267,
+                "time": 0.008517539,
                 "bytes": 1832936,
                 "alloc": 8271,
                 "gctime": 0.0
@@ -919,7 +919,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.077600355,
+                "time": 0.06268736,
                 "bytes": 20691240,
                 "alloc": 278069,
                 "gctime": 0.0
@@ -941,7 +941,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.069646189,
+                "time": 0.064251069,
                 "bytes": 25153424,
                 "alloc": 424015,
                 "gctime": 0.0
@@ -963,7 +963,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.037607486,
+                "time": 0.036948278,
                 "bytes": 4498496,
                 "alloc": 9375,
                 "gctime": 0.0
@@ -985,7 +985,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.084129989,
+                "time": 0.069710144,
                 "bytes": 41467912,
                 "alloc": 591661,
                 "gctime": 0.0
@@ -1007,7 +1007,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.064948564,
+                "time": 0.059742892,
                 "bytes": 25929728,
                 "alloc": 400864,
                 "gctime": 0.0
@@ -1029,7 +1029,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.032923113,
+                "time": 0.032148506,
                 "bytes": 7070416,
                 "alloc": 8127,
                 "gctime": 0.0
@@ -1051,7 +1051,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.213565026,
+                "time": 0.202649977,
                 "bytes": 80605288,
                 "alloc": 1191682,
                 "gctime": 0.0
@@ -1073,7 +1073,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.21701394,
+                "time": 0.189658514,
                 "bytes": 51374304,
                 "alloc": 792909,
                 "gctime": 0.0
@@ -1095,7 +1095,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.111191294,
+                "time": 0.108807779,
                 "bytes": 13666664,
                 "alloc": 8137,
                 "gctime": 0.0
@@ -1117,7 +1117,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.009987737,
+                "time": 0.009734187,
                 "bytes": 12240,
                 "alloc": 535,
                 "gctime": 0.0
@@ -1139,7 +1139,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.020398519,
+                "time": 0.017951403,
                 "bytes": 5444080,
                 "alloc": 112780,
                 "gctime": 0.0
@@ -1161,7 +1161,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.011386505,
+                "time": 0.011329126,
                 "bytes": 105264,
                 "alloc": 328,
                 "gctime": 0.0
@@ -1183,7 +1183,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.021663057,
+                "time": 0.02078128,
                 "bytes": 12240,
                 "alloc": 535,
                 "gctime": 0.0
@@ -1205,7 +1205,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.046149481,
+                "time": 0.040738989,
                 "bytes": 13534704,
                 "alloc": 280180,
                 "gctime": 0.0
@@ -1227,7 +1227,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.025526986,
+                "time": 0.025208709,
                 "bytes": 218288,
                 "alloc": 328,
                 "gctime": 0.0
@@ -1249,7 +1249,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.04307665,
+                "time": 0.039475824,
                 "bytes": 12240,
                 "alloc": 535,
                 "gctime": 0.0
@@ -1271,7 +1271,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.093544771,
+                "time": 0.091679003,
                 "bytes": 27018480,
                 "alloc": 559180,
                 "gctime": 0.0
@@ -1293,7 +1293,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.050087856,
+                "time": 0.048991924,
                 "bytes": 406064,
                 "alloc": 328,
                 "gctime": 0.0
@@ -1315,7 +1315,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.087165287,
+                "time": 0.077983745,
                 "bytes": 12240,
                 "alloc": 535,
                 "gctime": 0.0
@@ -1337,7 +1337,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.207056815,
+                "time": 0.236080183,
                 "bytes": 53986480,
                 "alloc": 1117180,
                 "gctime": 0.0
@@ -1359,7 +1359,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.099001811,
+                "time": 0.096537292,
                 "bytes": 782064,
                 "alloc": 328,
                 "gctime": 0.0
@@ -1381,7 +1381,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.00867803,
+                "time": 0.008557267,
                 "bytes": 3075656,
                 "alloc": 8330,
                 "gctime": 0.0
@@ -1403,7 +1403,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.016890578,
+                "time": 0.017106054,
                 "bytes": 7447536,
                 "alloc": 122410,
                 "gctime": 0.0
@@ -1425,7 +1425,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.008609551,
+                "time": 0.008409132,
                 "bytes": 3176056,
                 "alloc": 8052,
                 "gctime": 0.0
@@ -1447,7 +1447,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.020937531,
+                "time": 0.020749324,
                 "bytes": 7293320,
                 "alloc": 8605,
                 "gctime": 0.0
@@ -1469,7 +1469,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.05809692,
+                "time": 0.045855498,
                 "bytes": 20020512,
                 "alloc": 333429,
                 "gctime": 0.0
@@ -1491,7 +1491,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.022393845,
+                "time": 0.022384918,
                 "bytes": 7378424,
                 "alloc": 8326,
                 "gctime": 0.0
@@ -1513,7 +1513,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.043213011,
+                "time": 0.040105763,
                 "bytes": 12147448,
                 "alloc": 8579,
                 "gctime": 0.0
@@ -1535,7 +1535,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.114245975,
+                "time": 0.104127241,
                 "bytes": 39516416,
                 "alloc": 657350,
                 "gctime": 0.0
@@ -1557,7 +1557,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.045952433,
+                "time": 0.043691777,
                 "bytes": 14244472,
                 "alloc": 8292,
                 "gctime": 0.0
@@ -1579,7 +1579,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.138962113,
+                "time": 0.129746099,
                 "bytes": 25421784,
                 "alloc": 8640,
                 "gctime": 0.0
@@ -1601,7 +1601,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.328137376,
+                "time": 0.30006124,
                 "bytes": 78531376,
                 "alloc": 1305395,
                 "gctime": 0.0
@@ -1623,7 +1623,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.192183163,
+                "time": 0.178912708,
                 "bytes": 27994824,
                 "alloc": 8355,
                 "gctime": 0.0
@@ -1645,7 +1645,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.006348973,
+                "time": 0.005985567,
                 "bytes": 10064,
                 "alloc": 435,
                 "gctime": 0.0
@@ -1667,7 +1667,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.009166562,
+                "time": 0.008970354,
                 "bytes": 2846632,
                 "alloc": 66425,
                 "gctime": 0.0
@@ -1689,7 +1689,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.004617189,
+                "time": 0.004603209,
                 "bytes": 59712,
                 "alloc": 286,
                 "gctime": 0.0
@@ -1711,7 +1711,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.016444004,
+                "time": 0.012826475,
                 "bytes": 10336,
                 "alloc": 452,
                 "gctime": 0.0
@@ -1733,7 +1733,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.022415518,
+                "time": 0.019712914,
                 "bytes": 7063272,
                 "alloc": 164825,
                 "gctime": 0.0
@@ -1755,7 +1755,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.009530787,
+                "time": 0.009372499,
                 "bytes": 109952,
                 "alloc": 286,
                 "gctime": 0.0
@@ -1777,7 +1777,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.032736704,
+                "time": 0.024407292,
                 "bytes": 10336,
                 "alloc": 452,
                 "gctime": 0.0
@@ -1799,7 +1799,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.048854344,
+                "time": 0.042769769,
                 "bytes": 14091432,
                 "alloc": 328825,
                 "gctime": 0.0
@@ -1821,7 +1821,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.017795312,
+                "time": 0.017560295,
                 "bytes": 194112,
                 "alloc": 286,
                 "gctime": 0.0
@@ -1843,7 +1843,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.069698471,
+                "time": 0.057026077,
                 "bytes": 10336,
                 "alloc": 452,
                 "gctime": 0.0
@@ -1865,7 +1865,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.10770084,
+                "time": 0.120639965,
                 "bytes": 28147432,
                 "alloc": 656825,
                 "gctime": 0.0
@@ -1887,7 +1887,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.034286698,
+                "time": 0.033579386,
                 "bytes": 362112,
                 "alloc": 286,
                 "gctime": 0.0
@@ -1909,7 +1909,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.008505116,
+                "time": 0.007955507,
                 "bytes": 6614736,
                 "alloc": 67792,
                 "gctime": 0.0
@@ -1931,7 +1931,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.008816033,
+                "time": 0.008248147,
                 "bytes": 4044264,
                 "alloc": 75626,
                 "gctime": 0.0
@@ -1953,7 +1953,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.004134016,
+                "time": 0.004002235,
                 "bytes": 1734504,
                 "alloc": 7845,
                 "gctime": 0.0
@@ -1975,7 +1975,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.022216523,
+                "time": 0.019992056,
                 "bytes": 15601680,
                 "alloc": 172996,
                 "gctime": 0.0
@@ -1997,7 +1997,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.023512742,
+                "time": 0.024157197,
                 "bytes": 9414784,
                 "alloc": 176438,
                 "gctime": 0.0
@@ -2019,7 +2019,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.008702036,
+                "time": 0.008669896,
                 "bytes": 3628464,
                 "alloc": 7848,
                 "gctime": 0.0
@@ -2041,7 +2041,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.042011577,
+                "time": 0.041683948,
                 "bytes": 32028248,
                 "alloc": 369435,
                 "gctime": 0.0
@@ -2063,7 +2063,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.053065293,
+                "time": 0.0474738,
                 "bytes": 18367664,
                 "alloc": 344429,
                 "gctime": 0.0
@@ -2085,7 +2085,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.016004648,
+                "time": 0.016059522,
                 "bytes": 6786040,
                 "alloc": 7840,
                 "gctime": 0.0
@@ -2107,7 +2107,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.11964906,
+                "time": 0.114410338,
                 "bytes": 61990240,
                 "alloc": 744449,
                 "gctime": 0.0
@@ -2129,7 +2129,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.129898111,
+                "time": 0.154564313,
                 "bytes": 36272560,
                 "alloc": 680429,
                 "gctime": 0.0
@@ -2151,7 +2151,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.058519095,
+                "time": 0.056284305,
                 "bytes": 13103672,
                 "alloc": 7867,
                 "gctime": 0.0
@@ -2173,7 +2173,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.685325318,
+                "time": 0.538320735,
                 "bytes": 151632,
                 "alloc": 6611,
                 "gctime": 0.0
@@ -2195,7 +2195,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.589221441,
+                "time": 0.550348118,
                 "bytes": 80529616,
                 "alloc": 1458395,
                 "gctime": 0.0
@@ -2217,7 +2217,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.329724833,
+                "time": 0.32653709,
                 "bytes": 275104,
                 "alloc": 3109,
                 "gctime": 0.0
@@ -2239,7 +2239,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 34.641518671,
+                "time": 30.092040368,
                 "bytes": 136192,
                 "alloc": 5934,
                 "gctime": 0.0
@@ -2261,7 +2261,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 26.791715884,
+                "time": 26.355270625,
                 "bytes": 106270872,
                 "alloc": 1940464,
                 "gctime": 0.0
@@ -2283,7 +2283,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 24.871386556,
+                "time": 24.6309468,
                 "bytes": 379440,
                 "alloc": 2792,
                 "gctime": 0.0
@@ -2301,13 +2301,13 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": -1058.8744600693567,
+            "objective": -1058.8844992736801,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 509.520234205,
-                "bytes": 38896,
-                "alloc": 1697,
+                "time": 536.955966542,
+                "bytes": 42704,
+                "alloc": 1863,
                 "gctime": 0.0
             },
             "status": "TIME_LIMIT",
@@ -2315,7 +2315,7 @@
             "model": "jump",
             "criterion": "min",
             "grid_size": 1000,
-            "iterations": 19,
+            "iterations": 21,
             "disc_method": "trapeze"
         },
         {
@@ -2323,13 +2323,13 @@
             "problem": "glider",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": -1058.874514634927,
+            "objective": -1058.8846333225247,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 523.372712239,
-                "bytes": 108832392,
-                "alloc": 1976074,
+                "time": 528.641040581,
+                "bytes": 113835024,
+                "alloc": 2066306,
                 "gctime": 0.0
             },
             "status": "max_time",
@@ -2337,7 +2337,7 @@
             "model": "adnlp",
             "criterion": "min",
             "grid_size": 1000,
-            "iterations": 20,
+            "iterations": 21,
             "disc_method": "trapeze"
         },
         {
@@ -2349,7 +2349,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 505.790968269,
+                "time": 506.054520651,
                 "bytes": 512336,
                 "alloc": 822,
                 "gctime": 0.0
@@ -2371,7 +2371,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.849647264,
+                "time": 2.852070105,
                 "bytes": 75072,
                 "alloc": 3274,
                 "gctime": 0.0
@@ -2393,7 +2393,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 4.038672109,
+                "time": 3.67502347,
                 "bytes": 397335768,
                 "alloc": 7191250,
                 "gctime": 0.0
@@ -2415,7 +2415,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.400981045,
+                "time": 1.390203335,
                 "bytes": 909456,
                 "alloc": 1582,
                 "gctime": 0.0
@@ -2437,7 +2437,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.71652234,
+                "time": 0.626120794,
                 "bytes": 63567720,
                 "alloc": 538797,
                 "gctime": 0.0
@@ -2459,7 +2459,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.518308883,
+                "time": 0.487360254,
                 "bytes": 100192712,
                 "alloc": 1659231,
                 "gctime": 0.0
@@ -2481,7 +2481,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.307114656,
+                "time": 0.309490554,
                 "bytes": 15298320,
                 "alloc": 27145,
                 "gctime": 0.0
@@ -2503,7 +2503,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.685851639,
+                "time": 3.5327517,
                 "bytes": 179212776,
                 "alloc": 1379410,
                 "gctime": 0.0
@@ -2525,7 +2525,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.658893223,
+                "time": 3.276045594,
                 "bytes": 495651016,
                 "alloc": 8263572,
                 "gctime": 0.0
@@ -2547,7 +2547,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.283235837,
+                "time": 1.275733655,
                 "bytes": 52652712,
                 "alloc": 41538,
                 "gctime": 0.0
@@ -2569,7 +2569,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 4.660137906,
+                "time": 4.610015229,
                 "bytes": 320808520,
                 "alloc": 2718515,
                 "gctime": 0.0
@@ -2591,7 +2591,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 7.432642843,
+                "time": 5.907749659,
                 "bytes": 867262168,
                 "alloc": 14596228,
                 "gctime": 0.0
@@ -2613,7 +2613,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.934968626,
+                "time": 1.878264608,
                 "bytes": 75696880,
                 "alloc": 31319,
                 "gctime": 0.0
@@ -2635,7 +2635,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 5.414392116,
+                "time": 5.379626952,
                 "bytes": 593707392,
                 "alloc": 5418642,
                 "gctime": 0.0
@@ -2657,10 +2657,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 17.522847047,
+                "time": 16.825834782,
                 "bytes": 1826093384,
                 "alloc": 30330513,
-                "gctime": 0.20898679
+                "gctime": 0.186760077
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
@@ -2679,7 +2679,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 5.589546268,
+                "time": 5.578993278,
                 "bytes": 170561552,
                 "alloc": 36196,
                 "gctime": 0.0
@@ -2701,7 +2701,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.437441888,
+                "time": 0.392059096,
                 "bytes": 182880,
                 "alloc": 7964,
                 "gctime": 0.0
@@ -2723,7 +2723,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.598227129,
+                "time": 0.572212625,
                 "bytes": 126630720,
                 "alloc": 1725287,
                 "gctime": 0.0
@@ -2745,7 +2745,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.322787682,
+                "time": 0.324598809,
                 "bytes": 251936,
                 "alloc": 3729,
                 "gctime": 0.0
@@ -2767,7 +2767,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.375538376,
+                "time": 1.055875476,
                 "bytes": 193520,
                 "alloc": 8437,
                 "gctime": 0.0
@@ -2789,7 +2789,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.87324491,
+                "time": 1.833980976,
                 "bytes": 327160768,
                 "alloc": 4427859,
                 "gctime": 0.0
@@ -2811,7 +2811,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.92558026,
+                "time": 0.901083926,
                 "bytes": 452096,
                 "alloc": 4287,
                 "gctime": 0.0
@@ -2833,7 +2833,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.914231324,
+                "time": 3.691141713,
                 "bytes": 274976,
                 "alloc": 11980,
                 "gctime": 0.0
@@ -2855,7 +2855,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 6.659771819,
+                "time": 5.798312902,
                 "bytes": 991976496,
                 "alloc": 13427119,
                 "gctime": 0.0
@@ -2877,7 +2877,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.701809805,
+                "time": 2.634297295,
                 "bytes": 787856,
                 "alloc": 5286,
                 "gctime": 0.0
@@ -2899,7 +2899,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 12.171777442,
+                "time": 11.446497134,
                 "bytes": 391920,
                 "alloc": 17077,
                 "gctime": 0.0
@@ -2921,10 +2921,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 14.054874414,
+                "time": 14.89725348,
                 "bytes": 2644870336,
                 "alloc": 35836215,
-                "gctime": 0.391029201
+                "gctime": 0.393382808
             },
             "status": "first_order",
             "max_wall_time": 500.0,
@@ -2943,7 +2943,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 7.220852544,
+                "time": 7.475685466,
                 "bytes": 1468048,
                 "alloc": 7594,
                 "gctime": 0.0
@@ -2965,7 +2965,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.47676238,
+                "time": 0.543692021,
                 "bytes": 41150976,
                 "alloc": 240875,
                 "gctime": 0.0
@@ -2987,7 +2987,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.730780224,
+                "time": 0.791552448,
                 "bytes": 210300944,
                 "alloc": 2565292,
                 "gctime": 0.0
@@ -3009,7 +3009,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.335753657,
+                "time": 0.34736833,
                 "bytes": 27818112,
                 "alloc": 31535,
                 "gctime": 0.0
@@ -3031,7 +3031,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.723519368,
+                "time": 4.017374313,
                 "bytes": 153000936,
                 "alloc": 586723,
                 "gctime": 0.0
@@ -3053,10 +3053,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 8.394167053,
+                "time": 8.60005454,
                 "bytes": 1635310480,
                 "alloc": 19592805,
-                "gctime": 0.199415965
+                "gctime": 0.205178009
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
@@ -3075,7 +3075,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.229279587,
+                "time": 3.283294737,
                 "bytes": 164203016,
                 "alloc": 74135,
                 "gctime": 0.0
@@ -3097,7 +3097,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 15.074869826,
+                "time": 16.367366554,
                 "bytes": 564523864,
                 "alloc": 1174140,
                 "gctime": 0.0
@@ -3119,10 +3119,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 17.289262048,
+                "time": 18.00017078,
                 "bytes": 4040683240,
                 "alloc": 48522312,
-                "gctime": 0.558337523
+                "gctime": 0.5707192
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
@@ -3141,7 +3141,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 9.527251228,
+                "time": 9.956584847,
                 "bytes": 456595856,
                 "alloc": 99083,
                 "gctime": 0.0
@@ -3163,7 +3163,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 11.323790462,
+                "time": 12.032042556,
                 "bytes": 468924080,
                 "alloc": 2175665,
                 "gctime": 0.0
@@ -3185,10 +3185,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 18.126397966,
+                "time": 19.270730021,
                 "bytes": 2746194968,
                 "alloc": 32967868,
-                "gctime": 0.332410248
+                "gctime": 0.352378834
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
@@ -3207,7 +3207,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 7.061939138,
+                "time": 7.474579515,
                 "bytes": 337527656,
                 "alloc": 40915,
                 "gctime": 0.0
@@ -3229,7 +3229,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.073921146,
+                "time": 0.077307921,
                 "bytes": 85088,
                 "alloc": 3708,
                 "gctime": 0.0
@@ -3251,7 +3251,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.102174788,
+                "time": 0.10543897,
                 "bytes": 11332920,
                 "alloc": 129389,
                 "gctime": 0.0
@@ -3273,7 +3273,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.082903645,
+                "time": 0.081738657,
                 "bytes": 127280,
                 "alloc": 1776,
                 "gctime": 0.0
@@ -3295,7 +3295,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.258531643,
+                "time": 0.253547129,
                 "bytes": 113952,
                 "alloc": 4968,
                 "gctime": 0.0
@@ -3317,7 +3317,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.388003518,
+                "time": 0.362023823,
                 "bytes": 37946712,
                 "alloc": 426629,
                 "gctime": 0.0
@@ -3339,7 +3339,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.26636233,
+                "time": 0.260964624,
                 "bytes": 232048,
                 "alloc": 2356,
                 "gctime": 0.0
@@ -3361,7 +3361,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.15296901,
+                "time": 0.141791113,
                 "bytes": 42704,
                 "alloc": 1863,
                 "gctime": 0.0
@@ -3383,7 +3383,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.344616082,
+                "time": 0.305334458,
                 "bytes": 28796960,
                 "alloc": 322164,
                 "gctime": 0.0
@@ -3405,7 +3405,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.149296226,
+                "time": 0.14343208,
                 "bytes": 340656,
                 "alloc": 936,
                 "gctime": 0.0
@@ -3427,7 +3427,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.262163031,
+                "time": 0.234239707,
                 "bytes": 38896,
                 "alloc": 1697,
                 "gctime": 0.0
@@ -3449,7 +3449,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.700150599,
+                "time": 0.69543261,
                 "bytes": 52460368,
                 "alloc": 585978,
                 "gctime": 0.0
@@ -3471,7 +3471,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.244039846,
+                "time": 0.245207694,
                 "bytes": 634544,
                 "alloc": 860,
                 "gctime": 0.0
@@ -3493,7 +3493,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.048620816,
+                "time": 0.049169334,
                 "bytes": 7854792,
                 "alloc": 14853,
                 "gctime": 0.0
@@ -3515,7 +3515,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.080228824,
+                "time": 0.080705545,
                 "bytes": 16957224,
                 "alloc": 135229,
                 "gctime": 0.0
@@ -3537,7 +3537,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.051219507,
+                "time": 0.052295801,
                 "bytes": 7390864,
                 "alloc": 14161,
                 "gctime": 0.0
@@ -3559,7 +3559,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.047542545,
+                "time": 0.048990572,
                 "bytes": 13313632,
                 "alloc": 11274,
                 "gctime": 0.0
@@ -3581,7 +3581,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.103502177,
+                "time": 0.09736443,
                 "bytes": 24438592,
                 "alloc": 180308,
                 "gctime": 0.0
@@ -3603,7 +3603,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.049443437,
+                "time": 0.04990518,
                 "bytes": 12155768,
                 "alloc": 10792,
                 "gctime": 0.0
@@ -3625,7 +3625,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.100942562,
+                "time": 0.103230601,
                 "bytes": 28045952,
                 "alloc": 11466,
                 "gctime": 0.0
@@ -3647,7 +3647,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.257437358,
+                "time": 0.23509957,
                 "bytes": 50043024,
                 "alloc": 362529,
                 "gctime": 0.0
@@ -3669,7 +3669,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.100955481,
+                "time": 0.101759618,
                 "bytes": 24262928,
                 "alloc": 10949,
                 "gctime": 0.0
@@ -3691,7 +3691,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.251450195,
+                "time": 0.25613489,
                 "bytes": 48538136,
                 "alloc": 11441,
                 "gctime": 0.0
@@ -3713,7 +3713,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.727619254,
+                "time": 0.788195443,
                 "bytes": 99427392,
                 "alloc": 712499,
                 "gctime": 0.0
@@ -3735,7 +3735,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.277225032,
+                "time": 0.271787705,
                 "bytes": 47919712,
                 "alloc": 10946,
                 "gctime": 0.0
@@ -3757,7 +3757,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.024731015,
+                "time": 0.025312389,
                 "bytes": 20512,
                 "alloc": 974,
                 "gctime": 0.0
@@ -3779,7 +3779,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.033266321,
+                "time": 0.03314611,
                 "bytes": 3648752,
                 "alloc": 44059,
                 "gctime": 0.0
@@ -3801,7 +3801,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.023825728,
+                "time": 0.023729754,
                 "bytes": 97840,
                 "alloc": 874,
                 "gctime": 0.0
@@ -3823,7 +3823,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.051316654,
+                "time": 0.051911203,
                 "bytes": 18848,
                 "alloc": 898,
                 "gctime": 0.0
@@ -3845,7 +3845,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.07246951,
+                "time": 0.071001914,
                 "bytes": 8474184,
                 "alloc": 100559,
                 "gctime": 0.0
@@ -3867,7 +3867,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.051663943,
+                "time": 0.052249616,
                 "bytes": 185264,
                 "alloc": 822,
                 "gctime": 0.0
@@ -3889,7 +3889,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.135275315,
+                "time": 0.136559382,
                 "bytes": 26656,
                 "alloc": 1278,
                 "gctime": 0.0
@@ -3911,7 +3911,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.221013919,
+                "time": 0.202912019,
                 "bytes": 24467168,
                 "alloc": 290243,
                 "gctime": 0.0
@@ -3933,7 +3933,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.138987779,
+                "time": 0.140107417,
                 "bytes": 342672,
                 "alloc": 1164,
                 "gctime": 0.0
@@ -3955,7 +3955,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.310569714,
+                "time": 0.306542971,
                 "bytes": 29248,
                 "alloc": 1404,
                 "gctime": 0.0
@@ -3977,7 +3977,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.643660868,
+                "time": 0.639352451,
                 "bytes": 53877992,
                 "alloc": 638471,
                 "gctime": 0.0
@@ -3999,7 +3999,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.321674578,
+                "time": 0.321735444,
                 "bytes": 641840,
                 "alloc": 1278,
                 "gctime": 0.0
@@ -4021,7 +4021,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.026763507,
+                "time": 0.027192759,
                 "bytes": 3358464,
                 "alloc": 12601,
                 "gctime": 0.0
@@ -4043,7 +4043,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.043294759,
+                "time": 0.043285846,
                 "bytes": 8984088,
                 "alloc": 85717,
                 "gctime": 0.0
@@ -4065,7 +4065,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.027474768,
+                "time": 0.028146571,
                 "bytes": 3096112,
                 "alloc": 12064,
                 "gctime": 0.0
@@ -4087,7 +4087,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.056419145,
+                "time": 0.057712888,
                 "bytes": 6952568,
                 "alloc": 12488,
                 "gctime": 0.0
@@ -4109,7 +4109,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.095198118,
+                "time": 0.0874113,
                 "bytes": 18725488,
                 "alloc": 167999,
                 "gctime": 0.0
@@ -4131,7 +4131,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.053931435,
+                "time": 0.055194247,
                 "bytes": 6268712,
                 "alloc": 11597,
                 "gctime": 0.0
@@ -4153,7 +4153,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.169290446,
+                "time": 0.174833322,
                 "bytes": 17924456,
                 "alloc": 15388,
                 "gctime": 0.0
@@ -4175,7 +4175,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.338918017,
+                "time": 0.329299284,
                 "bytes": 59150088,
                 "alloc": 537054,
                 "gctime": 0.0
@@ -4197,7 +4197,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.172336341,
+                "time": 0.176537631,
                 "bytes": 16513880,
                 "alloc": 14633,
                 "gctime": 0.0
@@ -4219,7 +4219,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.367526361,
+                "time": 0.36312335,
                 "bytes": 30126752,
                 "alloc": 14385,
                 "gctime": 0.0
@@ -4241,7 +4241,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.843888941,
+                "time": 0.86597524,
                 "bytes": 102590928,
                 "alloc": 915780,
                 "gctime": 0.0
@@ -4263,7 +4263,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.392647771,
+                "time": 0.389360613,
                 "bytes": 29210384,
                 "alloc": 13608,
                 "gctime": 0.0
@@ -4277,411 +4277,531 @@
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": 9.141395465902225,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.087606017,
+                "bytes": 36992,
+                "alloc": 1614,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 200,
-            "iterations": null,
+            "iterations": 18,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": 9.141395465902225,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.115528956,
+                "bytes": 13536424,
+                "alloc": 82653,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 200,
-            "iterations": null,
+            "iterations": 18,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": 9.141395465902225,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.066135917,
+                "bytes": 185168,
+                "alloc": 822,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 200,
-            "iterations": null,
+            "iterations": 18,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": 9.140990626688337,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.223366701,
+                "bytes": 35088,
+                "alloc": 1531,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 500,
-            "iterations": null,
+            "iterations": 17,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": 9.140990626688332,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.300491279,
+                "bytes": 31865344,
+                "alloc": 191936,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 500,
-            "iterations": null,
+            "iterations": 17,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": 9.140990626688337,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.161356751,
+                "bytes": 378288,
+                "alloc": 784,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 500,
-            "iterations": null,
+            "iterations": 17,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": 9.140931432441958,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.586470428,
+                "bytes": 38896,
+                "alloc": 1697,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 1000,
-            "iterations": null,
+            "iterations": 19,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": 9.140931432441963,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.690281334,
+                "bytes": 70361200,
+                "alloc": 421246,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 1000,
-            "iterations": null,
+            "iterations": 19,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": 9.140931432441963,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.397841033,
+                "bytes": 704624,
+                "alloc": 860,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 1000,
-            "iterations": null,
+            "iterations": 19,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": 9.140916532415206,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 1.383933657,
+                "bytes": 42704,
+                "alloc": 1863,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 2000,
-            "iterations": null,
+            "iterations": 21,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": 9.140916532415211,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 1.991429613,
+                "bytes": 154115680,
+                "alloc": 919556,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 2000,
-            "iterations": null,
+            "iterations": 21,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": 9.140916532415208,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.9329982,
+                "bytes": 1354736,
+                "alloc": 936,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 2000,
-            "iterations": null,
+            "iterations": 21,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": 9.141396958635406,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.072150443,
+                "bytes": 21670416,
+                "alloc": 213900,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 200,
-            "iterations": null,
+            "iterations": 16,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": 9.141396958635402,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.102921601,
+                "bytes": 18139840,
+                "alloc": 84118,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 200,
-            "iterations": null,
+            "iterations": 16,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": 9.141396958635365,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.050627092,
+                "bytes": 7263680,
+                "alloc": 9935,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 200,
-            "iterations": null,
+            "iterations": 16,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": 9.140991668826665,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.30649268,
+                "bytes": 58246408,
+                "alloc": 534981,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 500,
-            "iterations": null,
+            "iterations": 25,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": 9.140991668826647,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.419025892,
+                "bytes": 64335848,
+                "alloc": 286911,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 500,
-            "iterations": null,
+            "iterations": 25,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": 9.140991668826658,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.200820977,
+                "bytes": 21750544,
+                "alloc": 11560,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 500,
-            "iterations": null,
+            "iterations": 25,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": 9.140938752481686,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.697155479,
+                "bytes": 116146752,
+                "alloc": 1078666,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 1000,
-            "iterations": null,
+            "iterations": 23,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": 9.140938752481695,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.943479394,
+                "bytes": 120596776,
+                "alloc": 526601,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 1000,
-            "iterations": null,
+            "iterations": 23,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": 9.14093875248169,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.488003986,
+                "bytes": 41675200,
+                "alloc": 11421,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 1000,
-            "iterations": null,
+            "iterations": 23,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": 9.140921925192872,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 1.91112504,
+                "bytes": 246960608,
+                "alloc": 2168036,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 2000,
-            "iterations": null,
+            "iterations": 30,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": 9.140921925192867,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot, CTBenchmarks)",
+            "benchmark": {
+                "time": 3.079477084,
+                "bytes": 301534192,
+                "alloc": 1324751,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 2000,
-            "iterations": null,
+            "iterations": 30,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": 9.14092192519288,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:robot_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 1.320686819,
+                "bytes": 95935328,
+                "alloc": 12661,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 2000,
-            "iterations": null,
+            "iterations": 30,
             "disc_method": "trapeze"
         },
         {
@@ -4693,7 +4813,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.038086036,
+                "time": 0.038677804,
                 "bytes": 36992,
                 "alloc": 1614,
                 "gctime": 0.0
@@ -4715,7 +4835,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.065489682,
+                "time": 0.064615164,
                 "bytes": 17730328,
                 "alloc": 362646,
                 "gctime": 0.0
@@ -4737,7 +4857,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.028641223,
+                "time": 0.028543008,
                 "bytes": 103376,
                 "alloc": 822,
                 "gctime": 0.0
@@ -4759,7 +4879,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.110322499,
+                "time": 0.106150842,
                 "bytes": 42704,
                 "alloc": 1863,
                 "gctime": 0.0
@@ -4781,7 +4901,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.19936191,
+                "time": 0.223355345,
                 "bytes": 50708992,
                 "alloc": 1035659,
                 "gctime": 0.0
@@ -4803,7 +4923,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.074664861,
+                "time": 0.074037645,
                 "bytes": 195248,
                 "alloc": 936,
                 "gctime": 0.0
@@ -4825,7 +4945,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.297841253,
+                "time": 0.279226002,
                 "bytes": 48416,
                 "alloc": 2112,
                 "gctime": 0.0
@@ -4847,7 +4967,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.49733794,
+                "time": 0.559954139,
                 "bytes": 114503736,
                 "alloc": 2336834,
                 "gctime": 0.0
@@ -4869,7 +4989,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.170436553,
+                "time": 0.168619046,
                 "bytes": 346512,
                 "alloc": 1050,
                 "gctime": 0.0
@@ -4891,7 +5011,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.683328018,
+                "time": 0.682756989,
                 "bytes": 46512,
                 "alloc": 2029,
                 "gctime": 0.0
@@ -4913,7 +5033,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.947463532,
+                "time": 0.947863997,
                 "bytes": 219902224,
                 "alloc": 4487609,
                 "gctime": 0.0
@@ -4935,7 +5055,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.37758918,
+                "time": 0.370146487,
                 "bytes": 641456,
                 "alloc": 1012,
                 "gctime": 0.0
@@ -4957,7 +5077,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.038705186,
+                "time": 0.038593482,
                 "bytes": 14393576,
                 "alloc": 125376,
                 "gctime": 0.0
@@ -4979,7 +5099,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.073792311,
+                "time": 0.071386445,
                 "bytes": 24277808,
                 "alloc": 429069,
                 "gctime": 0.0
@@ -5001,7 +5121,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.02342324,
+                "time": 0.023307248,
                 "bytes": 4952504,
                 "alloc": 10683,
                 "gctime": 0.0
@@ -5023,7 +5143,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.097104859,
+                "time": 0.101836522,
                 "bytes": 35981960,
                 "alloc": 324360,
                 "gctime": 0.0
@@ -5045,7 +5165,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.210657258,
+                "time": 0.166794875,
                 "bytes": 62023920,
                 "alloc": 1095471,
                 "gctime": 0.0
@@ -5067,7 +5187,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.059000811,
+                "time": 0.059519082,
                 "bytes": 11717584,
                 "alloc": 10845,
                 "gctime": 0.0
@@ -5089,7 +5209,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.252085347,
+                "time": 0.259885793,
                 "bytes": 71084296,
                 "alloc": 655450,
                 "gctime": 0.0
@@ -5111,7 +5231,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.487495944,
+                "time": 0.612274779,
                 "bytes": 133136272,
                 "alloc": 2356217,
                 "gctime": 0.0
@@ -5133,7 +5253,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.13186799,
+                "time": 0.134732643,
                 "bytes": 23816784,
                 "alloc": 11199,
                 "gctime": 0.0
@@ -5155,7 +5275,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.594715387,
+                "time": 0.538642971,
                 "bytes": 139020528,
                 "alloc": 1316926,
                 "gctime": 0.0
@@ -5177,7 +5297,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.062804748,
+                "time": 0.962783002,
                 "bytes": 235996272,
                 "alloc": 4155120,
                 "gctime": 0.0
@@ -5199,7 +5319,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.285919999,
+                "time": 0.284630747,
                 "bytes": 44111840,
                 "alloc": 10743,
                 "gctime": 0.0
@@ -5213,156 +5333,201 @@
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": -0.38537834995921955,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 1.647319238,
+                "bytes": 214464,
+                "alloc": 9350,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 200,
-            "iterations": null,
+            "iterations": 111,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": -0.5958694391819749,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 1.32281324,
+                "bytes": 181244048,
+                "alloc": 2336145,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 200,
-            "iterations": null,
+            "iterations": 101,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": -0.5958694391819719,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.737255062,
+                "bytes": 316528,
+                "alloc": 3976,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 200,
-            "iterations": null,
+            "iterations": 101,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": -0.5958750134251384,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 4.671978095,
+                "bytes": 221680,
+                "alloc": 9665,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 500,
-            "iterations": null,
+            "iterations": 115,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": -0.5958750133627932,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 4.109364854,
+                "bytes": 516335288,
+                "alloc": 6639504,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 500,
-            "iterations": null,
+            "iterations": 116,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": -0.5958750133627934,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 2.038786059,
+                "bytes": 509968,
+                "alloc": 4546,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 500,
-            "iterations": null,
+            "iterations": 116,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": -0.30501973414878114,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 7.17926604,
+                "bytes": 150512,
+                "alloc": 6561,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 1000,
-            "iterations": null,
+            "iterations": 74,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": -0.5958758104293775,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 13.17064157,
+                "bytes": 1109493040,
+                "alloc": 14254677,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 1000,
-            "iterations": null,
+            "iterations": 125,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": -0.595875810380699,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 6.601515608,
+                "bytes": 815680,
+                "alloc": 4895,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 1000,
-            "iterations": null,
+            "iterations": 125,
             "disc_method": "trapeze"
         },
         {
@@ -5370,203 +5535,263 @@
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": -0.34557845344972116,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 519.381610413,
+                "bytes": 1143696,
+                "alloc": 49947,
+                "gctime": 0.0
+            },
+            "status": "TIME_LIMIT",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 2000,
-            "iterations": null,
+            "iterations": 550,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": -0.595876009803793,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 29.490726125,
+                "bytes": 1674719464,
+                "alloc": 21518470,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 2000,
-            "iterations": null,
+            "iterations": 94,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "ipopt",
             "mu_strategy": "adaptive",
-            "objective": null,
+            "objective": -0.595876009827892,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 14.734886763,
+                "bytes": 1392688,
+                "alloc": 4356,
+                "gctime": 0.0
+            },
+            "status": "first_order",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 2000,
-            "iterations": null,
+            "iterations": 111,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": -0.38549227120486723,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 1.640027134,
+                "bytes": 112036440,
+                "alloc": 972063,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 200,
-            "iterations": null,
+            "iterations": 113,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": -0.5958694391837174,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 2.481867478,
+                "bytes": 418272384,
+                "alloc": 4806520,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 200,
-            "iterations": null,
+            "iterations": 198,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": -0.5958694391837105,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 0.954650858,
+                "bytes": 55458240,
+                "alloc": 43956,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 200,
-            "iterations": null,
+            "iterations": 181,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": -0.5958750132963726,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 3.035286242,
+                "bytes": 250972504,
+                "alloc": 2438272,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 500,
-            "iterations": null,
+            "iterations": 77,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": -0.5958750133113689,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 7.545208436,
+                "bytes": 889430056,
+                "alloc": 10231704,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 500,
-            "iterations": null,
+            "iterations": 166,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": -0.5958750133113667,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 2.255223226,
+                "bytes": 129484224,
+                "alloc": 43036,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 500,
-            "iterations": null,
+            "iterations": 166,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": -0.3050197320627113,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 82.146004794,
+                "bytes": 1349048480,
+                "alloc": 5071746,
+                "gctime": 0.0
+            },
+            "status": "LOCALLY_SOLVED",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 1000,
-            "iterations": null,
+            "iterations": 480,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": -0.595875810446595,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 12.90849528,
+                "bytes": 1024452040,
+                "alloc": 11674914,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 1000,
-            "iterations": null,
+            "iterations": 95,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": -0.5958758104465991,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 3.3580211,
+                "bytes": 167843688,
+                "alloc": 27331,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 1000,
-            "iterations": null,
+            "iterations": 95,
             "disc_method": "trapeze"
         },
         {
@@ -5574,50 +5799,65 @@
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": -0.46039872238629304,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 241.938362256,
+                "bytes": 4073361040,
+                "alloc": 10095207,
+                "gctime": 0.457756921
+            },
+            "status": "NUMERICAL_ERROR",
             "max_wall_time": 500.0,
             "model": "jump",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 2000,
-            "iterations": null,
+            "iterations": 695,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": -0.5958760089362191,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle, CTBenchmarks)",
+            "benchmark": {
+                "time": 57.447151507,
+                "bytes": 4939561136,
+                "alloc": 55187974,
+                "gctime": 0.725223863
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 2000,
-            "iterations": null,
+            "iterations": 236,
             "disc_method": "trapeze"
         },
         {
-            "success": false,
+            "success": true,
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": null,
+            "objective": -0.5958760089362352,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": null,
-            "status": "ERROR: UndefVarError(:space_shuttle_s, CTBenchmarks)",
+            "benchmark": {
+                "time": 15.016486142,
+                "bytes": 581740760,
+                "alloc": 49647,
+                "gctime": 0.0
+            },
+            "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 500.0,
             "model": "exa",
-            "criterion": null,
+            "criterion": "min",
             "grid_size": 2000,
-            "iterations": null,
+            "iterations": 207,
             "disc_method": "trapeze"
         },
         {
@@ -5629,7 +5869,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.023343758,
+                "time": 0.023169671,
                 "bytes": 17952,
                 "alloc": 784,
                 "gctime": 0.0
@@ -5651,7 +5891,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.028014179,
+                "time": 0.027831315,
                 "bytes": 5125560,
                 "alloc": 83986,
                 "gctime": 0.0
@@ -5673,7 +5913,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.019002569,
+                "time": 0.019453362,
                 "bytes": 104976,
                 "alloc": 442,
                 "gctime": 0.0
@@ -5695,7 +5935,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.058370999,
+                "time": 0.058014228,
                 "bytes": 17952,
                 "alloc": 784,
                 "gctime": 0.0
@@ -5717,7 +5957,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.069067681,
+                "time": 0.073295871,
                 "bytes": 12717704,
                 "alloc": 207904,
                 "gctime": 0.0
@@ -5739,7 +5979,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.047756695,
+                "time": 0.047879715,
                 "bytes": 218000,
                 "alloc": 442,
                 "gctime": 0.0
@@ -5761,7 +6001,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.131843815,
+                "time": 0.149005924,
                 "bytes": 17952,
                 "alloc": 784,
                 "gctime": 0.0
@@ -5783,7 +6023,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.162280186,
+                "time": 0.173674524,
                 "bytes": 25370056,
                 "alloc": 414404,
                 "gctime": 0.0
@@ -5805,7 +6045,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.109762877,
+                "time": 0.110447113,
                 "bytes": 405776,
                 "alloc": 442,
                 "gctime": 0.0
@@ -5827,7 +6067,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.309554186,
+                "time": 0.353451088,
                 "bytes": 17952,
                 "alloc": 784,
                 "gctime": 0.0
@@ -5849,7 +6089,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.34083359,
+                "time": 0.467546806,
                 "bytes": 50674056,
                 "alloc": 827404,
                 "gctime": 0.0
@@ -5871,7 +6111,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.25392499,
+                "time": 0.242107687,
                 "bytes": 781776,
                 "alloc": 442,
                 "gctime": 0.0
@@ -5893,7 +6133,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.027708631,
+                "time": 0.027906371,
                 "bytes": 10219192,
                 "alloc": 118338,
                 "gctime": 0.0
@@ -5915,7 +6155,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.030001924,
+                "time": 0.030275704,
                 "bytes": 9044192,
                 "alloc": 119555,
                 "gctime": 0.0
@@ -5937,7 +6177,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.018285327,
+                "time": 0.018874591,
                 "bytes": 2801736,
                 "alloc": 8999,
                 "gctime": 0.0
@@ -5959,7 +6199,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.076689866,
+                "time": 0.077732515,
                 "bytes": 25544032,
                 "alloc": 310769,
                 "gctime": 0.0
@@ -5973,25 +6213,20 @@
             "disc_method": "trapeze"
         },
         {
-            "success": true,
+            "success": false,
             "problem": "steering",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.5545718610888272,
+            "objective": null,
             "max_iter": 1000,
             "tol": 1.0e-8,
-            "benchmark": {
-                "time": 0.090036532,
-                "bytes": 24647848,
-                "alloc": 326056,
-                "gctime": 0.0
-            },
-            "status": "SOLVE_SUCCEEDED",
+            "benchmark": null,
+            "status": "ERROR: DomainError(Inf, \"sincos(x) is only defined for finite x.\")",
             "max_wall_time": 500.0,
             "model": "adnlp",
-            "criterion": "min",
+            "criterion": null,
             "grid_size": 500,
-            "iterations": 13,
+            "iterations": null,
             "disc_method": "trapeze"
         },
         {
@@ -6003,7 +6238,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.051628126,
+                "time": 0.052620235,
                 "bytes": 6509224,
                 "alloc": 9464,
                 "gctime": 0.0
@@ -6025,7 +6260,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.177181685,
+                "time": 0.189308016,
                 "bytes": 49506688,
                 "alloc": 626811,
                 "gctime": 0.0
@@ -6047,7 +6282,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.22699809,
+                "time": 0.263905494,
                 "bytes": 51593928,
                 "alloc": 683335,
                 "gctime": 0.0
@@ -6069,7 +6304,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.120459764,
+                "time": 0.121539,
                 "bytes": 12781160,
                 "alloc": 9625,
                 "gctime": 0.0
@@ -6091,7 +6326,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.47865013,
+                "time": 0.503669512,
                 "bytes": 95916344,
                 "alloc": 1258945,
                 "gctime": 0.0
@@ -6113,7 +6348,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.513433654,
+                "time": 0.594576847,
                 "bytes": 102588152,
                 "alloc": 1355434,
                 "gctime": 0.0
@@ -6135,7 +6370,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.294085126,
+                "time": 0.302262765,
                 "bytes": 25018040,
                 "alloc": 9724,
                 "gctime": 0.0
@@ -6157,7 +6392,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.004737823,
+                "time": 0.004800164,
                 "bytes": 8208,
                 "alloc": 355,
                 "gctime": 0.0
@@ -6179,7 +6414,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.006768416,
+                "time": 0.006843126,
                 "bytes": 978144,
                 "alloc": 14086,
                 "gctime": 0.0
@@ -6201,7 +6436,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.003766565,
+                "time": 0.003785747,
                 "bytes": 54720,
                 "alloc": 248,
                 "gctime": 0.0
@@ -6223,7 +6458,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.010486991,
+                "time": 0.01032975,
                 "bytes": 8432,
                 "alloc": 369,
                 "gctime": 0.0
@@ -6245,7 +6480,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.014630431,
+                "time": 0.015417379,
                 "bytes": 2410784,
                 "alloc": 34486,
                 "gctime": 0.0
@@ -6267,7 +6502,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.007734585,
+                "time": 0.007748226,
                 "bytes": 104960,
                 "alloc": 248,
                 "gctime": 0.0
@@ -6289,7 +6524,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.020240224,
+                "time": 0.020029673,
                 "bytes": 8432,
                 "alloc": 369,
                 "gctime": 0.0
@@ -6311,7 +6546,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.031795374,
+                "time": 0.033704537,
                 "bytes": 4798944,
                 "alloc": 68486,
                 "gctime": 0.0
@@ -6333,7 +6568,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.014222763,
+                "time": 0.014383562,
                 "bytes": 189120,
                 "alloc": 248,
                 "gctime": 0.0
@@ -6355,7 +6590,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.041141656,
+                "time": 0.054534881,
                 "bytes": 8432,
                 "alloc": 369,
                 "gctime": 0.0
@@ -6377,7 +6612,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.065656584,
+                "time": 0.085197255,
                 "bytes": 9574944,
                 "alloc": 136486,
                 "gctime": 0.0
@@ -6399,7 +6634,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.027965035,
+                "time": 0.028275184,
                 "bytes": 357120,
                 "alloc": 248,
                 "gctime": 0.0
@@ -6421,7 +6656,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.006793026,
+                "time": 0.006900675,
                 "bytes": 5811224,
                 "alloc": 66015,
                 "gctime": 0.0
@@ -6443,7 +6678,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.005859525,
+                "time": 0.006204584,
                 "bytes": 2114696,
                 "alloc": 21954,
                 "gctime": 0.0
@@ -6465,7 +6700,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.003183395,
+                "time": 0.003214862,
                 "bytes": 1731744,
                 "alloc": 7671,
                 "gctime": 0.0
@@ -6487,7 +6722,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.015575823,
+                "time": 0.017196647,
                 "bytes": 13621768,
                 "alloc": 168774,
                 "gctime": 0.0
@@ -6509,7 +6744,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.014039094,
+                "time": 0.016614483,
                 "bytes": 4616160,
                 "alloc": 42948,
                 "gctime": 0.0
@@ -6531,7 +6766,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.006807419,
+                "time": 0.006917547,
                 "bytes": 3641784,
                 "alloc": 7674,
                 "gctime": 0.0
@@ -6553,7 +6788,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.031202162,
+                "time": 0.036480713,
                 "bytes": 28192664,
                 "alloc": 361301,
                 "gctime": 0.0
@@ -6575,7 +6810,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.026916205,
+                "time": 0.050294618,
                 "bytes": 8790832,
                 "alloc": 77989,
                 "gctime": 0.0
@@ -6597,7 +6832,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.012801477,
+                "time": 0.01315655,
                 "bytes": 6829536,
                 "alloc": 7707,
                 "gctime": 0.0
@@ -6619,7 +6854,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.078239223,
+                "time": 0.093580539,
                 "bytes": 55533984,
                 "alloc": 728313,
                 "gctime": 0.0
@@ -6641,7 +6876,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.085062443,
+                "time": 0.113173434,
                 "bytes": 17135184,
                 "alloc": 147980,
                 "gctime": 0.0
@@ -6663,7 +6898,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.049262665,
+                "time": 0.051146361,
                 "bytes": 13203648,
                 "alloc": 7743,
                 "gctime": 0.0
