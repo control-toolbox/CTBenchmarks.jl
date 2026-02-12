@@ -51,4 +51,4 @@ Tables = "1"
 julia = "1.10"
 
 [sources]
-OptimalControlProblems = {url = "https://github.com/control-toolbox/OptimalControlProblems.jl", rev = "198-New-Problems"}
+OptimalControlProblems = {url = "https://github.com/control-toolbox/OptimalControlProblems.jl", rev = "198-dev-new-problems"}
