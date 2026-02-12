@@ -69,6 +69,7 @@ function run(
                 :space_shuttle,
                 :steering,
                 :vanderpol,
+                :brachistochrone,
             ],
             solver_models=[
                 :ipopt => [:jump, :adnlp, :exa],
