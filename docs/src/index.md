@@ -127,6 +127,7 @@ CTBenchmarks includes 14 optimal control problems from [OptimalControlProblems.j
 - `:space_shuttle` - Space shuttle re-entry
 - `:steering` - Steering control
 - `:vanderpol` - Van der Pol oscillator
+- `:balanced_field` - Aircraft
 
 ### Solver and Model Combinations
 

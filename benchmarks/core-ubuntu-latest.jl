@@ -18,6 +18,7 @@ function run()
             :space_shuttle,
             :steering,
             :vanderpol,
+            :balanced_field,
         ],
         solver_models=[:ipopt => [:jump, :adnlp, :exa], :madnlp => [:jump, :adnlp, :exa]],
         grid_sizes=[200, 500, 1000, 2000],
