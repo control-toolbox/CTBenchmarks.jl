@@ -1233,7 +1233,7 @@ version = "1.1.6"
 
 [[deps.OptimalControlProblems]]
 deps = ["ADNLPModels", "CTBase", "CTDirect", "CTModels", "DocStringExtensions", "ExaModels", "OrderedCollections", "SolverCore"]
-git-tree-sha1 = "94cfd117a2ca190c16576cc196d2e1efe153c41b"
+git-tree-sha1 = "3fca170cc3cf642978a2888bc67583c736cfcde3"
 repo-rev = "202-general-new-problem-the-van-der-pol-oscillator"
 repo-url = "https://github.com/control-toolbox/OptimalControlProblems.jl"
 uuid = "59046045-fb9c-4c23-964f-ff0a25704f96"
