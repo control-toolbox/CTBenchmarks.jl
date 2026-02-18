@@ -4,20 +4,9 @@
 function run()
     results = CTBenchmarks.benchmark(;
         problems=[
-            :beam,
-            :chain,
-            :double_oscillator,
-            # :ducted_fan,
-            :electric_vehicle,
-            :glider,
-            :insurance,
-            :jackson,
-            :robbins,
-            :robot,
-            :rocket,
-            :space_shuttle,
-            :steering,
-            :vanderpol,
+            :bryson_denham,
+            :robertson,
+            
         ],
         solver_models=[:ipopt => [:jump, :adnlp, :exa], :madnlp => [:jump, :adnlp, :exa]],
         grid_sizes=[200, 500, 1000, 2000],
