@@ -128,7 +128,7 @@ CTBenchmarks includes 14 optimal control problems from [OptimalControlProblems.j
 - `:steering` - Steering control
 - `:vanderpol` - Van der Pol oscillator
 - `:bryson_denham` - Bryson-Denham problem
-- `:robertson` - Robertson oscillator
+- `:robertson` - Robertson problem
 
 ### Solver and Model Combinations
 
