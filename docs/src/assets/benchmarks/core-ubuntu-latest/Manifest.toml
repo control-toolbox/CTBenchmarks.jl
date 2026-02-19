@@ -331,9 +331,9 @@ version = "1.1.1+0"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
-git-tree-sha1 = "d9d26935a0bcffc87d2613ce14c527c99fc543fd"
+git-tree-sha1 = "21d088c496ea22914fe80906eb5bce65755e5ec8"
 uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
-version = "2.5.0"
+version = "2.5.1"
 
 [[deps.Contour]]
 git-tree-sha1 = "439e35b0b36e2e5881738abc8857bd92ad6ff9a8"
@@ -1233,7 +1233,7 @@ version = "1.1.6"
 
 [[deps.OptimalControlProblems]]
 deps = ["ADNLPModels", "CTBase", "CTDirect", "CTModels", "DocStringExtensions", "ExaModels", "OrderedCollections", "SolverCore"]
-git-tree-sha1 = "0680e36603b5f63ee729b88b394c7ebdf2fd4e48"
+git-tree-sha1 = "da7c287e67a22a66d45c153d82de44ce1c80c847"
 repo-rev = "199-new-problem-bryson-denham"
 repo-url = "https://github.com/control-toolbox/OptimalControlProblems.jl"
 uuid = "59046045-fb9c-4c23-964f-ff0a25704f96"
