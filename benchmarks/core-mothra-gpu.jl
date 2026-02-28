@@ -18,6 +18,7 @@ function run()
             :space_shuttle,
             :steering,
             :vanderpol,
+            :brachistochrone,
         ],
         solver_models=[:madnlp => [:exa, :exa_gpu]],
         grid_sizes=[1000, 5000, 10000, 20000],
