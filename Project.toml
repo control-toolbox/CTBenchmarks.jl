@@ -49,3 +49,6 @@ Sockets = "1"
 Statistics = "1"
 Tables = "1"
 julia = "1.10"
+
+[sources]
+OptimalControlProblems = {url = "https://github.com/control-toolbox/OptimalControlProblems.jl", rev = "206-dev-test-all-new-problems-with-gpu"}
