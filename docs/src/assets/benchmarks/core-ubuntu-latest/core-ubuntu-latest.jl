@@ -19,6 +19,10 @@ function run()
             :steering,
             :vanderpol,
             :brachistochrone,
+            :balanced_field,
+            :bryson_denham,
+            :mountain_car,
+            
         ],
         solver_models=[:ipopt => [:jump, :adnlp, :exa], :madnlp => [:jump, :adnlp, :exa]],
         grid_sizes=[200, 500, 1000, 2000],
