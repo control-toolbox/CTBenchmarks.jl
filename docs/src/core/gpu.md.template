@@ -63,3 +63,58 @@ _print_benchmark_log("core-moonshot-gpu") # hide
   </div>
 </div>
 ```
+
+## KKT
+
+This benchmark suite evaluates optimal control problems on the KKT runner.
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = "core-kkt"
+ENV_NAME = BENCH
+-->
+
+### 📈 Performance Profile GPU Time
+
+<!-- PROFILE_PLOT:
+NAME = default_cpu
+BENCH_ID = core-kkt
+-->
+
+<!-- PROFILE_ANALYSIS:
+NAME = default_cpu
+BENCH_ID = core-kkt
+-->
+
+### 📈 Performance Profile Iterations
+
+<!-- PROFILE_PLOT:
+NAME = default_iter
+BENCH_ID = core-kkt
+-->
+
+<!-- PROFILE_ANALYSIS:
+NAME = default_iter
+BENCH_ID = core-kkt
+-->
+
+### 📊 Tables of Results
+
+<!-- INCLUDE_TEXT:
+NAME = print_benchmark_table_results
+ARGS = core-kkt
+-->
+
+```@raw html
+<div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+  <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
+  <div class="ctdetails-body">
+```
+
+```@example BENCH
+_print_benchmark_log("core-kkt") # hide
+```
+
+```@raw html
+  </div>
+</div>
+```

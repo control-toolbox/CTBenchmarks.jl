@@ -454,6 +454,7 @@ function write_core_benchmark_templates(
         ),
         ("core-moonshot-cpu", "Moonshot CPU", "Results on self-hosted CPU hardware."),
         ("core-moonshot-gpu", "Moonshot GPU", "Results on self-hosted GPU hardware."),
+        ("core-kkt", "KKT GPU", "Results on self-hosted KKT hardware."),
     ]
 
     # Get all problems from all benchmarks
