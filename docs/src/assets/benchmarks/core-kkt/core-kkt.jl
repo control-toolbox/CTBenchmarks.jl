@@ -10,14 +10,18 @@ function run()
             # :ducted_fan,
             :electric_vehicle,
             :glider,
-	    ## :insurance, # to be re-added (unstable / sincos issue)
+            :insurance,
             :jackson,
             :robbins,
-	    ## :robot, # to be re-added (unstable / sincos issue)
+            :robot,
             :rocket,
-	    ## :space_shuttle, # to be re-added (unstable / sincos issue)
-	    ## :steering, # to be re-added (unstable / sincos issue)
+            :space_shuttle,
+            :steering,
             :vanderpol,
+            :brachistochrone,
+            :balanced_field,
+            :bryson_denham,
+            :mountain_car,
         ],
         solver_models=[:madnlp => [:exa, :exa_gpu]],
         grid_sizes=[1000, 5000, 10000, 20000],
