@@ -1233,7 +1233,7 @@ version = "1.1.8-beta.3"
 
 [[deps.OptimalControlProblems]]
 deps = ["ADNLPModels", "CTBase", "CTDirect", "CTModels", "DocStringExtensions", "ExaModels", "OrderedCollections", "SolverCore"]
-git-tree-sha1 = "a3364374ac8b091d3b312ff643940c253fbdeafb"
+git-tree-sha1 = "c31b9117022bc4d60fc06603828c959bea977c0a"
 repo-rev = "206-dev-test-all-new-problems-with-gpu"
 repo-url = "https://github.com/control-toolbox/OptimalControlProblems.jl"
 uuid = "59046045-fb9c-4c23-964f-ff0a25704f96"
