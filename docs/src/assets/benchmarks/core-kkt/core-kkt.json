@@ -2,9 +2,9 @@
     "metadata": {
         "julia_version": "1.11.9",
         "versioninfo": "Julia Version 1.11.9\nCommit 53a02c0720c (2026-02-06 00:27 UTC)\nBuild Info:\n  Official https://julialang.org/ release\nPlatform Info:\n  OS: Linux (x86_64-linux-gnu)\n  CPU: 192 × INTEL(R) XEON(R) PLATINUM 8568Y+\n  WORD_SIZE: 64\n  LLVM: libLLVM-16.0.6 (ORCJIT, sapphirerapids)\nThreads: 1 default, 0 interactive, 1 GC (on 192 virtual cores)\nEnvironment:\n  JULIA_CUDSS_LIBRARY_PATH = /software/libcudss/libcudss-linux-x86_64-0.7.1.4_cuda13-archive/lib\n  JULIA_LOAD_PATH = @:@v#.#:@stdlib:/software/julia/environments/v1.12\n  JULIA_PKG_SERVER_REGISTRY_PREFERENCE = eager\n  JULIA_DEPOT_PATH = /storage/mschanen/github-actions/julia_depot\n  LD_LIBRARY_PATH = /software/julia/julia_binaries/julia-1.12/lib:/software/mpich-ofi/lib:/software/libcudss/libcudss-linux-x86_64-0.7.1.4_cuda13-archive/lib:/usr/local/cuda/lib\n",
-        "pkg_manifest": "\u001b[36m\u001b[1mProject\u001b[22m\u001b[39m CTBenchmarks v0.3.1\n\u001b[32m\u001b[1mStatus\u001b[22m\u001b[39m `/storage/mschanen/github-actions/actions_runner_ct/_work/CTBenchmarks.jl/CTBenchmarks.jl/Manifest.toml`\n  \u001b[90m[54578032] \u001b[39mADNLPModels v0.8.13\n  \u001b[90m[47edcb42] \u001b[39mADTypes v1.21.0\n  \u001b[90m[14f7f29c] \u001b[39mAMD v0.5.3\n  \u001b[90m[621f4979] \u001b[39mAbstractFFTs v1.5.0\n  \u001b[90m[79e6a3ab] \u001b[39mAdapt v4.5.0\n  \u001b[90m[66dad0bd] \u001b[39mAliasTables v1.1.3\n  \u001b[90m[a9b6321e] \u001b[39mAtomix v1.1.2\n  \u001b[90m[13072b0f] \u001b[39mAxisAlgorithms v1.1.0\n  \u001b[90m[ab4f0b2a] \u001b[39mBFloat16s v0.6.1\n  \u001b[90m[6e4b80f9] \u001b[39mBenchmarkTools v1.6.3\n  \u001b[90m[d1d4a3ce] \u001b[39mBitFlags v0.1.9\n  \u001b[90m[fa961155] \u001b[39mCEnum v0.5.0\n\u001b[33m⌅\u001b[39m \u001b[90m[54762871] \u001b[39mCTBase v0.16.2\n\u001b[33m⌅\u001b[39m \u001b[90m[790bbbee] \u001b[39mCTDirect v0.17.5-beta\n\u001b[32m⌃\u001b[39m \u001b[90m[1c39547c] \u001b[39mCTFlows v0.8.12-beta\n\u001b[33m⌅\u001b[39m \u001b[90m[34c4fa32] \u001b[39mCTModels v0.6.10-beta.2\n\u001b[32m⌃\u001b[39m \u001b[90m[32681960] \u001b[39mCTParser v0.8.2-beta.6\n  \u001b[90m[052768ef] \u001b[39mCUDA v5.9.7\n  \u001b[90m[1af6417a] \u001b[39mCUDA_Runtime_Discovery v1.0.0\n  \u001b[90m[45b445bb] \u001b[39mCUDSS v0.6.7\n  \u001b[90m[d360d2e6] \u001b[39mChainRulesCore v1.26.0\n  \u001b[90m[523fee87] \u001b[39mCodecBzip2 v0.8.5\n  \u001b[90m[944b1d66] \u001b[39mCodecZlib v0.7.8\n  \u001b[90m[35d6a980] \u001b[39mColorSchemes v3.31.0\n  \u001b[90m[3da002f7] \u001b[39mColorTypes v0.12.1\n  \u001b[90m[c3611d14] \u001b[39mColorVectorSpace v0.11.0\n  \u001b[90m[5ae59095] \u001b[39mColors v0.13.1\n  \u001b[90m[38540f10] \u001b[39mCommonSolve v0.2.6\n  \u001b[90m[bbf7d656] \u001b[39mCommonSubexpressions v0.3.1\n  \u001b[90m[34da2185] \u001b[39mCompat v4.18.1\n  \u001b[90m[f0e56b4a] \u001b[39mConcurrentUtilities v2.5.1\n  \u001b[90m[d38c429a] \u001b[39mContour v0.6.3\n  \u001b[90m[a8cc5b0e] \u001b[39mCrayons v4.1.1\n  \u001b[90m[9a962f9c] \u001b[39mDataAPI v1.16.0\n  \u001b[90m[a93c6f00] \u001b[39mDataFrames v1.8.1\n  \u001b[90m[864edb3b] \u001b[39mDataStructures v0.19.3\n  \u001b[90m[e2d170a0] \u001b[39mDataValueInterfaces v1.0.0\n  \u001b[90m[8bb1440f] \u001b[39mDelimitedFiles v1.9.1\n  \u001b[90m[163ba53b] \u001b[39mDiffResults v1.1.0\n  \u001b[90m[b552c78f] \u001b[39mDiffRules v1.15.1\n  \u001b[90m[ffbed154] \u001b[39mDocStringExtensions v0.9.5\n\u001b[32m⌃\u001b[39m \u001b[90m[1037b233] \u001b[39mExaModels v0.9.3\n  \u001b[90m[460bff9d] \u001b[39mExceptionUnwrapping v0.1.11\n  \u001b[90m[e2ba6199] \u001b[39mExprTools v0.1.10\n  \u001b[90m[c87230d0] \u001b[39mFFMPEG v0.4.5\n  \u001b[90m[9aa1b823] \u001b[39mFastClosures v0.3.2\n  \u001b[90m[1a297f60] \u001b[39mFillArrays v1.16.0\n  \u001b[90m[53c48c17] \u001b[39mFixedPointNumbers v0.8.5\n  \u001b[90m[1fa38f19] \u001b[39mFormat v1.3.7\n  \u001b[90m[f6369f11] \u001b[39mForwardDiff v1.3.2\n  \u001b[90m[069b7b12] \u001b[39mFunctionWrappers v1.1.3\n  \u001b[90m[0c68f7d7] \u001b[39mGPUArrays v11.4.1\n  \u001b[90m[46192b85] \u001b[39mGPUArraysCore v0.2.0\n  \u001b[90m[61eb1bfa] \u001b[39mGPUCompiler v1.8.2\n  \u001b[90m[096a3bc2] \u001b[39mGPUToolbox v1.0.0\n  \u001b[90m[28b8d3ca] \u001b[39mGR v0.73.24\n  \u001b[90m[42e2da0e] \u001b[39mGrisu v1.0.2\n  \u001b[90m[34c5aeac] \u001b[39mHSL v0.5.2\n  \u001b[90m[cd3eb016] \u001b[39mHTTP v1.10.19\n  \u001b[90m[076d061b] \u001b[39mHashArrayMappedTries v0.2.0\n  \u001b[90m[842dd82b] \u001b[39mInlineStrings v1.4.5\n  \u001b[90m[a98d9a8b] \u001b[39mInterpolations v0.16.2\n  \u001b[90m[41ab1584] \u001b[39mInvertedIndices v1.3.1\n  \u001b[90m[b6b21f68] \u001b[39mIpopt v1.14.1\n  \u001b[90m[92d709cd] \u001b[39mIrrationalConstants v0.2.6\n  \u001b[90m[82899510] \u001b[39mIteratorInterfaceExtensions v1.0.0\n  \u001b[90m[1019f520] \u001b[39mJLFzf v0.1.11\n  \u001b[90m[692b3bcd] \u001b[39mJLLWrappers v1.7.1\n  \u001b[90m[682c06a0] \u001b[39mJSON v1.4.0\n  \u001b[90m[4076af6c] \u001b[39mJuMP v1.30.0\n  \u001b[90m[63c18a36] \u001b[39mKernelAbstractions v0.9.40\n  \u001b[90m[40e66cde] \u001b[39mLDLFactorizations v0.10.1\n  \u001b[90m[929cbde3] \u001b[39mLLVM v9.4.6\n  \u001b[90m[8b046642] \u001b[39mLLVMLoopInfo v1.0.0\n  \u001b[90m[b964fa9f] \u001b[39mLaTeXStrings v1.4.0\n  \u001b[90m[23fbe1c1] \u001b[39mLatexify v0.16.10\n  \u001b[90m[5c8ed15e] \u001b[39mLinearOperators v2.13.0\n  \u001b[90m[2ab3a3ac] \u001b[39mLogExpFunctions v0.3.29\n  \u001b[90m[e6f89c97] \u001b[39mLoggingExtras v1.2.0\n  \u001b[90m[33e6dc65] \u001b[39mMKL v0.9.1\n  \u001b[90m[d8e11817] \u001b[39mMLStyle v0.4.17\n  \u001b[90m[1914dd2f] \u001b[39mMacroTools v0.5.16\n\u001b[33m⌅\u001b[39m \u001b[90m[2621e9c9] \u001b[39mMadNLP v0.8.12\n\u001b[33m⌅\u001b[39m \u001b[90m[d72a61cc] \u001b[39mMadNLPGPU v0.7.18\n  \u001b[90m[3b83494e] \u001b[39mMadNLPMumps v0.5.1\n  \u001b[90m[b8f27783] \u001b[39mMathOptInterface v1.49.0\n  \u001b[90m[739be429] \u001b[39mMbedTLS v1.1.10\n  \u001b[90m[442fdcdd] \u001b[39mMeasures v0.3.3\n  \u001b[90m[2679e427] \u001b[39mMetis v1.5.0\n  \u001b[90m[e1d29d7a] \u001b[39mMissings v1.2.0\n  \u001b[90m[d8a4904e] \u001b[39mMutableArithmetics v1.6.7\n  \u001b[90m[a4795742] \u001b[39mNLPModels v0.21.11\n  \u001b[90m[f4238b75] \u001b[39mNLPModelsIpopt v0.11.2\n  \u001b[90m[e01155f1] \u001b[39mNLPModelsModifiers v0.7.4\n  \u001b[90m[5da4648a] \u001b[39mNVTX v1.0.3\n  \u001b[90m[77ba4419] \u001b[39mNaNMath v1.1.3\n  \u001b[90m[6fe1bfb0] \u001b[39mOffsetArrays v1.17.0\n  \u001b[90m[4d8831e6] \u001b[39mOpenSSL v1.6.1\n\u001b[32m⌃\u001b[39m \u001b[90m[5f98b655] \u001b[39mOptimalControl v1.1.8-beta.3\n  \u001b[90m[59046045] \u001b[39mOptimalControlProblems v0.4.0 `https://github.com/control-toolbox/OptimalControlProblems.jl#206-dev-test-all-new-problems-with-gpu`\n  \u001b[90m[bac558e1] \u001b[39mOrderedCollections v1.8.1\n  \u001b[90m[d96e819e] \u001b[39mParameters v0.12.3\n  \u001b[90m[69de0a69] \u001b[39mParsers v2.8.3\n  \u001b[90m[ccf2f8ad] \u001b[39mPlotThemes v3.3.0\n  \u001b[90m[995b91a9] \u001b[39mPlotUtils v1.4.4\n  \u001b[90m[91a5bcdd] \u001b[39mPlots v1.41.6\n  \u001b[90m[2dfb63ee] \u001b[39mPooledArrays v1.4.3\n\u001b[33m⌅\u001b[39m \u001b[90m[aea7be01] \u001b[39mPrecompileTools v1.2.1\n  \u001b[90m[21216c6a] \u001b[39mPreferences v1.5.2\n  \u001b[90m[08abe8d2] \u001b[39mPrettyTables v3.2.3\n  \u001b[90m[43287f4e] \u001b[39mPtrArrays v1.4.0\n  \u001b[90m[be4d8f0f] \u001b[39mQuadmath v0.5.13\n  \u001b[90m[74087812] \u001b[39mRandom123 v1.7.1\n  \u001b[90m[e6cf234a] \u001b[39mRandomNumbers v1.6.0\n  \u001b[90m[c84ed2f1] \u001b[39mRatios v0.4.5\n  \u001b[90m[3cdcf5f2] \u001b[39mRecipesBase v1.3.4\n  \u001b[90m[01d81517] \u001b[39mRecipesPipeline v0.6.12\n  \u001b[90m[189a3867] \u001b[39mReexport v1.2.2\n  \u001b[90m[05181044] \u001b[39mRelocatableFolders v1.0.1\n  \u001b[90m[ae029012] \u001b[39mRequires v1.3.1\n  \u001b[90m[37e2e3b7] \u001b[39mReverseDiff v1.16.2\n  \u001b[90m[7e506255] \u001b[39mScopedValues v1.5.0\n  \u001b[90m[6c6a2e73] \u001b[39mScratch v1.3.0\n  \u001b[90m[91c51154] \u001b[39mSentinelArrays v1.4.9\n  \u001b[90m[992d4aef] \u001b[39mShowoff v1.0.3\n  \u001b[90m[777ac1f9] \u001b[39mSimpleBufferStream v1.2.0\n  \u001b[90m[ff4d7338] \u001b[39mSolverCore v0.3.10\n  \u001b[90m[a2af1166] \u001b[39mSortingAlgorithms v1.2.2\n  \u001b[90m[9f842d2f] \u001b[39mSparseConnectivityTracer v1.2.1\n  \u001b[90m[0a514795] \u001b[39mSparseMatrixColorings v0.4.24\n  \u001b[90m[276daf66] \u001b[39mSpecialFunctions v2.7.1\n  \u001b[90m[860ef19b] \u001b[39mStableRNGs v1.0.4\n  \u001b[90m[90137ffa] \u001b[39mStaticArrays v1.9.17\n  \u001b[90m[1e83bf80] \u001b[39mStaticArraysCore v1.4.4\n  \u001b[90m[10745b16] \u001b[39mStatistics v1.11.1\n  \u001b[90m[82ae8749] \u001b[39mStatsAPI v1.8.0\n  \u001b[90m[2913bbd2] \u001b[39mStatsBase v0.34.10\n  \u001b[90m[892a3eda] \u001b[39mStringManipulation v0.4.4\n  \u001b[90m[ec057cc2] \u001b[39mStructUtils v2.6.3\n  \u001b[90m[3783bdb8] \u001b[39mTableTraits v1.0.1\n  \u001b[90m[bd369af6] \u001b[39mTables v1.12.1\n  \u001b[90m[62fd8b95] \u001b[39mTensorCore v0.1.1\n  \u001b[90m[a759f4b9] \u001b[39mTimerOutputs v0.5.29\n  \u001b[90m[e689c965] \u001b[39mTracy v0.1.6\n  \u001b[90m[3bb67fe8] \u001b[39mTranscodingStreams v0.11.3\n  \u001b[90m[5c2747f8] \u001b[39mURIs v1.6.1\n  \u001b[90m[3a884ed6] \u001b[39mUnPack v1.0.2\n  \u001b[90m[1cfade01] \u001b[39mUnicodeFun v0.4.1\n  \u001b[90m[013be700] \u001b[39mUnsafeAtomics v0.3.0\n  \u001b[90m[41fe7b60] \u001b[39mUnzip v0.2.0\n  \u001b[90m[efce3f68] \u001b[39mWoodburyMatrices v1.1.0\n  \u001b[90m[ae81ac8f] \u001b[39mASL_jll v0.1.3+0\n  \u001b[90m[6e34b625] \u001b[39mBzip2_jll v1.0.9+0\n  \u001b[90m[d1e2174e] \u001b[39mCUDA_Compiler_jll v0.4.1+1\n  \u001b[90m[4ee394cb] \u001b[39mCUDA_Driver_jll v13.1.0+2\n\u001b[33m⌅\u001b[39m \u001b[90m[76a88914] \u001b[39mCUDA_Runtime_jll v0.19.2+0\n  \u001b[90m[4889d778] \u001b[39mCUDSS_jll v0.7.1+0\n  \u001b[90m[83423d85] \u001b[39mCairo_jll v1.18.5+1\n  \u001b[90m[ee1fde0b] \u001b[39mDbus_jll v1.16.2+0\n  \u001b[90m[2702e6a9] \u001b[39mEpollShim_jll v0.0.20230411+1\n  \u001b[90m[2e619515] \u001b[39mExpat_jll v2.7.3+0\n  \u001b[90m[b22a6f82] \u001b[39mFFMPEG_jll v8.0.1+0\n  \u001b[90m[a3f928ae] \u001b[39mFontconfig_jll v2.17.1+0\n  \u001b[90m[d7e528f0] \u001b[39mFreeType2_jll v2.13.4+0\n  \u001b[90m[559328eb] \u001b[39mFriBidi_jll v1.0.17+0\n  \u001b[90m[0656b61e] \u001b[39mGLFW_jll v3.4.1+0\n  \u001b[90m[d2c73de3] \u001b[39mGR_jll v0.73.24+0\n  \u001b[90m[b0724c58] \u001b[39mGettextRuntime_jll v0.22.4+0\n  \u001b[90m[61579ee1] \u001b[39mGhostscript_jll v9.55.1+0\n  \u001b[90m[7746bdde] \u001b[39mGlib_jll v2.86.3+0\n  \u001b[90m[3b182d85] \u001b[39mGraphite2_jll v1.3.15+0\n  \u001b[90m[017b0a0e] \u001b[39mHSL_jll v4.0.4+0\n  \u001b[90m[2e76f6c2] \u001b[39mHarfBuzz_jll v8.5.1+0\n  \u001b[90m[e33a78d0] \u001b[39mHwloc_jll v2.13.0+0\n  \u001b[90m[1d5cc7b8] \u001b[39mIntelOpenMP_jll v2025.2.0+0\n  \u001b[90m[9cc047cb] \u001b[39mIpopt_jll v300.1400.1901+0\n  \u001b[90m[aacddb02] \u001b[39mJpegTurbo_jll v3.1.4+0\n  \u001b[90m[9c1d0b0a] \u001b[39mJuliaNVTXCallbacks_jll v0.2.1+0\n  \u001b[90m[c1c5ebd0] \u001b[39mLAME_jll v3.100.3+0\n  \u001b[90m[88015f11] \u001b[39mLERC_jll v4.0.1+0\n  \u001b[90m[dad2f222] \u001b[39mLLVMExtra_jll v0.0.38+0\n  \u001b[90m[1d63c593] \u001b[39mLLVMOpenMP_jll v18.1.8+0\n  \u001b[90m[dd4b983a] \u001b[39mLZO_jll v2.10.3+0\n  \u001b[90m[ad6e5548] \u001b[39mLibTracyClient_jll v0.13.1+0\n\u001b[33m⌅\u001b[39m \u001b[90m[e9f186c6] \u001b[39mLibffi_jll v3.4.7+0\n  \u001b[90m[7e76a0d4] \u001b[39mLibglvnd_jll v1.7.1+1\n  \u001b[90m[94ce4f54] \u001b[39mLibiconv_jll v1.18.0+0\n  \u001b[90m[4b2f31a3] \u001b[39mLibmount_jll v2.41.3+0\n  \u001b[90m[89763e89] \u001b[39mLibtiff_jll v4.7.2+0\n  \u001b[90m[38a345b3] \u001b[39mLibuuid_jll v2.41.3+0\n  \u001b[90m[d00139f3] \u001b[39mMETIS_jll v5.1.3+0\n  \u001b[90m[856f044c] \u001b[39mMKL_jll v2025.2.0+0\n  \u001b[90m[d7ed1dd3] \u001b[39mMUMPS_seq_jll v500.800.200+0\n  \u001b[90m[e98f9f5b] \u001b[39mNVTX_jll v3.2.2+0\n  \u001b[90m[e7412a2a] \u001b[39mOgg_jll v1.3.6+0\n  \u001b[90m[656ef2d0] \u001b[39mOpenBLAS32_jll v0.3.30+0\n  \u001b[90m[458c3c95] \u001b[39mOpenSSL_jll v3.5.5+0\n  \u001b[90m[efe28fd5] \u001b[39mOpenSpecFun_jll v0.5.6+0\n  \u001b[90m[91d4177d] \u001b[39mOpus_jll v1.6.1+0\n  \u001b[90m[36c8627f] \u001b[39mPango_jll v1.57.0+0\n\u001b[33m⌅\u001b[39m \u001b[90m[30392449] \u001b[39mPixman_jll v0.44.2+0\n  \u001b[90m[c0090381] \u001b[39mQt6Base_jll v6.10.2+1\n  \u001b[90m[629bc702] \u001b[39mQt6Declarative_jll v6.10.2+1\n  \u001b[90m[ce943373] \u001b[39mQt6ShaderTools_jll v6.10.2+1\n  \u001b[90m[6de9746b] \u001b[39mQt6Svg_jll v6.10.2+0\n  \u001b[90m[e99dba38] \u001b[39mQt6Wayland_jll v6.10.2+1\n  \u001b[90m[319450e9] \u001b[39mSPRAL_jll v2025.9.18+0\n  \u001b[90m[a44049a8] \u001b[39mVulkan_Loader_jll v1.3.243+0\n  \u001b[90m[a2964d1f] \u001b[39mWayland_jll v1.24.0+0\n\u001b[33m⌅\u001b[39m \u001b[90m[02c8fc9c] \u001b[39mXML2_jll v2.13.9+0\n  \u001b[90m[ffd25f8a] \u001b[39mXZ_jll v5.8.2+0\n  \u001b[90m[f67eecfb] \u001b[39mXorg_libICE_jll v1.1.2+0\n  \u001b[90m[c834827a] \u001b[39mXorg_libSM_jll v1.2.6+0\n  \u001b[90m[4f6342f7] \u001b[39mXorg_libX11_jll v1.8.13+0\n  \u001b[90m[0c0b7dd1] \u001b[39mXorg_libXau_jll v1.0.13+0\n  \u001b[90m[935fb764] \u001b[39mXorg_libXcursor_jll v1.2.4+0\n  \u001b[90m[a3789734] \u001b[39mXorg_libXdmcp_jll v1.1.6+0\n  \u001b[90m[1082639a] \u001b[39mXorg_libXext_jll v1.3.8+0\n  \u001b[90m[d091e8ba] \u001b[39mXorg_libXfixes_jll v6.0.2+0\n  \u001b[90m[a51aa0fd] \u001b[39mXorg_libXi_jll v1.8.3+0\n  \u001b[90m[d1454406] \u001b[39mXorg_libXinerama_jll v1.1.7+0\n  \u001b[90m[ec84b674] \u001b[39mXorg_libXrandr_jll v1.5.6+0\n  \u001b[90m[ea2f1a96] \u001b[39mXorg_libXrender_jll v0.9.12+0\n  \u001b[90m[a65dc6b1] \u001b[39mXorg_libpciaccess_jll v0.18.1+0\n  \u001b[90m[c7cfdc94] \u001b[39mXorg_libxcb_jll v1.17.1+0\n  \u001b[90m[cc61e674] \u001b[39mXorg_libxkbfile_jll v1.2.0+0\n  \u001b[90m[e920d4aa] \u001b[39mXorg_xcb_util_cursor_jll v0.1.6+0\n  \u001b[90m[12413925] \u001b[39mXorg_xcb_util_image_jll v0.4.1+0\n  \u001b[90m[2def613f] \u001b[39mXorg_xcb_util_jll v0.4.1+0\n  \u001b[90m[975044d2] \u001b[39mXorg_xcb_util_keysyms_jll v0.4.1+0\n  \u001b[90m[0d47668e] \u001b[39mXorg_xcb_util_renderutil_jll v0.3.10+0\n  \u001b[90m[c22f9ab0] \u001b[39mXorg_xcb_util_wm_jll v0.4.2+0\n  \u001b[90m[35661453] \u001b[39mXorg_xkbcomp_jll v1.4.7+0\n  \u001b[90m[33bec58e] \u001b[39mXorg_xkeyboard_config_jll v2.44.0+0\n  \u001b[90m[c5fb5394] \u001b[39mXorg_xtrans_jll v1.6.0+0\n  \u001b[90m[3161d3a3] \u001b[39mZstd_jll v1.5.7+1\n  \u001b[90m[1e29f10c] \u001b[39mdemumble_jll v1.3.0+0\n  \u001b[90m[35ca27e7] \u001b[39meudev_jll v3.2.14+0\n  \u001b[90m[214eeab7] \u001b[39mfzf_jll v0.61.1+0\n  \u001b[90m[a4ae2306] \u001b[39mlibaom_jll v3.13.1+0\n  \u001b[90m[0ac62f75] \u001b[39mlibass_jll v0.17.4+0\n  \u001b[90m[1183f4f0] \u001b[39mlibdecor_jll v0.2.2+0\n  \u001b[90m[2db6ffa8] \u001b[39mlibevdev_jll v1.13.4+0\n  \u001b[90m[f638f0a6] \u001b[39mlibfdk_aac_jll v2.0.4+0\n  \u001b[90m[36db933b] \u001b[39mlibinput_jll v1.28.1+0\n  \u001b[90m[b53b4c65] \u001b[39mlibpng_jll v1.6.55+0\n  \u001b[90m[f27f6e37] \u001b[39mlibvorbis_jll v1.3.8+0\n  \u001b[90m[009596ad] \u001b[39mmtdev_jll v1.1.7+0\n  \u001b[90m[1317d2d5] \u001b[39moneTBB_jll v2022.0.0+1\n\u001b[33m⌅\u001b[39m \u001b[90m[1270edf5] \u001b[39mx264_jll v10164.0.1+0\n  \u001b[90m[dfaa095f] \u001b[39mx265_jll v4.1.0+0\n  \u001b[90m[d8fb68d0] \u001b[39mxkbcommon_jll v1.13.0+0\n  \u001b[90m[0dad84c5] \u001b[39mArgTools v1.1.2\n  \u001b[90m[56f22d72] \u001b[39mArtifacts v1.11.0\n  \u001b[90m[2a0f44e3] \u001b[39mBase64 v1.11.0\n  \u001b[90m[ade2ca70] \u001b[39mDates v1.11.0\n  \u001b[90m[8ba89e20] \u001b[39mDistributed v1.11.0\n  \u001b[90m[f43a241f] \u001b[39mDownloads v1.6.0\n  \u001b[90m[7b1f6079] \u001b[39mFileWatching v1.11.0\n  \u001b[90m[9fa8497b] \u001b[39mFuture v1.11.0\n  \u001b[90m[b77e0a4c] \u001b[39mInteractiveUtils v1.11.0\n  \u001b[90m[4af54fe1] \u001b[39mLazyArtifacts v1.11.0\n  \u001b[90m[b27032c2] \u001b[39mLibCURL v0.6.4\n  \u001b[90m[76f85450] \u001b[39mLibGit2 v1.11.0\n  \u001b[90m[8f399da3] \u001b[39mLibdl v1.11.0\n  \u001b[90m[37e2e46d] \u001b[39mLinearAlgebra v1.11.0\n  \u001b[90m[56ddb016] \u001b[39mLogging v1.11.0\n  \u001b[90m[d6f4376e] \u001b[39mMarkdown v1.11.0\n  \u001b[90m[a63ad114] \u001b[39mMmap v1.11.0\n  \u001b[90m[ca575930] \u001b[39mNetworkOptions v1.2.0\n  \u001b[90m[44cfe95a] \u001b[39mPkg v1.11.0\n  \u001b[90m[de0858da] \u001b[39mPrintf v1.11.0\n  \u001b[90m[9abbd945] \u001b[39mProfile v1.11.0\n  \u001b[90m[3fa0cd96] \u001b[39mREPL v1.11.0\n  \u001b[90m[9a3f8284] \u001b[39mRandom v1.11.0\n  \u001b[90m[ea8e919c] \u001b[39mSHA v0.7.0\n  \u001b[90m[9e88b42a] \u001b[39mSerialization v1.11.0\n  \u001b[90m[1a1011a3] \u001b[39mSharedArrays v1.11.0\n  \u001b[90m[6462fe0b] \u001b[39mSockets v1.11.0\n  \u001b[90m[2f01184e] \u001b[39mSparseArrays v1.11.0\n  \u001b[90m[f489334b] \u001b[39mStyledStrings v1.11.0\n  \u001b[90m[4607b0f0] \u001b[39mSuiteSparse\n  \u001b[90m[fa267f1f] \u001b[39mTOML v1.0.3\n  \u001b[90m[a4e569a6] \u001b[39mTar v1.10.0\n  \u001b[90m[8dfed614] \u001b[39mTest v1.11.0\n  \u001b[90m[cf7118a7] \u001b[39mUUIDs v1.11.0\n  \u001b[90m[4ec0a83e] \u001b[39mUnicode v1.11.0\n  \u001b[90m[e66e0078] \u001b[39mCompilerSupportLibraries_jll v1.1.1+0\n  \u001b[90m[deac9b47] \u001b[39mLibCURL_jll v8.6.0+0\n  \u001b[90m[e37daf67] \u001b[39mLibGit2_jll v1.7.2+0\n  \u001b[90m[29816b5a] \u001b[39mLibSSH2_jll v1.11.0+1\n  \u001b[90m[c8ffd9c3] \u001b[39mMbedTLS_jll v2.28.6+0\n  \u001b[90m[14a3606d] \u001b[39mMozillaCACerts_jll v2023.12.12\n  \u001b[90m[4536629a] \u001b[39mOpenBLAS_jll v0.3.27+1\n  \u001b[90m[05823500] \u001b[39mOpenLibm_jll v0.8.5+0\n  \u001b[90m[efcefdf7] \u001b[39mPCRE2_jll v10.42.0+1\n  \u001b[90m[bea87d4a] \u001b[39mSuiteSparse_jll v7.7.0+0\n  \u001b[90m[83775a58] \u001b[39mZlib_jll v1.2.13+1\n  \u001b[90m[8e850b90] \u001b[39mlibblastrampoline_jll v5.11.0+0\n  \u001b[90m[8e850ede] \u001b[39mnghttp2_jll v1.59.0+0\n  \u001b[90m[3f19e933] \u001b[39mp7zip_jll v17.4.0+2\n\u001b[36m\u001b[1mInfo\u001b[22m\u001b[39m Packages marked with \u001b[32m⌃\u001b[39m and \u001b[33m⌅\u001b[39m have new versions available. Those with \u001b[32m⌃\u001b[39m may be upgradable, but those with \u001b[33m⌅\u001b[39m are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`\n",
-        "pkg_status": "\u001b[36m\u001b[1mProject\u001b[22m\u001b[39m CTBenchmarks v0.3.1\n\u001b[32m\u001b[1mStatus\u001b[22m\u001b[39m `/storage/mschanen/github-actions/actions_runner_ct/_work/CTBenchmarks.jl/CTBenchmarks.jl/Project.toml`\n  \u001b[90m[6e4b80f9] \u001b[39mBenchmarkTools v1.6.3\n\u001b[33m⌅\u001b[39m \u001b[90m[54762871] \u001b[39mCTBase v0.16.2\n  \u001b[90m[052768ef] \u001b[39mCUDA v5.9.7\n  \u001b[90m[a93c6f00] \u001b[39mDataFrames v1.8.1\n  \u001b[90m[ffbed154] \u001b[39mDocStringExtensions v0.9.5\n  \u001b[90m[b6b21f68] \u001b[39mIpopt v1.14.1\n  \u001b[90m[682c06a0] \u001b[39mJSON v1.4.0\n  \u001b[90m[4076af6c] \u001b[39mJuMP v1.30.0\n\u001b[33m⌅\u001b[39m \u001b[90m[d72a61cc] \u001b[39mMadNLPGPU v0.7.18\n  \u001b[90m[3b83494e] \u001b[39mMadNLPMumps v0.5.1\n  \u001b[90m[f4238b75] \u001b[39mNLPModelsIpopt v0.11.2\n\u001b[32m⌃\u001b[39m \u001b[90m[5f98b655] \u001b[39mOptimalControl v1.1.8-beta.3\n  \u001b[90m[59046045] \u001b[39mOptimalControlProblems v0.4.0 `https://github.com/control-toolbox/OptimalControlProblems.jl#206-dev-test-all-new-problems-with-gpu`\n  \u001b[90m[91a5bcdd] \u001b[39mPlots v1.41.6\n  \u001b[90m[10745b16] \u001b[39mStatistics v1.11.1\n  \u001b[90m[bd369af6] \u001b[39mTables v1.12.1\n  \u001b[90m[ade2ca70] \u001b[39mDates v1.11.0\n  \u001b[90m[b77e0a4c] \u001b[39mInteractiveUtils v1.11.0\n  \u001b[90m[44cfe95a] \u001b[39mPkg v1.11.0\n  \u001b[90m[de0858da] \u001b[39mPrintf v1.11.0\n  \u001b[90m[6462fe0b] \u001b[39mSockets v1.11.0\n\u001b[36m\u001b[1mInfo\u001b[22m\u001b[39m Packages marked with \u001b[32m⌃\u001b[39m and \u001b[33m⌅\u001b[39m have new versions available. Those with \u001b[32m⌃\u001b[39m may be upgradable, but those with \u001b[33m⌅\u001b[39m are restricted by compatibility constraints from upgrading. To see why use `status --outdated`\n",
-        "timestamp": "2026-03-04 23:15:26 UTC",
+        "pkg_manifest": "\u001b[36m\u001b[1mProject\u001b[22m\u001b[39m CTBenchmarks v0.3.1\n\u001b[32m\u001b[1mStatus\u001b[22m\u001b[39m `/storage/mschanen/github-actions/actions_runner_ct/_work/CTBenchmarks.jl/CTBenchmarks.jl/Manifest.toml`\n  \u001b[90m[54578032] \u001b[39mADNLPModels v0.8.13\n  \u001b[90m[47edcb42] \u001b[39mADTypes v1.21.0\n  \u001b[90m[14f7f29c] \u001b[39mAMD v0.5.3\n  \u001b[90m[621f4979] \u001b[39mAbstractFFTs v1.5.0\n  \u001b[90m[79e6a3ab] \u001b[39mAdapt v4.5.0\n  \u001b[90m[66dad0bd] \u001b[39mAliasTables v1.1.3\n  \u001b[90m[a9b6321e] \u001b[39mAtomix v1.1.2\n  \u001b[90m[13072b0f] \u001b[39mAxisAlgorithms v1.1.0\n  \u001b[90m[ab4f0b2a] \u001b[39mBFloat16s v0.6.1\n  \u001b[90m[6e4b80f9] \u001b[39mBenchmarkTools v1.6.3\n  \u001b[90m[d1d4a3ce] \u001b[39mBitFlags v0.1.9\n  \u001b[90m[fa961155] \u001b[39mCEnum v0.5.0\n\u001b[33m⌅\u001b[39m \u001b[90m[54762871] \u001b[39mCTBase v0.16.2\n\u001b[33m⌅\u001b[39m \u001b[90m[790bbbee] \u001b[39mCTDirect v0.17.5-beta\n\u001b[32m⌃\u001b[39m \u001b[90m[1c39547c] \u001b[39mCTFlows v0.8.12-beta\n\u001b[33m⌅\u001b[39m \u001b[90m[34c4fa32] \u001b[39mCTModels v0.6.10-beta.2\n\u001b[32m⌃\u001b[39m \u001b[90m[32681960] \u001b[39mCTParser v0.8.2-beta.6\n  \u001b[90m[052768ef] \u001b[39mCUDA v5.10.0\n  \u001b[90m[1af6417a] \u001b[39mCUDA_Runtime_Discovery v1.0.0\n  \u001b[90m[45b445bb] \u001b[39mCUDSS v0.6.7\n  \u001b[90m[d360d2e6] \u001b[39mChainRulesCore v1.26.0\n  \u001b[90m[523fee87] \u001b[39mCodecBzip2 v0.8.5\n  \u001b[90m[944b1d66] \u001b[39mCodecZlib v0.7.8\n  \u001b[90m[35d6a980] \u001b[39mColorSchemes v3.31.0\n  \u001b[90m[3da002f7] \u001b[39mColorTypes v0.12.1\n  \u001b[90m[c3611d14] \u001b[39mColorVectorSpace v0.11.0\n  \u001b[90m[5ae59095] \u001b[39mColors v0.13.1\n  \u001b[90m[38540f10] \u001b[39mCommonSolve v0.2.6\n  \u001b[90m[bbf7d656] \u001b[39mCommonSubexpressions v0.3.1\n  \u001b[90m[34da2185] \u001b[39mCompat v4.18.1\n  \u001b[90m[f0e56b4a] \u001b[39mConcurrentUtilities v2.5.1\n  \u001b[90m[d38c429a] \u001b[39mContour v0.6.3\n  \u001b[90m[a8cc5b0e] \u001b[39mCrayons v4.1.1\n  \u001b[90m[9a962f9c] \u001b[39mDataAPI v1.16.0\n  \u001b[90m[a93c6f00] \u001b[39mDataFrames v1.8.1\n  \u001b[90m[864edb3b] \u001b[39mDataStructures v0.19.3\n  \u001b[90m[e2d170a0] \u001b[39mDataValueInterfaces v1.0.0\n  \u001b[90m[8bb1440f] \u001b[39mDelimitedFiles v1.9.1\n  \u001b[90m[163ba53b] \u001b[39mDiffResults v1.1.0\n  \u001b[90m[b552c78f] \u001b[39mDiffRules v1.15.1\n  \u001b[90m[ffbed154] \u001b[39mDocStringExtensions v0.9.5\n\u001b[32m⌃\u001b[39m \u001b[90m[1037b233] \u001b[39mExaModels v0.9.3\n  \u001b[90m[460bff9d] \u001b[39mExceptionUnwrapping v0.1.11\n  \u001b[90m[e2ba6199] \u001b[39mExprTools v0.1.10\n  \u001b[90m[c87230d0] \u001b[39mFFMPEG v0.4.5\n  \u001b[90m[9aa1b823] \u001b[39mFastClosures v0.3.2\n  \u001b[90m[1a297f60] \u001b[39mFillArrays v1.16.0\n  \u001b[90m[53c48c17] \u001b[39mFixedPointNumbers v0.8.5\n  \u001b[90m[1fa38f19] \u001b[39mFormat v1.3.7\n  \u001b[90m[f6369f11] \u001b[39mForwardDiff v1.3.2\n  \u001b[90m[069b7b12] \u001b[39mFunctionWrappers v1.1.3\n  \u001b[90m[0c68f7d7] \u001b[39mGPUArrays v11.4.1\n  \u001b[90m[46192b85] \u001b[39mGPUArraysCore v0.2.0\n  \u001b[90m[61eb1bfa] \u001b[39mGPUCompiler v1.8.2\n  \u001b[90m[096a3bc2] \u001b[39mGPUToolbox v1.0.0\n  \u001b[90m[28b8d3ca] \u001b[39mGR v0.73.24\n  \u001b[90m[42e2da0e] \u001b[39mGrisu v1.0.2\n  \u001b[90m[34c5aeac] \u001b[39mHSL v0.5.2\n  \u001b[90m[cd3eb016] \u001b[39mHTTP v1.10.19\n  \u001b[90m[076d061b] \u001b[39mHashArrayMappedTries v0.2.0\n  \u001b[90m[842dd82b] \u001b[39mInlineStrings v1.4.5\n  \u001b[90m[a98d9a8b] \u001b[39mInterpolations v0.16.2\n  \u001b[90m[41ab1584] \u001b[39mInvertedIndices v1.3.1\n  \u001b[90m[b6b21f68] \u001b[39mIpopt v1.14.1\n  \u001b[90m[92d709cd] \u001b[39mIrrationalConstants v0.2.6\n  \u001b[90m[82899510] \u001b[39mIteratorInterfaceExtensions v1.0.0\n  \u001b[90m[1019f520] \u001b[39mJLFzf v0.1.11\n  \u001b[90m[692b3bcd] \u001b[39mJLLWrappers v1.7.1\n  \u001b[90m[682c06a0] \u001b[39mJSON v1.4.0\n  \u001b[90m[4076af6c] \u001b[39mJuMP v1.30.0\n  \u001b[90m[63c18a36] \u001b[39mKernelAbstractions v0.9.40\n  \u001b[90m[40e66cde] \u001b[39mLDLFactorizations v0.10.1\n  \u001b[90m[929cbde3] \u001b[39mLLVM v9.4.6\n  \u001b[90m[8b046642] \u001b[39mLLVMLoopInfo v1.0.0\n  \u001b[90m[b964fa9f] \u001b[39mLaTeXStrings v1.4.0\n  \u001b[90m[23fbe1c1] \u001b[39mLatexify v0.16.10\n  \u001b[90m[5c8ed15e] \u001b[39mLinearOperators v2.13.0\n  \u001b[90m[2ab3a3ac] \u001b[39mLogExpFunctions v0.3.29\n  \u001b[90m[e6f89c97] \u001b[39mLoggingExtras v1.2.0\n  \u001b[90m[33e6dc65] \u001b[39mMKL v0.9.1\n  \u001b[90m[d8e11817] \u001b[39mMLStyle v0.4.17\n  \u001b[90m[1914dd2f] \u001b[39mMacroTools v0.5.16\n\u001b[33m⌅\u001b[39m \u001b[90m[2621e9c9] \u001b[39mMadNLP v0.8.12\n\u001b[33m⌅\u001b[39m \u001b[90m[d72a61cc] \u001b[39mMadNLPGPU v0.7.18\n  \u001b[90m[3b83494e] \u001b[39mMadNLPMumps v0.5.1\n  \u001b[90m[b8f27783] \u001b[39mMathOptInterface v1.49.0\n  \u001b[90m[739be429] \u001b[39mMbedTLS v1.1.10\n  \u001b[90m[442fdcdd] \u001b[39mMeasures v0.3.3\n  \u001b[90m[2679e427] \u001b[39mMetis v1.5.0\n  \u001b[90m[e1d29d7a] \u001b[39mMissings v1.2.0\n  \u001b[90m[d8a4904e] \u001b[39mMutableArithmetics v1.6.7\n  \u001b[90m[a4795742] \u001b[39mNLPModels v0.21.11\n  \u001b[90m[f4238b75] \u001b[39mNLPModelsIpopt v0.11.2\n  \u001b[90m[e01155f1] \u001b[39mNLPModelsModifiers v0.7.4\n  \u001b[90m[5da4648a] \u001b[39mNVTX v1.0.3\n  \u001b[90m[77ba4419] \u001b[39mNaNMath v1.1.3\n  \u001b[90m[6fe1bfb0] \u001b[39mOffsetArrays v1.17.0\n  \u001b[90m[4d8831e6] \u001b[39mOpenSSL v1.6.1\n\u001b[32m⌃\u001b[39m \u001b[90m[5f98b655] \u001b[39mOptimalControl v1.1.8-beta.3\n  \u001b[90m[59046045] \u001b[39mOptimalControlProblems v0.4.0 `https://github.com/control-toolbox/OptimalControlProblems.jl#206-dev-test-all-new-problems-with-gpu`\n  \u001b[90m[bac558e1] \u001b[39mOrderedCollections v1.8.1\n  \u001b[90m[d96e819e] \u001b[39mParameters v0.12.3\n  \u001b[90m[69de0a69] \u001b[39mParsers v2.8.3\n  \u001b[90m[ccf2f8ad] \u001b[39mPlotThemes v3.3.0\n  \u001b[90m[995b91a9] \u001b[39mPlotUtils v1.4.4\n  \u001b[90m[91a5bcdd] \u001b[39mPlots v1.41.6\n  \u001b[90m[2dfb63ee] \u001b[39mPooledArrays v1.4.3\n\u001b[33m⌅\u001b[39m \u001b[90m[aea7be01] \u001b[39mPrecompileTools v1.2.1\n  \u001b[90m[21216c6a] \u001b[39mPreferences v1.5.2\n  \u001b[90m[08abe8d2] \u001b[39mPrettyTables v3.2.3\n  \u001b[90m[43287f4e] \u001b[39mPtrArrays v1.4.0\n  \u001b[90m[be4d8f0f] \u001b[39mQuadmath v0.5.13\n  \u001b[90m[74087812] \u001b[39mRandom123 v1.7.1\n  \u001b[90m[e6cf234a] \u001b[39mRandomNumbers v1.6.0\n  \u001b[90m[c84ed2f1] \u001b[39mRatios v0.4.5\n  \u001b[90m[3cdcf5f2] \u001b[39mRecipesBase v1.3.4\n  \u001b[90m[01d81517] \u001b[39mRecipesPipeline v0.6.12\n  \u001b[90m[189a3867] \u001b[39mReexport v1.2.2\n  \u001b[90m[05181044] \u001b[39mRelocatableFolders v1.0.1\n  \u001b[90m[ae029012] \u001b[39mRequires v1.3.1\n  \u001b[90m[37e2e3b7] \u001b[39mReverseDiff v1.16.2\n  \u001b[90m[7e506255] \u001b[39mScopedValues v1.5.0\n  \u001b[90m[6c6a2e73] \u001b[39mScratch v1.3.0\n  \u001b[90m[91c51154] \u001b[39mSentinelArrays v1.4.9\n  \u001b[90m[992d4aef] \u001b[39mShowoff v1.0.3\n  \u001b[90m[777ac1f9] \u001b[39mSimpleBufferStream v1.2.0\n  \u001b[90m[ff4d7338] \u001b[39mSolverCore v0.3.10\n  \u001b[90m[a2af1166] \u001b[39mSortingAlgorithms v1.2.2\n  \u001b[90m[9f842d2f] \u001b[39mSparseConnectivityTracer v1.2.1\n  \u001b[90m[0a514795] \u001b[39mSparseMatrixColorings v0.4.24\n  \u001b[90m[276daf66] \u001b[39mSpecialFunctions v2.7.1\n  \u001b[90m[860ef19b] \u001b[39mStableRNGs v1.0.4\n  \u001b[90m[90137ffa] \u001b[39mStaticArrays v1.9.17\n  \u001b[90m[1e83bf80] \u001b[39mStaticArraysCore v1.4.4\n  \u001b[90m[10745b16] \u001b[39mStatistics v1.11.1\n  \u001b[90m[82ae8749] \u001b[39mStatsAPI v1.8.0\n  \u001b[90m[2913bbd2] \u001b[39mStatsBase v0.34.10\n  \u001b[90m[892a3eda] \u001b[39mStringManipulation v0.4.4\n  \u001b[90m[ec057cc2] \u001b[39mStructUtils v2.6.3\n  \u001b[90m[3783bdb8] \u001b[39mTableTraits v1.0.1\n  \u001b[90m[bd369af6] \u001b[39mTables v1.12.1\n  \u001b[90m[62fd8b95] \u001b[39mTensorCore v0.1.1\n  \u001b[90m[a759f4b9] \u001b[39mTimerOutputs v0.5.29\n  \u001b[90m[e689c965] \u001b[39mTracy v0.1.6\n  \u001b[90m[3bb67fe8] \u001b[39mTranscodingStreams v0.11.3\n  \u001b[90m[5c2747f8] \u001b[39mURIs v1.6.1\n  \u001b[90m[3a884ed6] \u001b[39mUnPack v1.0.2\n  \u001b[90m[1cfade01] \u001b[39mUnicodeFun v0.4.1\n  \u001b[90m[013be700] \u001b[39mUnsafeAtomics v0.3.0\n  \u001b[90m[41fe7b60] \u001b[39mUnzip v0.2.0\n  \u001b[90m[efce3f68] \u001b[39mWoodburyMatrices v1.1.0\n  \u001b[90m[ae81ac8f] \u001b[39mASL_jll v0.1.3+0\n  \u001b[90m[6e34b625] \u001b[39mBzip2_jll v1.0.9+0\n  \u001b[90m[d1e2174e] \u001b[39mCUDA_Compiler_jll v0.4.1+1\n  \u001b[90m[4ee394cb] \u001b[39mCUDA_Driver_jll v13.1.1+0\n  \u001b[90m[76a88914] \u001b[39mCUDA_Runtime_jll v0.20.1+0\n  \u001b[90m[4889d778] \u001b[39mCUDSS_jll v0.7.1+0\n  \u001b[90m[83423d85] \u001b[39mCairo_jll v1.18.5+1\n  \u001b[90m[ee1fde0b] \u001b[39mDbus_jll v1.16.2+0\n  \u001b[90m[2702e6a9] \u001b[39mEpollShim_jll v0.0.20230411+1\n  \u001b[90m[2e619515] \u001b[39mExpat_jll v2.7.3+0\n  \u001b[90m[b22a6f82] \u001b[39mFFMPEG_jll v8.0.1+0\n  \u001b[90m[a3f928ae] \u001b[39mFontconfig_jll v2.17.1+0\n  \u001b[90m[d7e528f0] \u001b[39mFreeType2_jll v2.13.4+0\n  \u001b[90m[559328eb] \u001b[39mFriBidi_jll v1.0.17+0\n  \u001b[90m[0656b61e] \u001b[39mGLFW_jll v3.4.1+0\n  \u001b[90m[d2c73de3] \u001b[39mGR_jll v0.73.24+0\n  \u001b[90m[b0724c58] \u001b[39mGettextRuntime_jll v0.22.4+0\n  \u001b[90m[61579ee1] \u001b[39mGhostscript_jll v9.55.1+0\n  \u001b[90m[7746bdde] \u001b[39mGlib_jll v2.86.3+0\n  \u001b[90m[3b182d85] \u001b[39mGraphite2_jll v1.3.15+0\n  \u001b[90m[017b0a0e] \u001b[39mHSL_jll v4.0.4+0\n  \u001b[90m[2e76f6c2] \u001b[39mHarfBuzz_jll v8.5.1+0\n  \u001b[90m[e33a78d0] \u001b[39mHwloc_jll v2.13.0+0\n  \u001b[90m[1d5cc7b8] \u001b[39mIntelOpenMP_jll v2025.2.0+0\n  \u001b[90m[9cc047cb] \u001b[39mIpopt_jll v300.1400.1901+0\n  \u001b[90m[aacddb02] \u001b[39mJpegTurbo_jll v3.1.4+0\n  \u001b[90m[9c1d0b0a] \u001b[39mJuliaNVTXCallbacks_jll v0.2.1+0\n  \u001b[90m[c1c5ebd0] \u001b[39mLAME_jll v3.100.3+0\n  \u001b[90m[88015f11] \u001b[39mLERC_jll v4.0.1+0\n  \u001b[90m[dad2f222] \u001b[39mLLVMExtra_jll v0.0.38+0\n  \u001b[90m[1d63c593] \u001b[39mLLVMOpenMP_jll v18.1.8+0\n  \u001b[90m[dd4b983a] \u001b[39mLZO_jll v2.10.3+0\n  \u001b[90m[ad6e5548] \u001b[39mLibTracyClient_jll v0.13.1+0\n\u001b[33m⌅\u001b[39m \u001b[90m[e9f186c6] \u001b[39mLibffi_jll v3.4.7+0\n  \u001b[90m[7e76a0d4] \u001b[39mLibglvnd_jll v1.7.1+1\n  \u001b[90m[94ce4f54] \u001b[39mLibiconv_jll v1.18.0+0\n  \u001b[90m[4b2f31a3] \u001b[39mLibmount_jll v2.41.3+0\n  \u001b[90m[89763e89] \u001b[39mLibtiff_jll v4.7.2+0\n  \u001b[90m[38a345b3] \u001b[39mLibuuid_jll v2.41.3+0\n  \u001b[90m[d00139f3] \u001b[39mMETIS_jll v5.1.3+0\n  \u001b[90m[856f044c] \u001b[39mMKL_jll v2025.2.0+0\n  \u001b[90m[d7ed1dd3] \u001b[39mMUMPS_seq_jll v500.800.200+0\n  \u001b[90m[e98f9f5b] \u001b[39mNVTX_jll v3.2.2+0\n  \u001b[90m[e7412a2a] \u001b[39mOgg_jll v1.3.6+0\n  \u001b[90m[656ef2d0] \u001b[39mOpenBLAS32_jll v0.3.30+0\n  \u001b[90m[458c3c95] \u001b[39mOpenSSL_jll v3.5.5+0\n  \u001b[90m[efe28fd5] \u001b[39mOpenSpecFun_jll v0.5.6+0\n  \u001b[90m[91d4177d] \u001b[39mOpus_jll v1.6.1+0\n  \u001b[90m[36c8627f] \u001b[39mPango_jll v1.57.0+0\n\u001b[33m⌅\u001b[39m \u001b[90m[30392449] \u001b[39mPixman_jll v0.44.2+0\n  \u001b[90m[c0090381] \u001b[39mQt6Base_jll v6.10.2+1\n  \u001b[90m[629bc702] \u001b[39mQt6Declarative_jll v6.10.2+1\n  \u001b[90m[ce943373] \u001b[39mQt6ShaderTools_jll v6.10.2+1\n  \u001b[90m[6de9746b] \u001b[39mQt6Svg_jll v6.10.2+0\n  \u001b[90m[e99dba38] \u001b[39mQt6Wayland_jll v6.10.2+1\n  \u001b[90m[319450e9] \u001b[39mSPRAL_jll v2025.9.18+0\n  \u001b[90m[a44049a8] \u001b[39mVulkan_Loader_jll v1.3.243+0\n  \u001b[90m[a2964d1f] \u001b[39mWayland_jll v1.24.0+0\n\u001b[33m⌅\u001b[39m \u001b[90m[02c8fc9c] \u001b[39mXML2_jll v2.13.9+0\n  \u001b[90m[ffd25f8a] \u001b[39mXZ_jll v5.8.2+0\n  \u001b[90m[f67eecfb] \u001b[39mXorg_libICE_jll v1.1.2+0\n  \u001b[90m[c834827a] \u001b[39mXorg_libSM_jll v1.2.6+0\n  \u001b[90m[4f6342f7] \u001b[39mXorg_libX11_jll v1.8.13+0\n  \u001b[90m[0c0b7dd1] \u001b[39mXorg_libXau_jll v1.0.13+0\n  \u001b[90m[935fb764] \u001b[39mXorg_libXcursor_jll v1.2.4+0\n  \u001b[90m[a3789734] \u001b[39mXorg_libXdmcp_jll v1.1.6+0\n  \u001b[90m[1082639a] \u001b[39mXorg_libXext_jll v1.3.8+0\n  \u001b[90m[d091e8ba] \u001b[39mXorg_libXfixes_jll v6.0.2+0\n  \u001b[90m[a51aa0fd] \u001b[39mXorg_libXi_jll v1.8.3+0\n  \u001b[90m[d1454406] \u001b[39mXorg_libXinerama_jll v1.1.7+0\n  \u001b[90m[ec84b674] \u001b[39mXorg_libXrandr_jll v1.5.6+0\n  \u001b[90m[ea2f1a96] \u001b[39mXorg_libXrender_jll v0.9.12+0\n  \u001b[90m[a65dc6b1] \u001b[39mXorg_libpciaccess_jll v0.18.1+0\n  \u001b[90m[c7cfdc94] \u001b[39mXorg_libxcb_jll v1.17.1+0\n  \u001b[90m[cc61e674] \u001b[39mXorg_libxkbfile_jll v1.2.0+0\n  \u001b[90m[e920d4aa] \u001b[39mXorg_xcb_util_cursor_jll v0.1.6+0\n  \u001b[90m[12413925] \u001b[39mXorg_xcb_util_image_jll v0.4.1+0\n  \u001b[90m[2def613f] \u001b[39mXorg_xcb_util_jll v0.4.1+0\n  \u001b[90m[975044d2] \u001b[39mXorg_xcb_util_keysyms_jll v0.4.1+0\n  \u001b[90m[0d47668e] \u001b[39mXorg_xcb_util_renderutil_jll v0.3.10+0\n  \u001b[90m[c22f9ab0] \u001b[39mXorg_xcb_util_wm_jll v0.4.2+0\n  \u001b[90m[35661453] \u001b[39mXorg_xkbcomp_jll v1.4.7+0\n  \u001b[90m[33bec58e] \u001b[39mXorg_xkeyboard_config_jll v2.44.0+0\n  \u001b[90m[c5fb5394] \u001b[39mXorg_xtrans_jll v1.6.0+0\n  \u001b[90m[3161d3a3] \u001b[39mZstd_jll v1.5.7+1\n  \u001b[90m[1e29f10c] \u001b[39mdemumble_jll v1.3.0+0\n  \u001b[90m[35ca27e7] \u001b[39meudev_jll v3.2.14+0\n  \u001b[90m[214eeab7] \u001b[39mfzf_jll v0.61.1+0\n  \u001b[90m[a4ae2306] \u001b[39mlibaom_jll v3.13.1+0\n  \u001b[90m[0ac62f75] \u001b[39mlibass_jll v0.17.4+0\n  \u001b[90m[1183f4f0] \u001b[39mlibdecor_jll v0.2.2+0\n  \u001b[90m[2db6ffa8] \u001b[39mlibevdev_jll v1.13.4+0\n  \u001b[90m[f638f0a6] \u001b[39mlibfdk_aac_jll v2.0.4+0\n  \u001b[90m[36db933b] \u001b[39mlibinput_jll v1.28.1+0\n  \u001b[90m[b53b4c65] \u001b[39mlibpng_jll v1.6.55+0\n  \u001b[90m[f27f6e37] \u001b[39mlibvorbis_jll v1.3.8+0\n  \u001b[90m[009596ad] \u001b[39mmtdev_jll v1.1.7+0\n  \u001b[90m[1317d2d5] \u001b[39moneTBB_jll v2022.0.0+1\n\u001b[33m⌅\u001b[39m \u001b[90m[1270edf5] \u001b[39mx264_jll v10164.0.1+0\n  \u001b[90m[dfaa095f] \u001b[39mx265_jll v4.1.0+0\n  \u001b[90m[d8fb68d0] \u001b[39mxkbcommon_jll v1.13.0+0\n  \u001b[90m[0dad84c5] \u001b[39mArgTools v1.1.2\n  \u001b[90m[56f22d72] \u001b[39mArtifacts v1.11.0\n  \u001b[90m[2a0f44e3] \u001b[39mBase64 v1.11.0\n  \u001b[90m[ade2ca70] \u001b[39mDates v1.11.0\n  \u001b[90m[8ba89e20] \u001b[39mDistributed v1.11.0\n  \u001b[90m[f43a241f] \u001b[39mDownloads v1.6.0\n  \u001b[90m[7b1f6079] \u001b[39mFileWatching v1.11.0\n  \u001b[90m[9fa8497b] \u001b[39mFuture v1.11.0\n  \u001b[90m[b77e0a4c] \u001b[39mInteractiveUtils v1.11.0\n  \u001b[90m[4af54fe1] \u001b[39mLazyArtifacts v1.11.0\n  \u001b[90m[b27032c2] \u001b[39mLibCURL v0.6.4\n  \u001b[90m[76f85450] \u001b[39mLibGit2 v1.11.0\n  \u001b[90m[8f399da3] \u001b[39mLibdl v1.11.0\n  \u001b[90m[37e2e46d] \u001b[39mLinearAlgebra v1.11.0\n  \u001b[90m[56ddb016] \u001b[39mLogging v1.11.0\n  \u001b[90m[d6f4376e] \u001b[39mMarkdown v1.11.0\n  \u001b[90m[a63ad114] \u001b[39mMmap v1.11.0\n  \u001b[90m[ca575930] \u001b[39mNetworkOptions v1.2.0\n  \u001b[90m[44cfe95a] \u001b[39mPkg v1.11.0\n  \u001b[90m[de0858da] \u001b[39mPrintf v1.11.0\n  \u001b[90m[9abbd945] \u001b[39mProfile v1.11.0\n  \u001b[90m[3fa0cd96] \u001b[39mREPL v1.11.0\n  \u001b[90m[9a3f8284] \u001b[39mRandom v1.11.0\n  \u001b[90m[ea8e919c] \u001b[39mSHA v0.7.0\n  \u001b[90m[9e88b42a] \u001b[39mSerialization v1.11.0\n  \u001b[90m[1a1011a3] \u001b[39mSharedArrays v1.11.0\n  \u001b[90m[6462fe0b] \u001b[39mSockets v1.11.0\n  \u001b[90m[2f01184e] \u001b[39mSparseArrays v1.11.0\n  \u001b[90m[f489334b] \u001b[39mStyledStrings v1.11.0\n  \u001b[90m[4607b0f0] \u001b[39mSuiteSparse\n  \u001b[90m[fa267f1f] \u001b[39mTOML v1.0.3\n  \u001b[90m[a4e569a6] \u001b[39mTar v1.10.0\n  \u001b[90m[8dfed614] \u001b[39mTest v1.11.0\n  \u001b[90m[cf7118a7] \u001b[39mUUIDs v1.11.0\n  \u001b[90m[4ec0a83e] \u001b[39mUnicode v1.11.0\n  \u001b[90m[e66e0078] \u001b[39mCompilerSupportLibraries_jll v1.1.1+0\n  \u001b[90m[deac9b47] \u001b[39mLibCURL_jll v8.6.0+0\n  \u001b[90m[e37daf67] \u001b[39mLibGit2_jll v1.7.2+0\n  \u001b[90m[29816b5a] \u001b[39mLibSSH2_jll v1.11.0+1\n  \u001b[90m[c8ffd9c3] \u001b[39mMbedTLS_jll v2.28.6+0\n  \u001b[90m[14a3606d] \u001b[39mMozillaCACerts_jll v2023.12.12\n  \u001b[90m[4536629a] \u001b[39mOpenBLAS_jll v0.3.27+1\n  \u001b[90m[05823500] \u001b[39mOpenLibm_jll v0.8.5+0\n  \u001b[90m[efcefdf7] \u001b[39mPCRE2_jll v10.42.0+1\n  \u001b[90m[bea87d4a] \u001b[39mSuiteSparse_jll v7.7.0+0\n  \u001b[90m[83775a58] \u001b[39mZlib_jll v1.2.13+1\n  \u001b[90m[8e850b90] \u001b[39mlibblastrampoline_jll v5.11.0+0\n  \u001b[90m[8e850ede] \u001b[39mnghttp2_jll v1.59.0+0\n  \u001b[90m[3f19e933] \u001b[39mp7zip_jll v17.4.0+2\n\u001b[36m\u001b[1mInfo\u001b[22m\u001b[39m Packages marked with \u001b[32m⌃\u001b[39m and \u001b[33m⌅\u001b[39m have new versions available. Those with \u001b[32m⌃\u001b[39m may be upgradable, but those with \u001b[33m⌅\u001b[39m are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`\n",
+        "pkg_status": "\u001b[36m\u001b[1mProject\u001b[22m\u001b[39m CTBenchmarks v0.3.1\n\u001b[32m\u001b[1mStatus\u001b[22m\u001b[39m `/storage/mschanen/github-actions/actions_runner_ct/_work/CTBenchmarks.jl/CTBenchmarks.jl/Project.toml`\n  \u001b[90m[6e4b80f9] \u001b[39mBenchmarkTools v1.6.3\n\u001b[33m⌅\u001b[39m \u001b[90m[54762871] \u001b[39mCTBase v0.16.2\n  \u001b[90m[052768ef] \u001b[39mCUDA v5.10.0\n  \u001b[90m[a93c6f00] \u001b[39mDataFrames v1.8.1\n  \u001b[90m[ffbed154] \u001b[39mDocStringExtensions v0.9.5\n  \u001b[90m[b6b21f68] \u001b[39mIpopt v1.14.1\n  \u001b[90m[682c06a0] \u001b[39mJSON v1.4.0\n  \u001b[90m[4076af6c] \u001b[39mJuMP v1.30.0\n\u001b[33m⌅\u001b[39m \u001b[90m[d72a61cc] \u001b[39mMadNLPGPU v0.7.18\n  \u001b[90m[3b83494e] \u001b[39mMadNLPMumps v0.5.1\n  \u001b[90m[f4238b75] \u001b[39mNLPModelsIpopt v0.11.2\n\u001b[32m⌃\u001b[39m \u001b[90m[5f98b655] \u001b[39mOptimalControl v1.1.8-beta.3\n  \u001b[90m[59046045] \u001b[39mOptimalControlProblems v0.4.0 `https://github.com/control-toolbox/OptimalControlProblems.jl#206-dev-test-all-new-problems-with-gpu`\n  \u001b[90m[91a5bcdd] \u001b[39mPlots v1.41.6\n  \u001b[90m[10745b16] \u001b[39mStatistics v1.11.1\n  \u001b[90m[bd369af6] \u001b[39mTables v1.12.1\n  \u001b[90m[ade2ca70] \u001b[39mDates v1.11.0\n  \u001b[90m[b77e0a4c] \u001b[39mInteractiveUtils v1.11.0\n  \u001b[90m[44cfe95a] \u001b[39mPkg v1.11.0\n  \u001b[90m[de0858da] \u001b[39mPrintf v1.11.0\n  \u001b[90m[6462fe0b] \u001b[39mSockets v1.11.0\n\u001b[36m\u001b[1mInfo\u001b[22m\u001b[39m Packages marked with \u001b[32m⌃\u001b[39m and \u001b[33m⌅\u001b[39m have new versions available. Those with \u001b[32m⌃\u001b[39m may be upgradable, but those with \u001b[33m⌅\u001b[39m are restricted by compatibility constraints from upgrading. To see why use `status --outdated`\n",
+        "timestamp": "2026-03-08 12:03:50 UTC",
         "machine": "kkt.mcs.anl.gov",
         "os": "Linux",
         "configuration": {
@@ -59,7 +59,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.044665616,
+                "time": 0.044624771,
                 "bytes": 9326528,
                 "alloc": 11789,
                 "gctime": 0.0
@@ -77,32 +77,32 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.88830229521045,
+            "objective": 8.888302225971474,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.180541004,
-                "cpu_bytes": 17673080,
+                "time": 0.20621463,
+                "cpu_bytes": 17426352,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 17673080,
-                    "malloc": 7,
+                    "allocd": 17426352,
+                    "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 663531,
+                    "poolalloc": 654295,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 12730862,
-                "gpu_memtime": 0.0061608090000000795,
+                "gpu_bytes": 12651477,
+                "gpu_memtime": 0.006205671999999912,
                 "gpu_memstats": {
-                    "alloc_count": 4858,
-                    "alloc_bytes": 12730862,
-                    "free_count": 485,
-                    "free_bytes": 1482474,
-                    "total_time": 0.0061608090000000795
+                    "alloc_count": 4785,
+                    "alloc_bytes": 12651477,
+                    "free_count": 484,
+                    "free_bytes": 1482459,
+                    "total_time": 0.006205671999999912
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -110,7 +110,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 1000,
-            "iterations": 49,
+            "iterations": 48,
             "disc_method": "midpoint"
         },
         {
@@ -122,10 +122,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.734907954,
+                "time": 0.742648639,
                 "bytes": 101729016,
                 "alloc": 20861,
-                "gctime": 0.002149769
+                "gctime": 0.002017968
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -140,32 +140,32 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.885839286059735,
+            "objective": 8.885839285411048,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.559470117,
-                "cpu_bytes": 50330200,
-                "cpu_gctime": 0.0,
+                "time": 0.675865459,
+                "cpu_bytes": 50330392,
+                "cpu_gctime": 0.039079178,
                 "cpu_gcstats": {
-                    "allocd": 50330200,
+                    "allocd": 50330392,
                     "malloc": 7,
                     "realloc": 0,
-                    "poolalloc": 1865109,
+                    "poolalloc": 1865138,
                     "bigalloc": 1,
-                    "freecall": 0,
-                    "total_time": 0,
-                    "pause": 0,
+                    "freecall": 710,
+                    "total_time": 39079178,
+                    "pause": 1,
                     "full_sweep": 0
                 },
                 "gpu_bytes": 99341213,
-                "gpu_memtime": 0.02451220699999982,
+                "gpu_memtime": 0.0344777040000001,
                 "gpu_memstats": {
                     "alloc_count": 13261,
                     "alloc_bytes": 99341213,
-                    "free_count": 1421,
-                    "free_bytes": 7435282,
-                    "total_time": 0.02451220699999982
+                    "free_count": 18154,
+                    "free_bytes": 142821484,
+                    "total_time": 0.0344777040000001
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -185,10 +185,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.094087654,
+                "time": 3.143791225,
                 "bytes": 410521016,
                 "alloc": 37289,
-                "gctime": 0.006385095
+                "gctime": 0.015856189
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -203,32 +203,32 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.882791104195412,
+            "objective": 8.882791601000491,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.057185951,
-                "cpu_bytes": 84015520,
-                "cpu_gctime": 0.047615616,
+                "time": 2.052155189,
+                "cpu_bytes": 125181296,
+                "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 84015520,
+                    "allocd": 125181296,
                     "malloc": 8,
                     "realloc": 0,
-                    "poolalloc": 3078040,
+                    "poolalloc": 4667353,
                     "bigalloc": 1,
-                    "freecall": 262,
-                    "total_time": 47615616,
-                    "pause": 1,
+                    "freecall": 0,
+                    "total_time": 0,
+                    "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 284989378,
-                "gpu_memtime": 0.0551601329999985,
+                "gpu_bytes": 385900591,
+                "gpu_memtime": 0.06261835099999899,
                 "gpu_memstats": {
-                    "alloc_count": 22234,
-                    "alloc_bytes": 284989378,
-                    "free_count": 28823,
-                    "free_bytes": 387995807,
-                    "total_time": 0.0551601329999985
+                    "alloc_count": 33596,
+                    "alloc_bytes": 385900591,
+                    "free_count": 3079,
+                    "free_bytes": 14981816,
+                    "total_time": 0.06261835099999899
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -236,7 +236,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 10000,
-            "iterations": 248,
+            "iterations": 375,
             "disc_method": "midpoint"
         },
         {
@@ -248,10 +248,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 6.810347657,
+                "time": 7.483943281,
                 "bytes": 882335440,
                 "alloc": 39801,
-                "gctime": 0.023180071
+                "gctime": 0.016844312
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -266,32 +266,32 @@
             "problem": "beam",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 8.876698021850878,
+            "objective": 8.876698138047775,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.958797958,
-                "cpu_bytes": 140505328,
-                "cpu_gctime": 0.058565111,
+                "time": 1.881817819,
+                "cpu_bytes": 131511792,
+                "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 140505328,
+                    "allocd": 131511792,
                     "malloc": 8,
                     "realloc": 0,
-                    "poolalloc": 5100111,
+                    "poolalloc": 4755004,
                     "bigalloc": 1,
-                    "freecall": 9,
-                    "total_time": 58565111,
-                    "pause": 1,
+                    "freecall": 0,
+                    "total_time": 0,
+                    "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 829307517,
-                "gpu_memtime": 0.09428679900000503,
+                "gpu_bytes": 780272760,
+                "gpu_memtime": 0.051130710999996554,
                 "gpu_memstats": {
-                    "alloc_count": 36726,
-                    "alloc_bytes": 829307517,
-                    "free_count": 42191,
-                    "free_bytes": 937036231,
-                    "total_time": 0.09428679900000503
+                    "alloc_count": 34177,
+                    "alloc_bytes": 780272760,
+                    "free_count": 3157,
+                    "free_bytes": 29948834,
+                    "total_time": 0.051130710999996554
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -299,7 +299,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 20000,
-            "iterations": 412,
+            "iterations": 381,
             "disc_method": "midpoint"
         },
         {
@@ -311,7 +311,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.036580174,
+                "time": 0.036968237,
                 "bytes": 7070512,
                 "alloc": 9431,
                 "gctime": 0.0
@@ -329,32 +329,32 @@
             "problem": "chain",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 5.068451907685595,
+            "objective": 5.068451907685588,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.086022242,
-                "cpu_bytes": 8137632,
-                "cpu_gctime": 0.0,
+                "time": 0.165697157,
+                "cpu_bytes": 8137920,
+                "cpu_gctime": 0.063922445,
                 "cpu_gcstats": {
-                    "allocd": 8137632,
+                    "allocd": 8137920,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 281093,
+                    "poolalloc": 281094,
                     "bigalloc": 1,
-                    "freecall": 0,
-                    "total_time": 0,
-                    "pause": 0,
+                    "freecall": 6427,
+                    "total_time": 63922445,
+                    "pause": 1,
                     "full_sweep": 0
                 },
                 "gpu_bytes": 15022361,
-                "gpu_memtime": 0.0022678930000010755,
+                "gpu_memtime": 0.0045048849999997365,
                 "gpu_memstats": {
                     "alloc_count": 1942,
                     "alloc_bytes": 15022361,
-                    "free_count": 247,
-                    "free_bytes": 2371726,
-                    "total_time": 0.0022678930000010755
+                    "free_count": 2649,
+                    "free_bytes": 16065340,
+                    "total_time": 0.0045048849999997365
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -374,7 +374,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.295718759,
+                "time": 0.29809392,
                 "bytes": 32386648,
                 "alloc": 9303,
                 "gctime": 0.0
@@ -392,18 +392,18 @@
             "problem": "chain",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 5.068338691391915,
+            "objective": 5.068338691392415,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.118902642,
-                "cpu_bytes": 11391856,
+                "time": 0.136972464,
+                "cpu_bytes": 11392304,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 11391856,
+                    "allocd": 11392304,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 303090,
+                    "poolalloc": 303101,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
@@ -411,13 +411,13 @@
                     "full_sweep": 0
                 },
                 "gpu_bytes": 75519471,
-                "gpu_memtime": 0.002919780999999011,
+                "gpu_memtime": 0.003057970999999826,
                 "gpu_memstats": {
                     "alloc_count": 2064,
                     "alloc_bytes": 75519471,
                     "free_count": 260,
                     "free_bytes": 11846729,
-                    "total_time": 0.002919780999999011
+                    "total_time": 0.003057970999999826
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -437,7 +437,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.603806216,
+                "time": 0.611321948,
                 "bytes": 64237168,
                 "alloc": 9308,
                 "gctime": 0.0
@@ -455,32 +455,32 @@
             "problem": "chain",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 5.068177802531172,
+            "objective": 5.0681974592479335,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.199565779,
-                "cpu_bytes": 252451560,
-                "cpu_gctime": 0.088221099,
+                "time": 20.928807411,
+                "cpu_bytes": 1661207304,
+                "cpu_gctime": 0.324273509,
                 "cpu_gcstats": {
-                    "allocd": 252451560,
-                    "malloc": 7,
+                    "allocd": 1661207304,
+                    "malloc": 22380,
                     "realloc": 0,
-                    "poolalloc": 9229322,
-                    "bigalloc": 1,
-                    "freecall": 6,
-                    "total_time": 88221099,
-                    "pause": 1,
+                    "poolalloc": 32320921,
+                    "bigalloc": 1912,
+                    "freecall": 21968,
+                    "total_time": 324273509,
+                    "pause": 4,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 540320341,
-                "gpu_memtime": 0.14006054200000884,
+                "gpu_bytes": 471919150,
+                "gpu_memtime": 0.1009320690000014,
                 "gpu_memstats": {
-                    "alloc_count": 61225,
-                    "alloc_bytes": 540320341,
-                    "free_count": 58041,
-                    "free_bytes": 463956589,
-                    "total_time": 0.14006054200000884
+                    "alloc_count": 49900,
+                    "alloc_bytes": 471919150,
+                    "free_count": 32832,
+                    "free_bytes": 354710410,
+                    "total_time": 0.1009320690000014
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -488,7 +488,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 10000,
-            "iterations": 386,
+            "iterations": 332,
             "disc_method": "midpoint"
         },
         {
@@ -500,7 +500,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.049082284,
+                "time": 2.060144427,
                 "bytes": 131150040,
                 "alloc": 9561,
                 "gctime": 0.0
@@ -518,32 +518,32 @@
             "problem": "chain",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 5.067921715645031,
+            "objective": 5.067921715644373,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.201279422,
-                "cpu_bytes": 20853088,
+                "time": 0.221509001,
+                "cpu_bytes": 20789936,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 20853088,
+                    "allocd": 20789936,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 283882,
+                    "poolalloc": 281290,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 299951754,
-                "gpu_memtime": 0.0031307999999967695,
+                "gpu_bytes": 299946232,
+                "gpu_memtime": 0.003573039999997807,
                 "gpu_memstats": {
-                    "alloc_count": 1917,
-                    "alloc_bytes": 299951754,
-                    "free_count": 241,
-                    "free_bytes": 47374212,
-                    "total_time": 0.0031307999999967695
+                    "alloc_count": 1904,
+                    "alloc_bytes": 299946232,
+                    "free_count": 235,
+                    "free_bytes": 47372954,
+                    "total_time": 0.003573039999997807
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -563,7 +563,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.023935274,
+                "time": 0.024097801,
                 "bytes": 11171496,
                 "alloc": 8328,
                 "gctime": 0.0
@@ -581,18 +581,18 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009106226765406705,
+            "objective": 0.0009106226765384385,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.088637471,
-                "cpu_bytes": 6082208,
+                "time": 0.058161369,
+                "cpu_bytes": 6082512,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 6082208,
+                    "allocd": 6082512,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 158629,
+                    "poolalloc": 158631,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
@@ -600,13 +600,13 @@
                     "full_sweep": 0
                 },
                 "gpu_bytes": 31034538,
-                "gpu_memtime": 0.0023515170000015795,
+                "gpu_memtime": 0.0013003270000003786,
                 "gpu_memstats": {
                     "alloc_count": 1160,
                     "alloc_bytes": 31034538,
                     "free_count": 178,
                     "free_bytes": 5521718,
-                    "total_time": 0.0023515170000015795
+                    "total_time": 0.0013003270000003786
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -626,7 +626,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.291554804,
+                "time": 0.290728058,
                 "bytes": 53808568,
                 "alloc": 8349,
                 "gctime": 0.0
@@ -644,32 +644,32 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009095190181204864,
+            "objective": 0.0009091471400627302,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.098943335,
-                "cpu_bytes": 13499984,
+                "time": 0.107800791,
+                "cpu_bytes": 14090320,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 13499984,
+                    "allocd": 14090320,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 185644,
+                    "poolalloc": 209775,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 155176636,
-                "gpu_memtime": 0.0017833070000011775,
+                "gpu_bytes": 155205654,
+                "gpu_memtime": 0.001959685000001987,
                 "gpu_memstats": {
-                    "alloc_count": 1285,
-                    "alloc_bytes": 155176636,
-                    "free_count": 226,
-                    "free_bytes": 27605470,
-                    "total_time": 0.0017833070000011775
+                    "alloc_count": 1404,
+                    "alloc_bytes": 155205654,
+                    "free_count": 280,
+                    "free_bytes": 27611320,
+                    "total_time": 0.001959685000001987
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -689,7 +689,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.655656981,
+                "time": 0.654484931,
                 "bytes": 107122696,
                 "alloc": 8346,
                 "gctime": 0.0
@@ -707,32 +707,32 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009072689653900954,
+            "objective": 0.0009072689897968669,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.14517713,
-                "cpu_bytes": 21114240,
+                "time": 0.143626237,
+                "cpu_bytes": 21177792,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 21114240,
+                    "allocd": 21177792,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 153689,
+                    "poolalloc": 156289,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 310209336,
-                "gpu_memtime": 0.0019323499999984728,
+                "gpu_bytes": 310214834,
+                "gpu_memtime": 0.0017846860000001463,
                 "gpu_memstats": {
-                    "alloc_count": 1108,
-                    "alloc_bytes": 310209336,
-                    "free_count": 154,
-                    "free_bytes": 55193130,
-                    "total_time": 0.0019323499999984728
+                    "alloc_count": 1121,
+                    "alloc_bytes": 310214834,
+                    "free_count": 160,
+                    "free_bytes": 55194364,
+                    "total_time": 0.0017846860000001463
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -752,7 +752,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.423187728,
+                "time": 1.416487439,
                 "bytes": 213751912,
                 "alloc": 8373,
                 "gctime": 0.0
@@ -770,18 +770,18 @@
             "problem": "double_oscillator",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.0009035309493894319,
+            "objective": 0.0009035309504206838,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.235812672,
-                "cpu_bytes": 37948256,
+                "time": 0.338222398,
+                "cpu_bytes": 37948304,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 37948256,
+                    "allocd": 37948304,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 154196,
+                    "poolalloc": 154199,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
@@ -789,13 +789,13 @@
                     "full_sweep": 0
                 },
                 "gpu_bytes": 620307657,
-                "gpu_memtime": 0.0020830010000000287,
+                "gpu_memtime": 0.00291511399999822,
                 "gpu_memstats": {
                     "alloc_count": 1102,
                     "alloc_bytes": 620307657,
                     "free_count": 155,
                     "free_bytes": 110382212,
-                    "total_time": 0.0020830010000000287
+                    "total_time": 0.00291511399999822
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -815,7 +815,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.010996292,
+                "time": 0.010908969,
                 "bytes": 5191712,
                 "alloc": 7900,
                 "gctime": 0.0
@@ -837,28 +837,28 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.060056084,
-                "cpu_bytes": 6425984,
+                "time": 0.077298423,
+                "cpu_bytes": 6489920,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 6425984,
+                    "allocd": 6489920,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 208010,
+                    "poolalloc": 210617,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 13790554,
-                "gpu_memtime": 0.001944769999999374,
+                "gpu_bytes": 13790940,
+                "gpu_memtime": 0.0017132389999994224,
                 "gpu_memstats": {
-                    "alloc_count": 1538,
-                    "alloc_bytes": 13790554,
-                    "free_count": 189,
-                    "free_bytes": 2342957,
-                    "total_time": 0.001944769999999374
+                    "alloc_count": 1551,
+                    "alloc_bytes": 13790940,
+                    "free_count": 195,
+                    "free_bytes": 2343063,
+                    "total_time": 0.0017132389999994224
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -878,7 +878,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.113530297,
+                "time": 0.114259398,
                 "bytes": 24687440,
                 "alloc": 8057,
                 "gctime": 0.0
@@ -900,28 +900,28 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.088163326,
-                "cpu_bytes": 9901024,
+                "time": 0.097678878,
+                "cpu_bytes": 9964928,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 9901024,
+                    "allocd": 9964928,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 228919,
+                    "poolalloc": 231524,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 68910069,
-                "gpu_memtime": 0.002307345999997268,
+                "gpu_bytes": 68911591,
+                "gpu_memtime": 0.002310477000002531,
                 "gpu_memstats": {
-                    "alloc_count": 1629,
-                    "alloc_bytes": 68910069,
-                    "free_count": 231,
-                    "free_bytes": 11708763,
-                    "total_time": 0.002307345999997268
+                    "alloc_count": 1642,
+                    "alloc_bytes": 68911591,
+                    "free_count": 237,
+                    "free_bytes": 11709093,
+                    "total_time": 0.002310477000002531
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -941,7 +941,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.242369552,
+                "time": 0.242739117,
                 "bytes": 48895824,
                 "alloc": 8069,
                 "gctime": 0.0
@@ -959,32 +959,32 @@
             "problem": "electric_vehicle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1228.5214222024365,
+            "objective": 1228.5214222024367,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.090715843,
-                "cpu_bytes": 12752400,
+                "time": 0.11449291,
+                "cpu_bytes": 12816336,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 12752400,
+                    "allocd": 12816336,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 196481,
+                    "poolalloc": 199088,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 137169011,
-                "gpu_memtime": 0.002130101999998524,
+                "gpu_bytes": 137171973,
+                "gpu_memtime": 0.0021192850000002483,
                 "gpu_memstats": {
-                    "alloc_count": 1426,
-                    "alloc_bytes": 137169011,
-                    "free_count": 176,
-                    "free_bytes": 23409706,
-                    "total_time": 0.002130101999998524
+                    "alloc_count": 1439,
+                    "alloc_bytes": 137171973,
+                    "free_count": 182,
+                    "free_bytes": 23410324,
+                    "total_time": 0.0021192850000002483
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1004,7 +1004,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.519131205,
+                "time": 0.517547143,
                 "bytes": 97313488,
                 "alloc": 8069,
                 "gctime": 0.0
@@ -1022,18 +1022,18 @@
             "problem": "electric_vehicle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1228.4625346468215,
+            "objective": 1228.462534645471,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.131071811,
-                "cpu_bytes": 20483472,
+                "time": 0.145109751,
+                "cpu_bytes": 20483552,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 20483472,
+                    "allocd": 20483552,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 211230,
+                    "poolalloc": 211235,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
@@ -1041,13 +1041,13 @@
                     "full_sweep": 0
                 },
                 "gpu_bytes": 274339997,
-                "gpu_memtime": 0.0025779939999985846,
+                "gpu_memtime": 0.0024603919999991453,
                 "gpu_memstats": {
                     "alloc_count": 1491,
                     "alloc_bytes": 274339997,
                     "free_count": 206,
                     "free_bytes": 46823144,
-                    "total_time": 0.0025779939999985846
+                    "total_time": 0.0024603919999991453
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1067,7 +1067,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.85961733,
+                "time": 0.85920653,
                 "bytes": 65984568,
                 "alloc": 26844,
                 "gctime": 0.0
@@ -1085,32 +1085,32 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -1247.9858077351812,
+            "objective": -1247.985808157118,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.333409915,
-                "cpu_bytes": 34934528,
+                "time": 0.235738429,
+                "cpu_bytes": 18786832,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 34934528,
+                    "allocd": 18786832,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 890634,
-                    "bigalloc": 1091,
+                    "poolalloc": 350499,
+                    "bigalloc": 743,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 57353848,
-                "gpu_memtime": 0.009243180999999878,
+                "gpu_bytes": 55582935,
+                "gpu_memtime": 0.0047467749999978714,
                 "gpu_memstats": {
-                    "alloc_count": 5267,
-                    "alloc_bytes": 57353848,
-                    "free_count": 1303,
-                    "free_bytes": 9531917,
-                    "total_time": 0.009243180999999878
+                    "alloc_count": 2346,
+                    "alloc_bytes": 55582935,
+                    "free_count": 292,
+                    "free_bytes": 9492488,
+                    "total_time": 0.0047467749999978714
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1118,7 +1118,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 1000,
-            "iterations": 27,
+            "iterations": 18,
             "disc_method": "midpoint"
         },
         {
@@ -1130,10 +1130,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.793526516,
+                "time": 0.763815239,
                 "bytes": 128604400,
                 "alloc": 9959,
-                "gctime": 0.016423784
+                "gctime": 0.0
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -1148,32 +1148,32 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -1247.9903428559696,
+            "objective": -1247.990342855975,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.967928383,
-                "cpu_bytes": 45624864,
+                "time": 2.701526349,
+                "cpu_bytes": 81710384,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 45624864,
+                    "allocd": 81710384,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 754050,
-                    "bigalloc": 995,
+                    "poolalloc": 1661804,
+                    "bigalloc": 2639,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 284477233,
-                "gpu_memtime": 0.021861716000001863,
+                "gpu_bytes": 325217919,
+                "gpu_memtime": 0.057364498000003095,
                 "gpu_memstats": {
-                    "alloc_count": 4516,
-                    "alloc_bytes": 284477233,
-                    "free_count": 1043,
-                    "free_bytes": 47561985,
-                    "total_time": 0.021861716000001863
+                    "alloc_count": 10060,
+                    "alloc_bytes": 325217919,
+                    "free_count": 2012,
+                    "free_bytes": 47712180,
+                    "total_time": 0.057364498000003095
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1181,7 +1181,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 5000,
-            "iterations": 25,
+            "iterations": 70,
             "disc_method": "midpoint"
         },
         {
@@ -1193,7 +1193,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.581539096,
+                "time": 1.73711621,
                 "bytes": 256459664,
                 "alloc": 9989,
                 "gctime": 0.0
@@ -1211,32 +1211,32 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -1247.9928740816913,
+            "objective": -1247.9928740814867,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.716685744,
-                "cpu_bytes": 63278720,
-                "cpu_gctime": 0.042259097,
+                "time": 1.963229847,
+                "cpu_bytes": 64486976,
+                "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 63278720,
+                    "allocd": 64486976,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 721702,
-                    "bigalloc": 983,
-                    "freecall": 507,
-                    "total_time": 42259097,
-                    "pause": 1,
+                    "poolalloc": 758672,
+                    "bigalloc": 1019,
+                    "freecall": 0,
+                    "total_time": 0,
+                    "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 568606544,
-                "gpu_memtime": 0.030272765999995732,
+                "gpu_bytes": 570446041,
+                "gpu_memtime": 0.027159465000000105,
                 "gpu_memstats": {
-                    "alloc_count": 4332,
-                    "alloc_bytes": 568606544,
-                    "free_count": 4410,
-                    "free_bytes": 587553137,
-                    "total_time": 0.030272765999995732
+                    "alloc_count": 4540,
+                    "alloc_bytes": 570446041,
+                    "free_count": 1028,
+                    "free_bytes": 95104436,
+                    "total_time": 0.027159465000000105
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1244,7 +1244,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 10000,
-            "iterations": 25,
+            "iterations": 26,
             "disc_method": "midpoint"
         },
         {
@@ -1256,10 +1256,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.783326659,
+                "time": 3.85539603,
                 "bytes": 520336096,
                 "alloc": 10202,
-                "gctime": 0.0
+                "gctime": 0.013396692
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -1274,32 +1274,32 @@
             "problem": "glider",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -1247.9978906601807,
+            "objective": -1247.997795809245,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.791132425,
-                "cpu_bytes": 94156352,
-                "cpu_gctime": 0.071055805,
+                "time": 2.685734647,
+                "cpu_bytes": 94878128,
+                "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 94156352,
+                    "allocd": 94878128,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 543788,
-                    "bigalloc": 767,
-                    "freecall": 323,
-                    "total_time": 71055805,
-                    "pause": 1,
+                    "poolalloc": 560893,
+                    "bigalloc": 803,
+                    "freecall": 0,
+                    "total_time": 0,
+                    "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 1114786821,
-                "gpu_memtime": 0.02690516000000187,
+                "gpu_bytes": 1118360228,
+                "gpu_memtime": 0.02232134400000141,
                 "gpu_memstats": {
-                    "alloc_count": 3293,
-                    "alloc_bytes": 1114786821,
-                    "free_count": 3696,
-                    "free_bytes": 1157325648,
-                    "total_time": 0.02690516000000187
+                    "alloc_count": 3404,
+                    "alloc_bytes": 1118360228,
+                    "free_count": 717,
+                    "free_bytes": 190015880,
+                    "total_time": 0.02232134400000141
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1307,7 +1307,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 20000,
-            "iterations": 19,
+            "iterations": 20,
             "disc_method": "midpoint"
         },
         {
@@ -1319,7 +1319,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.438389191,
+                "time": 3.487454946,
                 "bytes": 296151384,
                 "alloc": 66955,
                 "gctime": 0.0
@@ -1337,32 +1337,32 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -2.0582418635344575,
+            "objective": -2.058241863522672,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.141100704,
-                "cpu_bytes": 154054368,
-                "cpu_gctime": 0.095173163,
+                "time": 3.815191014,
+                "cpu_bytes": 233272496,
+                "cpu_gctime": 0.114398789,
                 "cpu_gcstats": {
-                    "allocd": 154054368,
+                    "allocd": 233272496,
                     "malloc": 8,
                     "realloc": 0,
-                    "poolalloc": 5467766,
+                    "poolalloc": 8318246,
                     "bigalloc": 11,
-                    "freecall": 1104,
-                    "total_time": 95173163,
+                    "freecall": 290,
+                    "total_time": 114398789,
                     "pause": 1,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 148529272,
-                "gpu_memtime": 0.09069141499998024,
+                "gpu_bytes": 203388269,
+                "gpu_memtime": 0.14383859500002383,
                 "gpu_memstats": {
-                    "alloc_count": 35341,
-                    "alloc_bytes": 148529272,
-                    "free_count": 50532,
-                    "free_bytes": 187753630,
-                    "total_time": 0.09069141499998024
+                    "alloc_count": 54089,
+                    "alloc_bytes": 203388269,
+                    "free_count": 69762,
+                    "free_bytes": 253200970,
+                    "total_time": 0.14383859500002383
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1370,7 +1370,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 1000,
-            "iterations": 329,
+            "iterations": 489,
             "disc_method": "midpoint"
         },
         {
@@ -1382,10 +1382,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 33.485091143,
+                "time": 34.040754663,
                 "bytes": 3299649936,
                 "alloc": 137981,
-                "gctime": 0.118067347
+                "gctime": 0.13277641
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -1400,32 +1400,32 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -2.0591439217801706,
+            "objective": -2.0591439217825327,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 7.085307228,
-                "cpu_bytes": 311854248,
-                "cpu_gctime": 0.082502601,
+                "time": 8.389703572,
+                "cpu_bytes": 283822312,
+                "cpu_gctime": 0.107959047,
                 "cpu_gcstats": {
-                    "allocd": 311854248,
+                    "allocd": 283822312,
                     "malloc": 7,
                     "realloc": 0,
-                    "poolalloc": 11371035,
+                    "poolalloc": 10303177,
                     "bigalloc": 11,
                     "freecall": 7,
-                    "total_time": 82502601,
+                    "total_time": 107959047,
                     "pause": 1,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 1006888961,
-                "gpu_memtime": 0.1975997450000262,
+                "gpu_bytes": 954440329,
+                "gpu_memtime": 0.23625967300000306,
                 "gpu_memstats": {
-                    "alloc_count": 68297,
-                    "alloc_bytes": 1006888961,
-                    "free_count": 65863,
-                    "free_bytes": 997662846,
-                    "total_time": 0.1975997450000262
+                    "alloc_count": 62154,
+                    "alloc_bytes": 954440329,
+                    "free_count": 65889,
+                    "free_bytes": 968488499,
+                    "total_time": 0.23625967300000306
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1433,7 +1433,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 5000,
-            "iterations": 479,
+            "iterations": 451,
             "disc_method": "midpoint"
         },
         {
@@ -1445,10 +1445,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 69.19470777,
+                "time": 68.290541803,
                 "bytes": 4982151368,
                 "alloc": 111867,
-                "gctime": 0.230077377
+                "gctime": 0.228199132
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -1463,32 +1463,32 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -2.059435645731518,
+            "objective": -2.0594356457306398,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 16.496205453,
-                "cpu_bytes": 329656400,
-                "cpu_gctime": 0.0,
+                "time": 15.983570654,
+                "cpu_bytes": 270091664,
+                "cpu_gctime": 0.104214447,
                 "cpu_gcstats": {
-                    "allocd": 329656400,
+                    "allocd": 270091664,
                     "malloc": 8,
                     "realloc": 0,
-                    "poolalloc": 11480936,
+                    "poolalloc": 9356245,
                     "bigalloc": 11,
-                    "freecall": 0,
-                    "total_time": 0,
-                    "pause": 0,
+                    "freecall": 8,
+                    "total_time": 104214447,
+                    "pause": 1,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 2250286411,
-                "gpu_memtime": 0.5772691189999972,
+                "gpu_bytes": 1931357865,
+                "gpu_memtime": 0.34040233900001393,
                 "gpu_memstats": {
-                    "alloc_count": 71470,
-                    "alloc_bytes": 2250286411,
-                    "free_count": 11184,
-                    "free_bytes": 54546499,
-                    "total_time": 0.5772691189999972
+                    "alloc_count": 58509,
+                    "alloc_bytes": 1931357865,
+                    "free_count": 59967,
+                    "free_bytes": 1802153619,
+                    "total_time": 0.34040233900001393
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1496,7 +1496,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 10000,
-            "iterations": 540,
+            "iterations": 459,
             "disc_method": "midpoint"
         },
         {
@@ -1508,10 +1508,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 197.095632327,
+                "time": 188.447179495,
                 "bytes": 12732951456,
                 "alloc": 142857,
-                "gctime": 0.895985565
+                "gctime": 0.658444683
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -1526,32 +1526,32 @@
             "problem": "insurance",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -2.0596731681120453,
+            "objective": -2.0596422895479427,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 54.655102879,
-                "cpu_bytes": 1135436432,
-                "cpu_gctime": 0.560919786,
+                "time": 56.478937872,
+                "cpu_bytes": 1159507200,
+                "cpu_gctime": 0.376242462,
                 "cpu_gcstats": {
-                    "allocd": 1135436432,
+                    "allocd": 1159507200,
                     "malloc": 8,
                     "realloc": 0,
-                    "poolalloc": 42268487,
+                    "poolalloc": 43850980,
                     "bigalloc": 11,
                     "freecall": 9,
-                    "total_time": 560919786,
+                    "total_time": 376242462,
                     "pause": 2,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 7965293656,
-                "gpu_memtime": 1.8171067470000053,
+                "gpu_bytes": 7724954524,
+                "gpu_memtime": 1.4667697989998922,
                 "gpu_memstats": {
-                    "alloc_count": 240504,
-                    "alloc_bytes": 7965293656,
-                    "free_count": 216135,
-                    "free_bytes": 8065591023,
-                    "total_time": 1.8171067470000053
+                    "alloc_count": 244277,
+                    "alloc_bytes": 7724954524,
+                    "free_count": 220335,
+                    "free_bytes": 8061669628,
+                    "total_time": 1.4667697989998922
                 }
             },
             "status": "MAXIMUM_ITERATIONS_EXCEEDED",
@@ -1571,7 +1571,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.060853274,
+                "time": 0.060810736,
                 "bytes": 21894576,
                 "alloc": 10976,
                 "gctime": 0.0
@@ -1589,11 +1589,11 @@
             "problem": "jackson",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -0.1918374197059592,
+            "objective": -0.19183741970595936,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.105581412,
+                "time": 0.102755792,
                 "cpu_bytes": 10690496,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
@@ -1608,13 +1608,13 @@
                     "full_sweep": 0
                 },
                 "gpu_bytes": 27640811,
-                "gpu_memtime": 0.00305989399998996,
+                "gpu_memtime": 0.002753914000009239,
                 "gpu_memstats": {
                     "alloc_count": 2474,
                     "alloc_bytes": 27640811,
                     "free_count": 278,
                     "free_bytes": 4162387,
-                    "total_time": 0.00305989399998996
+                    "total_time": 0.002753914000009239
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1634,7 +1634,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.405553849,
+                "time": 0.406843578,
                 "bytes": 101616040,
                 "alloc": 10639,
                 "gctime": 0.0
@@ -1652,32 +1652,32 @@
             "problem": "jackson",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -0.19192472604659633,
+            "objective": -0.1919247260465963,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.160816675,
-                "cpu_bytes": 17666784,
+                "time": 0.163529576,
+                "cpu_bytes": 17603232,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 17666784,
+                    "allocd": 17603232,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 382796,
+                    "poolalloc": 380196,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 140662316,
-                "gpu_memtime": 0.003734997000005791,
+                "gpu_bytes": 140659250,
+                "gpu_memtime": 0.003645981000012455,
                 "gpu_memstats": {
-                    "alloc_count": 2768,
-                    "alloc_bytes": 140662316,
-                    "free_count": 317,
-                    "free_bytes": 20801688,
-                    "total_time": 0.003734997000005791
+                    "alloc_count": 2755,
+                    "alloc_bytes": 140659250,
+                    "free_count": 311,
+                    "free_bytes": 20801174,
+                    "total_time": 0.003645981000012455
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1697,7 +1697,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.836853587,
+                "time": 0.838913052,
                 "bytes": 202645312,
                 "alloc": 10644,
                 "gctime": 0.0
@@ -1715,18 +1715,18 @@
             "problem": "jackson",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -0.1920350393316539,
+            "objective": -0.19203503933165397,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.196284958,
-                "cpu_bytes": 24449312,
+                "time": 0.205707063,
+                "cpu_bytes": 24449232,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 24449312,
+                    "allocd": 24449232,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 370145,
+                    "poolalloc": 370140,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
@@ -1734,13 +1734,13 @@
                     "full_sweep": 0
                 },
                 "gpu_bytes": 279560598,
-                "gpu_memtime": 0.0036700879999891356,
+                "gpu_memtime": 0.003768470000035329,
                 "gpu_memstats": {
                     "alloc_count": 2670,
                     "alloc_bytes": 279560598,
                     "free_count": 304,
                     "free_bytes": 41598445,
-                    "total_time": 0.0036700879999891356
+                    "total_time": 0.003768470000035329
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1760,10 +1760,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.866190796,
+                "time": 1.874538071,
                 "bytes": 393818520,
                 "alloc": 10505,
-                "gctime": 0.004243081
+                "gctime": 0.006192353
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -1778,32 +1778,32 @@
             "problem": "jackson",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -0.1922557819111584,
+            "objective": -0.192255781911165,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.343465394,
-                "cpu_bytes": 37677856,
-                "cpu_gctime": 0.030999595,
+                "time": 0.338864947,
+                "cpu_bytes": 37677792,
+                "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 37677856,
+                    "allocd": 37677792,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 332585,
+                    "poolalloc": 332598,
                     "bigalloc": 11,
-                    "freecall": 407,
-                    "total_time": 30999595,
-                    "pause": 1,
+                    "freecall": 0,
+                    "total_time": 0,
+                    "pause": 0,
                     "full_sweep": 0
                 },
                 "gpu_bytes": 548720673,
-                "gpu_memtime": 0.008746139999990632,
+                "gpu_memtime": 0.003920537999989371,
                 "gpu_memstats": {
                     "alloc_count": 2395,
                     "alloc_bytes": 548720673,
-                    "free_count": 2507,
-                    "free_bytes": 758646418,
-                    "total_time": 0.008746139999990632
+                    "free_count": 277,
+                    "free_bytes": 83183286,
+                    "total_time": 0.003920537999989371
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1823,7 +1823,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.183386897,
+                "time": 0.18258779,
                 "bytes": 15019104,
                 "alloc": 14653,
                 "gctime": 0.0
@@ -1841,32 +1841,32 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.432980803462005,
+            "objective": 19.43298079989492,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.184245418,
-                "cpu_bytes": 19315296,
+                "time": 0.384815143,
+                "cpu_bytes": 19442784,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 19315296,
+                    "allocd": 19442784,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 701024,
+                    "poolalloc": 706248,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 19226507,
-                "gpu_memtime": 0.005763172999979638,
+                "gpu_bytes": 19227567,
+                "gpu_memtime": 0.011410767000008093,
                 "gpu_memstats": {
-                    "alloc_count": 5031,
-                    "alloc_bytes": 19226507,
-                    "free_count": 600,
-                    "free_bytes": 2478278,
-                    "total_time": 0.005763172999979638
+                    "alloc_count": 5057,
+                    "alloc_bytes": 19227567,
+                    "free_count": 612,
+                    "free_bytes": 2478522,
+                    "total_time": 0.011410767000008093
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1886,7 +1886,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.210612686,
+                "time": 1.220717017,
                 "bytes": 105632264,
                 "alloc": 19332,
                 "gctime": 0.0
@@ -1904,32 +1904,32 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.430933734129265,
+            "objective": 19.430935157438878,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.24563739,
-                "cpu_bytes": 23623312,
+                "time": 0.296334618,
+                "cpu_bytes": 23098816,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 23623312,
+                    "allocd": 23098816,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 752910,
+                    "poolalloc": 732630,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 98672357,
-                "gpu_memtime": 0.007295418000000886,
+                "gpu_bytes": 98121788,
+                "gpu_memtime": 0.008422546999977243,
                 "gpu_memstats": {
-                    "alloc_count": 5426,
-                    "alloc_bytes": 98672357,
-                    "free_count": 605,
-                    "free_bytes": 12365241,
-                    "total_time": 0.007295418000000886
+                    "alloc_count": 5295,
+                    "alloc_bytes": 98121788,
+                    "free_count": 580,
+                    "free_bytes": 12363658,
+                    "total_time": 0.008422546999977243
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -1937,7 +1937,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 5000,
-            "iterations": 49,
+            "iterations": 48,
             "disc_method": "midpoint"
         },
         {
@@ -1949,7 +1949,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.143278102,
+                "time": 2.437233148,
                 "bytes": 185114920,
                 "alloc": 17498,
                 "gctime": 0.0
@@ -1967,32 +1967,32 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.42999219431493,
+            "objective": 19.429992431537016,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.503347196,
-                "cpu_bytes": 43163368,
+                "time": 0.473792782,
+                "cpu_bytes": 37973448,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 43163368,
+                    "allocd": 37973448,
                     "malloc": 7,
                     "realloc": 0,
-                    "poolalloc": 1353143,
+                    "poolalloc": 1163111,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 245197987,
-                "gpu_memtime": 0.013971487999984156,
+                "gpu_bytes": 224616600,
+                "gpu_memtime": 0.013373158000039354,
                 "gpu_memstats": {
-                    "alloc_count": 9708,
-                    "alloc_bytes": 245197987,
-                    "free_count": 1027,
-                    "free_bytes": 24773587,
-                    "total_time": 0.013971487999984156
+                    "alloc_count": 8196,
+                    "alloc_bytes": 224616600,
+                    "free_count": 1002,
+                    "free_bytes": 24770400,
+                    "total_time": 0.013373158000039354
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2000,7 +2000,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 10000,
-            "iterations": 93,
+            "iterations": 74,
             "disc_method": "midpoint"
         },
         {
@@ -2012,7 +2012,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 5.613757401,
+                "time": 5.690694672,
                 "bytes": 405692352,
                 "alloc": 18966,
                 "gctime": 0.0
@@ -2030,32 +2030,32 @@
             "problem": "robbins",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 19.428182242980977,
+            "objective": 19.428182587125495,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.532562523,
-                "cpu_bytes": 45638800,
+                "time": 0.567922196,
+                "cpu_bytes": 45909632,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 45638800,
+                    "allocd": 45909632,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 1180647,
+                    "poolalloc": 1190561,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 450808049,
-                "gpu_memtime": 0.012900029999991958,
+                "gpu_bytes": 452972191,
+                "gpu_memtime": 0.013708729999988734,
                 "gpu_memstats": {
-                    "alloc_count": 8303,
-                    "alloc_bytes": 450808049,
-                    "free_count": 1015,
-                    "free_bytes": 49535815,
-                    "total_time": 0.012900029999991958
+                    "alloc_count": 8382,
+                    "alloc_bytes": 452972191,
+                    "free_count": 1016,
+                    "free_bytes": 49536070,
+                    "total_time": 0.013708729999988734
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2063,7 +2063,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 20000,
-            "iterations": 75,
+            "iterations": 76,
             "disc_method": "midpoint"
         },
         {
@@ -2075,7 +2075,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.313759028,
+                "time": 0.314653541,
                 "bytes": 39781504,
                 "alloc": 11421,
                 "gctime": 0.0
@@ -2093,18 +2093,18 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.140744698437413,
+            "objective": 9.140744698436311,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.381028067,
-                "cpu_bytes": 19747968,
+                "time": 0.460632572,
+                "cpu_bytes": 19748192,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 19747968,
+                    "allocd": 19748192,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 577844,
+                    "poolalloc": 577858,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
@@ -2112,13 +2112,13 @@
                     "full_sweep": 0
                 },
                 "gpu_bytes": 61665618,
-                "gpu_memtime": 0.006603242999991821,
+                "gpu_memtime": 0.007851725000021403,
                 "gpu_memstats": {
                     "alloc_count": 3466,
                     "alloc_bytes": 61665618,
                     "free_count": 423,
                     "free_bytes": 9595302,
-                    "total_time": 0.006603242999991821
+                    "total_time": 0.007851725000021403
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2138,7 +2138,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 4.498097821,
+                "time": 4.05365962,
                 "bytes": 326925000,
                 "alloc": 16591,
                 "gctime": 0.0
@@ -2156,32 +2156,32 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.140131114753292,
+            "objective": 9.1401305218405,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.62384923,
-                "cpu_bytes": 47146224,
+                "time": 2.998717259,
+                "cpu_bytes": 47083120,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 47146224,
+                    "allocd": 47083120,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 1116980,
+                    "poolalloc": 1114408,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 354299455,
-                "gpu_memtime": 0.043750292000011015,
+                "gpu_bytes": 354294061,
+                "gpu_memtime": 0.03700834200002756,
                 "gpu_memstats": {
-                    "alloc_count": 6718,
-                    "alloc_bytes": 354299455,
-                    "free_count": 714,
-                    "free_bytes": 48005751,
-                    "total_time": 0.043750292000011015
+                    "alloc_count": 6705,
+                    "alloc_bytes": 354294061,
+                    "free_count": 708,
+                    "free_bytes": 48004621,
+                    "total_time": 0.03700834200002756
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2201,7 +2201,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 5.63814904,
+                "time": 5.626944857,
                 "bytes": 487624552,
                 "alloc": 13338,
                 "gctime": 0.0
@@ -2219,18 +2219,18 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.1392773225963,
+            "objective": 9.139277322579034,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.972004459,
+                "time": 4.275753535,
                 "cpu_bytes": 57910576,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
                     "allocd": 57910576,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 1005469,
+                    "poolalloc": 1005486,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
@@ -2238,13 +2238,13 @@
                     "full_sweep": 0
                 },
                 "gpu_bytes": 690164333,
-                "gpu_memtime": 0.03880282500003318,
+                "gpu_memtime": 0.03439310499997905,
                 "gpu_memstats": {
                     "alloc_count": 5925,
                     "alloc_bytes": 690164333,
                     "free_count": 743,
                     "free_bytes": 96010425,
-                    "total_time": 0.03880282500003318
+                    "total_time": 0.03439310499997905
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2264,10 +2264,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 25.858894434,
+                "time": 25.892766788,
                 "bytes": 1202126320,
                 "alloc": 15676,
-                "gctime": 0.021672998
+                "gctime": 0.019977148
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -2282,32 +2282,32 @@
             "problem": "robot",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 9.137650359062198,
+            "objective": 9.13765035911766,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 4.975953283,
-                "cpu_bytes": 75475376,
-                "cpu_gctime": 0.062723671,
+                "time": 5.191721608,
+                "cpu_bytes": 75412160,
+                "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 75475376,
+                    "allocd": 75412160,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 624658,
+                    "poolalloc": 622096,
                     "bigalloc": 11,
-                    "freecall": 33,
-                    "total_time": 62723671,
-                    "pause": 1,
+                    "freecall": 0,
+                    "total_time": 0,
+                    "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 1242553593,
-                "gpu_memtime": 0.027855199000012654,
+                "gpu_bytes": 1242544983,
+                "gpu_memtime": 0.02590304900000362,
                 "gpu_memstats": {
-                    "alloc_count": 3694,
-                    "alloc_bytes": 1242553593,
-                    "free_count": 3764,
-                    "free_bytes": 1296313886,
-                    "total_time": 0.027855199000012654
+                    "alloc_count": 3681,
+                    "alloc_bytes": 1242544983,
+                    "free_count": 470,
+                    "free_bytes": 191811704,
+                    "total_time": 0.02590304900000362
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2327,7 +2327,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.078755623,
+                "time": 0.07866321,
                 "bytes": 22093456,
                 "alloc": 11004,
                 "gctime": 0.0
@@ -2345,32 +2345,32 @@
             "problem": "rocket",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -1.0128696295128006,
+            "objective": -1.01286962951281,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.25660237,
-                "cpu_bytes": 13115760,
-                "cpu_gctime": 0.082729877,
+                "time": 0.20251235,
+                "cpu_bytes": 13051872,
+                "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 13115760,
+                    "allocd": 13051872,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 394157,
+                    "poolalloc": 391553,
                     "bigalloc": 11,
-                    "freecall": 6444,
-                    "total_time": 82729877,
-                    "pause": 1,
+                    "freecall": 0,
+                    "total_time": 0,
+                    "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 36505864,
-                "gpu_memtime": 0.007523613999995682,
+                "gpu_bytes": 36505174,
+                "gpu_memtime": 0.003534784999988716,
                 "gpu_memstats": {
-                    "alloc_count": 2828,
-                    "alloc_bytes": 36505864,
-                    "free_count": 3997,
-                    "free_bytes": 37338122,
-                    "total_time": 0.007523613999995682
+                    "alloc_count": 2815,
+                    "alloc_bytes": 36505174,
+                    "free_count": 304,
+                    "free_bytes": 5880628,
+                    "total_time": 0.003534784999988716
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2390,7 +2390,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.472444291,
+                "time": 0.472299145,
                 "bytes": 103360536,
                 "alloc": 10705,
                 "gctime": 0.0
@@ -2408,18 +2408,18 @@
             "problem": "rocket",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -1.0129996706235065,
+            "objective": -1.012999670623589,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.648639213,
-                "cpu_bytes": 22298112,
+                "time": 0.665595623,
+                "cpu_bytes": 22298016,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 22298112,
+                    "allocd": 22298016,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 443101,
+                    "poolalloc": 443112,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
@@ -2427,13 +2427,13 @@
                     "full_sweep": 0
                 },
                 "gpu_bytes": 184967756,
-                "gpu_memtime": 0.01383334000001124,
+                "gpu_memtime": 0.014288556999997759,
                 "gpu_memstats": {
                     "alloc_count": 3140,
                     "alloc_bytes": 184967756,
                     "free_count": 349,
                     "free_bytes": 29394187,
-                    "total_time": 0.01383334000001124
+                    "total_time": 0.014288556999997759
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2453,7 +2453,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.18904981,
+                "time": 1.075063084,
                 "bytes": 220541024,
                 "alloc": 11238,
                 "gctime": 0.0
@@ -2471,18 +2471,18 @@
             "problem": "rocket",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -1.013161663113168,
+            "objective": -1.0131616631131564,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.045113518,
-                "cpu_bytes": 32047600,
+                "time": 1.452454573,
+                "cpu_bytes": 32048000,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 32047600,
+                    "allocd": 32048000,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 442250,
+                    "poolalloc": 442292,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
@@ -2490,13 +2490,13 @@
                     "full_sweep": 0
                 },
                 "gpu_bytes": 369878807,
-                "gpu_memtime": 0.01913508000001407,
+                "gpu_memtime": 0.0178773699999919,
                 "gpu_memstats": {
                     "alloc_count": 3127,
                     "alloc_bytes": 369878807,
                     "free_count": 343,
                     "free_bytes": 58783041,
-                    "total_time": 0.01913508000001407
+                    "total_time": 0.0178773699999919
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2516,7 +2516,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.194801686,
+                "time": 2.202859361,
                 "bytes": 411637248,
                 "alloc": 10725,
                 "gctime": 0.0
@@ -2534,32 +2534,32 @@
             "problem": "rocket",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -1.0134837290988128,
+            "objective": -1.013483729098826,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.958553925,
-                "cpu_bytes": 52588160,
-                "cpu_gctime": 0.089717868,
+                "time": 2.404625786,
+                "cpu_bytes": 52588240,
+                "cpu_gctime": 0.076144431,
                 "cpu_gcstats": {
-                    "allocd": 52588160,
+                    "allocd": 52588240,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 478794,
+                    "poolalloc": 478816,
                     "bigalloc": 11,
-                    "freecall": 490,
-                    "total_time": 89717868,
+                    "freecall": 486,
+                    "total_time": 76144431,
                     "pause": 1,
                     "full_sweep": 0
                 },
                 "gpu_bytes": 746250080,
-                "gpu_memtime": 0.02118664599998521,
+                "gpu_memtime": 0.02079799999999743,
                 "gpu_memstats": {
                     "alloc_count": 3355,
                     "alloc_bytes": 746250080,
                     "free_count": 3422,
                     "free_bytes": 772811719,
-                    "total_time": 0.02118664599998521
+                    "total_time": 0.02079799999999743
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2579,7 +2579,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.104960262,
+                "time": 2.109021773,
                 "bytes": 172861216,
                 "alloc": 29617,
                 "gctime": 0.0
@@ -2597,18 +2597,18 @@
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -0.5959072825999642,
+            "objective": -0.5959072825999809,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.995265196,
-                "cpu_bytes": 90344024,
+                "time": 2.233485534,
+                "cpu_bytes": 90376520,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 90344024,
+                    "allocd": 90376520,
                     "malloc": 7,
                     "realloc": 0,
-                    "poolalloc": 2059240,
+                    "poolalloc": 2059456,
                     "bigalloc": 4583,
                     "freecall": 0,
                     "total_time": 0,
@@ -2616,13 +2616,13 @@
                     "full_sweep": 0
                 },
                 "gpu_bytes": 194771988,
-                "gpu_memtime": 0.044016590999993,
+                "gpu_memtime": 0.04281699399998384,
                 "gpu_memstats": {
                     "alloc_count": 12424,
                     "alloc_bytes": 194771988,
                     "free_count": 1245,
                     "free_bytes": 29308439,
-                    "total_time": 0.044016590999993
+                    "total_time": 0.04281699399998384
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2642,10 +2642,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 53.993969622,
+                "time": 53.427566451,
                 "bytes": 3690120952,
                 "alloc": 129586,
-                "gctime": 0.174638423
+                "gctime": 0.164704568
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -2660,32 +2660,32 @@
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -0.5960317835323065,
+            "objective": -0.5960317835323025,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 7.059446817,
-                "cpu_bytes": 133509464,
-                "cpu_gctime": 0.055901965,
+                "time": 7.464141461,
+                "cpu_bytes": 133477608,
+                "cpu_gctime": 0.031325618,
                 "cpu_gcstats": {
-                    "allocd": 133509464,
+                    "allocd": 133477608,
                     "malloc": 7,
                     "realloc": 0,
-                    "poolalloc": 2099959,
+                    "poolalloc": 2097572,
                     "bigalloc": 4523,
                     "freecall": 9,
-                    "total_time": 55901965,
+                    "total_time": 31325618,
                     "pause": 1,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 970270303,
-                "gpu_memtime": 0.09135174200000495,
+                "gpu_bytes": 970263837,
+                "gpu_memtime": 0.08705444999998413,
                 "gpu_memstats": {
-                    "alloc_count": 12502,
-                    "alloc_bytes": 970270303,
-                    "free_count": 12526,
-                    "free_bytes": 1071127754,
-                    "total_time": 0.09135174200000495
+                    "alloc_count": 12489,
+                    "alloc_bytes": 970263837,
+                    "free_count": 12551,
+                    "free_bytes": 1297236384,
+                    "total_time": 0.08705444999998413
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2705,10 +2705,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 29.090767914,
+                "time": 28.931861605,
                 "bytes": 1739406144,
                 "alloc": 30169,
-                "gctime": 1.192394871
+                "gctime": 1.173741396
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -2723,32 +2723,32 @@
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -0.5961874169691976,
+            "objective": -0.5961874169691986,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 11.744599369,
-                "cpu_bytes": 179651176,
-                "cpu_gctime": 0.09046547,
+                "time": 13.66691215,
+                "cpu_bytes": 179679688,
+                "cpu_gctime": 0.032089226,
                 "cpu_gcstats": {
-                    "allocd": 179651176,
+                    "allocd": 179679688,
                     "malloc": 7,
                     "realloc": 0,
-                    "poolalloc": 1914813,
+                    "poolalloc": 1914973,
                     "bigalloc": 4139,
-                    "freecall": 11,
-                    "total_time": 90465470,
+                    "freecall": 10,
+                    "total_time": 32089226,
                     "pause": 1,
                     "full_sweep": 0
                 },
                 "gpu_bytes": 1899110821,
-                "gpu_memtime": 0.09604701400002646,
+                "gpu_memtime": 0.08118123799996901,
                 "gpu_memstats": {
                     "alloc_count": 11409,
                     "alloc_bytes": 1899110821,
-                    "free_count": 12235,
-                    "free_bytes": 2471268084,
-                    "total_time": 0.09604701400002646
+                    "free_count": 11598,
+                    "free_bytes": 2431093937,
+                    "total_time": 0.08118123799996901
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2768,10 +2768,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 66.659602889,
-                "bytes": 3773120880,
+                "time": 66.88017155,
+                "bytes": 3773109976,
                 "alloc": 32125,
-                "gctime": 1.329006921
+                "gctime": 1.296621146
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -2786,32 +2786,32 @@
             "problem": "space_shuttle",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": -0.5964988056188741,
+            "objective": -0.5964987138571441,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 29.257366952,
-                "cpu_bytes": 319867040,
-                "cpu_gctime": 0.068553577,
+                "time": 31.911171534,
+                "cpu_bytes": 320242976,
+                "cpu_gctime": 0.077415475,
                 "cpu_gcstats": {
-                    "allocd": 319867040,
+                    "allocd": 320242976,
                     "malloc": 7,
                     "realloc": 0,
-                    "poolalloc": 2775468,
-                    "bigalloc": 6191,
-                    "freecall": 6,
-                    "total_time": 68553577,
-                    "pause": 1,
+                    "poolalloc": 2786331,
+                    "bigalloc": 6203,
+                    "freecall": 8,
+                    "total_time": 77415475,
+                    "pause": 2,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 4059785314,
-                "gpu_memtime": 0.1240064400000378,
+                "gpu_bytes": 4065881714,
+                "gpu_memtime": 0.11800825999994036,
                 "gpu_memstats": {
-                    "alloc_count": 16680,
-                    "alloc_bytes": 4059785314,
-                    "free_count": 16946,
-                    "free_bytes": 2721251291,
-                    "total_time": 0.1240064400000378
+                    "alloc_count": 16744,
+                    "alloc_bytes": 4065881714,
+                    "free_count": 16074,
+                    "free_bytes": 5060429045,
+                    "total_time": 0.11800825999994036
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2819,7 +2819,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 20000,
-            "iterations": 142,
+            "iterations": 143,
             "disc_method": "midpoint"
         },
         {
@@ -2831,7 +2831,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.076000467,
+                "time": 0.075902306,
                 "bytes": 11920056,
                 "alloc": 9724,
                 "gctime": 0.0
@@ -2849,32 +2849,32 @@
             "problem": "steering",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.5545708593213642,
+            "objective": 0.5545708620850017,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.153408808,
-                "cpu_bytes": 7956768,
+                "time": 0.188224919,
+                "cpu_bytes": 9564416,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 7956768,
+                    "allocd": 9564416,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 247582,
+                    "poolalloc": 311735,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 24776519,
-                "gpu_memtime": 0.002845656000008745,
+                "gpu_bytes": 24928853,
+                "gpu_memtime": 0.002940022999992742,
                 "gpu_memstats": {
-                    "alloc_count": 1650,
-                    "alloc_bytes": 24776519,
-                    "free_count": 225,
-                    "free_bytes": 4127900,
-                    "total_time": 0.002845656000008745
+                    "alloc_count": 1997,
+                    "alloc_bytes": 24928853,
+                    "free_count": 352,
+                    "free_bytes": 4131333,
+                    "total_time": 0.002940022999992742
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2882,7 +2882,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 1000,
-            "iterations": 11,
+            "iterations": 12,
             "disc_method": "midpoint"
         },
         {
@@ -2894,7 +2894,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.501137715,
+                "time": 0.55138565,
                 "bytes": 57381864,
                 "alloc": 9751,
                 "gctime": 0.0
@@ -2912,32 +2912,32 @@
             "problem": "steering",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.5545706820800076,
+            "objective": 0.5545705131579536,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.518494771,
-                "cpu_bytes": 14778640,
+                "time": 0.658319276,
+                "cpu_bytes": 14259040,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 14778640,
+                    "allocd": 14259040,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 323896,
+                    "poolalloc": 301030,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 124560065,
-                "gpu_memtime": 0.009207022000006226,
+                "gpu_bytes": 125210160,
+                "gpu_memtime": 0.010267952999988061,
                 "gpu_memstats": {
-                    "alloc_count": 2049,
-                    "alloc_bytes": 124560065,
-                    "free_count": 376,
-                    "free_bytes": 20639629,
-                    "total_time": 0.009207022000006226
+                    "alloc_count": 1956,
+                    "alloc_bytes": 125210160,
+                    "free_count": 299,
+                    "free_bytes": 20632538,
+                    "total_time": 0.010267952999988061
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -2945,7 +2945,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 5000,
-            "iterations": 12,
+            "iterations": 13,
             "disc_method": "midpoint"
         },
         {
@@ -2957,7 +2957,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.197099113,
+                "time": 1.221997242,
                 "bytes": 117175440,
                 "alloc": 9921,
                 "gctime": 0.0
@@ -2975,32 +2975,32 @@
             "problem": "steering",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.5545701442601445,
+            "objective": 0.554570584350666,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.020005188,
-                "cpu_bytes": 20234096,
+                "time": 0.896230202,
+                "cpu_bytes": 19972704,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 20234096,
+                    "allocd": 19972704,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 296751,
+                    "poolalloc": 287720,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 248965014,
-                "gpu_memtime": 0.010960877999984575,
+                "gpu_bytes": 247590973,
+                "gpu_memtime": 0.00929725300002282,
                 "gpu_memstats": {
-                    "alloc_count": 1898,
-                    "alloc_bytes": 248965014,
-                    "free_count": 310,
-                    "free_bytes": 41262635,
-                    "total_time": 0.010960877999984575
+                    "alloc_count": 1833,
+                    "alloc_bytes": 247590973,
+                    "free_count": 315,
+                    "free_bytes": 41263466,
+                    "total_time": 0.00929725300002282
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3008,7 +3008,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 10000,
-            "iterations": 12,
+            "iterations": 11,
             "disc_method": "midpoint"
         },
         {
@@ -3020,7 +3020,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.592487894,
+                "time": 2.58022327,
                 "bytes": 233790096,
                 "alloc": 9975,
                 "gctime": 0.0
@@ -3038,32 +3038,32 @@
             "problem": "steering",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 0.5545694170903674,
+            "objective": 0.5545694199924978,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.638996242,
-                "cpu_bytes": 31715600,
+                "time": 2.101954902,
+                "cpu_bytes": 32578960,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 31715600,
+                    "allocd": 32578960,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 264925,
+                    "poolalloc": 298624,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 497601627,
-                "gpu_memtime": 0.01053114000002342,
+                "gpu_bytes": 500409448,
+                "gpu_memtime": 0.01046928100000244,
                 "gpu_memstats": {
-                    "alloc_count": 1731,
-                    "alloc_bytes": 497601627,
-                    "free_count": 238,
-                    "free_bytes": 82494657,
-                    "total_time": 0.01053114000002342
+                    "alloc_count": 1924,
+                    "alloc_bytes": 500409448,
+                    "free_count": 293,
+                    "free_bytes": 82513230,
+                    "total_time": 0.01046928100000244
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3071,7 +3071,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 20000,
-            "iterations": 12,
+            "iterations": 13,
             "disc_method": "midpoint"
         },
         {
@@ -3083,7 +3083,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.013846361,
+                "time": 0.014094174,
                 "bytes": 5676296,
                 "alloc": 7944,
                 "gctime": 0.0
@@ -3101,32 +3101,32 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.0477850158850648,
+            "objective": 1.047787347269542,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.053123921,
-                "cpu_bytes": 5437872,
+                "time": 0.066790409,
+                "cpu_bytes": 6488064,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 5437872,
+                    "allocd": 6488064,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 171126,
+                    "poolalloc": 215173,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 14393630,
-                "gpu_memtime": 0.001631250000009743,
+                "gpu_bytes": 14342523,
+                "gpu_memtime": 0.001708895999993132,
                 "gpu_memstats": {
-                    "alloc_count": 1310,
-                    "alloc_bytes": 14393630,
-                    "free_count": 180,
-                    "free_bytes": 2465959,
-                    "total_time": 0.001631250000009743
+                    "alloc_count": 1497,
+                    "alloc_bytes": 14342523,
+                    "free_count": 299,
+                    "free_bytes": 2468220,
+                    "total_time": 0.001708895999993132
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3134,7 +3134,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 1000,
-            "iterations": 8,
+            "iterations": 7,
             "disc_method": "midpoint"
         },
         {
@@ -3146,7 +3146,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.090380764,
+                "time": 0.090301839,
                 "bytes": 26519640,
                 "alloc": 7919,
                 "gctime": 0.0
@@ -3164,32 +3164,32 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.047710165120444,
+            "objective": 1.0477101651294753,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.07121482,
-                "cpu_bytes": 9030384,
+                "time": 0.087494815,
+                "cpu_bytes": 10114512,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 9030384,
+                    "allocd": 10114512,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 183645,
+                    "poolalloc": 227976,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 71645042,
-                "gpu_memtime": 0.002058913999980483,
+                "gpu_bytes": 71671772,
+                "gpu_memtime": 0.002273495000006953,
                 "gpu_memstats": {
-                    "alloc_count": 1326,
-                    "alloc_bytes": 71645042,
-                    "free_count": 221,
-                    "free_bytes": 12324146,
-                    "total_time": 0.002058913999980483
+                    "alloc_count": 1549,
+                    "alloc_bytes": 71671772,
+                    "free_count": 323,
+                    "free_bytes": 12330028,
+                    "total_time": 0.002273495000006953
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3209,7 +3209,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.192515893,
+                "time": 0.204889853,
                 "bytes": 52571544,
                 "alloc": 7931,
                 "gctime": 0.0
@@ -3227,32 +3227,32 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.0476134732670461,
+            "objective": 1.0475901706839932,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.099949375,
-                "cpu_bytes": 14280416,
+                "time": 0.097792346,
+                "cpu_bytes": 12864112,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 14280416,
+                    "allocd": 12864112,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 229433,
+                    "poolalloc": 170388,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 143330909,
-                "gpu_memtime": 0.002487153999993552,
+                "gpu_bytes": 143839888,
+                "gpu_memtime": 0.001983455999988948,
                 "gpu_memstats": {
-                    "alloc_count": 1549,
-                    "alloc_bytes": 143330909,
-                    "free_count": 323,
-                    "free_bytes": 24657052,
-                    "total_time": 0.002487153999993552
+                    "alloc_count": 1284,
+                    "alloc_bytes": 143839888,
+                    "free_count": 168,
+                    "free_bytes": 24640471,
+                    "total_time": 0.001983455999988948
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3260,7 +3260,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 10000,
-            "iterations": 7,
+            "iterations": 8,
             "disc_method": "midpoint"
         },
         {
@@ -3272,7 +3272,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.470156762,
+                "time": 0.474072709,
                 "bytes": 107083744,
                 "alloc": 8119,
                 "gctime": 0.0
@@ -3290,32 +3290,32 @@
             "problem": "vanderpol",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.047420097447732,
+            "objective": 1.0473734913191834,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.141760559,
-                "cpu_bytes": 22700976,
+                "time": 0.136150428,
+                "cpu_bytes": 21284256,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 22700976,
+                    "allocd": 21284256,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 236408,
+                    "poolalloc": 177337,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 286638855,
-                "gpu_memtime": 0.002858867000012033,
+                "gpu_bytes": 287669248,
+                "gpu_memtime": 0.002312834999983693,
                 "gpu_memstats": {
-                    "alloc_count": 1575,
-                    "alloc_bytes": 286638855,
-                    "free_count": 335,
-                    "free_bytes": 49312736,
-                    "total_time": 0.002858867000012033
+                    "alloc_count": 1310,
+                    "alloc_bytes": 287669248,
+                    "free_count": 180,
+                    "free_bytes": 49281279,
+                    "total_time": 0.002312834999983693
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3323,7 +3323,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 20000,
-            "iterations": 7,
+            "iterations": 8,
             "disc_method": "midpoint"
         },
         {
@@ -3335,7 +3335,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.078663866,
+                "time": 0.078906193,
                 "bytes": 13310544,
                 "alloc": 11107,
                 "gctime": 0.0
@@ -3353,18 +3353,18 @@
             "problem": "brachistochrone",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.8029308201330239,
+            "objective": 1.8029308201330223,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.157109121,
-                "cpu_bytes": 11565056,
+                "time": 0.171214377,
+                "cpu_bytes": 11558976,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 11565056,
+                    "allocd": 11558976,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 387080,
+                    "poolalloc": 387062,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
@@ -3372,13 +3372,13 @@
                     "full_sweep": 0
                 },
                 "gpu_bytes": 24751564,
-                "gpu_memtime": 0.0034333989999977277,
+                "gpu_memtime": 0.0031548409999828664,
                 "gpu_memstats": {
                     "alloc_count": 2628,
                     "alloc_bytes": 24751564,
                     "free_count": 408,
                     "free_bytes": 4115018,
-                    "total_time": 0.0034333989999977277
+                    "total_time": 0.0031548409999828664
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3398,7 +3398,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.686086487,
+                "time": 0.756800653,
                 "bytes": 68075744,
                 "alloc": 11886,
                 "gctime": 0.0
@@ -3416,32 +3416,32 @@
             "problem": "brachistochrone",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.8029231420581395,
+            "objective": 1.8029231420580596,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.783737673,
-                "cpu_bytes": 58251072,
+                "time": 1.070399929,
+                "cpu_bytes": 22130624,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 58251072,
+                    "allocd": 22130624,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 1946940,
+                    "poolalloc": 587521,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 185067389,
-                "gpu_memtime": 0.07536705799998877,
+                "gpu_bytes": 134214710,
+                "gpu_memtime": 0.01903898099998802,
                 "gpu_memstats": {
-                    "alloc_count": 13114,
-                    "alloc_bytes": 185067389,
-                    "free_count": 1739,
-                    "free_bytes": 20668875,
-                    "total_time": 0.07536705799998877
+                    "alloc_count": 4056,
+                    "alloc_bytes": 134214710,
+                    "free_count": 470,
+                    "free_bytes": 20563628,
+                    "total_time": 0.01903898099998802
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3449,7 +3449,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 5000,
-            "iterations": 126,
+            "iterations": 33,
             "disc_method": "midpoint"
         },
         {
@@ -3461,7 +3461,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.663913552,
+                "time": 1.678999749,
                 "bytes": 148165152,
                 "alloc": 12588,
                 "gctime": 0.0
@@ -3479,32 +3479,32 @@
             "problem": "brachistochrone",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.8029226925347286,
+            "objective": 1.8029226925347288,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.193699002,
-                "cpu_bytes": 25674864,
+                "time": 1.297362657,
+                "cpu_bytes": 25350208,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 25674864,
+                    "allocd": 25350208,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 493016,
+                    "poolalloc": 480005,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 253833614,
-                "gpu_memtime": 0.01897764799997148,
+                "gpu_bytes": 253810004,
+                "gpu_memtime": 0.017404346999991382,
                 "gpu_memstats": {
-                    "alloc_count": 3269,
-                    "alloc_bytes": 253833614,
-                    "free_count": 516,
-                    "free_bytes": 41128726,
-                    "total_time": 0.01897764799997148
+                    "alloc_count": 3204,
+                    "alloc_bytes": 253810004,
+                    "free_count": 486,
+                    "free_bytes": 41124116,
+                    "total_time": 0.017404346999991382
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3524,7 +3524,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.785982506,
+                "time": 2.816250945,
                 "bytes": 270325352,
                 "alloc": 11740,
                 "gctime": 0.0
@@ -3542,32 +3542,32 @@
             "problem": "brachistochrone",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 1.8029138737789905,
+            "objective": 1.8029138737789927,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.664972212,
-                "cpu_bytes": 35527488,
+                "time": 1.823058592,
+                "cpu_bytes": 35585040,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 35527488,
+                    "allocd": 35585040,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 387577,
+                    "poolalloc": 390162,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 496433849,
-                "gpu_memtime": 0.017227812999997205,
+                "gpu_bytes": 496439915,
+                "gpu_memtime": 0.014768421999992398,
                 "gpu_memstats": {
-                    "alloc_count": 2615,
-                    "alloc_bytes": 496433849,
-                    "free_count": 373,
-                    "free_bytes": 82207943,
-                    "total_time": 0.017227812999997205
+                    "alloc_count": 2628,
+                    "alloc_bytes": 496439915,
+                    "free_count": 379,
+                    "free_bytes": 82209745,
+                    "total_time": 0.014768421999992398
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3587,7 +3587,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.12956356,
+                "time": 0.129828056,
                 "bytes": 27819200,
                 "alloc": 11328,
                 "gctime": 0.0
@@ -3605,32 +3605,32 @@
             "problem": "balanced_field",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 770.9956835536431,
+            "objective": 770.9956825993132,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.318370741,
-                "cpu_bytes": 24725504,
+                "time": 0.334891384,
+                "cpu_bytes": 24176688,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 24725504,
+                    "allocd": 24176688,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 751321,
+                    "poolalloc": 722079,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 57523923,
-                "gpu_memtime": 0.006792465000004633,
+                "gpu_bytes": 57866153,
+                "gpu_memtime": 0.006017769000040474,
                 "gpu_memstats": {
-                    "alloc_count": 4728,
-                    "alloc_bytes": 57523923,
-                    "free_count": 964,
-                    "free_bytes": 9695837,
-                    "total_time": 0.006792465000004633
+                    "alloc_count": 4662,
+                    "alloc_bytes": 57866153,
+                    "free_count": 870,
+                    "free_bytes": 9692171,
+                    "total_time": 0.006017769000040474
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3638,7 +3638,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 1000,
-            "iterations": 30,
+            "iterations": 32,
             "disc_method": "midpoint"
         },
         {
@@ -3650,10 +3650,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 28.291688382,
+                "time": 31.251457866,
                 "bytes": 2131897072,
                 "alloc": 165793,
-                "gctime": 0.048922873
+                "gctime": 0.062709761
             },
             "status": "MAXIMUM_ITERATIONS_EXCEEDED",
             "max_wall_time": 2000.0,
@@ -3668,32 +3668,32 @@
             "problem": "balanced_field",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 770.9473034657948,
+            "objective": 770.9473033889097,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.15276764,
-                "cpu_bytes": 40604176,
+                "time": 1.233663857,
+                "cpu_bytes": 39069536,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 40604176,
+                    "allocd": 39069536,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 835309,
+                    "poolalloc": 773725,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 289402970,
-                "gpu_memtime": 0.027167683000047127,
+                "gpu_bytes": 289197311,
+                "gpu_memtime": 0.02669467000004122,
                 "gpu_memstats": {
-                    "alloc_count": 5213,
-                    "alloc_bytes": 289402970,
-                    "free_count": 1116,
-                    "free_bytes": 48468101,
-                    "total_time": 0.027167683000047127
+                    "alloc_count": 4897,
+                    "alloc_bytes": 289197311,
+                    "free_count": 984,
+                    "free_bytes": 48446585,
+                    "total_time": 0.02669467000004122
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3713,7 +3713,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 4.430120579,
+                "time": 4.418342055,
                 "bytes": 397131432,
                 "alloc": 16709,
                 "gctime": 0.0
@@ -3731,32 +3731,32 @@
             "problem": "balanced_field",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 770.8868576781887,
+            "objective": 770.8867861030783,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.413743281,
-                "cpu_bytes": 60108128,
+                "time": 2.724972026,
+                "cpu_bytes": 58538736,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 60108128,
+                    "allocd": 58538736,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 900577,
+                    "poolalloc": 836090,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 593163647,
-                "gpu_memtime": 0.03711354700002101,
+                "gpu_bytes": 596085158,
+                "gpu_memtime": 0.031260957999948324,
                 "gpu_memstats": {
-                    "alloc_count": 5746,
-                    "alloc_bytes": 593163647,
-                    "free_count": 1047,
-                    "free_bytes": 96898949,
-                    "total_time": 0.03711354700002101
+                    "alloc_count": 5439,
+                    "alloc_bytes": 596085158,
+                    "free_count": 875,
+                    "free_bytes": 96844785,
+                    "total_time": 0.031260957999948324
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3764,7 +3764,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 10000,
-            "iterations": 40,
+            "iterations": 42,
             "disc_method": "midpoint"
         },
         {
@@ -3776,7 +3776,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 9.402833896,
+                "time": 9.380003035,
                 "bytes": 753980304,
                 "alloc": 16019,
                 "gctime": 0.0
@@ -3794,32 +3794,32 @@
             "problem": "balanced_field",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 770.7660666597849,
+            "objective": 770.7660655783948,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 8.125328122,
-                "cpu_bytes": 108945328,
+                "time": 6.448895909,
+                "cpu_bytes": 99110592,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 108945328,
+                    "allocd": 99110592,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 1384057,
+                    "poolalloc": 1065045,
                     "bigalloc": 11,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 1298923981,
-                "gpu_memtime": 0.06350882499998267,
+                "gpu_bytes": 1227455247,
+                "gpu_memtime": 0.04140845200000065,
                 "gpu_memstats": {
-                    "alloc_count": 8976,
-                    "alloc_bytes": 1298923981,
-                    "free_count": 1368,
-                    "free_bytes": 193984842,
-                    "total_time": 0.06350882499998267
+                    "alloc_count": 6840,
+                    "alloc_bytes": 1227455247,
+                    "free_count": 1169,
+                    "free_bytes": 193861117,
+                    "total_time": 0.04140845200000065
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3827,7 +3827,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 20000,
-            "iterations": 71,
+            "iterations": 52,
             "disc_method": "midpoint"
         },
         {
@@ -3839,7 +3839,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.034682563,
+                "time": 0.034781541,
                 "bytes": 7049352,
                 "alloc": 10541,
                 "gctime": 0.0
@@ -3857,32 +3857,32 @@
             "problem": "bryson_denham",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 3.999729057104411,
+            "objective": 3.9997290570217254,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.343705238,
-                "cpu_bytes": 36694440,
-                "cpu_gctime": 0.0,
+                "time": 0.554472746,
+                "cpu_bytes": 36758264,
+                "cpu_gctime": 0.143056361,
                 "cpu_gcstats": {
-                    "allocd": 36694440,
+                    "allocd": 36758264,
                     "malloc": 7,
                     "realloc": 0,
-                    "poolalloc": 1400785,
+                    "poolalloc": 1403402,
                     "bigalloc": 1,
-                    "freecall": 0,
-                    "total_time": 0,
-                    "pause": 0,
+                    "freecall": 16315,
+                    "total_time": 143056361,
+                    "pause": 1,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 16802335,
-                "gpu_memtime": 0.01207418700002183,
+                "gpu_bytes": 16802713,
+                "gpu_memtime": 0.024198051000037246,
                 "gpu_memstats": {
-                    "alloc_count": 10331,
-                    "alloc_bytes": 16802335,
-                    "free_count": 1023,
-                    "free_bytes": 1489896,
-                    "total_time": 0.01207418700002183
+                    "alloc_count": 10344,
+                    "alloc_bytes": 16802713,
+                    "free_count": 14509,
+                    "free_bytes": 24542703,
+                    "total_time": 0.024198051000037246
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3902,7 +3902,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.875864145,
+                "time": 0.884559628,
                 "bytes": 91502712,
                 "alloc": 21212,
                 "gctime": 0.0
@@ -3920,18 +3920,18 @@
             "problem": "bryson_denham",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 3.998618114861598,
+            "objective": 3.998618114862647,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.326212193,
-                "cpu_bytes": 29672712,
+                "time": 0.364991757,
+                "cpu_bytes": 29672904,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 29672712,
+                    "allocd": 29672904,
                     "malloc": 7,
                     "realloc": 0,
-                    "poolalloc": 1063505,
+                    "poolalloc": 1063517,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
@@ -3939,13 +3939,13 @@
                     "full_sweep": 0
                 },
                 "gpu_bytes": 74613926,
-                "gpu_memtime": 0.011125132999989518,
+                "gpu_memtime": 0.010196412999953886,
                 "gpu_memstats": {
                     "alloc_count": 7925,
                     "alloc_bytes": 74613926,
                     "free_count": 730,
                     "free_bytes": 7407005,
-                    "total_time": 0.011125132999989518
+                    "total_time": 0.010196412999953886
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -3965,7 +3965,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 3.136547647,
+                "time": 3.184310177,
                 "bytes": 309180792,
                 "alloc": 32834,
                 "gctime": 0.0
@@ -3983,32 +3983,32 @@
             "problem": "bryson_denham",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 3.9972373881137484,
+            "objective": 3.9972373853814105,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.316994737,
-                "cpu_bytes": 27047064,
+                "time": 0.365684552,
+                "cpu_bytes": 24940472,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 27047064,
+                    "allocd": 24940472,
                     "malloc": 7,
                     "realloc": 0,
-                    "poolalloc": 887470,
+                    "poolalloc": 806619,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 133404252,
-                "gpu_memtime": 0.010231775999981707,
+                "gpu_bytes": 127863326,
+                "gpu_memtime": 0.011297643000009572,
                 "gpu_memstats": {
-                    "alloc_count": 6425,
-                    "alloc_bytes": 133404252,
-                    "free_count": 746,
-                    "free_bytes": 14808413,
-                    "total_time": 0.010231775999981707
+                    "alloc_count": 5807,
+                    "alloc_bytes": 127863326,
+                    "free_count": 709,
+                    "free_bytes": 14805634,
+                    "total_time": 0.011297643000009572
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -4016,7 +4016,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 10000,
-            "iterations": 58,
+            "iterations": 51,
             "disc_method": "midpoint"
         },
         {
@@ -4028,10 +4028,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 14.021549892,
+                "time": 14.056832693,
                 "bytes": 1334282136,
                 "alloc": 65543,
-                "gctime": 0.019091353
+                "gctime": 0.019264875
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -4046,32 +4046,32 @@
             "problem": "bryson_denham",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 3.9944790450416496,
+            "objective": 3.9944777888138976,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.580542949,
-                "cpu_bytes": 121589504,
+                "time": 0.920109378,
+                "cpu_bytes": 59270680,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 121589504,
-                    "malloc": 8,
+                    "allocd": 59270680,
+                    "malloc": 7,
                     "realloc": 0,
-                    "poolalloc": 4404201,
+                    "poolalloc": 1983480,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 647670023,
-                "gpu_memtime": 0.05453830499993728,
+                "gpu_bytes": 381033149,
+                "gpu_memtime": 0.022498143999980513,
                 "gpu_memstats": {
-                    "alloc_count": 31337,
-                    "alloc_bytes": 647670023,
-                    "free_count": 3734,
-                    "free_bytes": 30024953,
-                    "total_time": 0.05453830499993728
+                    "alloc_count": 14100,
+                    "alloc_bytes": 381033149,
+                    "free_count": 1736,
+                    "free_bytes": 29747407,
+                    "total_time": 0.022498143999980513
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -4079,7 +4079,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 20000,
-            "iterations": 298,
+            "iterations": 130,
             "disc_method": "midpoint"
         },
         {
@@ -4091,7 +4091,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 0.205683532,
+                "time": 0.207194948,
                 "bytes": 38282536,
                 "alloc": 20272,
                 "gctime": 0.0
@@ -4109,32 +4109,32 @@
             "problem": "mountain_car",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 102.35111682497363,
+            "objective": 102.35111203483784,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 1.122803072,
-                "cpu_bytes": 82371944,
+                "time": 2.229724795,
+                "cpu_bytes": 158427040,
                 "cpu_gctime": 0.0,
                 "cpu_gcstats": {
-                    "allocd": 82371944,
-                    "malloc": 7,
+                    "allocd": 158427040,
+                    "malloc": 8,
                     "realloc": 0,
-                    "poolalloc": 3022681,
+                    "poolalloc": 5892627,
                     "bigalloc": 1,
                     "freecall": 0,
                     "total_time": 0,
                     "pause": 0,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 39010933,
-                "gpu_memtime": 0.029709031999930247,
+                "gpu_bytes": 56307169,
+                "gpu_memtime": 0.058763898999925956,
                 "gpu_memstats": {
-                    "alloc_count": 21541,
-                    "alloc_bytes": 39010933,
-                    "free_count": 1734,
-                    "free_bytes": 3132264,
-                    "total_time": 0.029709031999930247
+                    "alloc_count": 43372,
+                    "alloc_bytes": 56307169,
+                    "free_count": 3614,
+                    "free_bytes": 3173184,
+                    "total_time": 0.058763898999925956
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -4142,7 +4142,7 @@
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 1000,
-            "iterations": 187,
+            "iterations": 325,
             "disc_method": "midpoint"
         },
         {
@@ -4154,7 +4154,7 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 2.265379833,
+                "time": 2.25983662,
                 "bytes": 354515728,
                 "alloc": 32739,
                 "gctime": 0.0
@@ -4172,32 +4172,32 @@
             "problem": "mountain_car",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 106.90437173476964,
+            "objective": 104.81217584163628,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 22.19973367,
-                "cpu_bytes": 420338992,
-                "cpu_gctime": 0.304268993,
+                "time": 27.981098862,
+                "cpu_bytes": 403734704,
+                "cpu_gctime": 0.262599437,
                 "cpu_gcstats": {
-                    "allocd": 420338992,
+                    "allocd": 403734704,
                     "malloc": 8,
                     "realloc": 0,
-                    "poolalloc": 15737934,
+                    "poolalloc": 15073565,
                     "bigalloc": 1,
-                    "freecall": 14,
-                    "total_time": 304268993,
+                    "freecall": 15,
+                    "total_time": 262599437,
                     "pause": 1,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 693123097,
-                "gpu_memtime": 0.6622059830003693,
+                "gpu_bytes": 692494718,
+                "gpu_memtime": 0.7881652890000934,
                 "gpu_memstats": {
-                    "alloc_count": 107029,
-                    "alloc_bytes": 693123097,
-                    "free_count": 126969,
-                    "free_bytes": 794774549,
-                    "total_time": 0.6622059830003693
+                    "alloc_count": 102686,
+                    "alloc_bytes": 692494718,
+                    "free_count": 123290,
+                    "free_bytes": 821574602,
+                    "total_time": 0.7881652890000934
                 }
             },
             "status": "MAXIMUM_ITERATIONS_EXCEEDED",
@@ -4217,10 +4217,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 11.244043363,
+                "time": 10.834341495,
                 "bytes": 1798214552,
                 "alloc": 74872,
-                "gctime": 0.041400973
+                "gctime": 0.034494393
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -4239,28 +4239,28 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 5.647955568,
-                "cpu_bytes": 87607856,
-                "cpu_gctime": 0.145188281,
+                "time": 6.204578134,
+                "cpu_bytes": 87355216,
+                "cpu_gctime": 0.111958879,
                 "cpu_gcstats": {
-                    "allocd": 87607856,
+                    "allocd": 87355216,
                     "malloc": 6,
                     "realloc": 0,
-                    "poolalloc": 2910807,
+                    "poolalloc": 2900505,
                     "bigalloc": 1,
-                    "freecall": 556,
-                    "total_time": 145188281,
+                    "freecall": 345,
+                    "total_time": 111958879,
                     "pause": 1,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 363685112,
-                "gpu_memtime": 0.1479299810000807,
+                "gpu_bytes": 363667696,
+                "gpu_memtime": 0.14129903300000812,
                 "gpu_memstats": {
-                    "alloc_count": 20734,
-                    "alloc_bytes": 363685112,
-                    "free_count": 33548,
-                    "free_bytes": 558333457,
-                    "total_time": 0.1479299810000807
+                    "alloc_count": 20682,
+                    "alloc_bytes": 363667696,
+                    "free_count": 25463,
+                    "free_bytes": 485863309,
+                    "total_time": 0.14129903300000812
                 }
             },
             "status": "SOLVE_SUCCEEDED",
@@ -4280,10 +4280,10 @@
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 10.912044129,
+                "time": 10.976752041,
                 "bytes": 1749748392,
                 "alloc": 39878,
-                "gctime": 0.024529662
+                "gctime": 0.026156946
             },
             "status": "SOLVE_SUCCEEDED",
             "max_wall_time": 2000.0,
@@ -4294,44 +4294,44 @@
             "disc_method": "midpoint"
         },
         {
-            "success": true,
+            "success": false,
             "problem": "mountain_car",
             "solver": "madnlp",
             "mu_strategy": null,
-            "objective": 102.02695580497723,
+            "objective": 102.01877943047862,
             "max_iter": 1000,
             "tol": 1.0e-8,
             "benchmark": {
-                "time": 23.087669387,
-                "cpu_bytes": 221750056,
-                "cpu_gctime": 0.38192637,
+                "time": 64.324914553,
+                "cpu_bytes": 451500848,
+                "cpu_gctime": 0.411113617,
                 "cpu_gcstats": {
-                    "allocd": 221750056,
-                    "malloc": 7,
+                    "allocd": 451500848,
+                    "malloc": 8,
                     "realloc": 0,
-                    "poolalloc": 7616135,
+                    "poolalloc": 16367456,
                     "bigalloc": 1,
                     "freecall": 8,
-                    "total_time": 381926370,
+                    "total_time": 411113617,
                     "pause": 1,
                     "full_sweep": 0
                 },
-                "gpu_bytes": 1400499713,
-                "gpu_memtime": 0.5510492480004956,
+                "gpu_bytes": 2690901243,
+                "gpu_memtime": 0.8925439280007961,
                 "gpu_memstats": {
-                    "alloc_count": 53416,
-                    "alloc_bytes": 1400499713,
-                    "free_count": 100418,
-                    "free_bytes": 2662291702,
-                    "total_time": 0.5510492480004956
+                    "alloc_count": 109770,
+                    "alloc_bytes": 2690901243,
+                    "free_count": 106498,
+                    "free_bytes": 2600529896,
+                    "total_time": 0.8925439280007961
                 }
             },
-            "status": "SOLVE_SUCCEEDED",
+            "status": "MAXIMUM_ITERATIONS_EXCEEDED",
             "max_wall_time": 2000.0,
             "model": "exa_gpu",
             "criterion": "min",
             "grid_size": 20000,
-            "iterations": 457,
+            "iterations": 1000,
             "disc_method": "midpoint"
         }
     ]
