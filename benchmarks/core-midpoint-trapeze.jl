@@ -6,7 +6,7 @@ function run()
             :beam,
             :chain,
             :double_oscillator,
-            :ducted_fan,
+            # :ducted_fan,
             :electric_vehicle,
             :glider,
             :insurance,
@@ -17,6 +17,10 @@ function run()
             :space_shuttle,
             :steering,
             :vanderpol,
+            :brachistochrone,
+            :balanced_field,
+            :bryson_denham,
+            :mountain_car,
         ],
 
         # solver × modeler
