@@ -74,7 +74,7 @@ jobs:
       # ---------------------------
       - name: Cache Julia packages (standard runners)
         if: inputs.runner != 'self-hosted'
-        uses: julia-actions/cache@v2
+        uses: julia-actions/cache@v3
 
       - name: Cache Julia artifacts (self-hosted runners)
         if: inputs.runner == 'self-hosted'
