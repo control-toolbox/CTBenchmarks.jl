@@ -359,3 +359,4 @@ Manifest.toml
 .tmp/
 test/build
 .reports/
+.vscode/
