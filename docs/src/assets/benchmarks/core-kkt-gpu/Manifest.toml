@@ -2,7 +2,7 @@
 
 julia_version = "1.12.4"
 manifest_format = "2.0"
-project_hash = "69a17c26280d00ff3afd486883bb19345a8b7123"
+project_hash = "45ab36feab8c042ac634e721048a31916a1b0824"
 
 [[deps.ADNLPModels]]
 deps = ["ADTypes", "ForwardDiff", "LinearAlgebra", "NLPModels", "Requires", "ReverseDiff", "SparseArrays", "SparseConnectivityTracer", "SparseMatrixColorings"]
@@ -190,10 +190,10 @@ version = "0.6.10-beta.2"
     Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 
 [[deps.CTParser]]
-deps = ["CTBase", "DocStringExtensions", "ExaModels", "LinearAlgebra", "MLStyle", "OrderedCollections", "Parameters", "Unicode"]
-git-tree-sha1 = "561c822b8334417a384ef2ec1ba75dc9bb2bac8c"
+deps = ["CTBase", "DocStringExtensions", "MLStyle", "OrderedCollections", "Parameters", "Unicode"]
+git-tree-sha1 = "d2682ff1d764cc6a3ccdc98921b2c328d4d19d3d"
 uuid = "32681960-a1b1-40db-9bff-a1ca817385d1"
-version = "0.8.2-beta.6"
+version = "0.7.3-beta"
 
 [[deps.CUDA]]
 deps = ["AbstractFFTs", "Adapt", "BFloat16s", "CEnum", "CUDA_Compiler_jll", "CUDA_Driver_jll", "CUDA_Runtime_Discovery", "CUDA_Runtime_jll", "Crayons", "ExprTools", "GPUArrays", "GPUCompiler", "GPUToolbox", "KernelAbstractions", "LLVM", "LLVMLoopInfo", "LazyArtifacts", "Libdl", "LinearAlgebra", "Logging", "NVTX", "Preferences", "PrettyTables", "Printf", "Random", "Random123", "RandomNumbers", "Reexport", "SparseArrays", "StaticArrays", "Statistics", "demumble_jll"]
@@ -1238,9 +1238,9 @@ version = "0.5.6+0"
 
 [[deps.OptimalControl]]
 deps = ["ADNLPModels", "CTBase", "CTDirect", "CTFlows", "CTModels", "CTParser", "CommonSolve", "DocStringExtensions", "ExaModels", "RecipesBase"]
-git-tree-sha1 = "7a665bab916bf7f6214ff3085678cd3cdf717889"
+git-tree-sha1 = "bd4205fab4ea6c5ad5504efcf9e5868ef253227c"
 uuid = "5f98b655-cc9a-415a-b60e-744165666948"
-version = "1.1.8-beta.3"
+version = "1.1.6"
 
 [[deps.OptimalControlProblems]]
 deps = ["ADNLPModels", "CTBase", "CTDirect", "CTModels", "DocStringExtensions", "ExaModels", "OrderedCollections", "SolverCore"]
