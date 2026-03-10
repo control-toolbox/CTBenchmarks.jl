@@ -105,13 +105,13 @@ with_processed_template_problems(
             ),
             pages=[
                 "Introduction" => "index.md",
-                "Performance Profile" => "performance_profile.md",
                 "Core benchmarks" => [
                     "CPU" => joinpath("core", "cpu.md"),
                     "GPU" => joinpath("core", "gpu.md"),
                     "Midpoint vs Trapeze" => joinpath("core", "midpoint-trapeze.md"),
                     "Problems" => core_problems_menu,
                 ],
+                "Performance Profile Guidelines" => "performance_profile.md",
                 DocumenterReference.automatic_reference_documentation(;
                     subdirectory="api",
                     modules=[CTBenchmarks],

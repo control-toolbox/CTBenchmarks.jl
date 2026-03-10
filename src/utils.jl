@@ -823,6 +823,9 @@ end
 # Public API
 # ------------------------------
 
+#__problems() = OptimalControlProblems.problems() # all problems
+__problems() = [:beam] # default problem for quick tests
+
 """
     $(TYPEDSIGNATURES)
 
@@ -878,7 +881,7 @@ Dict{String, Any} with 3 entries:
 ```
 """
 function benchmark(;
-    problems::Vector{Symbol},
+    problems::Vector{Symbol}=__problems(),
     solver_models::Vector{Pair{Symbol,Vector{Symbol}}},
     grid_sizes::Vector{Int},
     disc_methods::Vector{Symbol},

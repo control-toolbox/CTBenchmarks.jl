@@ -41,7 +41,7 @@ MadNLPGPU = "0.7"
 MadNLPMumps = "0.5"
 NLPModelsIpopt = "0.11"
 OptimalControl = "1"
-OptimalControlProblems = "0.4"
+OptimalControlProblems = "0.5"
 Pkg = "1"
 Plots = "1.41"
 Printf = "1"
@@ -49,6 +49,3 @@ Sockets = "1"
 Statistics = "1"
 Tables = "1"
 julia = "1.10"
-
-[sources]
-OptimalControlProblems = {url = "https://github.com/control-toolbox/OptimalControlProblems.jl", rev = "206-dev-test-all-new-problems-with-gpu"}

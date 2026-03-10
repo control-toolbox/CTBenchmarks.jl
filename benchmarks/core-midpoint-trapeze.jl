@@ -1,36 +1,12 @@
 # Modeler: :exa
 
 function run()
-    results = CTBenchmarks.benchmark(
-        problems=[
-            :beam,
-            :chain,
-            :double_oscillator,
-            # :ducted_fan,
-            :electric_vehicle,
-            :glider,
-            :insurance,
-            :jackson,
-            :robbins,
-            :robot,
-            :rocket,
-            :space_shuttle,
-            :steering,
-            :vanderpol,
-            :brachistochrone,
-            :balanced_field,
-            :bryson_denham,
-            :mountain_car,
-        ],
-
-        # solver × modeler
+    results = CTBenchmarks.benchmark(;
         solver_models = [
             :madnlp => [:exa],
             :ipopt  => [:exa],
         ],
-
         disc_methods = [:trapeze, :midpoint],
-
         grid_sizes = [200],
         tol = 1e-8,
         ipopt_mu_strategy = "adaptive",

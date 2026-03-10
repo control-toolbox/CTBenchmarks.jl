@@ -1,4 +1,4 @@
-# Benchmark script for core-ubuntu-latest
+# Benchmark script for core-kkt-cpu
 # Setup (Pkg.activate, instantiate, update, using CTBenchmarks) is handled by the workflow
 
 function run()

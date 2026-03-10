@@ -8,29 +8,22 @@
       "runner": "github"
     },
     {
-      "id": "core-moonshot-cpu",
-      "julia_version": "1.11",
+      "id": "core-kkt-cpu",
+      "julia_version": "1",
       "julia_arch": "x64",
-      "runs_on": "[\"moonshot\"]",
+      "runs_on": "[\"kkt\"]",
       "runner": "self-hosted"
     },
     {
-      "id": "core-moonshot-gpu",
-      "julia_version": "1.11",
-      "julia_arch": "x64",
-      "runs_on": "[\"moonshot\"]",
-      "runner": "self-hosted"
-    },
-    {
-      "id": "core-kkt",
-      "julia_version": "1.11",
+      "id": "core-kkt-gpu",
+      "julia_version": "1",
       "julia_arch": "x64",
       "runs_on": "[\"kkt\"]",
       "runner": "self-hosted"
     },
     {
       "id": "core-midpoint-trapeze",
-      "julia_version": "1.11",
+      "julia_version": "1",
       "julia_arch": "x64",
       "runs_on": "\"ubuntu-latest\"",
       "runner": "github"

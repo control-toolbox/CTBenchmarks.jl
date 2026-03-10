@@ -320,7 +320,7 @@ Retrieve all problems that appear in at least one benchmark from a list.
 - `src_dir::String`: Path to the docs/src directory
 
 # Returns
-- `Vector{String}`: Unique list of problem names across all benchmarks
+- `Vector{String}`: Unique list of problem names across all benchmarks, sorted alphabetically
 """
 function get_problems_in_benchmarks(
     benchmarks::Vector{Tuple{String,String,String}}, src_dir::String
@@ -331,7 +331,7 @@ function get_problems_in_benchmarks(
         append!(problems, get_problems_in_benchmark(bench_id, src_dir))
     end
     # Return unique list
-    return unique(problems)
+    return sort(unique(problems))
 end
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -452,9 +452,7 @@ function write_core_benchmark_templates(
             "Ubuntu Latest CPU",
             "This benchmark suite evaluates optimal control problems on a standard CPU platform using GitHub Actions runners.",
         ),
-        ("core-moonshot-cpu", "Moonshot CPU", "Results on self-hosted CPU hardware."),
-        ("core-moonshot-gpu", "Moonshot GPU", "Results on self-hosted GPU hardware."),
-        ("core-kkt", "KKT GPU", "Results on self-hosted KKT hardware."),
+        ("core-kkt-gpu", "KKT GPU", "Results on self-hosted KKT hardware."),
     ]
 
     # Get all problems from all benchmarks
