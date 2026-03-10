@@ -126,13 +126,6 @@ function generate_template_problem(
     NAME = plot_time_vs_grid_size_bar
     ARGS = $problem_name, $bench_id
     -->
-
-    ### 🔁 Iterations vs CPU time ($bench_title)
-
-    <!-- INCLUDE_FIGURE:
-    NAME = plot_iterations_vs_cpu_time
-    ARGS = $problem_name, $bench_id
-    -->
     """
 
     # ───────────────────────────────────────────────────────────────────────────
@@ -452,6 +445,7 @@ function write_core_benchmark_templates(
             "Ubuntu Latest CPU",
             "This benchmark suite evaluates optimal control problems on a standard CPU platform using GitHub Actions runners.",
         ),
+        ("core-kkt-cpu", "KKT CPU", "Results on self-hosted KKT hardware."),
         ("core-kkt-gpu", "KKT GPU", "Results on self-hosted KKT hardware."),
     ]
 
@@ -473,7 +467,7 @@ function write_core_benchmark_templates(
         This page presents benchmark results for the **$problem_name** problem across different platforms and configurations.
 
         !!! note
-            The linear solver is MUMPS for all experiments."""
+            The linear solver is [MUMPS](https://github.com/JuliaSmoothOptimizers/MUMPS.jl) for CPU experiments and [CUDSS](https://github.com/exanauts/CUDSS.jl) for GPU experiments."""
 
         # Generate template content
         str = generate_template_problem_from_list(

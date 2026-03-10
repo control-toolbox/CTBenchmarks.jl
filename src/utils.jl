@@ -823,8 +823,32 @@ end
 # Public API
 # ------------------------------
 
-#__problems() = OptimalControlProblems.problems() # all problems
-__problems() = [:beam] # default problem for quick tests
+"""
+    $(TYPEDSIGNATURES)
+
+Return the list of problems to benchmark.
+
+This internal function defines which optimal control problems from the
+`OptimalControlProblems` package should be benchmarked. By default, it returns
+a minimal set for quick testing. The commented line shows how to benchmark all
+available problems.
+
+# Returns
+- `Vector{Symbol}`: List of problem names to benchmark
+
+# Details
+The default configuration returns `[:beam]` for quick tests. To benchmark all
+available problems, uncomment the first line and comment the second line.
+
+# Example
+```julia-repl
+julia> CTBenchmarks.__problems()
+1-element Vector{Symbol}:
+ :beam
+```
+"""
+__problems() = OptimalControlProblems.problems() # all problems
+#__problems() = [:beam] # default problem for quick tests
 
 """
     $(TYPEDSIGNATURES)

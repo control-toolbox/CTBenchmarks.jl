@@ -59,7 +59,7 @@ Run the full benchmark suite across all problems:
 CTBenchmarks.run(:complete)
 ```
 
-This runs 14 optimal control problems with:
+This runs the complete list of optimal control problems with:
 
 - Grid sizes: 100, 200, 500
 - Discretizations: trapeze, midpoint
@@ -111,22 +111,12 @@ CTBenchmarks.save_json(results, "path/to/custom_benchmark.json")
 
 ### Available Problems
 
-CTBenchmarks includes 14 optimal control problems from [OptimalControlProblems.jl](https://control-toolbox.org/OptimalControlProblems.jl):
+CTBenchmarks includes the optimal control problems from [OptimalControlProblems.jl](https://control-toolbox.org/OptimalControlProblems.jl):
 
-- `:beam` - Beam control problem
-- `:chain` - Chain of masses
-- `:double_oscillator` - Double oscillator
-- `:ducted_fan` - Ducted fan control
-- `:electric_vehicle` - Electric vehicle optimization
-- `:glider` - Glider trajectory
-- `:insurance` - Insurance problem
-- `:jackson` - Jackson problem
-- `:robbins` - Robbins problem
-- `:robot` - Robot arm control
-- `:rocket` - Rocket trajectory
-- `:space_shuttle` - Space shuttle re-entry
-- `:steering` - Steering control
-- `:vanderpol` - Van der Pol oscillator
+```@example main
+using OptimalControlProblems
+OptimalControlProblems.problems()
+```
 
 ### Solver and Model Combinations
 
@@ -135,7 +125,7 @@ CTBenchmarks includes 14 optimal control problems from [OptimalControlProblems.j
 - `:ipopt` - Interior Point Optimizer
 - `:madnlp` - filter linesearch Interior Point Optimizer
 
-**Supported Models:**
+**Supported Modelers:**
 
 - `:jump` - JuMP modelling framework
 - `:adnlp` - Automatic differentiation NLP models
@@ -150,12 +140,12 @@ CTBenchmarks includes 14 optimal control problems from [OptimalControlProblems.j
 - `max_iter`: Maximum solver iterations (e.g., `1000`)
 - `max_wall_time`: Maximum wall time in seconds (e.g., `500.0`)
 
-## Benchmark Results in This Documentation
+## Benchmark in This Documentation
 
 This documentation includes pre-computed benchmark results from continuous integration runs on different platforms:
 
 - **Ubuntu Latest** - Standard CPU benchmarks on GitHub Actions runners
-- **Moonshot** - GPU-accelerated benchmarks on dedicated hardware
+- **Kkt** - GPU-accelerated benchmarks on dedicated hardware
 
 These results provide reference performance data and demonstrate the capabilities of different solver and model combinations. You can explore them in the [Core Benchmark CPU](core/cpu.md) and [Core Benchmark GPU](core/gpu.md) pages.
 

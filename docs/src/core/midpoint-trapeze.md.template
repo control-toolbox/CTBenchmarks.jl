@@ -6,7 +6,7 @@ include(normpath(joinpath(@__DIR__, "..", "docutils", "utils.jl")))
 ```
 
 !!! note
-    - The linear solver is MUMPS for all experiments.
+    - The linear solver is [MUMPS](https://github.com/JuliaSmoothOptimizers/MUMPS.jl) for CPU experiments and [CUDSS](https://github.com/exanauts/CUDSS.jl) for GPU experiments.
     - Below you can find Dolan–Moré performance profiles comparing discretization method–solver combinations on the set of optimal control problems. For a detailed explanation of how to read these profiles, see the [Performance Profiles](@ref performance-profiles) page.
 
 ## Comparison of Discretization Methods
