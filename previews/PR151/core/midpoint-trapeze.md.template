@@ -1,0 +1,70 @@
+# Midpoint vs Trapeze
+
+```@setup BENCH
+# Load utilities
+include(normpath(joinpath(@__DIR__, "..", "docutils", "utils.jl")))
+```
+
+!!! note
+    - The linear solver is MUMPS for all experiments.
+    - Below you can find Dolan–Moré performance profiles comparing discretization method–solver combinations on the set of optimal control problems. For a detailed explanation of how to read these profiles, see the [Performance Profiles](@ref performance-profiles) page.
+
+## Comparison of Discretization Methods
+
+This benchmark evaluates the effect of two discretization methods:
+
+- **Midpoint**
+- **Trapeze**
+
+combined with two nonlinear solvers:
+
+- **Ipopt**
+- **MadNLP**
+
+on the **ExaModels** optimal control modeler.
+
+The comparison is based on four combinations `(disc_method, solver)`:
+
+1. `(trapeze, ipopt)`
+2. `(trapeze, madnlp)`
+3. `(midpoint, ipopt)`
+4. `(midpoint, madnlp)`
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = "core-midpoint-trapeze"
+ENV_NAME = BENCH
+-->
+
+### 📈 Performance Profile: CPU Time
+
+<!-- PROFILE_PLOT:
+NAME = midpoint_trapeze_cpu
+BENCH_ID = core-midpoint-trapeze
+-->
+
+<!-- PROFILE_ANALYSIS:
+NAME = midpoint_trapeze_cpu
+BENCH_ID = core-midpoint-trapeze
+-->
+
+### 📊 Result Tables
+
+<!-- INCLUDE_TEXT:
+NAME = print_benchmark_table_results
+ARGS = core-midpoint-trapeze
+-->
+
+```@raw html
+<div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+  <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
+  <div class="ctdetails-body">
+```
+
+```@example BENCH
+_print_benchmark_log("core-midpoint-trapeze") # hide
+```
+
+```@raw html
+  </div>
+</div>
+```

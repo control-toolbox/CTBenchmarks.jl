@@ -1,0 +1,65 @@
+# Core benchmark: robertson
+
+```@meta
+Draft = false
+```
+
+This page presents benchmark results for the **robertson** problem across different platforms and configurations.
+
+!!! note
+    The linear solver is MUMPS for all experiments.
+
+```@setup BENCH
+# Load utilities
+include(normpath(joinpath(@__DIR__, "..", "..", "docutils", "utils.jl")))
+```
+
+## Ubuntu Latest CPU
+
+This benchmark suite evaluates optimal control problems on a standard CPU platform using GitHub Actions runners.
+
+<!-- INCLUDE_ENVIRONMENT:
+BENCH_ID = "core-ubuntu-latest"
+ENV_NAME = BENCH
+-->
+
+### 📈 Time vs Grid Size (Ubuntu Latest CPU)
+
+<!-- INCLUDE_FIGURE:
+NAME = plot_time_vs_grid_size
+ARGS = robertson, core-ubuntu-latest
+-->
+
+<!-- INCLUDE_FIGURE:
+NAME = plot_time_vs_grid_size_bar
+ARGS = robertson, core-ubuntu-latest
+-->
+
+### 🔁 Iterations vs CPU time (Ubuntu Latest CPU)
+
+<!-- INCLUDE_FIGURE:
+NAME = plot_iterations_vs_cpu_time
+ARGS = robertson, core-ubuntu-latest
+-->
+
+### 📊 Table of Results (Ubuntu Latest CPU)
+
+<!-- INCLUDE_TEXT:
+NAME = print_benchmark_table_results
+ARGS = core-ubuntu-latest, robertson
+-->
+
+```@raw html
+<div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+<div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
+<div class="ctdetails-body">
+```
+
+```@example BENCH
+_print_benchmark_log("core-ubuntu-latest"; problems=["robertson"]) # hide
+```
+
+```@raw html
+</div>
+</div>
+```
