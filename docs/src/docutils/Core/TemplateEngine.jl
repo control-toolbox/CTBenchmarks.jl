@@ -404,8 +404,17 @@ function replace_profile_plot_blocks(
                 plt = plot_profile_from_registry(profile_name, bench_id, SRC_DIR; combos=combos)
 
                 # Generate unique basename for the figure
-                args_str = bench_id * (isnothing(combos) ? "" : "_" * join(["$(m)_$(s)" for (m, s) in combos], "_"))
-                basename = generate_figure_basename(template_filename, "profile_plot_$(profile_name)", args_str)
+                args_str =
+                    bench_id * (
+                        if isnothing(combos)
+                            ""
+                        else
+                            "_" * join(["$(m)_$(s)" for (m, s) in combos], "_")
+                        end
+                    )
+                basename = generate_figure_basename(
+                    template_filename, "profile_plot_$(profile_name)", args_str
+                )
 
                 # Create output directory if it doesn't exist
                 mkpath(figures_output_dir)
@@ -442,7 +451,9 @@ function replace_profile_plot_blocks(
 
             catch e
                 if DOC_DEBUG[]
-                    @error "  ✗ Failed to generate profile plot" exception = (e, catch_backtrace())
+                    @error "  ✗ Failed to generate profile plot" exception = (
+                        e, catch_backtrace()
+                    )
                 else
                     @error "  ✗ Failed to generate profile plot: $(e)"
                 end
@@ -528,13 +539,17 @@ function replace_profile_analysis_blocks(content::String)
             end
 
             try
-                text_md = analyze_profile_from_registry(profile_name, bench_id, SRC_DIR; combos=combos)
+                text_md = analyze_profile_from_registry(
+                    profile_name, bench_id, SRC_DIR; combos=combos
+                )
                 DOC_DEBUG[] &&
                     @info "  ✓ Replaced PROFILE_ANALYSIS block #$block_count: $profile_name for $bench_id"
                 return text_md
             catch e
                 if DOC_DEBUG[]
-                    @error "  ✗ Failed to generate profile analysis" exception = (e, catch_backtrace())
+                    @error "  ✗ Failed to generate profile analysis" exception = (
+                        e, catch_backtrace()
+                    )
                 else
                     @error "  ✗ Failed to generate profile analysis: $(e)"
                 end

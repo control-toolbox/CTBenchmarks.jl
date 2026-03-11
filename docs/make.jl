@@ -120,7 +120,8 @@ with_processed_template_problems(
                 "Developers Guidelines" => [
                     "Add a New Benchmark" => "add_benchmark.md",
                     "Add a Custom Profile" => "add_performance_profile.md",
-                    "DocUtils Template System" => joinpath("developers", "docutils_templates.md"),
+                    "DocUtils Template System" =>
+                        joinpath("developers", "docutils_templates.md"),
                     "Documentation Process" => "documentation_process.md",
                 ],
             ],
