@@ -4,7 +4,7 @@
 function run()
     results = CTBenchmarks.benchmark(;
         solver_models=[:ipopt => [:jump, :adnlp, :exa], :madnlp => [:jump, :adnlp, :exa]],
-        grid_sizes=[200, 500, 1000, 2000],
+        grid_sizes=[200, 500, 1000],
         disc_methods=[:trapeze],
         tol=1e-8,
         ipopt_mu_strategy="adaptive",
