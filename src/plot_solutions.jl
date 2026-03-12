@@ -58,12 +58,12 @@ function get_color(model::T, solver::T, idx::Int) where {T<:Union{String,Symbol}
     ]
 
     fixed = Dict(
-        ("adnlp", "ipopt")    => :steelblue,
-        ("exa", "ipopt")     => :tomato,
-        ("adnlp", "madnlp")  => :seagreen,
-        ("exa", "madnlp")    => :darkorange,
-        ("jump", "ipopt")     => :mediumpurple,
-        ("jump", "madnlp")   => :sienna,
+        ("adnlp", "ipopt") => :steelblue,
+        ("exa", "ipopt") => :tomato,
+        ("adnlp", "madnlp") => :seagreen,
+        ("exa", "madnlp") => :darkorange,
+        ("jump", "ipopt") => :mediumpurple,
+        ("jump", "madnlp") => :sienna,
         ("exa_gpu", "madnlp") => :mediumturquoise,
         # Discretization method combinations
         ("trapeze", "ipopt") => :steelblue,
@@ -99,7 +99,6 @@ function get_color(params::Vector, idx::Int)
         error("get_color requires at least one parameter")
     end
 end
-
 
 # -----------------------------------
 # Helper: left margin for plots

@@ -8,23 +8,70 @@ function test_performance_profile_internals()
         # Mock data
         data = Dict(
             "results" => [
-                Dict("problem" => "p1", "grid_size" => 10, "model" => "exa", "solver" => "ipopt", "time" => 1.0, "success" => true),
-                Dict("problem" => "p1", "grid_size" => 10, "model" => "exa", "solver" => "ab", "time" => 2.0, "success" => true),
-                Dict("problem" => "p1", "grid_size" => 10, "model" => "exb", "solver" => "ipopt", "time" => 0.5, "success" => true),
-                Dict("problem" => "p1", "grid_size" => 20, "model" => "exa", "solver" => "ipopt", "time" => 10.0, "success" => true),
-                Dict("problem" => "p1", "grid_size" => 20, "model" => "exa", "solver" => "ab", "time" => NaN, "success" => false),
+                Dict(
+                    "problem" => "p1",
+                    "grid_size" => 10,
+                    "model" => "exa",
+                    "solver" => "ipopt",
+                    "time" => 1.0,
+                    "success" => true,
+                ),
+                Dict(
+                    "problem" => "p1",
+                    "grid_size" => 10,
+                    "model" => "exa",
+                    "solver" => "ab",
+                    "time" => 2.0,
+                    "success" => true,
+                ),
+                Dict(
+                    "problem" => "p1",
+                    "grid_size" => 10,
+                    "model" => "exb",
+                    "solver" => "ipopt",
+                    "time" => 0.5,
+                    "success" => true,
+                ),
+                Dict(
+                    "problem" => "p1",
+                    "grid_size" => 20,
+                    "model" => "exa",
+                    "solver" => "ipopt",
+                    "time" => 10.0,
+                    "success" => true,
+                ),
+                Dict(
+                    "problem" => "p1",
+                    "grid_size" => 20,
+                    "model" => "exa",
+                    "solver" => "ab",
+                    "time" => NaN,
+                    "success" => false,
+                ),
                 # Duplicate run for aggregation test
-                Dict("problem" => "p2", "grid_size" => 10, "model" => "exa", "solver" => "ipopt", "time" => 1.0, "success" => true),
-                Dict("problem" => "p2", "grid_size" => 10, "model" => "exa", "solver" => "ipopt", "time" => 1.2, "success" => true),
-            ]
+                Dict(
+                    "problem" => "p2",
+                    "grid_size" => 10,
+                    "model" => "exa",
+                    "solver" => "ipopt",
+                    "time" => 1.0,
+                    "success" => true,
+                ),
+                Dict(
+                    "problem" => "p2",
+                    "grid_size" => 10,
+                    "model" => "exa",
+                    "solver" => "ipopt",
+                    "time" => 1.2,
+                    "success" => true,
+                ),
+            ],
         )
         df = DataFrame(data["results"])
 
         # Config
         cpu_criterion = CTBenchmarks.ProfileCriterion{Float64}(
-            "CPU time (s)",
-            row -> get(row, "time", NaN),
-            (a, b) -> a <= b
+            "CPU time (s)", row -> get(row, "time", NaN), (a, b) -> a <= b
         )
         config = CTBenchmarks.PerformanceProfileConfig{Float64}(
             [:problem, :grid_size],
@@ -32,7 +79,7 @@ function test_performance_profile_internals()
             cpu_criterion,
             row -> row.success == true,
             row -> true,
-            xs -> Statistics.mean(skipmissing(xs))
+            xs -> Statistics.mean(skipmissing(xs)),
         )
 
         @testset "_filter_benchmark_data" begin
@@ -44,7 +91,9 @@ function test_performance_profile_internals()
             allowed = [("exa", "ipopt")]
             filtered_restricted = CTBenchmarks._filter_benchmark_data(df, config, allowed)
             @test nrow(filtered_restricted) == 4 # Only (exa, ipopt) rows
-            @test all(r -> (r.model == "exa" && r.solver == "ipopt"), eachrow(filtered_restricted))
+            @test all(
+                r -> (r.model == "exa" && r.solver == "ipopt"), eachrow(filtered_restricted)
+            )
 
             # Test generic filtering with different solver_cols
             config_gen = CTBenchmarks.PerformanceProfileConfig{Float64}(
@@ -53,7 +102,7 @@ function test_performance_profile_internals()
                 config.criterion,
                 row -> true,
                 row -> true,
-                xs -> Statistics.mean(xs)
+                xs -> Statistics.mean(xs),
             )
             allowed_gen = [("exb",)]
             filtered_gen = CTBenchmarks._filter_benchmark_data(df, config_gen, allowed_gen)
@@ -81,7 +130,14 @@ function test_performance_profile_internals()
             @test p2_row[1, :metric] ≈ 1.1
 
             # Check non-duplicated rows exist
-            p1_row = filter(r -> r.problem == "p1" && r.grid_size == 10 && r.solver == "ipopt" && r.model == "exa", aggregated)
+            p1_row = filter(
+                r ->
+                    r.problem == "p1" &&
+                    r.grid_size == 10 &&
+                    r.solver == "ipopt" &&
+                    r.model == "exa",
+                aggregated,
+            )
             @test nrow(p1_row) == 1
             @test p1_row[1, :metric] == 1.0
         end
@@ -115,7 +171,7 @@ function test_performance_profile_internals()
                 grid_size=[10, 10],
                 model=["m1", "m2"],
                 solver=["s1", "s2"],
-                metric=[1.0, 0.0]
+                metric=[1.0, 0.0],
             )
             ratios0 = CTBenchmarks._compute_dolan_more_ratios(df0, config)
             @test ratios0[1, :ratio] == Inf
@@ -127,7 +183,7 @@ function test_performance_profile_internals()
                 grid_size=[10, 10],
                 model=["m1", "m2"],
                 solver=["s1", "s2"],
-                metric=[Inf, Inf]
+                metric=[Inf, Inf],
             )
             ratiosinf = CTBenchmarks._compute_dolan_more_ratios(dfinf, config)
             @test all(isnan.(ratiosinf.ratio))
@@ -186,14 +242,17 @@ function test_performance_profile_internals()
                 solver=["s1", "s1", "s1"],
                 ratio=[1.0, 1.0, 2.0],
                 best_metric=[1.0, 1.0, 1.0],
-                combo=["(m1, s1)", "(m2, s1)", "(m3, s1)"]
+                combo=["(m1, s1)", "(m2, s1)", "(m3, s1)"],
             )
             pp_ties = CTBenchmarks.PerformanceProfile(
                 "ties",
                 DataFrame(problem=["p1"], grid_size=[10]),
                 df_ties,
                 ["(m1, s1)", "(m2, s1)", "(m3, s1)"],
-                1, 1.0, 2.0, config
+                1,
+                1.0,
+                2.0,
+                config,
             )
             stats = CTBenchmarks.compute_profile_stats(pp_ties)
 
@@ -206,15 +265,23 @@ function test_performance_profile_internals()
             # 2. Total failure: one instance, no success
             # Note: build_profile_from_df would return nothing, but we test the stats logic
             df_fail_ratios = DataFrame(
-                problem=["p1"], grid_size=[10], model=["m1"], solver=["s1"],
-                ratio=[NaN], best_metric=[Inf], combo=["(m1, s1)"]
+                problem=["p1"],
+                grid_size=[10],
+                model=["m1"],
+                solver=["s1"],
+                ratio=[NaN],
+                best_metric=[Inf],
+                combo=["(m1, s1)"],
             )
             pp_fail = CTBenchmarks.PerformanceProfile(
                 "fail",
                 DataFrame(problem=["p1"], grid_size=[10]),
                 DataFrame(problem=String[], grid_size=Int[]), # Empty but has columns
                 ["(m1, s1)"],
-                1, 1.0, 1.0, config
+                1,
+                1.0,
+                1.0,
+                config,
             )
 
             stats_fail = CTBenchmarks.compute_profile_stats(pp_fail)
