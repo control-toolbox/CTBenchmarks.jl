@@ -73,7 +73,6 @@ function run(
                 :balanced_field,
                 :bryson_denham,
                 :mountain_car,
-            
             ],
             solver_models=[
                 :ipopt => [:jump, :adnlp, :exa],

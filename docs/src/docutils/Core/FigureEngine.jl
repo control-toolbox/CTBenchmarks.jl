@@ -50,9 +50,7 @@ plt = call_figure_function("_plot_profile_default_cpu", ["core-ubuntu-latest"])
 ```
 """
 function call_figure_function(
-    function_name::AbstractString,
-    args::Vector{<:AbstractString},
-    extra_args::Tuple=()
+    function_name::AbstractString, args::Vector{<:AbstractString}, extra_args::Tuple=()
 )
     if !haskey(FIGURE_FUNCTIONS, function_name)
         available = join(sort(collect(keys(FIGURE_FUNCTIONS))), ", ")

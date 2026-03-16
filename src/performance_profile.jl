@@ -292,7 +292,6 @@ end
 # Performance Profile Construction
 # ───────────────────────────────────────────────────────────────────────────────
 
-
 """
     _filter_benchmark_data(df, cfg, allowed_combos) -> DataFrame
 
@@ -306,8 +305,7 @@ function _filter_benchmark_data(df, cfg, allowed_combos)
     if !isnothing(allowed_combos) && !isempty(allowed_combos)
         allowed_set = Set(allowed_combos)
         df_filtered = filter(
-            row -> Tuple(row[c] for c in cfg.solver_cols) in allowed_set,
-            df_filtered,
+            row -> Tuple(row[c] for c in cfg.solver_cols) in allowed_set, df_filtered
         )
     end
 
@@ -553,7 +551,7 @@ function _marker_indices_for_curve(ratios; M=6)
     if M <= 1
         push!(indices, 1)
     else
-        for k in 0:(M-1)
+        for k in 0:(M - 1)
             t = k / (M - 1)
             p = a + t * (b - a)
             x_target = 2.0^p
@@ -632,7 +630,7 @@ function default_plot_config()
         1.5,
         4,
         :box,
-        :bottomright
+        :bottomright,
     )
 end
 
@@ -689,7 +687,9 @@ end
 
 Add a single solver combination series (line + markers) to the plot.
 """
-function _add_combo_series!(plt, x, y, label, color, marker, cfg::PerformanceProfilePlotConfig)
+function _add_combo_series!(
+    plt, x, y, label, color, marker, cfg::PerformanceProfilePlotConfig
+)
     # Plot the curve
     plot!(plt, x, y; label="", lw=cfg.linewidth, color=color)
 
@@ -698,7 +698,8 @@ function _add_combo_series!(plt, x, y, label, color, marker, cfg::PerformancePro
     x_markers = x[marker_indices]
     y_markers = y[marker_indices]
 
-    scatter!(plt,
+    scatter!(
+        plt,
         x_markers,
         y_markers;
         color=color,
@@ -709,7 +710,8 @@ function _add_combo_series!(plt, x, y, label, color, marker, cfg::PerformancePro
     )
 
     # Add marker/label entry on the first point of the curve for the legend
-    plot!(plt,
+    plot!(
+        plt,
         [x[1]],
         [y[1]];
         color=color,
@@ -855,15 +857,14 @@ function compute_profile_stats(pp::PerformanceProfile)
     # Find most efficient combos
     if !isempty(performances)
         best_efficient_rate = maximum(p -> p.efficiency, performances)
-        most_efficient =
-            [p.combo for p in performances if p.efficiency == best_efficient_rate]
+        most_efficient = [
+            p.combo for p in performances if p.efficiency == best_efficient_rate
+        ]
     else
         most_efficient = String[]
     end
 
-    return ProfileAnalysis(
-        pp.bench_id, stats, performances, most_robust, most_efficient
-    )
+    return ProfileAnalysis(pp.bench_id, stats, performances, most_robust, most_efficient)
 end
 
 """
@@ -884,7 +885,9 @@ function _format_analysis_markdown(analysis::ProfileAnalysis)
     # Header
     print(buf, "!!! info \"Performance Profile Analysis\"\n")
     print(buf, "    **Dataset overview for `$(analysis.bench_id)`:**\n")
-    print(buf, "    - **Problems**: ", stats.n_problems, " unique optimal control problems\n")
+    print(
+        buf, "    - **Problems**: ", stats.n_problems, " unique optimal control problems\n"
+    )
     print(buf, "    - **Instances**: ", stats.n_instances, "\n")
     print(buf, "    - **Solver combos**: ", stats.n_combos, "\n")
 
