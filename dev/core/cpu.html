@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>CPU · CTBenchmarks</title><meta name="title" content="CPU · CTBenchmarks"/><meta property="og:title" content="CPU · CTBenchmarks"/><meta property="twitter:title" content="CPU · CTBenchmarks"/><meta name="description" content="Documentation for CTBenchmarks."/><meta property="og:description" content="Documentation for CTBenchmarks."/><meta property="twitter:description" content="Documentation for CTBenchmarks."/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script><link href="https://control-toolbox.org/assets/css/documentation.css" rel="stylesheet" type="text/css"/><script src="https://control-toolbox.org/assets/js/documentation.js"></script><script src="../assets/js/ctbenchmarks-details.js"></script><link href="../assets/css/ctbenchmarks-details.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../index.html">CTBenchmarks</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../index.html">Introduction</a></li><li><span class="tocitem">Core benchmarks</span><ul><li class="is-active"><a class="tocitem" href="cpu.html">CPU</a><ul class="internal"><li><a class="tocitem" href="#Ubuntu-Latest"><span>Ubuntu Latest</span></a></li><li><a class="tocitem" href="#Kkt"><span>Kkt</span></a></li></ul></li><li><a class="tocitem" href="gpu.html">GPU</a></li><li><a class="tocitem" href="midpoint-trapeze.html">Midpoint vs Trapeze</a></li><li><input class="collapse-toggle" id="menuitem-2-4" type="checkbox"/><label class="tocitem" for="menuitem-2-4"><span class="docs-label">Problems</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="problems/balanced_field.html">balanced_field</a></li><li><a class="tocitem" href="problems/beam.html">beam</a></li><li><a class="tocitem" href="problems/brachistochrone.html">brachistochrone</a></li><li><a class="tocitem" href="problems/bryson_denham.html">bryson_denham</a></li><li><a class="tocitem" href="problems/chain.html">chain</a></li><li><a class="tocitem" href="problems/dielectrophoretic_particle.html">dielectrophoretic_particle</a></li><li><a class="tocitem" href="problems/double_oscillator.html">double_oscillator</a></li><li><a class="tocitem" href="problems/ducted_fan.html">ducted_fan</a></li><li><a class="tocitem" href="problems/electric_vehicle.html">electric_vehicle</a></li><li><a class="tocitem" href="problems/glider.html">glider</a></li><li><a class="tocitem" href="problems/insurance.html">insurance</a></li><li><a class="tocitem" href="problems/jackson.html">jackson</a></li><li><a class="tocitem" href="problems/mountain_car.html">mountain_car</a></li><li><a class="tocitem" href="problems/robbins.html">robbins</a></li><li><a class="tocitem" href="problems/robot.html">robot</a></li><li><a class="tocitem" href="problems/rocket.html">rocket</a></li><li><a class="tocitem" href="problems/space_shuttle.html">space_shuttle</a></li><li><a class="tocitem" href="problems/steering.html">steering</a></li><li><a class="tocitem" href="problems/vanderpol.html">vanderpol</a></li></ul></li></ul></li><li><a class="tocitem" href="../performance_profile.html">Performance Profile Guidelines</a></li><li><span class="tocitem">API Reference</span><ul><li><a class="tocitem" href="../api/public.html">Public</a></li><li><a class="tocitem" href="../api/private.html">Private</a></li></ul></li><li><span class="tocitem">Developers Guidelines</span><ul><li><a class="tocitem" href="../add_benchmark.html">Add a New Benchmark</a></li><li><a class="tocitem" href="../add_performance_profile.html">Add a Custom Profile</a></li><li><a class="tocitem" href="../developers/docutils_templates.html">DocUtils Template System</a></li><li><a class="tocitem" href="../documentation_process.html">Documentation Process</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Core benchmarks</a></li><li class="is-active"><a href="cpu.html">CPU</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href="cpu.html">CPU</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/control-toolbox/CTBenchmarks.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Core-CPU-Benchmarks"><a class="docs-heading-anchor" href="#Core-CPU-Benchmarks">Core CPU Benchmarks</a><a id="Core-CPU-Benchmarks-1"></a><a class="docs-heading-anchor-permalink" href="#Core-CPU-Benchmarks" title="Permalink"></a></h1><div class="admonition is-info" id="Note-249dc3585ed301eb"><header class="admonition-header">Note<a class="admonition-anchor" href="#Note-249dc3585ed301eb" title="Permalink"></a></header><div class="admonition-body"><ul><li>The linear solver is <a href="https://github.com/JuliaSmoothOptimizers/MUMPS.jl">MUMPS</a> for CPU experiments and <a href="https://github.com/exanauts/CUDSS.jl">CUDSS</a> for GPU experiments.</li><li>Below you can find Dolan–Moré performance profiles comparing solver–model combinations on the set of optimal control problems and grid sizes. For a detailed explanation of how to read these profiles, see the <a href="../performance_profile.html#performance-profiles">Performance Profiles</a> page.</li></ul></div></div><h2 id="Ubuntu-Latest"><a class="docs-heading-anchor" href="#Ubuntu-Latest">Ubuntu Latest</a><a id="Ubuntu-Latest-1"></a><a class="docs-heading-anchor-permalink" href="#Ubuntu-Latest" title="Permalink"></a></h2><p>This benchmark suite evaluates optimal control problems on a standard CPU platform using GitHub Actions runners.</p><h3 id="Configuration"><a class="docs-heading-anchor" href="#Configuration">⚙️ Configuration</a><a id="Configuration-1"></a><a class="docs-heading-anchor-permalink" href="#Configuration" title="Permalink"></a></h3><div class="benchmark-config" style="margin-bottom: 0em;"><div class="markdown"><ul>
-<li><p><strong>Problems:</strong> beam</p>
+<li><p><strong>Problems:</strong> balanced_field, beam, brachistochrone, bryson_denham, chain, dielectrophoretic_particle, double_oscillator, ducted_fan, electric_vehicle, glider, insurance, jackson, mountain_car, robbins, robot, rocket, space_shuttle, steering, vanderpol</p>
 </li>
 <li><p><strong>Solvers:</strong> ipopt, madnlp</p>
 </li>
 <li><p><strong>Models:</strong> adnlp, exa, jump</p>
 </li>
-<li><p><strong>Grid sizes:</strong> 200, 500, 1000, 2000 discretization points</p>
+<li><p><strong>Grid sizes:</strong> 200, 500, 1000 discretization points</p>
 </li>
 <li><p><strong>Discretization:</strong> trapeze method</p>
 </li>
@@ -17,8 +17,8 @@
 <li><p><strong>Limits:</strong> 1000 iterations max, 500.0s wall time</p>
 </li>
 </ul>
-</div></div><h3 id="Environment"><a class="docs-heading-anchor" href="#Environment">🖥️ Environment</a><a id="Environment-1"></a><a class="docs-heading-anchor-permalink" href="#Environment" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2026-03-10 17:55:49 UTC
-🔧 Julia version : 1.11.9
+</div></div><h3 id="Environment"><a class="docs-heading-anchor" href="#Environment">🖥️ Environment</a><a id="Environment-1"></a><a class="docs-heading-anchor-permalink" href="#Environment" title="Permalink"></a></h3><pre class="documenter-example-output"><code class="nohighlight hljs ansi">📅 Timestamp     : 2026-03-11 14:47:54 UTC
+🔧 Julia version : 1.12.5
 💻 OS            : Linux
 🖥️ Machine       : runnervm0kj6c</code></pre><div class="markdown"><p>You can download the exact environment used for this benchmark:</p>
 <ul>
@@ -32,21 +32,22 @@
 <p>These files allow you to reproduce the benchmark environment and results exactly.</p>
 </div><div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
   <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Version info</div>
-  <div class="ctdetails-body"><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Julia Version 1.11.9
-Commit 53a02c0720c (2026-02-06 00:27 UTC)
+  <div class="ctdetails-body"><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Julia Version 1.12.5
+Commit 5fe89b8ddc1 (2026-02-09 16:05 UTC)
 Build Info:
-  Official https://julialang.org/ release
+  Official https://julialang.org release
 Platform Info:
   OS: Linux (x86_64-linux-gnu)
   CPU: 4 × AMD EPYC 7763 64-Core Processor
   WORD_SIZE: 64
-  LLVM: libLLVM-16.0.6 (ORCJIT, znver3)
-Threads: 1 default, 0 interactive, 1 GC (on 4 virtual cores)
+  LLVM: libLLVM-18.1.7 (ORCJIT, znver3)
+  GC: Built with stock GC
+Threads: 1 default, 1 interactive, 1 GC (on 4 virtual cores)
 Environment:
   JULIA_PKG_SERVER_REGISTRY_PREFERENCE = eager</code></pre>  </div>
 </div><div class="ctdetails" style="margin-bottom: 0.5em;">
   <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">📦 Package status</div>
-  <div class="ctdetails-body"><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr36"><span class="sgr1">Project</span></span> CTBenchmarks v0.3.1
+  <div class="ctdetails-body"><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr36"><span class="sgr1">Project</span></span> CTBenchmarks v0.4.1
 <span class="sgr32"><span class="sgr1">Status</span></span> `~/work/CTBenchmarks.jl/CTBenchmarks.jl/Project.toml`
   <span class="sgr90">[6e4b80f9] </span>BenchmarkTools v1.6.3
 <span class="sgr33">⌅</span> <span class="sgr90">[54762871] </span>CTBase v0.16.2
@@ -66,13 +67,13 @@ Environment:
   <span class="sgr90">[bd369af6] </span>Tables v1.12.1
   <span class="sgr90">[ade2ca70] </span>Dates v1.11.0
   <span class="sgr90">[b77e0a4c] </span>InteractiveUtils v1.11.0
-  <span class="sgr90">[44cfe95a] </span>Pkg v1.11.0
+  <span class="sgr90">[44cfe95a] </span>Pkg v1.12.1
   <span class="sgr90">[de0858da] </span>Printf v1.11.0
   <span class="sgr90">[6462fe0b] </span>Sockets v1.11.0
 <span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr33">⌅</span> have new versions available but compatibility constraints restrict them from upgrading. To see why use `status --outdated`</code></pre>  </div>
 </div><div class="ctdetails" style="margin-bottom: 0.5em;">
   <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">📚 Complete manifest</div>
-  <div class="ctdetails-body"><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr36"><span class="sgr1">Project</span></span> CTBenchmarks v0.3.1
+  <div class="ctdetails-body"><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr36"><span class="sgr1">Project</span></span> CTBenchmarks v0.4.1
 <span class="sgr32"><span class="sgr1">Status</span></span> `~/work/CTBenchmarks.jl/CTBenchmarks.jl/Manifest.toml`
   <span class="sgr90">[54578032] </span>ADNLPModels v0.8.13
   <span class="sgr90">[47edcb42] </span>ADTypes v1.21.0
@@ -181,7 +182,7 @@ Environment:
   <span class="sgr90">[995b91a9] </span>PlotUtils v1.4.4
   <span class="sgr90">[91a5bcdd] </span>Plots v1.41.6
   <span class="sgr90">[2dfb63ee] </span>PooledArrays v1.4.3
-<span class="sgr33">⌅</span> <span class="sgr90">[aea7be01] </span>PrecompileTools v1.2.1
+  <span class="sgr90">[aea7be01] </span>PrecompileTools v1.3.3
   <span class="sgr90">[21216c6a] </span>Preferences v1.5.2
   <span class="sgr90">[08abe8d2] </span>PrettyTables v3.2.3
   <span class="sgr90">[43287f4e] </span>PtrArrays v1.4.0
@@ -206,7 +207,7 @@ Environment:
   <span class="sgr90">[0a514795] </span>SparseMatrixColorings v0.4.24
   <span class="sgr90">[276daf66] </span>SpecialFunctions v2.7.1
   <span class="sgr90">[860ef19b] </span>StableRNGs v1.0.4
-  <span class="sgr90">[90137ffa] </span>StaticArrays v1.9.17
+  <span class="sgr90">[90137ffa] </span>StaticArrays v1.9.18
   <span class="sgr90">[1e83bf80] </span>StaticArraysCore v1.4.4
   <span class="sgr90">[10745b16] </span>Statistics v1.11.1
   <span class="sgr90">[82ae8749] </span>StatsAPI v1.8.0
@@ -228,7 +229,7 @@ Environment:
   <span class="sgr90">[ae81ac8f] </span>ASL_jll v0.1.3+0
   <span class="sgr90">[6e34b625] </span>Bzip2_jll v1.0.9+0
   <span class="sgr90">[d1e2174e] </span>CUDA_Compiler_jll v0.4.1+1
-  <span class="sgr90">[4ee394cb] </span>CUDA_Driver_jll v13.1.1+0
+  <span class="sgr90">[4ee394cb] </span>CUDA_Driver_jll v13.2.0+0
   <span class="sgr90">[76a88914] </span>CUDA_Runtime_jll v0.20.1+0
   <span class="sgr90">[4889d778] </span>CUDSS_jll v0.7.1+0
   <span class="sgr90">[83423d85] </span>Cairo_jll v1.18.5+1
@@ -267,10 +268,10 @@ Environment:
   <span class="sgr90">[d00139f3] </span>METIS_jll v5.1.3+0
   <span class="sgr90">[856f044c] </span>MKL_jll v2025.2.0+0
   <span class="sgr90">[d7ed1dd3] </span>MUMPS_seq_jll v500.800.200+0
+  <span class="sgr90">[c8ffd9c3] </span>MbedTLS_jll v2.28.1010+0
   <span class="sgr90">[e98f9f5b] </span>NVTX_jll v3.2.2+0
   <span class="sgr90">[e7412a2a] </span>Ogg_jll v1.3.6+0
   <span class="sgr90">[656ef2d0] </span>OpenBLAS32_jll v0.3.30+0
-  <span class="sgr90">[458c3c95] </span>OpenSSL_jll v3.5.5+0
   <span class="sgr90">[efe28fd5] </span>OpenSpecFun_jll v0.5.6+0
   <span class="sgr90">[91d4177d] </span>Opus_jll v1.6.1+0
   <span class="sgr90">[36c8627f] </span>Pango_jll v1.57.0+0
@@ -331,20 +332,21 @@ Environment:
   <span class="sgr90">[2a0f44e3] </span>Base64 v1.11.0
   <span class="sgr90">[ade2ca70] </span>Dates v1.11.0
   <span class="sgr90">[8ba89e20] </span>Distributed v1.11.0
-  <span class="sgr90">[f43a241f] </span>Downloads v1.6.0
+  <span class="sgr90">[f43a241f] </span>Downloads v1.7.0
   <span class="sgr90">[7b1f6079] </span>FileWatching v1.11.0
   <span class="sgr90">[9fa8497b] </span>Future v1.11.0
   <span class="sgr90">[b77e0a4c] </span>InteractiveUtils v1.11.0
+  <span class="sgr90">[ac6e5ff7] </span>JuliaSyntaxHighlighting v1.12.0
   <span class="sgr90">[4af54fe1] </span>LazyArtifacts v1.11.0
   <span class="sgr90">[b27032c2] </span>LibCURL v0.6.4
   <span class="sgr90">[76f85450] </span>LibGit2 v1.11.0
   <span class="sgr90">[8f399da3] </span>Libdl v1.11.0
-  <span class="sgr90">[37e2e46d] </span>LinearAlgebra v1.11.0
+  <span class="sgr90">[37e2e46d] </span>LinearAlgebra v1.12.0
   <span class="sgr90">[56ddb016] </span>Logging v1.11.0
   <span class="sgr90">[d6f4376e] </span>Markdown v1.11.0
   <span class="sgr90">[a63ad114] </span>Mmap v1.11.0
-  <span class="sgr90">[ca575930] </span>NetworkOptions v1.2.0
-  <span class="sgr90">[44cfe95a] </span>Pkg v1.11.0
+  <span class="sgr90">[ca575930] </span>NetworkOptions v1.3.0
+  <span class="sgr90">[44cfe95a] </span>Pkg v1.12.1
   <span class="sgr90">[de0858da] </span>Printf v1.11.0
   <span class="sgr90">[9abbd945] </span>Profile v1.11.0
   <span class="sgr90">[3fa0cd96] </span>REPL v1.11.0
@@ -353,7 +355,7 @@ Environment:
   <span class="sgr90">[9e88b42a] </span>Serialization v1.11.0
   <span class="sgr90">[1a1011a3] </span>SharedArrays v1.11.0
   <span class="sgr90">[6462fe0b] </span>Sockets v1.11.0
-  <span class="sgr90">[2f01184e] </span>SparseArrays v1.11.0
+  <span class="sgr90">[2f01184e] </span>SparseArrays v1.12.0
   <span class="sgr90">[f489334b] </span>StyledStrings v1.11.0
   <span class="sgr90">[4607b0f0] </span>SuiteSparse
   <span class="sgr90">[fa267f1f] </span>TOML v1.0.3
@@ -361,20 +363,20 @@ Environment:
   <span class="sgr90">[8dfed614] </span>Test v1.11.0
   <span class="sgr90">[cf7118a7] </span>UUIDs v1.11.0
   <span class="sgr90">[4ec0a83e] </span>Unicode v1.11.0
-  <span class="sgr90">[e66e0078] </span>CompilerSupportLibraries_jll v1.1.1+0
-  <span class="sgr90">[deac9b47] </span>LibCURL_jll v8.6.0+0
-  <span class="sgr90">[e37daf67] </span>LibGit2_jll v1.7.2+0
-  <span class="sgr90">[29816b5a] </span>LibSSH2_jll v1.11.0+1
-  <span class="sgr90">[c8ffd9c3] </span>MbedTLS_jll v2.28.6+0
-  <span class="sgr90">[14a3606d] </span>MozillaCACerts_jll v2023.12.12
-  <span class="sgr90">[4536629a] </span>OpenBLAS_jll v0.3.27+1
-  <span class="sgr90">[05823500] </span>OpenLibm_jll v0.8.5+0
-  <span class="sgr90">[efcefdf7] </span>PCRE2_jll v10.42.0+1
-  <span class="sgr90">[bea87d4a] </span>SuiteSparse_jll v7.7.0+0
-  <span class="sgr90">[83775a58] </span>Zlib_jll v1.2.13+1
-  <span class="sgr90">[8e850b90] </span>libblastrampoline_jll v5.11.0+0
-  <span class="sgr90">[8e850ede] </span>nghttp2_jll v1.59.0+0
-  <span class="sgr90">[3f19e933] </span>p7zip_jll v17.4.0+2
+  <span class="sgr90">[e66e0078] </span>CompilerSupportLibraries_jll v1.3.0+1
+  <span class="sgr90">[deac9b47] </span>LibCURL_jll v8.15.0+0
+  <span class="sgr90">[e37daf67] </span>LibGit2_jll v1.9.0+0
+  <span class="sgr90">[29816b5a] </span>LibSSH2_jll v1.11.3+1
+  <span class="sgr90">[14a3606d] </span>MozillaCACerts_jll v2025.11.4
+  <span class="sgr90">[4536629a] </span>OpenBLAS_jll v0.3.29+0
+  <span class="sgr90">[05823500] </span>OpenLibm_jll v0.8.7+0
+  <span class="sgr90">[458c3c95] </span>OpenSSL_jll v3.5.4+0
+  <span class="sgr90">[efcefdf7] </span>PCRE2_jll v10.44.0+1
+  <span class="sgr90">[bea87d4a] </span>SuiteSparse_jll v7.8.3+2
+  <span class="sgr90">[83775a58] </span>Zlib_jll v1.3.1+2
+  <span class="sgr90">[8e850b90] </span>libblastrampoline_jll v5.15.0+0
+  <span class="sgr90">[8e850ede] </span>nghttp2_jll v1.64.0+1
+  <span class="sgr90">[3f19e933] </span>p7zip_jll v17.7.0+0
 <span class="sgr36"><span class="sgr1">Info</span></span> Packages marked with <span class="sgr32">⌃</span> and <span class="sgr33">⌅</span> have new versions available. Those with <span class="sgr32">⌃</span> may be upgradable, but those with <span class="sgr33">⌅</span> are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre>  </div>
 </div><h3 id="Performance-Profile-CPU-Time"><a class="docs-heading-anchor" href="#Performance-Profile-CPU-Time">📈 Performance Profile CPU Time</a><a id="Performance-Profile-CPU-Time-1"></a><a class="docs-heading-anchor-permalink" href="#Performance-Profile-CPU-Time" title="Permalink"></a></h3><a href="../assets/plots/cpu_profile_plot_default_cpu_0ebbe091.pdf">
   <img 
@@ -383,70 +385,1679 @@ Environment:
     style="max-width:1400px" 
     src="../assets/plots/cpu_profile_plot_default_cpu_0ebbe091.svg"
   />
-</a><div class="admonition is-info" id="Performance-Profile-Analysis-c6bd9c84a2aae3ad"><header class="admonition-header">Performance Profile Analysis<a class="admonition-anchor" href="#Performance-Profile-Analysis-c6bd9c84a2aae3ad" title="Permalink"></a></header><div class="admonition-body"><p><strong>Dataset overview for <code>core-ubuntu-latest</code>:</strong></p><ul><li><strong>Problems</strong>: 1 unique optimal control problems</li><li><strong>Instances</strong>: 4</li><li><strong>Solver combos</strong>: 6</li></ul><p><strong>Profile configuration:</strong></p><ul><li><strong>Instance definition</strong>: (problem, grid_size)</li><li><strong>Solver combos definition</strong>: (model, solver)</li><li><strong>Criterion</strong>: CPU time</li><li><strong>Successful runs</strong>: 24/24 (100.0%)</li><li><strong>Successful instances</strong>: 4/4 (100.0%)</li><li><strong>Unsuccessful instances</strong>: none (every instance had at least one successful run)</li></ul><p><strong>Robustness (% of instances solved):</strong></p><ul><li><code>(jump, ipopt)</code>: 100.0%</li><li><code>(adnlp, ipopt)</code>: 100.0%</li><li><code>(exa, ipopt)</code>: 100.0%</li><li><code>(jump, madnlp)</code>: 100.0%</li><li><code>(adnlp, madnlp)</code>: 100.0%</li><li><code>(exa, madnlp)</code>: 100.0%</li></ul><p><strong>Efficiency (% of instances where fastest):</strong></p><ul><li><code>(jump, ipopt)</code>: 0.0%</li><li><code>(adnlp, ipopt)</code>: 0.0%</li><li><code>(exa, ipopt)</code>: 25.0%</li><li><code>(jump, madnlp)</code>: 75.0%</li><li><code>(adnlp, madnlp)</code>: 0.0%</li><li><code>(exa, madnlp)</code>: 0.0%</li></ul><p><strong>Most robust</strong>: 6 combinations tied at 100.0%.</p><p><strong>Most efficient</strong>: <code>(jump, madnlp)</code> was fastest on 75.0% of instances.</p></div></div><h3 id="Performance-Profile-CPU-Time:-two-best-combos"><a class="docs-heading-anchor" href="#Performance-Profile-CPU-Time:-two-best-combos">📈 Performance Profile CPU Time: two best combos</a><a id="Performance-Profile-CPU-Time:-two-best-combos-1"></a><a class="docs-heading-anchor-permalink" href="#Performance-Profile-CPU-Time:-two-best-combos" title="Permalink"></a></h3><a href="../assets/plots/cpu_profile_plot_default_cpu_82cd6537.pdf">
+</a><div class="admonition is-info" id="Performance-Profile-Analysis-f88e7db24893788d"><header class="admonition-header">Performance Profile Analysis<a class="admonition-anchor" href="#Performance-Profile-Analysis-f88e7db24893788d" title="Permalink"></a></header><div class="admonition-body"><p><strong>Dataset overview for <code>core-ubuntu-latest</code>:</strong></p><ul><li><strong>Problems</strong>: 19 unique optimal control problems</li><li><strong>Instances</strong>: 57</li><li><strong>Solver combos</strong>: 6</li></ul><p><strong>Profile configuration:</strong></p><ul><li><strong>Instance definition</strong>: (problem, grid_size)</li><li><strong>Solver combos definition</strong>: (model, solver)</li><li><strong>Criterion</strong>: CPU time</li><li><strong>Successful runs</strong>: 334/342 (97.7%)</li><li><strong>Successful instances</strong>: 57/57 (100.0%)</li><li><strong>Unsuccessful instances</strong>: none (every instance had at least one successful run)</li></ul><p><strong>Robustness (% of instances solved):</strong></p><ul><li><code>(jump, ipopt)</code>: 98.2%</li><li><code>(adnlp, ipopt)</code>: 98.2%</li><li><code>(exa, ipopt)</code>: 98.2%</li><li><code>(jump, madnlp)</code>: 100.0%</li><li><code>(adnlp, madnlp)</code>: 91.2%</li><li><code>(exa, madnlp)</code>: 100.0%</li></ul><p><strong>Efficiency (% of instances where fastest):</strong></p><ul><li><code>(jump, ipopt)</code>: 3.5%</li><li><code>(adnlp, ipopt)</code>: 0.0%</li><li><code>(exa, ipopt)</code>: 21.1%</li><li><code>(jump, madnlp)</code>: 17.5%</li><li><code>(adnlp, madnlp)</code>: 0.0%</li><li><code>(exa, madnlp)</code>: 57.9%</li></ul><p><strong>Most robust</strong>: 2 combinations tied at 100.0%.</p><p><strong>Most efficient</strong>: <code>(exa, madnlp)</code> was fastest on 57.9% of instances.</p></div></div><h3 id="Performance-Profile-CPU-Time:-two-best-combos"><a class="docs-heading-anchor" href="#Performance-Profile-CPU-Time:-two-best-combos">📈 Performance Profile CPU Time: two best combos</a><a id="Performance-Profile-CPU-Time:-two-best-combos-1"></a><a class="docs-heading-anchor-permalink" href="#Performance-Profile-CPU-Time:-two-best-combos" title="Permalink"></a></h3><a href="../assets/plots/cpu_profile_plot_default_cpu_82cd6537.pdf">
   <img 
     class="centering" 
     width="100%" 
     style="max-width:1400px" 
     src="../assets/plots/cpu_profile_plot_default_cpu_82cd6537.svg"
   />
-</a><div class="admonition is-info" id="Performance-Profile-Analysis-2d30a1066f56a4a9"><header class="admonition-header">Performance Profile Analysis<a class="admonition-anchor" href="#Performance-Profile-Analysis-2d30a1066f56a4a9" title="Permalink"></a></header><div class="admonition-body"><p><strong>Dataset overview for <code>core-ubuntu-latest</code>:</strong></p><ul><li><strong>Problems</strong>: 1 unique optimal control problems</li><li><strong>Instances</strong>: 4</li><li><strong>Solver combos</strong>: 2</li></ul><p><strong>Profile configuration:</strong></p><ul><li><strong>Instance definition</strong>: (problem, grid_size)</li><li><strong>Solver combos definition</strong>: (model, solver)</li><li><strong>Criterion</strong>: CPU time</li><li><strong>Successful runs</strong>: 8/8 (100.0%)</li><li><strong>Successful instances</strong>: 4/4 (100.0%)</li><li><strong>Unsuccessful instances</strong>: none (every instance had at least one successful run)</li></ul><p><strong>Robustness (% of instances solved):</strong></p><ul><li><code>(exa, ipopt)</code>: 100.0%</li><li><code>(exa, madnlp)</code>: 100.0%</li></ul><p><strong>Efficiency (% of instances where fastest):</strong></p><ul><li><code>(exa, ipopt)</code>: 25.0%</li><li><code>(exa, madnlp)</code>: 75.0%</li></ul><p><strong>Most robust</strong>: 2 combinations tied at 100.0%.</p><p><strong>Most efficient</strong>: <code>(exa, madnlp)</code> was fastest on 75.0% of instances.</p></div></div><h3 id="Performance-Profile-Iterations"><a class="docs-heading-anchor" href="#Performance-Profile-Iterations">📈 Performance Profile Iterations</a><a id="Performance-Profile-Iterations-1"></a><a class="docs-heading-anchor-permalink" href="#Performance-Profile-Iterations" title="Permalink"></a></h3><a href="../assets/plots/cpu_profile_plot_default_iter_6ab7b719.pdf">
+</a><div class="admonition is-info" id="Performance-Profile-Analysis-ec0681f0704f26e9"><header class="admonition-header">Performance Profile Analysis<a class="admonition-anchor" href="#Performance-Profile-Analysis-ec0681f0704f26e9" title="Permalink"></a></header><div class="admonition-body"><p><strong>Dataset overview for <code>core-ubuntu-latest</code>:</strong></p><ul><li><strong>Problems</strong>: 19 unique optimal control problems</li><li><strong>Instances</strong>: 57</li><li><strong>Solver combos</strong>: 2</li></ul><p><strong>Profile configuration:</strong></p><ul><li><strong>Instance definition</strong>: (problem, grid_size)</li><li><strong>Solver combos definition</strong>: (model, solver)</li><li><strong>Criterion</strong>: CPU time</li><li><strong>Successful runs</strong>: 113/114 (99.1%)</li><li><strong>Successful instances</strong>: 57/57 (100.0%)</li><li><strong>Unsuccessful instances</strong>: none (every instance had at least one successful run)</li></ul><p><strong>Robustness (% of instances solved):</strong></p><ul><li><code>(exa, ipopt)</code>: 98.2%</li><li><code>(exa, madnlp)</code>: 100.0%</li></ul><p><strong>Efficiency (% of instances where fastest):</strong></p><ul><li><code>(exa, ipopt)</code>: 24.6%</li><li><code>(exa, madnlp)</code>: 75.4%</li></ul><p><strong>Most robust</strong>: <code>(exa, madnlp)</code> solved 100.0% of instances.</p><p><strong>Most efficient</strong>: <code>(exa, madnlp)</code> was fastest on 75.4% of instances.</p></div></div><h3 id="Performance-Profile-Iterations"><a class="docs-heading-anchor" href="#Performance-Profile-Iterations">📈 Performance Profile Iterations</a><a id="Performance-Profile-Iterations-1"></a><a class="docs-heading-anchor-permalink" href="#Performance-Profile-Iterations" title="Permalink"></a></h3><a href="../assets/plots/cpu_profile_plot_default_iter_6ab7b719.pdf">
   <img 
     class="centering" 
     width="100%" 
     style="max-width:1400px" 
     src="../assets/plots/cpu_profile_plot_default_iter_6ab7b719.svg"
   />
-</a><div class="admonition is-info" id="Performance-Profile-Analysis-239488155b1e35fc"><header class="admonition-header">Performance Profile Analysis<a class="admonition-anchor" href="#Performance-Profile-Analysis-239488155b1e35fc" title="Permalink"></a></header><div class="admonition-body"><p><strong>Dataset overview for <code>core-ubuntu-latest</code>:</strong></p><ul><li><strong>Problems</strong>: 1 unique optimal control problems</li><li><strong>Instances</strong>: 4</li><li><strong>Solver combos</strong>: 6</li></ul><p><strong>Profile configuration:</strong></p><ul><li><strong>Instance definition</strong>: (problem, grid_size)</li><li><strong>Solver combos definition</strong>: (model, solver)</li><li><strong>Criterion</strong>: Iterations</li><li><strong>Successful runs</strong>: 24/24 (100.0%)</li><li><strong>Successful instances</strong>: 4/4 (100.0%)</li><li><strong>Unsuccessful instances</strong>: none (every instance had at least one successful run)</li></ul><p><strong>Robustness (% of instances solved):</strong></p><ul><li><code>(jump, ipopt)</code>: 100.0%</li><li><code>(adnlp, ipopt)</code>: 100.0%</li><li><code>(exa, ipopt)</code>: 100.0%</li><li><code>(jump, madnlp)</code>: 100.0%</li><li><code>(adnlp, madnlp)</code>: 100.0%</li><li><code>(exa, madnlp)</code>: 100.0%</li></ul><p><strong>Efficiency (% of instances where fastest):</strong></p><ul><li><code>(jump, ipopt)</code>: 50.0%</li><li><code>(adnlp, ipopt)</code>: 50.0%</li><li><code>(exa, ipopt)</code>: 75.0%</li><li><code>(jump, madnlp)</code>: 25.0%</li><li><code>(adnlp, madnlp)</code>: 50.0%</li><li><code>(exa, madnlp)</code>: 25.0%</li></ul><p><strong>Most robust</strong>: 6 combinations tied at 100.0%.</p><p><strong>Most efficient</strong>: <code>(exa, ipopt)</code> was fastest on 75.0% of instances.</p></div></div><h3 id="Tables-of-Results"><a class="docs-heading-anchor" href="#Tables-of-Results">📊 Tables of Results</a><a id="Tables-of-Results-1"></a><a class="docs-heading-anchor-permalink" href="#Tables-of-Results" title="Permalink"></a></h3><h4 id="Problem:-beam"><a class="docs-heading-anchor" href="#Problem:-beam">Problem: <code>beam</code></a><a id="Problem:-beam-1"></a><a class="docs-heading-anchor-permalink" href="#Problem:-beam" title="Permalink"></a></h4><table><tr><th style="text-align: center">Success</th><th style="text-align: right">N</th><th style="text-align: left">Model</th><th style="text-align: left">Solver</th><th style="text-align: right">Time (ms)</th><th style="text-align: right">Iters</th><th style="text-align: right">Objective</th><th style="text-align: center">Criterion</th><th style="text-align: center">Best</th></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">200</td><td style="text-align: left"><code>adnlp</code></td><td style="text-align: left"><code>ipopt</code></td><td style="text-align: right">19.431</td><td style="text-align: right">16</td><td style="text-align: right">8.891335</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">200</td><td style="text-align: left"><code>adnlp</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">17.497</td><td style="text-align: right">21</td><td style="text-align: right">8.891335</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">200</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>ipopt</code></td><td style="text-align: right">14.976</td><td style="text-align: right">16</td><td style="text-align: right">8.891335</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">200</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">12.200</td><td style="text-align: right">21</td><td style="text-align: right">8.891335</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">200</td><td style="text-align: left"><code>jump</code></td><td style="text-align: left"><code>ipopt</code></td><td style="text-align: right">14.630</td><td style="text-align: right">16</td><td style="text-align: right">8.891335</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">200</td><td style="text-align: left"><code>jump</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">11.866</td><td style="text-align: right">21</td><td style="text-align: right">8.891335</td><td style="text-align: center">min</td><td style="text-align: center">✓</td></tr></table><table><tr><th style="text-align: center">Success</th><th style="text-align: right">N</th><th style="text-align: left">Model</th><th style="text-align: left">Solver</th><th style="text-align: right">Time (ms)</th><th style="text-align: right">Iters</th><th style="text-align: right">Objective</th><th style="text-align: center">Criterion</th><th style="text-align: center">Best</th></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">500</td><td style="text-align: left"><code>adnlp</code></td><td style="text-align: left"><code>ipopt</code></td><td style="text-align: right">46.080</td><td style="text-align: right">18</td><td style="text-align: right">8.889282</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">500</td><td style="text-align: left"><code>adnlp</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">34.485</td><td style="text-align: right">18</td><td style="text-align: right">8.889282</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">500</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>ipopt</code></td><td style="text-align: right">34.356</td><td style="text-align: right">18</td><td style="text-align: right">8.889282</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">500</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">23.590</td><td style="text-align: right">18</td><td style="text-align: right">8.889282</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">500</td><td style="text-align: left"><code>jump</code></td><td style="text-align: left"><code>ipopt</code></td><td style="text-align: right">34.628</td><td style="text-align: right">18</td><td style="text-align: right">8.889282</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">500</td><td style="text-align: left"><code>jump</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">22.714</td><td style="text-align: right">18</td><td style="text-align: right">8.889282</td><td style="text-align: center">min</td><td style="text-align: center">✓</td></tr></table><table><tr><th style="text-align: center">Success</th><th style="text-align: right">N</th><th style="text-align: left">Model</th><th style="text-align: left">Solver</th><th style="text-align: right">Time (ms)</th><th style="text-align: right">Iters</th><th style="text-align: right">Objective</th><th style="text-align: center">Criterion</th><th style="text-align: center">Best</th></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">1000</td><td style="text-align: left"><code>adnlp</code></td><td style="text-align: left"><code>ipopt</code></td><td style="text-align: right">149.812</td><td style="text-align: right">33</td><td style="text-align: right">8.888988</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">1000</td><td style="text-align: left"><code>adnlp</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">94.309</td><td style="text-align: right">26</td><td style="text-align: right">8.888987</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">1000</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>ipopt</code></td><td style="text-align: right">110.970</td><td style="text-align: right">33</td><td style="text-align: right">8.888987</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">1000</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">67.622</td><td style="text-align: right">28</td><td style="text-align: right">8.888987</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">1000</td><td style="text-align: left"><code>jump</code></td><td style="text-align: left"><code>ipopt</code></td><td style="text-align: right">102.874</td><td style="text-align: right">30</td><td style="text-align: right">8.888987</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">1000</td><td style="text-align: left"><code>jump</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">65.180</td><td style="text-align: right">28</td><td style="text-align: right">8.888987</td><td style="text-align: center">min</td><td style="text-align: center">✓</td></tr></table><table><tr><th style="text-align: center">Success</th><th style="text-align: right">N</th><th style="text-align: left">Model</th><th style="text-align: left">Solver</th><th style="text-align: right">Time (ms)</th><th style="text-align: right">Iters</th><th style="text-align: right">Objective</th><th style="text-align: center">Criterion</th><th style="text-align: center">Best</th></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">2000</td><td style="text-align: left"><code>adnlp</code></td><td style="text-align: left"><code>ipopt</code></td><td style="text-align: right">322.220</td><td style="text-align: right">34</td><td style="text-align: right">8.888913</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">2000</td><td style="text-align: left"><code>adnlp</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">343.246</td><td style="text-align: right">40</td><td style="text-align: right">8.888914</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">2000</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>ipopt</code></td><td style="text-align: right">193.729</td><td style="text-align: right">29</td><td style="text-align: right">8.888915</td><td style="text-align: center">min</td><td style="text-align: center">✓</td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">2000</td><td style="text-align: left"><code>exa</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">215.237</td><td style="text-align: right">37</td><td style="text-align: right">8.888913</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">2000</td><td style="text-align: left"><code>jump</code></td><td style="text-align: left"><code>ipopt</code></td><td style="text-align: right">213.556</td><td style="text-align: right">32</td><td style="text-align: right">8.888914</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr><tr><td style="text-align: center">✓</td><td style="text-align: right">2000</td><td style="text-align: left"><code>jump</code></td><td style="text-align: left"><code>madnlp</code></td><td style="text-align: right">203.824</td><td style="text-align: right">39</td><td style="text-align: right">8.888914</td><td style="text-align: center">min</td><td style="text-align: center"></td></tr></table><div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
+</a><div class="admonition is-info" id="Performance-Profile-Analysis-4b1af2af832ad17"><header class="admonition-header">Performance Profile Analysis<a class="admonition-anchor" href="#Performance-Profile-Analysis-4b1af2af832ad17" title="Permalink"></a></header><div class="admonition-body"><p><strong>Dataset overview for <code>core-ubuntu-latest</code>:</strong></p><ul><li><strong>Problems</strong>: 19 unique optimal control problems</li><li><strong>Instances</strong>: 57</li><li><strong>Solver combos</strong>: 6</li></ul><p><strong>Profile configuration:</strong></p><ul><li><strong>Instance definition</strong>: (problem, grid_size)</li><li><strong>Solver combos definition</strong>: (model, solver)</li><li><strong>Criterion</strong>: Iterations</li><li><strong>Successful runs</strong>: 334/342 (97.7%)</li><li><strong>Successful instances</strong>: 57/57 (100.0%)</li><li><strong>Unsuccessful instances</strong>: none (every instance had at least one successful run)</li></ul><p><strong>Robustness (% of instances solved):</strong></p><ul><li><code>(jump, ipopt)</code>: 98.2%</li><li><code>(adnlp, ipopt)</code>: 98.2%</li><li><code>(exa, ipopt)</code>: 98.2%</li><li><code>(jump, madnlp)</code>: 100.0%</li><li><code>(adnlp, madnlp)</code>: 91.2%</li><li><code>(exa, madnlp)</code>: 100.0%</li></ul><p><strong>Efficiency (% of instances where fastest):</strong></p><ul><li><code>(jump, ipopt)</code>: 75.4%</li><li><code>(adnlp, ipopt)</code>: 77.2%</li><li><code>(exa, ipopt)</code>: 75.4%</li><li><code>(jump, madnlp)</code>: 35.1%</li><li><code>(adnlp, madnlp)</code>: 31.6%</li><li><code>(exa, madnlp)</code>: 29.8%</li></ul><p><strong>Most robust</strong>: 2 combinations tied at 100.0%.</p><p><strong>Most efficient</strong>: <code>(adnlp, ipopt)</code> was fastest on 77.2% of instances.</p></div></div><h3 id="Tables-of-Results"><a class="docs-heading-anchor" href="#Tables-of-Results">📊 Tables of Results</a><a id="Tables-of-Results-1"></a><a class="docs-heading-anchor-permalink" href="#Tables-of-Results" title="Permalink"></a></h3><div class="ct-problem-table-selector">
+<label for="bench-core-ubuntu-latest-problem-select">Problem:</label>
+<select id="bench-core-ubuntu-latest-problem-select">
+  <option value="balanced_field">balanced_field</option>
+  <option value="beam">beam</option>
+  <option value="brachistochrone">brachistochrone</option>
+  <option value="bryson_denham">bryson_denham</option>
+  <option value="chain">chain</option>
+  <option value="dielectrophoretic_particle">dielectrophoretic_particle</option>
+  <option value="double_oscillator">double_oscillator</option>
+  <option value="ducted_fan">ducted_fan</option>
+  <option value="electric_vehicle">electric_vehicle</option>
+  <option value="glider">glider</option>
+  <option value="insurance">insurance</option>
+  <option value="jackson">jackson</option>
+  <option value="mountain_car">mountain_car</option>
+  <option value="robbins">robbins</option>
+  <option value="robot">robot</option>
+  <option value="rocket">rocket</option>
+  <option value="space_shuttle">space_shuttle</option>
+  <option value="steering">steering</option>
+  <option value="vanderpol">vanderpol</option>
+</select>
+</div>
+
+<div id="bench-core-ubuntu-latest-problem-tables">
+<div class="ct-problem-table" data-problem="balanced_field">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>104.574</td><td>17</td><td>771.011400</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>135.066</td><td>23</td><td>771.011400</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>38.829</td><td>17</td><td>771.011400</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>39.284</td><td>23</td><td>771.011400</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>70.988</td><td>17</td><td>771.011400</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>105.928</td><td>23</td><td>771.011400</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>316.332</td><td>20</td><td>771.008497</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>448.400</td><td>25</td><td>771.008498</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>106.130</td><td>20</td><td>771.008497</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>104.908</td><td>25</td><td>771.008498</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>230.327</td><td>20</td><td>771.008497</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>355.430</td><td>25</td><td>771.008498</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>832.642</td><td>20</td><td>771.008007</td><td>min</td><td></td></tr>
+    <tr><td>✗</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>218.603</td><td>20</td><td>771.008007</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>204.525</td><td>23</td><td>771.008010</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>620.983</td><td>20</td><td>771.008007</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>747.061</td><td>23</td><td>771.008010</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="beam" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>19.837</td><td>16</td><td>8.891335</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>17.244</td><td>21</td><td>8.891335</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>15.021</td><td>16</td><td>8.891335</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>12.300</td><td>21</td><td>8.891335</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>15.256</td><td>16</td><td>8.891335</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>11.525</td><td>21</td><td>8.891335</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>46.942</td><td>18</td><td>8.889282</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>34.519</td><td>18</td><td>8.889282</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>35.009</td><td>18</td><td>8.889282</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>23.049</td><td>18</td><td>8.889282</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>35.691</td><td>18</td><td>8.889282</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>22.487</td><td>18</td><td>8.889282</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>150.207</td><td>33</td><td>8.888988</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>94.578</td><td>26</td><td>8.888987</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>113.007</td><td>33</td><td>8.888987</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>67.005</td><td>28</td><td>8.888987</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>105.623</td><td>30</td><td>8.888987</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>64.450</td><td>28</td><td>8.888987</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="brachistochrone" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>64.306</td><td>19</td><td>1.802935</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>59.311</td><td>20</td><td>1.802935</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>30.437</td><td>19</td><td>1.802935</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>24.081</td><td>20</td><td>1.802935</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>44.234</td><td>19</td><td>1.802935</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>43.693</td><td>20</td><td>1.802935</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>144.036</td><td>18</td><td>1.802932</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>155.635</td><td>21</td><td>1.802932</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>61.043</td><td>18</td><td>1.802932</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>59.412</td><td>21</td><td>1.802932</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>109.194</td><td>18</td><td>1.802932</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>127.776</td><td>21</td><td>1.802932</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>333.437</td><td>20</td><td>1.802932</td><td>min</td><td></td></tr>
+    <tr><td>✗</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>136.338</td><td>20</td><td>1.802932</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>124.542</td><td>21</td><td>1.802932</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>243.891</td><td>20</td><td>1.802932</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>381.493</td><td>21</td><td>1.802932</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="bryson_denham" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>16.870</td><td>13</td><td>4.000889</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>13.201</td><td>15</td><td>4.000889</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>12.465</td><td>13</td><td>4.000889</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>8.898</td><td>15</td><td>4.000889</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>13.057</td><td>13</td><td>4.000889</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>8.599</td><td>15</td><td>4.000889</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>42.080</td><td>16</td><td>4.000143</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>37.997</td><td>19</td><td>4.000143</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>30.353</td><td>16</td><td>4.000143</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>23.097</td><td>18</td><td>4.000143</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>31.734</td><td>16</td><td>4.000143</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>21.047</td><td>17</td><td>4.000144</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>110.605</td><td>22</td><td>4.000037</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>89.278</td><td>23</td><td>4.000036</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>76.052</td><td>22</td><td>4.000037</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>54.981</td><td>23</td><td>4.000036</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>76.950</td><td>22</td><td>4.000037</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>59.100</td><td>25</td><td>4.000036</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="chain" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>15.991</td><td>7</td><td>5.068917</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>14.180</td><td>7</td><td>5.068917</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>9.547</td><td>7</td><td>5.068917</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>8.006</td><td>7</td><td>5.068917</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>14.029</td><td>7</td><td>5.068917</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>14.564</td><td>7</td><td>5.068917</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>71.452</td><td>14</td><td>5.068578</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>63.835</td><td>14</td><td>5.068578</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>41.089</td><td>14</td><td>5.068578</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>35.921</td><td>14</td><td>5.068578</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>62.463</td><td>14</td><td>5.068578</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>60.679</td><td>14</td><td>5.068578</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>72.866</td><td>6</td><td>5.068510</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>53.376</td><td>6</td><td>5.068510</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>39.702</td><td>6</td><td>5.068510</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>30.804</td><td>6</td><td>5.068510</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>65.119</td><td>6</td><td>5.068510</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>65.547</td><td>6</td><td>5.068510</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="dielectrophoretic_particle" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>28.254</td><td>12</td><td>7.811387</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>25.143</td><td>13</td><td>7.811387</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>13.132</td><td>12</td><td>7.811387</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>9.449</td><td>13</td><td>7.811387</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>18.708</td><td>12</td><td>7.811387</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>15.484</td><td>13</td><td>7.811387</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>66.343</td><td>13</td><td>7.811324</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>71.920</td><td>15</td><td>7.811325</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>29.800</td><td>13</td><td>7.811324</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>24.364</td><td>15</td><td>7.811325</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>40.707</td><td>13</td><td>7.811324</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>41.507</td><td>15</td><td>7.811325</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>144.393</td><td>13</td><td>7.811314</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>195.427</td><td>16</td><td>7.811315</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>58.515</td><td>13</td><td>7.811314</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>52.431</td><td>16</td><td>7.811315</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>83.302</td><td>13</td><td>7.811314</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>95.198</td><td>16</td><td>7.811315</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="double_oscillator" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>18.251</td><td>5</td><td>0.000910</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>16.799</td><td>5</td><td>0.000910</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>11.104</td><td>5</td><td>0.000910</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>7.976</td><td>5</td><td>0.000910</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>10.019</td><td>5</td><td>0.000910</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>8.010</td><td>5</td><td>0.000910</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>42.850</td><td>5</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>48.611</td><td>6</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>25.429</td><td>5</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>21.648</td><td>6</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>21.584</td><td>5</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>20.183</td><td>6</td><td>0.000911</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>87.945</td><td>5</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>99.527</td><td>6</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>49.162</td><td>5</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>43.155</td><td>6</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>41.223</td><td>5</td><td>0.000911</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>39.742</td><td>6</td><td>0.000911</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="ducted_fan" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>949.812</td><td>94</td><td>1831.941573</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>271.035</td><td>41</td><td>1831.941575</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>502.165</td><td>92</td><td>1831.941573</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>154.781</td><td>41</td><td>1831.941575</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>703.211</td><td>92</td><td>1831.941573</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>185.514</td><td>41</td><td>1831.941575</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>3441.926</td><td>117</td><td>1831.664623</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>3819.308</td><td>202</td><td>1831.664643</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>1994.269</td><td>141</td><td>1831.664623</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>688.090</td><td>94</td><td>1831.664643</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>1350.227</td><td>53</td><td>1831.664623</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>1109.327</td><td>94</td><td>1831.664643</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>14753.068</td><td>188</td><td>1831.623346</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>3553.616</td><td>79</td><td>1831.623386</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>16018.323</td><td>301</td><td>1831.623346</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>1811.340</td><td>79</td><td>1831.623386</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>7777.047</td><td>131</td><td>1831.623346</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>1957.787</td><td>74</td><td>1831.623386</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="electric_vehicle" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>9.140</td><td>4</td><td>1228.698880</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>8.385</td><td>4</td><td>1228.698880</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>4.533</td><td>4</td><td>1228.698880</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>3.556</td><td>4</td><td>1228.698880</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>6.147</td><td>4</td><td>1228.698880</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>7.554</td><td>4</td><td>1228.698880</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>20.826</td><td>4</td><td>1228.599284</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>19.735</td><td>4</td><td>1228.599284</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>9.319</td><td>4</td><td>1228.599284</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>8.058</td><td>4</td><td>1228.599284</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>13.186</td><td>4</td><td>1228.599284</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>18.244</td><td>4</td><td>1228.599284</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>46.089</td><td>4</td><td>1228.585040</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>42.347</td><td>4</td><td>1228.585040</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>17.263</td><td>4</td><td>1228.585040</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>15.059</td><td>4</td><td>1228.585040</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>25.144</td><td>4</td><td>1228.585040</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>36.445</td><td>4</td><td>1228.585040</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="glider" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>556.702</td><td>78</td><td>-1248.896363</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>544.469</td><td>83</td><td>-1248.896363</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>314.886</td><td>78</td><td>-1248.896363</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>308.306</td><td>112</td><td>-1248.896363</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>548.303</td><td>78</td><td>-1248.896363</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>579.993</td><td>92</td><td>-1248.896363</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>24834.049</td><td>40</td><td>-1247.978430</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>3370.297</td><td>171</td><td>-1247.978430</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>23148.596</td><td>68</td><td>-1247.978430</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>1285.104</td><td>172</td><td>-1247.978430</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>28310.238</td><td>68</td><td>-1247.978430</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>3438.241</td><td>182</td><td>-1247.978430</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✗</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>531483.166</td><td>19</td><td>-1058.874459</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>8057.528</td><td>148</td><td>-1247.985216</td><td>min</td><td></td></tr>
+    <tr><td>✗</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>539281.105</td><td>18</td><td>-1058.874458</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>1898.162</td><td>124</td><td>-1247.985216</td><td>min</td><td>✓</td></tr>
+    <tr><td>✗</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>503776.252</td><td>20</td><td>-1058.874516</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>4419.617</td><td>107</td><td>-1247.985216</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="insurance" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>577.631</td><td>90</td><td>-2.058581</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>724.552</td><td>120</td><td>-2.058581</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>317.780</td><td>91</td><td>-2.058581</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>333.018</td><td>120</td><td>-2.058581</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>390.900</td><td>90</td><td>-2.058581</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>463.606</td><td>120</td><td>-2.058581</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>1633.205</td><td>96</td><td>-2.059214</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>7337.442</td><td>409</td><td>-2.059207</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>912.445</td><td>109</td><td>-2.059214</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>3116.562</td><td>350</td><td>-2.059213</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>1054.150</td><td>100</td><td>-2.059214</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>3054.991</td><td>255</td><td>-2.059207</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>5384.866</td><td>146</td><td>-2.059511</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>19527.163</td><td>529</td><td>-2.059510</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>2616.325</td><td>134</td><td>-2.059511</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>9259.574</td><td>520</td><td>-2.059510</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>3435.551</td><td>139</td><td>-2.059511</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>12816.692</td><td>567</td><td>-2.059511</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="jackson" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>104.305</td><td>42</td><td>-0.191861</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>82.854</td><td>40</td><td>-0.191861</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>77.441</td><td>42</td><td>-0.191861</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>49.873</td><td>40</td><td>-0.191861</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>74.658</td><td>42</td><td>-0.191861</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>46.869</td><td>40</td><td>-0.191861</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>341.087</td><td>58</td><td>-0.191822</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>96.572</td><td>22</td><td>-0.191822</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>249.535</td><td>58</td><td>-0.191822</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>47.524</td><td>22</td><td>-0.191822</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>229.028</td><td>58</td><td>-0.191822</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>45.336</td><td>22</td><td>-0.191822</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>257.615</td><td>21</td><td>-0.191816</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>211.166</td><td>23</td><td>-0.191816</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>144.215</td><td>21</td><td>-0.191816</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>96.910</td><td>23</td><td>-0.191816</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>133.180</td><td>21</td><td>-0.191816</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>91.776</td><td>23</td><td>-0.191816</td><td>min</td><td>✓</td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="mountain_car" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>91.568</td><td>41</td><td>102.397570</td><td>min</td><td></td></tr>
+    <tr><td>✗</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>60.944</td><td>41</td><td>102.397570</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>54.193</td><td>49</td><td>102.380995</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>75.103</td><td>41</td><td>102.397570</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>63.823</td><td>49</td><td>102.380995</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>320.788</td><td>69</td><td>102.369940</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>197.104</td><td>51</td><td>102.369940</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>192.447</td><td>67</td><td>102.369940</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>106.733</td><td>51</td><td>102.369940</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>249.610</td><td>69</td><td>102.369940</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>138.920</td><td>51</td><td>102.369940</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>694.249</td><td>64</td><td>102.368164</td><td>min</td><td></td></tr>
+    <tr><td>✗</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>320.634</td><td>62</td><td>102.368164</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>323.140</td><td>74</td><td>102.368166</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>472.163</td><td>64</td><td>102.368164</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>425.486</td><td>74</td><td>102.368166</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="robbins" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>34.211</td><td>19</td><td>19.626260</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>43.183</td><td>34</td><td>19.626260</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>23.217</td><td>19</td><td>19.626260</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>26.402</td><td>34</td><td>19.626260</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>25.389</td><td>19</td><td>19.626260</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>25.708</td><td>34</td><td>19.626260</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>72.763</td><td>18</td><td>19.466633</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>87.679</td><td>29</td><td>19.466633</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>50.436</td><td>18</td><td>19.466633</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>52.935</td><td>29</td><td>19.466633</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>49.400</td><td>18</td><td>19.466633</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>55.233</td><td>31</td><td>19.466633</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>216.678</td><td>27</td><td>19.440191</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>322.803</td><td>50</td><td>19.440191</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>138.749</td><td>27</td><td>19.440191</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>169.978</td><td>50</td><td>19.440191</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>135.792</td><td>27</td><td>19.440191</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>165.368</td><td>50</td><td>19.440191</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="robot" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>119.856</td><td>18</td><td>9.141395</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>98.347</td><td>16</td><td>9.141397</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>63.343</td><td>18</td><td>9.141395</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>49.319</td><td>16</td><td>9.141397</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>84.221</td><td>18</td><td>9.141395</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>67.487</td><td>16</td><td>9.141397</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>347.597</td><td>17</td><td>9.140991</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>449.681</td><td>25</td><td>9.140992</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>158.340</td><td>17</td><td>9.140991</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>195.490</td><td>25</td><td>9.140992</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>216.737</td><td>17</td><td>9.140991</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>278.863</td><td>25</td><td>9.140992</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>783.148</td><td>19</td><td>9.140931</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>975.331</td><td>23</td><td>9.140939</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>395.172</td><td>19</td><td>9.140931</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>479.596</td><td>23</td><td>9.140939</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>572.037</td><td>19</td><td>9.140931</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>655.652</td><td>23</td><td>9.140939</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="rocket" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>70.902</td><td>18</td><td>-1.012836</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>72.863</td><td>21</td><td>-1.012835</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>27.650</td><td>18</td><td>-1.012836</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>22.500</td><td>21</td><td>-1.012835</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>38.181</td><td>18</td><td>-1.012836</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>36.717</td><td>21</td><td>-1.012835</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>217.642</td><td>21</td><td>-1.012837</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>182.906</td><td>22</td><td>-1.012835</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>71.947</td><td>21</td><td>-1.012837</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>57.592</td><td>22</td><td>-1.012835</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>100.123</td><td>21</td><td>-1.012837</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>94.513</td><td>22</td><td>-1.012835</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>553.075</td><td>24</td><td>-1.012837</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>487.694</td><td>24</td><td>-1.012836</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>165.116</td><td>24</td><td>-1.012837</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>128.806</td><td>24</td><td>-1.012836</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>253.402</td><td>24</td><td>-1.012837</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>223.565</td><td>24</td><td>-1.012836</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="space_shuttle" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>1450.163</td><td>101</td><td>-0.595869</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>2948.760</td><td>198</td><td>-0.595869</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>709.763</td><td>101</td><td>-0.595869</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>937.569</td><td>181</td><td>-0.595869</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>1486.030</td><td>111</td><td>-0.385378</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>1477.031</td><td>113</td><td>-0.385492</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>4380.688</td><td>116</td><td>-0.595875</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>7565.169</td><td>166</td><td>-0.595875</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>1958.590</td><td>116</td><td>-0.595875</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>2186.694</td><td>166</td><td>-0.595875</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>4673.943</td><td>115</td><td>-0.595875</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>2797.245</td><td>77</td><td>-0.595875</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>13251.052</td><td>125</td><td>-0.595876</td><td>min</td><td></td></tr>
+    <tr><td>✗</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>6299.557</td><td>125</td><td>-0.595876</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>3312.353</td><td>95</td><td>-0.595876</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>6490.800</td><td>74</td><td>-0.305020</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>81535.113</td><td>480</td><td>-0.305020</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="steering" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>27.864</td><td>8</td><td>0.554577</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>29.997</td><td>11</td><td>0.554577</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>18.972</td><td>8</td><td>0.554577</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>17.860</td><td>11</td><td>0.554577</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>22.525</td><td>8</td><td>0.554577</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>25.721</td><td>11</td><td>0.554577</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>75.733</td><td>8</td><td>0.554572</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>87.776</td><td>13</td><td>0.554572</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>48.718</td><td>8</td><td>0.554572</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>50.713</td><td>13</td><td>0.554572</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>58.795</td><td>8</td><td>0.554572</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>74.667</td><td>13</td><td>0.554572</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>187.352</td><td>8</td><td>0.554571</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>211.277</td><td>14</td><td>0.554571</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>108.805</td><td>8</td><td>0.554571</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>118.447</td><td>14</td><td>0.554571</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>157.364</td><td>8</td><td>0.554571</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>174.865</td><td>14</td><td>0.554571</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="ct-problem-table" data-problem="vanderpol" style="display:none;">
+
+<br/>
+
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>6.473</td><td>3</td><td>1.047836</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>6.244</td><td>3</td><td>1.047836</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>ipopt</code></td><td>3.714</td><td>3</td><td>1.047836</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>exa</code></td><td><code>madnlp</code></td><td>2.824</td><td>3</td><td>1.047836</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>ipopt</code></td><td>4.750</td><td>3</td><td>1.047836</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>200</td><td><code>jump</code></td><td><code>madnlp</code></td><td>6.220</td><td>3</td><td>1.047836</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>14.534</td><td>3</td><td>1.047812</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>14.006</td><td>3</td><td>1.047812</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>ipopt</code></td><td>7.519</td><td>3</td><td>1.047812</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>exa</code></td><td><code>madnlp</code></td><td>6.359</td><td>3</td><td>1.047812</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>ipopt</code></td><td>9.941</td><td>3</td><td>1.047812</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>500</td><td><code>jump</code></td><td><code>madnlp</code></td><td>15.347</td><td>3</td><td>1.047812</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+<table class="ct-benchmark-table">
+  <thead>
+    <tr><th>Success</th><th>N</th><th>Model</th><th>Solver</th><th>Time (ms)</th><th>Iters</th><th>Objective</th><th>Criterion</th><th>Best</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>ipopt</code></td><td>29.922</td><td>3</td><td>1.047808</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>adnlp</code></td><td><code>madnlp</code></td><td>30.692</td><td>3</td><td>1.047808</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>ipopt</code></td><td>14.209</td><td>3</td><td>1.047808</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>exa</code></td><td><code>madnlp</code></td><td>12.293</td><td>3</td><td>1.047808</td><td>min</td><td>✓</td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>ipopt</code></td><td>19.344</td><td>3</td><td>1.047808</td><td>min</td><td></td></tr>
+    <tr><td>✓</td><td>1000</td><td><code>jump</code></td><td><code>madnlp</code></td><td>30.433</td><td>3</td><td>1.047808</td><td>min</td><td></td></tr>
+  </tbody>
+</table>
+
+</div>
+</div>
+
+<script>
+(function(){
+  var select = document.getElementById('bench-core-ubuntu-latest-problem-select');
+  if (!select) return;
+  var container = document.getElementById('bench-core-ubuntu-latest-problem-tables');
+  if (!container) return;
+  var storageKey = 'ctbench-problem-core-ubuntu-latest';
+  function showProblem(value){
+    var blocks = container.querySelectorAll('.ct-problem-table');
+    for (var i = 0; i < blocks.length; i++) {
+      var b = blocks[i];
+      b.style.display = (b.getAttribute('data-problem') === value) ? '' : 'none';
+    }
+  }
+  // Try to restore last selection from localStorage
+  try {
+    if (window.localStorage) {
+      var saved = localStorage.getItem(storageKey);
+      if (saved) {
+        var opt = select.querySelector('option[value="' + saved + '"]');
+        if (opt) { select.value = saved; }
+      }
+    }
+  } catch (e) {}
+  // Initial display
+  showProblem(select.value);
+  select.addEventListener('change', function(){
+    var value = this.value;
+    showProblem(value);
+    try {
+      if (window.localStorage) { localStorage.setItem(storageKey, value); }
+    } catch (e) {}
+  });
+})();
+</script><div class="ctdetails" style="margin-bottom: 0.5em; margin-top: 1em;">
   <div class="ctdetails-summary" role="button" tabindex="0" aria-expanded="false">ℹ️ Log</div>
   <div class="ctdetails-body"><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Benchmarks results:
+
+┌─ Problem: balanced_field
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  70.988 ms | iters: 17    | obj: 7.710114e+02  (min) | CPU:  22.70 KiB
+│  │  ✓ | adnlp    | time: 104.574 ms | iters: 17    | obj: 7.710114e+02  (min) | CPU:  23.00 MiB
+│  │  ✓ | exa      | time:  38.829 ms | iters: 17    | obj: 7.710114e+02  (min) | CPU: 129.11 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time: 230.327 ms | iters: 20    | obj: 7.710085e+02  (min) | CPU:  26.41 KiB
+│  │  ✓ | adnlp    | time: 316.332 ms | iters: 20    | obj: 7.710085e+02  (min) | CPU:  66.32 MiB
+│  │  ✓ | exa      | time: 106.130 ms | iters: 20    | obj: 7.710085e+02  (min) | CPU: 242.58 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 620.983 ms | iters: 20    | obj: 7.710080e+02  (min) | CPU:  26.41 KiB
+│  │  ✓ | adnlp    | time: 832.642 ms | iters: 20    | obj: 7.710080e+02  (min) | CPU: 132.40 MiB
+│  │  ✓ | exa      | time: 218.603 ms | iters: 20    | obj: 7.710080e+02  (min) | CPU: 425.95 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time: 105.928 ms | iters: 23    | obj: 7.710114e+02  (min) | CPU:  31.45 MiB
+│  │  ✓ | adnlp    | time: 135.066 ms | iters: 23    | obj: 7.710114e+02  (min) | CPU:  34.07 MiB
+│  │  ✓ | exa      | time:  39.284 ms | iters: 23    | obj: 7.710114e+02  (min) | CPU:   5.62 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time: 355.430 ms | iters: 25    | obj: 7.710085e+02  (min) | CPU:  82.24 MiB
+│  │  ✓ | adnlp    | time: 448.400 ms | iters: 25    | obj: 7.710085e+02  (min) | CPU:  90.93 MiB
+│  │  ✓ | exa      | time: 104.908 ms | iters: 25    | obj: 7.710085e+02  (min) | CPU:  14.01 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 747.061 ms | iters: 23    | obj: 7.710080e+02  (min) | CPU: 164.44 MiB
+│  │  ✗ | adnlp   : ERROR: DomainError(Inf, &quot;sincos(x) is only defined for finite x.&quot;)
+│  │  ✓ | exa      | time: 204.525 ms | iters: 23    | obj: 7.710080e+02  (min) | CPU:  26.92 MiB
+│  └─
+└─
 
 ┌─ Problem: beam
 │
 ├──┬ Solver: ipopt, Discretization: trapeze
 │  │
 │  │  N = 200
-│  │  ✓ | jump     | time:  14.630 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:  16.38 KiB
-│  │  ✓ | adnlp    | time:  19.431 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:   2.37 MiB
-│  │  ✓ | exa      | time:  14.976 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:  72.50 KiB
+│  │  ✓ | jump     | time:  15.256 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:  10.16 KiB
+│  │  ✓ | adnlp    | time:  19.837 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:   2.37 MiB
+│  │  ✓ | exa      | time:  15.021 ms | iters: 16    | obj: 8.891335e+00  (min) | CPU:  72.55 KiB
 │  │
 │  │  N = 500
-│  │  ✓ | jump     | time:  34.628 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:  18.41 KiB
-│  │  ✓ | adnlp    | time:  46.080 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   6.47 MiB
-│  │  ✓ | exa      | time:  34.356 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU: 137.62 KiB
+│  │  ✓ | jump     | time:  35.691 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:  11.16 KiB
+│  │  ✓ | adnlp    | time:  46.942 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   6.47 MiB
+│  │  ✓ | exa      | time:  35.009 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU: 137.67 KiB
 │  │
 │  │  N = 1000
-│  │  ✓ | jump     | time: 102.874 ms | iters: 30    | obj: 8.888987e+00  (min) | CPU:  28.56 KiB
-│  │  ✓ | adnlp    | time: 149.812 ms | iters: 33    | obj: 8.888988e+00  (min) | CPU:  22.54 MiB
-│  │  ✓ | exa      | time: 110.970 ms | iters: 33    | obj: 8.888987e+00  (min) | CPU: 258.78 KiB
-│  │
-│  │  N = 2000
-│  │  ✓ | jump     | time: 213.556 ms | iters: 32    | obj: 8.888914e+00  (min) | CPU:  30.25 KiB
-│  │  ✓ | adnlp    | time: 322.220 ms | iters: 34    | obj: 8.888913e+00  (min) | CPU:  46.25 MiB
-│  │  ✓ | exa      | time: 193.729 ms | iters: 29    | obj: 8.888915e+00  (min) | CPU: 465.59 KiB
+│  │  ✓ | jump     | time: 105.623 ms | iters: 30    | obj: 8.888987e+00  (min) | CPU:  17.16 KiB
+│  │  ✓ | adnlp    | time: 150.207 ms | iters: 33    | obj: 8.888988e+00  (min) | CPU:  22.54 MiB
+│  │  ✓ | exa      | time: 113.007 ms | iters: 33    | obj: 8.888987e+00  (min) | CPU: 258.83 KiB
 │  └─
 │
 ├──┬ Solver: madnlp, Discretization: trapeze
 │  │
 │  │  N = 200
-│  │  ✓ | jump     | time:  11.866 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   2.16 MiB
-│  │  ✓ | adnlp    | time:  17.497 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   4.91 MiB
-│  │  ✓ | exa      | time:  12.200 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   2.07 MiB
+│  │  ✓ | jump     | time:  11.525 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   1.95 MiB
+│  │  ✓ | adnlp    | time:  17.244 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   4.59 MiB
+│  │  ✓ | exa      | time:  12.300 ms | iters: 21    | obj: 8.891335e+00  (min) | CPU:   1.76 MiB
 │  │
 │  │  N = 500
-│  │  ✓ | jump     | time:  22.714 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   4.22 MiB
-│  │  ✓ | adnlp    | time:  34.485 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:  10.13 MiB
-│  │  ✓ | exa      | time:  23.590 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   4.05 MiB
+│  │  ✓ | jump     | time:  22.487 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   4.13 MiB
+│  │  ✓ | adnlp    | time:  34.519 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   9.81 MiB
+│  │  ✓ | exa      | time:  23.049 ms | iters: 18    | obj: 8.889282e+00  (min) | CPU:   3.74 MiB
 │  │
 │  │  N = 1000
-│  │  ✓ | jump     | time:  65.180 ms | iters: 28    | obj: 8.888987e+00  (min) | CPU:  10.25 MiB
-│  │  ✓ | adnlp    | time:  94.309 ms | iters: 26    | obj: 8.888987e+00  (min) | CPU:  26.57 MiB
-│  │  ✓ | exa      | time:  67.622 ms | iters: 28    | obj: 8.888987e+00  (min) | CPU:   9.77 MiB
+│  │  ✓ | jump     | time:  64.450 ms | iters: 28    | obj: 8.888987e+00  (min) | CPU:  10.33 MiB
+│  │  ✓ | adnlp    | time:  94.578 ms | iters: 26    | obj: 8.888987e+00  (min) | CPU:  26.25 MiB
+│  │  ✓ | exa      | time:  67.005 ms | iters: 28    | obj: 8.888987e+00  (min) | CPU:   9.47 MiB
+│  └─
+└─
+
+┌─ Problem: brachistochrone
+│
+├──┬ Solver: ipopt, Discretization: trapeze
 │  │
-│  │  N = 2000
-│  │  ✓ | jump     | time: 203.824 ms | iters: 39    | obj: 8.888914e+00  (min) | CPU:  24.93 MiB
-│  │  ✓ | adnlp    | time: 343.246 ms | iters: 40    | obj: 8.888914e+00  (min) | CPU:  76.33 MiB
-│  │  ✓ | exa      | time: 215.237 ms | iters: 37    | obj: 8.888913e+00  (min) | CPU:  22.69 MiB
+│  │  N = 200
+│  │  ✓ | jump     | time:  44.234 ms | iters: 19    | obj: 1.802935e+00  (min) | CPU:  25.17 KiB
+│  │  ✓ | adnlp    | time:  64.306 ms | iters: 19    | obj: 1.802935e+00  (min) | CPU:  28.07 MiB
+│  │  ✓ | exa      | time:  30.437 ms | iters: 19    | obj: 1.802935e+00  (min) | CPU:  96.05 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time: 109.194 ms | iters: 18    | obj: 1.802932e+00  (min) | CPU:  24.19 KiB
+│  │  ✓ | adnlp    | time: 144.036 ms | iters: 18    | obj: 1.802932e+00  (min) | CPU:  66.85 MiB
+│  │  ✓ | exa      | time:  61.043 ms | iters: 18    | obj: 1.802932e+00  (min) | CPU: 182.03 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 243.891 ms | iters: 20    | obj: 1.802932e+00  (min) | CPU:  26.41 KiB
+│  │  ✓ | adnlp    | time: 333.437 ms | iters: 20    | obj: 1.802932e+00  (min) | CPU: 146.10 MiB
+│  │  ✓ | exa      | time: 136.338 ms | iters: 20    | obj: 1.802932e+00  (min) | CPU: 328.33 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  43.693 ms | iters: 20    | obj: 1.802935e+00  (min) | CPU:  14.31 MiB
+│  │  ✓ | adnlp    | time:  59.311 ms | iters: 20    | obj: 1.802935e+00  (min) | CPU:  31.76 MiB
+│  │  ✓ | exa      | time:  24.081 ms | iters: 20    | obj: 1.802935e+00  (min) | CPU:   2.88 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time: 127.776 ms | iters: 21    | obj: 1.802932e+00  (min) | CPU:  35.95 MiB
+│  │  ✓ | adnlp    | time: 155.635 ms | iters: 21    | obj: 1.802932e+00  (min) | CPU:  82.13 MiB
+│  │  ✓ | exa      | time:  59.412 ms | iters: 21    | obj: 1.802932e+00  (min) | CPU:   6.87 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 381.493 ms | iters: 21    | obj: 1.802932e+00  (min) | CPU:  70.50 MiB
+│  │  ✗ | adnlp   : ERROR: DomainError(-Inf, &quot;sincos(x) is only defined for finite x.&quot;)
+│  │  ✓ | exa      | time: 124.542 ms | iters: 21    | obj: 1.802932e+00  (min) | CPU:  13.50 MiB
+│  └─
+└─
+
+┌─ Problem: bryson_denham
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  13.057 ms | iters: 13    | obj: 4.000889e+00  (min) | CPU:   8.66 KiB
+│  │  ✓ | adnlp    | time:  16.870 ms | iters: 13    | obj: 4.000889e+00  (min) | CPU:   1.97 MiB
+│  │  ✓ | exa      | time:  12.465 ms | iters: 13    | obj: 4.000889e+00  (min) | CPU:  69.45 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  31.734 ms | iters: 16    | obj: 4.000143e+00  (min) | CPU:  10.16 KiB
+│  │  ✓ | adnlp    | time:  42.080 ms | iters: 16    | obj: 4.000143e+00  (min) | CPU:   5.82 MiB
+│  │  ✓ | exa      | time:  30.353 ms | iters: 16    | obj: 4.000143e+00  (min) | CPU: 135.61 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  76.950 ms | iters: 22    | obj: 4.000037e+00  (min) | CPU:  13.16 KiB
+│  │  ✓ | adnlp    | time: 110.605 ms | iters: 22    | obj: 4.000037e+00  (min) | CPU:  15.45 MiB
+│  │  ✓ | exa      | time:  76.052 ms | iters: 22    | obj: 4.000037e+00  (min) | CPU: 247.48 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:   8.599 ms | iters: 15    | obj: 4.000889e+00  (min) | CPU:   1.53 MiB
+│  │  ✓ | adnlp    | time:  13.201 ms | iters: 15    | obj: 4.000889e+00  (min) | CPU:   3.39 MiB
+│  │  ✓ | exa      | time:   8.898 ms | iters: 15    | obj: 4.000889e+00  (min) | CPU:   1.33 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  21.047 ms | iters: 17    | obj: 4.000144e+00  (min) | CPU:   3.63 MiB
+│  │  ✓ | adnlp    | time:  37.997 ms | iters: 19    | obj: 4.000143e+00  (min) | CPU:  10.00 MiB
+│  │  ✓ | exa      | time:  23.097 ms | iters: 18    | obj: 4.000143e+00  (min) | CPU:   3.33 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  59.100 ms | iters: 25    | obj: 4.000036e+00  (min) | CPU:   8.64 MiB
+│  │  ✓ | adnlp    | time:  89.278 ms | iters: 23    | obj: 4.000036e+00  (min) | CPU:  22.68 MiB
+│  │  ✓ | exa      | time:  54.981 ms | iters: 23    | obj: 4.000036e+00  (min) | CPU:   7.35 MiB
+│  └─
+└─
+
+┌─ Problem: chain
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  14.029 ms | iters: 7     | obj: 5.068917e+00  (min) | CPU:  10.36 KiB
+│  │  ✓ | adnlp    | time:  15.991 ms | iters: 7     | obj: 5.068917e+00  (min) | CPU:   4.40 MiB
+│  │  ✓ | exa      | time:   9.547 ms | iters: 7     | obj: 5.068917e+00  (min) | CPU:  70.12 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  62.463 ms | iters: 14    | obj: 5.068578e+00  (min) | CPU:  20.50 KiB
+│  │  ✓ | adnlp    | time:  71.452 ms | iters: 14    | obj: 5.068578e+00  (min) | CPU:  20.40 MiB
+│  │  ✓ | exa      | time:  41.089 ms | iters: 14    | obj: 5.068578e+00  (min) | CPU: 146.62 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  65.119 ms | iters: 6     | obj: 5.068510e+00  (min) | CPU:   9.12 KiB
+│  │  ✓ | adnlp    | time:  72.866 ms | iters: 6     | obj: 5.068510e+00  (min) | CPU:  19.35 MiB
+│  │  ✓ | exa      | time:  39.702 ms | iters: 6     | obj: 5.068510e+00  (min) | CPU: 250.34 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  14.564 ms | iters: 7     | obj: 5.068917e+00  (min) | CPU:   7.19 MiB
+│  │  ✓ | adnlp    | time:  14.180 ms | iters: 7     | obj: 5.068917e+00  (min) | CPU:   5.53 MiB
+│  │  ✓ | exa      | time:   8.006 ms | iters: 7     | obj: 5.068917e+00  (min) | CPU:   1.43 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  60.679 ms | iters: 14    | obj: 5.068578e+00  (min) | CPU:  19.22 MiB
+│  │  ✓ | adnlp    | time:  63.835 ms | iters: 14    | obj: 5.068578e+00  (min) | CPU:  23.67 MiB
+│  │  ✓ | exa      | time:  35.921 ms | iters: 14    | obj: 5.068578e+00  (min) | CPU:   3.98 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  65.547 ms | iters: 6     | obj: 5.068510e+00  (min) | CPU:  37.98 MiB
+│  │  ✓ | adnlp    | time:  53.376 ms | iters: 6     | obj: 5.068510e+00  (min) | CPU:  24.41 MiB
+│  │  ✓ | exa      | time:  30.804 ms | iters: 6     | obj: 5.068510e+00  (min) | CPU:   6.42 MiB
+│  └─
+└─
+
+┌─ Problem: dielectrophoretic_particle
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  18.708 ms | iters: 12    | obj: 7.811387e+00  (min) | CPU:  17.03 KiB
+│  │  ✓ | adnlp    | time:  28.254 ms | iters: 12    | obj: 7.811387e+00  (min) | CPU:   7.29 MiB
+│  │  ✓ | exa      | time:  13.132 ms | iters: 12    | obj: 7.811387e+00  (min) | CPU:  72.77 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  40.707 ms | iters: 13    | obj: 7.811324e+00  (min) | CPU:  17.77 KiB
+│  │  ✓ | adnlp    | time:  66.343 ms | iters: 13    | obj: 7.811324e+00  (min) | CPU:  19.13 MiB
+│  │  ✓ | exa      | time:  29.800 ms | iters: 13    | obj: 7.811324e+00  (min) | CPU: 136.45 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  83.302 ms | iters: 13    | obj: 7.811314e+00  (min) | CPU:  17.77 KiB
+│  │  ✓ | adnlp    | time: 144.393 ms | iters: 13    | obj: 7.811314e+00  (min) | CPU:  38.15 MiB
+│  │  ✓ | exa      | time:  58.515 ms | iters: 13    | obj: 7.811314e+00  (min) | CPU: 242.14 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  15.484 ms | iters: 13    | obj: 7.811387e+00  (min) | CPU:   6.83 MiB
+│  │  ✓ | adnlp    | time:  25.143 ms | iters: 13    | obj: 7.811387e+00  (min) | CPU:   9.15 MiB
+│  │  ✓ | exa      | time:   9.449 ms | iters: 13    | obj: 7.811387e+00  (min) | CPU:   1.95 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  41.507 ms | iters: 15    | obj: 7.811325e+00  (min) | CPU:  16.68 MiB
+│  │  ✓ | adnlp    | time:  71.920 ms | iters: 15    | obj: 7.811325e+00  (min) | CPU:  25.28 MiB
+│  │  ✓ | exa      | time:  24.364 ms | iters: 15    | obj: 7.811325e+00  (min) | CPU:   4.79 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  95.198 ms | iters: 16    | obj: 7.811315e+00  (min) | CPU:  34.32 MiB
+│  │  ✓ | adnlp    | time: 195.427 ms | iters: 16    | obj: 7.811315e+00  (min) | CPU:  53.10 MiB
+│  │  ✓ | exa      | time:  52.431 ms | iters: 16    | obj: 7.811315e+00  (min) | CPU:   9.63 MiB
+│  └─
+└─
+
+┌─ Problem: double_oscillator
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  10.019 ms | iters: 5     | obj: 9.103362e-04  (min) | CPU:   7.89 KiB
+│  │  ✓ | adnlp    | time:  18.251 ms | iters: 5     | obj: 9.103362e-04  (min) | CPU:   5.19 MiB
+│  │  ✓ | exa      | time:  11.104 ms | iters: 5     | obj: 9.103362e-04  (min) | CPU: 102.86 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  21.584 ms | iters: 5     | obj: 9.109230e-04  (min) | CPU:   7.89 KiB
+│  │  ✓ | adnlp    | time:  42.850 ms | iters: 5     | obj: 9.109230e-04  (min) | CPU:  12.91 MiB
+│  │  ✓ | exa      | time:  25.429 ms | iters: 5     | obj: 9.109230e-04  (min) | CPU: 213.23 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  41.223 ms | iters: 5     | obj: 9.110069e-04  (min) | CPU:   7.89 KiB
+│  │  ✓ | adnlp    | time:  87.945 ms | iters: 5     | obj: 9.110069e-04  (min) | CPU:  25.77 MiB
+│  │  ✓ | exa      | time:  49.162 ms | iters: 5     | obj: 9.110069e-04  (min) | CPU: 396.61 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:   8.010 ms | iters: 5     | obj: 9.103362e-04  (min) | CPU:   2.39 MiB
+│  │  ✓ | adnlp    | time:  16.799 ms | iters: 5     | obj: 9.103362e-04  (min) | CPU:   6.78 MiB
+│  │  ✓ | exa      | time:   7.976 ms | iters: 5     | obj: 9.103362e-04  (min) | CPU:   2.71 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  20.183 ms | iters: 6     | obj: 9.109230e-04  (min) | CPU:   5.77 MiB
+│  │  ✓ | adnlp    | time:  48.611 ms | iters: 6     | obj: 9.109230e-04  (min) | CPU:  18.77 MiB
+│  │  ✓ | exa      | time:  21.648 ms | iters: 6     | obj: 9.109230e-04  (min) | CPU:   6.72 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  39.742 ms | iters: 6     | obj: 9.110069e-04  (min) | CPU:  11.60 MiB
+│  │  ✓ | adnlp    | time:  99.527 ms | iters: 6     | obj: 9.110069e-04  (min) | CPU:  37.36 MiB
+│  │  ✓ | exa      | time:  43.155 ms | iters: 6     | obj: 9.110069e-04  (min) | CPU:  13.26 MiB
+│  └─
+└─
+
+┌─ Problem: ducted_fan
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time: 703.211 ms | iters: 92    | obj: 1.831942e+03  (min) | CPU: 121.25 KiB
+│  │  ✓ | adnlp    | time: 949.812 ms | iters: 94    | obj: 1.831942e+03  (min) | CPU: 115.43 MiB
+│  │  ✓ | exa      | time: 502.165 ms | iters: 92    | obj: 1.831942e+03  (min) | CPU: 254.80 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:   1.350 s  | iters: 53    | obj: 1.831665e+03  (min) | CPU:  69.05 KiB
+│  │  ✓ | adnlp    | time:   3.442 s  | iters: 117   | obj: 1.831665e+03  (min) | CPU: 354.63 MiB
+│  │  ✓ | exa      | time:   1.994 s  | iters: 141   | obj: 1.831665e+03  (min) | CPU: 483.64 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:   7.777 s  | iters: 131   | obj: 1.831623e+03  (min) | CPU: 187.27 KiB
+│  │  ✓ | adnlp    | time:  14.753 s  | iters: 188   | obj: 1.831623e+03  (min) | CPU:   1.16 GiB
+│  │  ✓ | exa      | time:  16.018 s  | iters: 301   | obj: 1.831623e+03  (min) | CPU: 955.38 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time: 185.514 ms | iters: 41    | obj: 1.831942e+03  (min) | CPU:  23.30 MiB
+│  │  ✓ | adnlp    | time: 271.035 ms | iters: 41    | obj: 1.831942e+03  (min) | CPU:  61.09 MiB
+│  │  ✓ | exa      | time: 154.781 ms | iters: 41    | obj: 1.831942e+03  (min) | CPU:   9.51 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:   1.109 s  | iters: 94    | obj: 1.831665e+03  (min) | CPU:  85.70 MiB
+│  │  ✓ | adnlp    | time:   3.819 s  | iters: 202   | obj: 1.831665e+03  (min) | CPU: 798.62 MiB
+│  │  ✓ | exa      | time: 688.090 ms | iters: 94    | obj: 1.831665e+03  (min) | CPU:  51.82 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:   1.958 s  | iters: 74    | obj: 1.831623e+03  (min) | CPU: 133.78 MiB
+│  │  ✓ | adnlp    | time:   3.554 s  | iters: 79    | obj: 1.831623e+03  (min) | CPU: 568.06 MiB
+│  │  ✓ | exa      | time:   1.811 s  | iters: 79    | obj: 1.831623e+03  (min) | CPU:  71.90 MiB
+│  └─
+└─
+
+┌─ Problem: electric_vehicle
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:   6.147 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   6.66 KiB
+│  │  ✓ | adnlp    | time:   9.140 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   2.71 MiB
+│  │  ✓ | exa      | time:   4.533 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:  58.38 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  13.186 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   6.66 KiB
+│  │  ✓ | adnlp    | time:  20.826 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   6.74 MiB
+│  │  ✓ | exa      | time:   9.319 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU: 107.44 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  25.144 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:   6.66 KiB
+│  │  ✓ | adnlp    | time:  46.089 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  13.44 MiB
+│  │  ✓ | exa      | time:  17.263 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU: 189.62 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:   7.554 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   5.62 MiB
+│  │  ✓ | adnlp    | time:   8.385 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   3.53 MiB
+│  │  ✓ | exa      | time:   3.556 ms | iters: 4     | obj: 1.228699e+03  (min) | CPU:   1.33 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  18.244 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:  13.73 MiB
+│  │  ✓ | adnlp    | time:  19.735 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   8.66 MiB
+│  │  ✓ | exa      | time:   8.058 ms | iters: 4     | obj: 1.228599e+03  (min) | CPU:   3.14 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  36.445 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  28.14 MiB
+│  │  ✓ | adnlp    | time:  42.347 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:  17.19 MiB
+│  │  ✓ | exa      | time:  15.059 ms | iters: 4     | obj: 1.228585e+03  (min) | CPU:   6.15 MiB
+│  └─
+└─
+
+┌─ Problem: glider
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time: 548.303 ms | iters: 78    | obj: -1.248896e+03 (min) | CPU:  98.25 KiB
+│  │  ✓ | adnlp    | time: 556.702 ms | iters: 78    | obj: -1.248896e+03 (min) | CPU:  76.78 MiB
+│  │  ✓ | exa      | time: 314.886 ms | iters: 78    | obj: -1.248896e+03 (min) | CPU: 268.72 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  28.310 s  | iters: 68    | obj: -1.247978e+03 (min) | CPU:  88.16 KiB
+│  │  ✓ | adnlp    | time:  24.834 s  | iters: 40    | obj: -1.247978e+03 (min) | CPU: 101.34 MiB
+│  │  ✓ | exa      | time:  23.149 s  | iters: 68    | obj: -1.247978e+03 (min) | CPU: 370.61 KiB
+│  │
+│  │  N = 1000
+│  │  ✗ | jump     | time: 503.776 s  | iters: 20    | obj: -1.058875e+03 (min) | CPU:  26.41 KiB
+│  │  ✗ | adnlp    | time: 531.483 s  | iters: 19    | obj: -1.058874e+03 (min) | CPU:  99.01 MiB
+│  │  ✗ | exa      | time: 539.281 s  | iters: 18    | obj: -1.058874e+03 (min) | CPU: 500.39 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time: 579.993 ms | iters: 92    | obj: -1.248896e+03 (min) | CPU:  56.83 MiB
+│  │  ✓ | adnlp    | time: 544.469 ms | iters: 83    | obj: -1.248896e+03 (min) | CPU:  95.23 MiB
+│  │  ✓ | exa      | time: 308.306 ms | iters: 112   | obj: -1.248896e+03 (min) | CPU:  14.30 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:   3.438 s  | iters: 182   | obj: -1.247978e+03 (min) | CPU: 162.29 MiB
+│  │  ✓ | adnlp    | time:   3.370 s  | iters: 171   | obj: -1.247978e+03 (min) | CPU: 472.36 MiB
+│  │  ✓ | exa      | time:   1.285 s  | iters: 172   | obj: -1.247978e+03 (min) | CPU:  49.93 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:   4.420 s  | iters: 107   | obj: -1.247985e+03 (min) | CPU: 289.82 MiB
+│  │  ✓ | adnlp    | time:   8.058 s  | iters: 148   | obj: -1.247985e+03 (min) | CPU: 826.72 MiB
+│  │  ✓ | exa      | time:   1.898 s  | iters: 124   | obj: -1.247985e+03 (min) | CPU:  71.83 MiB
+│  └─
+└─
+
+┌─ Problem: insurance
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time: 390.900 ms | iters: 90    | obj: -2.058581e+00 (min) | CPU: 118.31 KiB
+│  │  ✓ | adnlp    | time: 577.631 ms | iters: 90    | obj: -2.058581e+00 (min) | CPU: 120.75 MiB
+│  │  ✓ | exa      | time: 317.780 ms | iters: 91    | obj: -2.058581e+00 (min) | CPU: 246.09 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:   1.054 s  | iters: 100   | obj: -2.059214e+00 (min) | CPU: 125.41 KiB
+│  │  ✓ | adnlp    | time:   1.633 s  | iters: 96    | obj: -2.059214e+00 (min) | CPU: 311.99 MiB
+│  │  ✓ | exa      | time: 912.445 ms | iters: 109   | obj: -2.059214e+00 (min) | CPU: 441.56 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:   3.436 s  | iters: 139   | obj: -2.059511e+00 (min) | CPU: 178.05 KiB
+│  │  ✓ | adnlp    | time:   5.385 s  | iters: 146   | obj: -2.059511e+00 (min) | CPU: 946.00 MiB
+│  │  ✓ | exa      | time:   2.616 s  | iters: 134   | obj: -2.059511e+00 (min) | CPU: 769.45 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time: 463.606 ms | iters: 120   | obj: -2.058581e+00 (min) | CPU:  38.18 MiB
+│  │  ✓ | adnlp    | time: 724.552 ms | iters: 120   | obj: -2.058581e+00 (min) | CPU: 200.33 MiB
+│  │  ✓ | exa      | time: 333.018 ms | iters: 120   | obj: -2.058581e+00 (min) | CPU:  26.32 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:   3.055 s  | iters: 255   | obj: -2.059207e+00 (min) | CPU: 145.36 MiB
+│  │  ✓ | adnlp    | time:   7.337 s  | iters: 409   | obj: -2.059207e+00 (min) | CPU:   1.52 GiB
+│  │  ✓ | exa      | time:   3.117 s  | iters: 350   | obj: -2.059213e+00 (min) | CPU: 156.35 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  12.817 s  | iters: 567   | obj: -2.059511e+00 (min) | CPU: 535.27 MiB
+│  │  ✓ | adnlp    | time:  19.527 s  | iters: 529   | obj: -2.059510e+00 (min) | CPU:   3.76 GiB
+│  │  ✓ | exa      | time:   9.260 s  | iters: 520   | obj: -2.059510e+00 (min) | CPU: 435.18 MiB
+│  └─
+└─
+
+┌─ Problem: jackson
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  74.658 ms | iters: 42    | obj: -1.918613e-01 (min) | CPU:  55.06 KiB
+│  │  ✓ | adnlp    | time: 104.305 ms | iters: 42    | obj: -1.918613e-01 (min) | CPU:  10.80 MiB
+│  │  ✓ | exa      | time:  77.441 ms | iters: 42    | obj: -1.918613e-01 (min) | CPU: 124.73 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time: 229.028 ms | iters: 58    | obj: -1.918219e-01 (min) | CPU:  73.81 KiB
+│  │  ✓ | adnlp    | time: 341.087 ms | iters: 58    | obj: -1.918219e-01 (min) | CPU:  36.18 MiB
+│  │  ✓ | exa      | time: 249.535 ms | iters: 58    | obj: -1.918219e-01 (min) | CPU: 227.05 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 133.180 ms | iters: 21    | obj: -1.918162e-01 (min) | CPU:  27.64 KiB
+│  │  ✓ | adnlp    | time: 257.615 ms | iters: 21    | obj: -1.918162e-01 (min) | CPU:  27.46 MiB
+│  │  ✓ | exa      | time: 144.215 ms | iters: 21    | obj: -1.918162e-01 (min) | CPU: 333.11 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  46.869 ms | iters: 40    | obj: -1.918610e-01 (min) | CPU:   6.94 MiB
+│  │  ✓ | adnlp    | time:  82.854 ms | iters: 40    | obj: -1.918610e-01 (min) | CPU:  15.86 MiB
+│  │  ✓ | exa      | time:  49.873 ms | iters: 40    | obj: -1.918610e-01 (min) | CPU:   6.74 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  45.336 ms | iters: 22    | obj: -1.918217e-01 (min) | CPU:  12.71 MiB
+│  │  ✓ | adnlp    | time:  96.572 ms | iters: 22    | obj: -1.918217e-01 (min) | CPU:  22.99 MiB
+│  │  ✓ | exa      | time:  47.524 ms | iters: 22    | obj: -1.918217e-01 (min) | CPU:  11.28 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  91.776 ms | iters: 23    | obj: -1.918159e-01 (min) | CPU:  25.89 MiB
+│  │  ✓ | adnlp    | time: 211.166 ms | iters: 23    | obj: -1.918159e-01 (min) | CPU:  47.41 MiB
+│  │  ✓ | exa      | time:  96.910 ms | iters: 23    | obj: -1.918159e-01 (min) | CPU:  22.83 MiB
+│  └─
+└─
+
+┌─ Problem: mountain_car
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  75.103 ms | iters: 41    | obj: 1.023976e+02  (min) | CPU:  52.33 KiB
+│  │  ✓ | adnlp    | time:  91.568 ms | iters: 41    | obj: 1.023976e+02  (min) | CPU:  10.43 MiB
+│  │  ✓ | exa      | time:  60.944 ms | iters: 41    | obj: 1.023976e+02  (min) | CPU: 100.95 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time: 249.610 ms | iters: 69    | obj: 1.023699e+02  (min) | CPU:  89.64 KiB
+│  │  ✓ | adnlp    | time: 320.788 ms | iters: 69    | obj: 1.023699e+02  (min) | CPU:  43.15 MiB
+│  │  ✓ | exa      | time: 192.447 ms | iters: 67    | obj: 1.023699e+02  (min) | CPU: 193.06 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 472.163 ms | iters: 64    | obj: 1.023682e+02  (min) | CPU:  80.72 KiB
+│  │  ✓ | adnlp    | time: 694.249 ms | iters: 64    | obj: 1.023682e+02  (min) | CPU:  78.76 MiB
+│  │  ✓ | exa      | time: 320.634 ms | iters: 62    | obj: 1.023682e+02  (min) | CPU: 291.36 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  63.823 ms | iters: 49    | obj: 1.023810e+02  (min) | CPU:   9.76 MiB
+│  │  ✗ | adnlp   : ERROR: DomainError(Inf, &quot;sincos(x) is only defined for finite x.&quot;)
+│  │  ✓ | exa      | time:  54.193 ms | iters: 49    | obj: 1.023810e+02  (min) | CPU:   5.51 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time: 138.920 ms | iters: 51    | obj: 1.023699e+02  (min) | CPU:  23.86 MiB
+│  │  ✓ | adnlp    | time: 197.104 ms | iters: 51    | obj: 1.023699e+02  (min) | CPU:  44.17 MiB
+│  │  ✓ | exa      | time: 106.733 ms | iters: 51    | obj: 1.023699e+02  (min) | CPU:  13.41 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 425.486 ms | iters: 74    | obj: 1.023682e+02  (min) | CPU:  59.75 MiB
+│  │  ✗ | adnlp   : ERROR: DomainError(Inf, &quot;sincos(x) is only defined for finite x.&quot;)
+│  │  ✓ | exa      | time: 323.140 ms | iters: 74    | obj: 1.023682e+02  (min) | CPU:  37.98 MiB
+│  └─
+└─
+
+┌─ Problem: robbins
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  25.389 ms | iters: 19    | obj: 1.962626e+01  (min) | CPU:  12.16 KiB
+│  │  ✓ | adnlp    | time:  34.211 ms | iters: 19    | obj: 1.962626e+01  (min) | CPU:   3.48 MiB
+│  │  ✓ | exa      | time:  23.217 ms | iters: 19    | obj: 1.962626e+01  (min) | CPU:  95.61 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  49.400 ms | iters: 18    | obj: 1.946663e+01  (min) | CPU:  11.16 KiB
+│  │  ✓ | adnlp    | time:  72.763 ms | iters: 18    | obj: 1.946663e+01  (min) | CPU:   8.08 MiB
+│  │  ✓ | exa      | time:  50.436 ms | iters: 18    | obj: 1.946663e+01  (min) | CPU: 180.98 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 135.792 ms | iters: 27    | obj: 1.944019e+01  (min) | CPU:  15.66 KiB
+│  │  ✓ | adnlp    | time: 216.678 ms | iters: 27    | obj: 1.944019e+01  (min) | CPU:  23.33 MiB
+│  │  ✓ | exa      | time: 138.749 ms | iters: 27    | obj: 1.944019e+01  (min) | CPU: 334.70 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  25.708 ms | iters: 34    | obj: 1.962626e+01  (min) | CPU:   2.81 MiB
+│  │  ✓ | adnlp    | time:  43.183 ms | iters: 34    | obj: 1.962626e+01  (min) | CPU:   8.26 MiB
+│  │  ✓ | exa      | time:  26.402 ms | iters: 34    | obj: 1.962626e+01  (min) | CPU:   2.65 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  55.233 ms | iters: 31    | obj: 1.946663e+01  (min) | CPU:   6.14 MiB
+│  │  ✓ | adnlp    | time:  87.679 ms | iters: 29    | obj: 1.946663e+01  (min) | CPU:  17.55 MiB
+│  │  ✓ | exa      | time:  52.935 ms | iters: 29    | obj: 1.946663e+01  (min) | CPU:   5.67 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 165.368 ms | iters: 50    | obj: 1.944019e+01  (min) | CPU:  16.03 MiB
+│  │  ✓ | adnlp    | time: 322.803 ms | iters: 50    | obj: 1.944019e+01  (min) | CPU:  56.11 MiB
+│  │  ✓ | exa      | time: 169.978 ms | iters: 50    | obj: 1.944019e+01  (min) | CPU:  15.45 MiB
+│  └─
+└─
+
+┌─ Problem: robot
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  84.221 ms | iters: 18    | obj: 9.141395e+00  (min) | CPU:  23.94 KiB
+│  │  ✓ | adnlp    | time: 119.856 ms | iters: 18    | obj: 9.141395e+00  (min) | CPU:  12.91 MiB
+│  │  ✓ | exa      | time:  63.343 ms | iters: 18    | obj: 9.141395e+00  (min) | CPU: 181.27 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time: 216.737 ms | iters: 17    | obj: 9.140991e+00  (min) | CPU:  22.70 KiB
+│  │  ✓ | adnlp    | time: 347.597 ms | iters: 17    | obj: 9.140991e+00  (min) | CPU:  30.39 MiB
+│  │  ✓ | exa      | time: 158.340 ms | iters: 17    | obj: 9.140991e+00  (min) | CPU: 369.86 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 572.037 ms | iters: 19    | obj: 9.140931e+00  (min) | CPU:  25.17 KiB
+│  │  ✓ | adnlp    | time: 783.148 ms | iters: 19    | obj: 9.140931e+00  (min) | CPU:  67.10 MiB
+│  │  ✓ | exa      | time: 395.172 ms | iters: 19    | obj: 9.140931e+00  (min) | CPU: 688.55 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  67.487 ms | iters: 16    | obj: 9.141397e+00  (min) | CPU:  20.27 MiB
+│  │  ✓ | adnlp    | time:  98.347 ms | iters: 16    | obj: 9.141397e+00  (min) | CPU:  16.98 MiB
+│  │  ✓ | exa      | time:  49.319 ms | iters: 16    | obj: 9.141397e+00  (min) | CPU:   6.61 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time: 278.863 ms | iters: 25    | obj: 9.140992e+00  (min) | CPU:  54.52 MiB
+│  │  ✓ | adnlp    | time: 449.681 ms | iters: 25    | obj: 9.140992e+00  (min) | CPU:  61.04 MiB
+│  │  ✓ | exa      | time: 195.490 ms | iters: 25    | obj: 9.140992e+00  (min) | CPU:  20.43 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 655.652 ms | iters: 23    | obj: 9.140939e+00  (min) | CPU: 108.51 MiB
+│  │  ✓ | adnlp    | time: 975.331 ms | iters: 23    | obj: 9.140939e+00  (min) | CPU: 114.69 MiB
+│  │  ✓ | exa      | time: 479.596 ms | iters: 23    | obj: 9.140939e+00  (min) | CPU:  39.43 MiB
+│  └─
+└─
+
+┌─ Problem: rocket
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  38.181 ms | iters: 18    | obj: -1.012836e+00 (min) | CPU:  23.94 KiB
+│  │  ✓ | adnlp    | time:  70.902 ms | iters: 18    | obj: -1.012836e+00 (min) | CPU:  16.91 MiB
+│  │  ✓ | exa      | time:  27.650 ms | iters: 18    | obj: -1.012836e+00 (min) | CPU: 101.02 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time: 100.123 ms | iters: 21    | obj: -1.012837e+00 (min) | CPU:  27.64 KiB
+│  │  ✓ | adnlp    | time: 217.642 ms | iters: 21    | obj: -1.012837e+00 (min) | CPU:  48.36 MiB
+│  │  ✓ | exa      | time:  71.947 ms | iters: 21    | obj: -1.012837e+00 (min) | CPU: 190.73 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 253.402 ms | iters: 24    | obj: -1.012837e+00 (min) | CPU:  31.34 KiB
+│  │  ✓ | adnlp    | time: 553.075 ms | iters: 24    | obj: -1.012837e+00 (min) | CPU: 109.19 MiB
+│  │  ✓ | exa      | time: 165.116 ms | iters: 24    | obj: -1.012837e+00 (min) | CPU: 338.45 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  36.717 ms | iters: 21    | obj: -1.012835e+00 (min) | CPU:  12.96 MiB
+│  │  ✓ | adnlp    | time:  72.863 ms | iters: 21    | obj: -1.012835e+00 (min) | CPU:  22.84 MiB
+│  │  ✓ | exa      | time:  22.500 ms | iters: 21    | obj: -1.012835e+00 (min) | CPU:   4.41 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  94.513 ms | iters: 22    | obj: -1.012835e+00 (min) | CPU:  32.06 MiB
+│  │  ✓ | adnlp    | time: 182.906 ms | iters: 22    | obj: -1.012835e+00 (min) | CPU:  58.83 MiB
+│  │  ✓ | exa      | time:  57.592 ms | iters: 22    | obj: -1.012835e+00 (min) | CPU:  10.86 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 223.565 ms | iters: 24    | obj: -1.012836e+00 (min) | CPU:  65.45 MiB
+│  │  ✓ | adnlp    | time: 487.694 ms | iters: 24    | obj: -1.012836e+00 (min) | CPU: 126.65 MiB
+│  │  ✓ | exa      | time: 128.806 ms | iters: 24    | obj: -1.012836e+00 (min) | CPU:  22.40 MiB
+│  └─
+└─
+
+┌─ Problem: space_shuttle
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:   1.486 s  | iters: 111   | obj: -3.853783e-01 (min) | CPU: 138.98 KiB
+│  │  ✓ | adnlp    | time:   1.450 s  | iters: 101   | obj: -5.958694e-01 (min) | CPU: 172.82 MiB
+│  │  ✓ | exa      | time: 709.763 ms | iters: 101   | obj: -5.958694e-01 (min) | CPU: 309.17 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:   4.674 s  | iters: 115   | obj: -5.958750e-01 (min) | CPU: 143.67 KiB
+│  │  ✓ | adnlp    | time:   4.381 s  | iters: 116   | obj: -5.958750e-01 (min) | CPU: 492.38 MiB
+│  │  ✓ | exa      | time:   1.959 s  | iters: 116   | obj: -5.958750e-01 (min) | CPU: 498.08 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:   6.491 s  | iters: 74    | obj: -3.050197e-01 (min) | CPU:  97.30 KiB
+│  │  ✓ | adnlp    | time:  13.251 s  | iters: 125   | obj: -5.958758e-01 (min) | CPU:   1.03 GiB
+│  │  ✓ | exa      | time:   6.300 s  | iters: 125   | obj: -5.958758e-01 (min) | CPU: 796.62 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:   1.477 s  | iters: 113   | obj: -3.854923e-01 (min) | CPU: 101.75 MiB
+│  │  ✓ | adnlp    | time:   2.949 s  | iters: 198   | obj: -5.958694e-01 (min) | CPU: 398.60 MiB
+│  │  ✓ | exa      | time: 937.569 ms | iters: 181   | obj: -5.958694e-01 (min) | CPU:  52.66 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:   2.797 s  | iters: 77    | obj: -5.958750e-01 (min) | CPU: 230.97 MiB
+│  │  ✓ | adnlp    | time:   7.565 s  | iters: 166   | obj: -5.958750e-01 (min) | CPU: 847.91 MiB
+│  │  ✓ | exa      | time:   2.187 s  | iters: 166   | obj: -5.958750e-01 (min) | CPU: 123.22 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  81.535 s  | iters: 480   | obj: -3.050197e-01 (min) | CPU:   1.24 GiB
+│  │  ✗ | adnlp   : ERROR: DomainError(Inf, &quot;sincos(x) is only defined for finite x.&quot;)
+│  │  ✓ | exa      | time:   3.312 s  | iters: 95    | obj: -5.958758e-01 (min) | CPU: 159.66 MiB
+│  └─
+└─
+
+┌─ Problem: steering
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  22.525 ms | iters: 8     | obj: 5.545770e-01  (min) | CPU:  11.59 KiB
+│  │  ✓ | adnlp    | time:  27.864 ms | iters: 8     | obj: 5.545770e-01  (min) | CPU:   4.89 MiB
+│  │  ✓ | exa      | time:  18.972 ms | iters: 8     | obj: 5.545770e-01  (min) | CPU: 102.95 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  58.795 ms | iters: 8     | obj: 5.545719e-01  (min) | CPU:  11.59 KiB
+│  │  ✓ | adnlp    | time:  75.733 ms | iters: 8     | obj: 5.545719e-01  (min) | CPU:  12.13 MiB
+│  │  ✓ | exa      | time:  48.718 ms | iters: 8     | obj: 5.545719e-01  (min) | CPU: 213.33 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 157.364 ms | iters: 8     | obj: 5.545711e-01  (min) | CPU:  11.59 KiB
+│  │  ✓ | adnlp    | time: 187.352 ms | iters: 8     | obj: 5.545711e-01  (min) | CPU:  24.19 MiB
+│  │  ✓ | exa      | time: 108.805 ms | iters: 8     | obj: 5.545711e-01  (min) | CPU: 396.70 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:  25.721 ms | iters: 11    | obj: 5.545770e-01  (min) | CPU:   8.77 MiB
+│  │  ✓ | adnlp    | time:  29.997 ms | iters: 11    | obj: 5.545770e-01  (min) | CPU:   8.31 MiB
+│  │  ✓ | exa      | time:  17.860 ms | iters: 11    | obj: 5.545770e-01  (min) | CPU:   2.35 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  74.667 ms | iters: 13    | obj: 5.545719e-01  (min) | CPU:  22.17 MiB
+│  │  ✓ | adnlp    | time:  87.776 ms | iters: 13    | obj: 5.545719e-01  (min) | CPU:  23.19 MiB
+│  │  ✓ | exa      | time:  50.713 ms | iters: 13    | obj: 5.545719e-01  (min) | CPU:   5.89 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time: 174.865 ms | iters: 14    | obj: 5.545711e-01  (min) | CPU:  45.15 MiB
+│  │  ✓ | adnlp    | time: 211.277 ms | iters: 14    | obj: 5.545711e-01  (min) | CPU:  48.89 MiB
+│  │  ✓ | exa      | time: 118.447 ms | iters: 14    | obj: 5.545711e-01  (min) | CPU:  11.87 MiB
+│  └─
+└─
+
+┌─ Problem: vanderpol
+│
+├──┬ Solver: ipopt, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:   4.750 ms | iters: 3     | obj: 1.047836e+00  (min) | CPU:   5.42 KiB
+│  │  ✓ | adnlp    | time:   6.473 ms | iters: 3     | obj: 1.047836e+00  (min) | CPU: 955.09 KiB
+│  │  ✓ | exa      | time:   3.714 ms | iters: 3     | obj: 1.047836e+00  (min) | CPU:  53.50 KiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:   9.941 ms | iters: 3     | obj: 1.047812e+00  (min) | CPU:   5.42 KiB
+│  │  ✓ | adnlp    | time:  14.534 ms | iters: 3     | obj: 1.047812e+00  (min) | CPU:   2.30 MiB
+│  │  ✓ | exa      | time:   7.519 ms | iters: 3     | obj: 1.047812e+00  (min) | CPU: 102.56 KiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  19.344 ms | iters: 3     | obj: 1.047808e+00  (min) | CPU:   5.42 KiB
+│  │  ✓ | adnlp    | time:  29.922 ms | iters: 3     | obj: 1.047808e+00  (min) | CPU:   4.58 MiB
+│  │  ✓ | exa      | time:  14.209 ms | iters: 3     | obj: 1.047808e+00  (min) | CPU: 184.75 KiB
+│  └─
+│
+├──┬ Solver: madnlp, Discretization: trapeze
+│  │
+│  │  N = 200
+│  │  ✓ | jump     | time:   6.220 ms | iters: 3     | obj: 1.047836e+00  (min) | CPU:   5.04 MiB
+│  │  ✓ | adnlp    | time:   6.244 ms | iters: 3     | obj: 1.047836e+00  (min) | CPU:   1.69 MiB
+│  │  ✓ | exa      | time:   2.824 ms | iters: 3     | obj: 1.047836e+00  (min) | CPU:   1.33 MiB
+│  │
+│  │  N = 500
+│  │  ✓ | jump     | time:  15.347 ms | iters: 3     | obj: 1.047812e+00  (min) | CPU:  12.23 MiB
+│  │  ✓ | adnlp    | time:  14.006 ms | iters: 3     | obj: 1.047812e+00  (min) | CPU:   4.08 MiB
+│  │  ✓ | exa      | time:   6.359 ms | iters: 3     | obj: 1.047812e+00  (min) | CPU:   3.15 MiB
+│  │
+│  │  N = 1000
+│  │  ✓ | jump     | time:  30.433 ms | iters: 3     | obj: 1.047808e+00  (min) | CPU:  24.67 MiB
+│  │  ✓ | adnlp    | time:  30.692 ms | iters: 3     | obj: 1.047808e+00  (min) | CPU:   8.06 MiB
+│  │  ✓ | exa      | time:  12.293 ms | iters: 3     | obj: 1.047808e+00  (min) | CPU:   6.19 MiB
 │  └─
 └─</code></pre>  </div>
 </div><h2 id="Kkt"><a class="docs-heading-anchor" href="#Kkt">Kkt</a><a id="Kkt-1"></a><a class="docs-heading-anchor-permalink" href="#Kkt" title="Permalink"></a></h2><p>This benchmark suite evaluates optimal control problems on self-hosted CPU hardware.</p><h3 id="Configuration-2"><a class="docs-heading-anchor" href="#Configuration-2">⚙️ Configuration</a><a class="docs-heading-anchor-permalink" href="#Configuration-2" title="Permalink"></a></h3><div class="benchmark-config" style="margin-bottom: 0em;"><div class="markdown"><ul>
@@ -2951,4 +4562,4 @@ Environment:
 │  │  ✓ | exa      | time:  35.517 ms | iters: 3     | obj: 1.047807e+00  (min) | CPU:  12.27 MiB
 │  └─
 └─</code></pre>  </div>
-</div></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../index.html">« Introduction</a><a class="docs-footer-nextpage" href="gpu.html">GPU »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Wednesday 11 March 2026 10:11">Wednesday 11 March 2026</span>. Using Julia version 1.12.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+</div></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../index.html">« Introduction</a><a class="docs-footer-nextpage" href="gpu.html">GPU »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Monday 16 March 2026 14:30">Monday 16 March 2026</span>. Using Julia version 1.12.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
