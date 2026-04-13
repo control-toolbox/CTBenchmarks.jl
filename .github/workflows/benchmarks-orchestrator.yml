@@ -248,7 +248,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Comment on PR with failure notification
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           BENCHMARK_RESULT: ${{ needs.benchmark.result }}
           DOCS_RESULT: ${{ needs.docs.result }}
@@ -341,7 +341,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Comment on PR with success notification
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           BENCHMARKS_SUMMARY: ${{ needs.guard.outputs.benchmarks_summary }}
         with:
