@@ -79,5 +79,4 @@ jobs:
     with:
       versions: '["1.12"]'
       runs_on: '[["self-hosted", "Linux", "gpu", "cuda", "cuda12"]]'
-      archs: '["x64"]'
       runner_type: 'self-hosted'
