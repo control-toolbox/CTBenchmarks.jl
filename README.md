@@ -9,7 +9,7 @@ The CTBenchmarks.jl repo is part of the [control-toolbox ecosystem](https://gith
 
 | **Category** | **Badge** |
 |-----------------------|-----------|
-| **Documentation** | [![Stable Docs](https://img.shields.io/badge/docs-stable-blue.svg)](https://control-toolbox.org/CTBenchmarks.jl/stable/) [![Dev Docs](https://img.shields.io/badge/docs-dev-8A2BE2.svg)](https://control-toolbox.org/CTBenchmarks.jl/dev/) |
+| **Documentation** | [![Stable Docs](https://img.shields.io/badge/docs-stable-blue.svg)](https://control-toolbox.org/CTBenchmarks.jl/stable/) [![Dev Docs](https://img.shields.io/badge/docs-dev-8A2BE2.svg)](https://control-toolbox.org/CTBenchmarks.jl/dev/) [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/control-toolbox/CTBenchmarks.jl) |
 | **CI / Build** | [![Build Status](https://github.com/control-toolbox/CTBenchmarks.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/control-toolbox/CTBenchmarks.jl/actions/workflows/CI.yml?query=branch%3Amain) |
 | **Test Coverage** | [![Coverage](https://codecov.io/gh/control-toolbox/CTBenchmarks.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/control-toolbox/CTBenchmarks.jl) |
 | **Release / Version** | [![Release](https://img.shields.io/github/v/release/control-toolbox/CTBenchmarks.jl.svg)](https://github.com/control-toolbox/CTBenchmarks.jl/releases) |
