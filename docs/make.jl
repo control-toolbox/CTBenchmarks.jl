@@ -86,7 +86,7 @@ with_processed_template_problems(
         joinpath(@__DIR__, "src", "assets", "md"),
     ) do
         # Build the documentation with Documenter.jl
-        makedocs(;
+        return makedocs(;
             draft=draft,
             remotes=nothing,
             warnonly=true,

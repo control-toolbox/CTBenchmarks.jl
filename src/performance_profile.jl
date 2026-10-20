@@ -257,7 +257,7 @@ function load_benchmark_df(source::AbstractString)
         return DataFrame()
     end
     data = open(source, "r") do io
-        JSON.parse(io)
+        return JSON.parse(io)
     end
     results = get(data, "results", Any[])
     return DataFrame(results)
@@ -710,7 +710,7 @@ function _add_combo_series!(
     )
 
     # Add marker/label entry on the first point of the curve for the legend
-    plot!(
+    return plot!(
         plt,
         [x[1]],
         [y[1]];
@@ -731,7 +731,7 @@ Add reference lines at y=0, y=1 and x=1.
 function _add_reference_lines!(plt)
     vline!(plt, [1.0]; color=:black, lw=0.5, label="", linestyle=:solid, z_order=1)
     hline!(plt, [0.0]; color=:black, lw=0.5, label="", linestyle=:solid, z_order=1)
-    hline!(plt, [1.0]; color=:black, lw=0.5, label="", linestyle=:solid, z_order=1)
+    return hline!(plt, [1.0]; color=:black, lw=0.5, label="", linestyle=:solid, z_order=1)
 end
 
 """
