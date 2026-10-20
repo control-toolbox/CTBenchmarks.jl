@@ -206,7 +206,7 @@ function print_benchmark_line(model::Symbol, stats::NamedTuple)
 
     print(" | ")
     printstyled(rpad(string(model), 8); color=:magenta, bold=true)
-    println(
+    return println(
         " | time: $time_str | iters: $iter_str | obj: $obj_str ($criterion_str) | $memory_display",
     )
 end
