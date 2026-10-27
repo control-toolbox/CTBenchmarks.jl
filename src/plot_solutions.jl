@@ -163,7 +163,7 @@ julia> CTBenchmarks.costate_multiplier(:max)
 ```
 """
 function costate_multiplier(criterion)
-    lowercase(string(ismissing(criterion) ? "min" : criterion)) == "max" ? 1 : -1
+    return lowercase(string(ismissing(criterion) ? "min" : criterion)) == "max" ? 1 : -1
 end
 
 # -----------------------------------
@@ -420,7 +420,7 @@ function plot_solutions(payload::Dict, output_dir::AbstractString)
         end
     end
 
-    println("✅ All solution plots generated in $output_dir")
+    return println("✅ All solution plots generated in $output_dir")
 end
 
 """
@@ -1141,7 +1141,7 @@ julia> CTBenchmarks.format_solution_label(:exa, :madnlp, false)
 ```
 """
 function format_solution_label(model::Symbol, solver::Symbol, success::Bool)
-    string(success ? "✓" : "✗", " ", model, "-", solver)
+    return string(success ? "✓" : "✗", " ", model, "-", solver)
 end
 
 """
