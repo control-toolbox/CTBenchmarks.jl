@@ -142,7 +142,8 @@ function replace_environment_blocks(content::String, env_template::String)
         content,
         pattern => function (match_str)
             block_count += 1
-            DOC_DEBUG[] && @info "🔄 Processing INCLUDE_ENVIRONMENT block #$block_count"
+            DOC_DEBUG[] &&
+                @info "🔄 Processing INCLUDE_ENVIRONMENT block #$block_count"
 
             # Extract the parameter block (group 1)
             m = match(pattern, match_str)
@@ -621,7 +622,7 @@ function replace_text_blocks(content::String)
                 return text_md
             catch e
                 if DOC_DEBUG[]
-                    @error "  ✗ Failed to generate analysis" exception=(e, catch_backtrace())
+                    @error "  ✗ Failed to generate analysis" exception = (e, catch_backtrace())
                 else
                     @error "  ✗ Failed to generate analysis: $(e)"
                 end
@@ -811,7 +812,7 @@ function process_templates(
             append!(all_figure_paths, figure_paths)
         catch e
             if DOC_DEBUG[]
-                @error "❌ Failed to process template: $filename" exception=(
+                @error "❌ Failed to process template: $filename" exception = (
                     e, catch_backtrace()
                 )
             else
