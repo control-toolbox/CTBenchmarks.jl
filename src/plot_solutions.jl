@@ -163,7 +163,7 @@ julia> CTBenchmarks.costate_multiplier(:max)
 ```
 """
 function costate_multiplier(criterion)
-    lowercase(string(ismissing(criterion) ? "min" : criterion)) == "max" ? 1 : -1
+    return lowercase(string(ismissing(criterion) ? "min" : criterion)) == "max" ? 1 : -1
 end
 
 # -----------------------------------
@@ -420,7 +420,7 @@ function plot_solutions(payload::Dict, output_dir::AbstractString)
         end
     end
 
-    println("✅ All solution plots generated in $output_dir")
+    return println("✅ All solution plots generated in $output_dir")
 end
 
 """
@@ -624,7 +624,7 @@ function plot_ocp_solution(
         :control;
         color=color,
         label=:none,  # No label yet
-        size=(816, 240*(n+m)),
+        size=(816, 240 * (n + m)),
         leftmargin=get_left_margin(problem),
         #plot_title="$problem - N=$grid_size",
         linewidth=1.5,
@@ -1141,7 +1141,7 @@ julia> CTBenchmarks.format_solution_label(:exa, :madnlp, false)
 ```
 """
 function format_solution_label(model::Symbol, solver::Symbol, success::Bool)
-    string(success ? "✓" : "✗", " ", model, "-", solver)
+    return string(success ? "✓" : "✗", " ", model, "-", solver)
 end
 
 """
@@ -1288,13 +1288,13 @@ function create_jump_layout(
         label = i <= length(state_labels) ? state_labels[i] : "x$i"
         p = plot(;
             ylabel=label,
-            legend=(i==1 ? :best : :none),
-            title=(i==1 ? "state" : ""),
+            legend=(i == 1 ? :best : :none),
+            title=(i == 1 ? "state" : ""),
             titlefont=title_font,
             leftmargin=lm,
             xguidefontsize=label_font,
             yguidefontsize=label_font,
-            xlabel=i==n ? "time" : "",
+            xlabel=i == n ? "time" : "",
         )
         push!(state_plots, p)
     end
@@ -1306,11 +1306,11 @@ function create_jump_layout(
         p = plot(;
             legend=:none,
             leftmargin=lm,
-            title=(i==1 ? "costate" : ""),
+            title=(i == 1 ? "costate" : ""),
             titlefont=title_font,
             xguidefontsize=label_font,
             yguidefontsize=label_font,
-            xlabel=i==n ? "time" : "",
+            xlabel=i == n ? "time" : "",
         )
         push!(costate_plots, p)
     end
@@ -1321,11 +1321,11 @@ function create_jump_layout(
         label = i <= length(control_labels) ? control_labels[i] : "u$i"
         p = plot(;
             ylabel=label,
-            title=(i==1 ? "control" : ""),
+            title=(i == 1 ? "control" : ""),
             titlefont=title_font,
             xguidefontsize=label_font,
             yguidefontsize=label_font,
-            xlabel=i==m ? "time" : "",
+            xlabel=i == m ? "time" : "",
             leftmargin=lm,
         )
         push!(control_plots, p)
@@ -1345,12 +1345,12 @@ function create_jump_layout(
 
     # Combine state/costate block with control block vertically
     # Height: 240px per subplot (n states + n costates + m controls = 2n+m total)
-    height = 240*(n + m)
+    height = 240 * (n + m)
     # Layout weights: n rows for states/costates, m rows for controls
     p_final = plot(
         p_state_costate,
         p_control;
-        layout=grid(2, 1; heights=[n/(n+m), m/(n+m)]),
+        layout=grid(2, 1; heights=[n / (n + m), m / (n + m)]),
         size=(816, height),
         #plot_title="$problem - N=$grid_size",
         dpi=300,

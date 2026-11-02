@@ -645,7 +645,7 @@ function benchmark_data(;
                 # Only add spacing if there are more grid sizes with models to run
                 remaining_grids = grid_sizes[(grid_idx + 1):end]
                 has_more_grids = any(remaining_grids) do next_N
-                    !isempty(filter_models_for_backend(models, disc_method))
+                    return !isempty(filter_models_for_backend(models, disc_method))
                 end
                 if has_more_grids
                     println("│  │ ")
@@ -703,22 +703,22 @@ function generate_metadata()
     # Capture Pkg.status() with colors
     pkg_status_output = sprint() do buffer
         io = IOContext(buffer, :color => true)
-        Pkg.status(; io=io)
+        return Pkg.status(; io=io)
     end
 
     # Capture versioninfo() with colors
     versioninfo_output = sprint() do buffer
         io = IOContext(buffer, :color => true)
-        versioninfo(io)
+        return versioninfo(io)
     end
 
     # Capture Pkg.status(mode=PKGMODE_MANIFEST) with colors
     pkg_manifest_output = sprint() do buffer
         io = IOContext(buffer, :color => true)
-        Pkg.status(; mode=Pkg.PKGMODE_MANIFEST, io=io)
+        return Pkg.status(; mode=Pkg.PKGMODE_MANIFEST, io=io)
     end
 
-    Dict(
+    return Dict(
         "timestamp" =>
             Dates.format(Dates.now(Dates.UTC), dateformat"yyyy-mm-dd HH:MM:SS") * " UTC",
         "julia_version" => string(VERSION),
@@ -775,7 +775,7 @@ function build_payload(results::DataFrame, meta::Dict, config::Dict)
     # Add configuration to metadata
     meta_with_config = merge(meta, Dict("configuration" => config))
 
-    Dict(
+    return Dict(
         "metadata" => meta_with_config,
         "results" => results_vec,
         "solutions" => solutions,  # Kept in memory, not in JSON
@@ -815,7 +815,7 @@ function save_json(payload::Dict, filepath::AbstractString)
 
     open(filepath, "w") do io
         JSON.print(io, json_payload, 4)    # pretty printed with 4-space indent
-        write(io, '\n')            # add trailing newline
+        return write(io, '\n')            # add trailing newline
     end
 end
 

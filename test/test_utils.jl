@@ -217,5 +217,5 @@ function test_utils()
     @test all(df_subset.solver .== :ipopt)
     @test all(df_subset.grid_size .== 50)
 
-    println("\n=== All tests passed! ===")
+    return println("\n=== All tests passed! ===")
 end
