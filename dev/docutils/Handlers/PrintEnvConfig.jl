@@ -73,7 +73,7 @@ function _basic_metadata(bench_id::AbstractString, src_dir::AbstractString=SRC_D
             ("🖥️ Machine", "machine"),
         )
             value = string(get(meta, key, "n/a"))
-            println(rpad(label, key=="machine" ? 16 : 17), ": ", value)
+            println(rpad(label, key == "machine" ? 16 : 17), ": ", value)
         end
     else
         println("⚠️  No benchmark data available")
